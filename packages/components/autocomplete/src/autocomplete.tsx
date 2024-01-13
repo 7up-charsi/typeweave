@@ -2,7 +2,6 @@ import * as Popper from '@gist-ui/popper';
 import { Input, InputProps } from '@gist-ui/input';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { useClickOutside } from '@gist-ui/use-click-outside';
-import { mergeRefs } from '@gist-ui/react-utils';
 import { Option } from './option';
 import _groupby from 'lodash.groupby';
 import { Button } from '@gist-ui/button';
@@ -218,7 +217,6 @@ const Autocomplete = <
   const { isFocusVisible } = useFocusVisible({ isTextInput: true });
 
   const lisboxId = useId();
-  const listboxRef = useRef<HTMLUListElement>(null);
 
   const [open, setOpen] = useControllableState({
     defaultValue: defaultOpen,
@@ -593,7 +591,6 @@ const Autocomplete = <
                     isIconOnly
                     size="sm"
                     variant="text"
-                    color="neutral"
                     preventFocusOnPress
                     aria-label="clear value"
                     tabIndex={-1}
@@ -662,7 +659,7 @@ const Autocomplete = <
       {open && (
         <Popper.Floating sticky="always" mainOffset={offset || 5}>
           <ul
-            ref={mergeRefs(listboxRef, setListboxOutsideEle)}
+            ref={setListboxOutsideEle}
             id={lisboxId}
             className={styles.listbox({
               className: classNames?.listbox,

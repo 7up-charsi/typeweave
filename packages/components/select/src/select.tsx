@@ -7,6 +7,7 @@ import { Button } from '@gist-ui/button';
 import _groupby from 'lodash.groupby';
 import { GistUiError } from '@gist-ui/error';
 import { useFocusVisible } from '@react-aria/interactions';
+import { useCallbackRef } from '@gist-ui/use-callback-ref';
 import {
   InputClassNames,
   SelectClassNames,
@@ -138,7 +139,7 @@ const Select = <
     defaultOpen = false,
     defaultValue,
     value: valueProp,
-    onChange,
+    onChange: onChangeProp,
     renderOption,
     shadow,
     isDisabled,
@@ -160,6 +161,8 @@ const Select = <
     ...inputProps
   } = props;
 
+  const onChange = useCallbackRef(onChangeProp);
+
   const [value, setValue] = useControllableState<
     Value | Value[] | null,
     Reason
@@ -174,32 +177,32 @@ const Select = <
         );
 
       if (multiple && Array.isArray(value)) {
-        onChange?.(value, reason);
+        onChange(value, reason);
         return;
       }
 
       if (!multiple && !Array.isArray(value)) {
         if (value && disableClearable) {
-          onChange?.(value, reason);
+          onChange(value, reason);
           return;
         }
 
         if (!disableClearable) {
-          onChange?.(value, reason);
+          onChange(value, reason);
           return;
         }
       }
     },
   });
 
-  const { isFocusVisible } = useFocusVisible({ isTextInput: true });
-
   const inputRef = useRef<HTMLDivElement>(null);
-  const [options, setOptions] = useState(optionsProp);
   const [focused, setFocused] = useState<Value | null>(null);
+  const [options, setOptions] = useState(optionsProp);
   const [groupedOptions, setgroupedOptions] = useState<
     [string, Value[]][] | null
   >(null);
+
+  const { isFocusVisible } = useFocusVisible({ isTextInput: true });
 
   const lisboxId = useId();
 
@@ -221,7 +224,7 @@ const Select = <
     setFocused(null);
   }, [setOpen]);
 
-  const setOutsideEle = useClickOutside<HTMLUListElement>({
+  const setListboxOutsideEle = useClickOutside<HTMLUListElement>({
     isDisabled: !open,
     onEvent: 'pointerdown',
     callback: (e) => {
@@ -231,7 +234,7 @@ const Select = <
   });
 
   const getNextIndex = useCallback(
-    (currentIndex: number) => {
+    (currentIndex: number, options: Value[]) => {
       if (!getOptionDisabled) return currentIndex;
 
       for (let i = currentIndex; i < options!.length; i++) {
@@ -242,7 +245,7 @@ const Select = <
 
       return -1;
     },
-    [getOptionDisabled, options],
+    [getOptionDisabled],
   );
 
   const getPreviousIndex = useCallback(
@@ -268,7 +271,7 @@ const Select = <
     if (!options?.length) return;
 
     if (!value) {
-      const index = getNextIndex(0);
+      const index = getNextIndex(0, options);
       if (index >= 0) setFocused(options[index]);
       return;
     }
@@ -392,7 +395,7 @@ const Select = <
       }
 
       if (ArrowDown && open && focused) {
-        const index = getNextIndex(options.indexOf(focused) + 1);
+        const index = getNextIndex(options.indexOf(focused) + 1, options);
         if (index >= 0) setFocused(options[index]);
 
         return;
@@ -408,7 +411,7 @@ const Select = <
       if (Home) {
         setOpen(true);
 
-        const index = getNextIndex(0);
+        const index = getNextIndex(0, options);
         if (index >= 0) setFocused(options[index]);
 
         return;
@@ -441,15 +444,32 @@ const Select = <
 
   const handleClearValue = useCallback(() => {
     setOpen(true);
-    setFocused(null);
     inputRef.current?.focus();
+
+    if (optionsProp?.length) {
+      let options = optionsProp;
+
+      if (groupBy) {
+        const grouped = getGroupedOptions(options, groupBy);
+
+        options = flatGroupedOptions(grouped);
+        setgroupedOptions(grouped);
+      } else {
+        setgroupedOptions(null);
+      }
+
+      const index = getNextIndex(0, options);
+
+      if (index >= 0) setFocused(options[index]);
+      else setFocused(null);
+    }
 
     if (multiple) {
       setValue([], 'clear');
     } else {
       setValue(null, 'clear');
     }
-  }, [multiple, setOpen, setValue]);
+  }, [getNextIndex, groupBy, multiple, optionsProp, setOpen, setValue]);
 
   useEffect(() => {
     return () => {
@@ -459,32 +479,13 @@ const Select = <
 
   useEffect(() => {
     if (!groupBy) return;
+    if (!optionsProp?.length) return;
 
-    const grouped = Object.entries(
-      _groupby(options, (opt) => {
-        const by = groupBy(opt);
-
-        if (!isNaN(+by)) return '0-9';
-
-        return by;
-      }),
-    ).sort((a, b) => {
-      const a_key = a[0];
-      const b_key = b[0];
-
-      if (a_key < b_key) return -1;
-      if (a_key > b_key) return 1;
-      return 0;
-    });
+    const grouped = getGroupedOptions(optionsProp, groupBy);
 
     setgroupedOptions(grouped);
-    setOptions(grouped.reduce<Value[]>((acc, ele) => [...acc, ...ele[1]], []));
-  }, [groupBy, options]);
-
-  const styles = select({
-    shadow,
-    grouped: !!groupBy,
-  });
+    setOptions(flatGroupedOptions(grouped));
+  }, [groupBy, optionsProp]);
 
   const __renderOption = (option: Value) => {
     const isDisabled = getOptionDisabled?.(option) ?? false;
@@ -524,6 +525,11 @@ const Select = <
     isMultiple(value) &&
     (value.length ? `${value.length} selected` : null);
 
+  const styles = select({
+    shadow,
+    grouped: !!groupBy,
+  });
+
   return (
     <Popper.Root>
       <Popper.Reference>
@@ -540,20 +546,17 @@ const Select = <
           onBlur={() => {
             if (isFocusVisible) handleListboxClose();
           }}
-          classNames={{
-            ...classNames,
-            input: styles.input({ className: classNames?.input }),
-            inputWrapper: styles.inputWrapper({
-              className: classNames?.inputWrapper,
-            }),
-          }}
+          classNames={classNames}
           onKeyDown={handleInputKeyDown}
           aria-expanded={open}
           aria-controls={lisboxId}
           aria-haspopup="listbox"
-          aria-autocomplete="none"
+          aria-autocomplete="list"
+          aria-activedescendant={
+            focused ? getOptionId(focused)?.replaceAll(' ', '-') : undefined
+          }
           role="combobox"
-          autoComplete="off"
+          autoComplete="none"
           readOnly={true}
           startContent={
             startContent ? (
@@ -567,17 +570,20 @@ const Select = <
           }
           endContent={
             <>
-              {((multiple && value && isMultiple(value) && value.length) ||
+              {((multiple && isMultiple(value) && value.length) ||
                 (!multiple && value)) &&
                 !disableClearable && (
                   <Button
                     isIconOnly
                     size="sm"
                     variant="text"
-                    color="neutral"
                     preventFocusOnPress
+                    aria-label="clear value"
                     tabIndex={-1}
                     onPress={handleClearValue}
+                    className={styles.clearButton({
+                      className: classNames?.clearButton,
+                    })}
                   >
                     {clearIcon || (
                       <svg
@@ -629,6 +635,7 @@ const Select = <
                   </svg>
                 )}
               </div>
+
               {endContent}
             </>
           }
@@ -638,16 +645,15 @@ const Select = <
       {open && (
         <Popper.Floating sticky="always" mainOffset={offset || 5}>
           <ul
-            ref={setOutsideEle}
+            ref={setListboxOutsideEle}
             id={lisboxId}
             className={styles.listbox({
               className: classNames?.listbox,
             })}
             role="listbox"
-            aria-activedescendant={
-              focused ? getOptionId(focused)?.replaceAll(' ', '-') : undefined
+            aria-roledescription={
+              multiple ? 'multiple select list' : 'single select list'
             }
-            aria-roledescription="single select"
             aria-multiselectable={multiple}
             style={{ maxHeight }}
           >
@@ -708,6 +714,27 @@ Select.displayName = 'gist-ui.Select';
 export default Select;
 
 // ********** utils **********
+
+const getGroupedOptions = <V,>(options: V[], groupBy: (option: V) => string) =>
+  Object.entries(
+    _groupby(options, (opt) => {
+      const by = groupBy(opt);
+
+      if (!isNaN(+by)) return '0-9';
+
+      return by;
+    }),
+  ).sort((a, b) => {
+    const a_key = a[0];
+    const b_key = b[0];
+
+    if (a_key < b_key) return -1;
+    if (a_key > b_key) return 1;
+    return 0;
+  });
+
+const flatGroupedOptions = <V,>(grouped: [string, V[]][]) =>
+  grouped.reduce<V[]>((acc, ele) => [...acc, ...ele[1]], []);
 
 const isMultiple = <V,>(value: unknown): value is V[] => {
   if (Array.isArray(value)) return true;

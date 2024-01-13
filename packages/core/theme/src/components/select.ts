@@ -15,8 +15,6 @@ const select = tv({
     openIndicator:
       'text-neutral pointer-events-none rotate-0 data-[open=true]:rotate-180',
     clearButton: 'text-neutral',
-    input: '!cursor-pointer',
-    inputWrapper: '!cursor-pointer',
     group: 'relative isolate',
     groupHeader:
       'sticky top-0 bg-white px-3 py-2 z-50 text-sm font-medium text-neutral-600',
