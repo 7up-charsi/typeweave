@@ -1,7 +1,7 @@
 import { RefObject, useEffect, useRef } from 'react';
 import { capitalize } from '@gist-ui/shared-utils';
 
-export type ScrollOverflowDirection = 'horizontal' | 'vertical' | 'both';
+export type ScrollOverflowDirection = 'horizontal' | 'vertical';
 export type ScrollOverflowVisibility =
   | 'auto'
   | 'top'
@@ -91,7 +91,7 @@ const useScrollOverflow = <R extends HTMLElement>(
       ];
 
       directions.forEach(({ type, prefix, suffix }) => {
-        if (direction === type || direction === 'both') {
+        if (direction === type) {
           const hasBefore =
             type === 'vertical'
               ? el.scrollTop > offset
