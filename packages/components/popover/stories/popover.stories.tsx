@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Button } from '@gist-ui/button';
+import { popover } from '@gist-ui/theme';
 
 import * as Popover from '../src';
 
@@ -36,7 +37,7 @@ const meta: Meta<Popover.RootProps & Popover.ContentProps> = {
 
 export default meta;
 
-const Template = (args: Popover.RootProps & Popover.ContentProps) => {
+const Template = (args) => {
   const ref = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -46,6 +47,8 @@ const Template = (args: Popover.RootProps & Popover.ContentProps) => {
       inline: 'center',
     });
   }, []);
+
+  const styles = popover();
 
   return (
     <div className="w-[300vw] h-[300vh] flex items-center justify-center">
@@ -65,21 +68,29 @@ const Template = (args: Popover.RootProps & Popover.ContentProps) => {
             hideWhenDetached={args.hideWhenDetached}
             allowMainAxisFlip={args.allowMainAxisFlip}
             allowCrossAxisFlip={args.allowCrossAxisFlip}
+            className={styles.content()}
           >
-            <div
-              aria-label="very nice label"
-              className="max-w-sm w-full bg-white border shadow-lg rounded p-4"
-            >
-              {args.arrow && <Popover.Arrow />}
+            {args.arrow && <Popover.Arrow />}
 
-              <h3 className="text-lg first-letter:uppercase">nice heading</h3>
+            <Popover.Title className={styles.title()}>
+              Lorem ipsum dolor
+            </Popover.Title>
 
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
-                aperiam facere, molestias eius suscipit in, est distinctio
-                deserunt culpa odit, sunt nostrum. Ad culpa excepturi assumenda
-                perferendis similique dolore qui.
-              </p>
+            <Popover.Description className={styles.description()}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
+              aperiam facere, molestias eius suscipit in, est distinctio
+              deserunt culpa odit, sunt nostrum. Ad culpa excepturi assumenda
+              perferendis similique dolore qui.
+            </Popover.Description>
+
+            <div className="pt-3 flex gap-2 justify-end">
+              <Popover.Close>
+                <Button variant="text" color="danger">
+                  Close
+                </Button>
+              </Popover.Close>
+
+              <Button color="success">Agree</Button>
             </div>
           </Popover.Content>
         </Popover.Portal>

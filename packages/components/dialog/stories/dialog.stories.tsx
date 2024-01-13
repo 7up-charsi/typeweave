@@ -214,7 +214,7 @@ const Template = (args) => {
 
           <div className="my-4 flex justify-center">{args.svg}</div>
 
-          <div className="py-1 flex gap-2">
+          <div className="pt-1 flex gap-2">
             <div className="grow">{args.children}</div>
 
             <Dialog.Close>
@@ -234,7 +234,7 @@ const Template = (args) => {
 const DialogTemplate = (args) => {
   return (
     <>
-      <Template {...args} trigger="check plane" svg={plane_svg} />
+      <Template {...args} trigger="Check plane" svg={plane_svg} />
 
       {Array.from({ length: 10 }).map((_, i) => (
         <p className="m-3" key={i}>
@@ -267,8 +267,8 @@ export const Default: StoryObj = {
 const NestedTemplate = (args) => {
   return (
     <>
-      <Template {...args} trigger="check plane" svg={plane_svg}>
-        <Template trigger="check car" svg={car_svg} className="max-w-sm" />
+      <Template {...args} trigger="Check plane" svg={plane_svg}>
+        <Template trigger="Check car" svg={car_svg} className="max-w-sm" />
       </Template>
 
       {Array.from({ length: 10 }).map((_, i) => (

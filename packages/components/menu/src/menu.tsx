@@ -23,7 +23,7 @@ import {
 const Root_Name = 'Menu.Root';
 
 interface RootContext {
-  open: boolean;
+  isOpen: boolean;
   handleOpen(): void;
   handleClose(): void;
   id: string;
@@ -37,34 +37,34 @@ const [RootProvider, useRootContext] =
 export interface RootProps {
   children?: React.ReactNode;
   defaultOpen: boolean;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  isOpen: boolean;
+  onOpenChange: (isOpen: boolean) => void;
 }
 
 export const Root = (props: RootProps) => {
-  const { children, defaultOpen, open: openProp, onOpenChange } = props;
+  const { children, defaultOpen, isOpen: isOpenProp, onOpenChange } = props;
 
-  const [open, setOpen] = useControllableState({
+  const [isOpen, setIsOpen] = useControllableState({
     defaultValue: defaultOpen,
-    value: openProp,
+    value: isOpenProp,
     onChange: onOpenChange,
   });
 
   const id = useId();
 
   const handleOpen = useCallback(() => {
-    setOpen(true);
-  }, [setOpen]);
+    setIsOpen(true);
+  }, [setIsOpen]);
 
   const handleClose = useCallback(() => {
-    setOpen(false);
-  }, [setOpen]);
+    setIsOpen(false);
+  }, [setIsOpen]);
 
   return (
     <RootProvider
       handleOpen={handleOpen}
       handleClose={handleClose}
-      open={open}
+      isOpen={isOpen}
       id={id}
     >
       <Popper.Root>{children}</Popper.Root>
@@ -100,8 +100,8 @@ export const Trigger = (props: TriggerProps) => {
         ref={setElement}
         role="button"
         aria-haspopup="menu"
-        aria-expanded={rootContext.open}
-        aria-controls={rootContext.open ? rootContext.id : undefined}
+        aria-expanded={rootContext.isOpen}
+        aria-controls={rootContext.isOpen ? rootContext.id : undefined}
         {...pressProps}
       >
         {children}
@@ -126,7 +126,7 @@ export const Portal = ({ children, container }: PortalProps) => {
 
   return (
     <>
-      {rootContext.open && createPortal(children, container || document.body)}
+      {rootContext.isOpen && createPortal(children, container || document.body)}
     </>
   );
 };
@@ -175,11 +175,11 @@ export const Menu = (props: MenuProps) => {
   const { isFocusVisible } = useFocusVisible();
 
   const setOutsideEle = useClickOutside<HTMLUListElement>({
-    isDisabled: !rootContext.open,
+    isDisabled: !rootContext.isOpen,
     callback: rootContext.handleClose,
   });
 
-  useScrollLock({ enabled: rootContext.open });
+  useScrollLock({ enabled: rootContext.isOpen });
 
   const handleClose = rootContext.handleClose;
 

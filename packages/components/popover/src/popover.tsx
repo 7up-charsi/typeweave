@@ -1,6 +1,4 @@
-import { GistUiError, validChildError } from '@gist-ui/error';
 import { Slot } from '@gist-ui/slot';
-import { VisuallyHidden } from '@gist-ui/visually-hidden';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { FocusTrap } from '@gist-ui/focus-trap';
 import { useClickOutside } from '@gist-ui/use-click-outside';
@@ -9,26 +7,22 @@ import * as Popper from '@gist-ui/popper';
 import { createPortal } from 'react-dom';
 import { useIsDisabled } from '@gist-ui/use-is-disabled';
 import { createContextScope } from '@gist-ui/context';
-import {
-  cloneElement,
-  isValidElement,
-  useCallback,
-  useEffect,
-  useId,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useId } from 'react';
 
 interface PopoverContext {
   isOpen: boolean;
   handleOpen(): void;
   handleClose(): void;
-  id: string;
-  setGivenId: React.Dispatch<React.SetStateAction<string>>;
+  keepMounted: boolean;
+  contentId: string;
+  titleId: string;
+  descriptionId: string;
 }
 
 const Popover_Name = 'Popover.Root';
 
-const [Provider, useContext] = createContextScope<PopoverContext>(Popover_Name);
+const [RootProvider, useRootContext] =
+  createContextScope<PopoverContext>(Popover_Name);
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -48,10 +42,22 @@ export interface RootProps {
    * @default undefined
    */
   defaultOpen?: boolean;
+  /**
+   * When this prop is true, all content stays in the DOM and only css visiblity changes on open/close
+   *
+   * @default false
+   */
+  keepMounted?: boolean;
 }
 
 export const Root = (props: RootProps) => {
-  const { children, defaultOpen, isOpen: openProp, onOpenChange } = props;
+  const {
+    children,
+    defaultOpen,
+    isOpen: openProp,
+    onOpenChange,
+    keepMounted = false,
+  } = props;
 
   const [isOpen, setOpen] = useControllableState({
     defaultValue: defaultOpen,
@@ -59,9 +65,9 @@ export const Root = (props: RootProps) => {
     value: openProp,
   });
 
-  const id = useId();
-
-  const [givenId, setGivenId] = useState('');
+  const contentId = useId();
+  const titleId = useId();
+  const descriptionId = useId();
 
   const handleOpen = useCallback(() => {
     setOpen(true);
@@ -88,15 +94,17 @@ export const Root = (props: RootProps) => {
   }, [handleClose, isOpen]);
 
   return (
-    <Provider
+    <RootProvider
       handleOpen={handleOpen}
       handleClose={handleClose}
       isOpen={isOpen}
-      setGivenId={setGivenId}
-      id={givenId || id}
+      keepMounted={keepMounted}
+      contentId={contentId}
+      titleId={titleId}
+      descriptionId={descriptionId}
     >
       <Popper.Root>{children}</Popper.Root>
-    </Provider>
+    </RootProvider>
   );
 };
 
@@ -113,18 +121,21 @@ export interface TriggerProps {
 export const Trigger = (props: TriggerProps) => {
   const { children } = props;
 
-  const context = useContext(Trigger_Name);
+  const rootContext = useRootContext(Trigger_Name);
 
   const { setElement, isDisabled } = useIsDisabled();
 
-  const { pressProps } = usePress({ isDisabled, onPress: context.handleOpen });
+  const { pressProps } = usePress({
+    isDisabled,
+    onPress: rootContext.handleOpen,
+  });
 
   return (
     <Popper.Reference>
       <Slot
         ref={setElement}
-        aria-expanded={context.isOpen}
-        aria-controls={context.isOpen ? context.id : undefined}
+        aria-expanded={rootContext.isOpen}
+        aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
         {...pressProps}
       >
         {children}
@@ -146,11 +157,14 @@ export interface CloseProps {
 export const Close = (props: CloseProps) => {
   const { children } = props;
 
-  const context = useContext(Close_Name);
+  const rootContext = useRootContext(Close_Name);
 
   const { setElement, isDisabled } = useIsDisabled();
 
-  const { pressProps } = usePress({ isDisabled, onPress: context.handleClose });
+  const { pressProps } = usePress({
+    isDisabled,
+    onPress: rootContext.handleClose,
+  });
 
   return (
     <Slot ref={setElement} {...pressProps}>
@@ -171,14 +185,62 @@ export interface PortalProps {
 }
 
 export const Portal = ({ children, container }: PortalProps) => {
-  const context = useContext(Portal_Name);
+  const rootContext = useRootContext(Portal_Name);
 
   return (
-    <>{context.isOpen && createPortal(children, container || document.body)}</>
+    <>
+      {rootContext.isOpen && createPortal(children, container || document.body)}
+    </>
   );
 };
 
 Portal.displayName = 'gist-ui.' + Portal_Name;
+
+// *-*-*-*-* Title *-*-*-*-*
+
+const Title_Name = 'Dialog.Title';
+
+export interface TitleProps {
+  children?: React.ReactNode;
+  className?: string;
+}
+
+export const Title = (props: TitleProps) => {
+  const { children, className } = props;
+
+  const rootContext = useRootContext(Title_Name);
+
+  return (
+    <div id={rootContext.titleId} className={className}>
+      {children}
+    </div>
+  );
+};
+
+Title.displayName = 'gist-ui.' + Title_Name;
+
+// *-*-*-*-* Description *-*-*-*-*
+
+const Description_Name = 'Dialog.Description';
+
+export interface DescriptionProps {
+  children?: React.ReactNode;
+  className?: string;
+}
+
+export const Description = (props: DescriptionProps) => {
+  const { children, className } = props;
+
+  const rootContext = useRootContext(Description_Name);
+
+  return (
+    <div id={rootContext.descriptionId} className={className}>
+      {children}
+    </div>
+  );
+};
+
+Description.displayName = 'gist-ui.' + Description_Name;
 
 // *-*-*-*-* Content *-*-*-*-*
 
@@ -186,53 +248,44 @@ const Content_Name = 'Popover.Content';
 
 export interface ContentProps extends Popper.FloatingProps {
   children?: React.ReactNode;
+  className?: string;
+  noA11yTitle?: boolean;
+  noA11yDescription?: boolean;
 }
 
 export const Content = (props: ContentProps) => {
-  const { children, arrowPadding = 10, ...restProps } = props;
+  const {
+    children,
+    arrowPadding = 10,
+    className,
+    noA11yDescription,
+    noA11yTitle,
+    ...restProps
+  } = props;
 
-  const context = useContext(Content_Name);
+  const rootContext = useRootContext(Content_Name);
 
   const setOutsideEle = useClickOutside<HTMLDivElement>({
-    isDisabled: !context.isOpen,
+    isDisabled: !rootContext.isOpen,
     callback: () => {
-      context.handleClose();
+      rootContext.handleClose();
     },
   });
-
-  const { pressProps } = usePress({ onPress: context.handleClose });
-
-  useEffect(() => {
-    if (isValidElement(children)) {
-      context.setGivenId(children.props.id || '');
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [children]);
-
-  if (!isValidElement(children))
-    throw new GistUiError('Content', validChildError);
 
   return (
     <Popper.Floating arrowPadding={arrowPadding} {...restProps}>
       <FocusTrap ref={setOutsideEle} loop trapped asChild>
-        {cloneElement(children, {
-          role: 'dialog',
-          id: context.id,
-          children: (
-            <>
-              <VisuallyHidden asChild>
-                <button {...pressProps}>close</button>
-              </VisuallyHidden>
-
-              {children.props.children}
-
-              <VisuallyHidden asChild>
-                <button {...pressProps}>close</button>
-              </VisuallyHidden>
-            </>
-          ),
-        } as Partial<unknown>)}
+        <div
+          role="dialog"
+          aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
+          aria-describedby={
+            noA11yDescription ? undefined : rootContext.descriptionId
+          }
+          id={rootContext.contentId}
+          className={className}
+        >
+          {children}
+        </div>
       </FocusTrap>
     </Popper.Floating>
   );

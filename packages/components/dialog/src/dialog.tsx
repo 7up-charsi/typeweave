@@ -7,7 +7,7 @@ import { createPortal } from 'react-dom';
 import { FocusTrap, FocusScope } from '@gist-ui/focus-trap';
 import { createContextScope } from '@gist-ui/context';
 import { useIsDisabled } from '@gist-ui/use-is-disabled';
-import { ReactNode, useCallback, useEffect, useId, useRef } from 'react';
+import { useCallback, useEffect, useId, useRef } from 'react';
 
 type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
 
@@ -39,7 +39,7 @@ const [RootProvider, useRootContext] =
 // *-*-*-*-* Root *-*-*-*-*
 
 export interface RootProps {
-  children?: ReactNode;
+  children?: React.ReactNode;
   /**
    * This prop is used for controled state
    * @default undefined
@@ -184,7 +184,7 @@ Root.displayName = 'gist-ui.' + Dialog_Name;
 const Trigger_Name = 'Dialog.Trigger';
 
 export interface TriggerProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 export const Trigger = (props: TriggerProps) => {
@@ -218,7 +218,7 @@ Trigger.displayName = 'gist-ui.' + Trigger_Name;
 const Close_Name = 'Dialog.Close';
 
 export interface CloseProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 export const Close = (props: CloseProps) => {
@@ -251,7 +251,7 @@ Close.displayName = 'gist-ui.' + Close_Name;
 const Portal_Name = 'Dialog.Portal';
 
 export interface PortalProps {
-  children?: ReactNode;
+  children?: React.ReactNode;
   container?: HTMLElement;
 }
 
@@ -313,7 +313,7 @@ export const Title = (props: TitleProps) => {
 
 Title.displayName = 'gist-ui.' + Title_Name;
 
-// *-*-*-*-* Title *-*-*-*-*
+// *-*-*-*-* Description *-*-*-*-*
 
 const Description_Name = 'Dialog.Description';
 
@@ -341,7 +341,7 @@ Description.displayName = 'gist-ui.' + Description_Name;
 const Content_Name = 'Dialog.Content';
 
 export interface ContentProps {
-  children?: ReactNode;
+  children?: React.ReactNode;
   className?: string;
   noA11yTitle?: boolean;
   noA11yDescription?: boolean;
