@@ -1,6 +1,11 @@
 import { useCallback } from 'react';
 
-export interface UseRippleProps<E = HTMLElement> {
+export interface MinimalEvent {
+  clientX: number;
+  clientY: number;
+}
+
+export interface UseRippleProps {
   /**
    * this is used as css transition duration for ripple popup animation and popup duration depends on `completedFactor` prop
    *
@@ -20,43 +25,56 @@ export interface UseRippleProps<E = HTMLElement> {
    * @default 0.5
    */
   completedFactor?: number;
-  /**
-   * . when this prop is true, ripple will popup from the center of pointer
-   * . when this porp is false, ripple will popup from the center of element on which returned ref has set
-   *
-   * @default true
-   */
-  pointerCenter?: boolean;
-  ref?: React.RefObject<E> | React.MutableRefObject<E>;
+  containerRef?:
+    | React.RefObject<HTMLElement>
+    | React.MutableRefObject<HTMLElement>;
 }
 
-const useRipple = <E extends HTMLElement>({
-  ref,
+const useRipple = ({
+  containerRef,
   duration = 500,
   timingFunction = 'cubic-bezier(.42,.36,.28,.88)',
   isDisabled = false,
   completedFactor = 0.5,
-  pointerCenter = true,
-}: UseRippleProps<E> = {}) => {
+}: UseRippleProps = {}) => {
   //
 
   const onPointerDown = useCallback(
-    (e: React.PointerEvent<E>) => {
-      if (isDisabled || e.button !== 0) return;
+    (e?: MinimalEvent) => {
+      if (isDisabled || !containerRef || !containerRef.current) return;
 
-      const target = ref?.current || (e.currentTarget as HTMLElement);
-
+      const target = containerRef.current;
       const begun = Date.now();
 
-      const ripple = createRipple(target, e, {
+      const { height, width, top, left } = target.getBoundingClientRect();
+
+      const clientX = e?.clientX || left + width / 2;
+      const clientY = e?.clientY || top + height / 2;
+
+      const maxHeight = Math.max(clientY - top, height - clientY + top);
+      const maxWidth = Math.max(clientX - left, width - clientX + left);
+      const size = Math.hypot(maxHeight, maxWidth) * 2;
+
+      const element = document.createElement('span');
+
+      element.style.cssText = `
+        position: absolute;
+        top: ${e ? `${clientY - top}px` : '50%'};
+        left: ${e ? `${clientX - left}px` : '50%'};
+        height: ${size}px;
+        width: ${size}px;
+        translate: -50% -50%;
+        pointer-events: none;
+        border-radius: 50%;
+        background-color: var(--rippleBg);
+    `;
+
+      element.animate([{ scale: 0 }, { scale: 1 }], {
         duration,
-        completedFactor,
-        isDisabled,
-        pointerCenter,
-        timingFunction,
+        easing: timingFunction,
       });
 
-      target.appendChild(ripple);
+      target.appendChild(element);
 
       const removeRipple = () => {
         const now = Date.now();
@@ -68,13 +86,13 @@ const useRipple = <E extends HTMLElement>({
             : completedFactor * duration - diff;
 
         setTimeout(() => {
-          const animation = ripple.animate([{ opacity: 1 }, { opacity: 0 }], {
+          const animation = element.animate([{ opacity: 1 }, { opacity: 0 }], {
             duration: duration * 0.7,
             easing: 'ease-in-out',
           });
 
           animation.addEventListener('finish', () => {
-            ripple.remove();
+            element.remove();
           });
         }, timeoutDuration);
       };
@@ -84,50 +102,81 @@ const useRipple = <E extends HTMLElement>({
         capture: true,
       });
     },
-    [completedFactor, duration, isDisabled, pointerCenter, ref, timingFunction],
+    [completedFactor, containerRef, duration, isDisabled, timingFunction],
+  );
+
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent, keys = ['Enter', ' ']) => {
+      if (isDisabled || !containerRef || !containerRef.current) return;
+      if (!keys.includes(e.key)) return;
+      if (e.repeat) return;
+
+      const target = containerRef.current;
+      const begun = Date.now();
+
+      const { height, width, top, left } = target.getBoundingClientRect();
+
+      const clientX = left + width / 2;
+      const clientY = top + height / 2;
+
+      const maxHeight = Math.max(clientY - top, height - clientY + top);
+      const maxWidth = Math.max(clientX - left, width - clientX + left);
+      const size = Math.hypot(maxHeight, maxWidth) * 2;
+
+      const element = document.createElement('span');
+
+      element.style.cssText = `
+        position: absolute;
+        top: ${e ? `${clientY - top}px` : '50%'};
+        left: ${e ? `${clientX - left}px` : '50%'};
+        height: ${size}px;
+        width: ${size}px;
+        translate: -50% -50%;
+        pointer-events: none;
+        border-radius: 50%;
+        background-color: var(--rippleBg);
+    `;
+
+      element.animate([{ scale: 0 }, { scale: 1 }], {
+        duration,
+        easing: timingFunction,
+      });
+
+      target.appendChild(element);
+
+      const removeRipple = () => {
+        const now = Date.now();
+        const diff = now - begun;
+
+        const timeoutDuration =
+          diff > completedFactor * duration
+            ? 0
+            : completedFactor * duration - diff;
+
+        setTimeout(() => {
+          const animation = element.animate([{ opacity: 1 }, { opacity: 0 }], {
+            duration: duration * 0.7,
+            easing: 'ease-in-out',
+          });
+
+          animation.addEventListener('finish', () => {
+            element.remove();
+          });
+        }, timeoutDuration);
+      };
+
+      document.addEventListener('keyup', removeRipple, {
+        once: true,
+        capture: true,
+      });
+    },
+    [completedFactor, containerRef, duration, isDisabled, timingFunction],
   );
 
   return {
-    rippleProps: { onPointerDown },
+    ripplePointerProps: { onPointerDown },
+    rippleKeyboardProps: { onKeyDown },
   };
-};
-
-const createRipple = (
-  target: HTMLElement,
-  event: React.PointerEvent,
-  options: UseRippleProps,
-): HTMLElement => {
-  const { height, width, top, left } = target.getBoundingClientRect();
-  const { clientX, clientY } = options.pointerCenter
-    ? event
-    : { clientX: left + width / 2, clientY: top + height / 2 };
-
-  const maxHeight = Math.max(clientY - top, height - clientY + top);
-  const maxWidth = Math.max(clientX - left, width - clientX + left);
-  const size = Math.hypot(maxHeight, maxWidth) * 2;
-
-  const element = document.createElement('span');
-
-  const { duration, timingFunction } = options as Required<UseRippleProps>;
-
-  element.style.cssText = `
-    position: absolute;
-    top: ${options.pointerCenter ? `${event.clientY - top}px` : '50%'};
-    left: ${options.pointerCenter ? `${event.clientX - left}px` : '50%'};
-    height: ${size}px;
-    width: ${size}px;
-    translate: -50% -50%;
-    pointer-events: none;
-    border-radius: 50%;
-    background-color: var(--rippleBg);
-    `;
-
-  element.animate([{ scale: 0 }, { scale: 1 }], {
-    duration,
-    easing: timingFunction,
-  });
-
-  return element;
 };
 
 export type UseRippleReturn = ReturnType<typeof useRipple>;
