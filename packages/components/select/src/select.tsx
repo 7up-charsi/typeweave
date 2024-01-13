@@ -8,20 +8,13 @@ import _groupby from 'lodash.groupby';
 import { GistUiError } from '@gist-ui/error';
 import { useFocusVisible } from '@react-aria/interactions';
 import { useCallbackRef } from '@gist-ui/use-callback-ref';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import {
   InputClassNames,
   SelectClassNames,
   SelectVariantProps,
   select,
 } from '@gist-ui/theme';
-import {
-  Fragment,
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from 'react';
 
 export type Reason = 'select' | 'clear';
 
@@ -47,7 +40,7 @@ export type SelectProps<
      * This prop add distance between `Input` and listbox
      */
     offset?: Popper.FloatingProps['mainOffset'];
-    open?: boolean;
+    isOpen?: boolean;
     onOpenChange?: (open: boolean) => void;
     /**
      * @default false
@@ -133,7 +126,7 @@ const Select = <
     options: optionsProp,
     classNames,
     offset,
-    open: openProp,
+    isOpen: openProp,
     onOpenChange,
     maxHeight = 300,
     defaultOpen = false,
@@ -213,19 +206,19 @@ const Select = <
     searchedString: '',
   }).current;
 
-  const [open, setOpen] = useControllableState({
+  const [isOpen, setIsOpen] = useControllableState({
     defaultValue: defaultOpen,
     value: openProp,
     onChange: onOpenChange,
   });
 
   const handleListboxClose = useCallback(() => {
-    setOpen(false);
+    setIsOpen(false);
     setFocused(null);
-  }, [setOpen]);
+  }, [setIsOpen]);
 
   const setListboxOutsideEle = useClickOutside<HTMLUListElement>({
-    isDisabled: !open,
+    isDisabled: !isOpen,
     onEvent: 'pointerdown',
     callback: (e) => {
       if (inputRef.current?.contains(e.target as Node)) return;
@@ -264,9 +257,9 @@ const Select = <
   );
 
   const handleListboxOpen = useCallback(() => {
-    if (open) return;
+    if (isOpen) return;
 
-    setOpen(true);
+    setIsOpen(true);
 
     if (!options?.length) return;
 
@@ -285,7 +278,7 @@ const Select = <
       setFocused(value);
       return;
     }
-  }, [getNextIndex, multiple, open, options, setOpen, value]);
+  }, [getNextIndex, multiple, isOpen, options, setIsOpen, value]);
 
   const handleOptionHover = useCallback(
     (option: Value) => () => {
@@ -319,7 +312,7 @@ const Select = <
     (e: React.KeyboardEvent) => {
       // handle any printable character
       if (e.key.length === 1 && options?.length) {
-        setOpen(true);
+        setIsOpen(true);
 
         clearTimeout(state.searchedStringTimer);
 
@@ -377,31 +370,31 @@ const Select = <
       const Home = e.key === 'Home';
       const End = e.key === 'End';
 
-      if (Escape && open) {
+      if (Escape && isOpen) {
         handleListboxClose();
         return;
       }
 
-      if (ArrowDown && !open) {
+      if (ArrowDown && !isOpen) {
         handleListboxOpen();
         return;
       }
 
       if (!options) return;
 
-      if (Enter && open && focused) {
+      if (Enter && isOpen && focused) {
         handleOptionSelect(focused)();
         return;
       }
 
-      if (ArrowDown && open && focused) {
+      if (ArrowDown && isOpen && focused) {
         const index = getNextIndex(options.indexOf(focused) + 1, options);
         if (index >= 0) setFocused(options[index]);
 
         return;
       }
 
-      if (ArrowUp && open && focused) {
+      if (ArrowUp && isOpen && focused) {
         const index = getPreviousIndex(options.indexOf(focused) - 1);
         if (index >= 0) setFocused(options[index]);
 
@@ -409,7 +402,7 @@ const Select = <
       }
 
       if (Home) {
-        setOpen(true);
+        setIsOpen(true);
 
         const index = getNextIndex(0, options);
         if (index >= 0) setFocused(options[index]);
@@ -418,7 +411,7 @@ const Select = <
       }
 
       if (End) {
-        setOpen(true);
+        setIsOpen(true);
 
         const index = getPreviousIndex(options.length - 1);
         if (index >= 0) setFocused(options[index]);
@@ -435,15 +428,15 @@ const Select = <
       handleListboxClose,
       handleListboxOpen,
       handleOptionSelect,
-      open,
+      isOpen,
       options,
-      setOpen,
+      setIsOpen,
       state,
     ],
   );
 
   const handleClearValue = useCallback(() => {
-    setOpen(true);
+    setIsOpen(true);
     inputRef.current?.focus();
 
     if (optionsProp?.length) {
@@ -469,7 +462,7 @@ const Select = <
     } else {
       setValue(null, 'clear');
     }
-  }, [getNextIndex, groupBy, multiple, optionsProp, setOpen, setValue]);
+  }, [getNextIndex, groupBy, multiple, optionsProp, setIsOpen, setValue]);
 
   useEffect(() => {
     return () => {
@@ -499,31 +492,30 @@ const Select = <
         isOptionEqualToValue(value, option));
 
     return (
-      <Fragment key={getOptionKey(option)}>
-        <Option
-          id={getOptionId(option)?.replaceAll(' ', '-')}
-          isDisabled={isDisabled}
-          isSelected={isSelected}
-          isFocused={isFocused}
-          onSelect={handleOptionSelect(option)}
-          onHover={handleOptionHover(option)}
-          className={styles.option({
-            className: classNames?.option,
-          })}
-        >
-          {renderOption?.({
-            option,
-            state: { isDisabled, isFocused, isSelected },
-          }) || <li>{getOptionLabel(option)}</li>}
-        </Option>
-      </Fragment>
+      <Option
+        key={getOptionKey(option)}
+        id={getOptionId(option)?.replaceAll(' ', '-')}
+        isDisabled={isDisabled}
+        isSelected={isSelected}
+        isFocused={isFocused}
+        onSelect={handleOptionSelect(option)}
+        onHover={handleOptionHover(option)}
+        className={styles.option({
+          className: classNames?.option,
+        })}
+      >
+        {renderOption?.({
+          option,
+          state: { isDisabled, isFocused, isSelected },
+        }) || <li>{getOptionLabel(option)}</li>}
+      </Option>
     );
   };
 
   const startContentSelected =
     multiple &&
     isMultiple(value) &&
-    (value.length ? `${value.length} selected` : null);
+    (value.length ? `${value.length} selected ${isOpen ? ' -' : ''}` : null);
 
   const styles = select({
     shadow,
@@ -548,7 +540,7 @@ const Select = <
           }}
           classNames={classNames}
           onKeyDown={handleInputKeyDown}
-          aria-expanded={open}
+          aria-expanded={isOpen}
           aria-controls={lisboxId}
           aria-haspopup="listbox"
           aria-autocomplete="list"
@@ -609,7 +601,7 @@ const Select = <
                 )}
 
               <div
-                data-open={open}
+                data-open={isOpen}
                 className={styles.openIndicator({
                   className: classNames?.openIndicator,
                 })}
@@ -642,7 +634,7 @@ const Select = <
         />
       </Popper.Reference>
 
-      {open && (
+      {isOpen && (
         <Popper.Floating sticky="always" mainOffset={offset || 5}>
           <ul
             ref={setListboxOutsideEle}

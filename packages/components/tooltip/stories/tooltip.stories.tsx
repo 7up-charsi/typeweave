@@ -37,7 +37,7 @@ export default meta;
 const Template = (args: Tooltip.RootProps & Tooltip.ContentProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const [open, setOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     ref.current?.scrollIntoView({
@@ -53,8 +53,8 @@ const Template = (args: Tooltip.RootProps & Tooltip.ContentProps) => {
         {Array.from({ length: 4 }).map((_ele, i) => (
           <Tooltip.Root
             key={i}
-            isOpen={i === 0 ? open : undefined}
-            onOpenChange={i === 0 ? setOpen : undefined}
+            isOpen={i === 0 ? isOpen : undefined}
+            onOpenChange={i === 0 ? setIsOpen : undefined}
             hideDelay={args.hideDelay}
             showDelay={args.showDelay}
             trigger={args.trigger}
