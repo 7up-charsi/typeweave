@@ -6,10 +6,11 @@ import { useClickOutside } from '@gist-ui/use-click-outside';
 import { useFocusVisible, useHover, usePress } from '@react-aria/interactions';
 import { createPortal } from 'react-dom';
 import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
-import { useRipple } from '@gist-ui/use-ripple';
 import { MenuVariantProps, menu } from '@gist-ui/theme';
 import { ClassValue } from 'tailwind-variants';
 import { useScrollLock } from '@gist-ui/use-scroll-lock';
+import { useCallbackRef } from '@gist-ui/use-callback-ref';
+import { useIsDisabled } from '@gist-ui/use-is-disabled';
 import {
   forwardRef,
   useCallback,
@@ -18,8 +19,6 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
-import { useIsDisabled } from '@gist-ui/use-is-disabled';
 
 const Root_Name = 'Menu.Root';
 
@@ -180,7 +179,7 @@ export const Menu = (props: MenuProps) => {
     callback: rootContext.handleClose,
   });
 
-  useScrollLock({ enabled: true });
+  useScrollLock({ enabled: rootContext.open });
 
   const handleClose = rootContext.handleClose;
 
@@ -469,8 +468,6 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
 
     const { hoverProps, isHovered } = useHover({ isDisabled });
 
-    const { rippleProps } = useRipple({ isDisabled });
-
     const handleOnChange = useCallback(() => {
       onChange?.(!checked);
     }, [checked, onChange]);
@@ -515,9 +512,7 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
         aria-disabled={isDisabled}
         className={stylesContext.item({ className })}
         tabIndex={tabIndex}
-        {...mergeProps(rippleProps, hoverProps, {
-          onPointerUp: handleOnChange,
-        })}
+        {...mergeProps(hoverProps, { onPointerUp: handleOnChange })}
       >
         <span>
           {!checked ? null : (
@@ -614,8 +609,6 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
 
     const { hoverProps, isHovered } = useHover({ isDisabled });
 
-    const { rippleProps } = useRipple({ isDisabled });
-
     const groupContextOnChange = groupContext.onChange;
 
     const handleOnChange = useCallback(() => {
@@ -664,9 +657,7 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
         aria-disabled={isDisabled}
         className={stylesContext.item({ className })}
         tabIndex={tabIndex}
-        {...mergeProps(rippleProps, hoverProps, {
-          onPointerUp: handleOnChange,
-        })}
+        {...mergeProps(hoverProps, { onPointerUp: handleOnChange })}
       >
         <span>
           {!checked ? null : (

@@ -21,7 +21,7 @@ const Template = (args) => {
   useEffect(() => {
     ref.current?.scrollIntoView({
       behavior: 'instant',
-      block: 'nearest',
+      block: 'center',
       inline: 'center',
     });
   }, []);
