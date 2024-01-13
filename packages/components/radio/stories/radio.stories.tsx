@@ -26,11 +26,15 @@ const meta: Meta = {
 export default meta;
 
 const Template = (args) => (
-  <Radio.Group name="radio-group">
-    <Radio.Radio {...args} value="radio 1" label="radio 1" />
-    <Radio.Radio {...args} value="radio 2" label="radio 2" />
-    <Radio.Radio {...args} value="radio 3" label="radio 3" />
-  </Radio.Group>
+  <div className="flex flex-col ">
+    <div className="text-neutral-700 font-medium">Select Gender</div>
+
+    <Radio.Group name="gender">
+      <Radio.Radio {...args} value="Male" label="Male" />
+      <Radio.Radio {...args} value="Female" label="Female" />
+      <Radio.Radio {...args} value="Other" label="Other" />
+    </Radio.Group>
+  </div>
 );
 
 export const Default: StoryObj = {

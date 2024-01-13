@@ -1,9 +1,9 @@
-import { forwardRef, useId } from 'react';
+import { forwardRef, useId, useRef } from 'react';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { UseRippleProps, useRipple } from '@gist-ui/use-ripple';
 import { mergeProps } from '@gist-ui/react-utils';
 import { createContextScope } from '@gist-ui/context';
-import { useHover, usePress } from '@react-aria/interactions';
+import { useHover } from '@react-aria/interactions';
 import { useFocusRing } from '@react-aria/focus';
 import { RadioClassNames, RadioVariantProps, radio } from '@gist-ui/theme';
 
@@ -109,21 +109,14 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   const rootContext = useRootContext(Radio_Name);
 
   const id = useId();
+  const radioRef = useRef(null);
 
-  const { isFocusVisible, focusProps } = useFocusRing();
-
-  const { pressProps, isPressed } = usePress({
-    isDisabled,
-    onPressStart: (e) => e.continuePropagation(),
-    onPressEnd: (e) => e.continuePropagation(),
-    onPress: (e) => e.continuePropagation(),
-  });
+  const { isFocusVisible, focusProps, isFocused } = useFocusRing();
 
   const { hoverProps, isHovered } = useHover({ isDisabled });
 
-  const { rippleProps } = useRipple({
-    isDisabled,
-    pointerCenter: false,
+  const { rippleKeyboardProps, ripplePointerProps } = useRipple({
+    containerRef: radioRef,
     duration: rippleDuration,
     timingFunction: rippleTimingFunction,
     completedFactor: rippleCompletedFactor,
@@ -135,16 +128,16 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
 
   return (
     <div
-      data-pressed={isPressed}
       data-hovered={isHovered}
-      data-focus-visible={isFocusVisible}
+      data-focus-visible={isFocusVisible && isFocused}
       data-disabled={isDisabled}
       data-selected={selected}
       className={styles.base()}
     >
       <div
+        ref={radioRef}
         className={styles.radio({ className: classNames?.base })}
-        {...rippleProps}
+        onPointerDown={() => ripplePointerProps.onPointerDown()}
       >
         <input
           id={id}
@@ -154,10 +147,11 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
           name={rootContext.name}
           className={styles.nativeInput()}
           disabled={isDisabled}
-          {...mergeProps(focusProps, pressProps, hoverProps)}
+          {...mergeProps(focusProps, hoverProps)}
           onChange={(e) => {
             rootContext.onChange(e.target.value);
           }}
+          {...rippleKeyboardProps}
         />
 
         {selected ? checkIcon : icon}
