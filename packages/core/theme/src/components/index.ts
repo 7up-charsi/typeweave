@@ -3,7 +3,6 @@ export * from './input';
 export * from './number-input';
 export * from './tooltip';
 export * from './dialog';
-export * from './scroll-shadow';
 export * from './select';
 export * from './autocomplete';
 export * from './menu';
