@@ -7,127 +7,32 @@ import {
 
 const dialog = tv({
   slots: {
-    backdrop: 'w-screen h-screen fixed inset-0 z-50',
-    container: 'w-screen h-[100dvh] fixed inset-0 z-50 flex',
-    base: 'flex flex-col bg-white w-full max-h-[calc(100%_-_7.5rem)] box-border outline-none m-5 overflow-hidden rounded',
-    header:
-      'grow-0 shrink-0 min-h-[55px] flex items-center justify-start py-2 px-6 text-large font-semibold',
-    body: 'flex-1 px-6 py-2',
-    footer:
-      'grow-0 shrink-0 flex gap-2 px-6 py-2 items-center justify-end min-h-[55px]',
+    overlay: 'w-screen h-screen fixed inset-0 z-50',
+    content:
+      'fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-50 flex flex-col bg-white max-w-md w-full outline-none overflow-hidden rounded p-5',
+    title: 'text-lg font-semibold text-neutral-700 py-1',
+    description: 'text-normal text-neutral-700',
   },
   variants: {
-    backdrop: {
+    overlay: {
       opaque: {
-        backdrop: 'bg-overlay/50 backdrop-opacity-50',
+        overlay: 'bg-overlay/50 backdrop-opacity-50',
       },
       blur: {
-        backdrop: 'backdrop-blur-md backdrop-saturate-150 bg-overlay/30',
+        overlay: 'backdrop-blur-md backdrop-saturate-150 bg-overlay/30',
       },
-      transparent: { backdrop: 'hidden' },
-    },
-    variant: {
-      solid: {
-        base: 'border-0',
-      },
-      border: {
-        base: 'border border-neutral-300',
-      },
-    },
-    placement: {
-      'top-left': {
-        container: 'items-start justify-start',
-      },
-      'top-center': {
-        container: 'items-start justify-center',
-      },
-      'top-right': {
-        container: 'items-start justify-end',
-      },
-      'bottom-left': {
-        container: 'items-end justify-start',
-      },
-      'bottom-center': {
-        container: 'items-end justify-center',
-      },
-      'bottom-right': {
-        container: 'items-end justify-end',
-      },
-      'center-left': {
-        container: 'items-center justify-start',
-      },
-      center: {
-        container: 'items-center justify-center',
-      },
-      'center-right': {
-        container: 'items-center justify-end',
-      },
-    },
-    scrollBehavior: {
-      inside: {
-        base: 'overflow-hidden',
-        body: 'overflow-auto',
-      },
-      outside: {
-        container: 'overflow-y-auto items-start',
-        base: 'max-h-max overflow-visible',
-      },
+      transparent: { overlay: 'hidden' },
     },
     shadow: {
-      none: { base: 'shadow-none' },
-      sm: { base: 'shadow-sm' },
-      md: { base: 'shadow-md' },
-      lg: { base: 'shadow-lg' },
-    },
-    size: {
-      xs: { base: 'max-w-xs' },
-      sm: { base: 'max-w-sm' },
-      md: { base: 'max-w-md' },
-      lg: { base: 'max-w-lg' },
-      xl: { base: 'max-w-xl' },
-      '2xl': { base: 'max-w-2xl' },
-      '3xl': { base: 'max-w-3xl' },
-      '4xl': { base: 'max-w-4xl' },
-      '5xl': { base: 'max-w-5xl' },
-      full: {
-        base: 'my-0 mx-0 max-w-full max-h-full h-[100dvh] !rounded-none',
-      },
-    },
-    fullWidth: {
-      true: {
-        base: 'max-w-full',
-      },
-    },
-    removeVerticleSpace: {
-      true: {
-        base: 'my-0',
-      },
-    },
-    removeHorizontalSpace: {
-      true: {
-        base: 'mx-0',
-      },
-    },
-    borderedBody: {
-      true: {
-        body: 'border-y border-neutral-300',
-      },
-      false: {
-        body: 'border-y-0',
-      },
+      none: { content: 'shadow-none' },
+      sm: { content: 'shadow-sm' },
+      md: { content: 'shadow-md' },
+      lg: { content: 'shadow-lg' },
     },
   },
   defaultVariants: {
-    backdrop: 'opaque',
-    size: 'md',
-    scrollBehavior: 'inside',
-    shadow: 'lg',
-    placement: 'center',
-    fullWidth: false,
-    removeHorizontalSpace: false,
-    removeVerticleSpace: false,
-    variant: 'solid',
-    borderedBody: true,
+    shadow: 'md',
+    overlay: 'opaque',
   },
 });
 

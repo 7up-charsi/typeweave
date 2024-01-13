@@ -1,34 +1,19 @@
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { Slot } from '@gist-ui/slot';
-import { __DEV__ } from '@gist-ui/shared-utils';
-import { GistUiError, onlyChildError, validChildError } from '@gist-ui/error';
 import { useClickOutside } from '@gist-ui/use-click-outside';
 import { usePress } from '@react-aria/interactions';
 import { useScrollLock } from '@gist-ui/use-scroll-lock';
 import { createPortal } from 'react-dom';
 import { FocusTrap, FocusScope } from '@gist-ui/focus-trap';
-import { VisuallyHidden } from '@gist-ui/visually-hidden';
 import { createContextScope } from '@gist-ui/context';
 import { useIsDisabled } from '@gist-ui/use-is-disabled';
-import {
-  Children,
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  cloneElement,
-  isValidElement,
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from 'react';
+import { ReactNode, useCallback, useEffect, useId, useRef } from 'react';
 
 type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
 
 type CloseEvent = { preventDefault(): void };
 
-interface Context {
+interface RootContext {
   handleOpen: () => void;
   /**
    * reason param could be "pointer" | "escape" | "outside" | "virtual"
@@ -41,13 +26,15 @@ interface Context {
   isOpen: boolean;
   scope: FocusScope;
   keepMounted: boolean;
-  id: string;
-  setGivenId: Dispatch<SetStateAction<string>>;
+  contentId: string;
+  titleId: string;
+  descriptionId: string;
 }
 
 const Dialog_Name = 'Dialog.Root';
 
-const [Provider, useContext] = createContextScope<Context>(Dialog_Name);
+const [RootProvider, useRootContext] =
+  createContextScope<RootContext>(Dialog_Name);
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -117,9 +104,9 @@ export const Root = (props: RootProps) => {
     keepMounted = false,
   } = props;
 
-  const id = useId();
-
-  const [givenId, setGivenId] = useState('');
+  const contentId = useId();
+  const titleId = useId();
+  const descriptionId = useId();
 
   const scope = useRef<FocusScope>({
     paused: false,
@@ -175,19 +162,18 @@ export const Root = (props: RootProps) => {
   }, [handleClose, isOpen]);
 
   return (
-    <>
-      <Provider
-        handleClose={handleClose}
-        handleOpen={handleOpen}
-        isOpen={isOpen}
-        scope={scope}
-        keepMounted={keepMounted}
-        setGivenId={setGivenId}
-        id={givenId || id}
-      >
-        {children}
-      </Provider>
-    </>
+    <RootProvider
+      handleClose={handleClose}
+      handleOpen={handleOpen}
+      isOpen={isOpen}
+      scope={scope}
+      keepMounted={keepMounted}
+      contentId={contentId}
+      titleId={titleId}
+      descriptionId={descriptionId}
+    >
+      {children}
+    </RootProvider>
   );
 };
 
@@ -204,17 +190,20 @@ export interface TriggerProps {
 export const Trigger = (props: TriggerProps) => {
   const { children } = props;
 
-  const context = useContext(Trigger_Name);
+  const rootContext = useRootContext(Trigger_Name);
 
   const { setElement, isDisabled } = useIsDisabled();
 
-  const { pressProps } = usePress({ isDisabled, onPress: context.handleOpen });
+  const { pressProps } = usePress({
+    isDisabled,
+    onPress: rootContext.handleOpen,
+  });
 
   return (
     <Slot
       ref={setElement}
-      aria-expanded={context.isOpen}
-      aria-controls={context.isOpen ? context.id : undefined}
+      aria-expanded={rootContext.isOpen}
+      aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
       {...pressProps}
     >
       {children}
@@ -235,9 +224,9 @@ export interface CloseProps {
 export const Close = (props: CloseProps) => {
   const { children } = props;
 
-  const context = useContext(Close_Name);
+  const rootContext = useRootContext(Close_Name);
 
-  const handleClose = context.handleClose;
+  const handleClose = rootContext.handleClose;
 
   const { setElement, isDisabled } = useIsDisabled();
 
@@ -269,21 +258,83 @@ export interface PortalProps {
 export const Portal = (props: PortalProps) => {
   const { children, container = document.body } = props;
 
-  const context = useContext(Portal_Name);
+  const rootContext = useRootContext(Portal_Name);
 
-  if (context.keepMounted) {
+  if (rootContext.keepMounted) {
     return createPortal(
-      <div style={{ visibility: context.isOpen ? 'visible' : 'hidden' }}>
+      <div style={{ visibility: rootContext.isOpen ? 'visible' : 'hidden' }}>
         {children}
       </div>,
       container,
     );
   }
 
-  return context.isOpen ? createPortal(children, container) : null;
+  return rootContext.isOpen ? createPortal(children, container) : null;
 };
 
 Portal.displayName = 'gist-ui.' + Portal_Name;
+
+// *-*-*-*-* Overlay *-*-*-*-*
+
+const Overlay_Name = 'Dialog.Overlay';
+
+export interface OverlayProps {
+  className?: string;
+}
+
+export const Overlay = (props: OverlayProps) => {
+  const { className } = props;
+
+  return <div className={className} />;
+};
+
+Overlay.displayName = 'gist-ui.' + Overlay_Name;
+
+// *-*-*-*-* Title *-*-*-*-*
+
+const Title_Name = 'Dialog.Title';
+
+export interface TitleProps {
+  children?: React.ReactNode;
+  className?: string;
+}
+
+export const Title = (props: TitleProps) => {
+  const { children, className } = props;
+
+  const rootContext = useRootContext(Title_Name);
+
+  return (
+    <div id={rootContext.titleId} className={className}>
+      {children}
+    </div>
+  );
+};
+
+Title.displayName = 'gist-ui.' + Title_Name;
+
+// *-*-*-*-* Title *-*-*-*-*
+
+const Description_Name = 'Dialog.Description';
+
+export interface DescriptionProps {
+  children?: React.ReactNode;
+  className?: string;
+}
+
+export const Description = (props: DescriptionProps) => {
+  const { children, className } = props;
+
+  const rootContext = useRootContext(Description_Name);
+
+  return (
+    <div id={rootContext.descriptionId} className={className}>
+      {children}
+    </div>
+  );
+};
+
+Description.displayName = 'gist-ui.' + Description_Name;
 
 // *-*-*-*-* Content *-*-*-*-*
 
@@ -291,55 +342,24 @@ const Content_Name = 'Dialog.Content';
 
 export interface ContentProps {
   children?: ReactNode;
+  className?: string;
+  noA11yTitle?: boolean;
+  noA11yDescription?: boolean;
 }
 
 export const Content = (props: ContentProps) => {
-  const { children } = props;
+  const { children, className, noA11yDescription, noA11yTitle } = props;
 
-  const context = useContext(Content_Name);
+  const rootContext = useRootContext(Content_Name);
 
-  useScrollLock({ enabled: context.isOpen });
+  useScrollLock({ enabled: rootContext.isOpen });
 
   const setOutsideEle = useClickOutside<HTMLDivElement>({
-    isDisabled: !context.isOpen,
+    isDisabled: !rootContext.isOpen,
     callback: () => {
-      context.handleClose('outside');
+      rootContext.handleClose('outside');
     },
   });
-
-  const setGivenId = context.setGivenId;
-
-  useEffect(() => {
-    if (isValidElement(children)) {
-      setGivenId(children.props.id || '');
-
-      if (__DEV__ && !children.props['aria-describedby'])
-        console.warn(
-          'Content',
-          '"aria-describedby" is optional but recommended',
-        );
-    }
-  }, [children, setGivenId]);
-
-  const { pressProps } = usePress({
-    onPress: () => context.handleClose('virtual'),
-  });
-
-  const childCount = Children.count(children);
-  if (!childCount) return;
-  if (childCount > 1) throw new GistUiError('Content', onlyChildError);
-  if (!isValidElement(children))
-    throw new GistUiError('Content', validChildError);
-
-  if (
-    __DEV__ &&
-    !children.props['aria-label'] &&
-    !children.props['aria-labelledby']
-  )
-    throw new GistUiError(
-      'Content',
-      'add "aria-label" or "aria-labelledby" for accessibility',
-    );
 
   return (
     <FocusTrap
@@ -347,27 +367,21 @@ export const Content = (props: ContentProps) => {
       loop
       trapped
       asChild
-      scope={context.scope}
-      isDisabled={!context.isOpen}
+      scope={rootContext.scope}
+      isDisabled={!rootContext.isOpen}
     >
-      {cloneElement(children, {
-        role: 'dialog',
-        'aria-modal': true,
-        id: context.id,
-        children: (
-          <>
-            <VisuallyHidden asChild>
-              <button {...pressProps}>close</button>
-            </VisuallyHidden>
-
-            {children.props.children}
-
-            <VisuallyHidden asChild>
-              <button {...pressProps}>close</button>
-            </VisuallyHidden>
-          </>
-        ),
-      } as Partial<unknown>)}
+      <div
+        role="dialog"
+        aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
+        aria-describedby={
+          noA11yDescription ? undefined : rootContext.descriptionId
+        }
+        aria-modal={true}
+        id={rootContext.contentId}
+        className={className}
+      >
+        {children}
+      </div>
     </FocusTrap>
   );
 };
