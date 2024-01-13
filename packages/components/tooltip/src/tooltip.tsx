@@ -3,6 +3,7 @@ import { useHover, useFocus } from '@react-aria/interactions';
 import { useFocusRing } from '@react-aria/focus';
 import { mergeProps } from '@gist-ui/react-utils';
 import { useControllableState } from '@gist-ui/use-controllable-state';
+import { useCallbackRef } from '@gist-ui/use-callback-ref';
 import { Slot } from '@gist-ui/slot';
 import { TooltipVariantProps, tooltip } from '@gist-ui/theme';
 import { useIsDisabled } from '@gist-ui/use-is-disabled';
@@ -10,13 +11,8 @@ import { createContextScope } from '@gist-ui/context';
 import * as Popper from '@gist-ui/popper';
 import { ClassValue } from 'tailwind-variants';
 import {
-  Dispatch,
-  MutableRefObject,
-  ReactNode,
-  SetStateAction,
   forwardRef,
   isValidElement,
-  useCallback,
   useEffect,
   useId,
   useMemo,
@@ -32,11 +28,11 @@ interface TooltipContext {
   showTooltip: (a?: boolean) => void;
   hideTooltip: (a?: boolean) => void;
   trigger?: Trigger;
-  isHovered: MutableRefObject<boolean>;
-  isFocused: MutableRefObject<boolean>;
+  isHovered: React.MutableRefObject<boolean>;
+  isFocused: React.MutableRefObject<boolean>;
   id: string;
   isOpen: boolean;
-  setGivenId: Dispatch<SetStateAction<string>>;
+  setGivenId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Tooltip_Name = 'Tooltip.Root';
@@ -49,7 +45,7 @@ let tooltipId = 0;
 // *-*-*-*-* Root *-*-*-*-*
 
 export interface RootProps {
-  children?: ReactNode;
+  children?: React.ReactNode;
   showDelay?: number;
   hideDelay?: number;
   /**
@@ -57,6 +53,7 @@ export interface RootProps {
    * @default undefined
    */
   trigger?: Trigger;
+  defaultOpen?: boolean;
   isOpen?: boolean;
   onOpenChange?: (isOpen: boolean) => void;
 }
@@ -69,9 +66,11 @@ export const Root = (props: RootProps) => {
     trigger,
     isOpen: isOpenProp,
     onOpenChange,
+    defaultOpen,
   } = props;
 
   const [isOpen, setOpen] = useControllableState({
+    defaultValue: defaultOpen ?? false,
     value: isOpenProp,
     onChange: onOpenChange,
   });
@@ -102,7 +101,7 @@ export const Root = (props: RootProps) => {
     }
   };
 
-  const showTooltip = (immediate?: boolean) => {
+  const showTooltip = useCallbackRef((immediate?: boolean) => {
     clearTimeout(hideTimeout.current);
     hideTimeout.current = undefined;
 
@@ -118,37 +117,34 @@ export const Root = (props: RootProps) => {
     } else {
       setOpen(true);
     }
-  };
+  });
 
-  const handleShow = (immediate = false) => {
+  const handleShow = useCallbackRef((immediate: boolean = false) => {
     if (isHovered.current || isFocused.current) {
       showTooltip(immediate);
     }
-  };
+  });
 
-  const hideTooltip = useCallback(
-    (immediate?: boolean) => {
-      if (immediate || hideDelay <= 0) {
-        clearTimeout(hideTimeout.current);
-        hideTimeout.current = undefined;
+  const hideTooltip = useCallbackRef((immediate?: boolean) => {
+    if (immediate || hideDelay <= 0) {
+      clearTimeout(hideTimeout.current);
+      hideTimeout.current = undefined;
+      setOpen(false);
+    } else {
+      hideTimeout.current = setTimeout(() => {
         setOpen(false);
-      } else {
-        hideTimeout.current = setTimeout(() => {
-          setOpen(false);
-        }, hideDelay);
-      }
+      }, hideDelay);
+    }
 
-      clearTimeout(showTimeout.current);
-      showTimeout.current = undefined;
-    },
-    [hideDelay, setOpen],
-  );
+    clearTimeout(showTimeout.current);
+    showTimeout.current = undefined;
+  });
 
-  const handleHide = (immediate = false) => {
+  const handleHide = useCallbackRef((immediate: boolean = false) => {
     if (!isHovered.current && !isFocused.current) {
       hideTooltip(immediate);
     }
-  };
+  });
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -204,7 +200,7 @@ Root.displayName = 'gist-ui.' + Tooltip_Name;
 const Trigger_Name = 'Tooltip.Trigger';
 
 export interface TriggerProps {
-  children?: ReactNode;
+  children?: React.ReactNode;
 }
 
 export const Trigger = ({ children }: TriggerProps) => {
@@ -284,7 +280,7 @@ Trigger.displayName = 'gist-ui.' + Trigger_Name;
 const Portal_Name = 'Tooltip.Portal';
 
 export interface PortalProps {
-  children?: ReactNode;
+  children?: React.ReactNode;
   container?: Element;
 }
 
@@ -305,7 +301,7 @@ const Content_Name = 'Tooltip.Content';
 export interface ContentProps
   extends TooltipVariantProps,
     Popper.FloatingProps {
-  children?: ReactNode;
+  children?: React.ReactNode;
   asChild?: boolean;
   className?: ClassValue;
   disableInteractive?: boolean;

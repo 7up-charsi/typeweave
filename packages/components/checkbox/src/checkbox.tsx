@@ -4,7 +4,6 @@ import { UseRippleProps, useRipple } from '@gist-ui/use-ripple';
 import { mergeProps } from '@gist-ui/react-utils';
 import { useHover } from '@react-aria/interactions';
 import { useFocusRing } from '@react-aria/focus';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
 import {
   CheckboxClassNames,
   CheckboxVariantProps,
@@ -54,7 +53,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
   const {
     defaultChecked,
     checked: checkedProp,
-    onChange: onChangeProp,
+    onChange,
     isDisabled,
     classNames,
     icon = icon_svg,
@@ -71,10 +70,8 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
   const id = useId();
   const checkboxRef = useRef<HTMLDivElement>(null);
 
-  const onChange = useCallbackRef(onChangeProp);
-
   const [checked, setChecked] = useControllableState({
-    defaultValue: defaultChecked || false,
+    defaultValue: defaultChecked ?? false,
     value: checkedProp,
     onChange,
   });

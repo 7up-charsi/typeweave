@@ -11,14 +11,7 @@ import { ClassValue } from 'tailwind-variants';
 import { useScrollLock } from '@gist-ui/use-scroll-lock';
 import { useCallbackRef } from '@gist-ui/use-callback-ref';
 import { useIsDisabled } from '@gist-ui/use-is-disabled';
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from 'react';
+import { forwardRef, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 const Root_Name = 'Menu.Root';
 
@@ -45,20 +38,20 @@ export const Root = (props: RootProps) => {
   const { children, defaultOpen, isOpen: isOpenProp, onOpenChange } = props;
 
   const [isOpen, setIsOpen] = useControllableState({
-    defaultValue: defaultOpen,
+    defaultValue: defaultOpen ?? false,
     value: isOpenProp,
     onChange: onOpenChange,
   });
 
   const id = useId();
 
-  const handleOpen = useCallback(() => {
+  const handleOpen = useCallbackRef(() => {
     setIsOpen(true);
-  }, [setIsOpen]);
+  });
 
-  const handleClose = useCallback(() => {
+  const handleClose = useCallbackRef(() => {
     setIsOpen(false);
-  }, [setIsOpen]);
+  });
 
   return (
     <RootProvider
@@ -183,74 +176,71 @@ export const Menu = (props: MenuProps) => {
 
   const handleClose = rootContext.handleClose;
 
-  const onKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      const Tab = e.key === 'Tab';
-      const ArrowDown = e.key === 'ArrowDown';
-      const ArrowUp = e.key === 'ArrowUp';
-      const Home = e.key === 'Home';
-      const End = e.key === 'End';
-      const Escape = e.key === 'Escape';
-      const Enter = e.key === 'Enter';
-      const Space = e.key === ' ';
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    const Tab = e.key === 'Tab';
+    const ArrowDown = e.key === 'ArrowDown';
+    const ArrowUp = e.key === 'ArrowUp';
+    const Home = e.key === 'Home';
+    const End = e.key === 'End';
+    const Escape = e.key === 'Escape';
+    const Enter = e.key === 'Enter';
+    const Space = e.key === ' ';
 
-      if (Enter || Space) {
-        e.preventDefault();
-        focusedItem?.callback?.();
-        return;
-      }
+    if (Enter || Space) {
+      e.preventDefault();
+      focusedItem?.callback?.();
+      return;
+    }
 
-      if (Escape) {
-        setFocusedItem(null);
-        handleClose();
-        return;
-      }
+    if (Escape) {
+      setFocusedItem(null);
+      handleClose();
+      return;
+    }
 
-      if (Tab) {
-        handleClose();
-        return;
-      }
+    if (Tab) {
+      handleClose();
+      return;
+    }
 
-      if (ArrowDown) {
-        if (!focusedItem) {
-          setFocusedItem(items[0]);
-          return;
-        }
-
-        if (focusedItem) {
-          const index = items.indexOf(focusedItem);
-          if (index !== items.length - 1) setFocusedItem(items[index + 1]);
-          return;
-        }
-      }
-
-      if (ArrowUp) {
-        if (!focusedItem) {
-          setFocusedItem(items[0]);
-          return;
-        }
-
-        if (focusedItem) {
-          const index = items.indexOf(focusedItem);
-          if (index !== 0) setFocusedItem(items[index - 1]);
-          return;
-        }
-      }
-
-      if (Home) {
+    if (ArrowDown) {
+      if (!focusedItem) {
         setFocusedItem(items[0]);
         return;
       }
 
-      if (End) {
-        setFocusedItem(items[items.length - 1]);
+      if (focusedItem) {
+        const index = items.indexOf(focusedItem);
+        if (index !== items.length - 1) setFocusedItem(items[index + 1]);
         return;
       }
-    },
-    [focusedItem, handleClose, items],
-  );
+    }
 
-  const styles = menu({ shadow });
+    if (ArrowUp) {
+      if (!focusedItem) {
+        setFocusedItem(items[0]);
+        return;
+      }
+
+      if (focusedItem) {
+        const index = items.indexOf(focusedItem);
+        if (index !== 0) setFocusedItem(items[index - 1]);
+        return;
+      }
+    }
+
+    if (Home) {
+      setFocusedItem(items[0]);
+      return;
+    }
+
+    if (End) {
+      setFocusedItem(items[items.length - 1]);
+      return;
+    }
+  };
+
+  const styles = useMemo(() => menu({ shadow }), [shadow]);
 
   return (
     <Popper.Floating arrowPadding={arrowPadding} {...restProps}>
@@ -311,14 +301,11 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
 
   const { hoverProps, isHovered } = useHover({ isDisabled });
 
-  const handleOnPress = useCallback(() => {
-    if (!disableCloseOnPress) handleClose();
-    onPress?.();
-  }, [disableCloseOnPress, handleClose, onPress]);
-
   useEffect(() => {
-    focusRef.callback = handleOnPress;
-  }, [focusRef, handleOnPress]);
+    focusRef.callback = () => {
+      onPress?.();
+    };
+  }, [focusRef, onPress]);
 
   useEffect(() => {
     if (isDisabled) return;
@@ -354,7 +341,12 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
       aria-disabled={isDisabled}
       className={stylesContext.item({ className })}
       tabIndex={tabIndex}
-      {...mergeProps(hoverProps, { onPointerUp: handleOnPress })}
+      {...mergeProps(hoverProps, {
+        onPointerUp: () => {
+          if (!disableCloseOnPress) handleClose();
+          onPress?.();
+        },
+      })}
     >
       <span></span>
       {children}
@@ -468,13 +460,11 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
 
     const { hoverProps, isHovered } = useHover({ isDisabled });
 
-    const handleOnChange = useCallback(() => {
-      onChange?.(!checked);
-    }, [checked, onChange]);
-
     useEffect(() => {
-      focusRef.callback = handleOnChange;
-    }, [focusRef, handleOnChange]);
+      focusRef.callback = () => {
+        onChange?.(!checked);
+      };
+    }, [checked, focusRef, onChange]);
 
     useEffect(() => {
       if (isDisabled) return;
@@ -512,7 +502,11 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
         aria-disabled={isDisabled}
         className={stylesContext.item({ className })}
         tabIndex={tabIndex}
-        {...mergeProps(hoverProps, { onPointerUp: handleOnChange })}
+        {...mergeProps(hoverProps, {
+          onPointerUp: () => {
+            onChange?.(!checked);
+          },
+        })}
       >
         <span>
           {!checked ? null : (
@@ -611,13 +605,11 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
 
     const groupContextOnChange = groupContext.onChange;
 
-    const handleOnChange = useCallback(() => {
-      groupContextOnChange?.(value);
-    }, [groupContextOnChange, value]);
-
     useEffect(() => {
-      focusRef.callback = handleOnChange;
-    }, [focusRef, handleOnChange]);
+      focusRef.callback = () => {
+        groupContextOnChange?.(value);
+      };
+    }, [focusRef, groupContextOnChange, value]);
 
     useEffect(() => {
       if (isDisabled) return;
@@ -657,7 +649,11 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
         aria-disabled={isDisabled}
         className={stylesContext.item({ className })}
         tabIndex={tabIndex}
-        {...mergeProps(hoverProps, { onPointerUp: handleOnChange })}
+        {...mergeProps(hoverProps, {
+          onPointerUp: () => {
+            groupContextOnChange?.(value);
+          },
+        })}
       >
         <span>
           {!checked ? null : (

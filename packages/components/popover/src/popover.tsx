@@ -2,12 +2,13 @@ import { Slot } from '@gist-ui/slot';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { FocusTrap } from '@gist-ui/focus-trap';
 import { useClickOutside } from '@gist-ui/use-click-outside';
+import { useCallbackRef } from '@gist-ui/use-callback-ref';
 import { usePress } from '@react-aria/interactions';
 import * as Popper from '@gist-ui/popper';
 import { createPortal } from 'react-dom';
 import { useIsDisabled } from '@gist-ui/use-is-disabled';
 import { createContextScope } from '@gist-ui/context';
-import { useCallback, useEffect, useId } from 'react';
+import { useEffect, useId } from 'react';
 
 interface PopoverContext {
   isOpen: boolean;
@@ -60,7 +61,7 @@ export const Root = (props: RootProps) => {
   } = props;
 
   const [isOpen, setOpen] = useControllableState({
-    defaultValue: defaultOpen,
+    defaultValue: defaultOpen ?? false,
     onChange: onOpenChange,
     value: openProp,
   });
@@ -69,13 +70,13 @@ export const Root = (props: RootProps) => {
   const titleId = useId();
   const descriptionId = useId();
 
-  const handleOpen = useCallback(() => {
+  const handleOpen = useCallbackRef(() => {
     setOpen(true);
-  }, [setOpen]);
+  });
 
-  const handleClose = useCallback(() => {
+  const handleClose = useCallbackRef(() => {
     setOpen(false);
-  }, [setOpen]);
+  });
 
   useEffect(() => {
     if (!isOpen) return;

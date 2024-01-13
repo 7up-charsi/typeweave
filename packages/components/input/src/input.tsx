@@ -3,7 +3,6 @@ import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
 import { __DEV__ } from '@gist-ui/shared-utils';
 import { useFocusRing } from '@react-aria/focus';
 import { useControllableState } from '@gist-ui/use-controllable-state';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
 import { HoverEvents, useFocus, useHover } from '@react-aria/interactions';
 import {
   forwardRef,
@@ -52,7 +51,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     onFocus,
     classNames,
     required,
-    onChange: onChangeProp,
+    onChange,
     onHoverChange,
     onHoverEnd,
     onHoverStart,
@@ -76,8 +75,6 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const inputWrapperRef = useRef<HTMLDivElement>(null);
 
-  const onChange = useCallbackRef(onChangeProp);
-
   useEffect(() => {
     if (__DEV__) {
       if (!label)
@@ -100,7 +97,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
   );
 
   const [value, setValue] = useControllableState({
-    defaultValue: defaultValue || '',
+    defaultValue: defaultValue ?? '',
     value: valueProp,
     onChange,
   });

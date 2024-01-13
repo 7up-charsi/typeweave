@@ -7,8 +7,7 @@ import { Button } from '@gist-ui/button';
 import _groupby from 'lodash.groupby';
 import { GistUiError } from '@gist-ui/error';
 import { useFocusVisible } from '@react-aria/interactions';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import {
   InputClassNames,
   SelectClassNames,
@@ -132,7 +131,7 @@ const Select = <
     defaultOpen = false,
     defaultValue,
     value: valueProp,
-    onChange: onChangeProp,
+    onChange,
     renderOption,
     shadow,
     isDisabled,
@@ -154,8 +153,6 @@ const Select = <
     ...inputProps
   } = props;
 
-  const onChange = useCallbackRef(onChangeProp);
-
   const [value, setValue] = useControllableState<
     Value | Value[] | null,
     Reason
@@ -163,6 +160,8 @@ const Select = <
     defaultValue,
     value: valueProp,
     onChange: (value, reason) => {
+      if (!onChange) return;
+
       if (!reason)
         throw new GistUiError(
           'Autocomplete',
@@ -207,15 +206,15 @@ const Select = <
   }).current;
 
   const [isOpen, setIsOpen] = useControllableState({
-    defaultValue: defaultOpen,
+    defaultValue: defaultOpen ?? false,
     value: openProp,
     onChange: onOpenChange,
   });
 
-  const handleListboxClose = useCallback(() => {
+  const handleListboxClose = () => {
     setIsOpen(false);
     setFocused(null);
-  }, [setIsOpen]);
+  };
 
   const setListboxOutsideEle = useClickOutside<HTMLUListElement>({
     isDisabled: !isOpen,
@@ -226,37 +225,31 @@ const Select = <
     },
   });
 
-  const getNextIndex = useCallback(
-    (currentIndex: number, options: Value[]) => {
-      if (!getOptionDisabled) return currentIndex;
+  const getNextIndex = (currentIndex: number, options: Value[]) => {
+    if (!getOptionDisabled) return currentIndex;
 
-      for (let i = currentIndex; i < options!.length; i++) {
-        const isDisabled = getOptionDisabled(options![i]);
+    for (let i = currentIndex; i < options!.length; i++) {
+      const isDisabled = getOptionDisabled(options![i]);
 
-        if (!isDisabled) return i;
-      }
+      if (!isDisabled) return i;
+    }
 
-      return -1;
-    },
-    [getOptionDisabled],
-  );
+    return -1;
+  };
 
-  const getPreviousIndex = useCallback(
-    (currentIndex: number) => {
-      if (!getOptionDisabled) return currentIndex;
+  const getPreviousIndex = (currentIndex: number) => {
+    if (!getOptionDisabled) return currentIndex;
 
-      for (let i = currentIndex; i >= 0; i--) {
-        const isDisabled = getOptionDisabled(options![i]);
+    for (let i = currentIndex; i >= 0; i--) {
+      const isDisabled = getOptionDisabled(options![i]);
 
-        if (!isDisabled) return i;
-      }
+      if (!isDisabled) return i;
+    }
 
-      return -1;
-    },
-    [getOptionDisabled, options],
-  );
+    return -1;
+  };
 
-  const handleListboxOpen = useCallback(() => {
+  const handleListboxOpen = () => {
     if (isOpen) return;
 
     setIsOpen(true);
@@ -278,164 +271,142 @@ const Select = <
       setFocused(value);
       return;
     }
-  }, [getNextIndex, multiple, isOpen, options, setIsOpen, value]);
+  };
 
-  const handleOptionHover = useCallback(
-    (option: Value) => () => {
+  const handleOptionHover = (option: Value) => () => {
+    setFocused(option);
+  };
+
+  const handleOptionSelect = (option: Value) => () => {
+    //
+
+    if (multiple && isMultiple<Value>(value)) {
+      const val = value.find((ele) => ele === option)
+        ? value.filter((ele) => ele !== option)
+        : [...value, option];
+
+      setValue(val, 'select');
       setFocused(option);
-    },
-    [],
-  );
+    }
 
-  const handleOptionSelect = useCallback(
-    (option: Value) => () => {
-      //
+    if (!multiple) {
+      setValue(option, 'select');
+      handleListboxClose();
+    }
+  };
 
-      if (multiple && isMultiple<Value>(value)) {
-        const val = value.find((ele) => ele === option)
-          ? value.filter((ele) => ele !== option)
-          : [...value, option];
+  const handleInputKeyDown = (e: React.KeyboardEvent) => {
+    // handle any printable character
+    if (e.key.length === 1 && options?.length) {
+      setIsOpen(true);
 
-        setValue(val, 'select');
-        setFocused(option);
+      clearTimeout(state.searchedStringTimer);
+
+      state.searchedStringTimer = setTimeout(() => {
+        state.searchedString = '';
+      }, 500);
+
+      state.searchedString += e.key;
+
+      const startIndex = focused ? options.indexOf(focused) + 1 : 0;
+
+      const orderedOptions = [
+        ...options.slice(startIndex),
+        ...options.slice(0, startIndex),
+      ];
+
+      const filter = state.searchedString.toLowerCase();
+
+      const excatMatch = orderedOptions.find((ele) =>
+        getOptionDisabled?.(ele)
+          ? false
+          : getOptionLabel(ele).toLowerCase().startsWith(filter),
+      );
+
+      if (excatMatch) {
+        setFocused(excatMatch);
+        return;
       }
 
-      if (!multiple) {
-        setValue(option, 'select');
-        handleListboxClose();
-      }
-    },
-    [handleListboxClose, multiple, setValue, value],
-  );
+      const sameLetters = filter
+        .split('')
+        .every((letter) => letter.toLowerCase() === filter[0]);
 
-  const handleInputKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      // handle any printable character
-      if (e.key.length === 1 && options?.length) {
-        setIsOpen(true);
-
-        clearTimeout(state.searchedStringTimer);
-
-        state.searchedStringTimer = setTimeout(() => {
-          state.searchedString = '';
-        }, 500);
-
-        state.searchedString += e.key;
-
-        const startIndex = focused ? options.indexOf(focused) + 1 : 0;
-
-        const orderedOptions = [
-          ...options.slice(startIndex),
-          ...options.slice(0, startIndex),
-        ];
-
-        const filter = state.searchedString.toLowerCase();
-
-        const excatMatch = orderedOptions.find((ele) =>
+      if (sameLetters) {
+        const matched = orderedOptions.find((ele) =>
           getOptionDisabled?.(ele)
             ? false
-            : getOptionLabel(ele).toLowerCase().startsWith(filter),
+            : getOptionLabel(ele).toLowerCase().startsWith(filter[0]),
         );
 
-        if (excatMatch) {
-          setFocused(excatMatch);
-          return;
-        }
-
-        const sameLetters = filter
-          .split('')
-          .every((letter) => letter.toLowerCase() === filter[0]);
-
-        if (sameLetters) {
-          const matched = orderedOptions.find((ele) =>
-            getOptionDisabled?.(ele)
-              ? false
-              : getOptionLabel(ele).toLowerCase().startsWith(filter[0]),
-          );
-
-          if (matched) {
-            setFocused(matched);
-          }
-
-          return;
+        if (matched) {
+          setFocused(matched);
         }
 
         return;
       }
 
-      const ArrowDown = e.key === 'ArrowDown';
-      const ArrowUp = e.key === 'ArrowUp';
-      const Escape = e.key === 'Escape';
-      const Enter = e.key === 'Enter';
-      const Home = e.key === 'Home';
-      const End = e.key === 'End';
+      return;
+    }
 
-      if (Escape && isOpen) {
-        handleListboxClose();
-        return;
-      }
+    const ArrowDown = e.key === 'ArrowDown';
+    const ArrowUp = e.key === 'ArrowUp';
+    const Escape = e.key === 'Escape';
+    const Enter = e.key === 'Enter';
+    const Home = e.key === 'Home';
+    const End = e.key === 'End';
 
-      if (ArrowDown && !isOpen) {
-        handleListboxOpen();
-        return;
-      }
+    if (Escape && isOpen) {
+      handleListboxClose();
+      return;
+    }
 
-      if (!options) return;
+    if (ArrowDown && !isOpen) {
+      handleListboxOpen();
+      return;
+    }
 
-      if (Enter && isOpen && focused) {
-        handleOptionSelect(focused)();
-        return;
-      }
+    if (!options) return;
 
-      if (ArrowDown && isOpen && focused) {
-        const index = getNextIndex(options.indexOf(focused) + 1, options);
-        if (index >= 0) setFocused(options[index]);
+    if (Enter && isOpen && focused) {
+      handleOptionSelect(focused)();
+      return;
+    }
 
-        return;
-      }
+    if (ArrowDown && isOpen && focused) {
+      const index = getNextIndex(options.indexOf(focused) + 1, options);
+      if (index >= 0) setFocused(options[index]);
 
-      if (ArrowUp && isOpen && focused) {
-        const index = getPreviousIndex(options.indexOf(focused) - 1);
-        if (index >= 0) setFocused(options[index]);
+      return;
+    }
 
-        return;
-      }
+    if (ArrowUp && isOpen && focused) {
+      const index = getPreviousIndex(options.indexOf(focused) - 1);
+      if (index >= 0) setFocused(options[index]);
 
-      if (Home) {
-        setIsOpen(true);
+      return;
+    }
 
-        const index = getNextIndex(0, options);
-        if (index >= 0) setFocused(options[index]);
+    if (Home) {
+      setIsOpen(true);
 
-        return;
-      }
+      const index = getNextIndex(0, options);
+      if (index >= 0) setFocused(options[index]);
 
-      if (End) {
-        setIsOpen(true);
+      return;
+    }
 
-        const index = getPreviousIndex(options.length - 1);
-        if (index >= 0) setFocused(options[index]);
+    if (End) {
+      setIsOpen(true);
 
-        return;
-      }
-    },
-    [
-      focused,
-      getNextIndex,
-      getOptionDisabled,
-      getOptionLabel,
-      getPreviousIndex,
-      handleListboxClose,
-      handleListboxOpen,
-      handleOptionSelect,
-      isOpen,
-      options,
-      setIsOpen,
-      state,
-    ],
-  );
+      const index = getPreviousIndex(options.length - 1);
+      if (index >= 0) setFocused(options[index]);
 
-  const handleClearValue = useCallback(() => {
+      return;
+    }
+  };
+
+  const handleClearValue = () => {
     setIsOpen(true);
     inputRef.current?.focus();
 
@@ -462,7 +433,7 @@ const Select = <
     } else {
       setValue(null, 'clear');
     }
-  }, [getNextIndex, groupBy, multiple, optionsProp, setIsOpen, setValue]);
+  };
 
   useEffect(() => {
     return () => {

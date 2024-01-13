@@ -4,7 +4,6 @@ import { useRipple, UseRippleProps } from '@gist-ui/use-ripple';
 import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
 import { useFocusRing } from '@react-aria/focus';
 import { ClassValue } from 'tailwind-variants';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
 import {
   usePress,
   useHover,
@@ -42,7 +41,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
     endContent,
     className,
     children,
-    onPress: onPressProp,
+    onPress,
     onPressEnd,
     onPressStart,
     onPressUp,
@@ -62,7 +61,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
     ...buttonProps
   } = props;
 
-  const onPress = useCallbackRef(onPressProp);
   const innerRef = useRef(null);
 
   const { rippleKeyboardProps, ripplePointerProps } = useRipple({

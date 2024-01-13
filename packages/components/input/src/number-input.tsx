@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useRef } from 'react';
+import { forwardRef, useRef } from 'react';
 import Input, { InputProps } from './input';
 import { mergeRefs } from '@gist-ui/react-utils';
 import { NumberInputClassNames, numberInput } from '@gist-ui/theme';
@@ -7,7 +7,6 @@ import { __DEV__ } from '@gist-ui/shared-utils';
 import { GistUiError } from '@gist-ui/error';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { useLongPress } from '@react-aria/interactions';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
 
 export interface NumberInputProps extends Omit<InputProps, 'type'> {
   classNames?: InputProps['classNames'] & { stepButton: NumberInputClassNames };
@@ -32,7 +31,7 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       repeatRate = 100,
       threshold = 500,
       endContent,
-      onChange: onChangeProp,
+      onChange,
       defaultValue,
       value: valueProp,
       ...rest
@@ -40,10 +39,8 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const innerRef = useRef<HTMLDivElement>(null);
 
-    const onChange = useCallbackRef(onChangeProp);
-
     const [value, setValue] = useControllableState({
-      defaultValue: defaultValue || '',
+      defaultValue: defaultValue ?? '',
       value: valueProp,
       onChange,
     });
@@ -54,35 +51,29 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       repeatedEvent?: boolean;
     }>({});
 
-    const handleStepUp = useCallback(
-      (toAdd = step) => {
-        setValue((prev) => {
-          const val = +prev;
+    const handleStepUp = (toAdd = step) => {
+      setValue((prev) => {
+        const val = +prev;
 
-          if (val === max) return prev;
-          if (max && val > max) return max + '';
-          if (min && val < min) return min + '';
+        if (val === max) return prev;
+        if (max && val > max) return max + '';
+        if (min && val < min) return min + '';
 
-          return max && val + toAdd > max ? max + '' : `${val + toAdd}`;
-        });
-      },
-      [max, min, setValue, step],
-    );
+        return max && val + toAdd > max ? max + '' : `${val + toAdd}`;
+      });
+    };
 
-    const handleStepDown = useCallback(
-      (toAdd = step) => {
-        setValue((prev) => {
-          const val = +prev;
+    const handleStepDown = (toAdd = step) => {
+      setValue((prev) => {
+        const val = +prev;
 
-          if (val === min) return prev;
-          if (max && val > max) return max + '';
-          if (min && val < min) return min + '';
+        if (val === min) return prev;
+        if (max && val > max) return max + '';
+        if (min && val < min) return min + '';
 
-          return min && +prev - toAdd < min ? min + '' : `${+prev - toAdd}`;
-        });
-      },
-      [max, min, setValue, step],
-    );
+        return min && +prev - toAdd < min ? min + '' : `${+prev - toAdd}`;
+      });
+    };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
       const ArrowUp = e.key === 'ArrowUp';

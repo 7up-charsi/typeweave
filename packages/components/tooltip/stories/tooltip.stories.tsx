@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { tooltip } from '@gist-ui/theme';
 
@@ -37,8 +37,6 @@ export default meta;
 const Template = (args: Tooltip.RootProps & Tooltip.ContentProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const [isOpen, setIsOpen] = useState(true);
-
   useEffect(() => {
     ref.current?.scrollIntoView({
       behavior: 'instant',
@@ -53,8 +51,7 @@ const Template = (args: Tooltip.RootProps & Tooltip.ContentProps) => {
         {Array.from({ length: 4 }).map((_ele, i) => (
           <Tooltip.Root
             key={i}
-            isOpen={i === 0 ? isOpen : undefined}
-            onOpenChange={i === 0 ? setIsOpen : undefined}
+            defaultOpen={i === 0 ? true : undefined}
             hideDelay={args.hideDelay}
             showDelay={args.showDelay}
             trigger={args.trigger}

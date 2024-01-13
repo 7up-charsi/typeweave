@@ -59,7 +59,7 @@ export const Group = (props: GroupProps) => {
   const { children, defaultValue, value: valueProp, onChange, name } = props;
 
   const [value, setValue] = useControllableState({
-    defaultValue,
+    defaultValue: defaultValue ?? '',
     value: valueProp,
     onChange,
   });

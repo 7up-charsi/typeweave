@@ -6,8 +6,7 @@ import { Option } from './option';
 import _groupby from 'lodash.groupby';
 import { Button } from '@gist-ui/button';
 import { GistUiError } from '@gist-ui/error';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { useFocusVisible } from '@react-aria/interactions';
 import {
   InputClassNames,
@@ -141,7 +140,7 @@ const Autocomplete = <
     defaultOpen = false,
     defaultValue,
     value: valueProp,
-    onChange: onChangeProp,
+    onChange,
     renderOption,
     shadow,
     isDisabled,
@@ -166,8 +165,6 @@ const Autocomplete = <
     ...inputProps
   } = props;
 
-  const onChange = useCallbackRef(onChangeProp);
-
   const [value, setValue] = useControllableState<
     Value | Value[] | null,
     Reason
@@ -175,6 +172,8 @@ const Autocomplete = <
     defaultValue,
     value: valueProp,
     onChange: (value, reason) => {
+      if (!onChange) return;
+
       if (!reason)
         throw new GistUiError(
           'Autocomplete',
@@ -212,7 +211,7 @@ const Autocomplete = <
   const lisboxId = useId();
 
   const [isOpen, setIsOpen] = useControllableState({
-    defaultValue: defaultOpen,
+    defaultValue: defaultOpen ?? false,
     value: openProp,
     onChange: onOpenChange,
   });
@@ -224,7 +223,7 @@ const Autocomplete = <
     onChange: onInputChange,
   });
 
-  const handleListboxClose = useCallback(() => {
+  const handleListboxClose = () => {
     setIsOpen(false);
     setFocused(null);
 
@@ -241,15 +240,7 @@ const Autocomplete = <
     } else {
       setOptions(optionsProp);
     }
-  }, [
-    getOptionLabel,
-    groupBy,
-    multiple,
-    optionsProp,
-    setInputValue,
-    setIsOpen,
-    value,
-  ]);
+  };
 
   const setListboxOutsideEle = useClickOutside<HTMLUListElement>({
     onEvent: 'pointerdown',
@@ -259,37 +250,31 @@ const Autocomplete = <
     },
   });
 
-  const getNextIndex = useCallback(
-    (currentIndex: number, options: Value[]) => {
-      if (!getOptionDisabled) return currentIndex;
+  const getNextIndex = (currentIndex: number, options: Value[]) => {
+    if (!getOptionDisabled) return currentIndex;
 
-      for (let i = currentIndex; i < options.length; i++) {
-        const isDisabled = getOptionDisabled(options[i]);
+    for (let i = currentIndex; i < options.length; i++) {
+      const isDisabled = getOptionDisabled(options[i]);
 
-        if (!isDisabled) return i;
-      }
+      if (!isDisabled) return i;
+    }
 
-      return -1;
-    },
-    [getOptionDisabled],
-  );
+    return -1;
+  };
 
-  const getPreviousIndex = useCallback(
-    (currentIndex: number, options: Value[]) => {
-      if (!getOptionDisabled) return currentIndex;
+  const getPreviousIndex = (currentIndex: number, options: Value[]) => {
+    if (!getOptionDisabled) return currentIndex;
 
-      for (let i = currentIndex; i >= 0; i--) {
-        const isDisabled = getOptionDisabled(options[i]);
+    for (let i = currentIndex; i >= 0; i--) {
+      const isDisabled = getOptionDisabled(options[i]);
 
-        if (!isDisabled) return i;
-      }
+      if (!isDisabled) return i;
+    }
 
-      return -1;
-    },
-    [getOptionDisabled],
-  );
+    return -1;
+  };
 
-  const handleListboxOpen = useCallback(() => {
+  const handleListboxOpen = () => {
     if (isOpen) return;
 
     setIsOpen(true);
@@ -311,144 +296,108 @@ const Autocomplete = <
       setFocused(value);
       return;
     }
-  }, [getNextIndex, multiple, isOpen, options, setIsOpen, value]);
+  };
 
-  const handleOptionHover = useCallback(
-    (option: Value) => () => {
+  const handleOptionHover = (option: Value) => () => {
+    setFocused(option);
+  };
+
+  const handleOptionSelect = (option: Value) => () => {
+    //
+
+    if (multiple && isMultiple<Value>(value)) {
+      const val = value.find((ele) => ele === option)
+        ? value.filter((ele) => ele !== option)
+        : [...value, option];
+
+      setValue(val, 'select');
       setFocused(option);
-    },
-    [],
-  );
+    }
 
-  const handleOptionSelect = useCallback(
-    (option: Value) => () => {
-      //
+    if (!multiple) {
+      setValue(option, 'select');
+      handleListboxClose();
+      setInputValue(getOptionLabel(option));
+    }
+  };
 
-      if (multiple && isMultiple<Value>(value)) {
-        const val = value.find((ele) => ele === option)
-          ? value.filter((ele) => ele !== option)
-          : [...value, option];
+  const handleInputKeyDown = (e: React.KeyboardEvent) => {
+    const ArrowDown = e.key === 'ArrowDown';
+    const ArrowUp = e.key === 'ArrowUp';
+    const Escape = e.key === 'Escape';
+    const Enter = e.key === 'Enter';
 
-        setValue(val, 'select');
-        setFocused(option);
-      }
+    if (ArrowDown || ArrowUp) e.preventDefault();
 
-      if (!multiple) {
-        setValue(option, 'select');
-        handleListboxClose();
-        setInputValue(getOptionLabel(option));
-      }
-    },
-    [
-      getOptionLabel,
-      handleListboxClose,
-      multiple,
-      setInputValue,
-      setValue,
-      value,
-    ],
-  );
+    if (Escape && isOpen) {
+      setIsOpen(false);
+      setFocused(null);
+      return;
+    }
 
-  const handleInputKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      const ArrowDown = e.key === 'ArrowDown';
-      const ArrowUp = e.key === 'ArrowUp';
-      const Escape = e.key === 'Escape';
-      const Enter = e.key === 'Enter';
+    if (ArrowDown && !isOpen) {
+      handleListboxOpen();
+      return;
+    }
 
-      if (ArrowDown || ArrowUp) e.preventDefault();
+    if (!options?.length) return;
 
-      if (Escape && isOpen) {
-        setIsOpen(false);
-        setFocused(null);
-        return;
-      }
+    if (Enter && isOpen && focused) {
+      handleOptionSelect(focused)();
+      return;
+    }
 
-      if (ArrowDown && !isOpen) {
-        handleListboxOpen();
-        return;
-      }
+    if (ArrowDown && isOpen && focused) {
+      const index = getNextIndex(options.indexOf(focused) + 1, options);
+      if (index >= 0) setFocused(options[index]);
 
-      if (!options?.length) return;
+      return;
+    }
 
-      if (Enter && isOpen && focused) {
-        handleOptionSelect(focused)();
-        return;
-      }
+    if (ArrowUp && isOpen && focused) {
+      const index = getPreviousIndex(options.indexOf(focused) - 1, options);
+      if (index >= 0) setFocused(options[index]);
 
-      if (ArrowDown && isOpen && focused) {
-        const index = getNextIndex(options.indexOf(focused) + 1, options);
-        if (index >= 0) setFocused(options[index]);
+      return;
+    }
+  };
 
-        return;
-      }
+  const handleInputChange = (val: string) => {
+    setIsOpen(true);
+    setInputValue(val);
 
-      if (ArrowUp && isOpen && focused) {
-        const index = getPreviousIndex(options.indexOf(focused) - 1, options);
-        if (index >= 0) setFocused(options[index]);
+    if (!optionsProp?.length) return;
 
-        return;
-      }
-    },
-    [
-      focused,
-      getNextIndex,
-      getPreviousIndex,
-      handleListboxOpen,
-      handleOptionSelect,
-      isOpen,
-      options,
-      setIsOpen,
-    ],
-  );
+    const filter =
+      filterOptions ||
+      (({ options, inputValue }) =>
+        options.filter(
+          (opt) =>
+            getOptionLabel(opt)
+              ?.toLowerCase()
+              .startsWith(inputValue.toLowerCase()),
+        ));
 
-  const handleInputChange = useCallback(
-    (val: string) => {
-      setIsOpen(true);
-      setInputValue(val);
+    let options = val
+      ? filter({ options: optionsProp, inputValue: val })
+      : optionsProp;
 
-      if (!optionsProp?.length) return;
+    if (groupBy) {
+      const grouped = getGroupedOptions(options, groupBy);
 
-      const filter =
-        filterOptions ||
-        (({ options, inputValue }) =>
-          options.filter(
-            (opt) =>
-              getOptionLabel(opt)
-                ?.toLowerCase()
-                .startsWith(inputValue.toLowerCase()),
-          ));
+      options = flatGroupedOptions(grouped);
+      setgroupedOptions(grouped);
+    } else {
+      setgroupedOptions(null);
+    }
 
-      let options = val
-        ? filter({ options: optionsProp, inputValue: val })
-        : optionsProp;
+    const index = getNextIndex(0, options);
 
-      if (groupBy) {
-        const grouped = getGroupedOptions(options, groupBy);
+    setOptions(options);
+    setFocused(options[index]);
+  };
 
-        options = flatGroupedOptions(grouped);
-        setgroupedOptions(grouped);
-      } else {
-        setgroupedOptions(null);
-      }
-
-      const index = getNextIndex(0, options);
-
-      setOptions(options);
-      setFocused(options[index]);
-    },
-    [
-      filterOptions,
-      getNextIndex,
-      getOptionLabel,
-      groupBy,
-      optionsProp,
-      setInputValue,
-      setIsOpen,
-    ],
-  );
-
-  const handleClearValue = useCallback(() => {
+  const handleClearValue = () => {
     setIsOpen(true);
     setInputValue('');
     inputRef.current?.focus();
@@ -476,15 +425,7 @@ const Autocomplete = <
     } else {
       setValue(null, 'clear');
     }
-  }, [
-    getNextIndex,
-    groupBy,
-    multiple,
-    optionsProp,
-    setInputValue,
-    setIsOpen,
-    setValue,
-  ]);
+  };
 
   useEffect(() => {
     if (!groupBy) return;

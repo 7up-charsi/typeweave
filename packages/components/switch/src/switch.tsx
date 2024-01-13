@@ -94,7 +94,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
   const id = useId();
 
   const [checked, setChecked] = useControllableState({
-    defaultValue: defaultChecked || false,
+    defaultValue: defaultChecked ?? false,
     value: checkedProp,
     onChange,
   });

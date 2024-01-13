@@ -3,11 +3,12 @@ import { Slot } from '@gist-ui/slot';
 import { useClickOutside } from '@gist-ui/use-click-outside';
 import { usePress } from '@react-aria/interactions';
 import { useScrollLock } from '@gist-ui/use-scroll-lock';
+import { useCallbackRef } from '@gist-ui/use-callback-ref';
 import { createPortal } from 'react-dom';
 import { FocusTrap, FocusScope } from '@gist-ui/focus-trap';
 import { createContextScope } from '@gist-ui/context';
 import { useIsDisabled } from '@gist-ui/use-is-disabled';
-import { useCallback, useEffect, useId, useRef } from 'react';
+import { useEffect, useId, useRef } from 'react';
 
 type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
 
@@ -119,31 +120,28 @@ export const Root = (props: RootProps) => {
   }).current;
 
   const [isOpen, setOpen] = useControllableState({
-    defaultValue: defaultOpen,
+    defaultValue: defaultOpen ?? false,
     value: isOpenProp,
     onChange: onOpenChange,
   });
 
-  const handleOpen = useCallback(() => {
+  const handleOpen = useCallbackRef(() => {
     setOpen(true);
-  }, [setOpen]);
+  });
 
-  const handleClose = useCallback(
-    (reason: Reason) => {
-      if (scope.paused) return;
+  const handleClose = useCallbackRef((reason: Reason) => {
+    if (scope.paused) return;
 
-      const eventObj = { defaultPrevented: false };
+    const eventObj = { defaultPrevented: false };
 
-      const preventDefault = () => {
-        eventObj.defaultPrevented = true;
-      };
+    const preventDefault = () => {
+      eventObj.defaultPrevented = true;
+    };
 
-      onClose?.({ preventDefault }, reason);
+    onClose?.({ preventDefault }, reason);
 
-      if (!eventObj.defaultPrevented) setOpen(false);
-    },
-    [onClose, scope.paused, setOpen],
-  );
+    if (!eventObj.defaultPrevented) setOpen(false);
+  });
 
   useEffect(() => {
     const handleKeydown = (e: KeyboardEvent) => {
@@ -224,9 +222,7 @@ export interface CloseProps {
 export const Close = (props: CloseProps) => {
   const { children } = props;
 
-  const rootContext = useRootContext(Close_Name);
-
-  const handleClose = rootContext.handleClose;
+  const { handleClose } = useRootContext(Close_Name);
 
   const { setElement, isDisabled } = useIsDisabled();
 

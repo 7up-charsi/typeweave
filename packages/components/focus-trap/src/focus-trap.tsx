@@ -2,7 +2,7 @@ import { focus, getTabbableEdges } from './utils';
 import { Slot } from '@gist-ui/slot';
 import { mergeRefs } from '@gist-ui/react-utils';
 import { GistUiError } from '@gist-ui/error';
-import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 
 export type FocusScope = { paused: boolean; pause(): void; resume(): void };
 
@@ -141,40 +141,37 @@ const FocusTrap = forwardRef<HTMLDivElement, FocusTrapProps>((props, ref) => {
     };
   }, [container, focusScope, isDisabled]);
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      if (!loop) return;
-      if (focusScope.paused) return;
-      if (isDisabled) return;
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!loop) return;
+    if (focusScope.paused) return;
+    if (isDisabled) return;
 
-      const isTab = e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey;
-      const focusedElement = document.activeElement as HTMLElement | null;
+    const isTab = e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey;
+    const focusedElement = document.activeElement as HTMLElement | null;
 
-      if (isTab && focusedElement) {
-        const container = e.currentTarget as HTMLElement;
-        const [first, last] = getTabbableEdges(container);
+    if (isTab && focusedElement) {
+      const container = e.currentTarget as HTMLElement;
+      const [first, last] = getTabbableEdges(container);
 
-        if (!(first && last)) {
-          if (focusedElement === container) e.preventDefault();
-        } else {
-          if (e.shiftKey && focusedElement === first) {
-            if (loop) {
-              e.preventDefault();
+      if (!(first && last)) {
+        if (focusedElement === container) e.preventDefault();
+      } else {
+        if (e.shiftKey && focusedElement === first) {
+          if (loop) {
+            e.preventDefault();
 
-              focus(last, { select: true });
-            }
+            focus(last, { select: true });
           }
-          if (!e.shiftKey && focusedElement === last) {
-            if (loop) {
-              e.preventDefault();
-              focus(first, { select: true });
-            }
+        }
+        if (!e.shiftKey && focusedElement === last) {
+          if (loop) {
+            e.preventDefault();
+            focus(first, { select: true });
           }
         }
       }
-    },
-    [isDisabled, focusScope.paused, loop],
-  );
+    }
+  };
 
   return (
     <Component
