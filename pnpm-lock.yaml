@@ -290,6 +290,9 @@ importers:
       '@gist-ui/use-controllable-state':
         specifier: workspace:*
         version: link:../../hooks/use-controllable-state
+      '@gist-ui/use-is-disabled':
+        specifier: workspace:*
+        version: link:../../hooks/use-is-disabled
       '@gist-ui/use-scroll-lock':
         specifier: workspace:*
         version: link:../../hooks/use-scroll-lock
@@ -404,6 +407,9 @@ importers:
       '@gist-ui/use-controllable-state':
         specifier: workspace:*
         version: link:../../hooks/use-controllable-state
+      '@gist-ui/use-is-disabled':
+        specifier: workspace:*
+        version: link:../../hooks/use-is-disabled
       '@gist-ui/use-ripple':
         specifier: workspace:*
         version: link:../../hooks/use-ripple

@@ -1,9 +1,10 @@
-import { forwardRef, useId } from 'react';
+import { forwardRef, useId, useRef } from 'react';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { UseRippleProps, useRipple } from '@gist-ui/use-ripple';
 import { mergeProps } from '@gist-ui/react-utils';
-import { useHover, usePress } from '@react-aria/interactions';
+import { useHover } from '@react-aria/interactions';
 import { useFocusRing } from '@react-aria/focus';
+import { useCallbackRef } from '@gist-ui/use-callback-ref';
 import {
   CheckboxClassNames,
   CheckboxVariantProps,
@@ -13,8 +14,8 @@ import {
 const icon_svg = (
   <svg
     aria-hidden="true"
-    width={20}
-    height={20}
+    width={23}
+    height={23}
     stroke="currentColor"
     viewBox="0 0 24 24"
   >
@@ -25,8 +26,8 @@ const icon_svg = (
 const checkIcon_svg = (
   <svg
     aria-hidden="true"
-    width={20}
-    height={20}
+    width={23}
+    height={23}
     viewBox="0 0 24 24"
     fill="currentColor"
   >
@@ -53,7 +54,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
   const {
     defaultChecked,
     checked: checkedProp,
-    onChange,
+    onChange: onChangeProp,
     isDisabled,
     classNames,
     icon = icon_svg,
@@ -68,6 +69,9 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
   } = props;
 
   const id = useId();
+  const checkboxRef = useRef<HTMLDivElement>(null);
+
+  const onChange = useCallbackRef(onChangeProp);
 
   const [checked, setChecked] = useControllableState({
     defaultValue: defaultChecked || false,
@@ -75,20 +79,13 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
     onChange,
   });
 
-  const { isFocusVisible, focusProps } = useFocusRing();
-
-  const { pressProps, isPressed } = usePress({
-    isDisabled,
-    onPressStart: (e) => e.continuePropagation(),
-    onPressEnd: (e) => e.continuePropagation(),
-    onPress: (e) => e.continuePropagation(),
-  });
+  const { isFocusVisible, focusProps, isFocused } = useFocusRing();
 
   const { hoverProps, isHovered } = useHover({ isDisabled });
 
-  const { rippleProps } = useRipple({
+  const { rippleKeyboardProps, ripplePointerProps } = useRipple({
+    containerRef: checkboxRef,
     isDisabled,
-    pointerCenter: false,
     duration: rippleDuration,
     timingFunction: rippleTimingFunction,
     completedFactor: rippleCompletedFactor,
@@ -98,16 +95,16 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
 
   return (
     <div
-      data-pressed={isPressed}
       data-hovered={isHovered}
-      data-focus-visible={isFocusVisible}
+      data-focus-visible={isFocusVisible && isFocused}
       data-disabled={isDisabled}
       data-checked={checked}
       className={styles.base()}
     >
       <div
+        ref={checkboxRef}
         className={styles.checkbox({ className: classNames?.base })}
-        {...rippleProps}
+        onPointerDown={() => ripplePointerProps.onPointerDown()}
       >
         <input
           id={id}
@@ -116,10 +113,11 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
           checked={checked}
           className={styles.nativeInput()}
           disabled={isDisabled}
-          {...mergeProps(focusProps, pressProps, hoverProps)}
+          {...mergeProps(focusProps, hoverProps)}
           onChange={(e) => {
             setChecked(e.target.checked);
           }}
+          {...rippleKeyboardProps}
         />
 
         {checked ? checkIcon : icon}

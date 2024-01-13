@@ -45,7 +45,6 @@ const button = tv({
       info: '',
       warning: '',
       danger: '',
-      neutral: '',
     },
     size: {
       sm: '',
@@ -140,12 +139,6 @@ const button = tv({
       class:
         'bg-danger text-danger-foreground [--rippleBg:theme(colors.danger-foreground/40%)]',
     },
-    {
-      variant: 'solid',
-      color: 'neutral',
-      class:
-        'bg-neutral text-neutral-foreground [--rippleBg:theme(colors.neutral-foreground/40%)]',
-    },
 
     // color / shadow
     {
@@ -183,12 +176,6 @@ const button = tv({
       color: 'danger',
       class:
         'bg-danger text-danger-foreground [--rippleBg:theme(colors.danger-foreground/40%)] shadow-danger-400/80',
-    },
-    {
-      variant: 'shadow',
-      color: 'neutral',
-      class:
-        'bg-neutral text-neutral-foreground [--rippleBg:theme(colors.neutral-foreground/40%)] shadow-neutral-400/80',
     },
 
     // color / flat
@@ -228,12 +215,6 @@ const button = tv({
       class:
         'bg-danger-100 text-danger-800 [--rippleBg:theme(colors.danger-800/20%)]',
     },
-    {
-      variant: 'flat',
-      color: 'neutral',
-      class:
-        'bg-neutral-100 text-neutral-800 [--rippleBg:theme(colors.neutral-800/20%)]',
-    },
 
     // color / text
     {
@@ -272,12 +253,6 @@ const button = tv({
       class:
         'data-[hovered=true]:bg-danger-100 text-danger-700 [--rippleBg:theme(colors.danger-700/20%)]',
     },
-    {
-      variant: 'text',
-      color: 'neutral',
-      class:
-        'data-[hovered=true]:bg-neutral-100 text-neutral-700 [--rippleBg:theme(colors.neutral-700/20%)]',
-    },
 
     // color / border
     {
@@ -315,12 +290,6 @@ const button = tv({
       color: 'danger',
       class:
         'border-danger-700 text-danger-800 [--rippleBg:theme(colors.danger-800/20%)]',
-    },
-    {
-      variant: 'border',
-      color: 'neutral',
-      class:
-        'border-neutral-700 text-neutral-800 [--rippleBg:theme(colors.neutral-800/20%)]',
     },
   ],
 });

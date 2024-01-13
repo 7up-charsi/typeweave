@@ -1,17 +1,23 @@
 import { button, ButtonVariantProps } from '@gist-ui/theme';
 import { __DEV__ } from '@gist-ui/shared-utils';
 import { useRipple, UseRippleProps } from '@gist-ui/use-ripple';
-import { ButtonHTMLAttributes, forwardRef, ReactNode, useEffect } from 'react';
-import { mergeProps } from '@gist-ui/react-utils';
+import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
 import { useFocusRing } from '@react-aria/focus';
 import { ClassValue } from 'tailwind-variants';
+import { useCallbackRef } from '@gist-ui/use-callback-ref';
 import {
   usePress,
   useHover,
   HoverEvents,
   PressProps,
 } from '@react-aria/interactions';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
+import {
+  ButtonHTMLAttributes,
+  forwardRef,
+  ReactNode,
+  useEffect,
+  useRef,
+} from 'react';
 
 export interface ButtonProps
   extends ButtonVariantProps,
@@ -57,10 +63,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   } = props;
 
   const onPress = useCallbackRef(onPressProp);
+  const innerRef = useRef(null);
 
-  const { rippleProps } = useRipple<HTMLButtonElement>({
+  const { rippleKeyboardProps, ripplePointerProps } = useRipple({
+    containerRef: innerRef,
     isDisabled,
-    pointerCenter: !isIconOnly,
     duration: rippleDuration,
     timingFunction: rippleTimingFunction,
     completedFactor: rippleCompletedFactor,
@@ -103,18 +110,22 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   return (
     <button
       {...mergeProps(
-        rippleProps,
         pressProps,
         focusProps,
         hoverProps,
         buttonProps,
+        rippleKeyboardProps,
+        {
+          onPointerDown: (e: React.PointerEvent) =>
+            ripplePointerProps.onPointerDown(isIconOnly ? undefined : e),
+        },
       )}
       data-pressed={isPressed}
       data-hovered={isHovered}
       data-focused={isFocused}
       data-focus-visible={isFocusVisible && isFocused}
       disabled={isDisabled}
-      ref={ref}
+      ref={mergeRefs(ref, innerRef)}
       className={styles}
     >
       {!isIconOnly && startContent}
