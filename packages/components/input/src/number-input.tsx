@@ -43,7 +43,7 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const onChange = useCallbackRef(onChangeProp);
 
     const [value, setValue] = useControllableState({
-      defaultValue,
+      defaultValue: defaultValue || '',
       value: valueProp,
       onChange,
     });
@@ -238,7 +238,6 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           isIconOnly
           size="sm"
           variant="text"
-          color="neutral"
           preventFocusOnPress
           {...stepUpLongPressProps}
           className={styles.button({
@@ -264,7 +263,6 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           isIconOnly
           size="sm"
           variant="text"
-          color="neutral"
           preventFocusOnPress
           {...stepDownLongPressProps}
           className={styles.button({
