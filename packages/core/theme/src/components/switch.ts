@@ -10,13 +10,11 @@ const _switch = tv({
   slots: {
     base: 'inline-flex gap-2 group',
     switch: [
-      'rounded-full relative flex items-center transition-colors group-data-[checked=false]:text-neutral-700 group-data-[checked=false]:[--rippleBg:theme(colors.neutral-800/20%)] isolate cursor-pointer',
+      'rounded-full relative flex items-center transition-colors cursor-pointer group-data-[checked=false]:bg-neutral-200 isolate',
       ...groupDataFocusVisible,
     ],
-    track:
-      'rounded-full absolute inset-0 group-data-[checked=false]:bg-neutral-200',
-    thumb:
-      'absolute z-10 bg-white shadow-md flex items-center justify-center rounded-full left-1 translate-x-0 group-data-[checked=true]:left-[calc(100%-4px)] group-data-[checked=true]:-translate-x-full transition-[left,transform]',
+    indicator:
+      'absolute z-10 bg-white shadow-md flex items-center justify-center rounded-full left-[2px] translate-x-0 group-data-[checked=true]:left-[calc(100%-2px)] group-data-[checked=true]:-translate-x-full transition-[left,transform]',
     nativeInput:
       'absolute z-50 outline-none w-full h-full border-test opacity-0 absolute inset-0 cursor-pointer',
     label: 'cursor-pointer select-none text-neutral-700 first-letter:uppercase',
@@ -47,15 +45,16 @@ const _switch = tv({
         switch:
           'group-data-[checked=true]:[--rippleBg:theme(colors.danger-800/20%)] group-data-[checked=true]:text-danger-700 group-data-[checked=true]:bg-danger-400',
       },
-      neutral: {
-        switch:
-          'group-data-[checked=true]:[--rippleBg:theme(colors.neutral-800/20%)] group-data-[checked=true]:text-neutral-700 group-data-[checked=true]:bg-neutral-400',
-      },
     },
     size: {
-      sm: { switch: 'w-10 h-6', thumb: 'w-4 h-4' },
-      md: { switch: 'w-12 h-7', thumb: 'w-5 h-5' },
-      lg: { switch: 'w-14 h-8', thumb: 'w-6 h-6' },
+      sm: {
+        switch: 'w-9 h-5',
+        indicator: 'w-4 h-4 group-data-[pressed=true]:w-5',
+      },
+      md: {
+        switch: 'w-11 h-6',
+        indicator: 'w-5 h-5 group-data-[pressed=true]:w-6',
+      },
     },
     isDisabled: {
       true: {
@@ -70,10 +69,10 @@ const _switch = tv({
     },
   },
   defaultVariants: {
-    size: 'md',
+    size: 'sm',
     labelPlacement: 'right',
     isDisabled: false,
-    color: 'neutral',
+    color: 'primary',
   },
 });
 
