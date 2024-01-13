@@ -130,7 +130,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
           ref={ref}
           type="checkbox"
           checked={checked}
-          className={styles.nativeInput({ className: classNames?.nativeInput })}
+          className={styles.nativeInput()}
           disabled={isDisabled}
           {...mergeProps(focusProps, hoverProps)}
           onChange={(e) => {

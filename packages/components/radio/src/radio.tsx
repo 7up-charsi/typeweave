@@ -78,7 +78,7 @@ Group.displayName = 'gist-ui.' + Group_Name;
 const Radio_Name = 'Radio.Radio';
 
 export interface RadioProps extends RadioVariantProps {
-  classNames?: Omit<RadioClassNames, 'input' | 'ripple'>;
+  classNames?: Omit<RadioClassNames, 'input'>;
   isDisabled?: boolean;
   icon?: React.ReactNode;
   checkIcon?: React.ReactNode;
@@ -136,7 +136,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
     >
       <div
         ref={radioRef}
-        className={styles.radio({ className: classNames?.base })}
+        className={styles.radio({ className: classNames?.radio })}
         onPointerDown={() => ripplePointerProps.onPointerDown()}
       >
         <input

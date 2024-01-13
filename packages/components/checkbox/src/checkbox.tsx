@@ -39,7 +39,7 @@ export interface CheckboxProps extends CheckboxVariantProps {
   defaultChecked?: boolean;
   checked?: boolean;
   onChange?: (checked: boolean) => void;
-  classNames?: Omit<CheckboxClassNames, 'input' | 'ripple'>;
+  classNames?: Omit<CheckboxClassNames, 'input'>;
   isDisabled?: boolean;
   icon?: React.ReactNode;
   checkIcon?: React.ReactNode;
@@ -103,7 +103,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
     >
       <div
         ref={checkboxRef}
-        className={styles.checkbox({ className: classNames?.base })}
+        className={styles.checkbox({ className: classNames?.checkbox })}
         onPointerDown={() => ripplePointerProps.onPointerDown()}
       >
         <input
