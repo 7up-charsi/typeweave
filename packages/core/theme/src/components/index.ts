@@ -14,3 +14,4 @@ export * from './chip';
 export * from './alert-dialog';
 export * from './overlay';
 export * from './alert';
+export * from './badge';
