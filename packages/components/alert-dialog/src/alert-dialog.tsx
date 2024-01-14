@@ -102,8 +102,6 @@ export const Root = (props: RootProps) => {
 
 Root.displayName = 'gist-ui.' + Root_Name;
 
-export default Root;
-
 // *-*-*-*-* Trigger *-*-*-*-*
 
 const Trigger_Name = 'AlertDialog.Trigger';

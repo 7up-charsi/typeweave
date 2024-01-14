@@ -3,7 +3,7 @@ import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
 import { __DEV__ } from '@gist-ui/shared-utils';
 import { useFocusRing } from '@react-aria/focus';
 import { useControllableState } from '@gist-ui/use-controllable-state';
-import { HoverEvents, useFocus, useHover } from '@react-aria/interactions';
+import { useFocus, useHover } from '@react-aria/interactions';
 import {
   forwardRef,
   useEffect,
@@ -17,8 +17,7 @@ export interface InputProps
       React.InputHTMLAttributes<HTMLInputElement>,
       'onChange' | 'color' | 'size' | 'type'
     >,
-    Omit<InputVariantProps, 'error'>,
-    HoverEvents {
+    Omit<InputVariantProps, 'error'> {
   type?: 'text' | 'number' | 'password';
   defaultValue?: string;
   value?: string;
@@ -52,9 +51,6 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     classNames,
     required,
     onChange,
-    onHoverChange,
-    onHoverEnd,
-    onHoverStart,
     isDisabled,
     error,
     color,
@@ -108,12 +104,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     isFocused,
   } = useFocusRing({ isTextInput: true });
 
-  const { hoverProps, isHovered } = useHover({
-    isDisabled,
-    onHoverChange,
-    onHoverEnd,
-    onHoverStart,
-  });
+  const { hoverProps, isHovered } = useHover({ isDisabled });
 
   const { focusProps } = useFocus<HTMLInputElement>({ onFocus, onBlur });
 
