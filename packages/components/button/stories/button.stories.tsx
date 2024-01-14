@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { button } from '@gist-ui/theme';
-import { Button, ButtonProps } from '../src';
+import { Button, ButtonGroup, ButtonProps } from '../src';
 import { Bars, Circles } from 'react-loader-spinner';
 
 const meta: Meta<typeof Button> = {
@@ -175,6 +175,25 @@ export const IconOnly: StoryObj<ButtonProps> = {
 
 export const Spinner: StoryObj<ButtonProps> = {
   render: Template,
+  args: {
+    startContent: <Bars wrapperClass="svg:fill-current" width={20} />,
+    endContent: <Circles wrapperClass="svg:fill-current" width={20} />,
+    children: 'with spinners',
+  },
+};
+
+const GroupTemplate = () => (
+  <ButtonGroup variant="border">
+    <Button>Select</Button>
+    <Button color="danger">Delete</Button>
+    <Button color="info" isIconOnly>
+      <Circles wrapperClass="svg:fill-current" width={20} />
+    </Button>
+  </ButtonGroup>
+);
+
+export const Group: StoryObj<ButtonProps> = {
+  render: GroupTemplate,
   args: {
     startContent: <Bars wrapperClass="svg:fill-current" width={20} />,
     endContent: <Circles wrapperClass="svg:fill-current" width={20} />,

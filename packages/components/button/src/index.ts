@@ -1,7 +1,8 @@
 import * as button from './button';
 
 // export types
-export type { ButtonProps } from './button';
+export type { ButtonProps, ButtonGroupProps } from './button';
 
 // export component
-export const Button = button.default;
+export const Button = button.Button;
+export const ButtonGroup = button.ButtonGroup;

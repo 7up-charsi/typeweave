@@ -48,6 +48,7 @@ const button = tv({
     color: 'primary',
     fullWidth: false,
     isDisabled: false,
+    isIconOnly: false,
   },
   compoundVariants: [
     {

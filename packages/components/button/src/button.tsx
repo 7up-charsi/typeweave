@@ -1,22 +1,76 @@
-import { button, ButtonVariantProps } from '@gist-ui/theme';
+import {
+  button,
+  buttonGroup,
+  ButtonGroupVariantProps,
+  ButtonVariantProps,
+} from '@gist-ui/theme';
 import { __DEV__ } from '@gist-ui/shared-utils';
 import { useRipple, UseRippleProps } from '@gist-ui/use-ripple';
 import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
 import { useFocusRing } from '@react-aria/focus';
 import { ClassValue } from 'tailwind-variants';
-import {
-  usePress,
-  useHover,
-  HoverEvents,
-  PressProps,
-} from '@react-aria/interactions';
+import { usePress, useHover, PressProps } from '@react-aria/interactions';
 import {
   ButtonHTMLAttributes,
+  createContext,
   forwardRef,
   ReactNode,
+  useContext,
   useEffect,
   useRef,
 } from 'react';
+
+interface GroupContext extends ButtonVariantProps {}
+
+// *-*-*-*-* ButtonGroup *-*-*-*-*
+
+const Context = createContext<GroupContext | null>(null);
+
+export interface ButtonGroupProps
+  extends ButtonVariantProps,
+    ButtonGroupVariantProps {
+  children?: React.ReactNode;
+  className?: ClassValue;
+}
+
+export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
+  (props, ref) => {
+    const {
+      children,
+      isDisabled,
+      color,
+      fullWidth,
+      isIconOnly,
+      size,
+      variant,
+      direction,
+      className,
+    } = props;
+
+    const styles = buttonGroup({ direction, className });
+
+    return (
+      <Context.Provider
+        value={{
+          isDisabled,
+          color,
+          fullWidth,
+          isIconOnly,
+          size,
+          variant,
+        }}
+      >
+        <div ref={ref} className={styles}>
+          {children}
+        </div>
+      </Context.Provider>
+    );
+  },
+);
+
+ButtonGroup.displayName = 'gist-ui.ButtonGroup';
+
+// *-*-*-*-* Button *-*-*-*-*
 
 export interface ButtonProps
   extends ButtonVariantProps,
@@ -24,8 +78,7 @@ export interface ButtonProps
       ButtonHTMLAttributes<HTMLButtonElement>,
       'color' | 'className' | 'disabled'
     >,
-    Omit<PressProps, 'isPressed' | 'ref'>,
-    HoverEvents {
+    Omit<PressProps, 'isPressed' | 'ref'> {
   startContent?: ReactNode;
   endContent?: ReactNode;
   className?: ClassValue;
@@ -35,104 +88,118 @@ export interface ButtonProps
   rippleCompletedFactor?: UseRippleProps['completedFactor'];
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-  const {
-    startContent,
-    endContent,
-    className,
-    children,
-    onPress,
-    onPressEnd,
-    onPressStart,
-    onPressUp,
-    onPressChange,
-    isIconOnly = false,
-    rippleDuration = isIconOnly ? 450 : 500,
-    rippleTimingFunction,
-    rippleCompletedFactor,
-    color,
-    fullWidth,
-    isDisabled,
-    size,
-    variant,
-    allowTextSelectionOnPress,
-    preventFocusOnPress,
-    shouldCancelOnPointerExit,
-    ...buttonProps
-  } = props;
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (props, ref) => {
+    const {
+      startContent,
+      endContent,
+      className,
+      children,
+      onPress,
+      onPressEnd,
+      onPressStart,
+      onPressUp,
+      onPressChange,
+      isIconOnly,
+      rippleDuration = isIconOnly ? 450 : 500,
+      rippleTimingFunction,
+      rippleCompletedFactor,
+      color,
+      fullWidth,
+      isDisabled: _isDisabled,
+      size,
+      variant,
+      allowTextSelectionOnPress,
+      preventFocusOnPress,
+      shouldCancelOnPointerExit,
+      ...buttonProps
+    } = props;
 
-  const innerRef = useRef(null);
+    const groupContext = useContext(Context);
 
-  const { rippleKeyboardProps, ripplePointerProps } = useRipple({
-    containerRef: innerRef,
-    isDisabled,
-    duration: rippleDuration,
-    timingFunction: rippleTimingFunction,
-    completedFactor: rippleCompletedFactor,
-  });
+    const innerRef = useRef(null);
 
-  const { focusProps, isFocusVisible, isFocused } = useFocusRing();
-  const { hoverProps, isHovered } = useHover({ isDisabled });
-  const { pressProps, isPressed } = usePress({
-    isDisabled,
-    onPress,
-    onPressEnd,
-    onPressStart,
-    onPressUp,
-    onPressChange,
-    allowTextSelectionOnPress,
-    preventFocusOnPress,
-    shouldCancelOnPointerExit,
-  });
+    const isDisabled = _isDisabled ?? groupContext?.isDisabled;
 
-  const ariaLabel = props['aria-label'];
-  const ariaLabelledby = props['aria-labelledby'];
+    const { rippleKeyboardProps, ripplePointerProps } = useRipple({
+      containerRef: innerRef,
+      isDisabled,
+      duration: rippleDuration,
+      timingFunction: rippleTimingFunction,
+      completedFactor: rippleCompletedFactor,
+    });
 
-  useEffect(() => {
-    if (__DEV__ && isIconOnly && !ariaLabel && !ariaLabelledby)
-      console.warn(
-        'Gist-ui button: icon button must provide "aria-label" or "aria-labelledby"',
-      );
-  }, [ariaLabel, ariaLabelledby, isIconOnly]);
+    const { focusProps, isFocusVisible, isFocused } = useFocusRing();
+    const { hoverProps, isHovered } = useHover({ isDisabled });
+    const { pressProps, isPressed } = usePress({
+      isDisabled,
+      onPress,
+      onPressEnd,
+      onPressStart,
+      onPressUp,
+      onPressChange,
+      allowTextSelectionOnPress,
+      preventFocusOnPress,
+      shouldCancelOnPointerExit,
+    });
 
-  const styles = button({
-    color,
-    fullWidth,
-    isDisabled,
-    isIconOnly,
-    size,
-    variant,
-    className,
-  });
+    const ariaLabel = props['aria-label'];
+    const ariaLabelledby = props['aria-labelledby'];
 
-  return (
-    <button
-      {...mergeProps(
-        pressProps,
-        focusProps,
-        hoverProps,
-        buttonProps,
-        rippleKeyboardProps,
-        {
-          onPointerDown: (e: React.PointerEvent) =>
-            ripplePointerProps.onPointerDown(isIconOnly ? undefined : e),
-        },
-      )}
-      data-pressed={isPressed}
-      data-hovered={isHovered}
-      data-focused={isFocused}
-      data-focus-visible={isFocusVisible && isFocused}
-      disabled={isDisabled}
-      ref={mergeRefs(ref, innerRef)}
-      className={styles}
-    >
-      {!isIconOnly && startContent}
-      {children}
-      {!isIconOnly && endContent}
-    </button>
-  );
-});
+    useEffect(() => {
+      if (__DEV__ && isIconOnly && !ariaLabel && !ariaLabelledby)
+        console.warn(
+          'Gist-ui button: icon button must provide "aria-label" or "aria-labelledby"',
+        );
+    }, [ariaLabel, ariaLabelledby, isIconOnly]);
+
+    const styles = button(
+      groupContext
+        ? {
+            color: color ?? groupContext?.color,
+            variant: variant ?? groupContext?.variant,
+            isIconOnly: isIconOnly ?? groupContext?.isIconOnly,
+            size: groupContext?.size,
+            isDisabled,
+          }
+        : {
+            color,
+            isDisabled,
+            isIconOnly,
+            variant,
+            size,
+            fullWidth,
+            className,
+          },
+    );
+
+    return (
+      <button
+        {...mergeProps(
+          pressProps,
+          focusProps,
+          hoverProps,
+          buttonProps,
+          rippleKeyboardProps,
+          {
+            onPointerDown: (e: React.PointerEvent) =>
+              ripplePointerProps.onPointerDown(isIconOnly ? undefined : e),
+          },
+        )}
+        data-pressed={isPressed}
+        data-hovered={isHovered}
+        data-focused={isFocused}
+        data-focus-visible={isFocusVisible && isFocused}
+        disabled={isDisabled}
+        ref={mergeRefs(ref, innerRef)}
+        className={styles}
+      >
+        {!isIconOnly && startContent}
+        {children}
+        {!isIconOnly && endContent}
+      </button>
+    );
+  },
+);
 
 Button.displayName = 'gist-ui.Button';
-
-export default Button;
