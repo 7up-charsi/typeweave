@@ -23,7 +23,6 @@ const alertDialog = tv({
   },
   defaultVariants: {
     shadow: 'md',
-    overlay: 'opaque',
   },
 });
 

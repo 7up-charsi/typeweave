@@ -1,16 +1,12 @@
 import {
   ClassValue,
   SlotsClassValue,
-  VariantProps,
   tv,
+  VariantProps,
 } from 'tailwind-variants';
-import { dataFocusVisible } from '../classes';
 
-const button = tv({
-  base: [
-    'z-0 group relative inline-flex items-center justify-center box-border rounded appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transition-colors outline-none',
-    ...dataFocusVisible,
-  ],
+const alert = tv({
+  base: 'inline-flex gap-4 p-4 rounded',
   variants: {
     variant: {
       solid: '',
@@ -20,82 +16,23 @@ const button = tv({
       text: 'bg-transparent',
     },
     color: {
-      primary: '',
-      secondary: '',
       success: '',
       info: '',
       warning: '',
       danger: '',
     },
-    size: {
-      sm: '',
-      md: '',
-      lg: '',
-    },
     fullWidth: {
       true: 'w-full',
-    },
-    isDisabled: {
-      true: 'disabled',
-    },
-    isIconOnly: {
-      true: '[&>svg]:pointer-events-none rounded-full',
+      false: 'max-w-max',
     },
   },
   defaultVariants: {
-    size: 'md',
-    variant: 'solid',
-    color: 'primary',
-    fullWidth: false,
-    isDisabled: false,
+    variant: 'flat',
+    color: 'danger',
+    fullWidth: true,
   },
   compoundVariants: [
-    {
-      isIconOnly: false,
-      size: 'sm',
-      className: 'px-3 h-8 min-w-[64px] text-sm gap-2',
-    },
-    {
-      isIconOnly: false,
-      size: 'md',
-      className: 'px-4 h-10 min-w-[80px] gap-2',
-    },
-    {
-      isIconOnly: false,
-      size: 'lg',
-      className: 'px-6 h-12 min-w-[96px] text-lg gap-3',
-    },
-
-    // isIconOnly
-    {
-      isIconOnly: true,
-      size: 'sm',
-      class: 'w-8 h-8',
-    },
-    {
-      isIconOnly: true,
-      size: 'md',
-      class: 'w-10 h-10',
-    },
-    {
-      isIconOnly: true,
-      size: 'lg',
-      class: 'w-12 h-12',
-    },
-
     // color / solid
-    {
-      variant: 'solid',
-      color: 'primary',
-      class:
-        'bg-primary text-primary-foreground [--rippleBg:theme(colors.primary-foreground/30%)]',
-    },
-    {
-      variant: 'solid',
-      color: 'secondary',
-      class:
-        'bg-secondary text-secondary-foreground [--rippleBg:theme(colors.secondary-foreground/30%)]',
-    },
     {
       variant: 'solid',
       color: 'success',
@@ -124,18 +61,6 @@ const button = tv({
     // color / shadow
     {
       variant: 'shadow',
-      color: 'primary',
-      class:
-        'bg-primary text-primary-foreground [--rippleBg:theme(colors.primary-foreground/30%)] shadow-primary-400/80',
-    },
-    {
-      variant: 'shadow',
-      color: 'secondary',
-      class:
-        'bg-secondary text-secondary-foreground [--rippleBg:theme(colors.secondary-foreground/30%)] shadow-secondary-400/80',
-    },
-    {
-      variant: 'shadow',
       color: 'success',
       class:
         'bg-success text-success-foreground [--rippleBg:theme(colors.success-foreground/30%)] shadow-success-400/80',
@@ -160,18 +85,6 @@ const button = tv({
     },
 
     // color / flat
-    {
-      variant: 'flat',
-      color: 'primary',
-      class:
-        'bg-primary-100 text-primary-800 [--rippleBg:theme(colors.primary-800/20%)]',
-    },
-    {
-      variant: 'flat',
-      color: 'secondary',
-      class:
-        'bg-secondary-100 text-secondary-800 [--rippleBg:theme(colors.secondary-800/20%)]',
-    },
     {
       variant: 'flat',
       color: 'success',
@@ -200,18 +113,6 @@ const button = tv({
     // color / text
     {
       variant: 'text',
-      color: 'primary',
-      class:
-        'data-[hovered=true]:bg-primary-100 text-primary-700 [--rippleBg:theme(colors.primary-700/20%)]',
-    },
-    {
-      variant: 'text',
-      color: 'secondary',
-      class:
-        'data-[hovered=true]:bg-secondary-100 text-secondary-700 [--rippleBg:theme(colors.secondary-700/20%)]',
-    },
-    {
-      variant: 'text',
       color: 'success',
       class:
         'data-[hovered=true]:bg-success-100 text-success-700 [--rippleBg:theme(colors.success-700/20%)]',
@@ -236,18 +137,6 @@ const button = tv({
     },
 
     // color / border
-    {
-      variant: 'border',
-      color: 'primary',
-      class:
-        'border-primary-700 text-primary-800 [--rippleBg:theme(colors.primary-800/20%)]',
-    },
-    {
-      variant: 'border',
-      color: 'secondary',
-      class:
-        'border-secondary-700 text-secondary-800 [--rippleBg:theme(colors.secondary-800/20%)]',
-    },
     {
       variant: 'border',
       color: 'success',
@@ -275,7 +164,7 @@ const button = tv({
   ],
 });
 
-export type ButtonVariantProps = VariantProps<typeof button>;
-export type ButtonClassNames = SlotsClassValue<typeof button.slots, ClassValue>;
+export type AlertVariantProps = VariantProps<typeof alert>;
+export type AlertClassNames = SlotsClassValue<typeof alert.slots, ClassValue>;
 
-export { button };
+export { alert };
