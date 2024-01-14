@@ -8,8 +8,8 @@ import {
 const popover = tv({
   slots: {
     content: 'border bg-white max-w-sm w-full rounded p-4',
-    title: 'text-lg font-semibold text-neutral-700 mb-1',
-    description: 'text-normal text-neutral-700',
+    title: 'text-lg font-semibold text-neutral-800 mb-2',
+    description: 'text-normal text-neutral-600',
   },
   variants: {
     shadow: {

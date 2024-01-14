@@ -200,7 +200,7 @@ const Template = (args) => {
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Overlay className={styles.overlay()} />
+        <Dialog.Overlay />
 
         <Dialog.Content
           className={styles.content({ className: args.className })}

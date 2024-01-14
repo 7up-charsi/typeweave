@@ -275,7 +275,7 @@ export const Content = (props: ContentProps) => {
 
   return (
     <Popper.Floating arrowPadding={arrowPadding} {...restProps}>
-      <FocusTrap ref={setOutsideEle} loop trapped asChild>
+      <FocusTrap ref={setOutsideEle} loop trapped>
         <div
           role="dialog"
           aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}

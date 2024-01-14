@@ -20,7 +20,6 @@ export interface FocusTrapProps {
    */
   trapped?: boolean;
   children?: React.ReactNode;
-  asChild?: boolean;
   isDisabled?: boolean;
   /**
    * **This prop is for internal use.**
@@ -35,14 +34,11 @@ const FocusTrap = forwardRef<HTMLDivElement, FocusTrapProps>((props, ref) => {
   const {
     loop = true,
     trapped = true,
-    asChild,
     children,
     isDisabled,
     scope,
     ...restProps
   } = props;
-
-  const Component = asChild ? Slot : 'div';
 
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
@@ -174,7 +170,7 @@ const FocusTrap = forwardRef<HTMLDivElement, FocusTrapProps>((props, ref) => {
   };
 
   return (
-    <Component
+    <Slot<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>
       tabIndex={-1}
       ref={mergeRefs(ref, setContainer as React.ForwardedRef<HTMLDivElement>)}
       onKeyDown={handleKeyDown}
@@ -182,7 +178,7 @@ const FocusTrap = forwardRef<HTMLDivElement, FocusTrapProps>((props, ref) => {
       style={{ outline: 'none', ...(restProps as { style: object }).style }}
     >
       {children}
-    </Component>
+    </Slot>
   );
 });
 

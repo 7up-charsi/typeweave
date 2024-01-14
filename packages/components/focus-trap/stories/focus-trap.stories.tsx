@@ -14,7 +14,7 @@ export default meta;
 const DefaultTemplate = (args: FocusTrapProps) => {
   return (
     <>
-      <FocusTrap {...args} asChild>
+      <FocusTrap {...args}>
         <div className="w-[500px] h-[500px] border-2 border-neutral-300 rounded flex flex-wrap content-center items-center gap-3 justify-center">
           <span className="w-full text-center font-medium mb-4 text-info-400">
             Focus can not escape this container with

@@ -16,13 +16,6 @@ type CloseEvent = { preventDefault(): void };
 
 interface RootContext {
   handleOpen: () => void;
-  /**
-   * reason param could be "pointer" | "escape" | "outside" | "virtual"
-   * 1. when dialog closed on interaction with `Close` component then reason is "pointer"
-   * 2. when dialog closed on interaction outside `Content` component then reason is "outside"
-   * 2. when dialog closed on Escape keypress then reason is "escape"
-   * 2. when dialog closed on interaction with visually hidden close button then reason is "virtual" and this will only happen when screen reader read dialog content and close press close button
-   */
   handleClose: (reason: Reason) => void;
   isOpen: boolean;
   scope: FocusScope;
@@ -32,59 +25,34 @@ interface RootContext {
   descriptionId: string;
 }
 
-const Dialog_Name = 'Dialog.Root';
+const Root_Name = 'Dialog.Root';
 
 const [RootProvider, useRootContext] =
-  createContextScope<RootContext>(Dialog_Name);
+  createContextScope<RootContext>(Root_Name);
 
 // *-*-*-*-* Root *-*-*-*-*
 
 export interface RootProps {
   children?: React.ReactNode;
-  /**
-   * This prop is used for controled state
-   * @default undefined
-   */
   isOpen?: boolean;
-  /**
-   * This prop is used for controled state
-   * @default undefined
-   */
   onOpenChange?: (isOpen: boolean) => void;
-  /**
-   * @default undefined
-   */
   defaultOpen?: boolean;
   /**
+   * reason param could be "pointer" | "escape" | "outside" | "virtual"
+   * 1. when dialog closed on interaction with `Close` component then reason is "pointer"
+   * 2. when dialog closed on interaction outside `Content` component then reason is "outside"
+   * 2. when dialog closed on Escape keypress then reason is "escape"
+   * 2. when dialog closed on interaction with visually hidden close button then reason is "virtual" and this will only happen when screen reader read dialog content and close press close button
+   *
    * This callback can be used to prevent close conditionally
+   * if you want to prevent close when Escape is pressed then do this
+   * ```
+   *  onClose={(e, reason) => {
+   *   if (reason === 'escape') e.preventDefault();
+   *  }}
+   * ```
+   *
    * @default undefined
-   * @example
-   * 1. when user click outside of `Content` component
-   * ```js
-   * onClose={(event, reason)=>{
-   *  if(reason === 'outside') {
-   *    event.preventDefault()
-   *  }
-   * }}
-   * ```
-   *
-   * 2. when user press Escape key
-   * ```js
-   * onClose={(event, reason)=>{
-   *  if(reason === 'escape') {
-   *    event.preventDefault()
-   *  }
-   * }}
-   * ```
-   *
-   * 3. when user press `Close` button
-   * ```js
-   * onClose={(event, reason)=>{
-   *  if(reason === 'pointer') {
-   *    event.preventDefault()
-   *  }
-   * }}
-   * ```
    */
   onClose?: (event: CloseEvent, reason: Reason) => void;
   /**
@@ -144,19 +112,19 @@ export const Root = (props: RootProps) => {
   });
 
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         handleClose('escape');
       }
     };
 
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeydown);
+    document.addEventListener('keydown', handleKeydown);
 
-      return () => {
-        document.removeEventListener('keydown', handleKeydown);
-      };
-    }
+    return () => {
+      document.removeEventListener('keydown', handleKeydown);
+    };
   }, [handleClose, isOpen]);
 
   return (
@@ -175,7 +143,7 @@ export const Root = (props: RootProps) => {
   );
 };
 
-Root.displayName = 'gist-ui.' + Dialog_Name;
+Root.displayName = 'gist-ui.' + Root_Name;
 
 // *-*-*-*-* Trigger *-*-*-*-*
 
@@ -270,22 +238,6 @@ export const Portal = (props: PortalProps) => {
 
 Portal.displayName = 'gist-ui.' + Portal_Name;
 
-// *-*-*-*-* Overlay *-*-*-*-*
-
-const Overlay_Name = 'Dialog.Overlay';
-
-export interface OverlayProps {
-  className?: string;
-}
-
-export const Overlay = (props: OverlayProps) => {
-  const { className } = props;
-
-  return <div className={className} />;
-};
-
-Overlay.displayName = 'gist-ui.' + Overlay_Name;
-
 // *-*-*-*-* Title *-*-*-*-*
 
 const Title_Name = 'Dialog.Title';
@@ -362,7 +314,6 @@ export const Content = (props: ContentProps) => {
       ref={setOutsideEle}
       loop
       trapped
-      asChild
       scope={rootContext.scope}
       isDisabled={!rootContext.isOpen}
     >
