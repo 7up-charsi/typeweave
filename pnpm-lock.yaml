@@ -132,6 +132,64 @@ importers:
         specifier: ^4.4.5
         version: 4.4.5(@types/node@20.8.6)
 
+  packages/components/alert-dialog:
+    dependencies:
+      '@gist-ui/button':
+        specifier: workspace:*
+        version: link:../button
+      '@gist-ui/context':
+        specifier: workspace:*
+        version: link:../../core/context
+      '@gist-ui/error':
+        specifier: workspace:*
+        version: link:../../utilities/error
+      '@gist-ui/focus-trap':
+        specifier: workspace:*
+        version: link:../focus-trap
+      '@gist-ui/overlay':
+        specifier: workspace:*
+        version: link:../overlay
+      '@gist-ui/shared-utils':
+        specifier: workspace:*
+        version: link:../../utilities/shared-utils
+      '@gist-ui/slot':
+        specifier: workspace:*
+        version: link:../slot
+      '@gist-ui/theme':
+        specifier: workspace:*
+        version: link:../../core/theme
+      '@gist-ui/use-callback-ref':
+        specifier: workspace:*
+        version: link:../../hooks/use-callback-ref
+      '@gist-ui/use-click-outside':
+        specifier: workspace:*
+        version: link:../../hooks/use-click-outside
+      '@gist-ui/use-controllable-state':
+        specifier: workspace:*
+        version: link:../../hooks/use-controllable-state
+      '@gist-ui/use-is-disabled':
+        specifier: workspace:*
+        version: link:../../hooks/use-is-disabled
+      '@gist-ui/use-scroll-lock':
+        specifier: workspace:*
+        version: link:../../hooks/use-scroll-lock
+      '@gist-ui/visually-hidden':
+        specifier: workspace:*
+        version: link:../visually-hidden
+      '@react-aria/interactions':
+        specifier: ^3.20.0
+        version: 3.20.0(react@18.2.0)
+      react:
+        specifier: '>=18'
+        version: 18.2.0
+      react-dom:
+        specifier: '>=18'
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      clean-package:
+        specifier: ^2.2.0
+        version: 2.2.0
+
   packages/components/autocomplete:
     dependencies:
       '@gist-ui/button':
@@ -300,6 +358,9 @@ importers:
       '@gist-ui/focus-trap':
         specifier: workspace:*
         version: link:../focus-trap
+      '@gist-ui/overlay':
+        specifier: workspace:*
+        version: link:../overlay
       '@gist-ui/shared-utils':
         specifier: workspace:*
         version: link:../../utilities/shared-utils
@@ -458,6 +519,22 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
 
+  packages/components/overlay:
+    dependencies:
+      '@gist-ui/theme':
+        specifier: workspace:*
+        version: link:../../core/theme
+      react:
+        specifier: '>=18'
+        version: 18.2.0
+      react-dom:
+        specifier: '>=18'
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      clean-package:
+        specifier: ^2.2.0
+        version: 2.2.0
+
   packages/components/popover:
     dependencies:
       '@gist-ui/button':
@@ -484,6 +561,9 @@ importers:
       '@gist-ui/theme':
         specifier: workspace:*
         version: link:../../core/theme
+      '@gist-ui/use-callback-ref':
+        specifier: workspace:*
+        version: link:../../hooks/use-callback-ref
       '@gist-ui/use-click-outside':
         specifier: workspace:*
         version: link:../../hooks/use-click-outside
@@ -691,6 +771,9 @@ importers:
       '@gist-ui/theme':
         specifier: workspace:*
         version: link:../../core/theme
+      '@gist-ui/use-callback-ref':
+        specifier: workspace:*
+        version: link:../../hooks/use-callback-ref
       '@gist-ui/use-controllable-state':
         specifier: workspace:*
         version: link:../../hooks/use-controllable-state

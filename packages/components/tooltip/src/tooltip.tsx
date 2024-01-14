@@ -147,18 +147,19 @@ export const Root = (props: RootProps) => {
   });
 
   useEffect(() => {
+    if (!isOpen) return;
+
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         hideTooltip(true);
       }
     };
 
-    if (isOpen) {
-      document.addEventListener('keydown', onKeyDown);
-      return () => {
-        document.removeEventListener('keydown', onKeyDown);
-      };
-    }
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
   }, [hideTooltip, isOpen]);
 
   useEffect(() => {
