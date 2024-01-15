@@ -186,11 +186,11 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
 
         {type === 'multiline' ? (
           <textarea
+            rows={3}
             {...sharedProps}
             onChange={(e) => setValue(e.target.value)}
             className={styles.textarea({ className: classNames?.textarea })}
             ref={textareaRef}
-            rows={1}
           ></textarea>
         ) : (
           <input

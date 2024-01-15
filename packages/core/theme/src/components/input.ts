@@ -18,7 +18,7 @@ const input = tv({
     fieldset: '',
     legend: '',
     textarea:
-      'appearance-none bg-transparent outline-none grow w-0 text-neutral-700 placeholder:opacity-0 placeholder:text-neutral-400 group-data-[shrink=true]:placeholder:opacity-100 resize-none border border-transparent',
+      'appearance-none bg-transparent outline-none grow w-0 text-neutral-700 placeholder:opacity-0 placeholder:text-neutral-400 group-data-[shrink=true]:placeholder:opacity-100 resize-none',
   },
   variants: {
     variant: {
