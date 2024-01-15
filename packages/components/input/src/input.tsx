@@ -18,7 +18,7 @@ export interface InputProps
       'onChange' | 'color' | 'size' | 'type'
     >,
     Omit<InputVariantProps, 'error'> {
-  type?: 'text' | 'number' | 'password';
+  type?: 'text' | 'number' | 'password' | 'multiline';
   defaultValue?: string;
   value?: string;
   onChange?: (value: string) => void;
@@ -70,6 +70,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const inputWrapperRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (__DEV__) {
@@ -85,6 +86,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     () => {
       inputWrapperRef.current!.focus = () => {
         inputRef.current?.focus();
+        textareaRef.current?.focus();
       };
 
       return inputWrapperRef.current!;
@@ -116,7 +118,20 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     hideLabel,
     size,
     variant,
+    multiline: type === 'multiline',
   });
+
+  const sharedProps = {
+    ...mergeProps(focusProps, focusRingProps, inputProps),
+    value,
+    'aria-label': hideLabel ? label : undefined,
+    'aria-describedby': helperText ? helperTextId : undefined,
+    'aria-errormessage': error && errorMessage ? errorMessageId : undefined,
+    'aria-required': required,
+    'aria-invalid': error,
+    id: inputId,
+    disabled: isDisabled,
+  };
 
   return (
     <div
@@ -127,7 +142,18 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
       data-shrink={isFocused || !!value || !!startContent}
       data-hovered={isHovered}
       data-disabled={isDisabled}
+      data-start={!!startContent}
+      data-end={!!endContent}
     >
+      {!hideLabel && !!label && (
+        <label
+          htmlFor={inputId}
+          className={styles.label({ className: classNames?.label })}
+        >
+          {label}
+        </label>
+      )}
+
       <div
         ref={mergeRefs(ref, inputWrapperRef)}
         className={styles.inputWrapper({ className: classNames?.inputWrapper })}
@@ -135,21 +161,19 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
         onPointerDown={(e) => {
           if (isDisabled) return;
           if (e.button !== 0) return;
-          if (e.target !== inputRef.current) {
+
+          if (type !== 'multiline' && e.target !== inputRef.current) {
             e.preventDefault();
             inputRef.current?.focus();
+            return;
+          }
+
+          if (type === 'multiline' && e.target !== textareaRef.current) {
+            e.preventDefault();
+            textareaRef.current?.focus();
           }
         }}
       >
-        {!hideLabel && !!label && (
-          <label
-            htmlFor={inputId}
-            className={styles.label({ className: classNames?.label })}
-          >
-            {label}
-          </label>
-        )}
-
         {startContent && (
           <div
             className={styles.startContent({
@@ -160,22 +184,23 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
           </div>
         )}
 
-        <input
-          {...inputProps}
-          {...mergeProps(focusProps, focusRingProps)}
-          type={type}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          aria-label={hideLabel ? label : undefined}
-          aria-describedby={helperText ? helperTextId : undefined}
-          aria-errormessage={error && errorMessage ? errorMessageId : undefined}
-          aria-required={required}
-          aria-invalid={error}
-          className={styles.input({ className: classNames?.input })}
-          ref={inputRef}
-          id={inputId}
-          disabled={isDisabled}
-        />
+        {type === 'multiline' ? (
+          <textarea
+            {...sharedProps}
+            onChange={(e) => setValue(e.target.value)}
+            className={styles.textarea({ className: classNames?.textarea })}
+            ref={textareaRef}
+            rows={1}
+          ></textarea>
+        ) : (
+          <input
+            {...sharedProps}
+            type={type}
+            onChange={(e) => setValue(e.target.value)}
+            className={styles.input({ className: classNames?.input })}
+            ref={inputRef}
+          />
+        )}
 
         {endContent && (
           <div

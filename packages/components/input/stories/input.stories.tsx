@@ -94,3 +94,21 @@ export const Number: StoryObj<NumberInputProps> = {
     largeStep: 5,
   },
 };
+
+const MultilineTemplate = (args: InputProps) => (
+  <InputComp
+    type="multiline"
+    {...args}
+    startContent={
+      args.startContent && <p className="text-neutral">{args.startContent}</p>
+    }
+    endContent={
+      args.endContent && <p className="text-neutral">{args.endContent}</p>
+    }
+    placeholder="very nice placeholder"
+  />
+);
+
+export const Multiline: StoryObj<InputProps> = {
+  render: MultilineTemplate,
+};
