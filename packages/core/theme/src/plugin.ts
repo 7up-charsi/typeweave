@@ -102,6 +102,16 @@ const corePlugin = (
           colors: {
             ...colorObject,
           },
+          keyframes: {
+            skeletonWave: {
+              '100%': {
+                transform: 'translateX(100%)',
+              },
+            },
+          },
+          animation: {
+            skeletonWave: 'skeletonWave 2s linear 0.5s infinite',
+          },
         },
       },
     },
