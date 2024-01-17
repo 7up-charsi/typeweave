@@ -570,6 +570,25 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
 
+  packages/components/pagination:
+    dependencies:
+      '@gist-ui/button':
+        specifier: workspace:*
+        version: link:../button
+      '@gist-ui/theme':
+        specifier: workspace:*
+        version: link:../../core/theme
+      react:
+        specifier: '>=18'
+        version: 18.2.0
+      react-dom:
+        specifier: '>=18'
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      clean-package:
+        specifier: ^2.2.0
+        version: 2.2.0
+
   packages/components/popover:
     dependencies:
       '@gist-ui/button':
