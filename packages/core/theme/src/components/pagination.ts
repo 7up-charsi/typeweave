@@ -55,7 +55,7 @@ const pagination = tv({
       lg: { item: 'w-10 h-10 text-base', ellipsis: 'w-10 h-10' },
     },
     isDisabled: {
-      true: { base: 'disabled' },
+      true: { base: 'disabled', item: 'disabled' },
     },
   },
   defaultVariants: {

@@ -6,20 +6,23 @@ import { forwardRef } from 'react';
 export interface PaginationItemProps {
   className: string;
   a11yLabel: string;
-  selected: boolean;
-  onSelect: () => void;
   children: React.ReactNode;
   isDisabled: boolean;
+  selected?: boolean;
+  onPress?: () => void;
 }
 
 const PaginationItem = forwardRef<HTMLButtonElement, PaginationItemProps>(
   (props, ref) => {
-    const { a11yLabel, className, onSelect, selected, children, isDisabled } =
+    const { a11yLabel, className, onPress, selected, children, isDisabled } =
       props;
 
-    const { pressProps, isPressed } = usePress({ onPress: onSelect });
+    const { pressProps, isPressed } = usePress({
+      isDisabled,
+      onPress,
+    });
 
-    const { hoverProps, isHovered } = useHover({});
+    const { hoverProps, isHovered } = useHover({ isDisabled });
 
     const { focusProps, isFocusVisible, isFocused } = useFocusRing({});
 
@@ -29,11 +32,11 @@ const PaginationItem = forwardRef<HTMLButtonElement, PaginationItemProps>(
         ref={ref}
         className={className}
         aria-label={a11yLabel}
-        data-selected={selected}
+        disabled={isDisabled}
+        data-selected={!!selected}
         data-pressed={isPressed}
         data-hovered={isHovered}
         data-focus-visible={isFocusVisible && isFocused}
-        disabled={isDisabled}
       >
         {children}
       </button>

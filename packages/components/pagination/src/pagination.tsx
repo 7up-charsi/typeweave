@@ -9,28 +9,87 @@ import PaginationItem from './pagination-item';
 
 const ellipsis_svg = (
   <svg
-    viewBox="0 0 24 24"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
     width={18}
     height={18}
   >
-    <g strokeWidth="0"></g>
-    <g strokeLinecap="round" strokeLinejoin="round"></g>
-    <g>
-      <path
-        d="M12 13.75C12.9665 13.75 13.75 12.9665 13.75 12C13.75 11.0335 12.9665 10.25 12 10.25C11.0335 10.25 10.25 11.0335 10.25 12C10.25 12.9665 11.0335 13.75 12 13.75Z"
-        fill="currentColor"
-      ></path>
-      <path
-        d="M19 13.75C19.9665 13.75 20.75 12.9665 20.75 12C20.75 11.0335 19.9665 10.25 19 10.25C18.0335 10.25 17.25 11.0335 17.25 12C17.25 12.9665 18.0335 13.75 19 13.75Z"
-        fill="currentColor"
-      ></path>
-      <path
-        d="M5 13.75C5.9665 13.75 6.75 12.9665 6.75 12C6.75 11.0335 5.9665 10.25 5 10.25C4.0335 10.25 3.25 11.0335 3.25 12C3.25 12.9665 4.0335 13.75 5 13.75Z"
-        fill="currentColor"
-      ></path>
+    <g fill="currentColor">
+      <path d="M12 13.75a1.75 1.75 0 100-3.5 1.75 1.75 0 000 3.5zM19 13.75a1.75 1.75 0 100-3.5 1.75 1.75 0 000 3.5zM5 13.75a1.75 1.75 0 100-3.5 1.75 1.75 0 000 3.5z"></path>
     </g>
+  </svg>
+);
+
+const first_svg = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    width={20}
+    height={20}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M4 4v16m4-8h12M8 12l4-4m-4 4l4 4"
+    ></path>
+  </svg>
+);
+
+const last_svg = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    width={20}
+    height={20}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M20 4v16M4 12h12m0 0l-4-4m4 4l-4 4"
+    ></path>
+  </svg>
+);
+
+const next_svg = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    width={20}
+    height={20}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M6 12h12m0 0l-5-5m5 5l-5 5"
+    ></path>
+  </svg>
+);
+
+const prev_svg = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    width={20}
+    height={20}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M6 12h12M6 12l5-5m-5 5l5 5"
+    ></path>
   </svg>
 );
 
@@ -44,6 +103,14 @@ export interface PaginationProps extends PaginationVariantProps {
   classNames?: PaginationClassNames;
   getItemA11yLabel?: (page: number) => string;
   a11yLabel?: string;
+  showFirstButton?: boolean;
+  showLastButton?: boolean;
+  showPreviousButton?: boolean;
+  showNextButton?: boolean;
+  firstButtonIcon?: boolean;
+  lastButtonIcon?: boolean;
+  previousButtonIcon?: boolean;
+  nextButtonIcon?: boolean;
 }
 
 const range = (start: number, end: number) =>
@@ -61,6 +128,14 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
       isDisabled,
       size,
       variant,
+      showFirstButton = true,
+      showLastButton = true,
+      showPreviousButton = true,
+      showNextButton = true,
+      firstButtonIcon = first_svg,
+      lastButtonIcon = last_svg,
+      previousButtonIcon = prev_svg,
+      nextButtonIcon = next_svg,
       defaultPage = 1,
       count = 10,
       boundaryCount = 1,
@@ -103,6 +178,38 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
         className={styles.base({ className: classNames?.base })}
         aria-label={a11yLabel || 'pagination navigation'}
       >
+        {showFirstButton && (
+          <li>
+            <PaginationItem
+              className={styles.item({
+                className: classNames?.item,
+                isDisabled: page === 1,
+              })}
+              a11yLabel="first page"
+              onPress={() => setPage(1)}
+              isDisabled={!!isDisabled || page === 1}
+            >
+              {firstButtonIcon}
+            </PaginationItem>
+          </li>
+        )}
+
+        {showPreviousButton && (
+          <li>
+            <PaginationItem
+              className={styles.item({
+                className: classNames?.item,
+                isDisabled: page === 1,
+              })}
+              a11yLabel="previous page"
+              onPress={() => setPage((prev) => prev - 1)}
+              isDisabled={!!isDisabled || page === 1}
+            >
+              {previousButtonIcon}
+            </PaginationItem>
+          </li>
+        )}
+
         {[
           ...startPages,
 
@@ -158,7 +265,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
                 className={styles.item({ className: classNames?.item })}
                 a11yLabel={getItemA11yLabel(ele)}
                 selected={page === ele}
-                onSelect={() => setPage(ele)}
+                onPress={() => setPage(ele)}
                 isDisabled={!!isDisabled}
               >
                 {ele}
@@ -166,6 +273,38 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
             </li>
           );
         })}
+
+        {showNextButton && (
+          <li>
+            <PaginationItem
+              className={styles.item({
+                className: classNames?.item,
+                isDisabled: page === count,
+              })}
+              a11yLabel="next page"
+              onPress={() => setPage((prev) => prev + 1)}
+              isDisabled={!!isDisabled || page === count}
+            >
+              {nextButtonIcon}
+            </PaginationItem>
+          </li>
+        )}
+
+        {showLastButton && (
+          <li>
+            <PaginationItem
+              className={styles.item({
+                className: classNames?.item,
+                isDisabled: page === count,
+              })}
+              a11yLabel="last page"
+              onPress={() => setPage(count)}
+              isDisabled={!!isDisabled || page === count}
+            >
+              {lastButtonIcon}
+            </PaginationItem>
+          </li>
+        )}
       </ul>
     );
   },
