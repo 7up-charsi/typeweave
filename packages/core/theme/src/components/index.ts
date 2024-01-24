@@ -18,3 +18,6 @@ export * from './badge';
 export * from './button-group';
 export * from './skeleton';
 export * from './pagination';
+export * from './table';
+
+export type { ClassValue } from 'tailwind-variants';

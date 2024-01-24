@@ -8,8 +8,11 @@ import { Slot } from '@gist-ui/slot';
 import { FocusScope, FocusTrap } from '@gist-ui/focus-trap';
 import { useScrollLock } from '@gist-ui/use-scroll-lock';
 import { createPortal } from 'react-dom';
-import { AlertDialogVariantProps, alertDialog } from '@gist-ui/theme';
-import { ClassValue } from 'tailwind-variants';
+import {
+  AlertDialogVariantProps,
+  alertDialog,
+  ClassValue,
+} from '@gist-ui/theme';
 
 // *-*-*-*-* Root *-*-*-*-*
 

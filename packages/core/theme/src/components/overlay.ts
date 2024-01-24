@@ -1,9 +1,4 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  tv,
-  VariantProps,
-} from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
 
 const overlay = tv({
   base: 'w-screen h-screen fixed inset-0 z-50',
@@ -20,9 +15,5 @@ const overlay = tv({
 });
 
 export type OverlayVariantProps = VariantProps<typeof overlay>;
-export type OverlayClassNames = SlotsClassValue<
-  typeof overlay.slots,
-  ClassValue
->;
 
 export { overlay };

@@ -1,9 +1,5 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  tv,
-  VariantProps,
-} from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
+import { ClassNames } from '../types';
 
 const pagination = tv({
   slots: {
@@ -15,9 +11,6 @@ const pagination = tv({
 });
 
 export type PaginationVariantProps = VariantProps<typeof pagination>;
-export type PaginationClassNames = SlotsClassValue<
-  typeof pagination.slots,
-  ClassValue
->;
+export type PaginationClassNames = ClassNames<typeof pagination.slots>;
 
 export { pagination };

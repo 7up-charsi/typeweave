@@ -1,9 +1,5 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  tv,
-  VariantProps,
-} from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
+import { ClassNames } from '../types';
 
 const popover = tv({
   slots: {
@@ -25,9 +21,6 @@ const popover = tv({
 });
 
 export type PopoverVariantProps = VariantProps<typeof popover>;
-export type PopoverClassNames = SlotsClassValue<
-  typeof popover.slots,
-  ClassValue
->;
+export type PopoverClassNames = ClassNames<typeof popover.slots>;
 
 export { popover };

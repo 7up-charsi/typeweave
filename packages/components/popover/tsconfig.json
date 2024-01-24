@@ -3,8 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "tailwind-variants": ["../../../node_modules/tailwind-variants"]
-    }
+      "tailwind-variants": ["../../../node_modules/tailwind-variants"],
+    },
   },
-  "include": ["src", "index.ts"]
+  "include": ["src", "index.ts"],
 }

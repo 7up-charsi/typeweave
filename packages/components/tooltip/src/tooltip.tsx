@@ -5,11 +5,10 @@ import { mergeProps } from '@gist-ui/react-utils';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { useCallbackRef } from '@gist-ui/use-callback-ref';
 import { Slot } from '@gist-ui/slot';
-import { TooltipVariantProps, tooltip } from '@gist-ui/theme';
+import { TooltipVariantProps, tooltip, ClassValue } from '@gist-ui/theme';
 import { useIsDisabled } from '@gist-ui/use-is-disabled';
 import { createContextScope } from '@gist-ui/context';
 import * as Popper from '@gist-ui/popper';
-import { ClassValue } from 'tailwind-variants';
 import {
   forwardRef,
   isValidElement,

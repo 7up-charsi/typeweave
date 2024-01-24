@@ -1,9 +1,4 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  tv,
-  VariantProps,
-} from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
 
 const buttonGroup = tv({
   base: 'inline-flex gap-0 [&>button]:rounded-none',
@@ -21,9 +16,5 @@ const buttonGroup = tv({
 });
 
 export type ButtonGroupVariantProps = VariantProps<typeof buttonGroup>;
-export type ButtonGroupClassNames = SlotsClassValue<
-  typeof buttonGroup.slots,
-  ClassValue
->;
 
 export { buttonGroup };

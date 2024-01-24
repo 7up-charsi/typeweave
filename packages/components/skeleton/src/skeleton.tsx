@@ -1,6 +1,5 @@
 import { forwardRef } from 'react';
-import { SkeletonVariantProps, skeleton } from '@gist-ui/theme';
-import { ClassValue } from 'tailwind-variants';
+import { SkeletonVariantProps, skeleton, ClassValue } from '@gist-ui/theme';
 
 export interface SkeletonProps extends SkeletonVariantProps {
   className?: ClassValue;

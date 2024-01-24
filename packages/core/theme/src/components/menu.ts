@@ -1,9 +1,5 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  tv,
-  VariantProps,
-} from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
+import { ClassNames } from '../types';
 
 const menu = tv({
   slots: {
@@ -27,6 +23,6 @@ const menu = tv({
 });
 
 export type MenuVariantProps = VariantProps<typeof menu>;
-export type MenuClassNames = SlotsClassValue<typeof menu.slots, ClassValue>;
+export type MenuClassNames = ClassNames<typeof menu.slots>;
 
 export { menu };

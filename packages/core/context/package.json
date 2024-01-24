@@ -26,8 +26,6 @@
   "main": "./src/index.tsx",
   "scripts": {
     "build": "tsup src --dts",
-    "build:fast": "tsup src",
-    "dev": "pnpm build:fast --watch",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",

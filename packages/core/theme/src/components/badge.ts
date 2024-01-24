@@ -1,9 +1,5 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  tv,
-  VariantProps,
-} from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
+import { ClassNames } from '../types';
 
 const badge = tv({
   slots: {
@@ -80,6 +76,6 @@ const badge = tv({
 });
 
 export type BadgeVariantProps = VariantProps<typeof badge>;
-export type BadgeClassNames = SlotsClassValue<typeof badge.slots, ClassValue>;
+export type BadgeClassNames = ClassNames<typeof badge.slots>;
 
 export { badge };

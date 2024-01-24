@@ -1,9 +1,5 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  tv,
-  VariantProps,
-} from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
+import { ClassNames } from '../types';
 
 const select = tv({
   slots: {
@@ -39,6 +35,6 @@ const select = tv({
 });
 
 export type SelectVariantProps = VariantProps<typeof select>;
-export type SelectClassNames = SlotsClassValue<typeof select.slots, ClassValue>;
+export type SelectClassNames = ClassNames<typeof select.slots>;
 
 export { select };

@@ -1,9 +1,4 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  tv,
-  VariantProps,
-} from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
 
 const skeleton = tv({
   base: 'bg-neutral-200 overflow-hidden',
@@ -26,9 +21,5 @@ const skeleton = tv({
 });
 
 export type SkeletonVariantProps = VariantProps<typeof skeleton>;
-export type SkeletonClassNames = SlotsClassValue<
-  typeof skeleton.slots,
-  ClassValue
->;
 
 export { skeleton };

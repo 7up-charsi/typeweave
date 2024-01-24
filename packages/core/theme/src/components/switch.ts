@@ -1,10 +1,6 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  tv,
-  VariantProps,
-} from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
 import { groupDataFocusVisible } from '../classes';
+import { ClassNames } from '../types';
 
 const _switch = tv({
   slots: {
@@ -77,9 +73,6 @@ const _switch = tv({
 });
 
 export type SwitchVariantProps = VariantProps<typeof _switch>;
-export type SwitchClassNames = SlotsClassValue<
-  typeof _switch.slots,
-  ClassValue
->;
+export type SwitchClassNames = ClassNames<typeof _switch.slots>;
 
 export { _switch as switch };

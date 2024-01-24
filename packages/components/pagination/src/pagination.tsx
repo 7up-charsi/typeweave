@@ -223,16 +223,16 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
           ...(siblingsStart > boundaryCount + 2
             ? ['ellipsis']
             : boundaryCount + 1 < count - boundaryCount
-            ? [boundaryCount + 1]
-            : []),
+              ? [boundaryCount + 1]
+              : []),
 
           ...range(siblingsStart, siblingsEnd),
 
           ...(siblingsEnd < count - boundaryCount - 1
             ? ['ellipsis']
             : count - boundaryCount > boundaryCount
-            ? [count - boundaryCount]
-            : []),
+              ? [count - boundaryCount]
+              : []),
 
           ...endPages,
         ].map((ele, i) => {

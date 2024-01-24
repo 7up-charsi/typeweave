@@ -1,9 +1,5 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  tv,
-  VariantProps,
-} from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
+import { ClassNames } from '../types';
 
 const autocomplete = tv({
   slots: {
@@ -39,9 +35,6 @@ const autocomplete = tv({
 });
 
 export type AutocompleteVariantProps = VariantProps<typeof autocomplete>;
-export type AutocompleteClassNames = SlotsClassValue<
-  typeof autocomplete.slots,
-  ClassValue
->;
+export type AutocompleteClassNames = ClassNames<typeof autocomplete.slots>;
 
 export { autocomplete };

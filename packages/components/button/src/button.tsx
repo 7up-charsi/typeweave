@@ -3,12 +3,12 @@ import {
   buttonGroup,
   ButtonGroupVariantProps,
   ButtonVariantProps,
+  ClassValue,
 } from '@gist-ui/theme';
 import { __DEV__ } from '@gist-ui/shared-utils';
 import { useRipple, UseRippleProps } from '@gist-ui/use-ripple';
 import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
 import { useFocusRing } from '@react-aria/focus';
-import { ClassValue } from 'tailwind-variants';
 import { usePress, useHover, PressProps } from '@react-aria/interactions';
 import {
   ButtonHTMLAttributes,

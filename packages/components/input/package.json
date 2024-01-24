@@ -26,8 +26,6 @@
   "main": "./src/index.ts",
   "scripts": {
     "build": "tsup src --dts",
-    "build:fast": "tsup src",
-    "dev": "pnpm build:fast --watch",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
@@ -46,6 +44,7 @@
     "@gist-ui/use-callback-ref": "workspace:*",
     "@gist-ui/error": "workspace:*",
     "@react-aria/interactions": "^3.20.0",
+    "@react-aria/focus": "^3.15.0",
     "@gist-ui/button": "workspace:*"
   },
   "devDependencies": {

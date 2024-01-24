@@ -1,3 +1,5 @@
+import { ClassValue } from 'tailwind-variants';
+
 export type ColorScale =
   | Partial<{
       50: string;
@@ -71,3 +73,7 @@ export interface GistuiConfig {
   themes?: ConfigThemes;
   defaultTheme?: DefaultThemeType;
 }
+
+export type ClassNames<S extends Record<string, ClassValue>> = {
+  [key in keyof S]?: ClassValue;
+};

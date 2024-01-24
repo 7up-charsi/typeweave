@@ -1,11 +1,11 @@
-import React from "react";
-import { Meta, StoryObj } from "@storybook/react";
-import { overlay } from "@gist-ui/theme";
+import React from 'react';
+import { Meta, StoryObj } from '@storybook/react';
+import { overlay } from '@gist-ui/theme';
 
-import { Overlay, OverlayProps } from "../src";
+import { Overlay, OverlayProps } from '../src';
 
 const meta: Meta<OverlayProps> = {
-  title: "Components/Overlay",
+  title: 'Components/Overlay',
   component: Overlay,
   args: overlay.defaultVariants,
 };

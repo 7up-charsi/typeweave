@@ -1,9 +1,5 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  tv,
-  VariantProps,
-} from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
+import { ClassNames } from '../types';
 
 const dialog = tv({
   slots: {
@@ -27,6 +23,6 @@ const dialog = tv({
 });
 
 export type DialogVariantProps = VariantProps<typeof dialog>;
-export type DialogClassNames = SlotsClassValue<typeof dialog.slots, ClassValue>;
+export type DialogClassNames = ClassNames<typeof dialog.slots>;
 
 export { dialog };

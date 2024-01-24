@@ -124,10 +124,10 @@ const useScrollOverflow = <R extends HTMLElement>(
               hasBefore && hasAfter
                 ? 'both'
                 : hasBefore
-                ? prefix
-                : hasAfter
-                ? suffix
-                : 'none';
+                  ? prefix
+                  : hasAfter
+                    ? suffix
+                    : 'none';
 
             if (next !== prevVisiblility.current) {
               onVisibilityChange?.(next);

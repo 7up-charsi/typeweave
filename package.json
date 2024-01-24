@@ -3,8 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "pnpm storybook",
-    "storybook": "pnpm --filter @gist-ui/storybook dev",
+    "dev": "pnpm --filter @gist-ui/storybook dev",
     "typecheck": "turbo typecheck",
     "release:prepare": "changeset && pnpm clean && pnpm build",
     "release:bump": "changeset version",
@@ -23,6 +22,7 @@
     "create:hook": "plop hook"
   },
   "devDependencies": {
+    "@storybook/react": "^7.6.10",
     "@changesets/cli": "^2.26.2",
     "@commitlint/cli": "^17.7.2",
     "@commitlint/config-conventional": "^17.7.0",

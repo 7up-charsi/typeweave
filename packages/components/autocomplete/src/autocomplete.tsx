@@ -100,20 +100,20 @@ export type AutocompleteProps<
         disableClearable?: undefined;
       }
     : DisableClearable extends true
-    ? {
-        multiple?: Multiple;
-        defaultValue?: Value;
-        value?: Value;
-        onChange?: (value: Value, reason: Reason) => void;
-        disableClearable: DisableClearable;
-      }
-    : {
-        multiple?: Multiple;
-        defaultValue?: Value;
-        value?: Value | null;
-        onChange?: (value: Value | null, reason: Reason) => void;
-        disableClearable?: DisableClearable;
-      });
+      ? {
+          multiple?: Multiple;
+          defaultValue?: Value;
+          value?: Value;
+          onChange?: (value: Value, reason: Reason) => void;
+          disableClearable: DisableClearable;
+        }
+      : {
+          multiple?: Multiple;
+          defaultValue?: Value;
+          value?: Value | null;
+          onChange?: (value: Value | null, reason: Reason) => void;
+          disableClearable?: DisableClearable;
+        });
 
 const GET_OPTION_LABEL = <V,>(option: V) =>
   (option as { label?: string }).label || '';
@@ -371,11 +371,10 @@ const Autocomplete = <
     const filter =
       filterOptions ||
       (({ options, inputValue }) =>
-        options.filter(
-          (opt) =>
-            getOptionLabel(opt)
-              ?.toLowerCase()
-              .startsWith(inputValue.toLowerCase()),
+        options.filter((opt) =>
+          getOptionLabel(opt)
+            ?.toLowerCase()
+            .startsWith(inputValue.toLowerCase()),
         ));
 
     let options = val

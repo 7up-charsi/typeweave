@@ -1,9 +1,5 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  VariantProps,
-  tv,
-} from 'tailwind-variants';
+import { VariantProps, tv } from 'tailwind-variants';
+import { ClassNames } from '../types';
 
 const numberInput = tv({
   slots: {
@@ -14,9 +10,6 @@ const numberInput = tv({
 });
 
 export type NumberInputVariantProps = VariantProps<typeof numberInput>;
-export type NumberInputClassNames = SlotsClassValue<
-  typeof numberInput.slots,
-  ClassValue
->;
+export type NumberInputClassNames = ClassNames<typeof numberInput.slots>;
 
 export { numberInput };

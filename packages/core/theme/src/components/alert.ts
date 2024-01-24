@@ -1,9 +1,4 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  tv,
-  VariantProps,
-} from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
 
 const alert = tv({
   base: 'inline-flex gap-4 p-4 rounded',
@@ -165,6 +160,5 @@ const alert = tv({
 });
 
 export type AlertVariantProps = VariantProps<typeof alert>;
-export type AlertClassNames = SlotsClassValue<typeof alert.slots, ClassValue>;
 
 export { alert };

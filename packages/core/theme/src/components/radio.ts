@@ -1,10 +1,6 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  tv,
-  VariantProps,
-} from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
 import { groupDataFocusVisible } from '../classes';
+import { ClassNames } from '../types';
 
 const radio = tv({
   slots: {
@@ -70,6 +66,6 @@ const radio = tv({
 });
 
 export type RadioVariantProps = VariantProps<typeof radio>;
-export type RadioClassNames = SlotsClassValue<typeof radio.slots, ClassValue>;
+export type RadioClassNames = ClassNames<typeof radio.slots>;
 
 export { radio };

@@ -1,10 +1,6 @@
-import {
-  ClassValue,
-  SlotsClassValue,
-  VariantProps,
-  tv,
-} from 'tailwind-variants';
+import { VariantProps, tv } from 'tailwind-variants';
 import { dataFocusVisible } from '../classes';
+import { ClassNames } from '../types';
 
 const chip = tv({
   slots: {
@@ -265,6 +261,6 @@ const chip = tv({
 });
 
 export type ChipVariantProps = VariantProps<typeof chip>;
-export type ChipClassNames = SlotsClassValue<typeof chip.slots, ClassValue>;
+export type ChipClassNames = ClassNames<typeof chip.slots>;
 
 export { chip };
