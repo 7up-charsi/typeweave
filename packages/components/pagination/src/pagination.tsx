@@ -5,7 +5,7 @@ import {
 } from '@gist-ui/theme';
 import { forwardRef } from 'react';
 import { useControllableState } from '@gist-ui/use-controllable-state';
-import PaginationItem from './pagination-item';
+import { Button, ButtonProps } from '@gist-ui/button';
 
 const ellipsis_svg = (
   <svg
@@ -111,6 +111,9 @@ export interface PaginationProps extends PaginationVariantProps {
   lastButtonIcon?: boolean;
   previousButtonIcon?: boolean;
   nextButtonIcon?: boolean;
+  color: ButtonProps['color'];
+  size: ButtonProps['size'];
+  isDisabled?: boolean;
 }
 
 const range = (start: number, end: number) =>
@@ -126,8 +129,6 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
       a11yLabel,
       color,
       isDisabled,
-      size,
-      variant,
       showFirstButton = true,
       showLastButton = true,
       showPreviousButton = true,
@@ -136,6 +137,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
       lastButtonIcon = last_svg,
       previousButtonIcon = prev_svg,
       nextButtonIcon = next_svg,
+      size = 'sm',
       defaultPage = 1,
       count = 10,
       boundaryCount = 1,
@@ -170,7 +172,16 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
       endPages.length > 0 ? endPages[0] - 2 : count - 1,
     );
 
-    const styles = pagination({ color, isDisabled, size, variant });
+    const styles = pagination({});
+
+    const buttonProps = {
+      size,
+      color,
+      variant: 'text' as ButtonProps['variant'],
+      isIconOnly: true,
+      isDisabled,
+      'data-selected': false,
+    };
 
     return (
       <ul
@@ -180,33 +191,29 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
       >
         {showFirstButton && (
           <li>
-            <PaginationItem
-              className={styles.item({
-                className: classNames?.item,
-                isDisabled: page === 1,
-              })}
-              a11yLabel="first page"
+            <Button
+              {...buttonProps}
+              className={styles.item({ className: classNames?.item })}
+              aria-label="first page"
               onPress={() => setPage(1)}
               isDisabled={!!isDisabled || page === 1}
             >
               {firstButtonIcon}
-            </PaginationItem>
+            </Button>
           </li>
         )}
 
         {showPreviousButton && (
           <li>
-            <PaginationItem
-              className={styles.item({
-                className: classNames?.item,
-                isDisabled: page === 1,
-              })}
-              a11yLabel="previous page"
+            <Button
+              {...buttonProps}
+              className={styles.item({ className: classNames?.item })}
+              aria-label="previous page"
               onPress={() => setPage((prev) => prev - 1)}
               isDisabled={!!isDisabled || page === 1}
             >
               {previousButtonIcon}
-            </PaginationItem>
+            </Button>
           </li>
         )}
 
@@ -214,7 +221,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
           ...startPages,
 
           ...(siblingsStart > boundaryCount + 2
-            ? ['start-ellipsis']
+            ? ['ellipsis']
             : boundaryCount + 1 < count - boundaryCount
             ? [boundaryCount + 1]
             : []),
@@ -222,7 +229,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
           ...range(siblingsStart, siblingsEnd),
 
           ...(siblingsEnd < count - boundaryCount - 1
-            ? ['end-ellipsis']
+            ? ['ellipsis']
             : count - boundaryCount > boundaryCount
             ? [count - boundaryCount]
             : []),
@@ -230,79 +237,67 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
           ...endPages,
         ].map((ele, i) => {
           if (typeof ele === 'string') {
-            if (ele === 'start-ellipsis')
+            if (ele === 'ellipsis')
               return (
                 <li key={i}>
-                  <span
-                    className={styles.ellipsis({
-                      className: classNames?.ellipsis,
-                    })}
+                  <Button
+                    {...buttonProps}
+                    className={styles.item({ className: classNames?.item })}
+                    disableRipple
+                    asChild
                   >
-                    {ellipsis_svg}
-                  </span>
-                </li>
-              );
-
-            if (ele === 'end-ellipsis')
-              return (
-                <li key={i}>
-                  <span
-                    className={styles.ellipsis({
-                      className: classNames?.ellipsis,
-                    })}
-                  >
-                    {ellipsis_svg}
-                  </span>
+                    <div>{ellipsis_svg}</div>
+                  </Button>
                 </li>
               );
 
             return;
           }
 
+          const selected = page === ele;
+
           return (
             <li key={i}>
-              <PaginationItem
+              <Button
+                {...buttonProps}
                 className={styles.item({ className: classNames?.item })}
-                a11yLabel={getItemA11yLabel(ele)}
-                selected={page === ele}
+                aria-label={getItemA11yLabel(ele)}
                 onPress={() => setPage(ele)}
-                isDisabled={!!isDisabled}
+                isDisabled={isDisabled}
+                data-selected={!!selected}
+                variant={(selected && 'solid') || 'text'}
               >
                 {ele}
-              </PaginationItem>
+              </Button>
             </li>
           );
         })}
 
         {showNextButton && (
           <li>
-            <PaginationItem
-              className={styles.item({
-                className: classNames?.item,
-                isDisabled: page === count,
-              })}
-              a11yLabel="next page"
+            <Button
+              {...buttonProps}
+              className={styles.item({ className: classNames?.item })}
+              aria-label="next page"
               onPress={() => setPage((prev) => prev + 1)}
               isDisabled={!!isDisabled || page === count}
             >
               {nextButtonIcon}
-            </PaginationItem>
+            </Button>
           </li>
         )}
 
         {showLastButton && (
           <li>
-            <PaginationItem
-              className={styles.item({
-                className: classNames?.item,
-                isDisabled: page === count,
-              })}
-              a11yLabel="last page"
+            <Button
+              {...buttonProps}
+              className={styles.item({ className: classNames?.item })}
+              aria-label="last page"
               onPress={() => setPage(count)}
               isDisabled={!!isDisabled || page === count}
             >
               {lastButtonIcon}
-            </PaginationItem>
+            </Button>
           </li>
         )}
       </ul>
