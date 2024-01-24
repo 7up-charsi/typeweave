@@ -20,6 +20,7 @@ const button = tv({
       text: 'bg-transparent',
     },
     color: {
+      neutral: '',
       primary: '',
       secondary: '',
       success: '',
@@ -44,8 +45,8 @@ const button = tv({
   },
   defaultVariants: {
     size: 'md',
-    variant: 'solid',
-    color: 'primary',
+    variant: 'flat',
+    color: 'neutral',
     fullWidth: false,
     isDisabled: false,
     isIconOnly: false,
@@ -87,6 +88,12 @@ const button = tv({
     // color / solid
     {
       variant: 'solid',
+      color: 'neutral',
+      class:
+        'bg-neutral text-neutral-foreground [--rippleBg:theme(colors.neutral-foreground/30%)]',
+    },
+    {
+      variant: 'solid',
       color: 'primary',
       class:
         'bg-primary text-primary-foreground [--rippleBg:theme(colors.primary-foreground/30%)]',
@@ -123,6 +130,12 @@ const button = tv({
     },
 
     // color / shadow
+    {
+      variant: 'shadow',
+      color: 'neutral',
+      class:
+        'bg-neutral text-neutral-foreground [--rippleBg:theme(colors.neutral-foreground/30%)] shadow-neutral-400/80',
+    },
     {
       variant: 'shadow',
       color: 'primary',
@@ -163,6 +176,12 @@ const button = tv({
     // color / flat
     {
       variant: 'flat',
+      color: 'neutral',
+      class:
+        'bg-neutral-100 text-neutral-800 [--rippleBg:theme(colors.neutral-800/20%)]',
+    },
+    {
+      variant: 'flat',
       color: 'primary',
       class:
         'bg-primary-100 text-primary-800 [--rippleBg:theme(colors.primary-800/20%)]',
@@ -201,6 +220,12 @@ const button = tv({
     // color / text
     {
       variant: 'text',
+      color: 'neutral',
+      class:
+        'data-[hovered=true]:bg-neutral-100 text-neutral-700 [--rippleBg:theme(colors.neutral-700/20%)]',
+    },
+    {
+      variant: 'text',
       color: 'primary',
       class:
         'data-[hovered=true]:bg-primary-100 text-primary-700 [--rippleBg:theme(colors.primary-700/20%)]',
@@ -237,6 +262,12 @@ const button = tv({
     },
 
     // color / border
+    {
+      variant: 'border',
+      color: 'neutral',
+      class:
+        'border-neutral-700 text-neutral-800 [--rippleBg:theme(colors.neutral-800/20%)]',
+    },
     {
       variant: 'border',
       color: 'primary',
