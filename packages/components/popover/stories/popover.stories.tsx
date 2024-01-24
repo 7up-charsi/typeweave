@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { Button } from '@gist-ui/button';
 import { popover } from '@gist-ui/theme';
 
 import * as Popover from '../src';
 
-const meta: Meta<Popover.RootProps & Popover.ContentProps> = {
+const meta = {
   title: 'Components/Popover',
   args: {
     defaultOpen: true,
@@ -99,7 +98,7 @@ const Template = (args) => {
   );
 };
 
-export const Default: StoryObj<Popover.RootProps & Popover.ContentProps> = {
+export const Default = {
   render: Template,
   args: {
     alignOffset: 0,

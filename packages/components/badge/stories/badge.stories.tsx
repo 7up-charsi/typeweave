@@ -1,11 +1,10 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { badge } from '@gist-ui/theme';
 import { Button } from '@gist-ui/button';
 
 import { Badge } from '../src';
 
-const meta: Meta = {
+const meta = {
   title: 'Components/Badge',
   component: Badge,
   args: { ...badge.defaultVariants, overlap: undefined },
@@ -88,6 +87,6 @@ const Template = (args) => (
   </div>
 );
 
-export const Default: StoryObj = {
+export const Default = {
   render: Template,
 };

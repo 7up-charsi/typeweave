@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { tooltip } from '@gist-ui/theme';
 
 import * as Tooltip from '../src';
 
-const meta: Meta = {
+const meta = {
   title: 'Components/Tooltip',
   args: tooltip.defaultVariants,
   argTypes: {
@@ -72,7 +71,7 @@ const Template = (args: Tooltip.RootProps & Tooltip.ContentProps) => {
   );
 };
 
-export const Default: StoryObj<Tooltip.RootProps & Tooltip.ContentProps> = {
+export const Default = {
   render: Template,
   args: {
     showDelay: 100,

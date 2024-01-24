@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { menu } from '@gist-ui/theme';
 import { Button } from '@gist-ui/button';
 
 import * as Menu from '../src';
 
-const meta: Meta = {
+const meta = {
   title: 'Components/Menu',
   args: menu.defaultVariants,
 };
@@ -82,6 +81,6 @@ const Template = (args) => {
   );
 };
 
-export const Default: StoryObj = {
+export const Default = {
   render: Template,
 };

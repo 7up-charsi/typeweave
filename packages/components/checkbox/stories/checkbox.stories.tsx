@@ -1,10 +1,9 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { checkbox } from '@gist-ui/theme';
 
 import { Checkbox, CheckboxProps } from '../src';
 
-const meta: Meta<CheckboxProps> = {
+const meta = {
   title: 'Components/Checkbox',
   component: Checkbox,
   args: {
@@ -31,6 +30,6 @@ export default meta;
 
 const Template = (args: CheckboxProps) => <Checkbox {...args} />;
 
-export const Default: StoryObj<CheckboxProps> = {
+export const Default = {
   render: Template,
 };

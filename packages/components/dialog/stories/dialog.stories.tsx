@@ -1,11 +1,10 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { dialog } from '@gist-ui/theme';
 import { Button } from '@gist-ui/button';
 
 import * as Dialog from '../src';
 
-const meta: Meta = {
+const meta = {
   title: 'Components/Dialog',
 };
 
@@ -256,7 +255,7 @@ const DialogTemplate = (args) => {
   );
 };
 
-export const Default: StoryObj = {
+export const Default = {
   render: DialogTemplate,
   args: {
     defaultOpen: true,
@@ -291,7 +290,7 @@ const NestedTemplate = (args) => {
   );
 };
 
-export const Nested: StoryObj = {
+export const Nested = {
   render: NestedTemplate,
   args: {
     defaultOpen: true,

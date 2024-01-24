@@ -1,11 +1,10 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { alertDialog } from '@gist-ui/theme';
 import { Button } from '@gist-ui/button';
 
 import * as AlertDialog from '../src';
 
-const meta: Meta = {
+const meta = {
   title: 'Components/AlertDialog',
   args: alertDialog.defaultVariants,
 };
@@ -44,6 +43,6 @@ const Template = () => (
   </AlertDialog.Root>
 );
 
-export const Default: StoryObj = {
+export const Default = {
   render: Template,
 };

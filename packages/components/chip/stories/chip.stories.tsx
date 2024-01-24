@@ -1,10 +1,9 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { chip } from '@gist-ui/theme';
 
-import { Chip, ChipProps } from '../src';
+import { Chip } from '../src';
 
-const meta: Meta<ChipProps> = {
+const meta = {
   title: 'Components/Chip',
   component: Chip,
   args: chip.defaultVariants,
@@ -34,7 +33,7 @@ const Template = (args) => (
   />
 );
 
-export const Default: StoryObj = {
+export const Default = {
   render: Template,
   args: {
     deleteable: true,

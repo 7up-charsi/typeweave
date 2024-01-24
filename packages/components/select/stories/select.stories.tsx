@@ -1,11 +1,10 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { select } from '@gist-ui/theme';
 import InputStoryMeta from '@gist-ui/input/stories/input.stories';
 
 import { Select } from '../src';
 
-const meta: Meta = {
+const meta = {
   title: 'Components/Select',
   component: Select,
   args: {
@@ -166,7 +165,7 @@ const SingleTemplate = () => (
   />
 );
 
-export const Single: StoryObj = {
+export const Single = {
   render: SingleTemplate,
 };
 
@@ -185,7 +184,7 @@ const MultipleTemplate = () => (
   />
 );
 
-export const Multiple: StoryObj = {
+export const Multiple = {
   render: MultipleTemplate,
 };
 
@@ -217,7 +216,7 @@ const CustomOptionTemplate = () => (
   />
 );
 
-export const CutomOption: StoryObj = {
+export const CutomOption = {
   render: CustomOptionTemplate,
 };
 
@@ -236,6 +235,6 @@ const GroupByTemplate = () => (
   />
 );
 
-export const Groupby: StoryObj = {
+export const Groupby = {
   render: GroupByTemplate,
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { input } from '@gist-ui/theme';
 
 import {
@@ -11,7 +10,7 @@ import {
   InputProps,
 } from '../src';
 
-const meta: Meta = {
+const meta = {
   title: 'Components/Input',
   args: {
     ...input.defaultVariants,
@@ -60,11 +59,11 @@ const InputTemplate = (args: InputProps) => (
   />
 );
 
-export const Input: StoryObj<InputProps> = {
+export const Input = {
   render: InputTemplate,
 };
 
-export const StartEndContent: StoryObj<InputProps> = {
+export const StartEndContent = {
   name: 'Start / End content',
   render: InputTemplate,
   args: {
@@ -77,13 +76,13 @@ const PasswordTemplate = (args: PasswordInputProps) => (
   <PasswordInput {...args} />
 );
 
-export const Password: StoryObj<PasswordInputProps> = {
+export const Password = {
   render: PasswordTemplate,
 };
 
 const NumberTemplate = (args: NumberInputProps) => <NumberInput {...args} />;
 
-export const Number: StoryObj<NumberInputProps> = {
+export const Number = {
   render: NumberTemplate,
   argTypes: {
     min: { control: 'number' },
@@ -109,6 +108,6 @@ const MultilineTemplate = (args: InputProps) => (
   />
 );
 
-export const Multiline: StoryObj<InputProps> = {
+export const Multiline = {
   render: MultilineTemplate,
 };

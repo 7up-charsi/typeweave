@@ -1,10 +1,9 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { skeleton } from '@gist-ui/theme';
 
-import { Skeleton, SkeletonProps } from '../src';
+import { Skeleton } from '../src';
 
-const meta: Meta<SkeletonProps> = {
+const meta = {
   title: 'Components/Skeleton',
   component: Skeleton,
   args: skeleton.defaultVariants,
@@ -73,6 +72,6 @@ const DefaultTemplate = () => (
   </div>
 );
 
-export const Default: StoryObj = {
+export const Default = {
   render: DefaultTemplate,
 };

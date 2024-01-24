@@ -1,10 +1,9 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { Button } from '@gist-ui/button';
 
 import { FocusTrap, FocusTrapProps } from '../src';
 
-const meta: Meta<FocusTrapProps> = {
+const meta = {
   title: 'Components/FocusTrap',
   component: FocusTrap,
 };
@@ -35,7 +34,7 @@ const DefaultTemplate = (args: FocusTrapProps) => {
   );
 };
 
-export const Default: StoryObj<FocusTrapProps> = {
+export const Default = {
   render: DefaultTemplate,
   args: {
     loop: true,

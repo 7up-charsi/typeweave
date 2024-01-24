@@ -1,10 +1,9 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { radio } from '@gist-ui/theme';
 
 import * as Radio from '../src';
 
-const meta: Meta = {
+const meta = {
   title: 'Components/Radio',
   args: radio.defaultVariants,
   argTypes: {
@@ -37,6 +36,6 @@ const Template = (args) => (
   </div>
 );
 
-export const Default: StoryObj = {
+export const Default = {
   render: Template,
 };

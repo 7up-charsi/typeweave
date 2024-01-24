@@ -1,10 +1,9 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { button } from '@gist-ui/theme';
 import { Button, ButtonGroup, ButtonProps } from '../src';
 import { Bars, Circles } from 'react-loader-spinner';
 
-const meta: Meta<typeof Button> = {
+const meta = {
   title: 'Components/Button',
   component: Button,
   args: button.defaultVariants,
@@ -70,7 +69,7 @@ const DefaultTemplate = (args: ButtonProps) => (
   </div>
 );
 
-export const Default: StoryObj<ButtonProps> = {
+export const Default = {
   render: DefaultTemplate,
   args: {
     variant: undefined,
@@ -121,7 +120,7 @@ const WithConentTemplate = (args: ButtonProps) => (
   </div>
 );
 
-export const WithContent: StoryObj<ButtonProps> = {
+export const WithContent = {
   render: WithConentTemplate,
   args: {
     variant: undefined,
@@ -163,7 +162,7 @@ const IconOnlyTemplate = (args: ButtonProps) => (
   </div>
 );
 
-export const IconOnly: StoryObj<ButtonProps> = {
+export const IconOnly = {
   render: IconOnlyTemplate,
   args: {
     'aria-label': 'house button',
@@ -173,7 +172,7 @@ export const IconOnly: StoryObj<ButtonProps> = {
   },
 };
 
-export const Spinner: StoryObj<ButtonProps> = {
+export const Spinner = {
   render: Template,
   args: {
     startContent: <Bars wrapperClass="svg:fill-current" width={20} />,
@@ -192,7 +191,7 @@ const GroupTemplate = () => (
   </ButtonGroup>
 );
 
-export const Group: StoryObj<ButtonProps> = {
+export const Group = {
   render: GroupTemplate,
   args: {
     startContent: <Bars wrapperClass="svg:fill-current" width={20} />,

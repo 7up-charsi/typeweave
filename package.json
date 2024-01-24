@@ -1,6 +1,6 @@
 {
   "name": "gist-ui",
-  "private": true, 
+  "private": true,
   "scripts": {
     "build": "turbo build",
     "dev": "pnpm storybook",
@@ -26,7 +26,6 @@
     "@changesets/cli": "^2.26.2",
     "@commitlint/cli": "^17.7.2",
     "@commitlint/config-conventional": "^17.7.0",
-    "@storybook/react": "^7.6.4",
     "@types/node": "^20.8.6",
     "@types/react": "^18.2.25",
     "@types/react-dom": "^18.2.11",
@@ -46,7 +45,7 @@
     "rimraf": "^5.0.5",
     "tailwind-variants": "^0.1.14",
     "tslib": "^2.6.2",
-    "tsup": "^7.2.0",
+    "tsup": "^8.0.1",
     "turbo": "latest"
   }
 }

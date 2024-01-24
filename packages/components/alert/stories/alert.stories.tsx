@@ -1,10 +1,8 @@
 import React, { Fragment } from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { alert } from '@gist-ui/theme';
+import { Alert } from '../src';
 
-import { Alert, AlertProps } from '../src';
-
-const meta: Meta<AlertProps> = {
+const meta = {
   title: 'Components/Alert',
   component: Alert,
   args: { ...alert.defaultVariants, color: undefined },
@@ -34,6 +32,6 @@ const Template = (args) => (
   </>
 );
 
-export const Default: StoryObj = {
+export const Default = {
   render: Template,
 };
