@@ -12,13 +12,16 @@ import { ClassValue } from 'tailwind-variants';
 import { usePress, useHover, PressProps } from '@react-aria/interactions';
 import {
   ButtonHTMLAttributes,
+  cloneElement,
   createContext,
   forwardRef,
+  isValidElement,
   ReactNode,
   useContext,
   useEffect,
   useRef,
 } from 'react';
+import { Slot } from '@gist-ui/slot';
 
 interface GroupContext extends ButtonVariantProps {}
 
@@ -86,6 +89,8 @@ export interface ButtonProps
   rippleDuration?: UseRippleProps['duration'];
   rippleTimingFunction?: UseRippleProps['timingFunction'];
   rippleCompletedFactor?: UseRippleProps['completedFactor'];
+  disableRipple?: boolean;
+  asChild?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -112,18 +117,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       allowTextSelectionOnPress,
       preventFocusOnPress,
       shouldCancelOnPointerExit,
+      asChild,
+      disableRipple,
       ...buttonProps
     } = props;
 
     const groupContext = useContext(Context);
 
-    const innerRef = useRef(null);
+    const innerRef = useRef<HTMLButtonElement | null>(null);
 
     const isDisabled = _isDisabled ?? groupContext?.isDisabled;
 
     const { rippleKeyboardProps, ripplePointerProps } = useRipple({
       containerRef: innerRef,
-      isDisabled,
+      isDisabled: isDisabled ?? disableRipple,
       duration: rippleDuration,
       timingFunction: rippleTimingFunction,
       completedFactor: rippleCompletedFactor,
@@ -174,7 +181,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     );
 
     return (
-      <button
+      <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
         {...mergeProps(
           pressProps,
           focusProps,
@@ -190,14 +197,29 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         data-hovered={isHovered}
         data-focused={isFocused}
         data-focus-visible={isFocusVisible && isFocused}
-        disabled={isDisabled}
+        disabled={!!isDisabled}
         ref={mergeRefs(ref, innerRef)}
         className={styles}
       >
-        {!isIconOnly && startContent}
-        {children}
-        {!isIconOnly && endContent}
-      </button>
+        {asChild ? (
+          isValidElement(children) &&
+          cloneElement(children, {
+            children: (
+              <>
+                {!isIconOnly && startContent}
+                {children.props.children}
+                {!isIconOnly && endContent}
+              </>
+            ),
+          } as Partial<unknown>)
+        ) : (
+          <button>
+            {!isIconOnly && startContent}
+            {children}
+            {!isIconOnly && endContent}
+          </button>
+        )}
+      </Slot>
     );
   },
 );
