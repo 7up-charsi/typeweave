@@ -196,7 +196,7 @@ const Template = (args) => {
   return (
     <Dialog.Root defaultOpen={args.defaultOpen} keepMounted={args.keepMounted}>
       <Dialog.Trigger>
-        <Button color="secondary">{args.trigger}</Button>
+        <Button>{args.trigger}</Button>
       </Dialog.Trigger>
 
       <Dialog.Portal>
