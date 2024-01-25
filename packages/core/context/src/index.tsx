@@ -1,4 +1,4 @@
-import { createContext, useContext as _useContext } from 'react';
+import { createContext, useContext as _useContext, useMemo } from 'react';
 import { GistUiError } from '@gist-ui/error';
 
 export const createContextScope = <ContextValue extends object>(
@@ -8,13 +8,15 @@ export const createContextScope = <ContextValue extends object>(
   const Context = createContext(defaultContext);
 
   const Provider = (props: ContextValue & { children?: React.ReactNode }) => {
-    const { children, ...rest } = props;
+    const { children, ...context } = props;
 
-    return (
-      <Context.Provider value={rest as ContextValue}>
-        {children}
-      </Context.Provider>
-    );
+    const value = useMemo(
+      () => context,
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      Object.values(context),
+    ) as ContextValue;
+
+    return <Context.Provider value={value}>{children}</Context.Provider>;
   };
 
   const useContext = (consumerName: string) => {

@@ -28,9 +28,9 @@ const [RootProvider, useRootContext] =
 
 export interface RootProps {
   children?: React.ReactNode;
-  defaultOpen: boolean;
-  isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
+  defaultOpen?: boolean;
+  isOpen?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
 }
 
 export const Root = (props: RootProps) => {
@@ -148,6 +148,7 @@ const [FocusProvider, useFocusContext] =
 export interface MenuProps extends Popper.FloatingProps, MenuVariantProps {
   children?: React.ReactNode;
   className?: ClassValue;
+  roleDescription?: string;
 }
 
 export const Menu = (props: MenuProps) => {
@@ -155,6 +156,7 @@ export const Menu = (props: MenuProps) => {
     children,
     className,
     shadow,
+    roleDescription,
     arrowPadding = 10,
     ...restProps
   } = props;
@@ -249,6 +251,7 @@ export const Menu = (props: MenuProps) => {
         ref={setOutsideEle}
         className={styles.menu({ className })}
         onKeyDown={onKeyDown}
+        aria-roledescription={roleDescription}
       >
         <FocusProvider
           items={items}
@@ -342,6 +345,7 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
       tabIndex={tabIndex}
       {...mergeProps(hoverProps, {
         onPointerUp: () => {
+          if (isDisabled) return;
           if (!disableCloseOnPress) handleClose();
           onPress?.();
         },
@@ -503,6 +507,7 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
         tabIndex={tabIndex}
         {...mergeProps(hoverProps, {
           onPointerUp: () => {
+            if (isDisabled) return;
             onChange?.(!checked);
           },
         })}
@@ -650,6 +655,7 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
         tabIndex={tabIndex}
         {...mergeProps(hoverProps, {
           onPointerUp: () => {
+            if (isDisabled) return;
             groupContextOnChange?.(value);
           },
         })}

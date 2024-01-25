@@ -33,7 +33,7 @@ const Template = (args) => {
         </Menu.Trigger>
 
         <Menu.Portal>
-          <Menu.Menu>
+          <Menu.Menu roleDescription="control menu">
             <Menu.Arrow />
 
             <div style={{ width: 170 }}>
