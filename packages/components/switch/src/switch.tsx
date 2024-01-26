@@ -97,6 +97,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
     defaultValue: defaultChecked ?? false,
     value: checkedProp,
     onChange,
+    resetStateValue: false,
   });
 
   const { isFocusVisible, focusProps, isFocused } = useFocusRing();

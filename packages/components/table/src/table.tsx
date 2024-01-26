@@ -1,8 +1,9 @@
 import { createContextScope } from '@gist-ui/context';
 import { TableClassNames, TableVariantProps, table } from '@gist-ui/theme';
 import * as Menu from '@gist-ui/menu';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { GistUiError } from '@gist-ui/error';
+import { Slot } from '@gist-ui/slot';
 import {
   UseControllableStateReturn,
   useControllableState,
@@ -275,3 +276,84 @@ export const ColumnVisibility = (props: ColumnVisibilityProps) => {
 };
 
 ColumnVisibility.displayName = 'gist-ui.' + ColumnVisibility_Name;
+
+// ********** SelectRowProvider **********
+
+const SelectRowProvider_Name = 'Table.SelectRow';
+
+interface SelectRowContext {
+  isAllSelected: boolean;
+  setIsAllSelected: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const [SelectRowContextProvider, useSelectRowContext] =
+  createContextScope<SelectRowContext>(SelectRowProvider_Name);
+
+export interface SelectRowProviderProps {
+  children: React.ReactNode;
+}
+
+export const SelectRowProvider = (props: SelectRowProviderProps) => {
+  const { children } = props;
+  const [isAllSelected, setIsAllSelected] = useState(false);
+
+  return (
+    <SelectRowContextProvider
+      isAllSelected={isAllSelected}
+      setIsAllSelected={setIsAllSelected}
+    >
+      {children}
+    </SelectRowContextProvider>
+  );
+};
+
+SelectRowProvider.displayName = 'gist-ui.' + SelectRowProvider_Name;
+
+// ********** SelectAllRows **********
+
+const SelectAllRows_Name = 'Table.SelectAllRows';
+
+export interface SelectAllRowsProps {
+  children: React.ReactNode;
+}
+
+export const SelectAllRows = (props: SelectAllRowsProps) => {
+  const { children } = props;
+  const { setIsAllSelected, isAllSelected } =
+    useSelectRowContext(SelectAllRows_Name);
+
+  return (
+    <Slot checked={isAllSelected} onChange={setIsAllSelected}>
+      {children}
+    </Slot>
+  );
+};
+
+SelectAllRows.displayName = 'gist-ui.' + SelectAllRows_Name;
+
+// ********** SelectRow **********
+
+const SelectRow_Name = 'Table.SelectRow';
+
+export interface SelectRowProps {
+  children: React.ReactNode;
+}
+
+export const SelectRow = (props: SelectRowProps) => {
+  const { children } = props;
+  const { isAllSelected, setIsAllSelected } =
+    useSelectRowContext(SelectRow_Name);
+
+  return (
+    <Slot
+      checked={isAllSelected || undefined}
+      onChange={() => {
+        setIsAllSelected(false);
+      }}
+    >
+      {children}
+    </Slot>
+  );
+};
+
+SelectRow.displayName = 'gist-ui.' + SelectRow_Name;

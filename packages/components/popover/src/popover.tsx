@@ -65,6 +65,7 @@ export const Root = (props: RootProps) => {
     defaultValue: defaultOpen ?? false,
     onChange: onOpenChange,
     value: openProp,
+    resetStateValue: false,
   });
 
   const contentId = useId();

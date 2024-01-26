@@ -159,6 +159,7 @@ const Select = <
   >({
     defaultValue,
     value: valueProp,
+    resetStateValue: undefined,
     onChange: (value, reason) => {
       if (!onChange) return;
 
@@ -209,6 +210,7 @@ const Select = <
     defaultValue: defaultOpen ?? false,
     value: openProp,
     onChange: onOpenChange,
+    resetStateValue: false,
   });
 
   const handleListboxClose = () => {

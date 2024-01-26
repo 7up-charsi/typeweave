@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { table } from '@gist-ui/theme';
 import { Button } from '@gist-ui/button';
+import { Checkbox } from '@gist-ui/checkbox';
 
 import * as Table from '../src';
 
@@ -12,18 +13,48 @@ const meta = {
 export default meta;
 
 const Template = () => {
+  const selectedRows = useRef({});
+
   return (
     <Table.Root
-      data={Array.from({ length: 25 }).map((_, i) => ({ id: i + '' }))}
-      columns={Array.from({ length: 8 }).map((_, i) => ({
-        accessor: () => `${i + 1}`,
-        header: () => `column ${i + 1}`,
-        identifier: `${i + 1}`,
-      }))}
       getRowKey={(row) => row.id}
+      data={Array.from({ length: 25 }).map((_, i) => ({ id: i + '' }))}
+      columns={[
+        {
+          accessor: (row) => row.id,
+          header: (data) => (
+            <Table.SelectAllRows>
+              <Checkbox
+                onChange={(checked) => {
+                  if (checked)
+                    selectedRows.current = data.reduce(
+                      (acc, ele) => ((acc[ele.id] = true), acc),
+                      {},
+                    );
+                  else selectedRows.current = {};
+                }}
+              />
+            </Table.SelectAllRows>
+          ),
+          identifier: 'select-row',
+          cell: (val) => (
+            <Table.SelectRow>
+              <Checkbox
+                onChange={(checked) => (selectedRows.current[val] = checked)}
+              />
+            </Table.SelectRow>
+          ),
+          visibilityTitle: 'select',
+        },
+        ...Array.from({ length: 8 }).map((_, i) => ({
+          accessor: () => `${i + 1}`,
+          header: () => `column ${i + 1}`,
+          identifier: `${i + 1}`,
+        })),
+      ]}
     >
       <div className="flex flex-col gap-2">
-        <div className="flex items-center">
+        <div className="flex gap-2 items-center">
           <span className="text-neutral-700 font-medium">Data table</span>
           <span className="grow"></span>
 
@@ -48,7 +79,9 @@ const Template = () => {
           </Table.ColumnVisibility>
         </div>
 
-        <Table.Table />
+        <Table.SelectRowProvider>
+          <Table.Table />
+        </Table.SelectRowProvider>
       </div>
     </Table.Root>
   );

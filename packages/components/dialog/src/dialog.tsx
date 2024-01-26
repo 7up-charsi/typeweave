@@ -92,6 +92,7 @@ export const Root = (props: RootProps) => {
     defaultValue: defaultOpen ?? false,
     value: isOpenProp,
     onChange: onOpenChange,
+    resetStateValue: false,
   });
 
   const handleOpen = useCallbackRef(() => {

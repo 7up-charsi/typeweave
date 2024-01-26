@@ -43,6 +43,7 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       defaultValue: defaultValue ?? '',
       value: valueProp,
       onChange,
+      resetStateValue: '',
     });
 
     const state = useRef<{

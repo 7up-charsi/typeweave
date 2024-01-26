@@ -74,6 +74,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
     defaultValue: defaultChecked ?? false,
     value: checkedProp,
     onChange,
+    resetStateValue: false,
   });
 
   const { isFocusVisible, focusProps, isFocused } = useFocusRing();

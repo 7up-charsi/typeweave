@@ -45,6 +45,7 @@
     "@gist-ui/theme": "workspace:*",
     "@gist-ui/error": "workspace:*",
     "@gist-ui/button": "workspace:*",
+    "@gist-ui/slot": "workspace:*",
     "@gist-ui/checkbox": "workspace:*"
   },
   "devDependencies": {

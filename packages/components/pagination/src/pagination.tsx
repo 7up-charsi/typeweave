@@ -148,6 +148,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
       value: pageProp,
       defaultValue: defaultPage,
       onChange: onPageChange,
+      resetStateValue: 1,
     });
 
     // if boundaryCount is greater than count then render all pages from 1 to count

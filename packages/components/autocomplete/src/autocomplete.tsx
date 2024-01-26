@@ -171,6 +171,7 @@ const Autocomplete = <
   >({
     defaultValue,
     value: valueProp,
+    resetStateValue: undefined,
     onChange: (value, reason) => {
       if (!onChange) return;
 
@@ -214,6 +215,7 @@ const Autocomplete = <
     defaultValue: defaultOpen ?? false,
     value: openProp,
     onChange: onOpenChange,
+    resetStateValue: false,
   });
 
   const [inputValue, setInputValue] = useControllableState({
@@ -221,6 +223,7 @@ const Autocomplete = <
       !multiple && isSingle<Value>(value) ? getOptionLabel(value) : '',
     value: inputValueProp,
     onChange: onInputChange,
+    resetStateValue: '',
   });
 
   const handleListboxClose = () => {

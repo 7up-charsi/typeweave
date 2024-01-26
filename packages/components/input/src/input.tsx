@@ -98,6 +98,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     defaultValue: defaultValue ?? '',
     value: valueProp,
     onChange,
+    resetStateValue: '',
   });
 
   const {

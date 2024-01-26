@@ -62,6 +62,7 @@ export const Group = (props: GroupProps) => {
     defaultValue: defaultValue ?? '',
     value: valueProp,
     onChange,
+    resetStateValue: '',
   });
 
   return (
