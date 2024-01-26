@@ -10,6 +10,7 @@ import { MenuVariantProps, menu, ClassValue } from '@gist-ui/theme';
 import { useScrollLock } from '@gist-ui/use-scroll-lock';
 import { useCallbackRef } from '@gist-ui/use-callback-ref';
 import { useIsDisabled } from '@gist-ui/use-is-disabled';
+import { VisuallyHidden } from '@gist-ui/visually-hidden';
 import { forwardRef, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 const Root_Name = 'Menu.Root';
@@ -72,10 +73,12 @@ const Trigger_Name = 'Menu.Trigger';
 
 export interface TriggerProps {
   children?: React.ReactNode;
+  a11yLabel?: string;
+  a11yDescription?: string;
 }
 
 export const Trigger = (props: TriggerProps) => {
-  const { children } = props;
+  const { children, a11yLabel, a11yDescription } = props;
 
   const rootContext = useRootContext(Trigger_Name);
 
@@ -94,6 +97,8 @@ export const Trigger = (props: TriggerProps) => {
         aria-haspopup="menu"
         aria-expanded={rootContext.isOpen}
         aria-controls={rootContext.isOpen ? rootContext.id : undefined}
+        aria-label={a11yLabel}
+        aria-describedby={a11yDescription}
         {...pressProps}
       >
         {children}
@@ -158,6 +163,7 @@ export const Menu = (props: MenuProps) => {
     shadow,
     roleDescription,
     arrowPadding = 10,
+    boundaryPadding = 10,
     ...restProps
   } = props;
 
@@ -244,7 +250,11 @@ export const Menu = (props: MenuProps) => {
   const styles = useMemo(() => menu({ shadow }), [shadow]);
 
   return (
-    <Popper.Floating arrowPadding={arrowPadding} {...restProps}>
+    <Popper.Floating
+      arrowPadding={arrowPadding}
+      boundaryPadding={boundaryPadding ?? 10}
+      {...restProps}
+    >
       <ul
         id={rootContext.id}
         role="menu"
@@ -260,7 +270,17 @@ export const Menu = (props: MenuProps) => {
           setFocusedItem={setFocusedItem}
           isFocusVisible={isFocusVisible}
         >
-          <StylesProvider {...styles}>{children}</StylesProvider>
+          <StylesProvider {...styles}>
+            <VisuallyHidden>
+              <button onPointerUp={rootContext.handleClose}>close</button>
+            </VisuallyHidden>
+
+            {children}
+
+            <VisuallyHidden>
+              <button onPointerUp={rootContext.handleClose}>close</button>
+            </VisuallyHidden>
+          </StylesProvider>
         </FocusProvider>
       </ul>
     </Popper.Floating>

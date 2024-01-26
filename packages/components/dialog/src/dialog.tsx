@@ -9,6 +9,7 @@ import { FocusTrap, FocusScope } from '@gist-ui/focus-trap';
 import { createContextScope } from '@gist-ui/context';
 import { useIsDisabled } from '@gist-ui/use-is-disabled';
 import { useEffect, useId, useRef } from 'react';
+import { VisuallyHidden } from '@gist-ui/visually-hidden';
 
 type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
 
@@ -151,10 +152,12 @@ const Trigger_Name = 'Dialog.Trigger';
 
 export interface TriggerProps {
   children: React.ReactNode;
+  a11yLabel?: string;
+  a11yDescription?: string;
 }
 
 export const Trigger = (props: TriggerProps) => {
-  const { children } = props;
+  const { children, a11yLabel, a11yDescription } = props;
 
   const rootContext = useRootContext(Trigger_Name);
 
@@ -170,6 +173,8 @@ export const Trigger = (props: TriggerProps) => {
       ref={setElement}
       aria-expanded={rootContext.isOpen}
       aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
+      aria-label={a11yLabel}
+      aria-describedby={a11yDescription}
       {...pressProps}
     >
       {children}
@@ -327,7 +332,19 @@ export const Content = (props: ContentProps) => {
         id={rootContext.contentId}
         className={className}
       >
+        <VisuallyHidden>
+          <button onPointerUp={() => rootContext.handleClose('virtual')}>
+            close
+          </button>
+        </VisuallyHidden>
+
         {children}
+
+        <VisuallyHidden>
+          <button onPointerUp={() => rootContext.handleClose('virtual')}>
+            close
+          </button>
+        </VisuallyHidden>
       </div>
     </FocusTrap>
   );

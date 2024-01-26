@@ -546,6 +546,9 @@ importers:
       '@gist-ui/use-scroll-lock':
         specifier: workspace:*
         version: link:../../hooks/use-scroll-lock
+      '@gist-ui/visually-hidden':
+        specifier: workspace:*
+        version: link:../visually-hidden
       '@react-aria/interactions':
         specifier: ^3.20.0
         version: 3.20.1(react@18.2.0)
@@ -850,9 +853,18 @@ importers:
 
   packages/components/table:
     dependencies:
+      '@gist-ui/button':
+        specifier: workspace:*
+        version: link:../button
+      '@gist-ui/checkbox':
+        specifier: workspace:*
+        version: link:../checkbox
       '@gist-ui/context':
         specifier: workspace:*
         version: link:../../core/context
+      '@gist-ui/error':
+        specifier: workspace:*
+        version: link:../../utilities/error
       '@gist-ui/menu':
         specifier: workspace:*
         version: link:../menu

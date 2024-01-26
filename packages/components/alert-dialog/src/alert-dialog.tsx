@@ -111,10 +111,12 @@ const Trigger_Name = 'AlertDialog.Trigger';
 
 export interface TriggerProps {
   children: React.ReactNode;
+  a11yLabel?: string;
+  a11yDescription?: string;
 }
 
 export const Trigger = (props: TriggerProps) => {
-  const { children } = props;
+  const { children, a11yLabel, a11yDescription } = props;
 
   const rootContext = useRootContext(Trigger_Name);
 
@@ -130,6 +132,8 @@ export const Trigger = (props: TriggerProps) => {
       ref={setElement}
       aria-expanded={rootContext.isOpen}
       aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
+      aria-label={a11yLabel}
+      aria-describedby={a11yDescription}
       {...pressProps}
     >
       {children}

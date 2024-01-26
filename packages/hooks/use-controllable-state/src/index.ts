@@ -35,8 +35,8 @@ const useControllableState = <T, P = unknown>(
   return [value, setValue] as [T, typeof setValue];
 };
 
-export type UseControllableStateReturn = ReturnType<
-  typeof useControllableState
+export type UseControllableStateReturn<T, P = unknown> = ReturnType<
+  typeof useControllableState<T, P>
 >;
 
 export { useControllableState };

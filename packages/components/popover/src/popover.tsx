@@ -9,6 +9,7 @@ import { createPortal } from 'react-dom';
 import { useIsDisabled } from '@gist-ui/use-is-disabled';
 import { createContextScope } from '@gist-ui/context';
 import { useEffect, useId } from 'react';
+import { VisuallyHidden } from '@gist-ui/visually-hidden';
 
 interface PopoverContext {
   isOpen: boolean;
@@ -117,10 +118,12 @@ const Trigger_Name = 'Popover.Trigger';
 
 export interface TriggerProps {
   children: React.ReactNode;
+  a11yLabel?: string;
+  a11yDescription?: string;
 }
 
 export const Trigger = (props: TriggerProps) => {
-  const { children } = props;
+  const { children, a11yLabel, a11yDescription } = props;
 
   const rootContext = useRootContext(Trigger_Name);
 
@@ -137,6 +140,8 @@ export const Trigger = (props: TriggerProps) => {
         ref={setElement}
         aria-expanded={rootContext.isOpen}
         aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
+        aria-label={a11yLabel}
+        aria-describedby={a11yDescription}
         {...pressProps}
       >
         {children}
@@ -285,7 +290,15 @@ export const Content = (props: ContentProps) => {
           id={rootContext.contentId}
           className={className}
         >
+          <VisuallyHidden>
+            <button onPointerUp={rootContext.handleClose}>close </button>
+          </VisuallyHidden>
+
           {children}
+
+          <VisuallyHidden>
+            <button onPointerUp={rootContext.handleClose}>close </button>
+          </VisuallyHidden>
         </div>
       </FocusTrap>
     </Popper.Floating>
