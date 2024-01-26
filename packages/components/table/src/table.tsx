@@ -1,8 +1,12 @@
 import { createContextScope } from '@gist-ui/context';
 import { TableClassNames, TableVariantProps, table } from '@gist-ui/theme';
 import * as Menu from '@gist-ui/menu';
-import { useMemo, useState } from 'react';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
+import { useMemo } from 'react';
+import { GistUiError } from '@gist-ui/error';
+import {
+  UseControllableStateReturn,
+  useControllableState,
+} from '@gist-ui/use-controllable-state';
 
 type Column<Row> = {
   [K in keyof Row]: {
@@ -18,7 +22,7 @@ type Column<Row> = {
 
 type GetRowKey<R> = (row: R) => string;
 type _Row = Record<string, string>;
-type VisibilityState = { identifier: string; visibility: boolean }[];
+type VisibilityState = { identifier: string; visibility: boolean };
 
 // ********** ROOT **********
 
@@ -27,39 +31,67 @@ const Root_Name = 'Table.Root';
 interface RootContext {
   data?: _Row[];
   columns?: Column<_Row>[];
-  visibilityState?: VisibilityState;
-  getRowKey: GetRowKey<_Row>;
-  onVisibilityChange: (identifier: string, visibility: boolean) => void;
+  visibilityState?: VisibilityState[];
+  getRowKey?: GetRowKey<_Row>;
+  setVisibilityState: UseControllableStateReturn<
+    VisibilityState[],
+    VisibilityState
+  >[1];
 }
 
 const [RootProvider, useRootContext] =
   createContextScope<RootContext>(Root_Name);
+
+interface _RootProps {
+  data?: _Row[];
+  columns?: Column<_Row>[];
+  getRowKey?: GetRowKey<_Row>;
+  children?: React.ReactNode;
+  visibilityState?: VisibilityState[];
+  onVisibilityStateChange?: (
+    value: VisibilityState[],
+    changed: VisibilityState,
+  ) => void;
+}
 
 export interface RootProps<R> {
   data?: R[];
   columns?: Column<R>[];
   getRowKey?: GetRowKey<R>;
   children?: React.ReactNode;
+  visibilityState?: VisibilityState[];
+  onVisibilityStateChange?: (
+    value: VisibilityState[],
+    changed: VisibilityState,
+  ) => void;
 }
 
-export const Root = <R,>(props: RootProps<R>) => {
+const RootComp = (props: _RootProps) => {
   const {
     columns: userColumns,
     data,
     children,
-    getRowKey = (row) => (row as Record<string, string>).id,
+    getRowKey,
+    onVisibilityStateChange,
+    visibilityState: visibilityStateProp,
   } = props;
 
-  const [visibilityState, setVisibilityState] = useState<VisibilityState>([]);
+  const [visibilityState, setVisibilityState] = useControllableState<
+    VisibilityState[],
+    VisibilityState
+  >({
+    defaultValue: [],
+    value: visibilityStateProp,
+    onChange: (value, changed) => {
+      if (!changed)
+        throw new GistUiError(
+          'Autocomplete',
+          'internal Error, reason is not defined',
+        );
 
-  const onVisibilityChange = useCallbackRef(
-    (identifier: string, visibility: boolean) => {
-      setVisibilityState((prev) => [
-        ...prev.filter((ele) => ele.identifier !== identifier),
-        { identifier, visibility },
-      ]);
+      onVisibilityStateChange?.(value, changed);
     },
-  );
+  });
 
   const columns = useMemo(
     () =>
@@ -67,24 +99,29 @@ export const Root = <R,>(props: RootProps<R>) => {
         ...ele,
         visibility: ele.visibility ?? true,
         hideable: ele.hideable ?? true,
+        identifier: ele.identifier.replaceAll(' ', '-'),
       })),
     [userColumns],
   );
 
   return (
     <RootProvider
-      data={data as RootContext['data']}
-      columns={columns as RootContext['columns']}
+      data={data}
+      columns={columns}
       visibilityState={visibilityState}
-      getRowKey={getRowKey as RootContext['getRowKey']}
-      onVisibilityChange={onVisibilityChange}
+      getRowKey={getRowKey}
+      setVisibilityState={setVisibilityState}
     >
       {children}
     </RootProvider>
   );
 };
 
-Root.displayName = 'gist-ui.' + Root_Name;
+RootComp.displayName = 'gist-ui.' + Root_Name;
+
+export const Root = <R,>(props: RootProps<R>) => (
+  <RootComp {...(props as _RootProps)} />
+);
 
 // ********** Table **********
 
@@ -129,7 +166,7 @@ export const Table = (props: TableProps) => {
           {data.map((row, i) => (
             <tr
               className={styles.tr({ className: classNames?.tr })}
-              key={getRowKey(row) ?? i}
+              key={getRowKey?.(row) ?? i}
             >
               {columns.map(({ accessor, cell, identifier, visibility }) => {
                 const visible =
@@ -171,13 +208,15 @@ export interface ColumnVisibilityProps
 export const ColumnVisibility = (props: ColumnVisibilityProps) => {
   const { children, classNames, ...menuProps } = props;
 
-  const { columns, data, onVisibilityChange, visibilityState } = useRootContext(
+  const { columns, data, setVisibilityState, visibilityState } = useRootContext(
     ColumnVisibility_Name,
   );
 
   return (
     <Menu.Root>
-      <Menu.Trigger>{children}</Menu.Trigger>
+      <Menu.Trigger a11yLabel="open table column visibility">
+        {children}
+      </Menu.Trigger>
       <Menu.Portal>
         <Menu.Menu
           roleDescription="toggle table column visibility"
@@ -212,7 +251,17 @@ export const ColumnVisibility = (props: ColumnVisibilityProps) => {
                 <Menu.CheckboxItem
                   key={i}
                   checked={checked}
-                  onChange={() => onVisibilityChange(identifier, !checked)}
+                  onChange={() => {
+                    const changed = { identifier, visibility: !checked };
+
+                    setVisibilityState(
+                      (prev) => [
+                        ...prev.filter((ele) => ele.identifier !== identifier),
+                        changed,
+                      ],
+                      changed,
+                    );
+                  }}
                   className={classNames?.checkboxItem}
                 >
                   {val ? val[0].toUpperCase() + val.slice(1) : ''}

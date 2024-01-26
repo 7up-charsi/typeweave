@@ -37,16 +37,23 @@
   },
   "dependencies": {
     "@gist-ui/menu": "workspace:*",
+    "@gist-ui/use-controllable-state": "workspace:*",
     "@gist-ui/use-callback-ref": "workspace:*",
     "@gist-ui/react-utils": "workspace:*",
     "@gist-ui/context": "workspace:*",
     "@react-aria/interactions": "^3.20.0",
-    "@gist-ui/theme": "workspace:*"
+    "@gist-ui/theme": "workspace:*",
+    "@gist-ui/error": "workspace:*",
+    "@gist-ui/button": "workspace:*",
+    "@gist-ui/checkbox": "workspace:*"
   },
   "devDependencies": {
     "clean-package": "^2.2.0"
   },
   "clean-package": {
-    "extends": "../../../../../../clean-package.config.json"
+    "extends": "../../../../../../clean-package.config.json",
+    "remove": [
+      "dependencies.@gist-ui/button"
+    ]
   }
 }
