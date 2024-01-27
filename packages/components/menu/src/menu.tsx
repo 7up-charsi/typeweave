@@ -20,6 +20,7 @@ interface RootContext {
   handleOpen(): void;
   handleClose(): void;
   id: string;
+  triggerRef: React.RefObject<HTMLButtonElement>;
 }
 
 const [RootProvider, useRootContext] =
@@ -45,6 +46,7 @@ export const Root = (props: RootProps) => {
   });
 
   const id = useId();
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const handleOpen = useCallbackRef(() => {
     setIsOpen(true);
@@ -60,6 +62,7 @@ export const Root = (props: RootProps) => {
       handleClose={handleClose}
       isOpen={isOpen}
       id={id}
+      triggerRef={triggerRef}
     >
       <Popper.Root>{children}</Popper.Root>
     </RootProvider>
@@ -93,7 +96,7 @@ export const Trigger = (props: TriggerProps) => {
   return (
     <Popper.Reference>
       <Slot
-        ref={setElement}
+        ref={mergeRefs(setElement, rootContext.triggerRef)}
         role="button"
         aria-haspopup="menu"
         aria-expanded={rootContext.isOpen}
@@ -135,14 +138,15 @@ Portal.displayName = 'gist-ui.' + Portal_Name;
 
 const Menu_Name = 'Menu.Menu';
 
-type FocusableItem = { type: string; callback?: () => void };
+type FocusableItem = {
+  index: number;
+  isDisabled: boolean;
+  callback: () => void;
+};
 
 interface FocusContext {
-  items: FocusableItem[];
-  setItems: React.Dispatch<React.SetStateAction<FocusableItem[]>>;
-  setFocusedItem: React.Dispatch<React.SetStateAction<FocusableItem | null>>;
-  focusedItem: FocusableItem | null;
-  isFocusVisible: boolean;
+  items: Record<string, FocusableItem>;
+  focused: FocusableItem | null;
 }
 
 const [StylesProvider, useStylesContext] =
@@ -157,7 +161,7 @@ export interface MenuProps extends Popper.FloatingProps, MenuVariantProps {
   roleDescription?: string;
 }
 
-export const Menu = (props: MenuProps) => {
+export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
   const {
     children,
     className,
@@ -168,10 +172,14 @@ export const Menu = (props: MenuProps) => {
     ...restProps
   } = props;
 
+  const innerRef = useRef<HTMLUListElement>(null);
+
   const rootContext = useRootContext(Menu_Name);
 
-  const [items, setItems] = useState<FocusableItem[]>([]);
-  const [focusedItem, setFocusedItem] = useState<FocusableItem | null>(null);
+  const items = useRef<Record<string, FocusableItem>>({}).current;
+  const [focused, setFocused] = useState<FocusableItem | null>(null);
+
+  const itemsLength = Object.keys(items).length;
 
   const { isFocusVisible } = useFocusVisible();
 
@@ -182,7 +190,15 @@ export const Menu = (props: MenuProps) => {
 
   useScrollLock({ enabled: rootContext.isOpen });
 
-  const handleClose = rootContext.handleClose;
+  useEffect(() => {
+    if (!rootContext.isOpen) return;
+
+    innerRef.current?.focus?.();
+
+    if (isFocusVisible) setFocused(items['1']);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFocusVisible]);
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     const Tab = e.key === 'Tab';
@@ -196,54 +212,53 @@ export const Menu = (props: MenuProps) => {
 
     if (Enter || Space) {
       e.preventDefault();
-      focusedItem?.callback?.();
+      focused?.callback?.();
       return;
     }
 
     if (Escape) {
-      setFocusedItem(null);
-      handleClose();
+      setFocused(null);
+      rootContext.handleClose();
+      rootContext.triggerRef.current?.focus?.();
       return;
     }
 
     if (Tab) {
-      handleClose();
+      rootContext.handleClose();
       return;
     }
 
     if (ArrowDown) {
-      if (!focusedItem) {
-        setFocusedItem(items[0]);
+      if (!focused) {
+        setFocused(items['1']);
         return;
       }
 
-      if (focusedItem) {
-        const index = items.indexOf(focusedItem);
-        if (index !== items.length - 1) setFocusedItem(items[index + 1]);
+      if (focused) {
+        if (focused.index !== itemsLength) setFocused(items[focused.index + 1]);
         return;
       }
     }
 
     if (ArrowUp) {
-      if (!focusedItem) {
-        setFocusedItem(items[0]);
+      if (!focused) {
+        setFocused(items['1']);
         return;
       }
 
-      if (focusedItem) {
-        const index = items.indexOf(focusedItem);
-        if (index !== 0) setFocusedItem(items[index - 1]);
+      if (focused) {
+        if (focused.index !== 1) setFocused(items[focused.index - 1]);
         return;
       }
     }
 
     if (Home) {
-      setFocusedItem(items[0]);
+      setFocused(items[0]);
       return;
     }
 
     if (End) {
-      setFocusedItem(items[items.length - 1]);
+      setFocused(items[itemsLength]);
       return;
     }
   };
@@ -259,18 +274,13 @@ export const Menu = (props: MenuProps) => {
       <ul
         id={rootContext.id}
         role="menu"
-        ref={setOutsideEle}
+        ref={mergeRefs(setOutsideEle, ref, innerRef)}
         className={styles.menu({ className })}
         onKeyDown={onKeyDown}
         aria-roledescription={roleDescription}
+        tabIndex={-1}
       >
-        <FocusProvider
-          items={items}
-          setItems={setItems}
-          focusedItem={focusedItem}
-          setFocusedItem={setFocusedItem}
-          isFocusVisible={isFocusVisible}
-        >
+        <FocusProvider items={items} focused={focused}>
           <StylesProvider {...styles}>
             <VisuallyHidden>
               <button onPointerUp={rootContext.handleClose}>close</button>
@@ -286,7 +296,7 @@ export const Menu = (props: MenuProps) => {
       </ul>
     </Popper.Floating>
   );
-};
+});
 
 Menu.displayName = 'gist-ui.' + Menu_Name;
 
@@ -315,42 +325,41 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
 
   const { handleClose } = useRootContext(Item_Name);
   const stylesContext = useStylesContext(Item_Name);
-  const { isFocusVisible, items, setFocusedItem, setItems, focusedItem } =
-    useFocusContext(Item_Name);
+  const { items, focused } = useFocusContext(Item_Name);
 
-  const focusRef = useRef<FocusableItem>({ type: 'item' }).current;
+  const focusRef = useRef<FocusableItem>({
+    callback: () => {},
+    index: 0,
+    isDisabled: false,
+  }).current;
 
   const innerRef = useRef<HTMLLIElement>(null);
 
   const { hoverProps, isHovered } = useHover({ isDisabled });
 
-  useEffect(() => {
-    focusRef.callback = () => {
-      onPress?.();
-    };
-  }, [focusRef, onPress]);
+  const handlePress = useCallbackRef(() => {
+    if (!disableCloseOnPress) handleClose();
+    onPress?.();
+  });
+
+  const { isPressed, pressProps } = usePress({
+    isDisabled,
+    onPress: handlePress,
+  });
 
   useEffect(() => {
-    if (isDisabled) return;
-
-    setItems((prev) => [...prev, focusRef]);
-    () => {
-      setItems((prev) => prev.filter((ele) => ele !== focusRef));
-    };
-  }, [focusRef, isDisabled, setItems]);
-
-  const tabIndex = items[0] === focusRef ? 0 : -1;
+    focusRef.callback = handlePress;
+  }, [focusRef, handlePress]);
 
   useEffect(() => {
-    if (isFocusVisible && tabIndex === 0) {
-      setFocusedItem(focusRef);
-      innerRef.current?.focus();
-    }
+    const length = Object.keys(items).length;
 
-    return () => {
-      if (tabIndex === 0) setFocusedItem(null);
-    };
-  }, [focusRef, isFocusVisible, setFocusedItem, tabIndex]);
+    const index = length + 1;
+
+    focusRef.index = index;
+
+    items[index] = focusRef;
+  }, [focusRef, items]);
 
   const Component = asChild ? Slot : 'li';
 
@@ -358,19 +367,13 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
     <Component
       ref={mergeRefs(ref, innerRef)}
       role="menuitem"
+      data-pressed={isPressed}
       data-hovered={isHovered}
-      data-focused={focusedItem === focusRef}
+      data-focused={focused === focusRef}
       data-disabled={!!isDisabled}
       aria-disabled={isDisabled}
       className={stylesContext.item({ className })}
-      tabIndex={tabIndex}
-      {...mergeProps(hoverProps, {
-        onPointerUp: () => {
-          if (isDisabled) return;
-          if (!disableCloseOnPress) handleClose();
-          onPress?.();
-        },
-      })}
+      {...mergeProps(hoverProps, pressProps)}
     >
       <span></span>
       {children}
@@ -475,42 +478,40 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
       props;
 
     const stylesContext = useStylesContext(CheckboxItem_Name);
-    const { isFocusVisible, items, setFocusedItem, setItems, focusedItem } =
-      useFocusContext(Item_Name);
+    const { items, focused } = useFocusContext(Item_Name);
 
-    const focusRef = useRef<FocusableItem>({ type: 'checkbox' }).current;
+    const focusRef = useRef<FocusableItem>({
+      callback: () => {},
+      index: 0,
+      isDisabled: false,
+    }).current;
 
     const innerRef = useRef<HTMLLIElement>(null);
 
     const { hoverProps, isHovered } = useHover({ isDisabled });
 
-    useEffect(() => {
-      focusRef.callback = () => {
-        onChange?.(!checked);
-      };
-    }, [checked, focusRef, onChange]);
+    const hanldeChange = useCallbackRef(() => {
+      onChange?.(!checked);
+    });
+
+    const { isPressed, pressProps } = usePress({
+      isDisabled,
+      onPress: hanldeChange,
+    });
 
     useEffect(() => {
-      if (isDisabled) return;
-
-      setItems((prev) => [...prev, focusRef]);
-      () => {
-        setItems((prev) => prev.filter((ele) => ele !== focusRef));
-      };
-    }, [focusRef, isDisabled, setItems]);
-
-    const tabIndex = items[0] === focusRef ? 0 : -1;
+      focusRef.callback = hanldeChange;
+    }, [focusRef, hanldeChange]);
 
     useEffect(() => {
-      if (isFocusVisible && tabIndex === 0) {
-        setFocusedItem(focusRef);
-        innerRef.current?.focus();
-      }
+      const length = Object.keys(items).length;
 
-      return () => {
-        if (tabIndex === 0) setFocusedItem(null);
-      };
-    }, [focusRef, isFocusVisible, setFocusedItem, tabIndex]);
+      const index = length + 1;
+
+      focusRef.index = index;
+
+      items[index] = focusRef;
+    }, [focusRef, items]);
 
     const Component = asChild ? Slot : 'li';
 
@@ -518,20 +519,15 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
       <Component
         ref={mergeRefs(ref, innerRef)}
         role="menuitemcheckbox"
+        data-pressed={isPressed}
         data-hovered={isHovered}
-        data-focused={focusedItem === focusRef}
+        data-focused={focused === focusRef}
         data-disabled={!!isDisabled}
         data-checked={checked}
         aria-checked={checked}
         aria-disabled={isDisabled}
         className={stylesContext.item({ className })}
-        tabIndex={tabIndex}
-        {...mergeProps(hoverProps, {
-          onPointerUp: () => {
-            if (isDisabled) return;
-            onChange?.(!checked);
-          },
-        })}
+        {...mergeProps(hoverProps, pressProps)}
       >
         <span>
           {!checked ? null : (
@@ -619,44 +615,40 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
 
     const stylesContext = useStylesContext(RadioItem_Name);
     const groupContext = useRadioGroupContext(RadioItem_Name);
-    const { isFocusVisible, items, setFocusedItem, setItems, focusedItem } =
-      useFocusContext(Item_Name);
+    const { items, focused } = useFocusContext(Item_Name);
 
-    const focusRef = useRef<FocusableItem>({ type: 'radio' }).current;
+    const focusRef = useRef<FocusableItem>({
+      callback: () => {},
+      index: 0,
+      isDisabled: false,
+    }).current;
 
     const innerRef = useRef<HTMLLIElement>(null);
 
     const { hoverProps, isHovered } = useHover({ isDisabled });
 
-    const groupContextOnChange = groupContext.onChange;
+    const hanldeChange = useCallbackRef(() => {
+      groupContext.onChange?.(value);
+    });
+
+    const { isPressed, pressProps } = usePress({
+      isDisabled,
+      onPress: hanldeChange,
+    });
 
     useEffect(() => {
-      focusRef.callback = () => {
-        groupContextOnChange?.(value);
-      };
-    }, [focusRef, groupContextOnChange, value]);
+      focusRef.callback = hanldeChange;
+    }, [focusRef, hanldeChange]);
 
     useEffect(() => {
-      if (isDisabled) return;
+      const length = Object.keys(items).length;
 
-      setItems((prev) => [...prev, focusRef]);
-      () => {
-        setItems((prev) => prev.filter((ele) => ele !== focusRef));
-      };
-    }, [focusRef, isDisabled, setItems]);
+      const index = length + 1;
 
-    const tabIndex = items[0] === focusRef ? 0 : -1;
+      focusRef.index = index;
 
-    useEffect(() => {
-      if (isFocusVisible && tabIndex === 0) {
-        setFocusedItem(focusRef);
-        innerRef.current?.focus();
-      }
-
-      return () => {
-        if (tabIndex === 0) setFocusedItem(null);
-      };
-    }, [focusRef, isFocusVisible, setFocusedItem, tabIndex]);
+      items[index] = focusRef;
+    }, [focusRef, items]);
 
     const checked = value === groupContext.value;
 
@@ -666,29 +658,32 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
       <Component
         ref={mergeRefs(ref, innerRef)}
         role="menuitemradio"
+        data-pressed={isPressed}
         data-hovered={isHovered}
-        data-focused={focusedItem === focusRef}
+        data-focused={focused === focusRef}
         data-disabled={!!isDisabled}
         data-checked={checked}
         aria-checked={checked}
         aria-disabled={isDisabled}
         className={stylesContext.item({ className })}
-        tabIndex={tabIndex}
-        {...mergeProps(hoverProps, {
-          onPointerUp: () => {
-            if (isDisabled) return;
-            groupContextOnChange?.(value);
-          },
-        })}
+        {...mergeProps(hoverProps, pressProps)}
       >
         <span>
           {!checked ? null : (
             <svg
-              viewBox="0 0 512 512"
-              fill="currentColor"
-              style={{ width: 6, height: 6 }}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 48 48"
             >
-              <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0 0 114.6 0 256s114.6 256 256 256zm0-160c-53" />
+              <g>
+                <path fill="#fff" fillOpacity="0.01" d="M0 0H48V48H0z"></path>
+                <path
+                  fill="currentColor"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  d="M24 33a9 9 0 100-18 9 9 0 000 18z"
+                ></path>
+              </g>
             </svg>
           )}
         </span>

@@ -26,7 +26,7 @@ const Template = (args) => {
   }, []);
 
   return (
-    <div className="h-[300vh] w-[300vw] flex items-center justify-center">
+    <div className="h-[300vh] w-[300vw] flex pt-24 justify-center">
       <Menu.Root defaultOpen {...args}>
         <Menu.Trigger>
           <Button ref={ref}>open menu</Button>
