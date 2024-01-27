@@ -147,6 +147,7 @@ type FocusableItem = {
 interface FocusContext {
   items: Record<string, FocusableItem>;
   focused: FocusableItem | null;
+  setFocused: React.Dispatch<React.SetStateAction<FocusableItem | null>>;
 }
 
 const [StylesProvider, useStylesContext] =
@@ -291,7 +292,7 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
         aria-roledescription={roleDescription}
         tabIndex={-1}
       >
-        <FocusProvider items={items} focused={focused}>
+        <FocusProvider items={items} focused={focused} setFocused={setFocused}>
           <StylesProvider {...styles}>
             <VisuallyHidden>
               <button onPointerUp={rootContext.handleClose}>close</button>
@@ -336,7 +337,7 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
 
   const { handleClose } = useRootContext(Item_Name);
   const stylesContext = useStylesContext(Item_Name);
-  const { items, focused } = useFocusContext(Item_Name);
+  const { items, focused, setFocused } = useFocusContext(Item_Name);
 
   const focusRef = useRef<FocusableItem>({
     callback: () => {},
@@ -346,14 +347,18 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
 
   const innerRef = useRef<HTMLLIElement>(null);
 
-  const { hoverProps, isHovered } = useHover({ isDisabled });
+  const { hoverProps } = useHover({
+    isDisabled,
+    onHoverStart: () => setFocused(focusRef),
+    onHoverEnd: () => setFocused(null),
+  });
 
   const handlePress = useCallbackRef(() => {
     if (!disableCloseOnPress) handleClose();
     onPress?.();
   });
 
-  const { isPressed, pressProps } = usePress({
+  const { pressProps } = usePress({
     isDisabled,
     onPress: handlePress,
   });
@@ -379,8 +384,6 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
     <Component
       ref={mergeRefs(ref, innerRef)}
       role="menuitem"
-      data-pressed={isPressed}
-      data-hovered={isHovered}
       data-focused={focused === focusRef}
       data-disabled={!!isDisabled}
       aria-disabled={isDisabled}
@@ -490,7 +493,7 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
       props;
 
     const stylesContext = useStylesContext(CheckboxItem_Name);
-    const { items, focused } = useFocusContext(Item_Name);
+    const { items, focused, setFocused } = useFocusContext(Item_Name);
 
     const focusRef = useRef<FocusableItem>({
       callback: () => {},
@@ -500,13 +503,17 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
 
     const innerRef = useRef<HTMLLIElement>(null);
 
-    const { hoverProps, isHovered } = useHover({ isDisabled });
+    const { hoverProps } = useHover({
+      isDisabled,
+      onHoverStart: () => setFocused(focusRef),
+      onHoverEnd: () => setFocused(null),
+    });
 
     const hanldeChange = useCallbackRef(() => {
       onChange?.(!checked);
     });
 
-    const { isPressed, pressProps } = usePress({
+    const { pressProps } = usePress({
       isDisabled,
       onPress: hanldeChange,
     });
@@ -532,8 +539,6 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
       <Component
         ref={mergeRefs(ref, innerRef)}
         role="menuitemcheckbox"
-        data-pressed={isPressed}
-        data-hovered={isHovered}
         data-focused={focused === focusRef}
         data-disabled={!!isDisabled}
         data-checked={checked}
@@ -628,7 +633,7 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
 
     const stylesContext = useStylesContext(RadioItem_Name);
     const groupContext = useRadioGroupContext(RadioItem_Name);
-    const { items, focused } = useFocusContext(Item_Name);
+    const { items, focused, setFocused } = useFocusContext(Item_Name);
 
     const focusRef = useRef<FocusableItem>({
       callback: () => {},
@@ -638,13 +643,17 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
 
     const innerRef = useRef<HTMLLIElement>(null);
 
-    const { hoverProps, isHovered } = useHover({ isDisabled });
+    const { hoverProps } = useHover({
+      isDisabled,
+      onHoverStart: () => setFocused(focusRef),
+      onHoverEnd: () => setFocused(null),
+    });
 
     const hanldeChange = useCallbackRef(() => {
       groupContext.onChange?.(value);
     });
 
-    const { isPressed, pressProps } = usePress({
+    const { pressProps } = usePress({
       isDisabled,
       onPress: hanldeChange,
     });
@@ -672,8 +681,6 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
       <Component
         ref={mergeRefs(ref, innerRef)}
         role="menuitemradio"
-        data-pressed={isPressed}
-        data-hovered={isHovered}
         data-focused={focused === focusRef}
         data-disabled={!!isDisabled}
         data-checked={checked}
