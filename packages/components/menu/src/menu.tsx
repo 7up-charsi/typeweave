@@ -195,7 +195,11 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
 
     innerRef.current?.focus?.();
 
-    if (isFocusVisible) setFocused(items['1']);
+    // index zero mean... we need to check 1st item also
+    if (isFocusVisible)
+      setFocused(
+        getNext({ index: 0, isDisabled: false, callback: () => {} }, items),
+      );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocusVisible]);
@@ -235,7 +239,9 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
       }
 
       if (focused) {
-        if (focused.index !== itemsLength) setFocused(items[focused.index + 1]);
+        if (focused.index !== itemsLength)
+          setFocused(getNext(focused, items) ?? focused);
+
         return;
       }
     }
@@ -247,7 +253,8 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
       }
 
       if (focused) {
-        if (focused.index !== 1) setFocused(items[focused.index - 1]);
+        if (focused.index !== 1)
+          setFocused(getPrevious(items[focused.index - 1], items) ?? focused);
         return;
       }
     }
@@ -349,7 +356,8 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
 
   useEffect(() => {
     focusRef.callback = handlePress;
-  }, [focusRef, handlePress]);
+    focusRef.isDisabled = !!isDisabled;
+  }, [focusRef, handlePress, isDisabled]);
 
   useEffect(() => {
     const length = Object.keys(items).length;
@@ -501,7 +509,8 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
 
     useEffect(() => {
       focusRef.callback = hanldeChange;
-    }, [focusRef, hanldeChange]);
+      focusRef.isDisabled = !!isDisabled;
+    }, [focusRef, hanldeChange, isDisabled]);
 
     useEffect(() => {
       const length = Object.keys(items).length;
@@ -638,7 +647,8 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
 
     useEffect(() => {
       focusRef.callback = hanldeChange;
-    }, [focusRef, hanldeChange]);
+      focusRef.isDisabled = !!isDisabled;
+    }, [focusRef, hanldeChange, isDisabled]);
 
     useEffect(() => {
       const length = Object.keys(items).length;
@@ -695,3 +705,29 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
 );
 
 RadioItem.displayName = 'gist-ui.' + RadioItem_Name;
+
+// *-*-*-*-* Utils *-*-*-*-*
+
+const getNext = (
+  current: FocusableItem,
+  items: Record<string, FocusableItem>,
+) => {
+  for (let i = current.index + 1; i <= Object.keys(items).length; i++) {
+    const focused = items[i];
+    if (!focused.isDisabled) return focused;
+  }
+
+  return null;
+};
+
+const getPrevious = (
+  current: FocusableItem,
+  items: Record<string, FocusableItem>,
+) => {
+  for (let i = current.index; i > 0; i--) {
+    const focused = items[i];
+    if (!focused.isDisabled) return focused;
+  }
+
+  return null;
+};
