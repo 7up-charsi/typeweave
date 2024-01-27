@@ -197,10 +197,7 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
     innerRef.current?.focus?.();
 
     // index zero mean... we need to check 1st item also
-    if (isFocusVisible)
-      setFocused(
-        getNext({ index: 0, isDisabled: false, callback: () => {} }, items),
-      );
+    if (isFocusVisible) setFocused(getNext(createCustomItem(0), items));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocusVisible]);
@@ -215,12 +212,6 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
     const Enter = e.key === 'Enter';
     const Space = e.key === ' ';
 
-    if (Enter || Space) {
-      e.preventDefault();
-      focused?.callback();
-      return;
-    }
-
     if (Escape) {
       setFocused(null);
       rootContext.handleClose();
@@ -233,44 +224,38 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
       return;
     }
 
-    if (ArrowDown) {
-      if (!focused) {
-        setFocused(items['1']);
-        return;
-      }
+    if (!itemsLength) return;
 
-      if (focused) {
-        if (focused.index < itemsLength)
-          setFocused(getNext(focused, items) ?? focused);
-
-        return;
-      }
-
+    if ((Enter || Space) && focused) {
+      e.preventDefault();
+      focused.callback();
       return;
     }
 
-    if (ArrowUp) {
-      if (!focused) {
-        setFocused(items['1']);
-        return;
-      }
+    if ((ArrowDown || ArrowUp) && !focused) {
+      setFocused(getNext(createCustomItem(0), items) ?? focused);
+      return;
+    }
 
-      if (focused) {
-        if (focused.index > 1)
-          setFocused(getPrevious(focused, items) ?? focused);
-        return;
-      }
+    if (ArrowDown && focused && focused.index < itemsLength) {
+      setFocused(getNext(focused, items) ?? focused);
+      return;
+    }
 
+    if (ArrowUp && focused && focused.index > 1) {
+      setFocused(getPrevious(focused, items) ?? focused);
       return;
     }
 
     if (Home) {
-      setFocused(items['1']);
+      setFocused(getNext(createCustomItem(0), items) ?? focused);
       return;
     }
 
     if (End) {
-      setFocused(items[itemsLength]);
+      setFocused(
+        getPrevious(createCustomItem(itemsLength + 1), items) ?? focused,
+      );
       return;
     }
   };
@@ -742,3 +727,9 @@ const getPrevious = (
 
   return null;
 };
+
+const createCustomItem = (index: number) => ({
+  index,
+  isDisabled: false,
+  callback: () => {},
+});

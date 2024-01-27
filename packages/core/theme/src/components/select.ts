@@ -3,7 +3,8 @@ import { ClassNames } from '../types';
 
 const select = tv({
   slots: {
-    listbox: 'w-[--reference-width] bg-white border overflow-y-auto rounded',
+    listbox:
+      'w-[--reference-width] bg-white border overflow-y-auto rounded max-h-[300px]',
     option:
       'h-10 flex items-center px-2 select-none truncate cursor-pointer data-[disabled=true]:opacity-50 data-[selected=true]:bg-info-200 data-[focused=true]:data-[selected=false]:bg-neutral-200 data-[focused=true]:data-[selected=true]:bg-info-300 data-[hovered=true]:data-[selected=false]:bg-neutral-200 data-[hovered=true]:data-[selected=true]:bg-info-300 text-neutral-800',
     noOptions: 'h-10 flex items-center justify-center capitalize text-neutral',
