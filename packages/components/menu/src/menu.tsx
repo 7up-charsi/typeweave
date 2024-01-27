@@ -216,7 +216,7 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
 
     if (Enter || Space) {
       e.preventDefault();
-      focused?.callback?.();
+      focused?.callback();
       return;
     }
 
@@ -239,11 +239,13 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
       }
 
       if (focused) {
-        if (focused.index !== itemsLength)
+        if (focused.index < itemsLength)
           setFocused(getNext(focused, items) ?? focused);
 
         return;
       }
+
+      return;
     }
 
     if (ArrowUp) {
@@ -253,14 +255,16 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
       }
 
       if (focused) {
-        if (focused.index !== 1)
-          setFocused(getPrevious(items[focused.index - 1], items) ?? focused);
+        if (focused.index > 1)
+          setFocused(getPrevious(focused, items) ?? focused);
         return;
       }
+
+      return;
     }
 
     if (Home) {
-      setFocused(items[0]);
+      setFocused(items['1']);
       return;
     }
 
@@ -724,7 +728,7 @@ const getPrevious = (
   current: FocusableItem,
   items: Record<string, FocusableItem>,
 ) => {
-  for (let i = current.index; i > 0; i--) {
+  for (let i = current.index - 1; i > 0; i--) {
     const focused = items[i];
     if (!focused.isDisabled) return focused;
   }
