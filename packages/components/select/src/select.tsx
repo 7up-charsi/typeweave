@@ -5,13 +5,15 @@ import { useClickOutside } from '@gist-ui/use-click-outside';
 import { Button } from '@gist-ui/button';
 import { GistUiError } from '@gist-ui/error';
 import { useFocusVisible } from '@react-aria/interactions';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import {
   InputClassNames,
   SelectClassNames,
   SelectVariantProps,
   select,
 } from '@gist-ui/theme';
+import { Option, OptionProps } from './option';
+import { useCallbackRef } from '@gist-ui/use-callback-ref';
 
 const clearIcon_svg = (
   <svg
@@ -62,15 +64,25 @@ export type SelectProps<
   Multiple extends boolean = false,
   DisableClearable extends boolean = false,
 > = (SelectVariantProps &
-  Omit<InputProps, 'defaultValue' | 'value' | 'onChange' | 'classNames'> & {
+  Omit<
+    InputProps,
+    'defaultValue' | 'value' | 'onChange' | 'classNames' | 'multiline'
+  > & {
     classNames?: InputClassNames & SelectClassNames;
     offset?: Popper.FloatingProps['mainOffset'];
+    options: Value[];
     isOpen?: boolean;
     onOpenChange?: (open: boolean) => void;
     defaultOpen?: boolean;
     openIndicator?: React.ReactNode;
     clearIcon?: React.ReactNode;
-    children?: React.ReactNode;
+    children?: (props: {
+      listboxProps: React.HTMLAttributes<HTMLUListElement>;
+      options: OptionProps<Value>[];
+    }) => React.ReactNode;
+    getOptionDisabled?: (option: Value) => boolean;
+    disableCloseOnSelect?: boolean;
+    getOptionLabel?: (option: Value) => string;
   }) &
   (Multiple extends true
     ? {
@@ -96,33 +108,7 @@ export type SelectProps<
           disableClearable?: DisableClearable;
         });
 
-type OptionState = {
-  index: number;
-  isDisabled: boolean;
-  callback: () => void;
-  value: string;
-  id: string;
-};
-
-interface _SelectProps
-  extends SelectVariantProps,
-    Omit<InputProps, 'defaultValue' | 'value' | 'onChange' | 'classNames'> {
-  classNames?: InputClassNames & SelectClassNames;
-  offset?: Popper.FloatingProps['mainOffset'];
-  isOpen?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  defaultOpen?: boolean;
-  openIndicator?: React.ReactNode;
-  clearIcon?: React.ReactNode;
-  children?: React.ReactNode;
-  multiple?: boolean;
-  defaultValue?: string | string[];
-  value?: string | null | string[];
-  onChange?: (value: string | null | string[], reason: Reason) => void;
-  disableClearable?: undefined;
-}
-
-const Select = (props: _SelectProps) => {
+const _Select = (props: SelectProps<object, false, false>) => {
   const {
     classNames,
     offset,
@@ -133,19 +119,22 @@ const Select = (props: _SelectProps) => {
     value: valueProp,
     onChange,
     shadow,
+    options = [],
     isDisabled,
     multiple,
-    startContent,
     endContent,
     clearIcon = clearIcon_svg,
     openIndicator = openIndicator_svg,
     disableClearable,
+    disableCloseOnSelect,
     children,
+    getOptionDisabled,
+    getOptionLabel = (option) => (option as { label?: string }).label ?? '',
     ...inputProps
   } = props;
 
   const [value, setValue] = useControllableState<
-    string | string[] | null,
+    object | object[] | null,
     Reason
   >({
     defaultValue,
@@ -163,23 +152,9 @@ const Select = (props: _SelectProps) => {
   });
 
   const inputRef = useRef<HTMLDivElement>(null);
-
-  const options = useRef<Record<string, OptionState>>({}).current;
-
-  const optionsLength = Object.keys(options).length;
-
-  const [focused, setFocused] = useState<OptionState | null>(null);
-
+  const [focused, setFocused] = useState<object | null>(null);
   const { isFocusVisible } = useFocusVisible({ isTextInput: true });
-
   const lisboxId = useId();
-
-  const state = useRef<{
-    searchedString: string;
-    searchedStringTimer?: ReturnType<typeof setTimeout>;
-  }>({
-    searchedString: '',
-  }).current;
 
   const [isOpen, setIsOpen] = useControllableState({
     defaultValue: defaultOpen ?? false,
@@ -188,7 +163,7 @@ const Select = (props: _SelectProps) => {
     resetStateValue: false,
   });
 
-  const handleListboxClose = () => {
+  const handleClose = () => {
     setIsOpen(false);
     setFocused(null);
   };
@@ -198,52 +173,48 @@ const Select = (props: _SelectProps) => {
     onEvent: 'pointerdown',
     callback: (e) => {
       if (inputRef.current?.contains(e.target as Node)) return;
-      handleListboxClose();
+      handleClose();
     },
   });
 
-  const handleListboxOpen = () => {
+  const handleOpen = useCallbackRef(() => {
     if (isOpen) return;
 
     setIsOpen(true);
 
-    if (!optionsLength) return;
+    if (!options.length) return;
 
     if (!value) {
-      setFocused(getNext(createCustomItem(0), options));
+      setFocused(getNext(options[0], options, getOptionDisabled));
       return;
     }
 
-    if (multiple && Array.isArray(value) && value.length) {
-      setFocused(options[flatString(value[value.length - 1])]);
-      return;
+    setFocused(Array.isArray(value) ? value[0] : value);
+  });
+
+  const onSelect = (option: object) => {
+    if (Array.isArray(value)) {
+      const val = value.find((ele) => ele === option)
+        ? value.filter((ele) => ele !== option)
+        : [...value, option];
+
+      setValue(val, 'select');
+      setFocused(option);
     }
 
-    if (!multiple && !Array.isArray(value)) {
-      setFocused(options[flatString(value)]);
-      return;
+    if (!Array.isArray(value)) {
+      setValue(option, 'select');
+      setFocused(option);
     }
+
+    if (!disableCloseOnSelect) handleClose();
   };
 
-  // const handleOptionSelect = (option: string) => () => {
-  //   //
+  const onHover = (option: object) => {
+    setFocused(option);
+  };
 
-  //   if (multiple && Array.isArray(value)) {
-  //     const val = value.find((ele) => ele === option)
-  //       ? value.filter((ele) => ele !== option)
-  //       : [...value, option];
-
-  //     setValue(val, 'select');
-  //     setFocused(options[option]);
-  //   }
-
-  //   if (!multiple && !Array.isArray(value)) {
-  //     setValue(option, 'select');
-  //     handleListboxClose();
-  //   }
-  // };
-
-  const handleInputKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     const ArrowDown = e.key === 'ArrowDown';
     const ArrowUp = e.key === 'ArrowUp';
     const Escape = e.key === 'Escape';
@@ -252,54 +223,52 @@ const Select = (props: _SelectProps) => {
     const End = e.key === 'End';
 
     if (ArrowDown && !isOpen) {
-      handleListboxOpen();
+      handleOpen();
       return;
     }
 
-    if (!optionsLength || !isOpen) return;
+    if (!options.length || !isOpen) return;
 
     if (Escape) {
-      handleListboxClose();
+      handleClose();
       return;
     }
 
     if (Enter && focused) {
       e.preventDefault();
-      focused.callback();
+      onSelect(focused);
       return;
     }
 
     if ((ArrowDown || ArrowUp) && !focused) {
-      setFocused(getNext(createCustomItem(0), options) ?? focused);
+      setFocused(getNext(options[0], options, getOptionDisabled));
       return;
     }
 
-    if (ArrowDown && focused && focused.index < optionsLength) {
-      setFocused(getNext(focused, options) ?? focused);
+    if (ArrowDown && focused && focused !== options[options.length - 1]) {
+      setFocused(getNext(options[options.indexOf(focused) + 1], options));
       return;
     }
 
-    if (ArrowUp && focused && focused.index > 1) {
-      setFocused(getPrevious(focused, options) ?? focused);
+    if (ArrowUp && focused && focused !== options[0]) {
+      setFocused(getPrevious(options[options.indexOf(focused) - 1], options));
       return;
     }
 
     if (Home) {
-      setFocused(getNext(createCustomItem(0), options) ?? focused);
+      setFocused(getNext(options[0], options));
       return;
     }
 
     if (End) {
-      setFocused(
-        getPrevious(createCustomItem(optionsLength + 1), options) ?? focused,
-      );
+      setFocused(getPrevious(options[options.length - 1], options));
       return;
     }
   };
 
   const handleClearValue = () => {
-    setIsOpen(true);
     inputRef.current?.focus();
+    setFocused(null);
 
     if (multiple) {
       setValue([], 'clear');
@@ -308,71 +277,117 @@ const Select = (props: _SelectProps) => {
     }
   };
 
-  useEffect(() => {
-    return () => {
-      clearTimeout(state.searchedStringTimer);
-    };
-  }, [state]);
+  const getInputValue = (value: object | null | object[]) => {
+    if (!value) return '';
 
-  const startContentSelected =
-    multiple && Array.isArray(value) && value.length
-      ? `${value.length} selected ${isOpen ? ' -' : ''}`
-      : null;
+    if (Array.isArray(value))
+      return value.map((ele) => getOptionLabel?.(ele)).join(', ');
+
+    if (!Array.isArray(value)) return getOptionLabel?.(value);
+
+    return '';
+  };
 
   const styles = select({ shadow });
+
+  const __options = options.map((ele, i) => {
+    const isFocused = ele === focused;
+    const isDisabled = getOptionDisabled?.(ele) ?? false;
+    const isSelected = Array.isArray(value)
+      ? !!value.find((val) => val === ele)
+      : ele === value;
+
+    return {
+      option: ele,
+      label: getOptionLabel(ele),
+      props: {
+        className: styles.option({ className: classNames?.option }),
+        id: `option-${i}`,
+        role: 'option',
+        'aria-selected': isDisabled ? undefined : isSelected,
+        'data-disabled': isDisabled,
+        'data-selected': isSelected,
+        'data-focused': isFocused,
+      },
+      onHover: () => onHover(ele),
+      onSelect: () => onSelect(ele),
+      state: {
+        isFocused,
+        isSelected,
+        isDisabled,
+      },
+    };
+  });
+
+  const listboxProps = {
+    ref: setListboxOutsideEle,
+    id: lisboxId,
+    className: styles.listbox({
+      className: classNames?.listbox,
+    }),
+    role: 'listbox',
+    'aria-roledescription': multiple
+      ? 'multiple select list'
+      : 'single select list',
+    'aria-multiselectable': multiple,
+  };
+
+  if (multiple && !Array.isArray(value))
+    throw new GistUiError(
+      'Select',
+      'value must be an Array when multiple is true',
+    );
+
+  if (!multiple && Array.isArray(value))
+    throw new GistUiError(
+      'Select',
+      'value must not be an Array when multiple is false',
+    );
+
+  // TODO: open listbox on input click
 
   return (
     <Popper.Root>
       <Popper.Reference>
         <Input
           {...inputProps}
-          value={!multiple && !Array.isArray(value) && value ? value : ''}
+          value={getInputValue(value)}
           isDisabled={isDisabled}
           ref={inputRef}
-          onFocus={() => {
-            if (!isFocusVisible) handleListboxOpen();
-          }}
           onBlur={() => {
-            if (isFocusVisible) handleListboxClose();
+            if (isFocusVisible) handleClose();
           }}
           classNames={classNames}
-          onKeyDown={handleInputKeyDown}
+          onKeyDown={handleKeyDown}
           aria-expanded={isOpen}
           aria-controls={lisboxId}
           aria-haspopup="listbox"
           aria-autocomplete="list"
-          aria-activedescendant={focused?.id || undefined}
+          aria-activedescendant={
+            isOpen && focused ? `option-${options.indexOf(focused)}` : undefined
+          }
           role="combobox"
           autoComplete="none"
           readOnly={true}
-          startContent={
-            startContent ? (
-              <>
-                {startContent}
-                {startContentSelected}
-              </>
-            ) : (
-              startContentSelected
-            )
-          }
           endContent={
             <>
-              {value?.length && !disableClearable && (
-                <Button
-                  isIconOnly
-                  size="sm"
-                  variant="text"
-                  preventFocusOnPress
-                  aria-label="clear value"
-                  tabIndex={-1}
-                  onPress={handleClearValue}
-                  className={styles.clearButton({
-                    className: classNames?.clearButton,
-                  })}
-                >
-                  {clearIcon}
-                </Button>
-              )}
+              {(Array.isArray(value) ? !!value?.length : value) &&
+                !disableClearable && (
+                  <Button
+                    isIconOnly
+                    size="sm"
+                    variant="text"
+                    preventFocusOnPress
+                    aria-label="clear value"
+                    tabIndex={-1}
+                    onPress={handleClearValue}
+                    className={styles.clearButton({
+                      className: classNames?.clearButton,
+                    })}
+                  >
+                    {clearIcon}
+                  </Button>
+                )}
 
               <div
                 data-open={isOpen}
@@ -391,30 +406,25 @@ const Select = (props: _SelectProps) => {
 
       {isOpen && (
         <Popper.Floating sticky="always" mainOffset={offset || 5}>
-          <ul
-            ref={setListboxOutsideEle}
-            id={lisboxId}
-            className={styles.listbox({
-              className: classNames?.listbox,
-            })}
-            role="listbox"
-            aria-roledescription={
-              multiple ? 'multiple select list' : 'single select list'
-            }
-            aria-multiselectable={multiple}
-          >
-            {children}
-          </ul>
+          {children ? (
+            children({ listboxProps, options: __options })
+          ) : (
+            <ul {...listboxProps}>
+              {__options.map((ele, i) => (
+                <Option key={i} {...ele} />
+              ))}
+            </ul>
+          )}
         </Popper.Floating>
       )}
     </Popper.Root>
   );
 };
 
-Select.displayName = 'gist-ui.Select';
+_Select.displayName = 'gist-ui.Select';
 
-export default Select as <
-  Value extends string,
+export const Select = _Select as unknown as <
+  Value,
   Multiple extends boolean = false,
   DisableClearable extends boolean = false,
 >(
@@ -423,36 +433,35 @@ export default Select as <
 
 // *-*-*-*-* Utils *-*-*-*-*
 
-const flatString = (value: string) => value.replaceAll(' ', '-');
+const getNext = (
+  current: object,
+  items: object[],
+  isOptionDisabled?: (opt: object) => boolean,
+) => {
+  if (!isOptionDisabled) return current;
 
-const getNext = (current: OptionState, items: Record<string, OptionState>) => {
-  for (let i = current.index + 1; i <= Object.keys(items).length; i++) {
-    const focused = items[i];
-    if (!focused.isDisabled) return focused;
+  for (let i = items.indexOf(current); i <= items.length; i++) {
+    const option = items[i];
+    if (!isOptionDisabled(option)) return option;
   }
 
-  return null;
+  return current;
 };
 
 const getPrevious = (
-  current: OptionState,
-  items: Record<string, OptionState>,
+  current: object,
+  items: object[],
+  isOptionDisabled?: (opt: object) => boolean,
 ) => {
-  for (let i = current.index - 1; i > 0; i--) {
-    const focused = items[i];
-    if (!focused.isDisabled) return focused;
+  if (!isOptionDisabled) return current;
+
+  for (let i = items.indexOf(current) - 1; i > 0; i--) {
+    const option = items[i];
+    if (!isOptionDisabled(option)) return option;
   }
 
-  return null;
+  return current;
 };
-
-const createCustomItem = (index: number): OptionState => ({
-  index,
-  isDisabled: false,
-  callback: () => {},
-  value: '',
-  id: '',
-});
 
 // {loading && !options?.length ? (
 //   <div

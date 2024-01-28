@@ -43,18 +43,6 @@ interface RootContext {
 const [RootProvider, useRootContext] =
   createContextScope<RootContext>(Root_Name);
 
-interface _RootProps {
-  data?: _Row[];
-  columns?: Column<_Row>[];
-  getRowKey?: GetRowKey<_Row>;
-  children?: React.ReactNode;
-  visibilityState?: VisibilityState[];
-  onVisibilityStateChange?: (
-    value: VisibilityState[],
-    changed: VisibilityState,
-  ) => void;
-}
-
 export interface RootProps<R> {
   data?: R[];
   columns?: Column<R>[];
@@ -67,7 +55,7 @@ export interface RootProps<R> {
   ) => void;
 }
 
-const RootComp = (props: _RootProps) => {
+const RootComp = (props: RootProps<_Row>) => {
   const {
     columns: userColumns,
     data,
@@ -120,9 +108,7 @@ const RootComp = (props: _RootProps) => {
 
 RootComp.displayName = 'gist-ui.' + Root_Name;
 
-export const Root = <R,>(props: RootProps<R>) => (
-  <RootComp {...(props as _RootProps)} />
-);
+export const Root = RootComp as <R>(props: RootProps<R>) => React.ReactNode;
 
 // ********** Table **********
 

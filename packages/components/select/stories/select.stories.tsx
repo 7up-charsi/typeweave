@@ -1,19 +1,14 @@
 import React from 'react';
 import { select } from '@gist-ui/theme';
-import InputStoryMeta from '@gist-ui/input/stories/input.stories';
 
-import { Select } from '../src';
+import { Option, Select } from '../src';
 
 const meta = {
   title: 'Components/Select',
-  component: Select,
   args: {
     ...select.defaultVariants,
-    ...InputStoryMeta.args,
-    loading: false,
   },
   argTypes: {
-    ...InputStoryMeta.argTypes,
     shadow: {
       control: { type: 'select' },
       options: Object.keys(select.variants.shadow),
@@ -153,15 +148,10 @@ const options = [
 
 const SingleTemplate = () => (
   <Select
-    label="top movies"
     options={options}
-    getOptionDisabled={(option) =>
-      option.title.startsWith('1') || option.title.startsWith('The')
-    }
+    label="top movies"
     defaultValue={options[21]}
-    getOptionLabel={(opt) => opt.title}
-    getOptionId={(opt) => opt.title}
-    getOptionKey={(opt) => opt.title}
+    getOptionLabel={(option) => option.title}
   />
 );
 
@@ -171,16 +161,11 @@ export const Single = {
 
 const MultipleTemplate = () => (
   <Select
-    label="top movies"
     multiple
     options={options}
-    getOptionDisabled={(option) =>
-      option.title.startsWith('1') || option.title.startsWith('The')
-    }
+    label="top movies"
     defaultValue={[options[21]]}
-    getOptionLabel={(opt) => opt.title}
-    getOptionId={(opt) => opt.title}
-    getOptionKey={(opt) => opt.title}
+    getOptionLabel={(option) => option.title}
   />
 );
 
@@ -188,53 +173,34 @@ export const Multiple = {
   render: MultipleTemplate,
 };
 
-const CustomOptionTemplate = () => (
+const CustomTemplate = () => (
   <Select
-    label="top movies"
+    multiple
     options={options}
-    getOptionDisabled={(option) =>
-      option.title.startsWith('1') || option.title.startsWith('The')
-    }
-    defaultValue={options[21]}
-    getOptionLabel={(opt) => opt.title}
-    getOptionId={(opt) => opt.title}
-    getOptionKey={(opt) => opt.title}
-    renderOption={({ option, state }) => {
-      return (
-        <li className="flex gap-3 h-14">
-          <div className="flex items-center justify-center">
-            <input type="checkbox" checked={state.isSelected} readOnly />
-          </div>
-
-          <div className="flex flex-col">
-            <div className="">{option.title}</div>
-            <div className="text-sm text-neutral">very nice description</div>
-          </div>
-        </li>
-      );
-    }}
-  />
+    label="top movies"
+    defaultValue={[options[21]]}
+    getOptionLabel={(option) => option.title}
+  >
+    {({ listboxProps, options }) => (
+      <ul {...listboxProps}>
+        {options.map((ele, i) => (
+          <Option key={i} asChild {...ele}>
+            <div>
+              <input
+                type="checkbox"
+                checked={ele.state.isSelected}
+                readOnly
+                className="mr-2"
+              />
+              <span className="truncate">{ele.label}</span>
+            </div>
+          </Option>
+        ))}
+      </ul>
+    )}
+  </Select>
 );
 
-export const CutomOption = {
-  render: CustomOptionTemplate,
-};
-
-const GroupByTemplate = () => (
-  <Select
-    label="top movies"
-    options={options}
-    getOptionDisabled={(option) =>
-      option.title.startsWith('1') || option.title.startsWith('The')
-    }
-    defaultValue={options[21]}
-    groupBy={(option) => option.title[0]}
-    getOptionLabel={(opt) => opt.title}
-    getOptionId={(opt) => opt.title}
-    getOptionKey={(opt) => opt.title}
-  />
-);
-
-export const Groupby = {
-  render: GroupByTemplate,
+export const CustomOption = {
+  render: CustomTemplate,
 };

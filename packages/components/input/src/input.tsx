@@ -15,7 +15,7 @@ import {
 export interface InputProps
   extends Omit<
       React.InputHTMLAttributes<HTMLInputElement>,
-      'onChange' | 'color' | 'size' | 'type'
+      'onChange' | 'color' | 'size' | 'type' | 'children'
     >,
     Omit<InputVariantProps, 'error'> {
   type?: 'text' | 'number' | 'password' | 'multiline';

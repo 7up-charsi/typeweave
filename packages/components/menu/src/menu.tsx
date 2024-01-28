@@ -233,29 +233,27 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
     }
 
     if ((ArrowDown || ArrowUp) && !focused) {
-      setFocused(getNext(createCustomItem(0), items) ?? focused);
+      setFocused(getNext(createCustomItem(0), items));
       return;
     }
 
     if (ArrowDown && focused && focused.index < itemsLength) {
-      setFocused(getNext(focused, items) ?? focused);
+      setFocused(getNext(focused, items));
       return;
     }
 
     if (ArrowUp && focused && focused.index > 1) {
-      setFocused(getPrevious(focused, items) ?? focused);
+      setFocused(getPrevious(focused, items));
       return;
     }
 
     if (Home) {
-      setFocused(getNext(createCustomItem(0), items) ?? focused);
+      setFocused(getNext(createCustomItem(0), items));
       return;
     }
 
     if (End) {
-      setFocused(
-        getPrevious(createCustomItem(itemsLength + 1), items) ?? focused,
-      );
+      setFocused(getPrevious(createCustomItem(itemsLength + 1), items));
       return;
     }
   };
@@ -713,7 +711,7 @@ const getNext = (
     if (!focused.isDisabled) return focused;
   }
 
-  return null;
+  return current;
 };
 
 const getPrevious = (
@@ -725,7 +723,7 @@ const getPrevious = (
     if (!focused.isDisabled) return focused;
   }
 
-  return null;
+  return current;
 };
 
 const createCustomItem = (index: number) => ({

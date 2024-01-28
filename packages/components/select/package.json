@@ -41,11 +41,11 @@
     "@gist-ui/input": "workspace:*",
     "@gist-ui/popper": "workspace:*",
     "@gist-ui/react-utils": "workspace:*",
-    "@gist-ui/theme": "workspace:*",
     "@gist-ui/slot": "workspace:*",
+    "@gist-ui/theme": "workspace:*",
+    "@gist-ui/use-callback-ref": "workspace:*",
     "@gist-ui/use-click-outside": "workspace:*",
     "@gist-ui/use-controllable-state": "workspace:*",
-    "@gist-ui/use-callback-ref": "workspace:*",
     "@react-aria/interactions": "^3.20.0"
   },
   "devDependencies": {
@@ -56,3 +56,4 @@
     "extends": "../../../../../../clean-package.config.json"
   }
 }
+
