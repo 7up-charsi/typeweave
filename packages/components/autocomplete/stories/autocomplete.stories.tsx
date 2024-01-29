@@ -1,19 +1,14 @@
 import React from 'react';
 import { select } from '@gist-ui/theme';
-import InputStoryMeta from '@gist-ui/input/stories/input.stories';
 
-import { Autocomplete } from '../src';
+import { Option, Autocomplete } from '../src';
 
 const meta = {
   title: 'Components/Autocomplete',
-  component: Autocomplete,
   args: {
     ...select.defaultVariants,
-    ...InputStoryMeta.args,
-    loading: false,
   },
   argTypes: {
-    ...InputStoryMeta.argTypes,
     shadow: {
       control: { type: 'select' },
       options: Object.keys(select.variants.shadow),
@@ -153,15 +148,10 @@ const options = [
 
 const SingleTemplate = () => (
   <Autocomplete
-    label="top movies"
     options={options}
-    getOptionDisabled={(option) =>
-      option.title.startsWith('1') || option.title.startsWith('The')
-    }
+    label="top movies"
     defaultValue={options[21]}
-    getOptionLabel={(opt) => opt.title}
-    getOptionId={(opt) => opt.title}
-    getOptionKey={(opt) => opt.title}
+    getOptionLabel={(option) => option.title}
   />
 );
 
@@ -171,16 +161,11 @@ export const Single = {
 
 const MultipleTemplate = () => (
   <Autocomplete
-    label="top movies"
     multiple
     options={options}
-    getOptionDisabled={(option) =>
-      option.title.startsWith('1') || option.title.startsWith('The')
-    }
+    label="top movies"
     defaultValue={[options[21]]}
-    getOptionLabel={(opt) => opt.title}
-    getOptionId={(opt) => opt.title}
-    getOptionKey={(opt) => opt.title}
+    getOptionLabel={(option) => option.title}
   />
 );
 
@@ -188,53 +173,44 @@ export const Multiple = {
   render: MultipleTemplate,
 };
 
-const CustomOptionTemplate = () => (
+const CustomTemplate = () => (
   <Autocomplete
-    label="top movies"
+    multiple
     options={options}
-    getOptionDisabled={(option) =>
-      option.title.startsWith('1') || option.title.startsWith('The')
+    label="top movies"
+    defaultValue={[options[21]]}
+    getOptionLabel={(option) => option.title}
+  >
+    {({ options }) =>
+      options?.map((ele) => (
+        <Option {...ele} key={ele.key}>
+          <input
+            type="checkbox"
+            checked={ele.state.isSelected}
+            readOnly
+            className="mr-2"
+          />
+          <span className="truncate">{ele.label}</span>
+        </Option>
+      ))
     }
-    defaultValue={options[21]}
-    getOptionLabel={(opt) => opt.title}
-    getOptionId={(opt) => opt.title}
-    getOptionKey={(opt) => opt.title}
-    renderOption={({ option, state }) => {
-      return (
-        <li className="flex gap-3 h-14">
-          <div className="flex items-center justify-center">
-            <input type="checkbox" checked={state.isSelected} readOnly />
-          </div>
-
-          <div className="flex flex-col">
-            <div className="">{option.title}</div>
-            <div className="text-sm text-neutral">very nice description</div>
-          </div>
-        </li>
-      );
-    }}
-  />
+  </Autocomplete>
 );
 
-export const CutomOption = {
-  render: CustomOptionTemplate,
+export const CustomOption = {
+  render: CustomTemplate,
 };
 
-const GroupByTemplate = () => (
+const GroupTemplate = () => (
   <Autocomplete
-    label="top movies"
     options={options}
-    getOptionDisabled={(option) =>
-      option.title.startsWith('1') || option.title.startsWith('The')
-    }
+    label="top movies"
     defaultValue={options[21]}
+    getOptionLabel={(option) => option.title}
     groupBy={(option) => option.title[0]}
-    getOptionLabel={(opt) => opt.title}
-    getOptionId={(opt) => opt.title}
-    getOptionKey={(opt) => opt.title}
   />
 );
 
-export const Groupby = {
-  render: GroupByTemplate,
+export const Group = {
+  render: GroupTemplate,
 };

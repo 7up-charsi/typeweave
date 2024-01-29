@@ -8,7 +8,6 @@ export interface UseControllableStateProps<T, P> {
   value?: T;
   defaultValue?: T;
   onChange?: (value: T, payload?: P) => void;
-  onControlledChange?: (controlled: boolean) => void;
   resetStateValue?: T;
 }
 

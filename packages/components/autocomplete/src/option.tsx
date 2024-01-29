@@ -1,74 +1,59 @@
 import { useEffect, useRef } from 'react';
 import { mergeProps } from '@gist-ui/react-utils';
-import { Slot } from '@gist-ui/slot';
-import {
-  HoverEvent,
-  PressEvent,
-  useHover,
-  usePress,
-} from '@react-aria/interactions';
+import { useHover, usePress } from '@react-aria/interactions';
 
-interface OptionProps {
-  isDisabled: boolean;
-  isSelected: boolean;
-  isFocused: boolean;
-  className: string;
-  onSelect: (e: PressEvent) => void;
-  onHover: (e: HoverEvent) => void;
-  id?: string;
-  children: React.ReactNode;
+export interface OptionProps<V> {
+  option: V;
+  label: string;
+  state: { isSelected: boolean; isDisabled: boolean; isFocused: boolean };
+  onSelect: () => void;
+  onHover: () => void;
+  props: React.LiHTMLAttributes<HTMLLIElement>;
+  key: string;
 }
 
-export const Option = (props: OptionProps) => {
+export const Option = (
+  _props: OptionProps<object> & { children?: React.ReactNode },
+) => {
   const {
-    className,
-    isDisabled,
-    isSelected,
-    isFocused,
+    label,
+    props,
     onSelect,
     onHover,
-    id,
+    state: { isDisabled, isFocused, isSelected },
     children,
-  } = props;
+  } = _props;
 
   const ref = useRef<HTMLLIElement>(null);
 
   const { pressProps } = usePress({
-    onPress: (e) => {
+    onPress: () => {
       if (isDisabled) return;
-      onSelect(e);
+      onSelect();
     },
   });
 
   const { hoverProps, isHovered } = useHover({
-    isDisabled,
-    onHoverStart: onHover,
+    isDisabled: isDisabled,
+    onHoverStart: () => onHover(),
   });
 
   useEffect(() => {
-    if (isFocused && !isHovered) {
-      ref.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'end',
-      });
-    }
+    if (isSelected)
+      ref.current?.scrollIntoView({ behavior: 'instant', block: 'center' });
+  }, [isSelected]);
+
+  useEffect(() => {
+    if (isFocused && !isHovered)
+      ref.current?.scrollIntoView({ behavior: 'instant', block: 'nearest' });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);
 
   return (
-    <Slot<HTMLLIElement, React.HTMLAttributes<HTMLLIElement>>
-      id={id}
-      ref={ref}
-      data-disabled={isDisabled}
-      data-selected={isSelected}
-      data-focused={isFocused}
-      role="option"
-      className={className}
-      aria-selected={isDisabled ? undefined : isSelected}
-      {...mergeProps(pressProps, hoverProps)}
-    >
-      {children}
-    </Slot>
+    <li ref={ref} {...mergeProps(pressProps, hoverProps)} {...props}>
+      {children ?? label}
+    </li>
   );
 };
 
