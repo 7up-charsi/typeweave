@@ -9,6 +9,7 @@ export interface OptionProps<V> {
   onSelect: () => void;
   onHover: () => void;
   props: React.LiHTMLAttributes<HTMLLIElement>;
+  key: string;
 }
 
 export const Option = (

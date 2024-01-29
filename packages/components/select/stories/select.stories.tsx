@@ -180,11 +180,10 @@ const CustomTemplate = () => (
     label="top movies"
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
-    groupBy={(option) => option.title[0]}
   >
     {({ options }) =>
-      options?.map((ele, i) => (
-        <Option key={i} {...ele}>
+      options?.map((ele) => (
+        <Option {...ele} key={ele.key}>
           <input
             type="checkbox"
             checked={ele.state.isSelected}

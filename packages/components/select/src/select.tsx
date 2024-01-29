@@ -76,6 +76,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
       getOptionDisabled?: (option: Value) => boolean;
       disableCloseOnSelect?: boolean;
       getOptionLabel?: (option: Value) => string;
+      getOptionKey?: (options: Value) => string;
       noOptionsText?: string;
       loading?: boolean;
       loadingText?: string;
@@ -134,6 +135,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
     loading,
     loadingText = 'loading ...',
     getOptionLabel: getOptionLabelProp,
+    getOptionKey,
     groupBy,
     ...inputProps
   } = props;
@@ -200,6 +202,11 @@ const _Select = (props: SelectProps<object, false, false>) => {
   const [focused, setFocused] = useState<object | null>(null);
   const { isFocusVisible } = useFocusVisible({ isTextInput: true });
   const lisboxId = useId();
+
+  const searchState = useRef<{
+    timer?: ReturnType<typeof setTimeout>;
+    chars: string;
+  }>({ chars: '' }).current;
 
   const [isOpen, setIsOpen] = useControllableState({
     defaultValue: defaultOpen ?? false,
@@ -311,6 +318,57 @@ const _Select = (props: SelectProps<object, false, false>) => {
     }
   };
 
+  const handleCharSearch = (e: React.KeyboardEvent) => {
+    const char = e.key;
+
+    if (char.length !== 1) return;
+    if (!options.length) return;
+
+    setIsOpen(true);
+
+    clearTimeout(searchState.timer);
+
+    searchState.timer = setTimeout(() => {
+      searchState.chars = '';
+    }, 500);
+
+    searchState.chars += char;
+
+    const startIndex = focused ? options.indexOf(focused) + 1 : 0;
+
+    const orderedOptions = [
+      ...options.slice(startIndex),
+      ...options.slice(0, startIndex),
+    ];
+
+    const filter = searchState.chars.toLowerCase();
+
+    const excatMatch = orderedOptions.find((ele) =>
+      getOptionDisabled?.(ele)
+        ? false
+        : getOptionLabel(ele).toLowerCase().startsWith(filter),
+    );
+
+    if (excatMatch) {
+      setFocused(excatMatch);
+      return;
+    }
+
+    const sameLetters = filter
+      .split('')
+      .every((letter) => letter.toLowerCase() === filter[0]);
+
+    if (sameLetters) {
+      const matched = orderedOptions.find((ele) =>
+        getOptionDisabled?.(ele)
+          ? false
+          : getOptionLabel(ele).toLowerCase().startsWith(filter[0]),
+      );
+
+      if (matched) setFocused(matched);
+    }
+  };
+
   const handleClearValue = () => {
     inputRef.current?.focus();
     setFocused(null);
@@ -343,6 +401,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
     return {
       option: ele,
       label: getOptionLabel(ele),
+      key: getOptionKey?.(ele) ?? getOptionLabel(ele).replaceAll(' ', '-'),
       props: {
         className: styles.option({ className: classNames?.option }),
         id: `option-${i}`,
@@ -389,7 +448,10 @@ const _Select = (props: SelectProps<object, false, false>) => {
           }}
           classNames={classNames}
           inputProps={{
-            onKeyDown: handleKeyDown,
+            onKeyDown: (e) => {
+              handleKeyDown(e);
+              handleCharSearch(e);
+            },
             'aria-expanded': isOpen,
             'aria-controls': lisboxId,
             'aria-haspopup': 'listbox',
@@ -478,9 +540,10 @@ const _Select = (props: SelectProps<object, false, false>) => {
               : null}
 
             {!children && options.length && !groupBy
-              ? options.map((ele, i) => (
-                  <Option key={i} {...getOptionProps(ele, i)} />
-                ))
+              ? options.map((ele, i) => {
+                  const props = getOptionProps(ele, i);
+                  return <Option {...props} key={props.key} />;
+                })
               : null}
 
             {!children && options.length && groupBy && groupedOptions
@@ -501,9 +564,10 @@ const _Select = (props: SelectProps<object, false, false>) => {
                         className: classNames?.groupItems,
                       })}
                     >
-                      {grouped.map((ele, i) => (
-                        <Option key={i} {...getOptionProps(ele, i)} />
-                      ))}
+                      {grouped.map((ele, i) => {
+                        const props = getOptionProps(ele, i);
+                        return <Option {...props} key={props.key} />;
+                      })}
                     </ul>
                   </li>
                 ))
