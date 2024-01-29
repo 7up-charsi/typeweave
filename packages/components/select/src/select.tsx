@@ -5,15 +5,15 @@ import { useClickOutside } from '@gist-ui/use-click-outside';
 import { Button } from '@gist-ui/button';
 import { GistUiError } from '@gist-ui/error';
 import { useFocusVisible } from '@react-aria/interactions';
-import { useId, useRef, useState } from 'react';
+import { useId, useMemo, useRef, useState } from 'react';
+import { Option, OptionProps } from './option';
+import lodashGroupBy from 'lodash.groupby';
 import {
   InputClassNames,
   SelectClassNames,
   SelectVariantProps,
   select,
 } from '@gist-ui/theme';
-import { Option, OptionProps } from './option';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
 
 const clearIcon_svg = (
   <svg
@@ -59,54 +59,55 @@ const openIndicator_svg = (
 
 export type Reason = 'select' | 'clear';
 
-export type SelectProps<
-  Value,
-  Multiple extends boolean = false,
-  DisableClearable extends boolean = false,
-> = (SelectVariantProps &
-  Omit<
-    InputProps,
-    'defaultValue' | 'value' | 'onChange' | 'classNames' | 'multiline'
-  > & {
-    classNames?: InputClassNames & SelectClassNames;
-    offset?: Popper.FloatingProps['mainOffset'];
-    options: Value[];
-    isOpen?: boolean;
-    onOpenChange?: (open: boolean) => void;
-    defaultOpen?: boolean;
-    openIndicator?: React.ReactNode;
-    clearIcon?: React.ReactNode;
-    children?: (props: { options: OptionProps<Value>[] }) => React.ReactNode;
-    getOptionDisabled?: (option: Value) => boolean;
-    disableCloseOnSelect?: boolean;
-    getOptionLabel?: (option: Value) => string;
-    noOptionsText?: string;
-    loading?: boolean;
-    loadingText?: string;
-  }) &
-  (Multiple extends true
-    ? {
-        multiple: Multiple;
-        defaultValue?: Value[];
-        value?: Value[];
-        onChange?: (value: Value[], reason: Reason) => void;
-        disableClearable?: DisableClearable;
-      }
-    : DisableClearable extends true
+export type SelectProps<Value, Multiple, DisableClearable> =
+  (SelectVariantProps &
+    Omit<
+      InputProps,
+      'defaultValue' | 'value' | 'onChange' | 'classNames' | 'multiline'
+    > & {
+      classNames?: InputClassNames & SelectClassNames;
+      offset?: Popper.FloatingProps['mainOffset'];
+      options: Value[];
+      isOpen?: boolean;
+      onOpenChange?: (open: boolean) => void;
+      defaultOpen?: boolean;
+      openIndicator?: React.ReactNode;
+      clearIcon?: React.ReactNode;
+      getOptionDisabled?: (option: Value) => boolean;
+      disableCloseOnSelect?: boolean;
+      getOptionLabel?: (option: Value) => string;
+      noOptionsText?: string;
+      loading?: boolean;
+      loadingText?: string;
+      groupBy?: (option: Value) => string;
+      children?: (props: {
+        groupedOptions: Record<string, OptionProps<Value>[]> | null;
+        options: OptionProps<Value>[] | null;
+      }) => React.ReactNode;
+    }) &
+    (Multiple extends true
       ? {
-          multiple?: Multiple;
-          defaultValue?: Value;
-          value?: Value;
-          onChange?: (value: Value, reason: Reason) => void;
-          disableClearable: DisableClearable;
-        }
-      : {
-          multiple?: Multiple;
-          defaultValue?: Value;
-          value?: Value | null;
-          onChange?: (value: Value | null, reason: Reason) => void;
+          multiple: Multiple;
+          defaultValue?: Value[];
+          value?: Value[];
+          onChange?: (value: Value[], reason: Reason) => void;
           disableClearable?: DisableClearable;
-        });
+        }
+      : DisableClearable extends true
+        ? {
+            multiple?: Multiple;
+            defaultValue?: Value;
+            value?: Value;
+            onChange?: (value: Value, reason: Reason) => void;
+            disableClearable: DisableClearable;
+          }
+        : {
+            multiple?: Multiple;
+            defaultValue?: Value;
+            value?: Value | null;
+            onChange?: (value: Value | null, reason: Reason) => void;
+            disableClearable?: DisableClearable;
+          });
 
 const _Select = (props: SelectProps<object, false, false>) => {
   const {
@@ -133,6 +134,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
     loading,
     loadingText = 'loading ...',
     getOptionLabel: getOptionLabelProp,
+    groupBy,
     ...inputProps
   } = props;
 
@@ -168,6 +170,32 @@ const _Select = (props: SelectProps<object, false, false>) => {
     },
   });
 
+  const groupedOptions = useMemo(() => {
+    if (!groupBy) return null;
+
+    const grouped = lodashGroupBy(options, (opt) => {
+      const by = groupBy(opt);
+
+      if (!isNaN(+by)) return '0-9';
+
+      return by;
+    });
+
+    return Object.entries(grouped)
+      .sort((a, b) => {
+        const a_key = a[0];
+        const b_key = b[0];
+
+        if (a_key < b_key) return -1;
+        if (a_key > b_key) return 1;
+        return 0;
+      })
+      .reduce<Record<string, object[]>>(
+        (acc, ele) => ((acc[ele[0]] = ele[1]), acc),
+        {},
+      );
+  }, [groupBy, options]);
+
   const inputRef = useRef<HTMLDivElement>(null);
   const [focused, setFocused] = useState<object | null>(null);
   const { isFocusVisible } = useFocusVisible({ isTextInput: true });
@@ -194,7 +222,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
     },
   });
 
-  const handleOpen = useCallbackRef(() => {
+  const handleOpen = () => {
     if (isOpen) return;
 
     setIsOpen(true);
@@ -207,7 +235,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
     }
 
     setFocused(Array.isArray(value) ? value[0] : value);
-  });
+  };
 
   const onSelect = (option: object) => {
     if (Array.isArray(value)) {
@@ -305,9 +333,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
     return '';
   };
 
-  const styles = select({ shadow });
-
-  const __options = options.map((ele, i) => {
+  const getOptionProps = (ele: object, i: number) => {
     const isFocused = ele === focused;
     const isDisabled = getOptionDisabled?.(ele) ?? false;
     const isSelected = Array.isArray(value)
@@ -334,7 +360,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
         isDisabled,
       },
     };
-  });
+  };
 
   if (multiple && !Array.isArray(value))
     throw new GistUiError(
@@ -347,6 +373,8 @@ const _Select = (props: SelectProps<object, false, false>) => {
       'Select',
       'value must not be an Array when multiple is false',
     );
+
+  const styles = select({ shadow });
 
   return (
     <Popper.Root>
@@ -428,12 +456,57 @@ const _Select = (props: SelectProps<object, false, false>) => {
               multiple ? 'multiple select list' : 'single select list'
             }
           >
-            {children && options.length
-              ? children({ options: __options })
+            {children && options.length && !groupBy
+              ? children({
+                  options: options.map(getOptionProps),
+                  groupedOptions: null,
+                })
               : null}
 
-            {!children && options.length
-              ? __options.map((ele, i) => <Option key={i} {...ele} />)
+            {children && options.length && groupBy && groupedOptions
+              ? children({
+                  options: null,
+                  groupedOptions: Object.entries(groupedOptions).reduce<
+                    Record<string, OptionProps<object>[]>
+                  >(
+                    (acc, [key, val]) => (
+                      (acc[key] = val.map(getOptionProps)), acc
+                    ),
+                    {},
+                  ),
+                })
+              : null}
+
+            {!children && options.length && !groupBy
+              ? options.map((ele, i) => (
+                  <Option key={i} {...getOptionProps(ele, i)} />
+                ))
+              : null}
+
+            {!children && options.length && groupBy && groupedOptions
+              ? Object.entries(groupedOptions).map(([groupHeader, grouped]) => (
+                  <li
+                    key={groupHeader.replaceAll(' ', '-')}
+                    className={styles.group({ className: classNames?.group })}
+                  >
+                    <div
+                      className={styles.groupHeader({
+                        className: classNames?.groupHeader,
+                      })}
+                    >
+                      {groupHeader}
+                    </div>
+                    <ul
+                      className={styles.groupItems({
+                        className: classNames?.groupItems,
+                      })}
+                    >
+                      {grouped.map((ele, i) => (
+                        <Option key={i} {...getOptionProps(ele, i)} />
+                      ))}
+                    </ul>
+                  </li>
+                ))
               : null}
 
             {!loading && !options?.length ? (
@@ -465,7 +538,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
 _Select.displayName = 'gist-ui.Select';
 
 export const Select = _Select as unknown as <
-  Value,
+  Value extends object,
   Multiple extends boolean = false,
   DisableClearable extends boolean = false,
 >(

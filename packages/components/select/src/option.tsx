@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { mergeProps } from '@gist-ui/react-utils';
-import { Slot } from '@gist-ui/slot';
 import { useHover, usePress } from '@react-aria/interactions';
 
 export interface OptionProps<V> {
@@ -13,10 +12,7 @@ export interface OptionProps<V> {
 }
 
 export const Option = (
-  _props: OptionProps<object> & {
-    asChild?: boolean;
-    children?: React.ReactNode;
-  },
+  _props: OptionProps<object> & { children?: React.ReactNode },
 ) => {
   const {
     label,
@@ -24,7 +20,6 @@ export const Option = (
     onSelect,
     onHover,
     state: { isDisabled, isFocused, isSelected },
-    asChild,
     children,
   } = _props;
 
@@ -54,12 +49,10 @@ export const Option = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);
 
-  const Component = asChild ? Slot : 'li';
-
   return (
-    <Component ref={ref} {...mergeProps(pressProps, hoverProps)} {...props}>
-      {asChild ? children : label}
-    </Component>
+    <li ref={ref} {...mergeProps(pressProps, hoverProps)} {...props}>
+      {children ?? label}
+    </li>
   );
 };
 

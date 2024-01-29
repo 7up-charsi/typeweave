@@ -180,19 +180,18 @@ const CustomTemplate = () => (
     label="top movies"
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
+    groupBy={(option) => option.title[0]}
   >
     {({ options }) =>
-      options.map((ele, i) => (
-        <Option key={i} asChild {...ele}>
-          <div>
-            <input
-              type="checkbox"
-              checked={ele.state.isSelected}
-              readOnly
-              className="mr-2"
-            />
-            <span className="truncate">{ele.label}</span>
-          </div>
+      options?.map((ele, i) => (
+        <Option key={i} {...ele}>
+          <input
+            type="checkbox"
+            checked={ele.state.isSelected}
+            readOnly
+            className="mr-2"
+          />
+          <span className="truncate">{ele.label}</span>
         </Option>
       ))
     }
@@ -201,4 +200,18 @@ const CustomTemplate = () => (
 
 export const CustomOption = {
   render: CustomTemplate,
+};
+
+const GroupTemplate = () => (
+  <Select
+    options={options}
+    label="top movies"
+    defaultValue={options[21]}
+    getOptionLabel={(option) => option.title}
+    groupBy={(option) => option.title[0]}
+  />
+);
+
+export const Group = {
+  render: GroupTemplate,
 };

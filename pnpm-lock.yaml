@@ -753,6 +753,9 @@ importers:
       '@react-aria/interactions':
         specifier: ^3.20.0
         version: 3.20.1(react@18.2.0)
+      lodash.groupby:
+        specifier: ^4.6.0
+        version: 4.6.0
       react:
         specifier: '>=18'
         version: 18.2.0
