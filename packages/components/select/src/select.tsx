@@ -76,13 +76,13 @@ export type SelectProps<
     defaultOpen?: boolean;
     openIndicator?: React.ReactNode;
     clearIcon?: React.ReactNode;
-    children?: (props: {
-      listboxProps: React.HTMLAttributes<HTMLUListElement>;
-      options: OptionProps<Value>[];
-    }) => React.ReactNode;
+    children?: (props: { options: OptionProps<Value>[] }) => React.ReactNode;
     getOptionDisabled?: (option: Value) => boolean;
     disableCloseOnSelect?: boolean;
     getOptionLabel?: (option: Value) => string;
+    noOptionsText?: string;
+    loading?: boolean;
+    loadingText?: string;
   }) &
   (Multiple extends true
     ? {
@@ -129,9 +129,26 @@ const _Select = (props: SelectProps<object, false, false>) => {
     disableCloseOnSelect,
     children,
     getOptionDisabled,
-    getOptionLabel = (option) => (option as { label?: string }).label ?? '',
+    noOptionsText = 'no options',
+    loading,
+    loadingText = 'loading ...',
+    getOptionLabel: getOptionLabelProp,
     ...inputProps
   } = props;
+
+  const getOptionLabel = (option: object) => {
+    if (getOptionLabelProp) {
+      return getOptionLabelProp(option);
+    }
+
+    if (!('label' in option))
+      throw new GistUiError(
+        'Select',
+        'consider to add `label` property in all options or use `getOptionLabel` prop to get option label',
+      );
+
+    return option.label as string;
+  };
 
   const [value, setValue] = useControllableState<
     object | object[] | null,
@@ -319,19 +336,6 @@ const _Select = (props: SelectProps<object, false, false>) => {
     };
   });
 
-  const listboxProps = {
-    ref: setListboxOutsideEle,
-    id: lisboxId,
-    className: styles.listbox({
-      className: classNames?.listbox,
-    }),
-    role: 'listbox',
-    'aria-roledescription': multiple
-      ? 'multiple select list'
-      : 'single select list',
-    'aria-multiselectable': multiple,
-  };
-
   if (multiple && !Array.isArray(value))
     throw new GistUiError(
       'Select',
@@ -343,8 +347,6 @@ const _Select = (props: SelectProps<object, false, false>) => {
       'Select',
       'value must not be an Array when multiple is false',
     );
-
-  // TODO: open listbox on input click
 
   return (
     <Popper.Root>
@@ -358,17 +360,27 @@ const _Select = (props: SelectProps<object, false, false>) => {
             if (isFocusVisible) handleClose();
           }}
           classNames={classNames}
-          onKeyDown={handleKeyDown}
-          aria-expanded={isOpen}
-          aria-controls={lisboxId}
-          aria-haspopup="listbox"
-          aria-autocomplete="list"
-          aria-activedescendant={
-            isOpen && focused ? `option-${options.indexOf(focused)}` : undefined
-          }
-          role="combobox"
-          autoComplete="none"
-          readOnly={true}
+          inputProps={{
+            onKeyDown: handleKeyDown,
+            'aria-expanded': isOpen,
+            'aria-controls': lisboxId,
+            'aria-haspopup': 'listbox',
+            'aria-autocomplete': 'list',
+            'aria-activedescendant':
+              isOpen && focused
+                ? `option-${options.indexOf(focused)}`
+                : undefined,
+            role: 'combobox',
+            autoComplete: 'none',
+            readOnly: true,
+          }}
+          inputWrapperProps={{
+            onPointerDown: (e) => {
+              if (isDisabled) return;
+              if (e.button !== 0) return;
+              handleOpen();
+            },
+          }}
           endContent={
             <>
               {(Array.isArray(value) ? !!value?.length : value) &&
@@ -406,15 +418,44 @@ const _Select = (props: SelectProps<object, false, false>) => {
 
       {isOpen && (
         <Popper.Floating sticky="always" mainOffset={offset || 5}>
-          {children ? (
-            children({ listboxProps, options: __options })
-          ) : (
-            <ul {...listboxProps}>
-              {__options.map((ele, i) => (
-                <Option key={i} {...ele} />
-              ))}
-            </ul>
-          )}
+          <ul
+            ref={setListboxOutsideEle}
+            id={lisboxId}
+            className={styles.listbox({ className: classNames?.listbox })}
+            role="listbox"
+            aria-multiselectable={multiple}
+            aria-roledescription={
+              multiple ? 'multiple select list' : 'single select list'
+            }
+          >
+            {children && options.length
+              ? children({ options: __options })
+              : null}
+
+            {!children && options.length
+              ? __options.map((ele, i) => <Option key={i} {...ele} />)
+              : null}
+
+            {!loading && !options?.length ? (
+              <div
+                className={styles.noOptions({
+                  className: classNames?.noOptions,
+                })}
+              >
+                {noOptionsText}
+              </div>
+            ) : null}
+
+            {loading && !options?.length ? (
+              <div
+                className={styles.loading({
+                  className: classNames?.noOptions,
+                })}
+              >
+                {loadingText}
+              </div>
+            ) : null}
+          </ul>
         </Popper.Floating>
       )}
     </Popper.Root>
@@ -462,21 +503,3 @@ const getPrevious = (
 
   return current;
 };
-
-// {loading && !options?.length ? (
-//   <div
-//     className={styles.loading({ className: classNames?.loading })}
-//   >
-//     {loadingText}
-//   </div>
-// ) : null}
-
-// {!loading && !options?.length ? (
-//   <div
-//     className={styles.noOptions({
-//       className: classNames?.noOptions,
-//     })}
-//   >
-//     {noOptionsText}
-//   </div>
-// ) : null}

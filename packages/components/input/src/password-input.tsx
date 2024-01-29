@@ -88,7 +88,9 @@ const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProps>(
         ref={ref}
         {...rest}
         label={label}
-        type={isPassword ? 'password' : 'text'}
+        inputProps={{
+          type: isPassword ? 'password' : 'text',
+        }}
         endContent={
           <>
             {toggleButton}

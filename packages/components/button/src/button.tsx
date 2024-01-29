@@ -1,3 +1,7 @@
+import { useRipple, UseRippleProps } from '@gist-ui/use-ripple';
+import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
+import { useFocusRing } from '@react-aria/focus';
+import { usePress, useHover, PressProps } from '@react-aria/interactions';
 import {
   button,
   buttonGroup,
@@ -5,11 +9,6 @@ import {
   ButtonVariantProps,
   ClassValue,
 } from '@gist-ui/theme';
-import { __DEV__ } from '@gist-ui/shared-utils';
-import { useRipple, UseRippleProps } from '@gist-ui/use-ripple';
-import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
-import { useFocusRing } from '@react-aria/focus';
-import { usePress, useHover, PressProps } from '@react-aria/interactions';
 import {
   ButtonHTMLAttributes,
   cloneElement,
@@ -154,7 +153,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const ariaLabelledby = props['aria-labelledby'];
 
     useEffect(() => {
-      if (__DEV__ && isIconOnly && !ariaLabel && !ariaLabelledby)
+      if (
+        process.env.NODE_ENV !== 'production' &&
+        isIconOnly &&
+        !ariaLabel &&
+        !ariaLabelledby
+      )
         console.warn(
           'Gist-ui button: icon button must provide "aria-label" or "aria-labelledby"',
         );

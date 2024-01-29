@@ -181,23 +181,21 @@ const CustomTemplate = () => (
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
   >
-    {({ listboxProps, options }) => (
-      <ul {...listboxProps}>
-        {options.map((ele, i) => (
-          <Option key={i} asChild {...ele}>
-            <div>
-              <input
-                type="checkbox"
-                checked={ele.state.isSelected}
-                readOnly
-                className="mr-2"
-              />
-              <span className="truncate">{ele.label}</span>
-            </div>
-          </Option>
-        ))}
-      </ul>
-    )}
+    {({ options }) =>
+      options.map((ele, i) => (
+        <Option key={i} asChild {...ele}>
+          <div>
+            <input
+              type="checkbox"
+              checked={ele.state.isSelected}
+              readOnly
+              className="mr-2"
+            />
+            <span className="truncate">{ele.label}</span>
+          </div>
+        </Option>
+      ))
+    }
   </Select>
 );
 

@@ -35,7 +35,6 @@
     "tailwindcss": "^3.3.3"
   },
   "dependencies": {
-    "@gist-ui/shared-utils": "workspace:*",
     "@gist-ui/error": "workspace:*",
     "color": "^4.2.3",
     "deepmerge": "^4.3.1",

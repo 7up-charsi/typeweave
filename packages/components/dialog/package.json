@@ -46,7 +46,6 @@
     "@gist-ui/slot": "workspace:*",
     "@gist-ui/context": "workspace:*",
     "@gist-ui/overlay": "workspace:*",
-    "@gist-ui/shared-utils": "workspace:*",
     "@gist-ui/visually-hidden": "workspace:*",
     "@react-aria/interactions": "^3.20.0",
     "@gist-ui/button": "workspace:*",

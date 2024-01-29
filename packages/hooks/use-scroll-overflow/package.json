@@ -38,9 +38,7 @@
   "devDependencies": {
     "clean-package": "^2.2.0"
   },
-  "dependencies": {
-    "@gist-ui/shared-utils": "workspace:*"
-  },
+  "dependencies": {},
   "clean-package": {
     "extends": "../../../../../../clean-package.config.json"
   }

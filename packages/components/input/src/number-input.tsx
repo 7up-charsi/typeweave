@@ -3,7 +3,6 @@ import Input, { InputProps } from './input';
 import { mergeRefs } from '@gist-ui/react-utils';
 import { NumberInputClassNames, numberInput } from '@gist-ui/theme';
 import { Button } from '@gist-ui/button';
-import { __DEV__ } from '@gist-ui/shared-utils';
 import { GistUiError } from '@gist-ui/error';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { useLongPress } from '@react-aria/interactions';
@@ -276,9 +275,10 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       </div>
     );
 
-    if (__DEV__ && min && max && min > max)
+    if (process.env.NODE_ENV !== 'production' && min && max && min > max)
       throw new GistUiError('NumberInput', '"min" must be lower than "max"');
-    if (__DEV__ && step > largeStep)
+
+    if (process.env.NODE_ENV !== 'production' && step > largeStep)
       throw new GistUiError(
         'NumberInput',
         '"step" must be lower than "largeStep"',
@@ -291,12 +291,14 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         ref={mergeRefs(ref, innerRef)}
         value={value}
         onChange={setValue}
-        onKeyDown={handleKeyDown}
-        onKeyUp={handleKeyUp}
-        inputMode={inputMode}
-        min={min}
-        max={max}
-        step={step}
+        inputProps={{
+          onKeyDown: handleKeyDown,
+          onKeyUp: handleKeyUp,
+          inputMode,
+          max: max,
+          min: min,
+          step: step,
+        }}
         endContent={
           <>
             {endContent}

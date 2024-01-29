@@ -165,9 +165,6 @@ importers:
       '@gist-ui/overlay':
         specifier: workspace:*
         version: link:../overlay
-      '@gist-ui/shared-utils':
-        specifier: workspace:*
-        version: link:../../utilities/shared-utils
       '@gist-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -285,9 +282,6 @@ importers:
       '@gist-ui/react-utils':
         specifier: workspace:*
         version: link:../../utilities/react-utils
-      '@gist-ui/shared-utils':
-        specifier: workspace:*
-        version: link:../../utilities/shared-utils
       '@gist-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -399,9 +393,6 @@ importers:
       '@gist-ui/overlay':
         specifier: workspace:*
         version: link:../overlay
-      '@gist-ui/shared-utils':
-        specifier: workspace:*
-        version: link:../../utilities/shared-utils
       '@gist-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -476,9 +467,6 @@ importers:
       '@gist-ui/react-utils':
         specifier: workspace:*
         version: link:../../utilities/react-utils
-      '@gist-ui/shared-utils':
-        specifier: workspace:*
-        version: link:../../utilities/shared-utils
       '@gist-ui/theme':
         specifier: workspace:*
         version: link:../../core/theme
@@ -735,9 +723,6 @@ importers:
       '@gist-ui/button':
         specifier: workspace:*
         version: link:../button
-      '@gist-ui/context':
-        specifier: workspace:*
-        version: link:../../core/context
       '@gist-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
@@ -774,16 +759,10 @@ importers:
       react-dom:
         specifier: '>=18'
         version: 18.2.0(react@18.2.0)
-      uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
     devDependencies:
       '@types/lodash.groupby':
         specifier: ^4.6.9
         version: 4.6.9
-      '@types/uuid':
-        specifier: ^9.0.8
-        version: 9.0.8
       clean-package:
         specifier: ^2.2.0
         version: 2.2.0
@@ -977,9 +956,6 @@ importers:
       '@gist-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
-      '@gist-ui/shared-utils':
-        specifier: workspace:*
-        version: link:../../utilities/shared-utils
       color:
         specifier: ^4.2.3
         version: 4.2.3
@@ -1111,9 +1087,6 @@ importers:
 
   packages/hooks/use-scroll-overflow:
     dependencies:
-      '@gist-ui/shared-utils':
-        specifier: workspace:*
-        version: link:../../utilities/shared-utils
       react:
         specifier: '>=18'
         version: 18.2.0
@@ -5371,10 +5344,6 @@ packages:
 
   /@types/uuid@9.0.7:
     resolution: {integrity: sha512-WUtIVRUZ9i5dYXefDEAI7sh9/O7jGvHg7Df/5O/gtH3Yabe5odI3UWopVR1qbPXQtvOxWu3mM4XxlYeZtMWF4g==}
-    dev: true
-
-  /@types/uuid@9.0.8:
-    resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
     dev: true
 
   /@types/yargs-parser@21.0.3:
@@ -12267,6 +12236,7 @@ packages:
   /uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
+    dev: true
 
   /v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}

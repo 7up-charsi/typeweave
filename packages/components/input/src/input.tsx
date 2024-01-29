@@ -1,6 +1,5 @@
 import { input, InputClassNames, InputVariantProps } from '@gist-ui/theme';
 import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
-import { __DEV__ } from '@gist-ui/shared-utils';
 import { useFocusRing } from '@react-aria/focus';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { useFocus, useHover } from '@react-aria/interactions';
@@ -12,17 +11,16 @@ import {
   useRef,
 } from 'react';
 
-export interface InputProps
-  extends Omit<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      'onChange' | 'color' | 'size' | 'type' | 'children'
-    >,
-    Omit<InputVariantProps, 'error'> {
-  type?: 'text' | 'number' | 'password' | 'multiline';
+export interface InputProps extends Omit<InputVariantProps, 'error'> {
+  type?: 'text' | 'multiline';
   defaultValue?: string;
   value?: string;
   onChange?: (value: string) => void;
   label?: string;
+  id?: string;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement>;
+  required?: boolean;
   helperText?: string;
   error?: boolean;
   errorMessage?: string;
@@ -34,6 +32,17 @@ export interface InputProps
    * @default polite
    */
   a11yFeedback?: 'polite' | 'assertive';
+  inputProps?: Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    | 'defaultValue'
+    | 'value'
+    | 'onChange'
+    | 'id'
+    | 'onBlur'
+    | 'onFocus'
+    | 'required'
+  >;
+  inputWrapperProps?: React.HTMLAttributes<HTMLDivElement>;
 }
 
 const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
@@ -57,10 +66,11 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     fullWidth,
     hideLabel,
     size,
+    inputProps = {},
+    inputWrapperProps = {},
     type = 'text',
     a11yFeedback = 'polite',
     variant = 'filled',
-    ...inputProps
   } = props;
 
   const labelId = useId();
@@ -73,11 +83,10 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (__DEV__) {
-      if (!label)
-        console.warn(
-          '`Input` "label" prop is optional but recommended. if you want to hide label then pass "hideLabel" prop as well',
-        );
+    if (process.env.NODE_ENV !== 'production' && !label) {
+      console.warn(
+        '`Input` "label" prop is optional but recommended. if you want to hide label then pass "hideLabel" prop as well',
+      );
     }
   }, [label]);
 
@@ -158,8 +167,10 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
       <div
         ref={mergeRefs(ref, inputWrapperRef)}
         className={styles.inputWrapper({ className: classNames?.inputWrapper })}
-        {...hoverProps}
+        {...mergeProps(hoverProps, inputWrapperProps)}
         onPointerDown={(e) => {
+          inputWrapperProps.onPointerDown?.(e);
+
           if (isDisabled) return;
           if (e.button !== 0) return;
 
@@ -196,7 +207,6 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
         ) : (
           <input
             {...sharedProps}
-            type={type}
             onChange={(e) => setValue(e.target.value)}
             className={styles.input({ className: classNames?.input })}
             ref={inputRef}
