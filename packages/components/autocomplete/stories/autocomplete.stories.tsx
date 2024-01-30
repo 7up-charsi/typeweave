@@ -1,7 +1,8 @@
 import React from 'react';
 import { select } from '@gist-ui/theme';
 
-import { Option, Autocomplete } from '../src';
+import { Autocomplete, Option } from '../src';
+import { Input } from '@gist-ui/input';
 
 const meta = {
   title: 'Components/Autocomplete',
@@ -149,9 +150,9 @@ const options = [
 const SingleTemplate = () => (
   <Autocomplete
     options={options}
-    label="top movies"
     defaultValue={options[21]}
     getOptionLabel={(option) => option.title}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
   />
 );
 
@@ -163,9 +164,9 @@ const MultipleTemplate = () => (
   <Autocomplete
     multiple
     options={options}
-    label="top movies"
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
   />
 );
 
@@ -177,9 +178,9 @@ const CustomTemplate = () => (
   <Autocomplete
     multiple
     options={options}
-    label="top movies"
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
   >
     {({ options }) =>
       options?.map((ele) => (
@@ -204,9 +205,9 @@ export const CustomOption = {
 const GroupTemplate = () => (
   <Autocomplete
     options={options}
-    label="top movies"
     defaultValue={options[21]}
     getOptionLabel={(option) => option.title}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
     groupBy={(option) => option.title[0]}
   />
 );

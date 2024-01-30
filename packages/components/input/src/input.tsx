@@ -1,32 +1,26 @@
 import { input, InputClassNames, InputVariantProps } from '@gist-ui/theme';
 import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
 import { useFocusRing } from '@react-aria/focus';
-import { useControllableState } from '@gist-ui/use-controllable-state';
 import { useFocus, useHover } from '@react-aria/interactions';
-import {
-  forwardRef,
-  useEffect,
-  useId,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import { forwardRef, useEffect, useId, useRef } from 'react';
 
 export interface InputProps extends Omit<InputVariantProps, 'error'> {
-  type?: 'text' | 'multiline';
   defaultValue?: string;
   value?: string;
-  onChange?: (value: string) => void;
   label?: string;
   id?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
   onFocus?: React.FocusEventHandler<HTMLInputElement>;
   required?: boolean;
   helperText?: string;
   error?: boolean;
   errorMessage?: string;
+  hideLabel?: boolean;
   startContent?: React.ReactNode;
   endContent?: React.ReactNode;
   classNames?: InputClassNames;
+  placeholder?: string;
   /**
    * When error prop is true, its value is used in "errorMessage" aria-live attribute
    * @default polite
@@ -43,6 +37,8 @@ export interface InputProps extends Omit<InputVariantProps, 'error'> {
     | 'required'
   >;
   inputWrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  baseRef?: React.RefObject<HTMLDivElement>;
+  inputRef?: React.RefObject<HTMLInputElement>;
 }
 
 const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
@@ -53,7 +49,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     errorMessage,
     startContent,
     endContent,
-    value: valueProp,
+    value,
     defaultValue,
     onBlur,
     onFocus,
@@ -62,15 +58,16 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     onChange,
     isDisabled,
     error,
-    color,
     fullWidth,
     hideLabel,
     size,
+    placeholder,
+    variant,
+    baseRef,
+    inputRef,
     inputProps = {},
     inputWrapperProps = {},
-    type = 'text',
     a11yFeedback = 'polite',
-    variant = 'filled',
   } = props;
 
   const labelId = useId();
@@ -78,9 +75,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
   const errorMessageId = useId();
   const inputId = id || labelId;
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const inputWrapperRef = useRef<HTMLDivElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const innerInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production' && !label) {
@@ -89,26 +84,6 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
       );
     }
   }, [label]);
-
-  useImperativeHandle(
-    ref,
-    () => {
-      inputWrapperRef.current!.focus = () => {
-        inputRef.current?.focus();
-        textareaRef.current?.focus();
-      };
-
-      return inputWrapperRef.current!;
-    },
-    [],
-  );
-
-  const [value, setValue] = useControllableState({
-    defaultValue: defaultValue ?? '',
-    value: valueProp,
-    onChange,
-    resetStateValue: '',
-  });
 
   const {
     focusProps: focusRingProps,
@@ -122,38 +97,21 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
 
   const styles = input({
     isDisabled,
-    error,
-    color,
     fullWidth,
-    hideLabel,
     size,
     variant,
-    multiline: type === 'multiline',
+    required: !!required,
+    error: !!error,
   });
-
-  const sharedProps = {
-    ...mergeProps(focusProps, focusRingProps, inputProps),
-    value,
-    'aria-label': hideLabel ? label : undefined,
-    'aria-describedby': helperText ? helperTextId : undefined,
-    'aria-errormessage': error && errorMessage ? errorMessageId : undefined,
-    'aria-required': required,
-    'aria-invalid': error,
-    id: inputId,
-    disabled: isDisabled,
-  };
 
   return (
     <div
+      ref={baseRef}
       className={styles.base({ className: classNames?.base })}
-      data-focused={isFocused}
+      data-focused={!isFocusVisible && isFocused}
       data-focus-visible={isFocusVisible && isFocused}
-      data-filled={!!value}
-      data-shrink={isFocused || !!value || !!startContent}
       data-hovered={isHovered}
       data-disabled={isDisabled}
-      data-start={!!startContent}
-      data-end={!!endContent}
     >
       {!hideLabel && !!label && (
         <label
@@ -165,76 +123,42 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
       )}
 
       <div
-        ref={mergeRefs(ref, inputWrapperRef)}
+        ref={ref}
         className={styles.inputWrapper({ className: classNames?.inputWrapper })}
-        {...mergeProps(hoverProps, inputWrapperProps)}
-        onPointerDown={(e) => {
-          inputWrapperProps.onPointerDown?.(e);
+        {...mergeProps(hoverProps, inputWrapperProps, {
+          onPointerDown: (e: React.PointerEvent) => {
+            if (isDisabled) return;
+            if (e.button !== 0) return;
 
-          if (isDisabled) return;
-          if (e.button !== 0) return;
-
-          if (type !== 'multiline' && e.target !== inputRef.current) {
-            e.preventDefault();
-            inputRef.current?.focus();
-            return;
-          }
-
-          if (type === 'multiline' && e.target !== textareaRef.current) {
-            e.preventDefault();
-            textareaRef.current?.focus();
-          }
-        }}
+            if (e.target !== innerInputRef.current) {
+              e.preventDefault();
+              innerInputRef.current?.focus();
+              return;
+            }
+          },
+        })}
       >
-        {startContent && (
-          <div
-            className={styles.startContent({
-              className: classNames?.startContent,
-            })}
-          >
-            {startContent}
-          </div>
-        )}
+        {startContent}
 
-        {type === 'multiline' ? (
-          <textarea
-            rows={3}
-            {...sharedProps}
-            onChange={(e) => setValue(e.target.value)}
-            className={styles.textarea({ className: classNames?.textarea })}
-            ref={textareaRef}
-          ></textarea>
-        ) : (
-          <input
-            {...sharedProps}
-            onChange={(e) => setValue(e.target.value)}
-            className={styles.input({ className: classNames?.input })}
-            ref={inputRef}
-          />
-        )}
+        <input
+          ref={mergeRefs(innerInputRef, inputRef)}
+          {...mergeProps(focusProps, focusRingProps, inputProps)}
+          value={value}
+          defaultValue={defaultValue}
+          aria-label={hideLabel ? label : undefined}
+          aria-describedby={helperText ? helperTextId : undefined}
+          aria-errormessage={error && errorMessage ? errorMessageId : undefined}
+          aria-required={required}
+          aria-invalid={error}
+          id={inputId}
+          disabled={isDisabled}
+          placeholder={placeholder}
+          onChange={onChange}
+          className={styles.input({ className: classNames?.input })}
+          autoComplete="off"
+        />
 
-        {endContent && (
-          <div
-            className={styles.endContent({ className: classNames?.endContent })}
-          >
-            {endContent}
-          </div>
-        )}
-
-        {variant === 'border' ? (
-          <fieldset
-            aria-hidden="true"
-            className={styles.fieldset({ className: classNames?.fieldset })}
-          >
-            {!hideLabel && (
-              <legend
-                className={styles.legend({ className: classNames?.legend })}
-              >
-                {label}
-              </legend>
-            )}
-          </fieldset>
-        ) : null}
+        {endContent}
       </div>
 
       {!error && helperText && (

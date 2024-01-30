@@ -1,21 +1,23 @@
 import * as Popper from '@gist-ui/popper';
-import { Input, InputProps } from '@gist-ui/input';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { useClickOutside } from '@gist-ui/use-click-outside';
-import { Button } from '@gist-ui/button';
 import { GistUiError } from '@gist-ui/error';
 import { useFocusVisible } from '@react-aria/interactions';
 import { useId, useMemo, useRef, useState } from 'react';
 import { Option, OptionProps } from './option';
 import lodashGroupBy from 'lodash.groupby';
+import { Chip } from '@gist-ui/chip';
 import {
+  AutocompleteClassNames,
+  AutocompleteVariantProps,
   InputClassNames,
-  SelectClassNames,
-  SelectVariantProps,
-  select,
+  autocomplete,
 } from '@gist-ui/theme';
+import { Button } from '@gist-ui/button';
 
-const clearIcon_svg = (
+export type Reason = 'select' | 'clear';
+
+const openIndecator_svg = (
   <svg
     width={18}
     height={18}
@@ -36,62 +38,57 @@ const clearIcon_svg = (
   </svg>
 );
 
-const openIndicator_svg = (
-  <svg
-    width={20}
-    height={20}
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <g strokeWidth="0"></g>
-    <g strokeLinecap="round" strokeLinejoin="round"></g>
-    <g>
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M7.00003 8.5C6.59557 8.5 6.23093 8.74364 6.07615 9.11732C5.92137 9.49099 6.00692 9.92111 6.29292 10.2071L11.2929 15.2071C11.6834 15.5976 12.3166 15.5976 12.7071 15.2071L17.7071 10.2071C17.9931 9.92111 18.0787 9.49099 17.9239 9.11732C17.7691 8.74364 17.4045 8.5 17 8.5H7.00003Z"
-        fill="currentColor"
-      ></path>
-    </g>
-  </svg>
-);
-
-export type Reason = 'select' | 'clear';
+export interface RenderInputProps {
+  startContent: React.ReactNode;
+  endContent: React.ReactNode;
+  inputRef: React.RefObject<HTMLInputElement>;
+  ref: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
+  isDisabled: boolean;
+  onBlur: () => void;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  inputWrapperProps: { onPointerDown: React.PointerEventHandler };
+  classNames: InputClassNames;
+  inputProps: {
+    onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
+    'aria-expanded': boolean;
+    'aria-controls': string;
+    'aria-haspopup': 'listbox';
+    'aria-autocomplete': 'list';
+    'aria-activedescendant': string | undefined;
+    role: 'combobox';
+  };
+}
 
 export type AutocompleteProps<Value, Multiple, DisableClearable> =
-  (SelectVariantProps &
-    Omit<
-      InputProps,
-      'defaultValue' | 'value' | 'onChange' | 'classNames' | 'multiline'
-    > & {
-      classNames?: InputClassNames & SelectClassNames;
-      offset?: Popper.FloatingProps['mainOffset'];
-      options: Value[];
-      isOpen?: boolean;
-      onOpenChange?: (open: boolean) => void;
-      defaultOpen?: boolean;
-      openIndicator?: React.ReactNode;
-      clearIcon?: React.ReactNode;
-      getOptionDisabled?: (option: Value) => boolean;
-      disableCloseOnSelect?: boolean;
-      getOptionLabel?: (option: Value) => string;
-      getOptionKey?: (options: Value) => string;
-      noOptionsText?: string;
-      loading?: boolean;
-      loadingText?: string;
-      groupBy?: (option: Value) => string;
-      children?: (props: {
-        groupedOptions: Record<string, OptionProps<Value>[]> | null;
-        options: OptionProps<Value>[] | null;
-      }) => React.ReactNode;
-      inputValue?: string;
-      onInputChange?: (val: string) => void;
-      filterOptions?: (props: {
-        options: Value[];
-        inputValue: string;
-      }) => Value[];
-    }) &
+  (AutocompleteVariantProps & {
+    isDisabled?: boolean;
+    classNames?: AutocompleteClassNames;
+    offset?: Popper.FloatingProps['mainOffset'];
+    options: Value[];
+    isOpen?: boolean;
+    onOpenChange?: (open: boolean) => void;
+    defaultOpen?: boolean;
+    getOptionDisabled?: (option: Value) => boolean;
+    disableCloseOnSelect?: boolean;
+    getOptionLabel?: (option: Value) => string;
+    getOptionKey?: (options: Value) => string;
+    noOptionsText?: string;
+    loading?: boolean;
+    loadingText?: string;
+    groupBy?: (option: Value) => string;
+    children?: (props: {
+      groupedOptions: Record<string, OptionProps<Value>[]> | null;
+      options: OptionProps<Value>[] | null;
+    }) => React.ReactNode;
+    renderInput: (props: RenderInputProps) => React.ReactNode;
+    inputValue?: string;
+    onInputChange?: (val: string) => void;
+    filterOptions?: (options: Value[], inputValue: string) => Value[];
+    renderTags?: (
+      value: { label: string; onDelete: () => void }[],
+    ) => React.ReactNode;
+  }) &
     (Multiple extends true
       ? {
           multiple: Multiple;
@@ -130,9 +127,6 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     options: optionsProp = [],
     isDisabled,
     multiple,
-    endContent,
-    clearIcon = clearIcon_svg,
-    openIndicator = openIndicator_svg,
     disableClearable,
     disableCloseOnSelect,
     children,
@@ -142,12 +136,12 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     loadingText = 'loading ...',
     getOptionLabel: getOptionLabelProp,
     getOptionKey,
-    startContent,
     groupBy,
     inputValue: inputValueProp,
     onInputChange: onInputChangeProp,
     filterOptions,
-    ...inputProps
+    renderInput,
+    renderTags,
   } = props;
 
   const getOptionLabel = (option: object) => {
@@ -182,8 +176,13 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     },
   });
 
+  const inputDefaultValue =
+    !Array.isArray(value) && value ? getOptionLabel(value) : '';
+
+  const prevSelectedValue = useRef(inputDefaultValue);
+
   const [inputValue, setInputValue] = useControllableState({
-    defaultValue: !Array.isArray(value) && value ? getOptionLabel(value) : '',
+    defaultValue: inputDefaultValue,
     value: inputValueProp,
     onChange: onInputChangeProp,
     resetStateValue: '',
@@ -217,7 +216,10 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
       );
   }, [groupBy, options]);
 
-  const inputRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [inputWrapperRef, setInputWrapperRef] = useState<HTMLDivElement | null>(
+    null,
+  );
   const [focused, setFocused] = useState<object | null>(null);
   const { isFocusVisible } = useFocusVisible({ isTextInput: true });
   const lisboxId = useId();
@@ -235,13 +237,16 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     setOptions(optionsProp);
 
     if (Array.isArray(value)) setInputValue('');
+
+    if (prevSelectedValue.current !== inputValue)
+      setInputValue(prevSelectedValue.current);
   };
 
   const setListboxOutsideEle = useClickOutside<HTMLUListElement>({
     isDisabled: !isOpen,
     onEvent: 'pointerdown',
     callback: (e) => {
-      if (inputRef.current?.contains(e.target as Node)) return;
+      if (inputWrapperRef?.contains(e.target as Node)) return;
       handleClose();
     },
   });
@@ -275,7 +280,10 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     if (!Array.isArray(value)) {
       setValue(option, 'select');
       setFocused(option);
-      setInputValue(getOptionLabel(option));
+
+      const val = getOptionLabel(option);
+      setInputValue(val);
+      prevSelectedValue.current = val;
     }
 
     if (!disableCloseOnSelect) handleClose();
@@ -286,13 +294,15 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     setFocused(option);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const ArrowDown = e.key === 'ArrowDown';
     const ArrowUp = e.key === 'ArrowUp';
     const Escape = e.key === 'Escape';
     const Enter = e.key === 'Enter';
     const Home = e.key === 'Home';
     const End = e.key === 'End';
+
+    if (ArrowDown || ArrowUp) e.preventDefault();
 
     if (ArrowDown && !isOpen) {
       handleOpen();
@@ -342,6 +352,7 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     inputRef.current?.focus();
     setFocused(null);
     setInputValue('');
+    prevSelectedValue.current = '';
     setOptions(optionsProp);
 
     if (multiple) {
@@ -349,6 +360,30 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     } else {
       setValue(null, 'clear');
     }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+
+    setInputValue(val);
+    setIsOpen(true);
+
+    if (!val) {
+      setOptions(optionsProp);
+      setFocused(null);
+      return;
+    }
+
+    const filter =
+      filterOptions ||
+      ((options, inputValue) =>
+        options.filter((opt) =>
+          getOptionLabel(opt)
+            .toLowerCase()
+            .startsWith(inputValue.toLowerCase()),
+        ));
+
+    setOptions(filter(optionsProp, val));
   };
 
   const getOptionProps = (ele: object, i: number) => {
@@ -381,117 +416,133 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     };
   };
 
+  const tags = Array.isArray(value)
+    ? value.map((opt) => ({
+        label: getOptionLabel(opt),
+        onDelete: () => {
+          setValue((prev) =>
+            Array.isArray(prev) ? prev.filter((ele) => ele !== opt) : null,
+          );
+        },
+      }))
+    : null;
+
   if (multiple && !Array.isArray(value))
     throw new GistUiError(
-      'Select',
+      'Autocomplete',
       'value must be an Array when multiple is true',
     );
 
   if (!multiple && Array.isArray(value))
     throw new GistUiError(
-      'Select',
+      'Autocomplete',
       'value must not be an Array when multiple is false',
     );
 
-  const styles = select({ shadow });
+  if (!renderInput)
+    throw new GistUiError('Autocomplete', '`renderInput` prop is required');
+
+  const styles = autocomplete({ shadow, multiple });
 
   return (
     <Popper.Root>
-      <Popper.Reference>
-        <Input
-          {...inputProps}
-          value={inputValue}
-          onChange={(val) => {
-            setInputValue(val);
-            setIsOpen(true);
-
-            if (!val) {
-              setOptions(optionsProp);
-              setFocused(null);
-              return;
-            }
-
-            const filter =
-              filterOptions ||
-              (({ options, inputValue }) =>
-                options.filter((opt) =>
-                  getOptionLabel(opt)
-                    .toLowerCase()
-                    .startsWith(inputValue.toLowerCase()),
-                ));
-
-            setOptions(filter({ options: optionsProp, inputValue: val }));
-          }}
-          isDisabled={isDisabled}
-          ref={inputRef}
-          onBlur={() => {
-            if (isFocusVisible) handleClose();
-          }}
-          classNames={classNames}
-          inputProps={{
-            onKeyDown: handleKeyDown,
-            'aria-expanded': isOpen,
-            'aria-controls': lisboxId,
-            'aria-haspopup': 'listbox',
-            'aria-autocomplete': 'list',
-            'aria-activedescendant':
-              isOpen && focused
-                ? `option-${options.indexOf(focused)}`
-                : undefined,
-            role: 'combobox',
-            autoComplete: 'new-password',
-          }}
-          inputWrapperProps={{
-            onPointerDown: (e) => {
-              if (isDisabled) return;
-              if (e.button !== 0) return;
-              handleOpen();
-            },
-          }}
-          startContent={
-            Array.isArray(value) && value.length ? (
-              <>
-                {startContent}
-                {`selected ${value.length}`}
-              </>
-            ) : (
-              startContent
-            )
-          }
-          endContent={
-            <>
-              {(Array.isArray(value) ? !!value?.length : value) &&
-                !disableClearable && (
+      {renderInput({
+        classNames: {
+          inputWrapper: styles.inputWrapper({
+            className: classNames?.inputWrapper,
+          }),
+          input: styles.input({ className: classNames?.input }),
+        },
+        startContent: tags
+          ? renderTags
+            ? renderTags(tags)
+            : tags.map((opt, i) => (
+                <Chip
+                  key={i}
+                  color="neutral"
+                  variant="border"
+                  label={opt.label}
+                  onDelete={opt.onDelete}
+                />
+              ))
+          : null,
+        endContent: (
+          <div
+            className={styles.endContent({ className: classNames?.endContent })}
+          >
+            {disableClearable
+              ? null
+              : (Array.isArray(value) ? !!value?.length : !!value) && (
                   <Button
                     isIconOnly
-                    size="sm"
                     variant="text"
-                    preventFocusOnPress
-                    aria-label="clear value"
-                    tabIndex={-1}
                     onPress={handleClearValue}
+                    size="sm"
+                    preventFocusOnPress
+                    tabIndex={-1}
+                    aria-label="clear value"
                     className={styles.clearButton({
                       className: classNames?.clearButton,
                     })}
                   >
-                    {clearIcon}
+                    {openIndecator_svg}
                   </Button>
                 )}
 
-              <div
-                data-open={isOpen}
-                className={styles.openIndicator({
-                  className: classNames?.openIndicator,
-                })}
-              >
-                {openIndicator}
-              </div>
+            <svg
+              width={20}
+              height={20}
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ rotate: isOpen ? '180deg' : '0deg' }}
+              className={styles.openIndecator({
+                className: classNames?.openIndecator,
+              })}
+            >
+              <g strokeWidth="0"></g>
+              <g strokeLinecap="round" strokeLinejoin="round"></g>
+              <g>
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M7.00003 8.5C6.59557 8.5 6.23093 8.74364 6.07615 9.11732C5.92137 9.49099 6.00692 9.92111 6.29292 10.2071L11.2929 15.2071C11.6834 15.5976 12.3166 15.5976 12.7071 15.2071L17.7071 10.2071C17.9931 9.92111 18.0787 9.49099 17.9239 9.11732C17.7691 8.74364 17.4045 8.5 17 8.5H7.00003Z"
+                  fill="currentColor"
+                ></path>
+              </g>
+            </svg>
+          </div>
+        ),
+        inputWrapperProps: {
+          onPointerDown: (e) => {
+            if (e.button !== 0) return;
+            if (isDisabled) return;
+            handleOpen();
+          },
+        },
+        ref: setInputWrapperRef,
+        inputRef,
+        onBlur: () => {
+          if (isFocusVisible) handleClose();
+        },
+        value: inputValue,
+        onChange: handleInputChange,
+        isDisabled: !!isDisabled,
+        inputProps: {
+          onKeyDown: handleKeyDown,
+          role: 'combobox',
+          'aria-expanded': isOpen,
+          'aria-controls': lisboxId,
+          'aria-haspopup': 'listbox',
+          'aria-autocomplete': 'list',
+          'aria-activedescendant':
+            isOpen && focused
+              ? `option-${options.indexOf(focused)}`
+              : undefined,
+        },
+      })}
 
-              {endContent}
-            </>
-          }
-        />
-      </Popper.Reference>
+      <Popper.Reference virturalElement={inputWrapperRef} />
 
       {isOpen && (
         <Popper.Floating sticky="always" mainOffset={offset || 5}>

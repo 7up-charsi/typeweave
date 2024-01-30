@@ -208,6 +208,9 @@ importers:
       '@gist-ui/button':
         specifier: workspace:*
         version: link:../button
+      '@gist-ui/chip':
+        specifier: workspace:*
+        version: link:../chip
       '@gist-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error

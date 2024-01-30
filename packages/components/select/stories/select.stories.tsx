@@ -1,5 +1,6 @@
 import React from 'react';
 import { select } from '@gist-ui/theme';
+import { Input } from '@gist-ui/input';
 
 import { Option, Select } from '../src';
 
@@ -149,9 +150,9 @@ const options = [
 const SingleTemplate = () => (
   <Select
     options={options}
-    label="top movies"
     defaultValue={options[21]}
     getOptionLabel={(option) => option.title}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
   />
 );
 
@@ -163,9 +164,9 @@ const MultipleTemplate = () => (
   <Select
     multiple
     options={options}
-    label="top movies"
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
   />
 );
 
@@ -177,9 +178,9 @@ const CustomTemplate = () => (
   <Select
     multiple
     options={options}
-    label="top movies"
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
   >
     {({ options }) =>
       options?.map((ele) => (
@@ -204,9 +205,9 @@ export const CustomOption = {
 const GroupTemplate = () => (
   <Select
     options={options}
-    label="top movies"
     defaultValue={options[21]}
     getOptionLabel={(option) => option.title}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
     groupBy={(option) => option.title[0]}
   />
 );

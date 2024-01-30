@@ -30,6 +30,7 @@ export interface ChipProps extends ChipVariantProps {
   onDelete?: () => void;
   deleteIconA11yLabel?: string;
   classNames?: ChipClassNames;
+  excludeFromTabOrder?: boolean;
 }
 
 const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
@@ -41,6 +42,7 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
     size,
     variant,
     classNames,
+    excludeFromTabOrder,
     deleteIcon = delete_svg,
     deleteIconA11yLabel = 'delete',
   } = props;
@@ -66,7 +68,9 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
   return (
     <div ref={ref} className={styles.base({ className: classNames?.base })}>
       {avatar}
-      <span>{label}</span>
+      <span className={styles.content({ className: classNames?.content })}>
+        {label}
+      </span>
 
       {onDelete ? (
         <span
@@ -77,7 +81,7 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
           data-hovered={isHovered}
           data-focused={isFocused}
           data-focus-visible={isFocusVisible && isFocused}
-          tabIndex={0}
+          tabIndex={excludeFromTabOrder ? -1 : 0}
           role="button"
           className={styles.deleteIcon({ className: classNames?.deleteIcon })}
           aria-label={deleteIconA11yLabel}

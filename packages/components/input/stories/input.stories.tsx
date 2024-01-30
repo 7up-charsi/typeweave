@@ -26,11 +26,6 @@ const meta = {
       control: 'select',
       options: Object.keys(input.variants.variant),
     },
-    color: {
-      control: { type: 'select' },
-      options: Object.keys(input.variants.color),
-      if: { arg: 'color', exists: true },
-    },
     size: {
       control: { type: 'select' },
       options: Object.keys(input.variants.size),
@@ -49,18 +44,17 @@ export default meta;
 const InputTemplate = (args: InputProps) => (
   <InputComp
     {...args}
-    startContent={
-      args.startContent && <p className="text-neutral">{args.startContent}</p>
-    }
-    endContent={
-      args.endContent && <p className="text-neutral">{args.endContent}</p>
-    }
-    placeholder="very nice placeholder"
+    startContent={args.startContent && <p className="text-neutral">kg</p>}
+    endContent={args.endContent && <p className="text-neutral">$$$</p>}
+    required
   />
 );
 
 export const Input = {
   render: InputTemplate,
+  args: {
+    placeholder: 'Placeholder',
+  },
 };
 
 export const StartEndContent = {
@@ -92,22 +86,4 @@ export const Number = {
     step: 1,
     largeStep: 5,
   },
-};
-
-const MultilineTemplate = (args: InputProps) => (
-  <InputComp
-    type="multiline"
-    {...args}
-    startContent={
-      args.startContent && <p className="text-neutral">{args.startContent}</p>
-    }
-    endContent={
-      args.endContent && <p className="text-neutral">{args.endContent}</p>
-    }
-    placeholder="very nice placeholder"
-  />
-);
-
-export const Multiline = {
-  render: MultilineTemplate,
 };
