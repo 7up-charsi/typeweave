@@ -6,7 +6,7 @@ const checkbox = tv({
   slots: {
     base: 'inline-flex group',
     checkbox: [
-      'rounded-full relative inline-flex items-center justify-center overflow-hidden transition-colors group-data-[checked=false]:text-neutral-300 group-data-[checked=false]:[--rippleBg:theme(colors.neutral-800/20%)] group-data-[checked=false]:group-data-[hovered=true]:bg-neutral-200',
+      'rounded-full relative inline-flex items-center justify-center overflow-hidden transition-colors group-data-[checked=false]:text-neutral-400 group-data-[checked=false]:[--rippleBg:theme(colors.neutral-800/20%)] group-data-[checked=false]:group-data-[hovered=true]:bg-neutral-200',
       ...groupDataFocusVisible,
     ],
     nativeInput:

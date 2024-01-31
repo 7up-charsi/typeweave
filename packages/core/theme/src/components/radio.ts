@@ -6,7 +6,7 @@ const radio = tv({
   slots: {
     base: 'inline-flex group',
     radio: [
-      'rounded-full relative inline-flex items-center justify-center overflow-hidden transition-colors group-data-[selected=false]:text-neutral-300 group-data-[selected=false]:[--rippleBg:theme(colors.neutral-800/20%)] group-data-[selected=false]:group-data-[hovered=true]:bg-neutral-200',
+      'rounded-full relative inline-flex items-center justify-center overflow-hidden transition-colors group-data-[selected=false]:text-neutral-400 group-data-[selected=false]:[--rippleBg:theme(colors.neutral-800/20%)] group-data-[selected=false]:group-data-[hovered=true]:bg-neutral-200',
       ...groupDataFocusVisible,
     ],
     nativeInput:

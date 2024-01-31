@@ -9,28 +9,26 @@ import { RadioClassNames, RadioVariantProps, radio } from '@gist-ui/theme';
 
 const icon_svg = (
   <svg
-    viewBox="0 0 24 24"
-    width={20}
-    height={20}
+    width="16"
+    height="16"
+    viewBox="0 0 20 20"
+    fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    stroke="currentColor"
   >
-    <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-3a5" />
+    <circle cx="10" cy="10" r="9" stroke="currentColor" strokeWidth="2" />
   </svg>
 );
 
 const checkIcon_svg = (
   <svg
-    viewBox="0 0 24 24"
-    width={20}
-    height={20}
+    width="16"
+    height="16"
+    viewBox="0 0 20 20"
+    fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
   >
-    <g>
-      <path fill="none" d="M0 0h24v24H0z" />
-      <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-3a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
-    </g>
+    <circle cx="10" cy="10" r="9" stroke="currentColor" strokeWidth="2" />
+    <circle cx="10" cy="10" r="5" fill="currentColor" />
   </svg>
 );
 
