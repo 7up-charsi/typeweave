@@ -49,7 +49,9 @@ Root.displayName = 'gist-ui.' + Popper_Name;
 const Reference_Name = 'Popper.Reference';
 
 export interface ReferenceProps {
-  children?: React.ReactNode;
+  children?:
+    | React.ReactNode
+    | ((props: { setRef: PopperContext['setReference'] }) => React.ReactNode);
   /**
    * Position a floating element relative to a custom reference area, useful for context menus, range selections, following the cursor, and more.
    *
@@ -71,7 +73,9 @@ export const Reference = (props: ReferenceProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [virturalElement]);
 
-  return virturalElement ? null : (
+  return virturalElement ? null : typeof children === 'function' ? (
+    children({ setRef: context.setReference })
+  ) : (
     <Slot ref={context.setReference}>{children}</Slot>
   );
 };

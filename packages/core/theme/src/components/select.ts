@@ -30,7 +30,18 @@ const select = tv({
   },
 });
 
+const selectInput = tv({
+  slots: {
+    endContent: 'flex items-center',
+    openIndecator: 'text-neutral',
+    clearButton: 'text-neutral',
+  },
+});
+
 export type SelectVariantProps = VariantProps<typeof select>;
 export type SelectClassNames = ClassNames<typeof select.slots>;
 
-export { select };
+export type SelectInputVariantProps = VariantProps<typeof selectInput>;
+export type SelectInputClassNames = ClassNames<typeof selectInput.slots>;
+
+export { select, selectInput };

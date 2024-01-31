@@ -303,7 +303,11 @@ export interface ItemProps {
   children?: React.ReactNode;
   isDisabled?: boolean;
   disableCloseOnPress?: boolean;
-  className?: ClassValue;
+  classNames?: {
+    item?: ClassValue;
+    itemIcon?: ClassValue;
+    itemContent?: ClassValue;
+  };
   onPress?: () => void;
   asChild?: boolean;
 }
@@ -314,7 +318,7 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
     isDisabled,
     onPress,
     disableCloseOnPress,
-    className,
+    classNames,
     asChild,
   } = props;
 
@@ -370,11 +374,19 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
       data-focused={focused === focusRef}
       data-disabled={!!isDisabled}
       aria-disabled={isDisabled}
-      className={stylesContext.item({ className })}
+      className={stylesContext.item({ className: classNames?.item })}
       {...mergeProps(hoverProps, pressProps)}
     >
-      <span></span>
-      {children}
+      <span
+        className={stylesContext.itemIcon({ className: classNames?.itemIcon })}
+      ></span>
+      <span
+        className={stylesContext.itemContent({
+          className: classNames?.itemContent,
+        })}
+      >
+        {children}
+      </span>
     </Component>
   );
 });
@@ -466,13 +478,17 @@ export interface CheckboxItemProps {
   isDisabled?: boolean;
   checked?: boolean;
   onChange?: (checked: boolean) => void;
-  className?: ClassValue;
+  classNames?: {
+    item?: ClassValue;
+    itemIcon?: ClassValue;
+    itemContent?: ClassValue;
+  };
   asChild?: boolean;
 }
 
 export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
   (props, ref) => {
-    const { children, isDisabled, className, checked, onChange, asChild } =
+    const { children, isDisabled, classNames, checked, onChange, asChild } =
       props;
 
     const stylesContext = useStylesContext(CheckboxItem_Name);
@@ -527,10 +543,14 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
         data-checked={checked}
         aria-checked={checked}
         aria-disabled={isDisabled}
-        className={stylesContext.item({ className })}
+        className={stylesContext.item({ className: classNames?.item })}
         {...mergeProps(hoverProps, pressProps)}
       >
-        <span>
+        <span
+          className={stylesContext.itemIcon({
+            className: classNames?.itemIcon,
+          })}
+        >
           {!checked ? null : (
             <svg
               aria-hidden="true"
@@ -550,7 +570,13 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
           )}
         </span>
 
-        {children}
+        <span
+          className={stylesContext.itemContent({
+            className: classNames?.itemContent,
+          })}
+        >
+          {children}
+        </span>
       </Component>
     );
   },
@@ -606,13 +632,17 @@ export interface RadioItemProps {
   children?: React.ReactNode;
   isDisabled?: boolean;
   value: string;
-  className?: ClassValue;
+  classNames?: {
+    item?: ClassValue;
+    itemIcon?: ClassValue;
+    itemContent?: ClassValue;
+  };
   asChild?: boolean;
 }
 
 export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
   (props, ref) => {
-    const { children, isDisabled, className, value, asChild } = props;
+    const { children, isDisabled, classNames, value, asChild } = props;
 
     const stylesContext = useStylesContext(RadioItem_Name);
     const groupContext = useRadioGroupContext(RadioItem_Name);
@@ -669,10 +699,14 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
         data-checked={checked}
         aria-checked={checked}
         aria-disabled={isDisabled}
-        className={stylesContext.item({ className })}
+        className={stylesContext.item({ className: classNames?.item })}
         {...mergeProps(hoverProps, pressProps)}
       >
-        <span>
+        <span
+          className={stylesContext.itemIcon({
+            className: classNames?.itemIcon,
+          })}
+        >
           {!checked ? null : (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -692,7 +726,13 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
           )}
         </span>
 
-        {children}
+        <span
+          className={stylesContext.itemContent({
+            className: classNames?.itemContent,
+          })}
+        >
+          {children}
+        </span>
       </Component>
     );
   },

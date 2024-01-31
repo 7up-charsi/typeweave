@@ -4,8 +4,11 @@ import { ClassNames } from '../types';
 const menu = tv({
   slots: {
     menu: 'min-w-[150px] bg-white border rounded-md py-2 outline-none',
-    item: 'px-2 h-8 cursor-pointer select-none flex items-center gap-1 text-neutral-800 outline-none data-[disabled=true]:cursor-default data-[disabled=true]:opacity-50 data-[focused=true]:bg-neutral-200 relative [--rippleBg:theme(colors.neutral-800/20%)] overflow-hidden [&>span:first-of-type]:w-[15px] [&>span:first-of-type]:h-full [&>span:first-of-type]:overflow-hidden [&>span:first-of-type]:flex [&>span:first-of-type]:items-center [&>span:first-of-type]:justify-center',
-    label: 'px-4 py-1 text-sm text-neutral-700',
+    item: 'px-2 h-8 cursor-pointer select-none flex items-center gap-1 text-neutral-800 outline-none data-[disabled=true]:cursor-default data-[disabled=true]:opacity-50 data-[focused=true]:bg-neutral-200 relative [--rippleBg:theme(colors.neutral-800/20%)] overflow-hidden',
+    itemIcon:
+      'w-[15px] h-full overflow-hidden flex items-center justify-center',
+    itemContent: 'first-letter:uppercase',
+    label: 'px-4 py-1 text-sm text-neutral-700 first-letter:uppercase',
     group: '',
     separator: 'h-px bg-neutral-300 my-1',
   },

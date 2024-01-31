@@ -1,48 +1,31 @@
 import * as Popper from '@gist-ui/popper';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { useClickOutside } from '@gist-ui/use-click-outside';
-import { Button } from '@gist-ui/button';
 import { GistUiError } from '@gist-ui/error';
 import { useFocusVisible } from '@react-aria/interactions';
 import { useId, useMemo, useRef, useState } from 'react';
 import { Option, OptionProps } from './option';
 import lodashGroupBy from 'lodash.groupby';
 import { SelectClassNames, SelectVariantProps, select } from '@gist-ui/theme';
-
-const openIndecator_svg = (
-  <svg
-    width={18}
-    height={18}
-    viewBox="-2.4 -2.4 28.80 28.80"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    stroke="currentColor"
-    transform="rotate(0)"
-  >
-    <g strokeWidth="0"></g>
-    <g strokeLinecap="round" strokeLinejoin="round"></g>
-    <g>
-      <path
-        d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z"
-        fill="currentColor"
-      ></path>
-    </g>
-  </svg>
-);
+import { mergeRefs } from '@gist-ui/react-utils';
 
 export type Reason = 'select' | 'clear';
 
-export interface RenderInputProps {
-  endContent: React.ReactNode;
+export interface RenderInputProps<Value> {
   inputRef: React.RefObject<HTMLInputElement>;
-  ref: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
+  popperReferenceRef: (instance: HTMLDivElement | null) => void;
   isDisabled: boolean;
+  isOpen: boolean;
+  multiple: boolean;
+  value: Value;
+  inputValue: string;
+  readOnly: true;
+  showClearButton: boolean;
   onBlur: () => void;
-  value: string;
-  inputWrapperProps: { onPointerDown: React.PointerEventHandler };
-  inputProps: {
-    readOnly: true;
-    onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
+  handleOpen: () => void;
+  handleClear: () => void;
+  onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
+  ariaProps: {
     'aria-expanded': boolean;
     'aria-controls': string;
     'aria-haspopup': 'listbox';
@@ -73,7 +56,6 @@ export type SelectProps<Value, Multiple, DisableClearable> =
       groupedOptions: Record<string, OptionProps<Value>[]> | null;
       options: OptionProps<Value>[] | null;
     }) => React.ReactNode;
-    renderInput: (props: RenderInputProps) => React.ReactNode;
   }) &
     (Multiple extends true
       ? {
@@ -82,6 +64,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
           value?: Value[];
           onChange?: (value: Value[], reason: Reason) => void;
           disableClearable?: DisableClearable;
+          renderInput: (props: RenderInputProps<Value[]>) => React.ReactNode;
         }
       : DisableClearable extends true
         ? {
@@ -90,6 +73,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
             value?: Value;
             onChange?: (value: Value, reason: Reason) => void;
             disableClearable: DisableClearable;
+            renderInput: (props: RenderInputProps<Value>) => React.ReactNode;
           }
         : {
             multiple?: Multiple;
@@ -97,6 +81,9 @@ export type SelectProps<Value, Multiple, DisableClearable> =
             value?: Value | null;
             onChange?: (value: Value | null, reason: Reason) => void;
             disableClearable?: DisableClearable;
+            renderInput: (
+              props: RenderInputProps<Value | null>,
+            ) => React.ReactNode;
           });
 
 const _Select = (props: SelectProps<object, false, false>) => {
@@ -185,9 +172,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
   }, [groupBy, options]);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const [inputWrapperRef, setInputWrapperRef] = useState<HTMLDivElement | null>(
-    null,
-  );
+  const popperReferenceRef = useRef<HTMLElement>(null);
   const [focused, setFocused] = useState<object | null>(null);
   const { isFocusVisible } = useFocusVisible({ isTextInput: true });
   const lisboxId = useId();
@@ -213,7 +198,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
     isDisabled: !isOpen,
     onEvent: 'pointerdown',
     callback: (e) => {
-      if (inputWrapperRef?.contains(e.target as Node)) return;
+      if (popperReferenceRef.current?.contains(e.target as Node)) return;
       handleClose();
     },
   });
@@ -358,7 +343,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
     }
   };
 
-  const handleClearValue = () => {
+  const handleClear = () => {
     inputRef.current?.focus();
     setFocused(null);
 
@@ -429,87 +414,45 @@ const _Select = (props: SelectProps<object, false, false>) => {
 
   return (
     <Popper.Root>
-      {renderInput({
-        endContent: (
-          <div
-            className={styles.endContent({ className: classNames?.endContent })}
-          >
-            {disableClearable
-              ? null
-              : (Array.isArray(value) ? !!value?.length : !!value) && (
-                  <Button
-                    isIconOnly
-                    variant="text"
-                    onPress={handleClearValue}
-                    size="sm"
-                    preventFocusOnPress
-                    tabIndex={-1}
-                    aria-label="clear value"
-                    className={styles.clearButton({
-                      className: classNames?.clearButton,
-                    })}
-                  >
-                    {openIndecator_svg}
-                  </Button>
-                )}
-
-            <svg
-              width={20}
-              height={20}
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ rotate: isOpen ? '180deg' : '0deg' }}
-              className={styles.openIndecator({
-                className: classNames?.openIndecator,
-              })}
-            >
-              <g strokeWidth="0"></g>
-              <g strokeLinecap="round" strokeLinejoin="round"></g>
-              <g>
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M7.00003 8.5C6.59557 8.5 6.23093 8.74364 6.07615 9.11732C5.92137 9.49099 6.00692 9.92111 6.29292 10.2071L11.2929 15.2071C11.6834 15.5976 12.3166 15.5976 12.7071 15.2071L17.7071 10.2071C17.9931 9.92111 18.0787 9.49099 17.9239 9.11732C17.7691 8.74364 17.4045 8.5 17 8.5H7.00003Z"
-                  fill="currentColor"
-                ></path>
-              </g>
-            </svg>
-          </div>
-        ),
-        inputWrapperProps: {
-          onPointerDown: (e) => {
-            if (e.button !== 0) return;
-            if (isDisabled) return;
-            handleOpen();
-          },
-        },
-        ref: setInputWrapperRef,
-        inputRef,
-        onBlur: () => {
-          if (isFocusVisible) handleClose();
-        },
-        value: getInputValue(value),
-        isDisabled: !!isDisabled,
-        inputProps: {
-          onKeyDown: (e) => {
-            handleKeyDown(e);
-            handleCharSearch(e);
-          },
-          readOnly: true,
-          role: 'combobox',
-          'aria-expanded': isOpen,
-          'aria-controls': lisboxId,
-          'aria-haspopup': 'listbox',
-          'aria-autocomplete': 'list',
-          'aria-activedescendant':
-            isOpen && focused
-              ? `option-${options.indexOf(focused)}`
-              : undefined,
-        },
-      })}
-
-      <Popper.Reference virturalElement={inputWrapperRef} />
+      <Popper.Reference>
+        {({ setRef }) =>
+          renderInput({
+            onBlur: () => {
+              if (isFocusVisible) handleClose();
+            },
+            isOpen,
+            multiple: !!multiple,
+            handleOpen,
+            handleClear,
+            showClearButton: disableClearable
+              ? false
+              : Array.isArray(value)
+                ? !!value.length
+                : !!value,
+            popperReferenceRef: mergeRefs(setRef, popperReferenceRef),
+            inputRef,
+            value,
+            inputValue: getInputValue(value),
+            isDisabled: !!isDisabled,
+            onKeyDown: (e) => {
+              handleKeyDown(e);
+              handleCharSearch(e);
+            },
+            readOnly: true,
+            ariaProps: {
+              role: 'combobox',
+              'aria-expanded': isOpen,
+              'aria-controls': lisboxId,
+              'aria-haspopup': 'listbox',
+              'aria-autocomplete': 'list',
+              'aria-activedescendant':
+                isOpen && focused
+                  ? `option-${options.indexOf(focused)}`
+                  : undefined,
+            },
+          })
+        }
+      </Popper.Reference>
 
       {isOpen && (
         <Popper.Floating sticky="always" mainOffset={offset || 5}>

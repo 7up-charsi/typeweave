@@ -2,7 +2,7 @@ import React from 'react';
 import { select } from '@gist-ui/theme';
 import { Input } from '@gist-ui/input';
 
-import { Option, Select } from '../src';
+import { Option, Select, mapInputProps } from '../src';
 
 const meta = {
   title: 'Components/Select',
@@ -152,7 +152,9 @@ const SingleTemplate = () => (
     options={options}
     defaultValue={options[21]}
     getOptionLabel={(option) => option.title}
-    renderInput={(props) => <Input label="top 100 movies" {...props} />}
+    renderInput={(props) => (
+      <Input label="top 100 movies" {...mapInputProps(props)} />
+    )}
   />
 );
 
@@ -166,7 +168,9 @@ const MultipleTemplate = () => (
     options={options}
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
-    renderInput={(props) => <Input label="top 100 movies" {...props} />}
+    renderInput={(props) => (
+      <Input label="top 100 movies" {...mapInputProps(props)} />
+    )}
   />
 );
 
@@ -180,7 +184,9 @@ const CustomTemplate = () => (
     options={options}
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
-    renderInput={(props) => <Input label="top 100 movies" {...props} />}
+    renderInput={(props) => (
+      <Input label="top 100 movies" {...mapInputProps(props)} />
+    )}
   >
     {({ options }) =>
       options?.map((ele) => (
@@ -207,7 +213,9 @@ const GroupTemplate = () => (
     options={options}
     defaultValue={options[21]}
     getOptionLabel={(option) => option.title}
-    renderInput={(props) => <Input label="top 100 movies" {...props} />}
+    renderInput={(props) => (
+      <Input label="top 100 movies" {...mapInputProps(props)} />
+    )}
     groupBy={(option) => option.title[0]}
   />
 );

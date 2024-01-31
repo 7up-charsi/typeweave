@@ -13,11 +13,6 @@ const autocomplete = tv({
     groupHeader:
       'sticky top-0 bg-white px-2 py-2 z-50 text-sm font-medium text-neutral-600',
     groupItems: '',
-    endContent: 'flex items-center',
-    openIndecator: 'text-neutral',
-    clearButton: 'text-neutral',
-    inputWrapper: '',
-    input: '',
   },
   variants: {
     shadow: {
@@ -26,6 +21,21 @@ const autocomplete = tv({
       md: { listbox: 'shadow-md' },
       lg: { listbox: 'shadow-lg' },
     },
+  },
+  defaultVariants: {
+    shadow: 'md',
+  },
+});
+
+const autocompleteInput = tv({
+  slots: {
+    endContent: 'flex items-center',
+    openIndecator: 'text-neutral',
+    clearButton: 'text-neutral',
+    inputWrapper: '',
+    input: '',
+  },
+  variants: {
     multiple: {
       true: {
         inputWrapper: 'relative flex-wrap min-h-[48px] h-auto py-2 pr-[68px]',
@@ -34,12 +44,16 @@ const autocomplete = tv({
       },
     },
   },
-  defaultVariants: {
-    shadow: 'md',
-  },
 });
 
 export type AutocompleteVariantProps = VariantProps<typeof autocomplete>;
 export type AutocompleteClassNames = ClassNames<typeof autocomplete.slots>;
 
-export { autocomplete };
+export type AutocompleteInputVariantProps = VariantProps<
+  typeof autocompleteInput
+>;
+export type AutocompleteInputClassNames = ClassNames<
+  typeof autocompleteInput.slots
+>;
+
+export { autocomplete, autocompleteInput };
