@@ -1,4 +1,4 @@
-import { forwardRef, useRef } from 'react';
+import { ChangeEvent, forwardRef, useRef } from 'react';
 import Input, { InputProps } from './input';
 import { mergeRefs } from '@gist-ui/react-utils';
 import { NumberInputClassNames, numberInput } from '@gist-ui/theme';
@@ -36,12 +36,14 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       ...rest
     } = props;
 
-    const innerRef = useRef<HTMLDivElement>(null);
+    const innerRef = useRef<HTMLInputElement>(null);
 
     const [value, setValue] = useControllableState({
       defaultValue: defaultValue ?? '',
       value: valueProp,
-      onChange,
+      onChange: (value) => {
+        onChange?.({ target: { value } } as ChangeEvent<HTMLInputElement>);
+      },
       resetStateValue: '',
     });
 
@@ -288,9 +290,10 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       <Input
         {...rest}
         classNames={classNames}
-        ref={mergeRefs(ref, innerRef)}
+        inputRef={mergeRefs(rest.inputRef, innerRef)}
+        ref={ref}
         value={value}
-        onChange={setValue}
+        onChange={(e) => setValue(e.target.value)}
         inputProps={{
           onKeyDown: handleKeyDown,
           onKeyUp: handleKeyUp,

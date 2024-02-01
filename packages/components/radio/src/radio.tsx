@@ -47,7 +47,7 @@ const [RootProvider, useRootContext] =
 
 export interface GroupProps {
   value?: string;
-  onChange?: (value: string) => void;
+  onChange?: (event: React.ChangeEvent) => void;
   defaultValue?: string;
   children?: React.ReactNode;
   name: string;
@@ -59,7 +59,9 @@ export const Group = (props: GroupProps) => {
   const [value, setValue] = useControllableState({
     defaultValue: defaultValue ?? '',
     value: valueProp,
-    onChange,
+    onChange: (value) => {
+      onChange?.({ target: { value } } as unknown as React.ChangeEvent);
+    },
     resetStateValue: '',
   });
 

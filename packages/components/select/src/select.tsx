@@ -62,7 +62,11 @@ export type SelectProps<Value, Multiple, DisableClearable> =
           multiple: Multiple;
           defaultValue?: Value[];
           value?: Value[];
-          onChange?: (value: Value[], reason: Reason) => void;
+          onChange?: (
+            event: React.ChangeEvent,
+            reason: Reason,
+            value: Value[],
+          ) => void;
           disableClearable?: DisableClearable;
           renderInput: (props: RenderInputProps<Value[]>) => React.ReactNode;
         }
@@ -71,7 +75,11 @@ export type SelectProps<Value, Multiple, DisableClearable> =
             multiple?: Multiple;
             defaultValue?: Value;
             value?: Value;
-            onChange?: (value: Value, reason: Reason) => void;
+            onChange?: (
+              event: React.ChangeEvent,
+              reason: Reason,
+              value: Value,
+            ) => void;
             disableClearable: DisableClearable;
             renderInput: (props: RenderInputProps<Value>) => React.ReactNode;
           }
@@ -79,7 +87,11 @@ export type SelectProps<Value, Multiple, DisableClearable> =
             multiple?: Multiple;
             defaultValue?: Value;
             value?: Value | null;
-            onChange?: (value: Value | null, reason: Reason) => void;
+            onChange?: (
+              event: React.ChangeEvent,
+              reason: Reason,
+              value: Value | null,
+            ) => void;
             disableClearable?: DisableClearable;
             renderInput: (
               props: RenderInputProps<Value | null>,
@@ -141,7 +153,11 @@ const _Select = (props: SelectProps<object, false, false>) => {
           'internal Error, reason is not defined',
         );
 
-      onChange?.(value, reason);
+      onChange?.(
+        { target: { value } } as unknown as React.ChangeEvent,
+        reason,
+        value,
+      );
     },
   });
 

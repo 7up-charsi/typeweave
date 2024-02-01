@@ -31,14 +31,7 @@ export interface FocusTrapProps {
 }
 
 const FocusTrap = forwardRef<HTMLDivElement, FocusTrapProps>((props, ref) => {
-  const {
-    loop = true,
-    trapped = true,
-    children,
-    isDisabled,
-    scope,
-    ...restProps
-  } = props;
+  const { children, isDisabled, scope, loop = true, trapped = true } = props;
 
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
@@ -132,7 +125,7 @@ const FocusTrap = forwardRef<HTMLDivElement, FocusTrapProps>((props, ref) => {
     return () => {
       focusScopesStack?.remove(focusScope);
 
-      if (previouslyActiveElement) previouslyActiveElement?.focus?.();
+      if (previouslyActiveElement) previouslyActiveElement.focus?.();
       else document.body.focus();
     };
   }, [container, focusScope, isDisabled]);
@@ -172,10 +165,9 @@ const FocusTrap = forwardRef<HTMLDivElement, FocusTrapProps>((props, ref) => {
   return (
     <Slot<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>
       tabIndex={-1}
-      ref={mergeRefs(ref, setContainer as React.ForwardedRef<HTMLDivElement>)}
+      ref={mergeRefs(ref, setContainer)}
       onKeyDown={handleKeyDown}
-      {...restProps}
-      style={{ outline: 'none', ...(restProps as { style: object }).style }}
+      style={{ outline: 'none' }}
     >
       {children}
     </Slot>

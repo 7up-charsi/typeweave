@@ -61,13 +61,14 @@ const checkIcon_svg = (
 export interface CheckboxProps extends CheckboxVariantProps {
   defaultChecked?: boolean;
   checked?: boolean;
-  onChange?: (checked: boolean) => void;
+  onChange?: (event: React.ChangeEvent) => void;
   classNames?: Omit<CheckboxClassNames, 'input'>;
   isDisabled?: boolean;
   icon?: React.ReactNode;
   checkIcon?: React.ReactNode;
   label?: string;
   labelPlacement?: 'top' | 'bottom' | 'left' | 'right';
+  disableRipple?: boolean;
   rippleDuration?: UseRippleProps['duration'];
   rippleTimingFunction?: UseRippleProps['timingFunction'];
   rippleCompletedFactor?: UseRippleProps['completedFactor'];
@@ -84,6 +85,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
     checkIcon = checkIcon_svg,
     label,
     color,
+    disableRipple,
     rippleDuration = 450,
     rippleTimingFunction,
     rippleCompletedFactor,
@@ -97,7 +99,9 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
   const [checked, setChecked] = useControllableState({
     defaultValue: defaultChecked ?? false,
     value: checkedProp,
-    onChange,
+    onChange: (value) => {
+      onChange?.({ target: { value } } as unknown as React.ChangeEvent);
+    },
     resetStateValue: false,
   });
 
@@ -107,7 +111,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
 
   const { rippleKeyboardProps, ripplePointerProps } = useRipple({
     containerRef: checkboxRef,
-    isDisabled,
+    isDisabled: isDisabled ?? disableRipple,
     duration: rippleDuration,
     timingFunction: rippleTimingFunction,
     completedFactor: rippleCompletedFactor,

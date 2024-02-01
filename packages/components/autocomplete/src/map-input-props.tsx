@@ -75,6 +75,7 @@ export const mapInputProps = ({
         variant="border"
         label={opt.label}
         onDelete={opt.onDelete}
+        deleteIconA11yLabel={`remove ${opt.label}`}
       />
     )),
     endContent: (

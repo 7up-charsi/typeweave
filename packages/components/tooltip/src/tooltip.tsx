@@ -22,13 +22,9 @@ import {
 type Trigger = 'hover' | 'focus';
 
 interface TooltipContext {
-  handleShow: (a?: boolean) => void;
-  handleHide: (a?: boolean) => void;
   showTooltip: (a?: boolean) => void;
   hideTooltip: (a?: boolean) => void;
   trigger?: Trigger;
-  isHovered: React.MutableRefObject<boolean>;
-  isFocused: React.MutableRefObject<boolean>;
   id: string;
   isOpen: boolean;
   setGivenId: React.Dispatch<React.SetStateAction<string>>;
@@ -80,9 +76,6 @@ export const Root = (props: RootProps) => {
 
   const tooltipIdentifier = useMemo(() => `${++tooltipId}`, []);
 
-  const isHovered = useRef(false);
-  const isFocused = useRef(false);
-
   const showTimeout = useRef<NodeJS.Timeout>();
   const hideTimeout = useRef<NodeJS.Timeout>();
 
@@ -119,12 +112,6 @@ export const Root = (props: RootProps) => {
     }
   });
 
-  const handleShow = useCallbackRef((immediate: boolean = false) => {
-    if (isHovered.current || isFocused.current) {
-      showTooltip(immediate);
-    }
-  });
-
   const hideTooltip = useCallbackRef((immediate?: boolean) => {
     if (immediate || hideDelay <= 0) {
       clearTimeout(hideTimeout.current);
@@ -138,12 +125,6 @@ export const Root = (props: RootProps) => {
 
     clearTimeout(showTimeout.current);
     showTimeout.current = undefined;
-  });
-
-  const handleHide = useCallbackRef((immediate: boolean = false) => {
-    if (!isHovered.current && !isFocused.current) {
-      hideTooltip(immediate);
-    }
   });
 
   useEffect(() => {
@@ -178,13 +159,9 @@ export const Root = (props: RootProps) => {
 
   return (
     <Provider
-      handleShow={handleShow}
-      handleHide={handleHide}
       showTooltip={showTooltip}
       hideTooltip={hideTooltip}
       trigger={trigger}
-      isHovered={isHovered}
-      isFocused={isFocused}
       id={givenId || id}
       isOpen={isOpen}
       setGivenId={setGivenId}
@@ -214,24 +191,17 @@ export const Trigger = ({ children }: TriggerProps) => {
     onHoverStart: () => {
       if (context.trigger === 'focus') return;
 
-      context.isHovered.current = true;
-      context.isFocused.current = false;
-
-      context.handleShow();
+      context.showTooltip(false);
     },
     onHoverEnd: () => {
       if (context.trigger === 'focus') return;
 
-      context.isFocused.current = false;
-      context.isHovered.current = false;
-      context.handleHide();
+      context.hideTooltip(false);
     },
   });
 
   const handlePointerDown = () => {
-    context.isFocused.current = false;
-    context.isHovered.current = false;
-    context.handleHide(true);
+    context.hideTooltip(true);
   };
 
   const { isFocusVisible, focusProps: focusRingProps } = useFocusRing();
@@ -241,17 +211,13 @@ export const Trigger = ({ children }: TriggerProps) => {
       if (context.trigger === 'hover') return;
 
       if (isFocusVisible) {
-        context.isFocused.current = true;
-        context.isHovered.current = false;
-        context.handleShow(true);
+        context.showTooltip(true);
       }
     },
     onBlur: () => {
       if (context.trigger === 'hover') return;
 
-      context.isFocused.current = false;
-      context.isHovered.current = false;
-      context.handleHide(true);
+      context.showTooltip(true);
     },
   });
 

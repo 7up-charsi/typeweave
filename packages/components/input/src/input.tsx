@@ -37,8 +37,8 @@ export interface InputProps extends Omit<InputVariantProps, 'error'> {
     | 'required'
   >;
   inputWrapperProps?: React.HTMLAttributes<HTMLDivElement>;
-  baseRef?: React.RefObject<HTMLDivElement>;
-  inputRef?: React.RefObject<HTMLInputElement>;
+  baseRef?: React.ForwardedRef<HTMLDivElement>;
+  inputRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
 const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
