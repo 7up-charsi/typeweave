@@ -378,7 +378,9 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
       {...mergeProps(hoverProps, pressProps)}
     >
       <span
-        className={stylesContext.itemIcon({ className: classNames?.itemIcon })}
+        className={stylesContext.itemIcon({
+          className: classNames?.itemIcon,
+        })}
       ></span>
       <span
         className={stylesContext.itemContent({
