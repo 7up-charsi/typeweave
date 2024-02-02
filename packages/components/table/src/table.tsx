@@ -1,7 +1,7 @@
 import { createContextScope } from '@gist-ui/context';
 import { TableClassNames, TableVariantProps, table } from '@gist-ui/theme';
 import * as Menu from '@gist-ui/menu';
-import { useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { GistUiError } from '@gist-ui/error';
 import { Slot } from '@gist-ui/slot';
 import {
@@ -188,7 +188,7 @@ export interface ColumnVisibilityProps
   children?: React.ReactNode;
   classNames?: {
     menu?: string;
-    checkboxItem?: string;
+    checkboxItem?: Menu.CheckboxItemProps['classNames'];
   };
 }
 
@@ -238,6 +238,7 @@ export const ColumnVisibility = (props: ColumnVisibilityProps) => {
                 <Menu.CheckboxItem
                   key={i}
                   checked={checked}
+                  classNames={classNames?.checkboxItem}
                   onChange={() => {
                     const changed = { identifier, visibility: !checked };
 
@@ -249,7 +250,6 @@ export const ColumnVisibility = (props: ColumnVisibilityProps) => {
                       changed,
                     );
                   }}
-                  className={classNames?.checkboxItem}
                 >
                   {val ? val[0].toUpperCase() + val.slice(1) : ''}
                 </Menu.CheckboxItem>
@@ -268,8 +268,9 @@ ColumnVisibility.displayName = 'gist-ui.' + ColumnVisibility_Name;
 const SelectRowProvider_Name = 'Table.SelectRow';
 
 interface SelectRowContext {
-  isAllSelected: boolean;
-  setIsAllSelected: React.Dispatch<React.SetStateAction<boolean>>;
+  selected: string[];
+  setSelected: React.Dispatch<React.SetStateAction<string[]>>;
+  rows: React.MutableRefObject<string[]>;
 }
 
 const [SelectRowContextProvider, useSelectRowContext] =
@@ -281,12 +282,15 @@ export interface SelectRowProviderProps {
 
 export const SelectRowProvider = (props: SelectRowProviderProps) => {
   const { children } = props;
-  const [isAllSelected, setIsAllSelected] = useState(false);
+
+  const rows = useRef<string[]>([]);
+  const [selected, setSelected] = useState<string[]>([]);
 
   return (
     <SelectRowContextProvider
-      isAllSelected={isAllSelected}
-      setIsAllSelected={setIsAllSelected}
+      selected={selected}
+      setSelected={setSelected}
+      rows={rows}
     >
       {children}
     </SelectRowContextProvider>
@@ -305,11 +309,17 @@ export interface SelectAllRowsProps {
 
 export const SelectAllRows = (props: SelectAllRowsProps) => {
   const { children } = props;
-  const { setIsAllSelected, isAllSelected } =
+  const { selected, setSelected, rows } =
     useSelectRowContext(SelectAllRows_Name);
 
   return (
-    <Slot checked={isAllSelected} onChange={setIsAllSelected}>
+    <Slot
+      checked={selected.length && selected.length === rows.current.length}
+      onChange={(event: { target: { value: boolean } }) => {
+        setSelected(event.target.value ? rows.current : []);
+      }}
+      indeterminate={selected.length && selected.length !== rows.current.length}
+    >
       {children}
     </Slot>
   );
@@ -327,14 +337,27 @@ export interface SelectRowProps {
 
 export const SelectRow = (props: SelectRowProps) => {
   const { children } = props;
-  const { isAllSelected, setIsAllSelected } =
-    useSelectRowContext(SelectRow_Name);
+  const { selected, setSelected, rows } = useSelectRowContext(SelectRow_Name);
+
+  const identifier = useId();
+
+  useEffect(() => {
+    rows.current.push(identifier);
+
+    return () => {
+      rows.current = rows.current.filter((ele) => ele !== identifier);
+    };
+  }, [identifier, rows]);
 
   return (
     <Slot
-      checked={isAllSelected || undefined}
-      onChange={() => {
-        setIsAllSelected(false);
+      checked={selected.includes(identifier)}
+      onChange={(event: { target: { value: boolean } }) => {
+        setSelected((prev) =>
+          event.target.value
+            ? [...prev, identifier]
+            : prev.filter((ele) => ele !== identifier),
+        );
       }}
     >
       {children}
