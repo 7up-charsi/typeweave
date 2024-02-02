@@ -1,7 +1,7 @@
-import { forwardRef, useId, useRef } from 'react';
+import { forwardRef, useEffect, useId, useRef } from 'react';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { UseRippleProps, useRipple } from '@gist-ui/use-ripple';
-import { mergeProps } from '@gist-ui/react-utils';
+import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
 import { useHover } from '@react-aria/interactions';
 import { useFocusRing } from '@react-aria/focus';
 import {
@@ -58,14 +58,41 @@ const checkIcon_svg = (
   </svg>
 );
 
+const indeterminate_svg = (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="0.5"
+      y="0.5"
+      width="19"
+      height="19"
+      rx="2.5"
+      stroke="currentColor"
+    />
+    <path
+      d="M4 10H16"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 export interface CheckboxProps extends CheckboxVariantProps {
   defaultChecked?: boolean;
   checked?: boolean;
   onChange?: (event: React.ChangeEvent) => void;
   classNames?: Omit<CheckboxClassNames, 'input'>;
   isDisabled?: boolean;
+  indeterminate?: boolean;
   icon?: React.ReactNode;
   checkIcon?: React.ReactNode;
+  indeterminateIcon?: boolean;
   label?: string;
   labelPlacement?: 'top' | 'bottom' | 'left' | 'right';
   disableRipple?: boolean;
@@ -83,9 +110,11 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
     classNames,
     icon = icon_svg,
     checkIcon = checkIcon_svg,
+    indeterminateIcon = indeterminate_svg,
     label,
     color,
     disableRipple,
+    indeterminate,
     rippleDuration = 450,
     rippleTimingFunction,
     rippleCompletedFactor,
@@ -95,6 +124,8 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
 
   const id = useId();
   const checkboxRef = useRef<HTMLDivElement>(null);
+
+  const innerRef = useRef<HTMLInputElement>(null);
 
   const [checked, setChecked] = useControllableState({
     defaultValue: defaultChecked ?? false,
@@ -119,12 +150,17 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
 
   const styles = checkbox({ size, isDisabled, labelPlacement, color });
 
+  useEffect(() => {
+    if (innerRef.current) innerRef.current.indeterminate = !!indeterminate;
+  }, [indeterminate]);
+
   return (
     <div
       data-hovered={isHovered}
       data-focus-visible={isFocusVisible && isFocused}
       data-disabled={isDisabled}
-      data-checked={checked}
+      data-checked={!!checked}
+      data-indeterminate={!!indeterminate}
       className={styles.base()}
     >
       <div
@@ -134,9 +170,10 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
       >
         <input
           id={id}
-          ref={ref}
+          ref={mergeRefs(ref, innerRef)}
           type="checkbox"
           checked={checked}
+          aria-checked={indeterminate ? 'mixed' : checked}
           className={styles.nativeInput()}
           disabled={isDisabled}
           {...mergeProps(focusProps, hoverProps)}
@@ -146,7 +183,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
           {...rippleKeyboardProps}
         />
 
-        {checked ? checkIcon : icon}
+        {indeterminate ? indeterminateIcon : checked ? checkIcon : icon}
       </div>
 
       {label && (
