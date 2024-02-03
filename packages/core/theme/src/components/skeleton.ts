@@ -14,10 +14,6 @@ const skeleton = tv({
       wave: 'relative after:absolute after:inset-0 after:-translate-x-full after:content-["_"] after:bg-[linear-gradient(90deg,transparent,rgba(0,0,0,_0.06),transparent)] after:animate-skeletonWave',
     },
   },
-  defaultVariants: {
-    variant: 'text',
-    animation: 'pulse',
-  },
 });
 
 export type SkeletonVariantProps = VariantProps<typeof skeleton>;

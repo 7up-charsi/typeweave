@@ -6,7 +6,7 @@ export interface SkeletonProps extends SkeletonVariantProps {
 }
 
 const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props, ref) => {
-  const { variant, className, animation } = props;
+  const { className, variant = 'text', animation = 'pulse' } = props;
 
   const styles = skeleton({ variant, className, animation });
 

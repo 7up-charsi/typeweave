@@ -17,9 +17,6 @@ const alertDialog = tv({
       lg: { content: 'shadow-lg' },
     },
   },
-  defaultVariants: {
-    shadow: 'md',
-  },
 });
 
 export type AlertDialogVariantProps = VariantProps<typeof alertDialog>;

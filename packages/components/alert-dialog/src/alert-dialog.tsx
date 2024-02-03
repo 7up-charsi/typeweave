@@ -207,7 +207,13 @@ export interface ContentProps extends AlertDialogVariantProps {
 }
 
 export const Content = (props: ContentProps) => {
-  const { children, className, noA11yDescription, noA11yTitle, shadow } = props;
+  const {
+    children,
+    className,
+    noA11yDescription,
+    noA11yTitle,
+    shadow = 'md',
+  } = props;
 
   const rootContext = useRootContext(Content_Name);
 

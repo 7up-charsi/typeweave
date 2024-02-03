@@ -71,7 +71,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
           defaultValue?: Value[];
           value?: Value[];
           onChange?: (
-            event: React.ChangeEvent,
+            event: { target: { value: Value[] } },
             reason: Reason,
             value: Value[],
           ) => void;
@@ -84,7 +84,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
             defaultValue?: Value;
             value?: Value;
             onChange?: (
-              event: React.ChangeEvent,
+              event: { target: { value: Value } },
               reason: Reason,
               value: Value,
             ) => void;
@@ -96,7 +96,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
             defaultValue?: Value;
             value?: Value | null;
             onChange?: (
-              event: React.ChangeEvent,
+              event: { target: { value: Value | null } },
               reason: Reason,
               value: Value | null,
             ) => void;
@@ -116,7 +116,7 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     defaultValue,
     value: valueProp,
     onChange,
-    shadow,
+    shadow = 'md',
     options: optionsProp = [],
     isDisabled,
     multiple,
@@ -164,11 +164,7 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
           'internal Error, reason is not defined',
         );
 
-      onChange?.(
-        { target: { value } } as unknown as React.ChangeEvent,
-        reason,
-        value,
-      );
+      onChange?.({ target: { value } } as never, reason, value);
     },
   });
 

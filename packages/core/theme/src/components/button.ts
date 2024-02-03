@@ -38,14 +38,6 @@ const button = tv({
       true: '[&>svg]:pointer-events-none rounded-full',
     },
   },
-  defaultVariants: {
-    size: 'md',
-    variant: 'flat',
-    color: 'neutral',
-    fullWidth: false,
-    isDisabled: false,
-    isIconOnly: false,
-  },
   compoundVariants: [
     {
       isIconOnly: false,

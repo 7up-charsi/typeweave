@@ -64,12 +64,6 @@ const _switch = tv({
       right: { base: 'items-center', label: 'order-1' },
     },
   },
-  defaultVariants: {
-    size: 'sm',
-    labelPlacement: 'right',
-    isDisabled: false,
-    color: 'primary',
-  },
 });
 
 export type SwitchVariantProps = VariantProps<typeof _switch>;

@@ -10,9 +10,6 @@ const buttonGroup = tv({
         'flex-col [&>button:first-of-type]:rounded-t [&>button:last-of-type]:rounded-b [&>button]:w-full [&>button:first-of-type]:border-b-0 [&>button:last-of-type]:border-t-0 [&>button:not(:first-of-type,_:last-of-type)]:border-y-0',
     },
   },
-  defaultVariants: {
-    direction: 'horizontal',
-  },
 });
 
 export type ButtonGroupVariantProps = VariantProps<typeof buttonGroup>;

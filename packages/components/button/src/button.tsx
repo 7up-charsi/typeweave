@@ -45,7 +45,7 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
       isIconOnly,
       size,
       variant,
-      direction,
+      direction = 'horizontal',
       className,
     } = props;
 
@@ -104,20 +104,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onPressStart,
       onPressUp,
       onPressChange,
-      isIconOnly,
+      isIconOnly = false,
       rippleDuration = isIconOnly ? 450 : 500,
       rippleTimingFunction,
       rippleCompletedFactor,
-      color,
-      fullWidth,
-      isDisabled: _isDisabled,
-      size,
-      variant,
+      isDisabled: _isDisabled = false,
       allowTextSelectionOnPress,
       preventFocusOnPress,
       shouldCancelOnPointerExit,
       asChild,
       disableRipple,
+      size = 'md',
+      variant = 'flat',
+      color = 'neutral',
+      fullWidth = false,
       ...buttonProps
     } = props;
 
@@ -172,6 +172,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             isIconOnly: isIconOnly ?? groupContext?.isIconOnly,
             size: groupContext?.size,
             isDisabled,
+            className,
           }
         : {
             color,

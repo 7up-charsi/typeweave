@@ -6,7 +6,7 @@ export interface OverlayProps extends OverlayVariantProps {
 }
 
 const Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
-  const { children, variant } = props;
+  const { children, variant = 'opaque' } = props;
 
   const styles = overlay({ variant });
 

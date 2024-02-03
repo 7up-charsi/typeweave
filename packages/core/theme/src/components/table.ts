@@ -21,9 +21,6 @@ const table = tv({
       },
     },
   },
-  defaultVariants: {
-    variant: 'grid',
-  },
 });
 
 export type TableVariantProps = VariantProps<typeof table>;

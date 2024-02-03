@@ -166,7 +166,7 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
   const {
     children,
     className,
-    shadow,
+    shadow = 'md',
     roleDescription,
     arrowPadding = 10,
     boundaryPadding = 10,

@@ -9,9 +9,6 @@ const overlay = tv({
       transparent: 'hidden',
     },
   },
-  defaultVariants: {
-    variant: 'opaque',
-  },
 });
 
 export type OverlayVariantProps = VariantProps<typeof overlay>;

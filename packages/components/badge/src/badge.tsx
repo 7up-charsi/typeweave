@@ -13,12 +13,12 @@ const Badge = forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
     children,
     content,
     max,
-    color,
     classNames,
-    placement,
-    shadow,
-    overlap,
     variant = 'standard',
+    color = 'info',
+    placement = 'top-right',
+    shadow = 'md',
+    overlap = 'rectangular',
   } = props;
 
   const styles = badge({ color, variant, placement, shadow, overlap });

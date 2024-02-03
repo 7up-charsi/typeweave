@@ -86,7 +86,7 @@ const indeterminate_svg = (
 export interface CheckboxProps extends CheckboxVariantProps {
   defaultChecked?: boolean;
   checked?: boolean;
-  onChange?: (event: React.ChangeEvent) => void;
+  onChange?: (event: { target: { value: boolean } }, value: boolean) => void;
   classNames?: Omit<CheckboxClassNames, 'input'>;
   isDisabled?: boolean;
   indeterminate?: boolean;
@@ -106,20 +106,20 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
     defaultChecked,
     checked: checkedProp,
     onChange,
-    isDisabled,
     classNames,
     icon = icon_svg,
     checkIcon = checkIcon_svg,
     indeterminateIcon = indeterminate_svg,
     label,
-    color,
     disableRipple,
     indeterminate,
     rippleDuration = 450,
     rippleTimingFunction,
     rippleCompletedFactor,
-    labelPlacement = 'right',
     size = 'md',
+    labelPlacement = 'right',
+    isDisabled = false,
+    color = 'primary',
   } = props;
 
   const id = useId();
@@ -131,7 +131,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
     defaultValue: defaultChecked ?? false,
     value: checkedProp,
     onChange: (value) => {
-      onChange?.({ target: { value } } as unknown as React.ChangeEvent);
+      onChange?.({ target: { value } }, value);
     },
     resetStateValue: false,
   });

@@ -57,12 +57,6 @@ const checkbox = tv({
       right: { base: 'items-center', label: 'order-1' },
     },
   },
-  defaultVariants: {
-    size: 'md',
-    labelPlacement: 'right',
-    isDisabled: false,
-    color: 'primary',
-  },
 });
 
 export type CheckboxVariantProps = VariantProps<typeof checkbox>;

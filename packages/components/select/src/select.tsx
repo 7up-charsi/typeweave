@@ -63,7 +63,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
           defaultValue?: Value[];
           value?: Value[];
           onChange?: (
-            event: React.ChangeEvent,
+            event: { target: { value: Value[] } },
             reason: Reason,
             value: Value[],
           ) => void;
@@ -76,7 +76,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
             defaultValue?: Value;
             value?: Value;
             onChange?: (
-              event: React.ChangeEvent,
+              event: { target: { value: Value } },
               reason: Reason,
               value: Value,
             ) => void;
@@ -88,7 +88,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
             defaultValue?: Value;
             value?: Value | null;
             onChange?: (
-              event: React.ChangeEvent,
+              event: { target: { value: Value | null } },
               reason: Reason,
               value: Value | null,
             ) => void;
@@ -108,7 +108,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
     defaultValue,
     value: valueProp,
     onChange,
-    shadow,
+    shadow = 'md',
     options = [],
     isDisabled,
     multiple,
@@ -153,11 +153,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
           'internal Error, reason is not defined',
         );
 
-      onChange?.(
-        { target: { value } } as unknown as React.ChangeEvent,
-        reason,
-        value,
-      );
+      onChange?.({ target: { value } } as never, reason, value);
     },
   });
 

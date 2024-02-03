@@ -82,9 +82,9 @@ export interface AlertProps extends AlertVariantProps {
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
   const {
-    color,
-    fullWidth,
-    variant,
+    variant = 'flat',
+    color = 'danger',
+    fullWidth = true,
     children,
     icon = icons[color || 'danger'],
   } = props;

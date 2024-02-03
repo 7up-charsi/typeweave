@@ -22,9 +22,6 @@ const autocomplete = tv({
       lg: { listbox: 'shadow-lg' },
     },
   },
-  defaultVariants: {
-    shadow: 'md',
-  },
 });
 
 const autocompleteInput = tv({

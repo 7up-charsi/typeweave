@@ -12,7 +12,7 @@ import {
 export interface SwitchProps extends SwitchVariantProps {
   defaultChecked?: boolean;
   checked?: boolean;
-  onChange?: (event: React.ChangeEvent) => void;
+  onChange?: (event: { target: { value: boolean } }, value: boolean) => void;
   classNames?: Omit<SwitchClassNames, 'input'>;
   isDisabled?: boolean;
   label?: string;
@@ -24,12 +24,12 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
     defaultChecked,
     checked: checkedProp,
     onChange,
-    isDisabled,
     classNames,
     label,
-    color,
+    size = 'sm',
     labelPlacement = 'right',
-    size = 'md',
+    isDisabled = false,
+    color = 'primary',
   } = props;
 
   const id = useId();
@@ -38,7 +38,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
     defaultValue: defaultChecked ?? false,
     value: checkedProp,
     onChange: (value) => {
-      onChange?.({ target: { value } } as unknown as React.ChangeEvent);
+      onChange?.({ target: { value } }, value);
     },
     resetStateValue: false,
   });

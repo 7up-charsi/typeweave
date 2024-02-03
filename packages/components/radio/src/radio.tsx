@@ -47,7 +47,7 @@ const [RootProvider, useRootContext] =
 
 export interface GroupProps {
   value?: string;
-  onChange?: (event: React.ChangeEvent) => void;
+  onChange?: (event: { target: { value: string } }, value: string) => void;
   defaultValue?: string;
   children?: React.ReactNode;
   name: string;
@@ -60,7 +60,7 @@ export const Group = (props: GroupProps) => {
     defaultValue: defaultValue ?? '',
     value: valueProp,
     onChange: (value) => {
-      onChange?.({ target: { value } } as unknown as React.ChangeEvent);
+      onChange?.({ target: { value } }, value);
     },
     resetStateValue: '',
   });
@@ -93,18 +93,18 @@ export interface RadioProps extends RadioVariantProps {
 
 export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   const {
-    isDisabled,
     classNames,
     icon = icon_svg,
     checkIcon = checkIcon_svg,
     label,
     value,
-    color,
     rippleDuration = 450,
     rippleTimingFunction,
     rippleCompletedFactor,
-    labelPlacement = 'right',
     size = 'md',
+    labelPlacement = 'right',
+    isDisabled = false,
+    color = 'primary',
   } = props;
 
   const rootContext = useRootContext(Radio_Name);

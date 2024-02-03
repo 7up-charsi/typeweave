@@ -20,9 +20,6 @@ const menu = tv({
       lg: { menu: 'shadow-lg' },
     },
   },
-  defaultVariants: {
-    shadow: 'md',
-  },
 });
 
 export type MenuVariantProps = VariantProps<typeof menu>;

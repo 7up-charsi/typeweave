@@ -49,12 +49,6 @@ const input = tv({
       },
     },
   },
-  defaultVariants: {
-    fullWidth: false,
-    isDisabled: false,
-    size: 'md',
-    variant: 'filled',
-  },
   compoundVariants: [],
 });
 

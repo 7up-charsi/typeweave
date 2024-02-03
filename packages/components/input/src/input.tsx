@@ -56,18 +56,18 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     classNames,
     required,
     onChange,
-    isDisabled,
     error,
-    fullWidth,
     hideLabel,
-    size,
     placeholder,
-    variant,
     baseRef,
     inputRef,
     inputProps = {},
     inputWrapperProps = {},
     a11yFeedback = 'polite',
+    fullWidth = false,
+    isDisabled = false,
+    size = 'md',
+    variant = 'filled',
   } = props;
 
   const labelId = useId();

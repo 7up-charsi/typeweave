@@ -31,11 +31,6 @@ const chip = tv({
       lg: { base: 'h-8' },
     },
   },
-  defaultVariants: {
-    size: 'md',
-    variant: 'solid',
-    color: 'primary',
-  },
   compoundVariants: [
     // color / solid
     {

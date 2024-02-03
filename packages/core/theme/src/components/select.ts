@@ -25,9 +25,6 @@ const select = tv({
       lg: { listbox: 'shadow-lg' },
     },
   },
-  defaultVariants: {
-    shadow: 'md',
-  },
 });
 
 const selectInput = tv({

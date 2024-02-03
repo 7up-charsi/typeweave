@@ -21,11 +21,6 @@ const alert = tv({
       false: 'max-w-max',
     },
   },
-  defaultVariants: {
-    variant: 'flat',
-    color: 'danger',
-    fullWidth: true,
-  },
   compoundVariants: [
     // color / solid
     {

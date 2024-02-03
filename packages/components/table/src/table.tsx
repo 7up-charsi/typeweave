@@ -119,7 +119,7 @@ export interface TableProps extends TableVariantProps {
 }
 
 export const Table = (props: TableProps) => {
-  const { classNames, variant } = props;
+  const { classNames, variant = 'grid' } = props;
 
   const { data, columns, getRowKey, visibilityState } =
     useRootContext(Table_Name);

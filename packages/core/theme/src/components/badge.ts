@@ -44,13 +44,6 @@ const badge = tv({
       rectangular: '',
     },
   },
-  defaultVariants: {
-    variant: 'standard',
-    color: 'info',
-    placement: 'top-right',
-    shadow: 'md',
-    overlap: 'rectangular',
-  },
   compoundVariants: [
     {
       overlap: 'circular',
