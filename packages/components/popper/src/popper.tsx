@@ -259,7 +259,7 @@ export const Floating = (props: FloatingProps) => {
       {typeof children === 'function' ? (
         children(childrenProps)
       ) : (
-        <Slot ref={refs.setFloating} {...childrenProps.style}>
+        <Slot ref={refs.setFloating} style={childrenProps.style}>
           {children}
         </Slot>
       )}

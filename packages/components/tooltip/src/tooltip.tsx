@@ -1,8 +1,7 @@
 'use client';
 
 import { createPortal } from 'react-dom';
-import { useHover, useFocus } from '@react-aria/interactions';
-import { useFocusRing } from '@react-aria/focus';
+import { useHover, useFocus, useFocusVisible } from '@react-aria/interactions';
 import { mergeProps } from '@gist-ui/react-utils';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { useCallbackRef } from '@gist-ui/use-callback-ref';
@@ -206,7 +205,7 @@ export const Trigger = ({ children }: TriggerProps) => {
     context.hideTooltip(true);
   };
 
-  const { isFocusVisible, focusProps: focusRingProps } = useFocusRing();
+  const { isFocusVisible } = useFocusVisible();
 
   const { focusProps } = useFocus({
     onFocus: () => {
@@ -219,7 +218,7 @@ export const Trigger = ({ children }: TriggerProps) => {
     onBlur: () => {
       if (context.trigger === 'hover') return;
 
-      context.showTooltip(true);
+      context.hideTooltip(true);
     },
   });
 
@@ -229,7 +228,6 @@ export const Trigger = ({ children }: TriggerProps) => {
         ref={setElement}
         aria-describedby={context.isOpen ? context.id : undefined}
         {...mergeProps(
-          focusRingProps,
           hoverProps,
           focusProps,
           { onPointerDown: handlePointerDown },
