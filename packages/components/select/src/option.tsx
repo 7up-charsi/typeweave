@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
 import { mergeProps } from '@gist-ui/react-utils';
 import { useHover, usePress } from '@react-aria/interactions';

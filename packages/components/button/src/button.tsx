@@ -1,3 +1,5 @@
+'use client';
+
 import { useRipple, UseRippleProps } from '@gist-ui/use-ripple';
 import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
 import { useFocusRing } from '@react-aria/focus';

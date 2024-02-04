@@ -1,3 +1,5 @@
+'use client';
+
 import { Slot } from '@gist-ui/slot';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { FocusTrap } from '@gist-ui/focus-trap';

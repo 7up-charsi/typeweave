@@ -1,3 +1,5 @@
+'use client';
+
 import { Children, cloneElement, forwardRef, isValidElement } from 'react';
 import { GistUiError, onlyChildError, validChildError } from '@gist-ui/error';
 import { mergeProps, mergeRefs } from '@gist-ui/react-utils';

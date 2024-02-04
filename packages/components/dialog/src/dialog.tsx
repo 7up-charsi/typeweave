@@ -1,3 +1,5 @@
+'use client';
+
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { Slot } from '@gist-ui/slot';
 import { useClickOutside } from '@gist-ui/use-click-outside';

@@ -1,3 +1,5 @@
+'use client';
+
 import * as Popper from '@gist-ui/popper';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { useClickOutside } from '@gist-ui/use-click-outside';

@@ -1,3 +1,5 @@
+'use server';
+
 import { BadgeClassNames, BadgeVariantProps, badge } from '@gist-ui/theme';
 import { forwardRef } from 'react';
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { focus, getTabbableEdges } from './utils';
 import { Slot } from '@gist-ui/slot';
 import { GistUiError } from '@gist-ui/error';

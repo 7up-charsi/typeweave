@@ -1,3 +1,5 @@
+'use client';
+
 import { createPortal } from 'react-dom';
 import { useHover, useFocus } from '@react-aria/interactions';
 import { useFocusRing } from '@react-aria/focus';

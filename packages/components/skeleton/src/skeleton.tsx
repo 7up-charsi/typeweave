@@ -1,3 +1,5 @@
+'use server';
+
 import { forwardRef } from 'react';
 import { SkeletonVariantProps, skeleton, ClassValue } from '@gist-ui/theme';
 

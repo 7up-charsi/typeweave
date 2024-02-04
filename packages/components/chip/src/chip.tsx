@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef } from 'react';
 import { mergeProps } from '@gist-ui/react-utils';
 import { ChipClassNames, ChipVariantProps, chip } from '@gist-ui/theme';

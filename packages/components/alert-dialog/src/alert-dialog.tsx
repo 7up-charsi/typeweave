@@ -1,3 +1,5 @@
+'use client';
+
 import { createContextScope } from '@gist-ui/context';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { useCallbackRef } from '@gist-ui/use-callback-ref';

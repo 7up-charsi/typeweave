@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@gist-ui/button';
 import { RenderInputProps } from './select';
 import { selectInput } from '@gist-ui/theme';

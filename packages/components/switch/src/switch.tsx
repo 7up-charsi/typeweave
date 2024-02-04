@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef, useId } from 'react';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { mergeProps } from '@gist-ui/react-utils';

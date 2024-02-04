@@ -1,3 +1,5 @@
+'use client';
+
 import { createContextScope } from '@gist-ui/context';
 import { Slot } from '@gist-ui/slot';
 import { useSize } from '@gist-ui/use-size';

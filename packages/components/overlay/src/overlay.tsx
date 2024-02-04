@@ -1,3 +1,5 @@
+'use server';
+
 import { OverlayVariantProps, overlay } from '@gist-ui/theme';
 import { forwardRef } from 'react';
 

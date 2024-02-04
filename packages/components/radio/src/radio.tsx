@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef, useId, useRef } from 'react';
 import { useControllableState } from '@gist-ui/use-controllable-state';
 import { UseRippleProps, useRipple } from '@gist-ui/use-ripple';

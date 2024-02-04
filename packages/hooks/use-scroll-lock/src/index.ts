@@ -1,3 +1,5 @@
+'use client';
+
 import { RefObject, useEffect } from 'react';
 
 type Direction = 'horizontal' | 'vertical' | 'both';

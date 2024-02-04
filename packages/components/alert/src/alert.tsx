@@ -1,3 +1,5 @@
+'use server';
+
 import { forwardRef } from 'react';
 import { AlertVariantProps, alert as alertStyles } from '@gist-ui/theme';
 

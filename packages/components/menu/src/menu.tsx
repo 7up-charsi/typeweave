@@ -1,3 +1,5 @@
+'use client';
+
 import { createContextScope } from '@gist-ui/context';
 import { Slot } from '@gist-ui/slot';
 import * as Popper from '@gist-ui/popper';

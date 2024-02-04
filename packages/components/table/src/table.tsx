@@ -1,3 +1,5 @@
+'use client';
+
 import { createContextScope } from '@gist-ui/context';
 import { TableClassNames, TableVariantProps, table } from '@gist-ui/theme';
 import * as Menu from '@gist-ui/menu';

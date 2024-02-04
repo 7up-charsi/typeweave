@@ -1,3 +1,5 @@
+'use client';
+
 import { input, InputClassNames, InputVariantProps } from '@gist-ui/theme';
 import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
 import { useFocusRing } from '@react-aria/focus';

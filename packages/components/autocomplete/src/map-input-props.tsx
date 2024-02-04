@@ -1,3 +1,5 @@
+'use client';
+
 import { Chip } from '@gist-ui/chip';
 import { Button } from '@gist-ui/button';
 import { RenderInputProps } from './autocomplete';

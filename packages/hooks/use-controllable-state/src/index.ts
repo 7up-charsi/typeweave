@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallbackRef } from '@gist-ui/use-callback-ref';
 import { useEffect, useRef, useState } from 'react';
 
