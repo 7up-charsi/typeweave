@@ -427,7 +427,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
   return (
     <Popper.Root>
       <Popper.Reference>
-        {({ setRef }) =>
+        {({ referenceRef }) =>
           renderInput({
             onBlur: () => {
               if (isFocusVisible) handleClose();
@@ -441,7 +441,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
               : Array.isArray(value)
                 ? !!value.length
                 : !!value,
-            popperReferenceRef: mergeRefs(setRef, popperReferenceRef),
+            popperReferenceRef: mergeRefs(referenceRef, popperReferenceRef),
             inputRef,
             value,
             inputValue: getInputValue(value),

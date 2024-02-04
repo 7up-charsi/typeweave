@@ -426,7 +426,7 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
   return (
     <Popper.Root>
       <Popper.Reference>
-        {({ setRef }) =>
+        {({ referenceRef }) =>
           renderInput({
             tags: Array.isArray(value)
               ? value.map((opt) => ({
@@ -452,7 +452,7 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
               : Array.isArray(value)
                 ? !!value.length
                 : !!value,
-            popperReferenceRef: mergeRefs(setRef, popperReferenceRef),
+            popperReferenceRef: mergeRefs(referenceRef, popperReferenceRef),
             inputRef,
             value,
             inputValue,

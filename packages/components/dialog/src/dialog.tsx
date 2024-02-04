@@ -317,13 +317,13 @@ export const Content = (props: ContentProps) => {
 
   return (
     <FocusTrap
-      ref={setOutsideEle}
       loop
       trapped
       scope={rootContext.scope}
       isDisabled={!rootContext.isOpen}
     >
       <div
+        ref={setOutsideEle}
         role="dialog"
         aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
         aria-describedby={

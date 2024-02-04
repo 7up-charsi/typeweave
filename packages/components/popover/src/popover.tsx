@@ -10,6 +10,7 @@ import { useIsDisabled } from '@gist-ui/use-is-disabled';
 import { createContextScope } from '@gist-ui/context';
 import { useEffect, useId } from 'react';
 import { VisuallyHidden } from '@gist-ui/visually-hidden';
+import { mergeRefs } from '@gist-ui/react-utils';
 
 interface PopoverContext {
   isOpen: boolean;
@@ -272,7 +273,7 @@ export const Content = (props: ContentProps) => {
 
   const rootContext = useRootContext(Content_Name);
 
-  const setOutsideEle = useClickOutside<HTMLDivElement>({
+  const setOutsideEle = useClickOutside({
     isDisabled: !rootContext.isOpen,
     callback: () => {
       rootContext.handleClose();
@@ -281,27 +282,31 @@ export const Content = (props: ContentProps) => {
 
   return (
     <Popper.Floating arrowPadding={arrowPadding} {...restProps}>
-      <FocusTrap ref={setOutsideEle} loop trapped>
-        <div
-          role="dialog"
-          aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
-          aria-describedby={
-            noA11yDescription ? undefined : rootContext.descriptionId
-          }
-          id={rootContext.contentId}
-          className={className}
-        >
-          <VisuallyHidden>
-            <button onPointerUp={rootContext.handleClose}>close </button>
-          </VisuallyHidden>
+      {({ floatingRef, style }) => (
+        <FocusTrap loop trapped>
+          <div
+            ref={mergeRefs(floatingRef, setOutsideEle)}
+            role="dialog"
+            aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
+            aria-describedby={
+              noA11yDescription ? undefined : rootContext.descriptionId
+            }
+            id={rootContext.contentId}
+            className={className}
+            style={style}
+          >
+            <VisuallyHidden>
+              <button onPointerUp={rootContext.handleClose}>close </button>
+            </VisuallyHidden>
 
-          {children}
+            {children}
 
-          <VisuallyHidden>
-            <button onPointerUp={rootContext.handleClose}>close </button>
-          </VisuallyHidden>
-        </div>
-      </FocusTrap>
+            <VisuallyHidden>
+              <button onPointerUp={rootContext.handleClose}>close </button>
+            </VisuallyHidden>
+          </div>
+        </FocusTrap>
+      )}
     </Popper.Floating>
   );
 };

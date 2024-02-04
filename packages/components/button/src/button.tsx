@@ -29,7 +29,7 @@ interface GroupContext extends ButtonVariantProps {}
 const Context = createContext<GroupContext | null>(null);
 
 export interface ButtonGroupProps
-  extends ButtonVariantProps,
+  extends Omit<ButtonVariantProps, 'fullWidth'>,
     ButtonGroupVariantProps {
   children?: React.ReactNode;
   className?: ClassValue;
@@ -39,14 +39,13 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
   (props, ref) => {
     const {
       children,
-      isDisabled,
-      color,
-      fullWidth,
-      isIconOnly,
-      size,
-      variant,
+      isDisabled = false,
+      isIconOnly = false,
       direction = 'horizontal',
       className,
+      size = 'md',
+      variant = 'flat',
+      color = 'neutral',
     } = props;
 
     const styles = buttonGroup({ direction, className });
@@ -56,7 +55,6 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
         value={{
           isDisabled,
           color,
-          fullWidth,
           isIconOnly,
           size,
           variant,
@@ -114,10 +112,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       shouldCancelOnPointerExit,
       asChild,
       disableRipple,
-      size = 'md',
-      variant = 'flat',
-      color = 'neutral',
-      fullWidth = false,
+      size,
+      variant,
+      color,
+      fullWidth,
       ...buttonProps
     } = props;
 
@@ -167,21 +165,21 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const styles = button(
       groupContext
         ? {
-            color: color ?? groupContext?.color,
-            variant: variant ?? groupContext?.variant,
-            isIconOnly: isIconOnly ?? groupContext?.isIconOnly,
-            size: groupContext?.size,
-            isDisabled,
             className,
+            isDisabled: isDisabled ?? groupContext.isDisabled,
+            color: color ?? groupContext.color,
+            isIconOnly: isIconOnly ?? groupContext.isIconOnly,
+            size: size ?? groupContext.size,
+            variant: variant ?? groupContext.variant,
           }
         : {
-            color,
             isDisabled,
             isIconOnly,
-            variant,
-            size,
-            fullWidth,
             className,
+            size: size ?? 'md',
+            variant: variant ?? 'flat',
+            color: color ?? 'neutral',
+            fullWidth: fullWidth ?? false,
           },
     );
 

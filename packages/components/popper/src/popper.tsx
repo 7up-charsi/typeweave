@@ -9,6 +9,7 @@ import {
   Padding,
   Side,
   UseFloatingOptions,
+  UseFloatingReturn,
   arrow as arrowMiddleware,
   autoUpdate,
   flip,
@@ -51,7 +52,9 @@ const Reference_Name = 'Popper.Reference';
 export interface ReferenceProps {
   children?:
     | React.ReactNode
-    | ((props: { setRef: PopperContext['setReference'] }) => React.ReactNode);
+    | ((props: {
+        referenceRef: PopperContext['setReference'];
+      }) => React.ReactNode);
   /**
    * Position a floating element relative to a custom reference area, useful for context menus, range selections, following the cursor, and more.
    *
@@ -74,7 +77,7 @@ export const Reference = (props: ReferenceProps) => {
   }, [virturalElement]);
 
   return virturalElement ? null : typeof children === 'function' ? (
-    children({ setRef: context.setReference })
+    children({ referenceRef: context.setReference })
   ) : (
     <Slot ref={context.setReference}>{children}</Slot>
   );
@@ -96,7 +99,12 @@ const [ArrowProvider, useArrowContext] =
   createContextScope<ArrowContext>(Floating_Name);
 
 export interface FloatingProps {
-  children?: React.ReactNode;
+  children?:
+    | React.ReactNode
+    | ((props: {
+        floatingRef: UseFloatingReturn['refs']['setFloating'];
+        style: React.CSSProperties;
+      }) => React.ReactNode);
   placement?: UseFloatingOptions['placement'];
   updatePositionStrategy?: 'optimized' | 'always';
   /**
@@ -226,6 +234,18 @@ export const Floating = (props: FloatingProps) => {
   const arrowData = middlewareData.arrow;
   const hideData = middlewareData.hide;
 
+  const childrenProps = {
+    floatingRef: refs.setFloating,
+    style: {
+      ...floatingStyles,
+      visibility: (hideData?.referenceHidden
+        ? 'hidden'
+        : 'visible') as React.CSSProperties['visibility'],
+      '--reference-width': `${referenceSize?.width}px`,
+      '--reference-height': `${referenceSize?.height}px`,
+    },
+  };
+
   return (
     <ArrowProvider
       arrowX={arrowData?.x}
@@ -234,19 +254,13 @@ export const Floating = (props: FloatingProps) => {
       setArrow={setArrow}
       shouldHideArrow={!!hideData?.referenceHidden}
     >
-      <Slot
-        ref={refs.setFloating}
-        {...{
-          style: {
-            ...floatingStyles,
-            visibility: hideData?.referenceHidden ? 'hidden' : 'visible',
-            '--reference-width': `${referenceSize?.width}px`,
-            '--reference-height': `${referenceSize?.height}px`,
-          },
-        }}
-      >
-        {children}
-      </Slot>
+      {typeof children === 'function' ? (
+        children(childrenProps)
+      ) : (
+        <Slot ref={refs.setFloating} {...childrenProps.style}>
+          {children}
+        </Slot>
+      )}
     </ArrowProvider>
   );
 };

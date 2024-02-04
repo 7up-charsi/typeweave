@@ -1,8 +1,7 @@
 import { focus, getTabbableEdges } from './utils';
 import { Slot } from '@gist-ui/slot';
-import { mergeRefs } from '@gist-ui/react-utils';
 import { GistUiError } from '@gist-ui/error';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export type FocusScope = { paused: boolean; pause(): void; resume(): void };
 
@@ -30,7 +29,7 @@ export interface FocusTrapProps {
   scope?: FocusScope;
 }
 
-const FocusTrap = forwardRef<HTMLDivElement, FocusTrapProps>((props, ref) => {
+const FocusTrap = (props: FocusTrapProps) => {
   const { children, isDisabled, scope, loop = true, trapped = true } = props;
 
   const [container, setContainer] = useState<HTMLElement | null>(null);
@@ -165,14 +164,14 @@ const FocusTrap = forwardRef<HTMLDivElement, FocusTrapProps>((props, ref) => {
   return (
     <Slot<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>
       tabIndex={-1}
-      ref={mergeRefs(ref, setContainer)}
+      ref={setContainer}
       onKeyDown={handleKeyDown}
       style={{ outline: 'none' }}
     >
       {children}
     </Slot>
   );
-});
+};
 
 FocusTrap.displayName = 'gist-ui.FocusTrap';
 
