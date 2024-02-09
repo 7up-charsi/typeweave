@@ -4,8 +4,8 @@ export const overlay = tv({
   base: 'w-screen h-screen fixed inset-0 z-50',
   variants: {
     variant: {
-      opaque: 'bg-overlay/50 backdrop-opacity-50',
-      blur: 'backdrop-blur-md backdrop-saturate-150 bg-overlay/30',
+      opaque: 'bg-black/50 backdrop-opacity-50',
+      blur: 'backdrop-blur-md backdrop-saturate-150 bg-black/30',
       transparent: 'hidden',
     },
   },
