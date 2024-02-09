@@ -1,48 +1,27 @@
-import { flatten } from 'flat';
+export const genVariables = (theme: Record<string, string>) =>
+  Object.entries(theme).reduce<Record<string, string>>(
+    (acc, [key, value]) => ((acc[`--${key}`] = value), acc),
+    {},
+  );
 
-export function swapColorValues<T extends Record<string, unknown>>(colors: T) {
-  const keys = Object.keys(colors);
+export const genColorScale = (color: Record<string, string>, name: string) =>
+  Object.entries(color).reduce<Record<string, string>>(
+    (acc, [key, value]) => ((acc[`${name}-${key}`] = value), acc),
+    {},
+  );
+
+export const genDarkScale = (color: Record<string, string>) => {
+  const swapped: Record<string, string> = {};
+  const keys = Object.keys(color);
   const length = keys.length;
 
-  const swapped: Record<string, unknown> = {};
+  for (let i = 0; i < Math.floor(length / 2); i++) {
+    const first = keys[i];
+    const last = keys[length - 1 - i];
 
-  for (let i = 0; i < length / 2; i++) {
-    const key = keys[i];
-    const toSwap = keys[length - 1 - i];
-
-    swapped[key] = colors[toSwap];
-    swapped[toSwap] = colors[key];
-  }
-
-  if (length % 2 !== 0) {
-    const leftKey = keys[Math.floor(length / 2)];
-
-    swapped[leftKey] = colors[leftKey];
+    swapped[first] = color[last];
+    swapped[last] = color[first];
   }
 
   return swapped;
-}
-
-export function removeDefaultKeys<T extends Record<string, string>>(obj: T) {
-  const newObj: Record<string, string> = {};
-
-  for (const key in obj) {
-    if (key.endsWith('-DEFAULT')) {
-      newObj[key.replace('-DEFAULT', '')] = obj[key];
-      continue;
-    }
-    newObj[key] = obj[key];
-  }
-
-  return newObj;
-}
-
-export const flattenThemeObject = <T, R extends Record<string, string>>(
-  obj: T,
-) =>
-  removeDefaultKeys(
-    flatten<T, R>(obj, {
-      safe: true,
-      delimiter: '-',
-    }),
-  );
+};

@@ -1,68 +1,85 @@
 import plugin from 'tailwindcss/plugin';
-import kebabCase from 'lodash.kebabcase';
-import deepmerge from 'deepmerge';
-import Color from 'color';
-import { GistUiError } from '@gist-ui/error';
-import { semanticColors } from './semantic';
-import { flattenThemeObject } from './utils';
-import { ConfigThemes, DefaultThemeType, GistuiConfig } from './types';
-import { defaultLayout } from './layout';
+import animatePlugin from 'tailwindcss-animate';
+import { fontFamily } from 'tailwindcss/defaultTheme';
+import { genColorScale, genDarkScale, genVariables } from './utils';
+import {
+  primary,
+  secondary,
+  success,
+  warning,
+  danger,
+  info,
+  neutral,
+} from './colors';
 
-const corePlugin = (
-  themes: ConfigThemes = {},
-  defaultTheme: DefaultThemeType,
-) => {
-  const variants: { name: string; definition: string[] }[] = [];
-  const utilities: Record<string, Record<string, unknown>> = {};
-  const colorObject: Record<string, string> = {};
-  const layoutObject: Record<string, Record<string, string>> = {};
+const light = {
+  background: '0 0% 100%',
+  foreground: '240 10% 3.9%',
+  border: '240 5.9% 90%',
+  ring: '240 5% 64.9%',
+  radius: '0.5rem',
+  ...genColorScale(primary, 'primary'),
+  ...genColorScale(secondary, 'secondary'),
+  ...genColorScale(success, 'success'),
+  ...genColorScale(warning, 'warning'),
+  ...genColorScale(danger, 'danger'),
+  ...genColorScale(info, 'info'),
+  ...genColorScale(neutral, 'neutral'),
+  primary: primary[500],
+  'primary-foreground': '0 0% 100%',
+  secondary: secondary[500],
+  'secondary-foreground': '0 0% 100%',
+  success: success[500],
+  'success-foreground': '0 0% 100%',
+  warning: warning[500],
+  'warning-foreground': '0 0% 100%',
+  danger: danger[500],
+  'danger-foreground': '0 0% 100%',
+  info: info[500],
+  'info-foreground': '0 0% 100%',
+  neutral: neutral[500],
+  'neutral-foreground': '0 0% 100%',
+};
 
-  Object.entries(themes).forEach(([themeName, { extend, colors, layout }]) => {
-    let selector = `.${themeName} ,[data-theme="${themeName}"]`;
-    const scheme =
-      themeName === 'light' || themeName === 'dark' ? themeName : extend;
+const dark = {
+  background: '240 10% 3.9%',
+  foreground: '0 0% 100%',
+  border: '0 4% 35%',
+  ring: '240 5% 64.9%',
+  radius: '0.5rem',
+  ...genColorScale(genDarkScale(primary), 'primary'),
+  ...genColorScale(genDarkScale(secondary), 'secondary'),
+  ...genColorScale(genDarkScale(success), 'success'),
+  ...genColorScale(genDarkScale(warning), 'warning'),
+  ...genColorScale(genDarkScale(danger), 'danger'),
+  ...genColorScale(genDarkScale(info), 'info'),
+  ...genColorScale(genDarkScale(neutral), 'neutral'),
+  primary: primary[500],
+  'primary-foreground': '0 0% 100%',
+  secondary: secondary[500],
+  'secondary-foreground': '0 0% 100%',
+  success: success[500],
+  'success-foreground': '0 0% 100%',
+  warning: warning[500],
+  'warning-foreground': '0 0% 100%',
+  danger: danger[500],
+  'danger-foreground': '0 0% 100%',
+  info: info[500],
+  'info-foreground': '0 0% 100%',
+  neutral: neutral[500],
+  'neutral-foreground': '0 0% 100%',
+};
 
-    if (themeName === defaultTheme) {
-      selector = `:root,${selector}`;
-    }
-
-    utilities[selector] = scheme ? { 'color-scheme': scheme } : {};
-
-    variants.push({
-      name: themeName,
-      definition: [`&.${themeName}`, `&[data-theme='${themeName}']`],
-    });
-
-    const flatColors = flattenThemeObject(colors);
-
-    Object.entries(flatColors).forEach(([name, value]) => {
-      colorObject[name] = `rgb(var(--${name}) / <alpha-value>)`;
-      utilities[selector][`--${name}`] = Color(value).rgb().array().join(' ');
-    });
-
-    Object.entries(layout || {}).forEach(([key, value]) => {
-      layoutObject[key] = {};
-      const kebabCaseKey = kebabCase(key);
-
-      if (typeof value === 'object') {
-        Object.entries(value).forEach(([k, value]) => {
-          const variable = `--${kebabCaseKey}-${k}`;
-
-          layoutObject[key][k] = `var(${variable})`;
-          utilities[selector][variable] = value;
-        });
-      } else {
-        const variable = `--${kebabCaseKey}`;
-
-        layoutObject[key].DEFAULT = `var(${variable})`;
-        utilities[selector][variable] = value;
-      }
-    });
-  });
-
-  return plugin(
-    ({ addUtilities, addVariant, addBase }) => {
-      addBase({
+export const gistui = plugin(
+  ({ addUtilities, addBase }) => {
+    addBase([
+      {
+        body: {
+          background: 'var(--background)',
+          color: 'var(--foreground)',
+        },
+      },
+      {
         'input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button':
           {
             '-webkit-appearance': 'none',
@@ -71,87 +88,53 @@ const corePlugin = (
         'input[type="number"]': {
           '-moz-appearance': 'textfield',
         },
-      });
+      },
+      { ':root': genVariables(light) },
+      { '.dark': genVariables(dark) },
+    ]);
 
-      addUtilities({
-        // other utilities
-        '.disabled': {
-          opacity: '0.5',
-          pointerEvents: 'none',
+    addUtilities({
+      '.disabled': {
+        opacity: '0.5',
+        pointerEvents: 'none',
+      },
+      '.border-test': {
+        border: '1px solid red',
+      },
+    });
+  },
+  {
+    darkMode: ['class'],
+    theme: {
+      extend: {
+        colors: Object.keys(light).reduce<Record<string, string>>(
+          (acc, key) => (
+            (acc[key] = `hsl(var(--${key}) / <alpha-value>)`), acc
+          ),
+          {},
+        ),
+        borderRadius: {
+          sm: 'calc(var(--radius) - 4px)',
+          md: `calc(var(--radius) - 2px)`,
+          lg: `var(--radius)`,
+          xl: `calc(var(--radius) + 4px)`,
         },
-        '.border-test': {
-          border: '1px solid red',
+        fontFamily: {
+          sans: ["var(--font-geist-sans, 'Nunito Sans')", ...fontFamily.sans],
+          mono: ['var(--font-geist-mono)', ...fontFamily.mono],
         },
-
-        // theme utilities
-        ...utilities,
-      });
-
-      // other variants
-      addVariant('svg', '&>svg');
-
-      // theme variants
-      variants.forEach(({ name, definition }) => {
-        addVariant(name, definition);
-      });
-    },
-    {
-      theme: {
-        extend: {
-          ...layoutObject,
-          colors: {
-            ...colorObject,
-          },
-          keyframes: {
-            skeletonWave: {
-              '100%': {
-                transform: 'translateX(100%)',
-              },
+        keyframes: {
+          skeletonWave: {
+            '100%': {
+              transform: 'translateX(100%)',
             },
           },
-          animation: {
-            skeletonWave: 'skeletonWave 2s linear 0.5s infinite',
-          },
+        },
+        animation: {
+          skeletonWave: 'skeletonWave 2s linear 0.5s infinite',
         },
       },
     },
-  );
-};
-
-export const gistui = ({
-  themes: userThemes = {},
-  defaultTheme = 'light',
-}: GistuiConfig = {}) => {
-  //
-
-  if (userThemes && typeof userThemes !== 'object')
-    throw new GistUiError('plugin', 'themes must be object');
-
-  const themes: ConfigThemes = {
-    ...userThemes,
-    light: {
-      extend: 'light',
-      colors: userThemes?.light?.colors,
-      layout: userThemes?.light?.layout,
-    },
-    dark: {
-      extend: 'dark',
-      colors: userThemes?.dark?.colors,
-      layout: userThemes?.dark?.layout,
-    },
-  };
-
-  Object.entries(themes).forEach(
-    ([themeName, { extend = 'light', colors = {}, layout = {} }]) => {
-      if (colors && typeof colors === 'object') {
-        themes[themeName].colors = deepmerge(semanticColors[extend], colors);
-      }
-
-      if (layout && typeof layout === 'object') {
-        themes[themeName].layout = deepmerge(defaultLayout, layout);
-      }
-    },
-  );
-
-  return corePlugin(themes, defaultTheme);
-};
+    plugins: [animatePlugin],
+  },
+);

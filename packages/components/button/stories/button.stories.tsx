@@ -175,8 +175,8 @@ export const IconOnly = {
 export const Spinner = {
   render: Template,
   args: {
-    startContent: <Bars wrapperClass="svg:fill-current" width={20} />,
-    endContent: <Circles wrapperClass="svg:fill-current" width={20} />,
+    startContent: <Bars wrapperClass="[&>svg]:fill-current" width={20} />,
+    endContent: <Circles wrapperClass="[&>svg]:fill-current" width={20} />,
     children: 'with spinners',
   },
 };
@@ -186,7 +186,7 @@ const GroupTemplate = () => (
     <Button>Select</Button>
     <Button color="danger">Delete</Button>
     <Button color="info" isIconOnly>
-      <Circles wrapperClass="svg:fill-current" width={20} />
+      <Circles wrapperClass="[&>svg]:fill-current" width={20} />
     </Button>
   </ButtonGroup>
 );
@@ -194,8 +194,8 @@ const GroupTemplate = () => (
 export const Group = {
   render: GroupTemplate,
   args: {
-    startContent: <Bars wrapperClass="svg:fill-current" width={20} />,
-    endContent: <Circles wrapperClass="svg:fill-current" width={20} />,
+    startContent: <Bars wrapperClass="[&>svg]:fill-current" width={20} />,
+    endContent: <Circles wrapperClass="[&>svg]:fill-current" width={20} />,
     children: 'with spinners',
   },
 };
