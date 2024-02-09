@@ -1,7 +1,7 @@
 import { tv, VariantProps } from 'tailwind-variants';
 import { ClassNames } from '../types';
 
-const badge = tv({
+export const badge = tv({
   slots: {
     base: 'inline-block relative isolate',
     content: 'absolute z-50 rounded-full -translate-x-1/2 -translate-y-1/2',
@@ -71,4 +71,6 @@ const badge = tv({
 export type BadgeVariantProps = VariantProps<typeof badge>;
 export type BadgeClassNames = ClassNames<typeof badge.slots>;
 
-export { badge };
+export const badgeStyles = [
+  './node_modules/@gist-ui/theme/src/components/badge.ts',
+];

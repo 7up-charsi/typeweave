@@ -2,7 +2,7 @@ import { tv, VariantProps } from 'tailwind-variants';
 import { groupDataFocusVisible } from '../classes';
 import { ClassNames } from '../types';
 
-const checkbox = tv({
+export const checkbox = tv({
   slots: {
     base: 'inline-flex group',
     checkbox: [
@@ -62,4 +62,7 @@ const checkbox = tv({
 export type CheckboxVariantProps = VariantProps<typeof checkbox>;
 export type CheckboxClassNames = ClassNames<typeof checkbox.slots>;
 
-export { checkbox };
+export const checkboxStyles = [
+  './node_modules/@gist-ui/theme/src/components/checkbox.ts',
+  './node_modules/@gist-ui/theme/src/classes.ts',
+];

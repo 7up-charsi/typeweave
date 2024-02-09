@@ -2,7 +2,7 @@ import { VariantProps, tv } from 'tailwind-variants';
 import { ClassNames } from '../types';
 import { groupDataFocusVisible } from '../classes';
 
-const input = tv({
+export const input = tv({
   slots: {
     base: 'flex flex-col w-64 group',
     label:
@@ -55,4 +55,7 @@ const input = tv({
 export type InputVariantProps = VariantProps<typeof input>;
 export type InputClassNames = ClassNames<typeof input.slots>;
 
-export { input };
+export const inputStyles = [
+  './node_modules/@gist-ui/theme/src/components/input.ts',
+  './node_modules/@gist-ui/theme/src/classes.ts',
+];

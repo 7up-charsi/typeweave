@@ -1,6 +1,6 @@
 import { tv, VariantProps } from 'tailwind-variants';
 
-const overlay = tv({
+export const overlay = tv({
   base: 'w-screen h-screen fixed inset-0 z-50',
   variants: {
     variant: {
@@ -13,4 +13,6 @@ const overlay = tv({
 
 export type OverlayVariantProps = VariantProps<typeof overlay>;
 
-export { overlay };
+export const overlayStyles = [
+  './node_modules/@gist-ui/theme/src/components/overlay.ts',
+];

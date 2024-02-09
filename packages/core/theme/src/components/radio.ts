@@ -2,7 +2,7 @@ import { tv, VariantProps } from 'tailwind-variants';
 import { groupDataFocusVisible } from '../classes';
 import { ClassNames } from '../types';
 
-const radio = tv({
+export const radio = tv({
   slots: {
     base: 'inline-flex group',
     radio: [
@@ -62,4 +62,7 @@ const radio = tv({
 export type RadioVariantProps = VariantProps<typeof radio>;
 export type RadioClassNames = ClassNames<typeof radio.slots>;
 
-export { radio };
+export const radioStyles = [
+  './node_modules/@gist-ui/theme/src/components/radio.ts',
+  './node_modules/@gist-ui/theme/src/classes.ts',
+];

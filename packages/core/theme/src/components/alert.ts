@@ -1,6 +1,6 @@
 import { tv, VariantProps } from 'tailwind-variants';
 
-const alert = tv({
+export const alert = tv({
   base: 'inline-flex gap-4 p-4 rounded',
   variants: {
     variant: {
@@ -156,4 +156,6 @@ const alert = tv({
 
 export type AlertVariantProps = VariantProps<typeof alert>;
 
-export { alert };
+export const alertStyles = [
+  './node_modules/@gist-ui/theme/src/components/alert.ts',
+];

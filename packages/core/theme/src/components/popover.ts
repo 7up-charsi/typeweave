@@ -1,7 +1,7 @@
 import { tv, VariantProps } from 'tailwind-variants';
 import { ClassNames } from '../types';
 
-const popover = tv({
+export const popover = tv({
   slots: {
     content: 'border bg-white max-w-sm w-full rounded p-4',
     title: 'text-lg font-semibold text-neutral-800 mb-2',
@@ -23,4 +23,6 @@ const popover = tv({
 export type PopoverVariantProps = VariantProps<typeof popover>;
 export type PopoverClassNames = ClassNames<typeof popover.slots>;
 
-export { popover };
+export const popoverStyles = [
+  './node_modules/@gist-ui/theme/src/components/popover.ts',
+];

@@ -1,7 +1,7 @@
 import { tv, VariantProps } from 'tailwind-variants';
 import { ClassNames } from '../types';
 
-const select = tv({
+export const select = tv({
   slots: {
     listbox:
       'w-[--reference-width] bg-white border overflow-y-auto rounded max-h-[300px]',
@@ -27,7 +27,7 @@ const select = tv({
   },
 });
 
-const selectInput = tv({
+export const selectInput = tv({
   slots: {
     endContent: 'flex items-center',
     openIndecator: 'text-neutral',
@@ -41,4 +41,6 @@ export type SelectClassNames = ClassNames<typeof select.slots>;
 export type SelectInputVariantProps = VariantProps<typeof selectInput>;
 export type SelectInputClassNames = ClassNames<typeof selectInput.slots>;
 
-export { select, selectInput };
+export const selectStyles = [
+  './node_modules/@gist-ui/theme/src/components/select.ts',
+];

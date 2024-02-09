@@ -1,7 +1,7 @@
 import { tv, VariantProps } from 'tailwind-variants';
 import { ClassNames } from '../types';
 
-const autocomplete = tv({
+export const autocomplete = tv({
   slots: {
     listbox:
       'w-[--reference-width] bg-white border overflow-y-auto rounded max-h-[300px]',
@@ -24,7 +24,7 @@ const autocomplete = tv({
   },
 });
 
-const autocompleteInput = tv({
+export const autocompleteInput = tv({
   slots: {
     endContent: 'flex items-center',
     openIndecator: 'text-neutral',
@@ -53,4 +53,6 @@ export type AutocompleteInputClassNames = ClassNames<
   typeof autocompleteInput.slots
 >;
 
-export { autocomplete, autocompleteInput };
+export const autocompleteStyles = [
+  './node_modules/@gist-ui/theme/src/components/autocomplete.ts',
+];

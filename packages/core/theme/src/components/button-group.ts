@@ -1,6 +1,6 @@
 import { tv, VariantProps } from 'tailwind-variants';
 
-const buttonGroup = tv({
+export const buttonGroup = tv({
   base: 'inline-flex gap-0 [&>button]:rounded-none',
   variants: {
     direction: {
@@ -14,4 +14,6 @@ const buttonGroup = tv({
 
 export type ButtonGroupVariantProps = VariantProps<typeof buttonGroup>;
 
-export { buttonGroup };
+export const buttonGroupStyles = [
+  './node_modules/@gist-ui/theme/src/components/button-group.ts',
+];

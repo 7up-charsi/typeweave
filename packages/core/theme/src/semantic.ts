@@ -1,5 +1,5 @@
 import type { ThemeColors, SemanticBaseColors } from './types';
-import { swapColorValues } from './utils/object';
+import { swapColorValues } from './utils';
 import {
   zinc,
   emerald,

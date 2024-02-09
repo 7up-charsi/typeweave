@@ -2,7 +2,7 @@ import { VariantProps, tv } from 'tailwind-variants';
 import { dataFocusVisible } from '../classes';
 import { ClassNames } from '../types';
 
-const chip = tv({
+export const chip = tv({
   slots: {
     base: 'relative inline-flex items-center gap-1 px-2 rounded-full select-none max-w-full whitespace-nowrap ',
     content: 'truncate',
@@ -334,4 +334,7 @@ const chip = tv({
 export type ChipVariantProps = VariantProps<typeof chip>;
 export type ChipClassNames = ClassNames<typeof chip.slots>;
 
-export { chip };
+export const chipStyles = [
+  './node_modules/@gist-ui/theme/src/components/chip.ts',
+  './node_modules/@gist-ui/theme/src/classes.ts',
+];

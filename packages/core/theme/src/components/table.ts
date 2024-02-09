@@ -1,7 +1,7 @@
 import { tv, VariantProps } from 'tailwind-variants';
 import { ClassNames } from '../types';
 
-const table = tv({
+export const table = tv({
   slots: {
     table: '',
     thead: '',
@@ -26,4 +26,6 @@ const table = tv({
 export type TableVariantProps = VariantProps<typeof table>;
 export type TableClassNames = ClassNames<typeof table.slots>;
 
-export { table };
+export const tableStyles = [
+  './node_modules/@gist-ui/theme/src/components/table.ts',
+];

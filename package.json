@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "pnpm --filter @gist-ui/storybook dev",
+    "dev:pkg": "pnpm --filter @gist-ui/storybook dev",
+    "dev:docs": "pnpm --filter @gist-ui/docs dev",
     "typecheck": "turbo typecheck",
     "release:prepare": "changeset && pnpm clean && pnpm build",
     "release:bump": "changeset version",

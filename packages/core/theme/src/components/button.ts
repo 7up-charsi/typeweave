@@ -1,7 +1,7 @@
 import { VariantProps, tv } from 'tailwind-variants';
 import { dataFocusVisible } from '../classes';
 
-const button = tv({
+export const button = tv({
   base: [
     'z-0 group relative inline-flex items-center justify-center box-border rounded appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transition-colors outline-none',
     ...dataFocusVisible,
@@ -296,4 +296,7 @@ const button = tv({
 
 export type ButtonVariantProps = VariantProps<typeof button>;
 
-export { button };
+export const buttonStyles = [
+  './node_modules/@gist-ui/theme/src/components/button.ts',
+  './node_modules/@gist-ui/theme/src/classes.ts',
+];

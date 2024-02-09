@@ -1,7 +1,7 @@
 import { tv, VariantProps } from 'tailwind-variants';
 import { ClassNames } from '../types';
 
-const menu = tv({
+export const menu = tv({
   slots: {
     menu: 'min-w-[150px] bg-white border rounded-md py-2 outline-none',
     item: 'px-2 h-8 cursor-pointer select-none flex items-center gap-1 text-neutral-800 outline-none data-[disabled=true]:cursor-default data-[disabled=true]:opacity-50 data-[focused=true]:bg-neutral-200 relative [--rippleBg:theme(colors.neutral-800/20%)] overflow-hidden',
@@ -25,4 +25,6 @@ const menu = tv({
 export type MenuVariantProps = VariantProps<typeof menu>;
 export type MenuClassNames = ClassNames<typeof menu.slots>;
 
-export { menu };
+export const menuStyles = [
+  './node_modules/@gist-ui/theme/src/components/menu.ts',
+];

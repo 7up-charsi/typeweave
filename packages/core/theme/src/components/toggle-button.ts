@@ -1,7 +1,7 @@
 import { tv, VariantProps } from 'tailwind-variants';
 import { ClassNames } from '../types';
 
-const toggleButton = tv({
+export const toggleButton = tv({
   slots: { button: '' },
   variants: {
     variant: {
@@ -98,4 +98,6 @@ const toggleButton = tv({
 export type ToggleButtonVariantProps = VariantProps<typeof toggleButton>;
 export type ToggleButtonClassNames = ClassNames<typeof toggleButton.slots>;
 
-export { toggleButton };
+export const toggleButtonStyles = [
+  './node_modules/@gist-ui/theme/src/components/toggle-button.ts',
+];

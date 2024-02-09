@@ -4,7 +4,7 @@ import deepmerge from 'deepmerge';
 import Color from 'color';
 import { GistUiError } from '@gist-ui/error';
 import { semanticColors } from './semantic';
-import { flattenThemeObject } from './utils/object';
+import { flattenThemeObject } from './utils';
 import { ConfigThemes, DefaultThemeType, GistuiConfig } from './types';
 import { defaultLayout } from './layout';
 

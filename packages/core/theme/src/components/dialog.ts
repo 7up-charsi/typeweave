@@ -1,7 +1,7 @@
 import { tv, VariantProps } from 'tailwind-variants';
 import { ClassNames } from '../types';
 
-const dialog = tv({
+export const dialog = tv({
   slots: {
     content:
       'fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-50 flex flex-col bg-white max-w-md w-full outline-none overflow-hidden rounded p-4',
@@ -25,4 +25,6 @@ const dialog = tv({
 export type DialogVariantProps = VariantProps<typeof dialog>;
 export type DialogClassNames = ClassNames<typeof dialog.slots>;
 
-export { dialog };
+export const dialogStyles = [
+  './node_modules/@gist-ui/theme/src/components/dialog.ts',
+];

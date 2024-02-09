@@ -1,6 +1,6 @@
 import { tv, VariantProps } from 'tailwind-variants';
 
-const skeleton = tv({
+export const skeleton = tv({
   base: 'bg-neutral-200 overflow-hidden',
   variants: {
     variant: {
@@ -18,4 +18,6 @@ const skeleton = tv({
 
 export type SkeletonVariantProps = VariantProps<typeof skeleton>;
 
-export { skeleton };
+export const skeletonStyles = [
+  './node_modules/@gist-ui/theme/src/components/skeleton.ts',
+];

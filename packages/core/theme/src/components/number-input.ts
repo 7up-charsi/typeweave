@@ -1,7 +1,7 @@
 import { VariantProps, tv } from 'tailwind-variants';
 import { ClassNames } from '../types';
 
-const numberInput = tv({
+export const numberInput = tv({
   slots: {
     base: 'h-7 w-6 flex flex-col items-center justify-center opacity-0 group-data-[hovered=true]:opacity-100 group-data-[focused=true]:opacity-100 group-data-[focus-visible=true]:opacity-100 transition-opacity',
     button: 'min-w-0 min-h-0 px-0 w-full grow cursor-pointer',
@@ -12,4 +12,6 @@ const numberInput = tv({
 export type NumberInputVariantProps = VariantProps<typeof numberInput>;
 export type NumberInputClassNames = ClassNames<typeof numberInput.slots>;
 
-export { numberInput };
+export const numberInputStyles = [
+  './node_modules/@gist-ui/theme/src/components/number-input.ts',
+];
