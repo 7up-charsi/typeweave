@@ -1,11 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-html.dark {
-  background: #333333;
-}
-
-html.light {
-  background: #ffffff;
-}

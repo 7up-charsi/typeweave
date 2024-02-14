@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import logo from '@/app/_assets/logo.png';
 import Link from 'next/link';
+import { ThemeSwitcher } from '@gist-ui/theme-switcher';
 
 const links = [
   { title: 'docs', href: '/get-started' },
@@ -10,13 +11,13 @@ const links = [
 export const Navbar = () => {
   return (
     <div className="w-full h-16 border-b flex items-center px-12">
-      <Link href="/" className="inline-block leading-none">
+      <Link href="/" className="inline-block leading-none mr-10">
         <Image
           src={logo}
           alt="webbu/ui logo"
           width={120}
           height={120}
-          className="inline-block mr-10"
+          className="inline-block"
         />
       </Link>
 
@@ -39,17 +40,20 @@ export const Navbar = () => {
 
       {/* search docs placeholder input */}
       <div
-        className="mr-5 w-52 h-9 border px-2 rounded flex items-center text-neutral-400"
+        className="mr-5 w-52 h-9 border px-2 rounded flex items-center cursor-pointer transition-colors hover:border-neutral-400 group select-none"
         tabIndex={0}
         aria-label="press to open command palette and search docs"
       >
-        <span className="text-sm tracking-wide">Search docs</span>
+        <span className="text-sm text-neutral-400 tracking-wide">
+          Search docs
+        </span>
         <div className="grow"></div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 32 32"
           width={17}
           height={17}
+          className="text-neutral-400 group-hover:text-neutral-500"
         >
           <g>
             <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
@@ -61,23 +65,7 @@ export const Navbar = () => {
         </svg>
       </div>
 
-      {/* theme mode */}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        width={25}
-        height={25}
-        className="mr-5 text-neutral-500 hover:text-neutral-700 transition-colors"
-      >
-        <path
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M12 3v1m0 16v1m-8-9H3m3.314-5.686L5.5 5.5m12.186.814L18.5 5.5M6.314 17.69l-.814.81m12.186-.81l.814.81M21 12h-1m-4 0a4 4 0 11-8 0 4 4 0 018 0z"
-        ></path>
-      </svg>
+      <ThemeSwitcher size="sm" className="mr-5" />
 
       {/* github link */}
       <Link
