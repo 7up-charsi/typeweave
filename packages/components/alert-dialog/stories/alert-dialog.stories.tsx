@@ -18,12 +18,13 @@ const Template = () => (
     </AlertDialog.Trigger>
 
     <AlertDialog.Portal>
-      <AlertDialog.Overlay variant="blur" />
+      <AlertDialog.Overlay />
 
       <AlertDialog.Content>
-        <AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
+        <AlertDialog.Title>Lorem ipsum dolor, sit amet?</AlertDialog.Title>
         <AlertDialog.Description>
-          You can not undo this action afterwards
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo
+          quasi
         </AlertDialog.Description>
         <AlertDialog.Actions>
           <AlertDialog.Close>

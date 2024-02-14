@@ -10,8 +10,9 @@ import { createPortal } from 'react-dom';
 import { FocusTrap, FocusScope } from '@gist-ui/focus-trap';
 import { createContextScope } from '@gist-ui/context';
 import { useIsDisabled } from '@gist-ui/use-is-disabled';
-import { useEffect, useId, useRef } from 'react';
+import { useEffect, useId, useMemo, useRef } from 'react';
 import { VisuallyHidden } from '@gist-ui/visually-hidden';
+import { DialogVariantProps, dialog } from '@gist-ui/theme';
 
 type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
 
@@ -32,6 +33,9 @@ const Root_Name = 'Dialog.Root';
 
 const [RootProvider, useRootContext] =
   createContextScope<RootContext>(Root_Name);
+
+const [StylesProvider, useStylesContext] =
+  createContextScope<ReturnType<typeof dialog>>(Root_Name);
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -259,9 +263,10 @@ export const Title = (props: TitleProps) => {
   const { children, className } = props;
 
   const rootContext = useRootContext(Title_Name);
+  const styles = useStylesContext(Description_Name);
 
   return (
-    <div id={rootContext.titleId} className={className}>
+    <div id={rootContext.titleId} className={styles.title({ className })}>
       {children}
     </div>
   );
@@ -282,9 +287,13 @@ export const Description = (props: DescriptionProps) => {
   const { children, className } = props;
 
   const rootContext = useRootContext(Description_Name);
+  const styles = useStylesContext(Description_Name);
 
   return (
-    <div id={rootContext.descriptionId} className={className}>
+    <div
+      id={rootContext.descriptionId}
+      className={styles.description({ className })}
+    >
       {children}
     </div>
   );
@@ -296,7 +305,7 @@ Description.displayName = 'gist-ui.' + Description_Name;
 
 const Content_Name = 'Dialog.Content';
 
-export interface ContentProps {
+export interface ContentProps extends DialogVariantProps {
   children?: React.ReactNode;
   className?: string;
   noA11yTitle?: boolean;
@@ -304,7 +313,7 @@ export interface ContentProps {
 }
 
 export const Content = (props: ContentProps) => {
-  const { children, className, noA11yDescription, noA11yTitle } = props;
+  const { children, className, noA11yDescription, noA11yTitle, shadow } = props;
 
   const rootContext = useRootContext(Content_Name);
 
@@ -317,39 +326,43 @@ export const Content = (props: ContentProps) => {
     },
   });
 
+  const styles = useMemo(() => dialog({ shadow }), [shadow]);
+
   return (
-    <FocusTrap
-      loop
-      trapped
-      scope={rootContext.scope}
-      isDisabled={!rootContext.isOpen}
-    >
-      <div
-        ref={setOutsideEle}
-        role="dialog"
-        aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
-        aria-describedby={
-          noA11yDescription ? undefined : rootContext.descriptionId
-        }
-        aria-modal={true}
-        id={rootContext.contentId}
-        className={className}
+    <StylesProvider {...styles}>
+      <FocusTrap
+        loop
+        trapped
+        scope={rootContext.scope}
+        isDisabled={!rootContext.isOpen}
       >
-        <VisuallyHidden>
-          <button onPointerUp={() => rootContext.handleClose('virtual')}>
-            close
-          </button>
-        </VisuallyHidden>
+        <div
+          ref={setOutsideEle}
+          role="dialog"
+          aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
+          aria-describedby={
+            noA11yDescription ? undefined : rootContext.descriptionId
+          }
+          aria-modal={true}
+          id={rootContext.contentId}
+          className={styles.content({ className })}
+        >
+          <VisuallyHidden>
+            <button onPointerUp={() => rootContext.handleClose('virtual')}>
+              close
+            </button>
+          </VisuallyHidden>
 
-        {children}
+          {children}
 
-        <VisuallyHidden>
-          <button onPointerUp={() => rootContext.handleClose('virtual')}>
-            close
-          </button>
-        </VisuallyHidden>
-      </div>
-    </FocusTrap>
+          <VisuallyHidden>
+            <button onPointerUp={() => rootContext.handleClose('virtual')}>
+              close
+            </button>
+          </VisuallyHidden>
+        </div>
+      </FocusTrap>
+    </StylesProvider>
   );
 };
 

@@ -1,34 +1,29 @@
 import { VariantProps, tv } from 'tailwind-variants';
 import { ClassNames } from '../types';
-import { groupDataFocusVisible } from '../classes';
 
 export const input = tv({
   slots: {
     base: 'flex flex-col w-64 group',
     label:
-      'first-letter:uppercase cursor-pointer self-start px-1 pb-1 text-base text-neutral leading-none group-data-[focused=true]:text-neutral-700',
-    inputWrapper: [
+      'first-letter:uppercase cursor-pointer self-start px-1 pb-1 text-base leading-none text-muted-500 dark:text-muted-400 group-data-[focused=true]:text-muted-700 dark:group-data-[focused=true]:text-muted-200',
+    inputWrapper:
       'w-full relative flex items-center gap-2 rounded px-3 cursor-text',
-      ...groupDataFocusVisible,
-    ],
     input:
-      'appearance-none bg-transparent outline-none grow w-0 text-neutral-700 placeholder:text-neutral',
-
+      'appearance-none bg-transparent outline-none grow w-0 text-muted-700 dark:text-muted-200 placeholder:text-muted-500 dark:placeholder:text-muted-400',
     helperText:
-      'first-letter:uppercase px-1 pt-1 text-sm leading-none text-neutral',
+      'first-letter:uppercase px-1 pt-1 text-sm leading-none text-muted-600 dark:text-muted-300',
   },
   variants: {
     variant: {
       filled: {
         inputWrapper:
-          'bg-neutral-200/60 group-data-[hovered=true]:group-data-[focused=false]:bg-neutral-200/80 border border-transparent group-data-[focused=true]:border-neutral-400',
+          'bg-muted-100 dark:bg-muted-700 group-data-[hovered=true]:group-data-[focused=false]:bg-muted-200 dark:group-data-[hovered=true]:group-data-[focused=false]:bg-muted-600 border border-transparent group-data-[focused=true]:border-muted-400',
       },
       border: {
         inputWrapper:
-          'bg-transparent border border-neutral-300 group-data-[hovered=true]:border-neutral-400 group-data-[focused=true]:border-neutral-400',
+          'bg-transparent border border-muted-300 dark:border-muted-500 group-data-[hovered=true]:border-muted-400 group-data-[focused=true]:border-muted-400',
       },
     },
-
     size: {
       sm: { inputWrapper: 'h-10' },
       md: { inputWrapper: 'h-12' },
@@ -38,18 +33,17 @@ export const input = tv({
     required: {
       true: {
         label:
-          "relative after:absolute after:content-['*'] after:text-danger after:ml-2",
+          "relative after:absolute after:content-['*'] after:text-danger-700 dark:after:text-danger-300 after:ml-2",
       },
     },
     error: {
       true: {
-        label: 'text-danger-700',
-        inputWrapper: 'border-danger',
-        helperText: 'text-danger',
+        label:
+          'text-danger-700 dark:text-danger-300 group-data-[focused=true]:text-danger-700 dark:group-data-[focused=true]:text-danger-300',
+        helperText: 'text-danger-700 dark:text-danger-300',
       },
     },
   },
-  compoundVariants: [],
 });
 
 export type InputVariantProps = VariantProps<typeof input>;

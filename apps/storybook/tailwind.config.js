@@ -7,5 +7,5 @@ export default {
     './.storybook/**/*.{ts,tsx}',
     ...fullLibraryStyles,
   ],
-  plugins: [gistui],
+  plugins: [gistui()],
 };

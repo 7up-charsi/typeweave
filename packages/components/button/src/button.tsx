@@ -46,7 +46,7 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
       className,
       size = 'md',
       variant = 'flat',
-      color = 'neutral',
+      color = 'default',
     } = props;
 
     const styles = buttonGroup({ direction, className });
@@ -168,7 +168,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       size: size ?? groupContext?.size ?? 'md',
       variant: variant ?? groupContext?.variant ?? 'flat',
-      color: color ?? groupContext?.color ?? 'neutral',
+      color: color ?? groupContext?.color ?? 'default',
       fullWidth: fullWidth ?? false,
       isInGroup: !!groupContext,
     });

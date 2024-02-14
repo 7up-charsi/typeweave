@@ -110,7 +110,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     <div
       ref={baseRef}
       className={styles.base({ className: classNames?.base })}
-      data-focused={!isFocusVisible && isFocused}
+      data-focused={isFocused}
       data-focus-visible={isFocusVisible && isFocused}
       data-hovered={isHovered}
       data-disabled={isDisabled}
