@@ -75,11 +75,9 @@ export const gistui = plugin(
     addBase([
       {
         body: {
-          background: 'var(--background)',
+          'background-color': 'var(--background)',
           color: 'var(--foreground)',
         },
-      },
-      {
         'input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button':
           {
             '-webkit-appearance': 'none',
@@ -89,22 +87,30 @@ export const gistui = plugin(
           '-moz-appearance': 'textfield',
         },
       },
-      { ':root': genVariables(light) },
-      { '.dark': genVariables(dark) },
+      { ':root, :root[data-theme="light"]': genVariables(light) },
+      {
+        ':root.dark, :root[data-theme="dark"]': {
+          'color-scheme': 'dark',
+          ...genVariables(dark),
+        },
+      },
     ]);
 
-    addUtilities({
-      '.disabled': {
-        opacity: '0.5',
-        pointerEvents: 'none',
+    addUtilities([
+      {
+        '.disabled': {
+          opacity: '0.5',
+          pointerEvents: 'none',
+        },
+        '.border-test': {
+          border: '1px solid red',
+        },
       },
-      '.border-test': {
-        border: '1px solid red',
-      },
-    });
+    ]);
   },
   {
-    darkMode: ['class'],
+    darkMode: 'class',
+    safelist: ['dark'],
     theme: {
       extend: {
         colors: Object.keys(light).reduce<Record<string, string>>(

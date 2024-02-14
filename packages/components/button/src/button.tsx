@@ -31,7 +31,7 @@ interface GroupContext extends ButtonVariantProps {}
 const Context = createContext<GroupContext | null>(null);
 
 export interface ButtonGroupProps
-  extends Omit<ButtonVariantProps, 'fullWidth'>,
+  extends Pick<ButtonVariantProps, 'isDisabled' | 'color' | 'size' | 'variant'>,
     ButtonGroupVariantProps {
   children?: React.ReactNode;
   className?: ClassValue;
@@ -42,7 +42,6 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
     const {
       children,
       isDisabled = false,
-      isIconOnly = false,
       direction = 'horizontal',
       className,
       size = 'md',
@@ -57,7 +56,6 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
         value={{
           isDisabled,
           color,
-          isIconOnly,
           size,
           variant,
         }}
@@ -108,7 +106,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       rippleDuration = isIconOnly ? 450 : 500,
       rippleTimingFunction,
       rippleCompletedFactor,
-      isDisabled: _isDisabled = false,
+      isDisabled: _isDisabled,
       allowTextSelectionOnPress,
       preventFocusOnPress,
       shouldCancelOnPointerExit,
@@ -164,26 +162,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         );
     }, [ariaLabel, ariaLabelledby, isIconOnly]);
 
-    const styles = button(
-      groupContext
-        ? {
-            className,
-            isDisabled: isDisabled ?? groupContext.isDisabled,
-            color: color ?? groupContext.color,
-            isIconOnly: isIconOnly ?? groupContext.isIconOnly,
-            size: size ?? groupContext.size,
-            variant: variant ?? groupContext.variant,
-          }
-        : {
-            isDisabled,
-            isIconOnly,
-            className,
-            size: size ?? 'md',
-            variant: variant ?? 'flat',
-            color: color ?? 'neutral',
-            fullWidth: fullWidth ?? false,
-          },
-    );
+    const styles = button({
+      isDisabled: isDisabled ?? groupContext?.isDisabled ?? false,
+      isIconOnly,
+      className,
+      size: size ?? groupContext?.size ?? 'md',
+      variant: variant ?? groupContext?.variant ?? 'flat',
+      color: color ?? groupContext?.color ?? 'neutral',
+      fullWidth: fullWidth ?? false,
+    });
 
     return (
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>

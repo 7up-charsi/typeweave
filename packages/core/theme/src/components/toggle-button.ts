@@ -23,37 +23,37 @@ export const toggleButton = tv({
     {
       variant: 'border',
       color: 'primary',
-      className: { button: 'data-[selected=true]:bg-primary-100' },
+      className: { button: 'data-[selected=true]:bg-primary-200' },
     },
     {
       variant: 'border',
       color: 'secondary',
-      className: { button: 'data-[selected=true]:bg-secondary-100' },
+      className: { button: 'data-[selected=true]:bg-secondary-200' },
     },
     {
       variant: 'border',
       color: 'success',
-      className: { button: 'data-[selected=true]:bg-success-100' },
+      className: { button: 'data-[selected=true]:bg-success-200' },
     },
     {
       variant: 'border',
       color: 'warning',
-      className: { button: 'data-[selected=true]:bg-warning-100' },
+      className: { button: 'data-[selected=true]:bg-warning-200' },
     },
     {
       variant: 'border',
       color: 'info',
-      className: { button: 'data-[selected=true]:bg-info-100' },
+      className: { button: 'data-[selected=true]:bg-info-200' },
     },
     {
       variant: 'border',
       color: 'danger',
-      className: { button: 'data-[selected=true]:bg-danger-100' },
+      className: { button: 'data-[selected=true]:bg-danger-200' },
     },
     {
       variant: 'border',
       color: 'neutral',
-      className: { button: 'data-[selected=true]:bg-neutral-100' },
+      className: { button: 'data-[selected=true]:bg-neutral-200' },
     },
 
     // flat
