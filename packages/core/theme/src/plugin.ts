@@ -1,73 +1,53 @@
 import plugin from 'tailwindcss/plugin';
 import animatePlugin from 'tailwindcss-animate';
 import { fontFamily } from 'tailwindcss/defaultTheme';
-import { genColorScale, genDarkScale, genVariables } from './utils';
-import {
-  primary,
-  secondary,
-  success,
-  warning,
-  danger,
-  info,
-  neutral,
-} from './colors';
+import { genColorScale, genColors } from './utils';
+import * as colors from './colors';
+
+const primary = genColorScale(colors.violet, 'violet', 'primary');
+const secondary = genColorScale(colors.pink, 'pink', 'secondary');
+const success = genColorScale(colors.green, 'green', 'success');
+const warning = genColorScale(colors.amber, 'amber', 'warning');
+const danger = genColorScale(colors.red, 'red', 'danger');
+const info = genColorScale(colors.blue, 'blue', 'info');
+const neutral = genColorScale(colors.gray, 'gray', 'neutral');
+const overlay = genColorScale(colors.blackA, 'blackA', 'overlay');
+
+const primaryDark = genColorScale(colors.violetDark, 'violet', 'primary');
+const secondaryDark = genColorScale(colors.pinkDark, 'pink', 'secondary');
+const successDark = genColorScale(colors.greenDark, 'green', 'success');
+const warningDark = genColorScale(colors.amberDark, 'amber', 'warning');
+const dangerDark = genColorScale(colors.redDark, 'red', 'danger');
+const infoDark = genColorScale(colors.blueDark, 'blue', 'info');
+const neutralDark = genColorScale(colors.grayDark, 'gray', 'neutral');
+const overlayDark = genColorScale(colors.whiteA, 'whiteA', 'overlay');
 
 const light = {
-  background: '0 0% 100%',
-  foreground: '240 10% 3.9%',
-  border: '240 5.9% 90%',
-  ring: '240 5% 64.9%',
+  background: neutral.neutral1,
+  foreground: neutral.neutral11,
+  ring: neutral.neutral7,
   radius: '0.5rem',
-  ...genColorScale(primary, 'primary'),
-  ...genColorScale(secondary, 'secondary'),
-  ...genColorScale(success, 'success'),
-  ...genColorScale(warning, 'warning'),
-  ...genColorScale(danger, 'danger'),
-  ...genColorScale(info, 'info'),
-  ...genColorScale(neutral, 'neutral'),
-  primary: primary[500],
-  'primary-foreground': '0 0% 100%',
-  secondary: secondary[500],
-  'secondary-foreground': '0 0% 100%',
-  success: success[500],
-  'success-foreground': '0 0% 100%',
-  warning: warning[500],
-  'warning-foreground': '0 0% 100%',
-  danger: danger[500],
-  'danger-foreground': '0 0% 100%',
-  info: info[500],
-  'info-foreground': '0 0% 100%',
-  neutral: neutral[500],
-  'neutral-foreground': '0 0% 100%',
+  ...primary,
+  ...secondary,
+  ...success,
+  ...warning,
+  ...danger,
+  ...info,
+  ...neutral,
 };
 
 const dark = {
-  background: '240 10% 3.9%',
-  foreground: '0 0% 100%',
-  border: '0 4% 35%',
-  ring: '240 5% 64.9%',
+  background: neutralDark.neutral8,
+  foreground: neutralDark.neutral12,
+  ring: neutralDark.neutral7,
   radius: '0.5rem',
-  ...genColorScale(genDarkScale(primary), 'primary'),
-  ...genColorScale(genDarkScale(secondary), 'secondary'),
-  ...genColorScale(genDarkScale(success), 'success'),
-  ...genColorScale(genDarkScale(warning), 'warning'),
-  ...genColorScale(genDarkScale(danger), 'danger'),
-  ...genColorScale(genDarkScale(info), 'info'),
-  ...genColorScale(genDarkScale(neutral), 'neutral'),
-  primary: primary[500],
-  'primary-foreground': '0 0% 100%',
-  secondary: secondary[500],
-  'secondary-foreground': '0 0% 100%',
-  success: success[500],
-  'success-foreground': '0 0% 100%',
-  warning: warning[500],
-  'warning-foreground': '0 0% 100%',
-  danger: danger[500],
-  'danger-foreground': '0 0% 100%',
-  info: info[500],
-  'info-foreground': '0 0% 100%',
-  neutral: neutral[500],
-  'neutral-foreground': '0 0% 100%',
+  ...primaryDark,
+  ...secondaryDark,
+  ...successDark,
+  ...warningDark,
+  ...dangerDark,
+  ...infoDark,
+  ...neutralDark,
 };
 
 export const gistui = plugin(
@@ -75,8 +55,8 @@ export const gistui = plugin(
     addBase([
       {
         body: {
-          'background-color': 'var(--background)',
-          color: 'var(--foreground)',
+          'background-color': 'hsl(var(--background))',
+          color: 'hsl(var(--foreground))',
         },
         'input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button':
           {
@@ -87,11 +67,13 @@ export const gistui = plugin(
           '-moz-appearance': 'textfield',
         },
       },
-      { ':root, :root[data-theme="light"]': genVariables(light) },
+      {
+        ':root, :root[data-theme="light"]': genColors({ ...light, ...overlay }),
+      },
       {
         ':root.dark, :root[data-theme="dark"]': {
           'color-scheme': 'dark',
-          ...genVariables(dark),
+          ...genColors({ ...dark, ...overlayDark }),
         },
       },
     ]);
@@ -113,12 +95,27 @@ export const gistui = plugin(
     safelist: ['dark'],
     theme: {
       extend: {
-        colors: Object.keys(light).reduce<Record<string, string>>(
-          (acc, key) => (
-            (acc[key] = `hsl(var(--${key}) / <alpha-value>)`), acc
+        colors: {
+          ...Object.keys(light).reduce<Record<string, string>>(
+            (acc, key) => (
+              (acc[key] = `hsl(var(--${key}) / <alpha-value>)`), acc
+            ),
+            {},
           ),
-          {},
-        ),
+
+          overlay1: 'var(--overlay1)',
+          overlay2: 'var(--overlay2)',
+          overlay3: 'var(--overlay3)',
+          overlay4: 'var(--overlay4)',
+          overlay5: 'var(--overlay5)',
+          overlay6: 'var(--overlay6)',
+          overlay7: 'var(--overlay7)',
+          overlay8: 'var(--overlay8)',
+          overlay9: 'var(--overlay9)',
+          overlay10: 'var(--overlay10)',
+          overlay11: 'var(--overlay11)',
+          overlay12: 'var(--overlay12)',
+        },
         borderRadius: {
           sm: 'calc(var(--radius) - 4px)',
           md: `calc(var(--radius) - 2px)`,

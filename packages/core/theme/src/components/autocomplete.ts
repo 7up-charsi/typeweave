@@ -4,14 +4,15 @@ import { ClassNames } from '../types';
 export const autocomplete = tv({
   slots: {
     listbox:
-      'w-[--reference-width] bg-white border overflow-y-auto rounded max-h-[300px]',
+      'w-[--reference-width] bg-neutral1 border border-neutral6 overflow-y-auto rounded max-h-[300px]',
     option:
-      'h-10 flex items-center px-2 select-none truncate cursor-pointer data-[disabled=true]:opacity-50 data-[selected=true]:bg-info-200 data-[focused=true]:data-[selected=false]:bg-neutral-200 data-[focused=true]:data-[selected=true]:bg-info-300 data-[hovered=true]:data-[selected=false]:bg-neutral-200 data-[hovered=true]:data-[selected=true]:bg-info-300 text-neutral-800 ',
-    noOptions: 'h-10 flex items-center justify-center capitalize text-neutral',
-    loading: 'h-10 flex items-center justify-center capitalize text-neutral',
+      'h-10 flex items-center px-2 select-none truncate cursor-pointer data-[disabled=true]:opacity-50 data-[selected=true]:bg-neutral5 data-[focused=true]:data-[selected=false]:bg-neutral4 data-[focused=true]:data-[selected=true]:bg-neutral5 data-[hovered=true]:data-[selected=false]:bg-neutral4 data-[hovered=true]:data-[selected=true]:bg-neutral5 text-neutral11',
+    noOptions:
+      'h-10 flex items-center justify-center capitalize text-neutral11',
+    loading: 'h-10 flex items-center justify-center capitalize text-neutral11',
     group: 'relative isolate',
     groupHeader:
-      'sticky top-0 bg-white px-2 py-2 z-50 text-sm font-medium text-neutral-600',
+      'sticky top-0 bg-neutral2 px-2 py-2 z-50 text-sm font-semibold text-neutral11',
     groupItems: '',
   },
   variants: {
@@ -27,8 +28,8 @@ export const autocomplete = tv({
 export const autocompleteInput = tv({
   slots: {
     endContent: 'flex items-center',
-    openIndecator: 'text-neutral',
-    clearButton: 'text-neutral',
+    openIndecator: 'text-neutral11',
+    clearButton: 'text-neutral11',
     inputWrapper: '',
     input: '',
   },

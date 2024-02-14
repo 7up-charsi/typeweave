@@ -73,7 +73,7 @@ ButtonGroup.displayName = 'gist-ui.ButtonGroup';
 // *-*-*-*-* Button *-*-*-*-*
 
 export interface ButtonProps
-  extends ButtonVariantProps,
+  extends Omit<ButtonVariantProps, 'isInGroup'>,
     Omit<
       ButtonHTMLAttributes<HTMLButtonElement>,
       'color' | 'className' | 'disabled'
@@ -170,6 +170,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant: variant ?? groupContext?.variant ?? 'flat',
       color: color ?? groupContext?.color ?? 'neutral',
       fullWidth: fullWidth ?? false,
+      isInGroup: !!groupContext,
     });
 
     return (

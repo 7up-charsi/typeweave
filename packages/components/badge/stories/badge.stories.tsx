@@ -66,7 +66,7 @@ const Template = (args) => (
       </Badge>
 
       <Badge {...args} content={100} max={99} overlap="circular" variant="dot">
-        <Button variant="flat" isIconOnly>
+        <Button variant="flat" isIconOnly aria-label="mail">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"

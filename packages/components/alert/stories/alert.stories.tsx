@@ -5,29 +5,27 @@ import { Alert } from '../src';
 const meta = {
   title: 'Components/Alert',
   component: Alert,
-  args: { ...alert.defaultVariants, color: undefined },
-  argTypes: {
-    variant: {
-      control: { type: 'select' },
-      options: Object.keys(alert.variants.variant),
-      if: { arg: 'variant', exists: true },
-    },
-  },
 };
 
 export default meta;
 
-const Template = (args) => (
+const Template = () => (
   <>
-    {Object.keys(alert.variants.color).map((color) => (
-      <Fragment key={color}>
-        <Alert {...args} color={color}>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim ab
-          fugiat commodi
-        </Alert>
+    {Object.keys(alert.variants.variant).map((variant) => (
+      <div key={variant} className="flex flex-col gap-4 first:mt-0 mt-4">
+        <span className="text-foreground pl-3 uppercase font-bold place-self-start text-sm border-l-2 border-neutral9">
+          {variant}
+        </span>
 
-        <div className="h-5" />
-      </Fragment>
+        {Object.keys(alert.variants.color).map((color) => (
+          <Fragment key={color + variant}>
+            <Alert variant={variant as never} color={color as never}>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim ab
+              fugiat commodi
+            </Alert>
+          </Fragment>
+        ))}
+      </div>
     ))}
   </>
 );
