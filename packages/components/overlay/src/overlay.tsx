@@ -5,12 +5,13 @@ import { forwardRef } from 'react';
 
 export interface OverlayProps extends OverlayVariantProps {
   children?: React.ReactNode;
+  className?: string;
 }
 
 const Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
-  const { children, variant = 'opaque' } = props;
+  const { children, className } = props;
 
-  const styles = overlay({ variant });
+  const styles = overlay({ className });
 
   return (
     <div ref={ref} className={styles}>

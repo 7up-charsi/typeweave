@@ -25,88 +25,95 @@ export const alert = tv({
     {
       variant: 'solid',
       color: 'success',
-      class: 'bg-success9 text-success1',
+      class: 'bg-success-500 text-white',
     },
     {
       variant: 'solid',
       color: 'info',
-      class: 'bg-info9 text-info1',
+      class: 'bg-info-500 text-white',
     },
     {
       variant: 'solid',
       color: 'warning',
-      class: 'bg-warning9 text-warning12',
+      class: 'bg-warning-500 text-white',
     },
     {
       variant: 'solid',
       color: 'danger',
-      class: 'bg-danger9 text-danger1',
+      class: 'bg-danger-500 text-white',
     },
 
     // color / flat
     {
       variant: 'flat',
       color: 'success',
-      class: 'bg-success3 text-success11',
+      class:
+        'bg-success-100 text-success-700 dark:bg-success-900 dark:text-success-200',
     },
     {
       variant: 'flat',
       color: 'info',
-      class: 'bg-info3 text-info11',
+      class: 'bg-info-100 text-info-700 dark:bg-info-900 dark:text-info-200',
     },
     {
       variant: 'flat',
       color: 'warning',
-      class: 'bg-warning3 text-warning11',
+      class:
+        'bg-warning-100 text-warning-700 dark:bg-warning-900 dark:text-warning-200',
     },
     {
       variant: 'flat',
       color: 'danger',
-      class: 'bg-danger3 text-danger11',
+      class:
+        'bg-danger-100 text-danger-700 dark:bg-danger-900 dark:text-danger-200',
     },
 
     // color / text
     {
       variant: 'text',
       color: 'success',
-      class: 'text-success11',
+      class: 'text-success-700 dark:text-success-200',
     },
     {
       variant: 'text',
       color: 'info',
-      class: 'text-info11',
+      class: 'text-info-700 dark:text-info-200',
     },
     {
       variant: 'text',
       color: 'warning',
-      class: 'text-warning11',
+      class: 'text-warning-700 dark:text-warning-200',
     },
     {
       variant: 'text',
       color: 'danger',
-      class: 'text-danger11',
+      class: 'text-danger-700 dark:text-danger-200',
     },
 
     // color / border
     {
       variant: 'border',
       color: 'success',
-      class: 'border-success6 text-success11',
+      class:
+        'border-success-300 text-success-700 dark:border-success-800 dark:text-success-200',
     },
     {
       variant: 'border',
       color: 'info',
-      class: 'border-info6 text-info11',
+      class:
+        'border-info-300 text-info-700 dark:border-info-800 dark:text-info-200',
     },
     {
       variant: 'border',
       color: 'warning',
-      class: 'border-warning6 text-warning11',
+      class:
+        'border-warning-300 text-warning-700 dark:border-warning-800 dark:text-warning-200',
     },
     {
       variant: 'border',
       color: 'danger',
-      class: 'border-danger6 text-danger11',
+      class:
+        'border-danger-300 text-danger-700 dark:border-danger-800 dark:text-danger-200',
     },
   ],
 });

@@ -178,6 +178,33 @@ export const Multiple = {
   render: MultipleTemplate,
 };
 
+const NoOptionTemplate = () => (
+  <Autocomplete
+    options={[]}
+    renderInput={(props) => (
+      <Input label="top 100 movies" {...mapInputProps(props)} />
+    )}
+  />
+);
+
+export const NoOptions = {
+  render: NoOptionTemplate,
+};
+
+const LoadingTemplate = () => (
+  <Autocomplete
+    options={[]}
+    loading
+    renderInput={(props) => (
+      <Input label="top 100 movies" {...mapInputProps(props)} />
+    )}
+  />
+);
+
+export const Loading = {
+  render: LoadingTemplate,
+};
+
 const CustomTemplate = () => (
   <Autocomplete
     multiple

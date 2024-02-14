@@ -25,12 +25,34 @@ const meta = {
 
 export default meta;
 
-const Template = (args) => (
-  <Chip
-    {...args}
-    label="Chip Comp"
-    onDelete={args.deleteable ? () => {} : undefined}
-  />
+const Template = () => (
+  <div className="p-5 flex flex-col gap-6 items-center">
+    {(
+      Object.keys(chip.variants.variant) as [keyof typeof chip.variants.variant]
+    ).map((variant, idx) => (
+      <div key={idx} className="flex flex-col gap-4">
+        <span className="text-foreground pl-3 uppercase font-bold place-self-start text-sm border-l-2 border-neutral9">
+          {variant}
+        </span>
+
+        <div className="flex flex-wrap gap-4">
+          {(
+            Object.keys(chip.variants.color) as [
+              keyof typeof chip.variants.color,
+            ]
+          ).map((color, i) => (
+            <Chip
+              key={i}
+              color={color}
+              variant={variant}
+              label="Chip Comp"
+              onDelete={() => {}}
+            />
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
 );
 
 export const Default = {

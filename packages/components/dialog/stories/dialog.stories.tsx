@@ -1,5 +1,4 @@
 import React from 'react';
-import { dialog } from '@gist-ui/theme';
 import { Button } from '@gist-ui/button';
 
 import * as Dialog from '../src';
@@ -190,8 +189,6 @@ const car_svg = (
 );
 
 const Template = (args) => {
-  const styles = dialog();
-
   return (
     <Dialog.Root defaultOpen={args.defaultOpen} keepMounted={args.keepMounted}>
       <Dialog.Trigger>
@@ -201,12 +198,10 @@ const Template = (args) => {
       <Dialog.Portal>
         <Dialog.Overlay />
 
-        <Dialog.Content
-          className={styles.content({ className: args.className })}
-        >
-          <Dialog.Title className={styles.title()}>SVG Vector</Dialog.Title>
+        <Dialog.Content className={args.className}>
+          <Dialog.Title>SVG Vector</Dialog.Title>
 
-          <Dialog.Description className={styles.description()}>
+          <Dialog.Description>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
             ducimus atque aut amet odio ex at rem alias nemo recusandae
           </Dialog.Description>
