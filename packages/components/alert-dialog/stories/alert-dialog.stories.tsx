@@ -18,7 +18,7 @@ const Template = () => (
     </AlertDialog.Trigger>
 
     <AlertDialog.Portal>
-      <AlertDialog.Overlay />
+      <AlertDialog.Overlay variant="blur" />
 
       <AlertDialog.Content>
         <AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>

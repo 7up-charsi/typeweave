@@ -15,12 +15,12 @@ export const badge = tv({
       },
     },
     color: {
-      primary: { content: 'bg-primary text-primary-foreground' },
-      secondary: { content: 'bg-secondary text-secondary-foreground' },
-      success: { content: 'bg-success text-success-foreground' },
-      info: { content: 'bg-info text-info-foreground' },
-      warning: { content: 'bg-warning text-warning-foreground' },
-      danger: { content: 'bg-danger text-danger-foreground' },
+      primary: { content: 'bg-primary9 text-white' },
+      secondary: { content: 'bg-secondary9 text-white' },
+      success: { content: 'bg-success9 text-white' },
+      info: { content: 'bg-info9 text-white' },
+      warning: { content: 'bg-warning9 text-black' },
+      danger: { content: 'bg-danger9 text-white' },
     },
     placement: {
       'top-left': { content: 'top-0 left-0' },

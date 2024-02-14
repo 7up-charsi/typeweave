@@ -49,7 +49,7 @@ const DefaultTemplate = (args: ButtonProps) => (
       ]
     ).map((variant, idx) => (
       <div key={idx} className="flex flex-col gap-4">
-        <span className="text-foreground pl-3 uppercase font-medium place-self-start text-sm border-l-2 border-neutral">
+        <span className="text-foreground pl-3 uppercase font-bold place-self-start text-sm border-l-2 border-neutral9">
           {variant}
         </span>
 
@@ -185,7 +185,7 @@ const GroupTemplate = () => (
   <ButtonGroup variant="border">
     <Button>Select</Button>
     <Button color="danger">Delete</Button>
-    <Button color="info" isIconOnly>
+    <Button color="info" isIconOnly aria-label="spinner">
       <Circles wrapperClass="[&>svg]:fill-current" width={20} />
     </Button>
   </ButtonGroup>
@@ -193,9 +193,4 @@ const GroupTemplate = () => (
 
 export const Group = {
   render: GroupTemplate,
-  args: {
-    startContent: <Bars wrapperClass="[&>svg]:fill-current" width={20} />,
-    endContent: <Circles wrapperClass="[&>svg]:fill-current" width={20} />,
-    children: 'with spinners',
-  },
 };
