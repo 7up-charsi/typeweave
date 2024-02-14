@@ -15,7 +15,6 @@ export * from './alert-dialog';
 export * from './overlay';
 export * from './alert';
 export * from './badge';
-export * from './button-group';
 export * from './skeleton';
 export * from './pagination';
 export * from './table';

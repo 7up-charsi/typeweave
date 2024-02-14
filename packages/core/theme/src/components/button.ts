@@ -1,6 +1,18 @@
 import { VariantProps, tv } from 'tailwind-variants';
 import { dataFocusVisible } from '../classes';
 
+export const buttonGroup = tv({
+  base: 'inline-flex gap-0 [&>button]:rounded-none',
+  variants: {
+    direction: {
+      horizontal:
+        'items-center [&>button:first-of-type]:rounded-l [&>button:last-of-type]:rounded-r [&>button:first-of-type]:border-r-0 [&>button:last-of-type]:border-l-0 [&>button:not(:first-of-type,_:last-of-type)]:border-x-0',
+      verticle:
+        'flex-col [&>button:first-of-type]:rounded-t [&>button:last-of-type]:rounded-b [&>button]:grow [&>button:first-of-type]:border-b-0 [&>button:last-of-type]:border-t-0 [&>button:not(:first-of-type,_:last-of-type)]:border-y-0',
+    },
+  },
+});
+
 export const button = tv({
   base: [
     'z-0 group relative inline-flex items-center justify-center box-border rounded appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transition-colors outline-none',
@@ -59,17 +71,17 @@ export const button = tv({
     {
       isIconOnly: true,
       size: 'sm',
-      class: 'w-8 h-8',
+      class: 'min-w-8 min-h-8',
     },
     {
       isIconOnly: true,
       size: 'md',
-      class: 'w-10 h-10',
+      class: 'min-w-10 min-h-10',
     },
     {
       isIconOnly: true,
       size: 'lg',
-      class: 'w-12 h-12',
+      class: 'min-w-12 min-h-12',
     },
 
     // color / solid
@@ -294,6 +306,7 @@ export const button = tv({
   ],
 });
 
+export type ButtonGroupVariantProps = VariantProps<typeof buttonGroup>;
 export type ButtonVariantProps = VariantProps<typeof button>;
 
 export const buttonStyles = [
