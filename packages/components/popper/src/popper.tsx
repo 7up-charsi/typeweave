@@ -315,6 +315,7 @@ export const Arrow = forwardRef<
         ref={ref}
         viewBox="0 0 30 10"
         preserveAspectRatio="none"
+        style={{ ...props.style, fill: 'var(--arrowFill)' }}
       >
         <polygon points="0,0 30,0 15,10" />
       </svg>
