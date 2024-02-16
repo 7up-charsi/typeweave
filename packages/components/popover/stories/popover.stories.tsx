@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { Button } from '@gist-ui/button';
-import { popover } from '@gist-ui/theme';
 
 import * as Popover from '../src';
 
@@ -47,8 +46,6 @@ const Template = (args) => {
     });
   }, []);
 
-  const styles = popover();
-
   return (
     <div className="w-[300vw] h-[300vh] flex items-center justify-center">
       <Popover.Root defaultOpen={args.defaultOpen}>
@@ -67,15 +64,12 @@ const Template = (args) => {
             hideWhenDetached={args.hideWhenDetached}
             allowMainAxisFlip={args.allowMainAxisFlip}
             allowCrossAxisFlip={args.allowCrossAxisFlip}
-            className={styles.content()}
           >
             {args.arrow && <Popover.Arrow />}
 
-            <Popover.Title className={styles.title()}>
-              Lorem ipsum dolor
-            </Popover.Title>
+            <Popover.Title>Lorem ipsum dolor</Popover.Title>
 
-            <Popover.Description className={styles.description()}>
+            <Popover.Description>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
               aperiam facere, molestias eius suscipit in, est distinctio
               deserunt culpa odit, sunt nostrum. Ad culpa excepturi assumenda
