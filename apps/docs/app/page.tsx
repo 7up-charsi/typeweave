@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div className="">
-      <h1 className="text-center leading-tight text-6xl font-bold mt-32 text-neutral-600">
+      <h1 className="text-center leading-tight text-6xl font-bold mt-32">
         <span className="text-primary">Fully featured</span> and{' '}
         <span className="text-secondary-500">accessible</span>
         <br />
