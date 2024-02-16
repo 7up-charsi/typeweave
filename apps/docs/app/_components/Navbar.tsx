@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import logo from '@/app/_assets/logo.png';
+import darkLogo from '@/app/_assets/dark-logo.png';
+import lightLogo from '@/app/_assets/light-logo.png';
 import Link from 'next/link';
 import { ThemeSwitcher } from '@gist-ui/theme-switcher';
 
@@ -13,11 +14,18 @@ export const Navbar = () => {
     <div className="w-full h-16 border-b flex items-center px-12">
       <Link href="/" className="inline-block leading-none mr-10">
         <Image
-          src={logo}
+          src={lightLogo}
           alt="webbu/ui logo"
           width={120}
           height={120}
-          className="inline-block"
+          className="dark:inline-block hidden"
+        />
+        <Image
+          src={darkLogo}
+          alt="webbu/ui logo"
+          width={120}
+          height={120}
+          className="inline-block dark:hidden"
         />
       </Link>
 
@@ -27,7 +35,7 @@ export const Navbar = () => {
             <li key={i} className="first-letter:uppercase">
               <Link
                 href={href}
-                className="text-neutral-500 hover:text-neutral-700 transition-colors"
+                className="text-neutral-500 hover:text-neutral-700 transition-colors dark:text-neutral-700 dark:hover:text-neutral-900"
               >
                 {title}
               </Link>
@@ -40,11 +48,11 @@ export const Navbar = () => {
 
       {/* search docs placeholder input */}
       <div
-        className="mr-5 w-52 h-9 border px-2 rounded flex items-center cursor-pointer transition-colors hover:border-neutral-400 group select-none"
+        className="mr-5 w-52 h-9 ring-2 ring-neutral-500 px-2 rounded flex items-center cursor-pointer transition-colors hover:border-neutral-400 group select-none dark:border-neutral-600"
         tabIndex={0}
-        aria-label="press to open command palette and search docs"
+        aria-label="press to open command palette for docs search"
       >
-        <span className="text-sm text-neutral-400 tracking-wide">
+        <span className="text-sm text-neutral-400 tracking-wide dark:text-neutral-700">
           Search docs
         </span>
         <div className="grow"></div>
@@ -53,7 +61,7 @@ export const Navbar = () => {
           viewBox="0 0 32 32"
           width={17}
           height={17}
-          className="text-neutral-400 group-hover:text-neutral-500"
+          className="text-neutral-400 group-hover:text-neutral-500 dark:text-neutral-700"
         >
           <g>
             <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
