@@ -25,7 +25,7 @@ type Column<Row> = {
 
 type GetRowKey<R> = (row: R) => string;
 type _Row = Record<string, string>;
-type VisibilityState = { identifier: string; visibility: boolean };
+type VisibilityState = Record<string, boolean>;
 
 // ********** ROOT **********
 
@@ -34,11 +34,11 @@ const Root_Name = 'Table.Root';
 interface RootContext {
   data?: _Row[];
   columns?: Column<_Row>[];
-  visibilityState?: VisibilityState[];
+  visibilityState?: VisibilityState;
   getRowKey?: GetRowKey<_Row>;
   setVisibilityState: UseControllableStateReturn<
-    VisibilityState[],
-    VisibilityState
+    VisibilityState,
+    string | null
   >[1];
 }
 
@@ -50,11 +50,8 @@ export interface RootProps<R> {
   columns?: Column<R>[];
   getRowKey?: GetRowKey<R>;
   children?: React.ReactNode;
-  visibilityState?: VisibilityState[];
-  onVisibilityStateChange?: (
-    value: VisibilityState[],
-    changed: VisibilityState,
-  ) => void;
+  visibilityState?: VisibilityState;
+  onChange?: (value: VisibilityState, changedIdentifier: string) => void;
 }
 
 const RootComp = (props: RootProps<_Row>) => {
@@ -63,24 +60,24 @@ const RootComp = (props: RootProps<_Row>) => {
     data,
     children,
     getRowKey,
-    onVisibilityStateChange,
+    onChange,
     visibilityState: visibilityStateProp,
   } = props;
 
   const [visibilityState, setVisibilityState] = useControllableState<
-    VisibilityState[],
-    VisibilityState
+    Record<string, boolean>,
+    string | null
   >({
-    defaultValue: [],
+    defaultValue: {},
     value: visibilityStateProp,
     onChange: (value, changed) => {
-      if (!changed)
+      if (!changed && changed !== null)
         throw new GistUiError(
           'Autocomplete',
           'internal Error, reason is not defined',
         );
 
-      onVisibilityStateChange?.(value, changed);
+      if (changed) onChange?.(value, changed);
     },
   });
 
@@ -135,9 +132,7 @@ export const Table = (props: TableProps) => {
         <thead className={styles.thead({ className: classNames?.thead })}>
           <tr className={styles.tr({ className: classNames?.tr })}>
             {columns?.map(({ header, identifier, visibility }) => {
-              const visible =
-                visibilityState?.find((ele) => ele.identifier === identifier)
-                  ?.visibility ?? visibility;
+              const visible = visibilityState?.[identifier] ?? visibility;
 
               return !visible ? undefined : (
                 <th
@@ -158,9 +153,7 @@ export const Table = (props: TableProps) => {
               key={getRowKey?.(row) ?? i}
             >
               {columns.map(({ accessor, cell, identifier, visibility }) => {
-                const visible =
-                  visibilityState?.find((ele) => ele.identifier === identifier)
-                    ?.visibility ?? visibility;
+                const visible = visibilityState?.[identifier] ?? visibility;
 
                 return !visible ? undefined : (
                   <td
@@ -188,6 +181,8 @@ const ColumnVisibility_Name = 'Table.ColumnVisibility';
 export interface ColumnVisibilityProps
   extends Omit<Menu.MenuProps, 'className' | 'roleDescription'> {
   children?: React.ReactNode;
+  tableIdentifier?: string;
+  onChange?: (identifier: string, visibility: boolean) => void;
   classNames?: {
     menu?: string;
     checkboxItem?: Menu.CheckboxItemProps['classNames'];
@@ -195,11 +190,23 @@ export interface ColumnVisibilityProps
 }
 
 export const ColumnVisibility = (props: ColumnVisibilityProps) => {
-  const { children, classNames, ...menuProps } = props;
+  const { children, classNames, onChange, tableIdentifier, ...menuProps } =
+    props;
 
   const { columns, data, setVisibilityState, visibilityState } = useRootContext(
     ColumnVisibility_Name,
   );
+
+  useEffect(() => {
+    if (tableIdentifier) {
+      setVisibilityState(
+        JSON.parse(localStorage.getItem(tableIdentifier) ?? `{}`),
+        null,
+      );
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tableIdentifier]);
 
   return (
     <Menu.Root>
@@ -232,24 +239,28 @@ export const ColumnVisibility = (props: ColumnVisibilityProps) => {
               const val =
                 typeof headerValue === 'string' ? headerValue : visibilityTitle;
 
-              const checked =
-                visibilityState?.find((ele) => ele.identifier === identifier)
-                  ?.visibility ?? visibility;
+              const checked = visibilityState?.[identifier] ?? visibility;
 
               return (
                 <Menu.CheckboxItem
                   key={i}
                   checked={checked}
                   classNames={classNames?.checkboxItem}
-                  onChange={() => {
-                    const changed = { identifier, visibility: !checked };
+                  onChange={(checked) => {
+                    if (onChange) onChange(identifier, checked);
+                    if (!onChange && tableIdentifier) {
+                      localStorage.setItem(
+                        tableIdentifier,
+                        JSON.stringify({
+                          ...visibilityState,
+                          [identifier]: checked,
+                        }),
+                      );
+                    }
 
                     setVisibilityState(
-                      (prev) => [
-                        ...prev.filter((ele) => ele.identifier !== identifier),
-                        changed,
-                      ],
-                      changed,
+                      (prev) => ({ ...prev, [identifier]: checked }),
+                      identifier,
                     );
                   }}
                 >

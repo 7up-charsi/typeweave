@@ -58,7 +58,7 @@ const Template = () => {
           <span className="text-neutral-700 font-medium">Data table</span>
           <span className="grow"></span>
 
-          <Table.ColumnVisibility>
+          <Table.ColumnVisibility tableIdentifier="demo_table">
             <Button isIconOnly>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +80,7 @@ const Template = () => {
         </div>
 
         <Table.SelectRowProvider>
-          <Table.Table />
+          <Table.Table variant="strip" />
         </Table.SelectRowProvider>
       </div>
     </Table.Root>
