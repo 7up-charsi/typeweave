@@ -179,7 +179,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
 
     const buttonProps = {
       size,
-      color,
+      color: color ?? 'primary',
       variant: 'text' as ButtonProps['variant'],
       isIconOnly: true,
       isDisabled,

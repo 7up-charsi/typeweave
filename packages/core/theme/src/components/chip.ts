@@ -39,7 +39,7 @@ export const chip = tv({
       variant: 'solid',
       color: 'default',
       class: {
-        base: 'bg-muted-500 text-white',
+        base: 'bg-muted-9 dark:bg-mutedDark-9  text-white',
         deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
       },
     },
@@ -47,7 +47,7 @@ export const chip = tv({
       variant: 'solid',
       color: 'primary',
       class: {
-        base: 'bg-primary-500 text-white',
+        base: 'bg-primary-9 dark:bg-primaryDark-9  text-white',
         deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
       },
     },
@@ -55,7 +55,7 @@ export const chip = tv({
       variant: 'solid',
       color: 'secondary',
       class: {
-        base: 'bg-secondary-500 text-white',
+        base: 'bg-secondary-9 dark:bg-secondaryDark-9  text-white',
         deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
       },
     },
@@ -63,7 +63,7 @@ export const chip = tv({
       variant: 'solid',
       color: 'success',
       class: {
-        base: 'bg-success-500 text-white',
+        base: 'bg-success-9 dark:bg-successDark-9  text-white',
         deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
       },
     },
@@ -71,7 +71,7 @@ export const chip = tv({
       variant: 'solid',
       color: 'info',
       class: {
-        base: 'bg-info-500 text-white',
+        base: 'bg-info-9 dark:bg-infoDark-9  text-white',
         deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
       },
     },
@@ -79,15 +79,15 @@ export const chip = tv({
       variant: 'solid',
       color: 'warning',
       class: {
-        base: 'bg-warning-500 text-black',
-        deleteIcon: 'text-black/70 data-[hovered=true]:text-black',
+        base: 'bg-warning-9 dark:bg-warningDark-9  text-white',
+        deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
       },
     },
     {
       variant: 'solid',
       color: 'danger',
       class: {
-        base: 'bg-danger-500 text-white',
+        base: 'bg-danger-9 dark:bg-dangerDark-9  text-white',
         deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
       },
     },
@@ -97,63 +97,63 @@ export const chip = tv({
       variant: 'flat',
       color: 'default',
       class: {
-        base: 'bg-muted-100 text-muted-700 dark:bg-muted-800 dark:text-muted-200',
+        base: 'bg-muted-3 text-muted-11 dark:bg-mutedDark-3 dark:text-mutedDark-11',
         deleteIcon:
-          'text-muted-500 data-[hovered=true]:text-muted-700 dark:text-muted-400 dark:data-[hovered=true]:text-muted-300',
+          'text-muted-11/70 data-[hovered=true]:text-muted-11 dark:text-mutedDark-11/70 dark:data-[hovered=true]:text-mutedDark-11',
       },
     },
     {
       variant: 'flat',
       color: 'primary',
       class: {
-        base: 'bg-primary-100 text-primary-700 dark:bg-primary-800 dark:text-primary-200',
+        base: 'bg-primary-3 text-primary-11 dark:bg-primaryDark-3 dark:text-primaryDark-11',
         deleteIcon:
-          'text-primary-500 data-[hovered=true]:text-primary-700 dark:text-primary-400 dark:data-[hovered=true]:text-primary-300',
+          'text-primary-11/70 data-[hovered=true]:text-primary-11 dark:text-primaryDark-11/70 dark:data-[hovered=true]:text-primaryDark-11',
       },
     },
     {
       variant: 'flat',
       color: 'secondary',
       class: {
-        base: 'bg-secondary-100 text-secondary-700 dark:bg-secondary-800 dark:text-secondary-200',
+        base: 'bg-secondary-3 text-secondary-11 dark:bg-secondaryDark-3 dark:text-secondaryDark-11',
         deleteIcon:
-          'text-secondary-500 data-[hovered=true]:text-secondary-700 dark:text-secondary-400 dark:data-[hovered=true]:text-secondary-300',
+          'text-secondary-11/70 data-[hovered=true]:text-secondary-11 dark:text-secondaryDark-11/70 dark:data-[hovered=true]:text-secondaryDark-11',
       },
     },
     {
       variant: 'flat',
       color: 'success',
       class: {
-        base: 'bg-success-100 text-success-700 dark:bg-success-800 dark:text-success-200',
+        base: 'bg-success-3 text-success-11 dark:bg-successDark-3 dark:text-successDark-11',
         deleteIcon:
-          'text-success-500 data-[hovered=true]:text-success-700 dark:text-success-400 dark:data-[hovered=true]:text-success-300',
+          'text-success-11/70 data-[hovered=true]:text-success-11 dark:text-successDark-11/70 dark:data-[hovered=true]:text-successDark-11',
       },
     },
     {
       variant: 'flat',
       color: 'info',
       class: {
-        base: 'bg-info-100 text-info-700 dark:bg-info-800 dark:text-info-200',
+        base: 'bg-info-3 text-info-11 dark:bg-infoDark-3 dark:text-infoDark-11',
         deleteIcon:
-          'text-info-500 data-[hovered=true]:text-info-700 dark:text-info-400 dark:data-[hovered=true]:text-info-300',
+          'text-info-11/70 data-[hovered=true]:text-info-11 dark:text-infoDark-11/70 dark:data-[hovered=true]:text-infoDark-11',
       },
     },
     {
       variant: 'flat',
       color: 'warning',
       class: {
-        base: 'bg-warning-100 text-warning-700 dark:bg-warning-800 dark:text-warning-200',
+        base: 'bg-warning-3 text-warning-11 dark:bg-warningDark-3 dark:text-warningDark-11',
         deleteIcon:
-          'text-warning-500 data-[hovered=true]:text-warning-700 dark:text-warning-400 dark:data-[hovered=true]:text-warning-300',
+          'text-warning-11/70 data-[hovered=true]:text-warning-11 dark:text-warningDark-11/70 dark:data-[hovered=true]:text-warningDark-11',
       },
     },
     {
       variant: 'flat',
       color: 'danger',
       class: {
-        base: 'bg-danger-100 text-danger-700 dark:bg-danger-800 dark:text-danger-200',
+        base: 'bg-danger-3 text-danger-11 dark:bg-dangerDark-3 dark:text-dangerDark-11',
         deleteIcon:
-          'text-danger-500 data-[hovered=true]:text-danger-700 dark:text-danger-400 dark:data-[hovered=true]:text-danger-300',
+          'text-danger-11/70 data-[hovered=true]:text-danger-11 dark:text-dangerDark-11/70 dark:data-[hovered=true]:text-dangerDark-11',
       },
     },
 
@@ -162,63 +162,63 @@ export const chip = tv({
       variant: 'text',
       color: 'default',
       class: {
-        base: 'text-muted-700 dark:text-muted-300',
+        base: 'text-muted-11 dark:text-mutedDark-11',
         deleteIcon:
-          'text-muted-500 data-[hovered=true]:text-muted-700 dark:text-muted-400 dark:data-[hovered=true]:text-muted-300',
+          'text-muted-11/70 data-[hovered=true]:text-muted-11 dark:text-mutedDark-11/70 dark:data-[hovered=true]:text-mutedDark-11',
       },
     },
     {
       variant: 'text',
       color: 'primary',
       class: {
-        base: 'text-primary-700 dark:text-primary-300',
+        base: 'text-primary-11 dark:text-primaryDark-11',
         deleteIcon:
-          'text-primary-500 data-[hovered=true]:text-primary-700 dark:text-primary-400 dark:data-[hovered=true]:text-primary-300',
+          'text-primary-11/70 data-[hovered=true]:text-primary-11 dark:text-primaryDark-11/70 dark:data-[hovered=true]:text-primaryDark-11',
       },
     },
     {
       variant: 'text',
       color: 'secondary',
       class: {
-        base: 'text-secondary-700 dark:text-secondary-300',
+        base: 'text-secondary-11 dark:text-secondaryDark-11',
         deleteIcon:
-          'text-secondary-500 data-[hovered=true]:text-secondary-700 dark:text-secondary-400 dark:data-[hovered=true]:text-secondary-300',
+          'text-secondary-11/70 data-[hovered=true]:text-secondary-11 dark:text-secondaryDark-11/70 dark:data-[hovered=true]:text-secondaryDark-11',
       },
     },
     {
       variant: 'text',
       color: 'success',
       class: {
-        base: 'text-success-700 dark:text-success-300',
+        base: 'text-success-11 dark:text-successDark-11',
         deleteIcon:
-          'text-success-500 data-[hovered=true]:text-success-700 dark:text-success-400 dark:data-[hovered=true]:text-success-300',
+          'text-success-11/70 data-[hovered=true]:text-success-11 dark:text-successDark-11/70 dark:data-[hovered=true]:text-successDark-11',
       },
     },
     {
       variant: 'text',
       color: 'info',
       class: {
-        base: 'text-info-700 dark:text-info-300',
+        base: 'text-info-11 dark:text-infoDark-11',
         deleteIcon:
-          'text-info-500 data-[hovered=true]:text-info-700 dark:text-info-400 dark:data-[hovered=true]:text-info-300',
+          'text-info-11/70 data-[hovered=true]:text-info-11 dark:text-infoDark-11/70 dark:data-[hovered=true]:text-infoDark-11',
       },
     },
     {
       variant: 'text',
       color: 'warning',
       class: {
-        base: 'text-warning-700 dark:text-warning-300',
+        base: 'text-warning-11 dark:text-warningDark-11',
         deleteIcon:
-          'text-warning-500 data-[hovered=true]:text-warning-700 dark:text-warning-400 dark:data-[hovered=true]:text-warning-300',
+          'text-warning-11/70 data-[hovered=true]:text-warning-11 dark:text-warningDark-11/70 dark:data-[hovered=true]:text-warningDark-11',
       },
     },
     {
       variant: 'text',
       color: 'danger',
       class: {
-        base: 'text-danger-700 dark:text-danger-300',
+        base: 'text-danger-11 dark:text-dangerDark-11',
         deleteIcon:
-          'text-danger-500 data-[hovered=true]:text-danger-700 dark:text-danger-400 dark:data-[hovered=true]:text-danger-300',
+          'text-danger-11/70 data-[hovered=true]:text-danger-11 dark:text-dangerDark-11/70 dark:data-[hovered=true]:text-dangerDark-11',
       },
     },
 
@@ -227,63 +227,63 @@ export const chip = tv({
       variant: 'border',
       color: 'default',
       class: {
-        base: 'border-muted-400 text-muted-700 dark:border-muted-700 dark:text-muted-300',
+        base: 'border-muted-6 text-muted-11 dark:border-mutedDark-6 dark:text-mutedDark-11',
         deleteIcon:
-          'text-muted-500 data-[hovered=true]:text-muted-700 dark:text-muted-400 dark:data-[hovered=true]:text-muted-300',
+          'text-muted-11/70 data-[hovered=true]:text-muted-11 dark:text-mutedDark-11/70 dark:data-[hovered=true]:text-mutedDark-11',
       },
     },
     {
       variant: 'border',
       color: 'primary',
       class: {
-        base: 'border-primary-400 text-primary-700 dark:border-primary-700 dark:text-primary-300',
+        base: 'border-primary-6 text-primary-11 dark:border-primaryDark-6 dark:text-primaryDark-11',
         deleteIcon:
-          'text-primary-500 data-[hovered=true]:text-primary-700 dark:text-primary-400 dark:data-[hovered=true]:text-primary-300',
+          'text-primary-11/70 data-[hovered=true]:text-primary-11 dark:text-primaryDark-11/70 dark:data-[hovered=true]:text-primaryDark-11',
       },
     },
     {
       variant: 'border',
       color: 'secondary',
       class: {
-        base: 'border-secondary-400 text-secondary-700 dark:border-secondary-700 dark:text-secondary-300',
+        base: 'border-secondary-6 text-secondary-11 dark:border-secondaryDark-6 dark:text-secondaryDark-11',
         deleteIcon:
-          'text-secondary-500 data-[hovered=true]:text-secondary-700 dark:text-secondary-400 dark:data-[hovered=true]:text-secondary-300',
+          'text-secondary-11/70 data-[hovered=true]:text-secondary-11 dark:text-secondaryDark-11/70 dark:data-[hovered=true]:text-secondaryDark-11',
       },
     },
     {
       variant: 'border',
       color: 'success',
       class: {
-        base: 'border-success-400 text-success-700 dark:border-success-700 dark:text-success-300',
+        base: 'border-success-6 text-success-11 dark:border-successDark-6 dark:text-successDark-11',
         deleteIcon:
-          'text-success-500 data-[hovered=true]:text-success-700 dark:text-success-400 dark:data-[hovered=true]:text-success-300',
+          'text-success-11/70 data-[hovered=true]:text-success-11 dark:text-successDark-11/70 dark:data-[hovered=true]:text-successDark-11',
       },
     },
     {
       variant: 'border',
       color: 'info',
       class: {
-        base: 'border-info-400 text-info-700 dark:border-info-700 dark:text-info-300',
+        base: 'border-info-6 text-info-11 dark:border-infoDark-6 dark:text-infoDark-11',
         deleteIcon:
-          'text-info-500 data-[hovered=true]:text-info-700 dark:text-info-400 dark:data-[hovered=true]:text-info-300',
+          'text-info-11/70 data-[hovered=true]:text-info-11 dark:text-infoDark-11/70 dark:data-[hovered=true]:text-infoDark-11',
       },
     },
     {
       variant: 'border',
       color: 'warning',
       class: {
-        base: 'border-warning-400 text-warning-700 dark:border-warning-700 dark:text-warning-300',
+        base: 'border-warning-6 text-warning-11 dark:border-warningDark-6 dark:text-warningDark-11',
         deleteIcon:
-          'text-warning-500 data-[hovered=true]:text-warning-700 dark:text-warning-400 dark:data-[hovered=true]:text-warning-300',
+          'text-warning-11/70 data-[hovered=true]:text-warning-11 dark:text-warningDark-11/70 dark:data-[hovered=true]:text-warningDark-11',
       },
     },
     {
       variant: 'border',
       color: 'danger',
       class: {
-        base: 'border-danger-400 text-danger-700 dark:border-danger-700 dark:text-danger-300',
+        base: 'border-danger-6 text-danger-11 dark:border-dangerDark-6 dark:text-dangerDark-11',
         deleteIcon:
-          'text-danger-500 data-[hovered=true]:text-danger-700 dark:text-danger-400 dark:data-[hovered=true]:text-danger-300',
+          'text-danger-11/70 data-[hovered=true]:text-danger-11 dark:text-dangerDark-11/70 dark:data-[hovered=true]:text-dangerDark-11',
       },
     },
   ],

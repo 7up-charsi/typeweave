@@ -59,7 +59,7 @@ export const _ToggleButtonGroup = (props: ToggleButtonGroupProps<false>) => {
     value: valueProp,
     onChange,
     variant = 'flat',
-    color = 'neutral',
+    color = 'default',
     defaultValue,
     ...rest
   } = props;

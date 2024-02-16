@@ -111,37 +111,44 @@ export const button = tv({
     {
       variant: 'solid',
       color: 'default',
-      class: 'bg-muted-500 text-white [--rippleBg:theme(colors.white/30%)]',
+      class:
+        'bg-muted-9 dark:bg-mutedDark-9 data-[hovered=true]:bg-muted-10 text-white [--rippleBg:theme(colors.white/30%)]',
     },
     {
       variant: 'solid',
       color: 'primary',
-      class: 'bg-primary-500 text-white [--rippleBg:theme(colors.white/30%)]',
+      class:
+        'bg-primary-9 dark:bg-primaryDark-9 data-[hovered=true]:bg-primary-10 text-white [--rippleBg:theme(colors.white/30%)]',
     },
     {
       variant: 'solid',
       color: 'secondary',
-      class: 'bg-secondary-500 text-white [--rippleBg:theme(colors.white/30%)]',
+      class:
+        'bg-secondary-9 dark:bg-secondaryDark-9 data-[hovered=true]:bg-secondary-10 text-white [--rippleBg:theme(colors.white/30%)]',
     },
     {
       variant: 'solid',
       color: 'success',
-      class: 'bg-success-500 text-white [--rippleBg:theme(colors.white/30%)]',
+      class:
+        'bg-success-9 dark:bg-successDark-9 data-[hovered=true]:bg-success-10 text-white [--rippleBg:theme(colors.white/30%)]',
     },
     {
       variant: 'solid',
       color: 'info',
-      class: 'bg-info-500 text-white [--rippleBg:theme(colors.white/30%)]',
+      class:
+        'bg-info-9 dark:bg-infoDark-9 data-[hovered=true]:bg-info-10 text-white [--rippleBg:theme(colors.white/30%)]',
     },
     {
       variant: 'solid',
       color: 'warning',
-      class: 'bg-warning-500 text-black [--rippleBg:theme(colors.black/10%)]',
+      class:
+        'bg-warning-9 dark:bg-warningDark-9 data-[hovered=true]:bg-warning-10 text-white [--rippleBg:theme(colors.white/10%)]',
     },
     {
       variant: 'solid',
       color: 'danger',
-      class: 'bg-danger-500 text-white [--rippleBg:theme(colors.white/30%)]',
+      class:
+        'bg-danger-9 dark:bg-dangerDark-9 data-[hovered=true]:bg-danger-10 text-white [--rippleBg:theme(colors.white/30%)]',
     },
 
     // color / flat
@@ -149,43 +156,43 @@ export const button = tv({
       variant: 'flat',
       color: 'default',
       class:
-        'bg-muted-100 text-muted-700 [--rippleBg:theme(colors.muted.700/10%)] dark:bg-muted-950 dark:text-muted-100 dark:[--rippleBg:theme(colors.muted.100/20%)]',
+        'bg-muted-3 data-[hovered=true]:bg-muted-4 text-muted-11 [--rippleBg:theme(colors.muted.11/10%)] dark:bg-mutedDark-3 dark:data-[hovered=true]:bg-mutedDark-4 dark:text-mutedDark-11 dark:[--rippleBg:theme(colors.mutedDark.11/10%)]',
     },
     {
       variant: 'flat',
       color: 'primary',
       class:
-        'bg-primary-100 text-primary-700 [--rippleBg:theme(colors.primary.700/10%)] dark:bg-primary-950 dark:text-primary-100 dark:[--rippleBg:theme(colors.primary.100/20%)]',
+        'bg-primary-3 data-[hovered=true]:bg-primary-4 text-primary-11 [--rippleBg:theme(colors.primary.11/10%)] dark:bg-primaryDark-3 dark:data-[hovered=true]:bg-primaryDark-4 dark:text-primaryDark-11 dark:[--rippleBg:theme(colors.primaryDark.11/10%)]',
     },
     {
       variant: 'flat',
       color: 'secondary',
       class:
-        'bg-secondary-100 text-secondary-700 [--rippleBg:theme(colors.secondary.700/10%)] dark:bg-secondary-950 dark:text-secondary-100 dark:[--rippleBg:theme(colors.secondary.100/20%)]',
+        'bg-secondary-3 data-[hovered=true]:bg-secondary-4 text-secondary-11 [--rippleBg:theme(colors.secondary.11/10%)] dark:bg-secondaryDark-3 dark:data-[hovered=true]:bg-secondaryDark-4 dark:text-secondaryDark-11 dark:[--rippleBg:theme(colors.secondaryDark.11/10%)]',
     },
     {
       variant: 'flat',
       color: 'success',
       class:
-        'bg-success-100 text-success-700 [--rippleBg:theme(colors.success.700/10%)] dark:bg-success-950 dark:text-success-100 dark:[--rippleBg:theme(colors.success.100/20%)]',
+        'bg-success-3 data-[hovered=true]:bg-success-4 text-success-11 [--rippleBg:theme(colors.success.11/10%)] dark:bg-successDark-3 dark:data-[hovered=true]:bg-successDark-4 dark:text-successDark-11 dark:[--rippleBg:theme(colors.successDark.11/10%)]',
     },
     {
       variant: 'flat',
       color: 'info',
       class:
-        'bg-info-100 text-info-700 [--rippleBg:theme(colors.info.700/10%)] dark:bg-info-950 dark:text-info-100 dark:[--rippleBg:theme(colors.info.100/20%)]',
+        'bg-info-3 data-[hovered=true]:bg-info-4 text-info-11 [--rippleBg:theme(colors.info.11/10%)] dark:bg-infoDark-3 dark:data-[hovered=true]:bg-infoDark-4 dark:text-infoDark-11 dark:[--rippleBg:theme(colors.infoDark.11/10%)]',
     },
     {
       variant: 'flat',
       color: 'warning',
       class:
-        'bg-warning-100 text-warning-700 [--rippleBg:theme(colors.warning.700/10%)] dark:bg-warning-950 dark:text-warning-100 dark:[--rippleBg:theme(colors.warning.100/20%)]',
+        'bg-warning-3 data-[hovered=true]:bg-warning-4 text-warning-11 [--rippleBg:theme(colors.warning.11/10%)] dark:bg-warningDark-3 dark:data-[hovered=true]:bg-warningDark-4 dark:text-warningDark-11 dark:[--rippleBg:theme(colors.warningDark.11/10%)]',
     },
     {
       variant: 'flat',
       color: 'danger',
       class:
-        'bg-danger-100 text-danger-700 [--rippleBg:theme(colors.danger.700/10%)] dark:bg-danger-950 dark:text-danger-100 dark:[--rippleBg:theme(colors.danger.100/20%)]',
+        'bg-danger-3 data-[hovered=true]:bg-danger-4 text-danger-11 [--rippleBg:theme(colors.danger.11/10%)] dark:bg-dangerDark-3 dark:data-[hovered=true]:bg-dangerDark-4 dark:text-dangerDark-11 dark:[--rippleBg:theme(colors.dangerDark.11/10%)]',
     },
 
     // color / text
@@ -193,43 +200,43 @@ export const button = tv({
       variant: 'text',
       color: 'default',
       class:
-        'data-[hovered=true]:bg-muted-100 text-muted-700 [--rippleBg:theme(colors.muted.700/10%)] dark:data-[hovered=true]:bg-muted-950 dark:text-muted-100 dark:[--rippleBg:theme(colors.muted.100/20%)]',
+        'data-[hovered=true]:bg-muted-3 text-muted-11 [--rippleBg:theme(colors.muted.11/10%)] dark:data-[hovered=true]:bg-mutedDark-3 dark:text-mutedDark-11 dark:[--rippleBg:theme(colors.mutedDark.11/10%)]',
     },
     {
       variant: 'text',
       color: 'primary',
       class:
-        'data-[hovered=true]:bg-primary-100 text-primary-700 [--rippleBg:theme(colors.primary.700/10%)] dark:data-[hovered=true]:bg-primary-950 dark:text-primary-300 dark:[--rippleBg:theme(colors.primary.100/20%)]',
+        'data-[hovered=true]:bg-primary-3 text-primary-11 [--rippleBg:theme(colors.primary.11/10%)] dark:data-[hovered=true]:bg-primaryDark-3 dark:text-primaryDark-11 dark:[--rippleBg:theme(colors.primaryDark.11/10%)]',
     },
     {
       variant: 'text',
       color: 'secondary',
       class:
-        'data-[hovered=true]:bg-secondary-100 text-secondary-700 [--rippleBg:theme(colors.secondary.700/10%)] dark:data-[hovered=true]:bg-secondary-950 dark:text-secondary-300 dark:[--rippleBg:theme(colors.secondary.100/20%)]',
+        'data-[hovered=true]:bg-secondary-3 text-secondary-11 [--rippleBg:theme(colors.secondary.11/10%)] dark:data-[hovered=true]:bg-secondaryDark-3 dark:text-secondaryDark-11 dark:[--rippleBg:theme(colors.secondaryDark.11/10%)]',
     },
     {
       variant: 'text',
       color: 'success',
       class:
-        'data-[hovered=true]:bg-success-100 text-success-700 [--rippleBg:theme(colors.success.700/10%)] dark:data-[hovered=true]:bg-success-950 dark:text-success-300 dark:[--rippleBg:theme(colors.success.100/20%)]',
+        'data-[hovered=true]:bg-success-3 text-success-11 [--rippleBg:theme(colors.success.11/10%)] dark:data-[hovered=true]:bg-successDark-3 dark:text-successDark-11 dark:[--rippleBg:theme(colors.successDark.11/10%)]',
     },
     {
       variant: 'text',
       color: 'info',
       class:
-        'data-[hovered=true]:bg-info-100 text-info-700 [--rippleBg:theme(colors.info.700/10%)] dark:data-[hovered=true]:bg-info-950 dark:text-info-300 dark:[--rippleBg:theme(colors.info.100/20%)]',
+        'data-[hovered=true]:bg-info-3 text-info-11 [--rippleBg:theme(colors.info.11/10%)] dark:data-[hovered=true]:bg-infoDark-3 dark:text-infoDark-11 dark:[--rippleBg:theme(colors.infoDark.11/10%)]',
     },
     {
       variant: 'text',
       color: 'warning',
       class:
-        'data-[hovered=true]:bg-warning-100 text-warning-700 [--rippleBg:theme(colors.warning.700/10%)] dark:data-[hovered=true]:bg-warning-950 dark:text-warning-300 dark:[--rippleBg:theme(colors.warning.100/20%)]',
+        'data-[hovered=true]:bg-warning-3 text-warning-11 [--rippleBg:theme(colors.warning.11/10%)] dark:data-[hovered=true]:bg-warningDark-3 dark:text-warningDark-11 dark:[--rippleBg:theme(colors.warningDark.11/10%)]',
     },
     {
       variant: 'text',
       color: 'danger',
       class:
-        'data-[hovered=true]:bg-danger-100 text-danger-700 [--rippleBg:theme(colors.danger.700/10%)] dark:data-[hovered=true]:bg-danger-950 dark:text-danger-300 dark:[--rippleBg:theme(colors.danger.100/20%)]',
+        'data-[hovered=true]:bg-danger-3 text-danger-11 [--rippleBg:theme(colors.danger.11/10%)] dark:data-[hovered=true]:bg-dangerDark-3 dark:text-dangerDark-11 dark:[--rippleBg:theme(colors.dangerDark.11/10%)]',
     },
 
     // color / border
@@ -237,43 +244,43 @@ export const button = tv({
       variant: 'border',
       color: 'default',
       class:
-        'border-neutral-400 text-neutral-700 [--rippleBg:theme(colors.neutral.700/10%)] dark:border-neutral-700 dark:text-neutral-300 dark:[--rippleBg:theme(colors.neutral.300/20%)]',
+        'border-muted-7 data-[hovered=true]:border-muted-8 text-muted-11 [--rippleBg:theme(colors.muted.11/10%)] dark:border-mutedDark-7 dark:data-[hovered=true]:border-mutedDark-8 dark:text-mutedDark-11 [--rippleBg:theme(colors.mutedDark.11/10%)]',
     },
     {
       variant: 'border',
       color: 'primary',
       class:
-        'border-primary-400 text-primary-700 [--rippleBg:theme(colors.primary.700/10%)] dark:border-primary-700 dark:text-primary-300 dark:[--rippleBg:theme(colors.primary.300/20%)]',
+        'border-primary-7 data-[hovered=true]:border-primary-8 text-primary-11 [--rippleBg:theme(colors.primary.11/10%)] dark:border-primaryDark-7 dark:data-[hovered=true]:border-primaryDark-8 dark:text-primaryDark-11 [--rippleBg:theme(colors.primaryDark.11/10%)]',
     },
     {
       variant: 'border',
       color: 'secondary',
       class:
-        'border-secondary-400 text-secondary-700 [--rippleBg:theme(colors.secondary.700/10%)] dark:border-secondary-700 dark:text-secondary-300 dark:[--rippleBg:theme(colors.secondary.300/20%)]',
+        'border-secondary-7 data-[hovered=true]:border-secondary-8 text-secondary-11 [--rippleBg:theme(colors.secondary.11/10%)] dark:border-secondaryDark-7 dark:data-[hovered=true]:border-secondaryDark-8 dark:text-secondaryDark-11 [--rippleBg:theme(colors.secondaryDark.11/10%)]',
     },
     {
       variant: 'border',
       color: 'success',
       class:
-        'border-success-400 text-success-700 [--rippleBg:theme(colors.success.700/10%)] dark:border-success-700 dark:text-success-300 dark:[--rippleBg:theme(colors.success.300/20%)]',
+        'border-success-7 data-[hovered=true]:border-success-8 text-success-11 [--rippleBg:theme(colors.success.11/10%)] dark:border-successDark-7 dark:data-[hovered=true]:border-successDark-8 dark:text-successDark-11 [--rippleBg:theme(colors.successDark.11/10%)]',
     },
     {
       variant: 'border',
       color: 'info',
       class:
-        'border-info-400 text-info-700 [--rippleBg:theme(colors.info.700/10%)] dark:border-info-700 dark:text-info-300 dark:[--rippleBg:theme(colors.info.300/20%)]',
+        'border-info-7 data-[hovered=true]:border-info-8 text-info-11 [--rippleBg:theme(colors.info.11/10%)] dark:border-infoDark-7 dark:data-[hovered=true]:border-infoDark-8 dark:text-infoDark-11 [--rippleBg:theme(colors.infoDark.11/10%)]',
     },
     {
       variant: 'border',
       color: 'warning',
       class:
-        'border-warning-400 text-warning-700 [--rippleBg:theme(colors.warning.700/10%)] dark:border-warning-700 dark:text-warning-300 dark:[--rippleBg:theme(colors.warning.300/20%)]',
+        'border-warning-7 data-[hovered=true]:border-warning-8 text-warning-11 [--rippleBg:theme(colors.warning.11/10%)] dark:border-warningDark-7 dark:data-[hovered=true]:border-warningDark-8 dark:text-warningDark-11 [--rippleBg:theme(colors.warningDark.11/10%)]',
     },
     {
       variant: 'border',
       color: 'danger',
       class:
-        'border-danger-400 text-danger-700 [--rippleBg:theme(colors.danger.700/10%)] dark:border-danger-700 dark:text-danger-300 dark:[--rippleBg:theme(colors.danger.300/20%)]',
+        'border-danger-7 data-[hovered=true]:border-danger-8 text-danger-11 [--rippleBg:theme(colors.danger.11/10%)] dark:border-dangerDark-7 dark:data-[hovered=true]:border-dangerDark-8 dark:text-dangerDark-11 [--rippleBg:theme(colors.dangerDark.11/10%)]',
     },
   ],
 });

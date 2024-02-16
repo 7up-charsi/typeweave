@@ -34,7 +34,7 @@ const Template = () => (
           </AlertDialog.Close>
 
           <AlertDialog.Close>
-            <Button variant="solid" color="success">
+            <Button variant="text" color="success">
               Ok
             </Button>
           </AlertDialog.Close>

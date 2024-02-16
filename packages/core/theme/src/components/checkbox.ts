@@ -6,7 +6,7 @@ export const checkbox = tv({
   slots: {
     base: 'inline-flex group',
     checkbox: [
-      'rounded-full relative inline-flex items-center justify-center overflow-hidden transition-colors group-data-[checked=false]:text-neutral-400 group-data-[checked=false]:[--rippleBg:theme(colors.neutral.700/20%)] group-data-[checked=false]:group-data-[hovered=true]:bg-neutral-200 dark:group-data-[checked=false]:text-neutral-300 dark:group-data-[checked=false]:[--rippleBg:theme(colors.neutral.300/20%)] dark:group-data-[checked=false]:group-data-[hovered=true]:bg-neutral-700',
+      'rounded-full relative inline-flex items-center justify-center overflow-hidden transition-colors text-muted-11 [--rippleBg:theme(colors.muted.11/20%)] group-data-[hovered=true]:bg-muted-4 dark:text-mutedDark-11 dark:[--rippleBg:theme(colors.mutedDark.11/20%)] dark:group-data-[hovered=true]:bg-mutedDark-4',
       ...groupDataFocusVisible,
     ],
     nativeInput:
@@ -17,27 +17,27 @@ export const checkbox = tv({
     color: {
       primary: {
         checkbox:
-          'group-data-[checked=true]:[--rippleBg:theme(colors.primary.700/20%)] group-data-[checked=true]:text-primary-700 group-data-[checked=true]:group-data-[hovered=true]:bg-primary-200 dark:group-data-[checked=true]:[--rippleBg:theme(colors.primary.300/20%)] dark:group-data-[checked=true]:text-primary-300 dark:group-data-[checked=true]:group-data-[hovered=true]:bg-primary-800',
+          'group-data-[checked=true]:text-primary-11 group-data-[checked=true]:[--rippleBg:theme(colors.primary.11/20%)] group-data-[checked=true]:group-data-[hovered=true]:bg-primary-4 dark:group-data-[checked=true]:text-primaryDark-11 dark:group-data-[checked=true]:[--rippleBg:theme(colors.primaryDark.11/20%)] dark:group-data-[checked=true]:group-data-[hovered=true]:bg-primaryDark-4',
       },
       secondary: {
         checkbox:
-          'group-data-[checked=true]:[--rippleBg:theme(colors.secondary.700/20%)] group-data-[checked=true]:text-secondary-700 group-data-[checked=true]:group-data-[hovered=true]:bg-secondary-200 dark:group-data-[checked=true]:[--rippleBg:theme(colors.secondary.300/20%)] dark:group-data-[checked=true]:text-secondary-300 dark:group-data-[checked=true]:group-data-[hovered=true]:bg-secondary-800',
+          'group-data-[checked=true]:text-secondary-11 group-data-[checked=true]:[--rippleBg:theme(colors.secondary.11/20%)] group-data-[checked=true]:group-data-[hovered=true]:bg-secondary-4 dark:group-data-[checked=true]:text-secondaryDark-11 dark:group-data-[checked=true]:[--rippleBg:theme(colors.secondaryDark.11/20%)] dark:group-data-[checked=true]:group-data-[hovered=true]:bg-secondaryDark-4',
       },
       success: {
         checkbox:
-          'group-data-[checked=true]:[--rippleBg:theme(colors.success.700/20%)] group-data-[checked=true]:text-success-700 group-data-[checked=true]:group-data-[hovered=true]:bg-success-200 dark:group-data-[checked=true]:[--rippleBg:theme(colors.success.300/20%)] dark:group-data-[checked=true]:text-success-300 dark:group-data-[checked=true]:group-data-[hovered=true]:bg-success-800',
+          'group-data-[checked=true]:text-success-11 group-data-[checked=true]:[--rippleBg:theme(colors.success.11/20%)] group-data-[checked=true]:group-data-[hovered=true]:bg-success-4 dark:group-data-[checked=true]:text-successDark-11 dark:group-data-[checked=true]:[--rippleBg:theme(colors.successDark.11/20%)] dark:group-data-[checked=true]:group-data-[hovered=true]:bg-successDark-4',
       },
       info: {
         checkbox:
-          'group-data-[checked=true]:[--rippleBg:theme(colors.info.700/20%)] group-data-[checked=true]:text-info-700 group-data-[checked=true]:group-data-[hovered=true]:bg-info-200 dark:group-data-[checked=true]:[--rippleBg:theme(colors.info.300/20%)] dark:group-data-[checked=true]:text-info-300 dark:group-data-[checked=true]:group-data-[hovered=true]:bg-info-800',
+          'group-data-[checked=true]:text-info-11 group-data-[checked=true]:[--rippleBg:theme(colors.info.11/20%)] group-data-[checked=true]:group-data-[hovered=true]:bg-info-4 dark:group-data-[checked=true]:text-infoDark-11 dark:group-data-[checked=true]:[--rippleBg:theme(colors.infoDark.11/20%)] dark:group-data-[checked=true]:group-data-[hovered=true]:bg-infoDark-4',
       },
       warning: {
         checkbox:
-          'group-data-[checked=true]:[--rippleBg:theme(colors.warning.700/20%)] group-data-[checked=true]:text-warning-700 group-data-[checked=true]:group-data-[hovered=true]:bg-warning-200 dark:group-data-[checked=true]:[--rippleBg:theme(colors.warning.300/20%)] dark:group-data-[checked=true]:text-warning-300 dark:group-data-[checked=true]:group-data-[hovered=true]:bg-warning-800',
+          'group-data-[checked=true]:text-warning-11 group-data-[checked=true]:[--rippleBg:theme(colors.warning.11/20%)] group-data-[checked=true]:group-data-[hovered=true]:bg-warning-4 dark:group-data-[checked=true]:text-warningDark-11 dark:group-data-[checked=true]:[--rippleBg:theme(colors.warningDark.11/20%)] dark:group-data-[checked=true]:group-data-[hovered=true]:bg-warningDark-4',
       },
       danger: {
         checkbox:
-          'group-data-[checked=true]:[--rippleBg:theme(colors.danger.700/20%)] group-data-[checked=true]:text-danger-700 group-data-[checked=true]:group-data-[hovered=true]:bg-danger-200 dark:group-data-[checked=true]:[--rippleBg:theme(colors.danger.300/20%)] dark:group-data-[checked=true]:text-danger-300 dark:group-data-[checked=true]:group-data-[hovered=true]:bg-danger-800',
+          'group-data-[checked=true]:text-danger-11 group-data-[checked=true]:[--rippleBg:theme(colors.danger.11/20%)] group-data-[checked=true]:group-data-[hovered=true]:bg-danger-4 dark:group-data-[checked=true]:text-dangerDark-11 dark:group-data-[checked=true]:[--rippleBg:theme(colors.dangerDark.11/20%)] dark:group-data-[checked=true]:group-data-[hovered=true]:bg-dangerDark-4',
       },
     },
     size: {

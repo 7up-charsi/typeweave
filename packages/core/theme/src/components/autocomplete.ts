@@ -4,16 +4,16 @@ import { ClassNames } from '../types';
 export const autocomplete = tv({
   slots: {
     listbox:
-      'w-[--reference-width] bg-white border border-muted-300 overflow-y-auto rounded max-h-[300px] dark:bg-muted-700 dark:border-muted-500',
+      'w-[--reference-width] bg-muted-2 border border-muted-6 overflow-y-auto rounded max-h-[300px] dark:bg-mutedDark-2 dark:border-mutedDark-6',
     option:
-      'h-10 flex items-center px-2 select-none truncate cursor-pointer data-[disabled=true]:opacity-50 data-[selected=true]:bg-muted-300 data-[focused=true]:data-[selected=false]:bg-muted-200 data-[focused=true]:data-[selected=true]:bg-muted-300 dark:data-[selected=true]:bg-muted-500 dark:data-[focused=true]:data-[selected=false]:bg-muted-600 dark:data-[focused=true]:data-[selected=true]:bg-muted-500 text-muted-700 dark:text-white',
+      'h-10 flex items-center px-2 select-none truncate cursor-pointer data-[disabled=true]:opacity-50 text-muted-11 dark:text-mutedDark-11 data-[selected=true]:bg-muted-5 data-[focused=true]:data-[selected=false]:bg-muted-4 data-[focused=true]:data-[selected=true]:bg-muted-5 dark:data-[selected=true]:bg-mutedDark-5 dark:data-[focused=true]:data-[selected=false]:bg-mutedDark-4 dark:data-[focused=true]:data-[selected=true]:bg-mutedDark-5',
     noOptions:
-      'h-10 flex items-center justify-center capitalize text-muted-700 dark:text-muted-200',
+      'h-10 flex items-center justify-center capitalize text-muted-11 dark:text-mutedDark-11',
     loading:
-      'h-10 flex items-center justify-center capitalize text-muted-700 dark:text-muted-200',
+      'h-10 flex items-center justify-center capitalize text-muted-11 dark:text-mutedDark-11',
     group: 'relative isolate',
     groupHeader:
-      'sticky top-0 bg-white dark:bg-muted-700 px-2 py-2 z-50 text-sm font-semibold text-muted-700 dark:text-white',
+      'sticky top-0 bg-muted-2 dark:bg-mutedDark-2 px-2 py-2 z-50 text-sm font-semibold text-muted-11 dark:text-mutedDark-11',
     groupItems: '',
   },
   variants: {
@@ -29,8 +29,8 @@ export const autocomplete = tv({
 export const autocompleteInput = tv({
   slots: {
     endContent: 'flex items-center',
-    openIndecator: 'text-muted-500 dark:text-muted-400',
-    clearButton: 'text-muted-500 dark:text-muted-400',
+    openIndecator: 'text-muted-11 dark:text-mutedDark-11',
+    clearButton: 'text-muted-11 dark:text-mutedDark-11',
     inputWrapper: '',
     input: '',
   },

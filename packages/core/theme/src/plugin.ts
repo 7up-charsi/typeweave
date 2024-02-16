@@ -3,80 +3,65 @@ import animatePlugin from 'tailwindcss-animate';
 import tailwindcssForms from '@tailwindcss/forms';
 import { fontFamily } from 'tailwindcss/defaultTheme';
 import deepmerge from 'deepmerge';
-import {
-  amber,
-  violet,
-  fuchsia,
-  emerald,
-  sky,
-  rose,
-  neutral,
-} from 'tailwindcss/colors';
+import * as colors from '@radix-ui/colors';
 
-type ColorScale = {
-  50?: string;
-  100?: string;
-  200?: string;
-  300?: string;
-  400?: string;
-  500?: string;
-  600?: string;
-  700?: string;
-  800?: string;
-  900?: string;
-  950?: string;
-};
+type ColorScale = Record<string, string>;
+
+type Colors =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'info'
+  | 'muted'
+  | 'overlay';
+
+type Theme = Record<Colors, ColorScale>;
 
 type PluginConfig = {
-  layout?: {
-    radius?: {
-      sm?: string;
-      md?: string;
-      lg?: string;
-      xl?: string;
-    };
-  };
-  colors?: {
-    primary?: ColorScale;
-    secondary?: ColorScale;
-    success?: ColorScale;
-    warning?: ColorScale;
-    danger?: ColorScale;
-    info?: ColorScale;
-    muted?: ColorScale;
-  };
+  lightTheme?: Theme;
+  darkTheme?: Theme;
 };
 
-const defaultColors = {
-  primary: violet,
-  secondary: fuchsia,
-  success: emerald,
-  warning: amber,
-  danger: rose,
-  info: sky,
-  muted: neutral,
+const genColorScale = (color: ColorScale) =>
+  Object.values(color).reduce<ColorScale>(
+    (acc, value, i) => ((acc[i + 1] = value), acc),
+    {},
+  );
+
+const defaultLightTheme: Theme = {
+  primary: genColorScale(colors.violet),
+  secondary: genColorScale(colors.plum),
+  success: genColorScale(colors.green),
+  warning: genColorScale(colors.orange),
+  danger: genColorScale(colors.red),
+  info: genColorScale(colors.blue),
+  muted: genColorScale(colors.gray),
+  overlay: genColorScale(colors.blackA),
 };
 
-const defaultLayout = {
-  radius: {
-    sm: 'calc(0.5rem - 4px)',
-    md: 'calc(0.5rem - 2px)',
-    lg: '0.5rem',
-    xl: 'calc(0.5rem + 2px)',
-  },
+const defaultDarkTheme: Theme = {
+  primary: genColorScale(colors.violetDark),
+  secondary: genColorScale(colors.plumDark),
+  success: genColorScale(colors.greenDark),
+  warning: genColorScale(colors.orangeDark),
+  danger: genColorScale(colors.redDark),
+  info: genColorScale(colors.blueDark),
+  muted: genColorScale(colors.grayDark),
+  overlay: genColorScale(colors.whiteA),
 };
 
-export const gistui = ({ colors, layout }: PluginConfig = {}) => {
-  const mergedColors = deepmerge(colors ?? {}, defaultColors);
-  const mergedLayout = deepmerge(layout ?? {}, defaultLayout);
+export const gistui = ({ lightTheme, darkTheme }: PluginConfig = {}) => {
+  const userLightTheme = deepmerge(lightTheme ?? {}, defaultLightTheme);
+  const userDarkTheme = deepmerge(darkTheme ?? {}, defaultDarkTheme);
 
   return plugin(
     ({ addUtilities, addBase }) => {
       addBase([
         {
-          'html.dark body': {
-            'background-color': mergedColors.muted[900]!,
-            color: mergedColors.muted[50]!,
+          ':root.dark': {
+            'color-scheme': 'dark',
           },
         },
         {
@@ -107,8 +92,13 @@ export const gistui = ({ colors, layout }: PluginConfig = {}) => {
       darkMode: 'class',
       theme: {
         extend: {
-          colors: mergedColors,
-          borderRadius: mergedLayout.radius,
+          colors: {
+            ...userLightTheme,
+            ...Object.entries(userDarkTheme).reduce<Record<string, ColorScale>>(
+              (acc, [key, value]) => ((acc[`${key}Dark`] = value), acc),
+              {},
+            ),
+          },
           fontFamily: {
             sans: ["var(--font-geist-sans, 'Nunito Sans')", ...fontFamily.sans],
             mono: ['var(--font-geist-mono)', ...fontFamily.mono],
