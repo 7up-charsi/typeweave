@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-muted-1;
+  }
+
+  html.dark body {
+    @apply bg-mutedDark-1;
+  }
+}

@@ -6,40 +6,41 @@ const _switch = tv({
   slots: {
     base: 'inline-flex gap-2 group',
     switch: [
-      'rounded-full relative flex items-center transition-colors cursor-pointer group-data-[checked=false]:bg-neutral-200 isolate',
+      'rounded-full relative flex items-center transition-colors cursor-pointer isolate bg-muted-5 dark:bg-mutedDark-5',
       ...groupDataFocusVisible,
     ],
     indicator:
       'absolute z-10 bg-white shadow-md rounded-full left-[2px] translate-x-0 group-data-[checked=true]:left-[calc(100%-2px)] group-data-[checked=true]:-translate-x-full transition-[left,transform]',
     nativeInput:
       'absolute z-50 outline-none w-full h-full border-test opacity-0 absolute inset-0 cursor-pointer',
-    label: 'cursor-pointer select-none text-neutral-700 first-letter:uppercase',
+    label:
+      'cursor-pointer select-none text-muted-11 dark:text-mutedDark-11 first-letter:uppercase',
   },
   variants: {
     color: {
       primary: {
         switch:
-          'group-data-[checked=true]:[--rippleBg:theme(colors.primary-800/20%)] group-data-[checked=true]:text-primary-700 group-data-[checked=true]:bg-primary-400',
+          'group-data-[checked=true]:text-primary-11 group-data-[checked=true]:bg-primary-9 dark:group-data-[checked=true]:text-primaryDark-11 dark:group-data-[checked=true]:bg-primaryDark-9',
       },
       secondary: {
         switch:
-          'group-data-[checked=true]:[--rippleBg:theme(colors.secondary-800/20%)] group-data-[checked=true]:text-secondary-700 group-data-[checked=true]:bg-secondary-400',
+          'group-data-[checked=true]:text-secondary-11 group-data-[checked=true]:bg-secondary-9 dark:group-data-[checked=true]:text-secondaryDark-11 dark:group-data-[checked=true]:bg-secondaryDark-9',
       },
       success: {
         switch:
-          'group-data-[checked=true]:[--rippleBg:theme(colors.success-800/20%)] group-data-[checked=true]:text-success-700 group-data-[checked=true]:bg-success-400',
+          'group-data-[checked=true]:text-success-11 group-data-[checked=true]:bg-success-9 dark:group-data-[checked=true]:text-successDark-11 dark:group-data-[checked=true]:bg-successDark-9',
       },
       info: {
         switch:
-          'group-data-[checked=true]:[--rippleBg:theme(colors.info-800/20%)] group-data-[checked=true]:text-info-700 group-data-[checked=true]:bg-info-400',
+          'group-data-[checked=true]:text-info-11 group-data-[checked=true]:bg-info-9 dark:group-data-[checked=true]:text-infoDark-11 dark:group-data-[checked=true]:bg-infoDark-9',
       },
       warning: {
         switch:
-          'group-data-[checked=true]:[--rippleBg:theme(colors.warning-800/20%)] group-data-[checked=true]:text-warning-700 group-data-[checked=true]:bg-warning-400',
+          'group-data-[checked=true]:text-warning-11 group-data-[checked=true]:bg-warning-9 dark:group-data-[checked=true]:text-warningDark-11 dark:group-data-[checked=true]:bg-warningDark-9',
       },
       danger: {
         switch:
-          'group-data-[checked=true]:[--rippleBg:theme(colors.danger-800/20%)] group-data-[checked=true]:text-danger-700 group-data-[checked=true]:bg-danger-400',
+          'group-data-[checked=true]:text-danger-11 group-data-[checked=true]:bg-danger-9 dark:group-data-[checked=true]:text-dangerDark-11 dark:group-data-[checked=true]:bg-dangerDark-9',
       },
     },
     size: {

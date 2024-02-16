@@ -7,7 +7,6 @@ export const alert = tv({
       solid: '',
       flat: '',
       border: 'border bg-transparent',
-      text: 'bg-transparent',
     },
     color: {
       success: '',
@@ -25,22 +24,22 @@ export const alert = tv({
     {
       variant: 'solid',
       color: 'success',
-      class: 'bg-success-500 text-white',
+      class: 'bg-success-9 dark:bg-successDark-9 text-white',
     },
     {
       variant: 'solid',
       color: 'info',
-      class: 'bg-info-500 text-white',
+      class: 'bg-info-9 dark:bg-infoDark-9 text-white',
     },
     {
       variant: 'solid',
       color: 'warning',
-      class: 'bg-warning-500 text-white',
+      class: 'bg-warning-9 dark:bg-warningDark-9 text-white',
     },
     {
       variant: 'solid',
       color: 'danger',
-      class: 'bg-danger-500 text-white',
+      class: 'bg-danger-9 dark:bg-dangerDark-9 text-white',
     },
 
     // color / flat
@@ -48,46 +47,24 @@ export const alert = tv({
       variant: 'flat',
       color: 'success',
       class:
-        'bg-success-100 text-success-700 dark:bg-success-900 dark:text-success-200',
+        'bg-success-3 text-success-11 dark:bg-successDark-3 dark:text-successDark-11',
     },
     {
       variant: 'flat',
       color: 'info',
-      class: 'bg-info-100 text-info-700 dark:bg-info-900 dark:text-info-200',
+      class: 'bg-info-3 text-info-11 dark:bg-infoDark-3 dark:text-infoDark-11',
     },
     {
       variant: 'flat',
       color: 'warning',
       class:
-        'bg-warning-100 text-warning-700 dark:bg-warning-900 dark:text-warning-200',
+        'bg-warning-3 text-warning-11 dark:bg-warningDark-3 dark:text-warningDark-11',
     },
     {
       variant: 'flat',
       color: 'danger',
       class:
-        'bg-danger-100 text-danger-700 dark:bg-danger-900 dark:text-danger-200',
-    },
-
-    // color / text
-    {
-      variant: 'text',
-      color: 'success',
-      class: 'text-success-700 dark:text-success-200',
-    },
-    {
-      variant: 'text',
-      color: 'info',
-      class: 'text-info-700 dark:text-info-200',
-    },
-    {
-      variant: 'text',
-      color: 'warning',
-      class: 'text-warning-700 dark:text-warning-200',
-    },
-    {
-      variant: 'text',
-      color: 'danger',
-      class: 'text-danger-700 dark:text-danger-200',
+        'bg-danger-3 text-danger-11 dark:bg-dangerDark-3 dark:text-dangerDark-11',
     },
 
     // color / border
@@ -95,25 +72,25 @@ export const alert = tv({
       variant: 'border',
       color: 'success',
       class:
-        'border-success-300 text-success-700 dark:border-success-800 dark:text-success-200',
+        'border-success-6 text-success-11 dark:border-successDark-6 dark:text-successDark-11',
     },
     {
       variant: 'border',
       color: 'info',
       class:
-        'border-info-300 text-info-700 dark:border-info-800 dark:text-info-200',
+        'border-info-6 text-info-11 dark:border-infoDark-6 dark:text-infoDark-11',
     },
     {
       variant: 'border',
       color: 'warning',
       class:
-        'border-warning-300 text-warning-700 dark:border-warning-800 dark:text-warning-200',
+        'border-warning-6 text-warning-11 dark:border-warningDark-6 dark:text-warningDark-11',
     },
     {
       variant: 'border',
       color: 'danger',
       class:
-        'border-danger-300 text-danger-700 dark:border-danger-800 dark:text-danger-200',
+        'border-danger-6 text-danger-11 dark:border-dangerDark-6 dark:text-dangerDark-11',
     },
   ],
 });

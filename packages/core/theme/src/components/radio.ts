@@ -6,7 +6,7 @@ export const radio = tv({
   slots: {
     base: 'inline-flex group',
     radio: [
-      'rounded-full relative inline-flex items-center justify-center overflow-hidden transition-colors group-data-[selected=false]:text-neutral-400 group-data-[selected=false]:[--rippleBg:theme(colors.neutral-800/20%)] group-data-[selected=false]:group-data-[hovered=true]:bg-neutral-200',
+      'rounded-full relative inline-flex items-center justify-center overflow-hidden transition-colors text-muted-11 [--rippleBg:theme(colors.muted.11/20%)] group-data-[hovered=true]:bg-muted-4 dark:text-mutedDark-11 dark:[--rippleBg:theme(colors.mutedDark.11/20%)] dark:group-data-[hovered=true]:bg-mutedDark-4',
       ...groupDataFocusVisible,
     ],
     nativeInput:
@@ -17,27 +17,27 @@ export const radio = tv({
     color: {
       primary: {
         radio:
-          'group-data-[selected=true]:[--rippleBg:theme(colors.primary-800/20%)] group-data-[selected=true]:text-primary-700 group-data-[selected=true]:group-data-[hovered=true]:bg-primary-100',
+          'group-data-[selected=true]:text-primary-11 group-data-[selected=true]:[--rippleBg:theme(colors.primary.11/20%)] group-data-[selected=true]:group-data-[hovered=true]:bg-primary-4 dark:group-data-[selected=true]:text-primaryDark-11 dark:group-data-[selected=true]:[--rippleBg:theme(colors.primaryDark.11/20%)] dark:group-data-[selected=true]:group-data-[hovered=true]:bg-primaryDark-4',
       },
       secondary: {
         radio:
-          'group-data-[selected=true]:[--rippleBg:theme(colors.secondary-800/20%)] group-data-[selected=true]:text-secondary-700 group-data-[selected=true]:group-data-[hovered=true]:bg-secondary-100',
+          'group-data-[selected=true]:text-secondary-11 group-data-[selected=true]:[--rippleBg:theme(colors.secondary.11/20%)] group-data-[selected=true]:group-data-[hovered=true]:bg-secondary-4 dark:group-data-[selected=true]:text-secondaryDark-11 dark:group-data-[selected=true]:[--rippleBg:theme(colors.secondaryDark.11/20%)] dark:group-data-[selected=true]:group-data-[hovered=true]:bg-secondaryDark-4',
       },
       success: {
         radio:
-          'group-data-[selected=true]:[--rippleBg:theme(colors.success-800/20%)] group-data-[selected=true]:text-success-700 group-data-[selected=true]:group-data-[hovered=true]:bg-success-100',
+          'group-data-[selected=true]:text-success-11 group-data-[selected=true]:[--rippleBg:theme(colors.success.11/20%)] group-data-[selected=true]:group-data-[hovered=true]:bg-success-4 dark:group-data-[selected=true]:text-successDark-11 dark:group-data-[selected=true]:[--rippleBg:theme(colors.successDark.11/20%)] dark:group-data-[selected=true]:group-data-[hovered=true]:bg-successDark-4',
       },
       info: {
         radio:
-          'group-data-[selected=true]:[--rippleBg:theme(colors.info-800/20%)] group-data-[selected=true]:text-info-700 group-data-[selected=true]:group-data-[hovered=true]:bg-info-100',
+          'group-data-[selected=true]:text-info-11 group-data-[selected=true]:[--rippleBg:theme(colors.info.11/20%)] group-data-[selected=true]:group-data-[hovered=true]:bg-info-4 dark:group-data-[selected=true]:text-infoDark-11 dark:group-data-[selected=true]:[--rippleBg:theme(colors.infoDark.11/20%)] dark:group-data-[selected=true]:group-data-[hovered=true]:bg-infoDark-4',
       },
       warning: {
         radio:
-          'group-data-[selected=true]:[--rippleBg:theme(colors.warning-800/20%)] group-data-[selected=true]:text-warning-700 group-data-[selected=true]:group-data-[hovered=true]:bg-warning-100',
+          'group-data-[selected=true]:text-warning-11 group-data-[selected=true]:[--rippleBg:theme(colors.warning.11/20%)] group-data-[selected=true]:group-data-[hovered=true]:bg-warning-4 dark:group-data-[selected=true]:text-warningDark-11 dark:group-data-[selected=true]:[--rippleBg:theme(colors.warningDark.11/20%)] dark:group-data-[selected=true]:group-data-[hovered=true]:bg-warningDark-4',
       },
       danger: {
         radio:
-          'group-data-[selected=true]:[--rippleBg:theme(colors.danger-800/20%)] group-data-[selected=true]:text-danger-700 group-data-[selected=true]:group-data-[hovered=true]:bg-danger-100',
+          'group-data-[selected=true]:text-danger-11 group-data-[selected=true]:[--rippleBg:theme(colors.danger.11/20%)] group-data-[selected=true]:group-data-[hovered=true]:bg-danger-4 dark:group-data-[selected=true]:text-dangerDark-11 dark:group-data-[selected=true]:[--rippleBg:theme(colors.dangerDark.11/20%)] dark:group-data-[selected=true]:group-data-[hovered=true]:bg-dangerDark-4',
       },
     },
     size: {
