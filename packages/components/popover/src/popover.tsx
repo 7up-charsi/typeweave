@@ -10,9 +10,10 @@ import * as Popper from '@gist-ui/popper';
 import { createPortal } from 'react-dom';
 import { useIsDisabled } from '@gist-ui/use-is-disabled';
 import { createContextScope } from '@gist-ui/context';
-import { useEffect, useId } from 'react';
+import { useEffect, useId, useMemo } from 'react';
 import { VisuallyHidden } from '@gist-ui/visually-hidden';
 import { mergeRefs } from '@gist-ui/react-utils';
+import { PopoverVariantProps, popover } from '@gist-ui/theme';
 
 interface PopoverContext {
   isOpen: boolean;
@@ -28,6 +29,9 @@ const Popover_Name = 'Popover.Root';
 
 const [RootProvider, useRootContext] =
   createContextScope<PopoverContext>(Popover_Name);
+
+const [StylesProvider, useStylesContext] =
+  createContextScope<ReturnType<typeof popover>>(Popover_Name);
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -219,9 +223,10 @@ export const Title = (props: TitleProps) => {
   const { children, className } = props;
 
   const rootContext = useRootContext(Title_Name);
+  const styles = useStylesContext(Title_Name);
 
   return (
-    <div id={rootContext.titleId} className={className}>
+    <div id={rootContext.titleId} className={styles.title({ className })}>
       {children}
     </div>
   );
@@ -242,9 +247,13 @@ export const Description = (props: DescriptionProps) => {
   const { children, className } = props;
 
   const rootContext = useRootContext(Description_Name);
+  const styles = useStylesContext(Description_Name);
 
   return (
-    <div id={rootContext.descriptionId} className={className}>
+    <div
+      id={rootContext.descriptionId}
+      className={styles.description({ className })}
+    >
       {children}
     </div>
   );
@@ -256,7 +265,9 @@ Description.displayName = 'gist-ui.' + Description_Name;
 
 const Content_Name = 'Popover.Content';
 
-export interface ContentProps extends Popper.FloatingProps {
+export interface ContentProps
+  extends Popper.FloatingProps,
+    PopoverVariantProps {
   children?: React.ReactNode;
   className?: string;
   noA11yTitle?: boolean;
@@ -270,6 +281,7 @@ export const Content = (props: ContentProps) => {
     className,
     noA11yDescription,
     noA11yTitle,
+    shadow,
     ...restProps
   } = props;
 
@@ -282,32 +294,36 @@ export const Content = (props: ContentProps) => {
     },
   });
 
+  const styles = useMemo(() => popover({ shadow }), [shadow]);
+
   return (
     <Popper.Floating arrowPadding={arrowPadding} {...restProps}>
       {({ floatingRef, style }) => (
-        <FocusTrap loop trapped>
-          <div
-            ref={mergeRefs(floatingRef, setOutsideEle)}
-            role="dialog"
-            aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
-            aria-describedby={
-              noA11yDescription ? undefined : rootContext.descriptionId
-            }
-            id={rootContext.contentId}
-            className={className}
-            style={style}
-          >
-            <VisuallyHidden>
-              <button onPointerUp={rootContext.handleClose}>close </button>
-            </VisuallyHidden>
+        <StylesProvider {...styles}>
+          <FocusTrap loop trapped>
+            <div
+              ref={mergeRefs(floatingRef, setOutsideEle)}
+              role="dialog"
+              aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
+              aria-describedby={
+                noA11yDescription ? undefined : rootContext.descriptionId
+              }
+              id={rootContext.contentId}
+              className={styles.content({ className })}
+              style={style}
+            >
+              <VisuallyHidden>
+                <button onPointerUp={rootContext.handleClose}>close </button>
+              </VisuallyHidden>
 
-            {children}
+              {children}
 
-            <VisuallyHidden>
-              <button onPointerUp={rootContext.handleClose}>close </button>
-            </VisuallyHidden>
-          </div>
-        </FocusTrap>
+              <VisuallyHidden>
+                <button onPointerUp={rootContext.handleClose}>close </button>
+              </VisuallyHidden>
+            </div>
+          </FocusTrap>
+        </StylesProvider>
       )}
     </Popper.Floating>
   );
