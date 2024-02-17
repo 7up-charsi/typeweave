@@ -1,8 +1,8 @@
 'use client';
 
 import { focus, getTabbableEdges } from './utils';
-import { Slot } from '@gist-ui/slot';
-import { GistUiError } from '@gist-ui/error';
+import { Slot } from '@webbo-ui/slot';
+import { CustomError } from '@webbo-ui/error';
 import { useEffect, useRef, useState } from 'react';
 
 export type FocusScope = { paused: boolean; pause(): void; resume(): void };
@@ -116,7 +116,7 @@ const FocusTrap = (props: FocusTrapProps) => {
     focusScopesStack?.add(focusScope);
 
     if (!('focus' in container))
-      throw new GistUiError(
+      throw new CustomError(
         'FocusTrap',
         'container must be focusable, hint =  set tabIndex to -1',
       );
@@ -175,7 +175,7 @@ const FocusTrap = (props: FocusTrapProps) => {
   );
 };
 
-FocusTrap.displayName = 'gist-ui.FocusTrap';
+FocusTrap.displayName = 'webbo-ui.FocusTrap';
 
 export default FocusTrap;
 

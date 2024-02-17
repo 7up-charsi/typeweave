@@ -63,6 +63,6 @@ export type CheckboxVariantProps = VariantProps<typeof checkbox>;
 export type CheckboxClassNames = ClassNames<typeof checkbox.slots>;
 
 export const checkboxStyles = [
-  './node_modules/@gist-ui/theme/src/components/checkbox.ts',
-  './node_modules/@gist-ui/theme/src/classes.ts',
+  './node_modules/@webbo-ui/theme/src/components/checkbox.ts',
+  './node_modules/@webbo-ui/theme/src/classes.ts',
 ];

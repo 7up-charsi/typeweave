@@ -1,15 +1,15 @@
-# @gist-ui/visually-hidden
+# @webbo-ui/visually-hidden
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/visually-hidden
+pnpm add @webbo-ui/visually-hidden
 # or
-yarn add @gist-ui/visually-hidden
+yarn add @webbo-ui/visually-hidden
 # or
-npm i @gist-ui/visually-hidden
+npm i @webbo-ui/visually-hidden
 ```
 
 ## Licence

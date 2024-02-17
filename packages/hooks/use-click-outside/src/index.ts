@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
+import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 
 export interface UseClickOutsideProps {
   /**

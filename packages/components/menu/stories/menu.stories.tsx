@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { menu } from '@gist-ui/theme';
-import { Button } from '@gist-ui/button';
+import { menu } from '@webbo-ui/theme';
+import { Button } from '@webbo-ui/button';
 
 import * as Menu from '../src';
 

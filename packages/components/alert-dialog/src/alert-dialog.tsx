@@ -1,20 +1,20 @@
 'use client';
 
-import { createContextScope } from '@gist-ui/context';
-import { useControllableState } from '@gist-ui/use-controllable-state';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
-import { useIsDisabled } from '@gist-ui/use-is-disabled';
+import { createContextScope } from '@webbo-ui/context';
+import { useControllableState } from '@webbo-ui/use-controllable-state';
+import { useCallbackRef } from '@webbo-ui/use-callback-ref';
+import { useIsDisabled } from '@webbo-ui/use-is-disabled';
 import { usePress } from '@react-aria/interactions';
 import { useEffect, useId, useMemo, useRef } from 'react';
-import { Slot } from '@gist-ui/slot';
-import { FocusScope, FocusTrap } from '@gist-ui/focus-trap';
-import { useScrollLock } from '@gist-ui/use-scroll-lock';
+import { Slot } from '@webbo-ui/slot';
+import { FocusScope, FocusTrap } from '@webbo-ui/focus-trap';
+import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { createPortal } from 'react-dom';
 import {
   AlertDialogVariantProps,
   alertDialog,
   ClassValue,
-} from '@gist-ui/theme';
+} from '@webbo-ui/theme';
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -106,7 +106,7 @@ export const Root = (props: RootProps) => {
   );
 };
 
-Root.displayName = 'gist-ui.' + Root_Name;
+Root.displayName = 'webbo-ui.' + Root_Name;
 
 // *-*-*-*-* Trigger *-*-*-*-*
 
@@ -144,7 +144,7 @@ export const Trigger = (props: TriggerProps) => {
   );
 };
 
-Trigger.displayName = 'gist-ui.' + Trigger_Name;
+Trigger.displayName = 'webbo-ui.' + Trigger_Name;
 
 // *-*-*-*-* Close *-*-*-*-*
 
@@ -173,7 +173,7 @@ export const Close = (props: CloseProps) => {
   );
 };
 
-Close.displayName = 'gist-ui.' + Close_Name;
+Close.displayName = 'webbo-ui.' + Close_Name;
 
 // *-*-*-*-* Portal *-*-*-*-*
 
@@ -192,7 +192,7 @@ export const Portal = (props: PortalProps) => {
   return rootContext.isOpen ? createPortal(children, container) : null;
 };
 
-Portal.displayName = 'gist-ui.' + Portal_Name;
+Portal.displayName = 'webbo-ui.' + Portal_Name;
 
 // *-*-*-*-* Content *-*-*-*-*
 
@@ -248,7 +248,7 @@ export const Content = (props: ContentProps) => {
   );
 };
 
-Content.displayName = 'gist-ui.' + Content_Name;
+Content.displayName = 'webbo-ui.' + Content_Name;
 
 // *-*-*-*-* Title *-*-*-*-*
 
@@ -275,7 +275,7 @@ export const Title = (props: TitleProps) => {
   );
 };
 
-Title.displayName = 'gist-ui.' + Title_Name;
+Title.displayName = 'webbo-ui.' + Title_Name;
 
 // *-*-*-*-* Description *-*-*-*-*
 
@@ -302,7 +302,7 @@ export const Description = (props: DescriptionProps) => {
   );
 };
 
-Description.displayName = 'gist-ui.' + Description_Name;
+Description.displayName = 'webbo-ui.' + Description_Name;
 
 // *-*-*-*-* Actions *-*-*-*-*
 
@@ -321,4 +321,4 @@ export const Actions = (props: OverlayProps) => {
   return <div className={stylesContext.actions({ className })}>{children}</div>;
 };
 
-Actions.displayName = 'gist-ui.' + Actions_Name;
+Actions.displayName = 'webbo-ui.' + Actions_Name;

@@ -1,15 +1,15 @@
-# @gist-ui/chip
+# @webbo-ui/chip
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/chip
+pnpm add @webbo-ui/chip
 # or
-yarn add @gist-ui/chip
+yarn add @webbo-ui/chip
 # or
-npm i @gist-ui/chip
+npm i @webbo-ui/chip
 ```
 
 ## Licence

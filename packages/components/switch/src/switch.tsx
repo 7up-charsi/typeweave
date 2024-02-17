@@ -1,15 +1,15 @@
 'use client';
 
 import { forwardRef, useId } from 'react';
-import { useControllableState } from '@gist-ui/use-controllable-state';
-import { mergeProps } from '@gist-ui/react-utils';
+import { useControllableState } from '@webbo-ui/use-controllable-state';
+import { mergeProps } from '@webbo-ui/react-utils';
 import { useHover, usePress } from '@react-aria/interactions';
 import { useFocusRing } from '@react-aria/focus';
 import {
   SwitchClassNames,
   SwitchVariantProps,
   switch as switchStyles,
-} from '@gist-ui/theme';
+} from '@webbo-ui/theme';
 
 export interface SwitchProps extends SwitchVariantProps {
   defaultChecked?: boolean;
@@ -101,6 +101,6 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
   );
 });
 
-Switch.displayName = 'gist-ui.Switch';
+Switch.displayName = 'webbo-ui.Switch';
 
 export default Switch;

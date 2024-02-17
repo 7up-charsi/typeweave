@@ -1,15 +1,15 @@
-# @gist-ui/radio
+# @webbo-ui/radio
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/radio
+pnpm add @webbo-ui/radio
 # or
-yarn add @gist-ui/radio
+yarn add @webbo-ui/radio
 # or
-npm i @gist-ui/radio
+npm i @webbo-ui/radio
 ```
 
 ## Licence

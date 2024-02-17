@@ -1,15 +1,15 @@
-# @gist-ui/shared-utils
+# @webbo-ui/shared-utils
 
 This package contains common used utilities
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/shared-utils
+pnpm add @webbo-ui/shared-utils
 # or
-yarn add @gist-ui/shared-utils
+yarn add @webbo-ui/shared-utils
 # or
-npm i @gist-ui/shared-utils
+npm i @webbo-ui/shared-utils
 ```
 
 ## API Reference

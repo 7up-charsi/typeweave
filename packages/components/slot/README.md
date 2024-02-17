@@ -1,15 +1,15 @@
-# @gist-ui/slot
+# @webbo-ui/slot
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/slot
+pnpm add @webbo-ui/slot
 # or
-yarn add @gist-ui/slot
+yarn add @webbo-ui/slot
 # or
-npm i @gist-ui/slot
+npm i @webbo-ui/slot
 ```
 
 ## Licence

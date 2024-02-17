@@ -1,5 +1,5 @@
 import React from 'react';
-import { radio } from '@gist-ui/theme';
+import { radio } from '@webbo-ui/theme';
 
 import * as Radio from '../src';
 

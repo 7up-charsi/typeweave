@@ -1,5 +1,5 @@
 import React from 'react';
-import { input } from '@gist-ui/theme';
+import { input } from '@webbo-ui/theme';
 
 import {
   NumberInput,

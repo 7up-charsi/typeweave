@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { alert } from '@gist-ui/theme';
+import { alert } from '@webbo-ui/theme';
 import { Alert } from '../src';
 
 const meta = {

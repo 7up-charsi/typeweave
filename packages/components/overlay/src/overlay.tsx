@@ -1,6 +1,6 @@
 'use server';
 
-import { OverlayVariantProps, overlay } from '@gist-ui/theme';
+import { OverlayVariantProps, overlay } from '@webbo-ui/theme';
 import { forwardRef } from 'react';
 
 export interface OverlayProps extends OverlayVariantProps {
@@ -20,6 +20,6 @@ const Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
   );
 });
 
-Overlay.displayName = 'gist-ui.Overlay';
+Overlay.displayName = 'webbo-ui.Overlay';
 
 export default Overlay;

@@ -1,18 +1,18 @@
 'use client';
 
-import { createContextScope } from '@gist-ui/context';
-import { Slot } from '@gist-ui/slot';
-import * as Popper from '@gist-ui/popper';
-import { useControllableState } from '@gist-ui/use-controllable-state';
-import { useClickOutside } from '@gist-ui/use-click-outside';
+import { createContextScope } from '@webbo-ui/context';
+import { Slot } from '@webbo-ui/slot';
+import * as Popper from '@webbo-ui/popper';
+import { useControllableState } from '@webbo-ui/use-controllable-state';
+import { useClickOutside } from '@webbo-ui/use-click-outside';
 import { useFocusVisible, useHover, usePress } from '@react-aria/interactions';
 import { createPortal } from 'react-dom';
-import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
-import { MenuVariantProps, menu, ClassValue } from '@gist-ui/theme';
-import { useScrollLock } from '@gist-ui/use-scroll-lock';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
-import { useIsDisabled } from '@gist-ui/use-is-disabled';
-import { VisuallyHidden } from '@gist-ui/visually-hidden';
+import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
+import { MenuVariantProps, menu, ClassValue } from '@webbo-ui/theme';
+import { useScrollLock } from '@webbo-ui/use-scroll-lock';
+import { useCallbackRef } from '@webbo-ui/use-callback-ref';
+import { useIsDisabled } from '@webbo-ui/use-is-disabled';
+import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { forwardRef, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 const Root_Name = 'Menu.Root';
@@ -71,7 +71,7 @@ export const Root = (props: RootProps) => {
   );
 };
 
-Root.displayName = 'gist-ui.' + Root_Name;
+Root.displayName = 'webbo-ui.' + Root_Name;
 
 // *-*-*-*-* Trigger *-*-*-*-*
 
@@ -113,7 +113,7 @@ export const Trigger = (props: TriggerProps) => {
   );
 };
 
-Trigger.displayName = 'gist-ui.' + Trigger_Name;
+Trigger.displayName = 'webbo-ui.' + Trigger_Name;
 
 // *-*-*-*-* Portal *-*-*-*-*
 
@@ -134,7 +134,7 @@ export const Portal = ({ children, container }: PortalProps) => {
   );
 };
 
-Portal.displayName = 'gist-ui.' + Portal_Name;
+Portal.displayName = 'webbo-ui.' + Portal_Name;
 
 // *-*-*-*-* Menu *-*-*-*-*
 
@@ -295,7 +295,7 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
   );
 });
 
-Menu.displayName = 'gist-ui.' + Menu_Name;
+Menu.displayName = 'webbo-ui.' + Menu_Name;
 
 // *-*-*-*-* Item *-*-*-*-*
 
@@ -395,7 +395,7 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
   );
 });
 
-Item.displayName = 'gist-ui.' + Item_Name;
+Item.displayName = 'webbo-ui.' + Item_Name;
 
 // *-*-*-*-* Group *-*-*-*-*
 
@@ -418,7 +418,7 @@ export const Label = (props: LabelProps) => {
   );
 };
 
-Label.displayName = 'gist-ui.' + Label_Name;
+Label.displayName = 'webbo-ui.' + Label_Name;
 
 // *-*-*-*-* Group *-*-*-*-*
 
@@ -448,7 +448,7 @@ export const Group = (props: GroupProps) => {
   );
 };
 
-Group.displayName = 'gist-ui.' + Group_Name;
+Group.displayName = 'webbo-ui.' + Group_Name;
 
 // *-*-*-*-* Separator *-*-*-*-*
 
@@ -471,7 +471,7 @@ export const Separator = (props: SeparatorProps) => {
   );
 };
 
-Separator.displayName = 'gist-ui.' + Separator_Name;
+Separator.displayName = 'webbo-ui.' + Separator_Name;
 
 // *-*-*-*-* CheckboxItem *-*-*-*-*
 
@@ -586,7 +586,7 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
   },
 );
 
-CheckboxItem.displayName = 'gist-ui.' + CheckboxItem_Name;
+CheckboxItem.displayName = 'webbo-ui.' + CheckboxItem_Name;
 
 // *-*-*-*-* RadioGroup *-*-*-*-*
 
@@ -626,7 +626,7 @@ export const RadioGroup = (props: RadioGroupProps) => {
   );
 };
 
-RadioGroup.displayName = 'gist-ui.' + RadioGroup_Name;
+RadioGroup.displayName = 'webbo-ui.' + RadioGroup_Name;
 
 // *-*-*-*-* RadioItem *-*-*-*-*
 
@@ -742,7 +742,7 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
   },
 );
 
-RadioItem.displayName = 'gist-ui.' + RadioItem_Name;
+RadioItem.displayName = 'webbo-ui.' + RadioItem_Name;
 
 // *-*-*-*-* Utils *-*-*-*-*
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { switch as _switch } from '@gist-ui/theme';
+import { switch as _switch } from '@webbo-ui/theme';
 
 import { Switch, SwitchProps } from '../src';
 

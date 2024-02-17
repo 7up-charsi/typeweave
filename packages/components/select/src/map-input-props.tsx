@@ -1,8 +1,8 @@
 'use client';
 
-import { Button } from '@gist-ui/button';
+import { Button } from '@webbo-ui/button';
 import { RenderInputProps } from './select';
-import { selectInput } from '@gist-ui/theme';
+import { selectInput } from '@webbo-ui/theme';
 
 const clearIcon_svg = (
   <svg

@@ -25,5 +25,5 @@ export type PopoverVariantProps = VariantProps<typeof popover>;
 export type PopoverClassNames = ClassNames<typeof popover.slots>;
 
 export const popoverStyles = [
-  './node_modules/@gist-ui/theme/src/components/popover.ts',
+  './node_modules/@webbo-ui/theme/src/components/popover.ts',
 ];

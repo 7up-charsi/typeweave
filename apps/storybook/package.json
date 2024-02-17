@@ -1,5 +1,5 @@
 {
-  "name": "@gist-ui/storybook",
+  "name": "@webbo-ui/storybook",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
-    "@gist-ui/theme": "workspace:*",
+    "@webbo-ui/theme": "workspace:*",
     "@storybook/addon-a11y": "^7.6.10",
     "@storybook/addon-essentials": "^7.6.10",
     "@storybook/addon-themes": "^7.6.10",

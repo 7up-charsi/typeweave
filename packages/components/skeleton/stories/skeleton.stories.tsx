@@ -1,5 +1,5 @@
 import React from 'react';
-import { skeleton } from '@gist-ui/theme';
+import { skeleton } from '@webbo-ui/theme';
 
 import { Skeleton } from '../src';
 

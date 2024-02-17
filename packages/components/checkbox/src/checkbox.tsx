@@ -1,16 +1,16 @@
 'use client';
 
 import { forwardRef, useEffect, useId, useRef } from 'react';
-import { useControllableState } from '@gist-ui/use-controllable-state';
-import { UseRippleProps, useRipple } from '@gist-ui/use-ripple';
-import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
+import { useControllableState } from '@webbo-ui/use-controllable-state';
+import { UseRippleProps, useRipple } from '@webbo-ui/use-ripple';
+import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
 import { useHover } from '@react-aria/interactions';
 import { useFocusRing } from '@react-aria/focus';
 import {
   CheckboxClassNames,
   CheckboxVariantProps,
   checkbox,
-} from '@gist-ui/theme';
+} from '@webbo-ui/theme';
 
 const icon_svg = (
   <svg
@@ -200,6 +200,6 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
   );
 });
 
-Checkbox.displayName = 'gist-ui.Checkbox';
+Checkbox.displayName = 'webbo-ui.Checkbox';
 
 export default Checkbox;

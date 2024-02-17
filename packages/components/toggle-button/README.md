@@ -1,15 +1,15 @@
-# @gist-ui/toggle-button
+# @webbo-ui/toggle-button
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/toggle-button
+pnpm add @webbo-ui/toggle-button
 # or
-yarn add @gist-ui/toggle-button
+yarn add @webbo-ui/toggle-button
 # or
-npm i @gist-ui/toggle-button
+npm i @webbo-ui/toggle-button
 ```
 
 ## Licence

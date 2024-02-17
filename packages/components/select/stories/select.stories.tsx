@@ -1,6 +1,6 @@
 import React from 'react';
-import { select } from '@gist-ui/theme';
-import { Input } from '@gist-ui/input';
+import { select } from '@webbo-ui/theme';
+import { Input } from '@webbo-ui/input';
 
 import { Option, Select, mapInputProps } from '../src';
 

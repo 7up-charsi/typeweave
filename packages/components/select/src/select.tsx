@@ -1,15 +1,15 @@
 'use client';
 
-import * as Popper from '@gist-ui/popper';
-import { useControllableState } from '@gist-ui/use-controllable-state';
-import { useClickOutside } from '@gist-ui/use-click-outside';
-import { GistUiError } from '@gist-ui/error';
+import * as Popper from '@webbo-ui/popper';
+import { useControllableState } from '@webbo-ui/use-controllable-state';
+import { useClickOutside } from '@webbo-ui/use-click-outside';
+import { CustomError } from '@webbo-ui/error';
 import { useFocusVisible } from '@react-aria/interactions';
 import { useId, useMemo, useRef, useState } from 'react';
 import { Option, OptionProps } from './option';
 import lodashGroupBy from 'lodash.groupby';
-import { SelectClassNames, SelectVariantProps, select } from '@gist-ui/theme';
-import { mergeRefs } from '@gist-ui/react-utils';
+import { SelectClassNames, SelectVariantProps, select } from '@webbo-ui/theme';
+import { mergeRefs } from '@webbo-ui/react-utils';
 
 export type Reason = 'select' | 'clear';
 
@@ -133,7 +133,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
     }
 
     if (!('label' in option))
-      throw new GistUiError(
+      throw new CustomError(
         'Select',
         'consider to add `label` property in all options or use `getOptionLabel` prop to get option label',
       );
@@ -150,7 +150,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
     resetStateValue: undefined,
     onChange: (value, reason) => {
       if (!reason)
-        throw new GistUiError(
+        throw new CustomError(
           'Autocomplete',
           'internal Error, reason is not defined',
         );
@@ -410,19 +410,19 @@ const _Select = (props: SelectProps<object, false, false>) => {
   };
 
   if (multiple && !Array.isArray(value))
-    throw new GistUiError(
+    throw new CustomError(
       'Select',
       'value must be an Array when multiple is true',
     );
 
   if (!multiple && Array.isArray(value))
-    throw new GistUiError(
+    throw new CustomError(
       'Select',
       'value must not be an Array when multiple is false',
     );
 
   if (!renderInput)
-    throw new GistUiError('Autocomplete', '`renderInput` prop is required');
+    throw new CustomError('Autocomplete', '`renderInput` prop is required');
 
   const styles = select({ shadow });
 
@@ -561,7 +561,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
   );
 };
 
-_Select.displayName = 'gist-ui.Select';
+_Select.displayName = 'webbo-ui.Select';
 
 export const Select = _Select as unknown as <
   Value extends object,

@@ -56,5 +56,5 @@ export type AutocompleteInputClassNames = ClassNames<
 >;
 
 export const autocompleteStyles = [
-  './node_modules/@gist-ui/theme/src/components/autocomplete.ts',
+  './node_modules/@webbo-ui/theme/src/components/autocomplete.ts',
 ];

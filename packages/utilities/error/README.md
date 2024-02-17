@@ -1,15 +1,15 @@
-# @gist-ui/error
+# @webbo-ui/error
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/error
+pnpm add @webbo-ui/error
 # or
-yarn add @gist-ui/error
+yarn add @webbo-ui/error
 # or
-npm i @gist-ui/error
+npm i @webbo-ui/error
 ```
 
 ## Licence

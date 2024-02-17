@@ -1,15 +1,15 @@
-# @gist-ui/popover
+# @webbo-ui/popover
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/popover
+pnpm add @webbo-ui/popover
 # or
-yarn add @gist-ui/popover
+yarn add @webbo-ui/popover
 # or
-npm i @gist-ui/popover
+npm i @webbo-ui/popover
 ```
 
 ## Licence

@@ -1,7 +1,7 @@
 'use server';
 
 import { forwardRef } from 'react';
-import { AlertVariantProps, alert as alertStyles } from '@gist-ui/theme';
+import { AlertVariantProps, alert as alertStyles } from '@webbo-ui/theme';
 
 const success = (
   <svg
@@ -101,6 +101,6 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
   );
 });
 
-Alert.displayName = 'gist-ui.Alert';
+Alert.displayName = 'webbo-ui.Alert';
 
 export default Alert;

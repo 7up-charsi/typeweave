@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
+import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { useEffect, useRef, useState } from 'react';
 
 export interface UseControllableStateProps<T, P> {

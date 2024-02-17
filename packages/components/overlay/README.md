@@ -1,15 +1,15 @@
-# @gist-ui/overlay
+# @webbo-ui/overlay
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/overlay
+pnpm add @webbo-ui/overlay
 # or
-yarn add @gist-ui/overlay
+yarn add @webbo-ui/overlay
 # or
-npm i @gist-ui/overlay
+npm i @webbo-ui/overlay
 ```
 
 ## Licence

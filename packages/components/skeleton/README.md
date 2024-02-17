@@ -1,15 +1,15 @@
-# @gist-ui/skeleton
+# @webbo-ui/skeleton
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/skeleton
+pnpm add @webbo-ui/skeleton
 # or
-yarn add @gist-ui/skeleton
+yarn add @webbo-ui/skeleton
 # or
-npm i @gist-ui/skeleton
+npm i @webbo-ui/skeleton
 ```
 
 ## Licence

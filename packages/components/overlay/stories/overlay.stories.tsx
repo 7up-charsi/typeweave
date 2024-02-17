@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { overlay } from '@gist-ui/theme';
+import { overlay } from '@webbo-ui/theme';
 
 import { Overlay, OverlayProps } from '../src';
 

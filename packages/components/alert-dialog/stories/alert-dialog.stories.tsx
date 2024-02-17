@@ -1,6 +1,6 @@
 import React from 'react';
-import { alertDialog } from '@gist-ui/theme';
-import { Button } from '@gist-ui/button';
+import { alertDialog } from '@webbo-ui/theme';
+import { Button } from '@webbo-ui/button';
 
 import * as AlertDialog from '../src';
 

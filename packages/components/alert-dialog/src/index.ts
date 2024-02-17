@@ -1,6 +1,6 @@
 import * as alertDialog from './alert-dialog';
-export { Overlay } from '@gist-ui/overlay';
-export type { OverlayProps } from '@gist-ui/overlay';
+export { Overlay } from '@webbo-ui/overlay';
+export type { OverlayProps } from '@webbo-ui/overlay';
 
 // export types
 export type {

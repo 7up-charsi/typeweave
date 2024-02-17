@@ -8,5 +8,5 @@ export const tooltip = tv({
 export type TooltipVariantProps = VariantProps<typeof tooltip>;
 
 export const tooltipStyles = [
-  './node_modules/@gist-ui/theme/src/components/tooltip.ts',
+  './node_modules/@webbo-ui/theme/src/components/tooltip.ts',
 ];

@@ -1,15 +1,15 @@
-# @gist-ui/alert-dialog
+# @webbo-ui/alert-dialog
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/alert-dialog
+pnpm add @webbo-ui/alert-dialog
 # or
-yarn add @gist-ui/alert-dialog
+yarn add @webbo-ui/alert-dialog
 # or
-npm i @gist-ui/alert-dialog
+npm i @webbo-ui/alert-dialog
 ```
 
 ## Licence

@@ -293,6 +293,6 @@ export type ChipVariantProps = VariantProps<typeof chip>;
 export type ChipClassNames = ClassNames<typeof chip.slots>;
 
 export const chipStyles = [
-  './node_modules/@gist-ui/theme/src/components/chip.ts',
-  './node_modules/@gist-ui/theme/src/classes.ts',
+  './node_modules/@webbo-ui/theme/src/components/chip.ts',
+  './node_modules/@webbo-ui/theme/src/classes.ts',
 ];

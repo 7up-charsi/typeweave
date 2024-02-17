@@ -52,7 +52,7 @@ const defaultDarkTheme: Theme = {
   overlay: genColorScale(colors.whiteA),
 };
 
-export const gistui = ({ lightTheme, darkTheme }: PluginConfig = {}) => {
+export const webboUi = ({ lightTheme, darkTheme }: PluginConfig = {}) => {
   const userLightTheme = deepmerge(lightTheme ?? {}, defaultLightTheme);
   const userDarkTheme = deepmerge(darkTheme ?? {}, defaultDarkTheme);
 

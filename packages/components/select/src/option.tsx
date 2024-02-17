@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { mergeProps } from '@gist-ui/react-utils';
+import { mergeProps } from '@webbo-ui/react-utils';
 import { useHover, usePress } from '@react-aria/interactions';
 
 export interface OptionProps<V> {
@@ -59,4 +59,4 @@ export const Option = (
   );
 };
 
-Option.displayName = 'gist-ui.Select';
+Option.displayName = 'webbo-ui.Select';

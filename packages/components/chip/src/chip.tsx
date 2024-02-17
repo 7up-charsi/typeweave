@@ -1,8 +1,8 @@
 'use client';
 
 import { forwardRef } from 'react';
-import { mergeProps } from '@gist-ui/react-utils';
-import { ChipClassNames, ChipVariantProps, chip } from '@gist-ui/theme';
+import { mergeProps } from '@webbo-ui/react-utils';
+import { ChipClassNames, ChipVariantProps, chip } from '@webbo-ui/theme';
 import { useFocusRing } from '@react-aria/focus';
 import { useHover, usePress } from '@react-aria/interactions';
 
@@ -95,6 +95,6 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
   );
 });
 
-Chip.displayName = 'gist-ui.Chip';
+Chip.displayName = 'webbo-ui.Chip';
 
 export default Chip;

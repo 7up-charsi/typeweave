@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { toggleButton } from '@gist-ui/theme';
+import { toggleButton } from '@webbo-ui/theme';
 
 import { ToggleButton, ToggleButtonGroup } from '../src';
 

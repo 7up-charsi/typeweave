@@ -1,9 +1,9 @@
 'use client';
 
-import { Chip } from '@gist-ui/chip';
-import { Button } from '@gist-ui/button';
+import { Chip } from '@webbo-ui/chip';
+import { Button } from '@webbo-ui/button';
 import { RenderInputProps } from './autocomplete';
-import { autocompleteInput } from '@gist-ui/theme';
+import { autocompleteInput } from '@webbo-ui/theme';
 
 const clearIcon_svg = (
   <svg

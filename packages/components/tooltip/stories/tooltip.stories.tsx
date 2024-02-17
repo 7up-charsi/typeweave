@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { tooltip } from '@gist-ui/theme';
+import { tooltip } from '@webbo-ui/theme';
 
 import * as Tooltip from '../src';
 

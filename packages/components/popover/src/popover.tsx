@@ -1,19 +1,19 @@
 'use client';
 
-import { Slot } from '@gist-ui/slot';
-import { useControllableState } from '@gist-ui/use-controllable-state';
-import { FocusTrap } from '@gist-ui/focus-trap';
-import { useClickOutside } from '@gist-ui/use-click-outside';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
+import { Slot } from '@webbo-ui/slot';
+import { useControllableState } from '@webbo-ui/use-controllable-state';
+import { FocusTrap } from '@webbo-ui/focus-trap';
+import { useClickOutside } from '@webbo-ui/use-click-outside';
+import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { usePress } from '@react-aria/interactions';
-import * as Popper from '@gist-ui/popper';
+import * as Popper from '@webbo-ui/popper';
 import { createPortal } from 'react-dom';
-import { useIsDisabled } from '@gist-ui/use-is-disabled';
-import { createContextScope } from '@gist-ui/context';
+import { useIsDisabled } from '@webbo-ui/use-is-disabled';
+import { createContextScope } from '@webbo-ui/context';
 import { useEffect, useId, useMemo } from 'react';
-import { VisuallyHidden } from '@gist-ui/visually-hidden';
-import { mergeRefs } from '@gist-ui/react-utils';
-import { PopoverVariantProps, popover } from '@gist-ui/theme';
+import { VisuallyHidden } from '@webbo-ui/visually-hidden';
+import { mergeRefs } from '@webbo-ui/react-utils';
+import { PopoverVariantProps, popover } from '@webbo-ui/theme';
 
 interface PopoverContext {
   isOpen: boolean;
@@ -118,7 +118,7 @@ export const Root = (props: RootProps) => {
   );
 };
 
-Root.displayName = 'gist-ui.' + Popover_Name;
+Root.displayName = 'webbo-ui.' + Popover_Name;
 
 // *-*-*-*-* Trigger *-*-*-*-*
 
@@ -158,7 +158,7 @@ export const Trigger = (props: TriggerProps) => {
   );
 };
 
-Trigger.displayName = 'gist-ui.' + Trigger_Name;
+Trigger.displayName = 'webbo-ui.' + Trigger_Name;
 
 // *-*-*-*-* Close *-*-*-*-*
 
@@ -187,7 +187,7 @@ export const Close = (props: CloseProps) => {
   );
 };
 
-Close.displayName = 'gist-ui.' + Close_Name;
+Close.displayName = 'webbo-ui.' + Close_Name;
 
 // *-*-*-*-* Portal *-*-*-*-*
 
@@ -208,7 +208,7 @@ export const Portal = ({ children, container }: PortalProps) => {
   );
 };
 
-Portal.displayName = 'gist-ui.' + Portal_Name;
+Portal.displayName = 'webbo-ui.' + Portal_Name;
 
 // *-*-*-*-* Title *-*-*-*-*
 
@@ -232,7 +232,7 @@ export const Title = (props: TitleProps) => {
   );
 };
 
-Title.displayName = 'gist-ui.' + Title_Name;
+Title.displayName = 'webbo-ui.' + Title_Name;
 
 // *-*-*-*-* Description *-*-*-*-*
 
@@ -259,7 +259,7 @@ export const Description = (props: DescriptionProps) => {
   );
 };
 
-Description.displayName = 'gist-ui.' + Description_Name;
+Description.displayName = 'webbo-ui.' + Description_Name;
 
 // *-*-*-*-* Content *-*-*-*-*
 
@@ -329,4 +329,4 @@ export const Content = (props: ContentProps) => {
   );
 };
 
-Content.displayName = 'gist-ui.' + Content_Name;
+Content.displayName = 'webbo-ui.' + Content_Name;

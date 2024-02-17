@@ -1,13 +1,13 @@
 'use client';
 
 import { forwardRef, useId, useRef } from 'react';
-import { useControllableState } from '@gist-ui/use-controllable-state';
-import { UseRippleProps, useRipple } from '@gist-ui/use-ripple';
-import { mergeProps } from '@gist-ui/react-utils';
-import { createContextScope } from '@gist-ui/context';
+import { useControllableState } from '@webbo-ui/use-controllable-state';
+import { UseRippleProps, useRipple } from '@webbo-ui/use-ripple';
+import { mergeProps } from '@webbo-ui/react-utils';
+import { createContextScope } from '@webbo-ui/context';
 import { useHover } from '@react-aria/interactions';
 import { useFocusRing } from '@react-aria/focus';
-import { RadioClassNames, RadioVariantProps, radio } from '@gist-ui/theme';
+import { RadioClassNames, RadioVariantProps, radio } from '@webbo-ui/theme';
 
 const icon_svg = (
   <svg
@@ -74,7 +74,7 @@ export const Group = (props: GroupProps) => {
   );
 };
 
-Group.displayName = 'gist-ui.' + Group_Name;
+Group.displayName = 'webbo-ui.' + Group_Name;
 
 // *-*-*-*-* Radio *-*-*-*-*
 
@@ -172,4 +172,4 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   );
 });
 
-Radio.displayName = 'gist-ui.' + Radio_Name;
+Radio.displayName = 'webbo-ui.' + Radio_Name;
