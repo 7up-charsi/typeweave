@@ -73,7 +73,7 @@ export const mapInputProps = ({
     startContent: tags?.map((opt, i) => (
       <Chip
         key={i}
-        color="neutral"
+        color="default"
         variant="border"
         label={opt.label}
         onDelete={opt.onDelete}

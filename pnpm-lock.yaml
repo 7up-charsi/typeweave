@@ -948,6 +948,9 @@ importers:
       '@webbo-ui/toggle-button':
         specifier: workspace:*
         version: link:../toggle-button
+      '@webbo-ui/tooltip':
+        specifier: workspace:*
+        version: link:../tooltip
       '@webbo-ui/use-media-query':
         specifier: workspace:*
         version: link:../../hooks/use-media-query

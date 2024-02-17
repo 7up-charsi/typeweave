@@ -11,7 +11,7 @@ const links = [
 
 export const Navbar = () => {
   return (
-    <div className="w-full h-16 border-b flex items-center px-12">
+    <div className="w-full h-16 border-b border-b-muted-6 dark:border-b-mutedDark-6 flex items-center px-12">
       <Link href="/" className="inline-block leading-none mr-10">
         <Image
           src={lightLogo}
@@ -30,12 +30,12 @@ export const Navbar = () => {
       </Link>
 
       <nav>
-        <ul className="flex gap-10">
+        <ul className="flex gap-5">
           {links.map(({ href, title }, i) => (
             <li key={i} className="first-letter:uppercase">
               <Link
                 href={href}
-                className="text-neutral-500 hover:text-neutral-700 transition-colors dark:text-neutral-700 dark:hover:text-neutral-900"
+                className="text-muted-11/90 hover:text-muted-11 transition-colors dark:text-mutedDark-11/90 dark:hover:text-mutedDark-11 hover:bg-muted-3 dark:hover:bg-mutedDark-3 px-3 py-2 rounded"
               >
                 {title}
               </Link>
@@ -48,11 +48,11 @@ export const Navbar = () => {
 
       {/* search docs placeholder input */}
       <div
-        className="mr-5 w-52 h-9 ring-2 ring-neutral-500 px-2 rounded flex items-center cursor-pointer transition-colors hover:border-neutral-400 group select-none dark:border-neutral-600"
+        className="mr-5 w-52 h-9 ring-1 ring-muted-7 dark:ring-mutedDark-7 hover:ring-muted-8 dark:hover:ring-mutedDark-8 px-2 rounded flex items-center cursor-pointer transition-colors group select-none"
         tabIndex={0}
         aria-label="press to open command palette for docs search"
       >
-        <span className="text-sm text-neutral-400 tracking-wide dark:text-neutral-700">
+        <span className="text-sm text-muted-11 dark:text-mutedDark-11 tracking-wide">
           Search docs
         </span>
         <div className="grow"></div>
@@ -61,7 +61,7 @@ export const Navbar = () => {
           viewBox="0 0 32 32"
           width={17}
           height={17}
-          className="text-neutral-400 group-hover:text-neutral-500 dark:text-neutral-700"
+          className="text-muted-11 dark:text-mutedDark-11"
         >
           <g>
             <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
@@ -86,7 +86,7 @@ export const Navbar = () => {
           viewBox="0 0 20 20"
           width={20}
           height={20}
-          className="text-neutral-500 hover:text-neutral-700 transition-colors"
+          className="text-muted-11/90 hover:text-muted-11 dark:text-mutedDark-11/90 dark:hover:text-mutedDark-11 transition-colors"
         >
           <g>
             <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">

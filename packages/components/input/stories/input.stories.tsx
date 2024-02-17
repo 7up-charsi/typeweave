@@ -44,8 +44,16 @@ export default meta;
 const InputTemplate = (args: InputProps) => (
   <InputComp
     {...args}
-    startContent={args.startContent && <p className="text-neutral">kg</p>}
-    endContent={args.endContent && <p className="text-neutral">$$$</p>}
+    startContent={
+      args.startContent && (
+        <p className="text-muted-11 dark:text-mutedDark-11">kg</p>
+      )
+    }
+    endContent={
+      args.endContent && (
+        <p className="text-muted-11 dark:text-mutedDark-11">$$$</p>
+      )
+    }
     required
   />
 );

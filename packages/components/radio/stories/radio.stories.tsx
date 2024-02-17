@@ -26,7 +26,9 @@ export default meta;
 
 const Template = (args) => (
   <div className="flex flex-col ">
-    <div className="text-neutral-700 font-medium">Select Gender</div>
+    <div className="text-muted-11 dark:text-mutedDark-11 font-medium">
+      Select Gender
+    </div>
 
     <Radio.Group name="gender">
       <Radio.Radio {...args} value="Male" label="Male" />

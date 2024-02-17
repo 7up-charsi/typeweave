@@ -7,6 +7,7 @@ import {
 } from '@webbo-ui/toggle-button';
 import { useMediaQuery } from '@webbo-ui/use-media-query';
 import { useEffect, useState } from 'react';
+import * as Tooltip from '@webbo-ui/tooltip';
 
 const dark_svg = (
   <svg
@@ -116,6 +117,7 @@ const ThemeSwitcher = (props: ThemeSwitcherProps) => {
       size={size}
       variant={variant}
       className={className}
+      aria-label="toggle theme between light, dark and system"
       onChange={(_, val) => {
         if (val) {
           setTheme(val);
@@ -123,15 +125,50 @@ const ThemeSwitcher = (props: ThemeSwitcherProps) => {
         }
       }}
     >
-      <ToggleButton value="light" isIconOnly>
-        {lightIcon}
-      </ToggleButton>
-      <ToggleButton value="dark" isIconOnly>
-        {darkIcon}
-      </ToggleButton>
-      <ToggleButton value="system" isIconOnly>
-        {systemIcon}
-      </ToggleButton>
+      <Tooltip.Root>
+        <Tooltip.Trigger>
+          <ToggleButton value="light" isIconOnly aria-label="light">
+            {lightIcon}
+          </ToggleButton>
+        </Tooltip.Trigger>
+
+        <Tooltip.Portal>
+          <Tooltip.Content>
+            <Tooltip.Arrow />
+            Light
+          </Tooltip.Content>
+        </Tooltip.Portal>
+      </Tooltip.Root>
+
+      <Tooltip.Root>
+        <Tooltip.Trigger>
+          <ToggleButton value="dark" isIconOnly aria-label="dark">
+            {darkIcon}
+          </ToggleButton>
+        </Tooltip.Trigger>
+
+        <Tooltip.Portal>
+          <Tooltip.Content>
+            <Tooltip.Arrow />
+            Dark
+          </Tooltip.Content>
+        </Tooltip.Portal>
+      </Tooltip.Root>
+
+      <Tooltip.Root>
+        <Tooltip.Trigger>
+          <ToggleButton value="system" isIconOnly aria-label="system">
+            {systemIcon}
+          </ToggleButton>
+        </Tooltip.Trigger>
+
+        <Tooltip.Portal>
+          <Tooltip.Content>
+            <Tooltip.Arrow />
+            System
+          </Tooltip.Content>
+        </Tooltip.Portal>
+      </Tooltip.Root>
     </ToggleButtonGroup>
   );
 };
