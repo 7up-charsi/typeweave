@@ -32,8 +32,11 @@ const Context = createContext<GroupContext | null>(null);
 
 export interface ButtonGroupProps
   extends Pick<ButtonVariantProps, 'isDisabled' | 'color' | 'size' | 'variant'>,
+    Omit<
+      React.HTMLAttributes<HTMLDivElement>,
+      'color' | 'size' | 'className' | 'onChange'
+    >,
     ButtonGroupVariantProps {
-  children?: React.ReactNode;
   className?: ClassValue;
 }
 
@@ -47,6 +50,7 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
       size = 'md',
       variant = 'flat',
       color = 'default',
+      ...rest
     } = props;
 
     const styles = buttonGroup({ direction, className });
@@ -60,7 +64,7 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
           variant,
         }}
       >
-        <div ref={ref} className={styles}>
+        <div ref={ref} {...rest} className={styles}>
           {children}
         </div>
       </Context.Provider>

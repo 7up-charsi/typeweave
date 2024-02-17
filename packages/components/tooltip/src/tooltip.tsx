@@ -10,15 +10,7 @@ import { TooltipVariantProps, tooltip, ClassValue } from '@webbo-ui/theme';
 import { useIsDisabled } from '@webbo-ui/use-is-disabled';
 import { createContextScope } from '@webbo-ui/context';
 import * as Popper from '@webbo-ui/popper';
-import {
-  forwardRef,
-  isValidElement,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { forwardRef, useEffect, useMemo, useRef } from 'react';
 
 type Trigger = 'hover' | 'focus';
 
@@ -26,14 +18,13 @@ interface TooltipContext {
   showTooltip: (a?: boolean) => void;
   hideTooltip: (a?: boolean) => void;
   trigger?: Trigger;
-  id: string;
   isOpen: boolean;
-  setGivenId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Tooltip_Name = 'Tooltip.Root';
 
-const [Provider, useContext] = createContextScope<TooltipContext>(Tooltip_Name);
+const [RootProvider, useRootContext] =
+  createContextScope<TooltipContext>(Tooltip_Name);
 
 const tooltips: Record<string, (a: boolean) => void> = {};
 let tooltipId = 0;
@@ -71,9 +62,6 @@ export const Root = (props: RootProps) => {
     onChange: onOpenChange,
     resetStateValue: false,
   });
-
-  const [givenId, setGivenId] = useState('');
-  const id = useId();
 
   const tooltipIdentifier = useMemo(() => `${++tooltipId}`, []);
 
@@ -159,16 +147,14 @@ export const Root = (props: RootProps) => {
   }, [isOpen]);
 
   return (
-    <Provider
+    <RootProvider
       showTooltip={showTooltip}
       hideTooltip={hideTooltip}
       trigger={trigger}
-      id={givenId || id}
       isOpen={isOpen}
-      setGivenId={setGivenId}
     >
       <Popper.Root>{children}</Popper.Root>
-    </Provider>
+    </RootProvider>
   );
 };
 
@@ -183,7 +169,7 @@ export interface TriggerProps {
 }
 
 export const Trigger = ({ children }: TriggerProps) => {
-  const context = useContext(Trigger_Name);
+  const context = useRootContext(Trigger_Name);
 
   const { setElement, isDisabled } = useIsDisabled();
 
@@ -226,7 +212,6 @@ export const Trigger = ({ children }: TriggerProps) => {
     <Popper.Reference>
       <Slot
         ref={setElement}
-        aria-describedby={context.isOpen ? context.id : undefined}
         {...mergeProps(
           hoverProps,
           focusProps,
@@ -252,7 +237,7 @@ export interface PortalProps {
 }
 
 export const Portal = ({ children, container }: PortalProps) => {
-  const context = useContext(Portal_Name);
+  const context = useRootContext(Portal_Name);
 
   return (
     <>{context.isOpen && createPortal(children, container || document.body)}</>
@@ -279,9 +264,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     const { children, asChild, disableInteractive, className, ...popperProps } =
       props;
 
-    const context = useContext(Content_Name);
-
-    const Component = asChild ? Slot : 'div';
+    const context = useRootContext(Content_Name);
 
     const { hoverProps: tooltipHoverProps } = useHover({
       isDisabled: disableInteractive,
@@ -293,15 +276,9 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       },
     });
 
-    useEffect(() => {
-      if (isValidElement(children)) {
-        context.setGivenId((children.props as { id?: string }).id || '');
-      }
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [children]);
-
     const styles = tooltip({ className });
+
+    const Component = asChild ? Slot : 'div';
 
     return (
       <Popper.Floating {...popperProps}>
@@ -310,7 +287,6 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
           role="tooltip"
           className={styles}
           {...tooltipHoverProps}
-          id={context.id}
         >
           {children}
         </Component>

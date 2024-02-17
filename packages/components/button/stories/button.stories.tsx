@@ -49,7 +49,7 @@ const DefaultTemplate = (args: ButtonProps) => (
       ]
     ).map((variant, idx) => (
       <div key={idx} className="flex flex-col gap-4">
-        <span className="text-foreground pl-3 uppercase font-bold place-self-start text-sm border-l-2 border-neutral9">
+        <span className="text-muted-11 dark:text-mutedDark-11 pl-3 uppercase font-bold place-self-start text-sm border-l-2 border-muted-9 dark:border-mutedDark-11">
           {variant}
         </span>
 
@@ -85,13 +85,13 @@ const WithConentTemplate = (args: ButtonProps) => (
       ]
     ).map((variant, idx) => (
       <div key={idx} className="flex flex-col gap-4">
-        <span className="text-foreground pl-3 uppercase font-medium place-self-start text-sm border-l-2 border-neutral">
+        <span className="text-foreground pl-3 uppercase font-medium place-self-start text-sm border-l-2 border-muted-9">
           {variant}
         </span>
 
         {['start', 'end', 'start / end'].map((position, i) => (
           <div key={i} className="pl-5 flex flex-col gap-3">
-            <span className="text-foreground pl-3 uppercase font-medium place-self-start text-sm border-l-2 border-neutral">
+            <span className="text-foreground pl-3 uppercase font-medium place-self-start text-sm border-l-2 border-muted-9">
               {position} content
             </span>
 
