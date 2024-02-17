@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import './globals.css';
-import { Navbar } from './_components/Navbar';
+import { Navbar } from '@/app/_components/Navbar';
 
 export const metadata: Metadata = {
   title: { default: 'webbo-ui docs', template: '%s | webbo-ui' },
@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={GeistSans.variable}>
-      <body className="max-w-screen-2xl m-auto">
+      <body className="max-w-screen-2xl min-h-screen m-auto flex flex-col">
         <Navbar />
         {children}
       </body>
