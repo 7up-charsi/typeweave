@@ -1,6 +1,6 @@
 import { ReactNode, forwardRef, useState } from 'react';
 import Input, { InputProps } from './input';
-import { Button } from '@gist-ui/button';
+import { Button } from '@webbo-ui/button';
 
 export interface PasswordInputProps extends Omit<InputProps, 'type'> {
   /**
@@ -102,6 +102,6 @@ const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProps>(
   },
 );
 
-PasswordInput.displayName = 'gist-ui.PasswordInput';
+PasswordInput.displayName = 'webbo-ui.PasswordInput';
 
 export default PasswordInput;

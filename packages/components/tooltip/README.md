@@ -1,15 +1,15 @@
-# @gist-ui/tooltip
+# @webbo-ui/tooltip
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/tooltip
+pnpm add @webbo-ui/tooltip
 # or
-yarn add @gist-ui/tooltip
+yarn add @webbo-ui/tooltip
 # or
-npm i @gist-ui/tooltip
+npm i @webbo-ui/tooltip
 ```
 
 ## Licence

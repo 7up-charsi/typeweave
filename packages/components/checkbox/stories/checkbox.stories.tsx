@@ -1,5 +1,5 @@
 import React from 'react';
-import { checkbox } from '@gist-ui/theme';
+import { checkbox } from '@webbo-ui/theme';
 
 import { Checkbox, CheckboxProps } from '../src';
 

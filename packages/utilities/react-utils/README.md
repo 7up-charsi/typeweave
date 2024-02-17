@@ -1,15 +1,15 @@
-# @gist-ui/react-utils
+# @webbo-ui/react-utils
 
 This package contains utilities for react
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/react-utils
+pnpm add @webbo-ui/react-utils
 # or
-yarn add @gist-ui/react-utils
+yarn add @webbo-ui/react-utils
 # or
-npm i @gist-ui/react-utils
+npm i @webbo-ui/react-utils
 ```
 
 ## API Reference

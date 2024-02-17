@@ -1,15 +1,15 @@
-# @gist-ui/switch
+# @webbo-ui/switch
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/switch
+pnpm add @webbo-ui/switch
 # or
-yarn add @gist-ui/switch
+yarn add @webbo-ui/switch
 # or
-npm i @gist-ui/switch
+npm i @webbo-ui/switch
 ```
 
 ## Licence

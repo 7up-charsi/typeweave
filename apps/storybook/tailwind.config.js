@@ -1,4 +1,4 @@
-import { gistui, fullLibraryStyles } from '@gist-ui/theme';
+import { webboUi, fullLibraryStyles } from '@webbo-ui/theme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -7,5 +7,5 @@ export default {
     './.storybook/**/*.{ts,tsx}',
     ...fullLibraryStyles,
   ],
-  plugins: [gistui()],
+  plugins: [webboUi()],
 };

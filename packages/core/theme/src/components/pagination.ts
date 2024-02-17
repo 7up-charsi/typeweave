@@ -12,5 +12,5 @@ export type PaginationVariantProps = VariantProps<typeof pagination>;
 export type PaginationClassNames = ClassNames<typeof pagination.slots>;
 
 export const paginationStyles = [
-  './node_modules/@gist-ui/theme/src/components/pagination.ts',
+  './node_modules/@webbo-ui/theme/src/components/pagination.ts',
 ];

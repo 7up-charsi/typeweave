@@ -19,5 +19,5 @@ export const skeleton = tv({
 export type SkeletonVariantProps = VariantProps<typeof skeleton>;
 
 export const skeletonStyles = [
-  './node_modules/@gist-ui/theme/src/components/skeleton.ts',
+  './node_modules/@webbo-ui/theme/src/components/skeleton.ts',
 ];

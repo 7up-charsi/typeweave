@@ -1,4 +1,4 @@
-# @gist-ui/use-media-query
+# @webbo-ui/use-media-query
 
 Subscribe and respond to media query changes with useMediaQuery.
 
@@ -7,11 +7,11 @@ The useMediaQuery hook leverages the window.matchMedia API to subscribe to CSS m
 ## Installation
 
 ```bash
-pnpm add @gist-ui/use-media-query
+pnpm add @webbo-ui/use-media-query
 # or
-yarn add @gist-ui/use-media-query
+yarn add @webbo-ui/use-media-query
 # or
-npm i @gist-ui/use-media-query
+npm i @webbo-ui/use-media-query
 ```
 
 ## API Reference

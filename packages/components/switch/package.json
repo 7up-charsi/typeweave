@@ -1,5 +1,5 @@
 {
-  "name": "@gist-ui/switch",
+  "name": "@webbo-ui/switch",
   "version": "1.0.0",
   "keywords": [
     "switch"
@@ -17,11 +17,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mzeeshan3597/gist-ui.git",
+    "url": "git+https://github.com/mzeeshan3597/webbo-ui.git",
     "directory": "packages/components/switch"
   },
   "bugs": {
-    "url": "https://github.com/mzeeshan3597/gist-ui/issues"
+    "url": "https://github.com/mzeeshan3597/webbo-ui/issues"
   },
   "main": "./src/index.ts",
   "scripts": {
@@ -36,11 +36,11 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@gist-ui/theme": "workspace:*",
-    "@gist-ui/use-controllable-state": "workspace:*",
-    "@gist-ui/react-utils": "workspace:*",
-    "@gist-ui/use-callback-ref": "workspace:*",
-    "@gist-ui/use-ripple": "workspace:*",
+    "@webbo-ui/theme": "workspace:*",
+    "@webbo-ui/use-controllable-state": "workspace:*",
+    "@webbo-ui/react-utils": "workspace:*",
+    "@webbo-ui/use-callback-ref": "workspace:*",
+    "@webbo-ui/use-ripple": "workspace:*",
     "@react-aria/focus": "^3.15.0",
     "@react-aria/interactions": "^3.20.0"
   },

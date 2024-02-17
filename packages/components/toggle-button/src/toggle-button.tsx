@@ -5,11 +5,11 @@ import {
   ButtonGroup,
   ButtonGroupProps,
   ButtonProps,
-} from '@gist-ui/button';
-import { createContextScope } from '@gist-ui/context';
-import { GistUiError } from '@gist-ui/error';
-import { ToggleButtonVariantProps, toggleButton } from '@gist-ui/theme';
-import { useControllableState } from '@gist-ui/use-controllable-state';
+} from '@webbo-ui/button';
+import { createContextScope } from '@webbo-ui/context';
+import { CustomError } from '@webbo-ui/error';
+import { ToggleButtonVariantProps, toggleButton } from '@webbo-ui/theme';
+import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { useMemo } from 'react';
 
 // *-*-*-*-* ToggleButtonGroup *-*-*-*-*
@@ -73,13 +73,13 @@ export const _ToggleButtonGroup = (props: ToggleButtonGroupProps<false>) => {
   });
 
   if (exclusive && Array.isArray(value))
-    throw new GistUiError(
+    throw new CustomError(
       Group_Name,
       '`value` must be `string`, when `exclusive` is true',
     );
 
   if (!exclusive && !Array.isArray(value))
-    throw new GistUiError(
+    throw new CustomError(
       Group_Name,
       '`value` must be `string[]`, when `exclusive` is false',
     );
@@ -104,7 +104,7 @@ export const _ToggleButtonGroup = (props: ToggleButtonGroupProps<false>) => {
   );
 };
 
-_ToggleButtonGroup.displayName = 'gist-ui.' + Group_Name;
+_ToggleButtonGroup.displayName = 'webbo-ui.' + Group_Name;
 
 export const ToggleButtonGroup = _ToggleButtonGroup as <
   Exclusive extends boolean = false,
@@ -169,4 +169,4 @@ export const ToggleButton = (props: ToggleButtonProps) => {
   );
 };
 
-ToggleButton.displayName = 'gist-ui.' + Button_Name;
+ToggleButton.displayName = 'webbo-ui.' + Button_Name;

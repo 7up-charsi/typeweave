@@ -1,15 +1,15 @@
-# @gist-ui/use-click-outside
+# @webbo-ui/use-click-outside
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/use-click-outside
+pnpm add @webbo-ui/use-click-outside
 # or
-yarn add @gist-ui/use-click-outside
+yarn add @webbo-ui/use-click-outside
 # or
-npm i @gist-ui/use-click-outside
+npm i @webbo-ui/use-click-outside
 ```
 
 ## Licence

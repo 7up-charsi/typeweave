@@ -1,15 +1,15 @@
 'use client';
 
-import { createContextScope } from '@gist-ui/context';
-import { TableClassNames, TableVariantProps, table } from '@gist-ui/theme';
-import * as Menu from '@gist-ui/menu';
+import { createContextScope } from '@webbo-ui/context';
+import { TableClassNames, TableVariantProps, table } from '@webbo-ui/theme';
+import * as Menu from '@webbo-ui/menu';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
-import { GistUiError } from '@gist-ui/error';
-import { Slot } from '@gist-ui/slot';
+import { CustomError } from '@webbo-ui/error';
+import { Slot } from '@webbo-ui/slot';
 import {
   UseControllableStateReturn,
   useControllableState,
-} from '@gist-ui/use-controllable-state';
+} from '@webbo-ui/use-controllable-state';
 
 type Column<Row> = {
   [K in keyof Row]: {
@@ -72,7 +72,7 @@ const RootComp = (props: RootProps<_Row>) => {
     value: visibilityStateProp,
     onChange: (value, changed) => {
       if (!changed && changed !== null)
-        throw new GistUiError(
+        throw new CustomError(
           'Autocomplete',
           'internal Error, reason is not defined',
         );
@@ -105,7 +105,7 @@ const RootComp = (props: RootProps<_Row>) => {
   );
 };
 
-RootComp.displayName = 'gist-ui.' + Root_Name;
+RootComp.displayName = 'webbo-ui.' + Root_Name;
 
 export const Root = RootComp as <R>(props: RootProps<R>) => React.ReactNode;
 
@@ -172,7 +172,7 @@ export const Table = (props: TableProps) => {
   );
 };
 
-Table.displayName = 'gist-ui.' + Table_Name;
+Table.displayName = 'webbo-ui.' + Table_Name;
 
 // ********** ColumnVisibility **********
 
@@ -274,7 +274,7 @@ export const ColumnVisibility = (props: ColumnVisibilityProps) => {
   );
 };
 
-ColumnVisibility.displayName = 'gist-ui.' + ColumnVisibility_Name;
+ColumnVisibility.displayName = 'webbo-ui.' + ColumnVisibility_Name;
 
 // ********** SelectRowProvider **********
 
@@ -310,7 +310,7 @@ export const SelectRowProvider = (props: SelectRowProviderProps) => {
   );
 };
 
-SelectRowProvider.displayName = 'gist-ui.' + SelectRowProvider_Name;
+SelectRowProvider.displayName = 'webbo-ui.' + SelectRowProvider_Name;
 
 // ********** SelectAllRows **********
 
@@ -338,7 +338,7 @@ export const SelectAllRows = (props: SelectAllRowsProps) => {
   );
 };
 
-SelectAllRows.displayName = 'gist-ui.' + SelectAllRows_Name;
+SelectAllRows.displayName = 'webbo-ui.' + SelectAllRows_Name;
 
 // ********** SelectRow **********
 
@@ -378,4 +378,4 @@ export const SelectRow = (props: SelectRowProps) => {
   );
 };
 
-SelectRow.displayName = 'gist-ui.' + SelectRow_Name;
+SelectRow.displayName = 'webbo-ui.' + SelectRow_Name;

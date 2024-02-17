@@ -1,15 +1,15 @@
-# @gist-ui/autocomplete
+# @webbo-ui/autocomplete
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/autocomplete
+pnpm add @webbo-ui/autocomplete
 # or
-yarn add @gist-ui/autocomplete
+yarn add @webbo-ui/autocomplete
 # or
-npm i @gist-ui/autocomplete
+npm i @webbo-ui/autocomplete
 ```
 
 ## Licence

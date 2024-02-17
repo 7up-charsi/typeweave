@@ -50,6 +50,6 @@ export type InputVariantProps = VariantProps<typeof input>;
 export type InputClassNames = ClassNames<typeof input.slots>;
 
 export const inputStyles = [
-  './node_modules/@gist-ui/theme/src/components/input.ts',
-  './node_modules/@gist-ui/theme/src/classes.ts',
+  './node_modules/@webbo-ui/theme/src/components/input.ts',
+  './node_modules/@webbo-ui/theme/src/classes.ts',
 ];

@@ -27,5 +27,5 @@ export type TableVariantProps = VariantProps<typeof table>;
 export type TableClassNames = ClassNames<typeof table.slots>;
 
 export const tableStyles = [
-  './node_modules/@gist-ui/theme/src/components/table.ts',
+  './node_modules/@webbo-ui/theme/src/components/table.ts',
 ];

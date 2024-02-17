@@ -4,9 +4,9 @@ import './globals.css';
 import { Navbar } from './_components/Navbar';
 
 export const metadata: Metadata = {
-  title: { default: 'gist-ui/ui docs', template: '%s | gist-ui/ui' },
+  title: { default: 'webbo-ui docs', template: '%s | webbo-ui' },
   description:
-    'The documentation of react components ui library developed by gist-ui',
+    'The documentation of react components ui library developed by webbo-ui',
 };
 
 export default function RootLayout({

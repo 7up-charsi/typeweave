@@ -1,15 +1,15 @@
-# @gist-ui/popper
+# @webbo-ui/popper
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/popper
+pnpm add @webbo-ui/popper
 # or
-yarn add @gist-ui/popper
+yarn add @webbo-ui/popper
 # or
-npm i @gist-ui/popper
+npm i @webbo-ui/popper
 ```
 
 ## Licence

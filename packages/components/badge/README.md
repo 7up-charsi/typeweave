@@ -1,15 +1,15 @@
-# @gist-ui/badge
+# @webbo-ui/badge
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/badge
+pnpm add @webbo-ui/badge
 # or
-yarn add @gist-ui/badge
+yarn add @webbo-ui/badge
 # or
-npm i @gist-ui/badge
+npm i @webbo-ui/badge
 ```
 
 ## Licence

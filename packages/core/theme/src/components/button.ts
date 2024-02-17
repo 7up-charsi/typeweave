@@ -289,6 +289,6 @@ export type ButtonGroupVariantProps = VariantProps<typeof buttonGroup>;
 export type ButtonVariantProps = VariantProps<typeof button>;
 
 export const buttonStyles = [
-  './node_modules/@gist-ui/theme/src/components/button.ts',
-  './node_modules/@gist-ui/theme/src/classes.ts',
+  './node_modules/@webbo-ui/theme/src/components/button.ts',
+  './node_modules/@webbo-ui/theme/src/classes.ts',
 ];

@@ -1,15 +1,15 @@
-# @gist-ui/select
+# @webbo-ui/select
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/select
+pnpm add @webbo-ui/select
 # or
-yarn add @gist-ui/select
+yarn add @webbo-ui/select
 # or
-npm i @gist-ui/select
+npm i @webbo-ui/select
 ```
 
 ## Licence

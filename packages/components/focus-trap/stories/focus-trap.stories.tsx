@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@gist-ui/button';
+import { Button } from '@webbo-ui/button';
 
 import { FocusTrap, FocusTrapProps } from '../src';
 

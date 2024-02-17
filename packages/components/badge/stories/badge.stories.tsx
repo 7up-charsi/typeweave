@@ -1,6 +1,6 @@
 import React from 'react';
-import { badge } from '@gist-ui/theme';
-import { Button } from '@gist-ui/button';
+import { badge } from '@webbo-ui/theme';
+import { Button } from '@webbo-ui/button';
 
 import { Badge } from '../src';
 

@@ -7,5 +7,5 @@ export const overlay = tv({
 export type OverlayVariantProps = VariantProps<typeof overlay>;
 
 export const overlayStyles = [
-  './node_modules/@gist-ui/theme/src/components/overlay.ts',
+  './node_modules/@webbo-ui/theme/src/components/overlay.ts',
 ];

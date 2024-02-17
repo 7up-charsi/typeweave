@@ -13,5 +13,5 @@ export type NumberInputVariantProps = VariantProps<typeof numberInput>;
 export type NumberInputClassNames = ClassNames<typeof numberInput.slots>;
 
 export const numberInputStyles = [
-  './node_modules/@gist-ui/theme/src/components/number-input.ts',
+  './node_modules/@webbo-ui/theme/src/components/number-input.ts',
 ];

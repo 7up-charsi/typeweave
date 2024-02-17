@@ -4,8 +4,8 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupProps,
-} from '@gist-ui/toggle-button';
-import { useMediaQuery } from '@gist-ui/use-media-query';
+} from '@webbo-ui/toggle-button';
+import { useMediaQuery } from '@webbo-ui/use-media-query';
 import { useEffect, useState } from 'react';
 
 const dark_svg = (
@@ -136,6 +136,6 @@ const ThemeSwitcher = (props: ThemeSwitcherProps) => {
   );
 };
 
-ThemeSwitcher.displayName = 'gist-ui.ThemeSwitcher';
+ThemeSwitcher.displayName = 'webbo-ui.ThemeSwitcher';
 
 export default ThemeSwitcher;

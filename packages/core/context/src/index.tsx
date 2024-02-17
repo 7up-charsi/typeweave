@@ -1,5 +1,5 @@
 import { createContext, useContext as _useContext, useMemo } from 'react';
-import { GistUiError } from '@gist-ui/error';
+import { CustomError } from '@webbo-ui/error';
 
 export const createContextScope = <ContextValue extends object>(
   rootName: string,
@@ -23,7 +23,7 @@ export const createContextScope = <ContextValue extends object>(
     const context = _useContext(Context);
 
     if (!context)
-      throw new GistUiError(
+      throw new CustomError(
         'createContextScope',
         `\`${consumerName}\` must be used within \`${rootName}\``,
       );

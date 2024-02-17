@@ -1,15 +1,15 @@
-# @gist-ui/pagination
+# @webbo-ui/pagination
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/pagination
+pnpm add @webbo-ui/pagination
 # or
-yarn add @gist-ui/pagination
+yarn add @webbo-ui/pagination
 # or
-npm i @gist-ui/pagination
+npm i @webbo-ui/pagination
 ```
 
 ## Licence

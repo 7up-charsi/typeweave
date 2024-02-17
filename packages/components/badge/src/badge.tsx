@@ -1,6 +1,6 @@
 'use server';
 
-import { BadgeClassNames, BadgeVariantProps, badge } from '@gist-ui/theme';
+import { BadgeClassNames, BadgeVariantProps, badge } from '@webbo-ui/theme';
 import { forwardRef } from 'react';
 
 export interface BadgeProps extends BadgeVariantProps {
@@ -42,6 +42,6 @@ const Badge = forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
   );
 });
 
-Badge.displayName = 'gist-ui.Badge';
+Badge.displayName = 'webbo-ui.Badge';
 
 export default Badge;

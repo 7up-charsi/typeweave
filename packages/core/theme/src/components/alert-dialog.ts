@@ -23,5 +23,5 @@ export type AlertDialogVariantProps = VariantProps<typeof alertDialog>;
 export type AlertDialogClassNames = ClassNames<typeof alertDialog.slots>;
 
 export const alertDialogStyles = [
-  './node_modules/@gist-ui/theme/src/components/alert-dialog.ts',
+  './node_modules/@webbo-ui/theme/src/components/alert-dialog.ts',
 ];

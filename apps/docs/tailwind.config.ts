@@ -1,9 +1,9 @@
 import type { Config } from 'tailwindcss';
-import { gistui, fullLibraryStyles } from '@gist-ui/theme';
+import { webboUi, fullLibraryStyles } from '@webbo-ui/theme';
 
 const config: Config = {
   content: ['./app/**/*.{js,ts,jsx,tsx,mdx}', ...fullLibraryStyles],
-  plugins: [gistui],
+  plugins: [webboUi()],
 };
 
 export default config;

@@ -1,5 +1,5 @@
 import * as menu from './menu';
-export { Arrow } from '@gist-ui/popper';
+export { Arrow } from '@webbo-ui/popper';
 
 // export types
 export type {

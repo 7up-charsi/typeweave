@@ -1,15 +1,15 @@
-# @gist-ui/use-size
+# @webbo-ui/use-size
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/use-size
+pnpm add @webbo-ui/use-size
 # or
-yarn add @gist-ui/use-size
+yarn add @webbo-ui/use-size
 # or
-npm i @gist-ui/use-size
+npm i @webbo-ui/use-size
 ```
 
 ## Licence

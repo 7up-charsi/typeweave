@@ -1,5 +1,5 @@
 import React from 'react';
-import { pagination } from '@gist-ui/theme';
+import { pagination } from '@webbo-ui/theme';
 
 import { Pagination, PaginationProps } from '../src';
 

@@ -4,10 +4,10 @@ import {
   PaginationClassNames,
   PaginationVariantProps,
   pagination,
-} from '@gist-ui/theme';
+} from '@webbo-ui/theme';
 import { forwardRef } from 'react';
-import { useControllableState } from '@gist-ui/use-controllable-state';
-import { Button, ButtonProps } from '@gist-ui/button';
+import { useControllableState } from '@webbo-ui/use-controllable-state';
+import { Button, ButtonProps } from '@webbo-ui/button';
 
 const ellipsis_svg = (
   <svg
@@ -308,6 +308,6 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
   },
 );
 
-Pagination.displayName = 'gist-ui.Pagination';
+Pagination.displayName = 'webbo-ui.Pagination';
 
 export default Pagination;

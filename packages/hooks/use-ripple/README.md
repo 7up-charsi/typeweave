@@ -1,4 +1,4 @@
-# @gist-ui/use-ripple
+# @webbo-ui/use-ripple
 
 This hook is used to add ripple effect in all elements except void elements
 
@@ -8,11 +8,11 @@ This hook is used to add ripple effect in all elements except void elements
 ## Installation
 
 ```bash
-pnpm add @gist-ui/use-ripple
+pnpm add @webbo-ui/use-ripple
 # or
-yarn add @gist-ui/use-ripple
+yarn add @webbo-ui/use-ripple
 # or
-npm i @gist-ui/use-ripple
+npm i @webbo-ui/use-ripple
 ```
 
 ## API Reference

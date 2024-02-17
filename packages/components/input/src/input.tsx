@@ -1,7 +1,7 @@
 'use client';
 
-import { input, InputClassNames, InputVariantProps } from '@gist-ui/theme';
-import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
+import { input, InputClassNames, InputVariantProps } from '@webbo-ui/theme';
+import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
 import { useFocusRing } from '@react-aria/focus';
 import { useFocus, useHover } from '@react-aria/interactions';
 import { forwardRef, useEffect, useId, useRef } from 'react';
@@ -185,6 +185,6 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
   );
 });
 
-Input.displayName = 'gist-ui.Input';
+Input.displayName = 'webbo-ui.Input';
 
 export default Input;

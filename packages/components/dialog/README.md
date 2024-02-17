@@ -1,15 +1,15 @@
-# @gist-ui/dialog
+# @webbo-ui/dialog
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/dialog
+pnpm add @webbo-ui/dialog
 # or
-yarn add @gist-ui/dialog
+yarn add @webbo-ui/dialog
 # or
-npm i @gist-ui/dialog
+npm i @webbo-ui/dialog
 ```
 
 ## Licence

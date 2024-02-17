@@ -2,14 +2,14 @@
 
 import { createPortal } from 'react-dom';
 import { useHover, useFocus, useFocusVisible } from '@react-aria/interactions';
-import { mergeProps } from '@gist-ui/react-utils';
-import { useControllableState } from '@gist-ui/use-controllable-state';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
-import { Slot } from '@gist-ui/slot';
-import { TooltipVariantProps, tooltip, ClassValue } from '@gist-ui/theme';
-import { useIsDisabled } from '@gist-ui/use-is-disabled';
-import { createContextScope } from '@gist-ui/context';
-import * as Popper from '@gist-ui/popper';
+import { mergeProps } from '@webbo-ui/react-utils';
+import { useControllableState } from '@webbo-ui/use-controllable-state';
+import { useCallbackRef } from '@webbo-ui/use-callback-ref';
+import { Slot } from '@webbo-ui/slot';
+import { TooltipVariantProps, tooltip, ClassValue } from '@webbo-ui/theme';
+import { useIsDisabled } from '@webbo-ui/use-is-disabled';
+import { createContextScope } from '@webbo-ui/context';
+import * as Popper from '@webbo-ui/popper';
 import {
   forwardRef,
   isValidElement,
@@ -172,7 +172,7 @@ export const Root = (props: RootProps) => {
   );
 };
 
-Root.displayName = 'gist-ui.' + Tooltip_Name;
+Root.displayName = 'webbo-ui.' + Tooltip_Name;
 
 // *-*-*-*-* Trigger *-*-*-*-*
 
@@ -240,7 +240,7 @@ export const Trigger = ({ children }: TriggerProps) => {
   );
 };
 
-Trigger.displayName = 'gist-ui.' + Trigger_Name;
+Trigger.displayName = 'webbo-ui.' + Trigger_Name;
 
 // *-*-*-*-* Portal *-*-*-*-*
 
@@ -259,7 +259,7 @@ export const Portal = ({ children, container }: PortalProps) => {
   );
 };
 
-Portal.displayName = 'gist-ui.' + Portal_Name;
+Portal.displayName = 'webbo-ui.' + Portal_Name;
 
 // *-*-*-*-* Content *-*-*-*-*
 
@@ -319,4 +319,4 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
   },
 );
 
-Content.displayName = 'gist-ui.' + Content_Name;
+Content.displayName = 'webbo-ui.' + Content_Name;

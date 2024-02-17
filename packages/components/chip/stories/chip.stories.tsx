@@ -1,5 +1,5 @@
 import React from 'react';
-import { chip } from '@gist-ui/theme';
+import { chip } from '@webbo-ui/theme';
 
 import { Chip } from '../src';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { forwardRef } from 'react';
-import { Slot } from '@gist-ui/slot';
+import { Slot } from '@webbo-ui/slot';
 
 export interface VisuallyHiddenProps {
   children?: React.ReactNode;
@@ -35,6 +35,6 @@ const VisuallyHidden = forwardRef<HTMLSpanElement, VisuallyHiddenProps>(
   },
 );
 
-VisuallyHidden.displayName = 'gist-ui.VisuallyHidden';
+VisuallyHidden.displayName = 'webbo-ui.VisuallyHidden';
 
 export default VisuallyHidden;

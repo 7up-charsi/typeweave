@@ -1,15 +1,15 @@
-# @gist-ui/table
+# @webbo-ui/table
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/table
+pnpm add @webbo-ui/table
 # or
-yarn add @gist-ui/table
+yarn add @webbo-ui/table
 # or
-npm i @gist-ui/table
+npm i @webbo-ui/table
 ```
 
 ## Licence

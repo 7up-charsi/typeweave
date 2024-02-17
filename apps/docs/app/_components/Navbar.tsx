@@ -2,7 +2,7 @@ import Image from 'next/image';
 import darkLogo from '@/app/_assets/dark-logo.png';
 import lightLogo from '@/app/_assets/light-logo.png';
 import Link from 'next/link';
-import { ThemeSwitcher } from '@gist-ui/theme-switcher';
+import { ThemeSwitcher } from '@webbo-ui/theme-switcher';
 
 const links = [
   { title: 'docs', href: '/get-started' },
@@ -15,14 +15,14 @@ export const Navbar = () => {
       <Link href="/" className="inline-block leading-none mr-10">
         <Image
           src={lightLogo}
-          alt="webbu/ui logo"
+          alt="webbu-ui logo"
           width={120}
           height={120}
           className="dark:inline-block hidden"
         />
         <Image
           src={darkLogo}
-          alt="webbu/ui logo"
+          alt="webbu-ui logo"
           width={120}
           height={120}
           className="inline-block dark:hidden"
@@ -77,7 +77,7 @@ export const Navbar = () => {
 
       {/* github link */}
       <Link
-        href="https://github.com/7up-charsi/gist-ui"
+        href="https://github.com/7up-charsi/webbo-ui"
         target="_blank"
         rel="noreferrer"
       >

@@ -1,18 +1,18 @@
 'use client';
 
-import { useControllableState } from '@gist-ui/use-controllable-state';
-import { Slot } from '@gist-ui/slot';
-import { useClickOutside } from '@gist-ui/use-click-outside';
+import { useControllableState } from '@webbo-ui/use-controllable-state';
+import { Slot } from '@webbo-ui/slot';
+import { useClickOutside } from '@webbo-ui/use-click-outside';
 import { usePress } from '@react-aria/interactions';
-import { useScrollLock } from '@gist-ui/use-scroll-lock';
-import { useCallbackRef } from '@gist-ui/use-callback-ref';
+import { useScrollLock } from '@webbo-ui/use-scroll-lock';
+import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { createPortal } from 'react-dom';
-import { FocusTrap, FocusScope } from '@gist-ui/focus-trap';
-import { createContextScope } from '@gist-ui/context';
-import { useIsDisabled } from '@gist-ui/use-is-disabled';
+import { FocusTrap, FocusScope } from '@webbo-ui/focus-trap';
+import { createContextScope } from '@webbo-ui/context';
+import { useIsDisabled } from '@webbo-ui/use-is-disabled';
 import { useEffect, useId, useMemo, useRef } from 'react';
-import { VisuallyHidden } from '@gist-ui/visually-hidden';
-import { DialogVariantProps, dialog } from '@gist-ui/theme';
+import { VisuallyHidden } from '@webbo-ui/visually-hidden';
+import { DialogVariantProps, dialog } from '@webbo-ui/theme';
 
 type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
 
@@ -151,7 +151,7 @@ export const Root = (props: RootProps) => {
   );
 };
 
-Root.displayName = 'gist-ui.' + Root_Name;
+Root.displayName = 'webbo-ui.' + Root_Name;
 
 // *-*-*-*-* Trigger *-*-*-*-*
 
@@ -189,7 +189,7 @@ export const Trigger = (props: TriggerProps) => {
   );
 };
 
-Trigger.displayName = 'gist-ui.' + Trigger_Name;
+Trigger.displayName = 'webbo-ui.' + Trigger_Name;
 
 // *-*-*-*-* Close *-*-*-*-*
 
@@ -220,7 +220,7 @@ export const Close = (props: CloseProps) => {
   );
 };
 
-Close.displayName = 'gist-ui.' + Close_Name;
+Close.displayName = 'webbo-ui.' + Close_Name;
 
 // *-*-*-*-* Portal *-*-*-*-*
 
@@ -248,7 +248,7 @@ export const Portal = (props: PortalProps) => {
   return rootContext.isOpen ? createPortal(children, container) : null;
 };
 
-Portal.displayName = 'gist-ui.' + Portal_Name;
+Portal.displayName = 'webbo-ui.' + Portal_Name;
 
 // *-*-*-*-* Title *-*-*-*-*
 
@@ -272,7 +272,7 @@ export const Title = (props: TitleProps) => {
   );
 };
 
-Title.displayName = 'gist-ui.' + Title_Name;
+Title.displayName = 'webbo-ui.' + Title_Name;
 
 // *-*-*-*-* Description *-*-*-*-*
 
@@ -299,7 +299,7 @@ export const Description = (props: DescriptionProps) => {
   );
 };
 
-Description.displayName = 'gist-ui.' + Description_Name;
+Description.displayName = 'webbo-ui.' + Description_Name;
 
 // *-*-*-*-* Content *-*-*-*-*
 
@@ -366,4 +366,4 @@ export const Content = (props: ContentProps) => {
   );
 };
 
-Content.displayName = 'gist-ui.' + Content_Name;
+Content.displayName = 'webbo-ui.' + Content_Name;

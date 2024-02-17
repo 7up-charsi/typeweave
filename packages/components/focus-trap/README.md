@@ -1,15 +1,15 @@
-# @gist-ui/focus-trap
+# @webbo-ui/focus-trap
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/focus-trap
+pnpm add @webbo-ui/focus-trap
 # or
-yarn add @gist-ui/focus-trap
+yarn add @webbo-ui/focus-trap
 # or
-npm i @gist-ui/focus-trap
+npm i @webbo-ui/focus-trap
 ```
 
 ## Licence

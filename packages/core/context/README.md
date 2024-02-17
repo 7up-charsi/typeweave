@@ -1,15 +1,15 @@
-# @gist-ui/context
+# @webbo-ui/context
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/context
+pnpm add @webbo-ui/context
 # or
-yarn add @gist-ui/context
+yarn add @webbo-ui/context
 # or
-npm i @gist-ui/context
+npm i @webbo-ui/context
 ```
 
 ## Licence

@@ -1,5 +1,5 @@
 import React from 'react';
-import { button } from '@gist-ui/theme';
+import { button } from '@webbo-ui/theme';
 import { Button, ButtonGroup, ButtonProps } from '../src';
 import { Bars, Circles } from 'react-loader-spinner';
 

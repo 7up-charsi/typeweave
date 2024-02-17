@@ -1,15 +1,15 @@
-# @gist-ui/use-is-disabled
+# @webbo-ui/use-is-disabled
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/use-is-disabled
+pnpm add @webbo-ui/use-is-disabled
 # or
-yarn add @gist-ui/use-is-disabled
+yarn add @webbo-ui/use-is-disabled
 # or
-npm i @gist-ui/use-is-disabled
+npm i @webbo-ui/use-is-disabled
 ```
 
 ## Licence

@@ -73,6 +73,6 @@ export type SwitchClassNames = ClassNames<typeof _switch.slots>;
 export { _switch as switch };
 
 export const switchStyles = [
-  './node_modules/@gist-ui/theme/src/components/switch.ts',
-  './node_modules/@gist-ui/theme/src/classes.ts',
+  './node_modules/@webbo-ui/theme/src/components/switch.ts',
+  './node_modules/@webbo-ui/theme/src/classes.ts',
 ];

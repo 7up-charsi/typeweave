@@ -1,5 +1,5 @@
 {
-  "name": "@gist-ui/visually-hidden",
+  "name": "@webbo-ui/visually-hidden",
   "version": "1.0.0",
   "keywords": [
     "visually-hidden"
@@ -17,11 +17,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mzeeshan3597/gist-ui.git",
+    "url": "git+https://github.com/mzeeshan3597/webbo-ui.git",
     "directory": "packages/components/visually-hidden"
   },
   "bugs": {
-    "url": "https://github.com/mzeeshan3597/gist-ui/issues"
+    "url": "https://github.com/mzeeshan3597/webbo-ui/issues"
   },
   "main": "./src/index.ts",
   "scripts": {
@@ -36,7 +36,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@gist-ui/slot": "workspace:*"
+    "@webbo-ui/slot": "workspace:*"
   },
   "devDependencies": {
     "clean-package": "^2.2.0"

@@ -1,7 +1,7 @@
 'use client';
 
-import { useRipple, UseRippleProps } from '@gist-ui/use-ripple';
-import { mergeProps, mergeRefs } from '@gist-ui/react-utils';
+import { useRipple, UseRippleProps } from '@webbo-ui/use-ripple';
+import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
 import { useFocusRing } from '@react-aria/focus';
 import { usePress, useHover, PressProps } from '@react-aria/interactions';
 import {
@@ -10,7 +10,7 @@ import {
   ButtonGroupVariantProps,
   ButtonVariantProps,
   ClassValue,
-} from '@gist-ui/theme';
+} from '@webbo-ui/theme';
 import {
   ButtonHTMLAttributes,
   cloneElement,
@@ -22,7 +22,7 @@ import {
   useEffect,
   useRef,
 } from 'react';
-import { Slot } from '@gist-ui/slot';
+import { Slot } from '@webbo-ui/slot';
 
 interface GroupContext extends ButtonVariantProps {}
 
@@ -68,7 +68,7 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
   },
 );
 
-ButtonGroup.displayName = 'gist-ui.ButtonGroup';
+ButtonGroup.displayName = 'webbo-ui.ButtonGroup';
 
 // *-*-*-*-* Button *-*-*-*-*
 
@@ -158,7 +158,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         !ariaLabelledby
       )
         console.warn(
-          'Gist-ui button: icon button must provide "aria-label" or "aria-labelledby"',
+          'webbo-ui button: icon button must provide "aria-label" or "aria-labelledby"',
         );
     }, [ariaLabel, ariaLabelledby, isIconOnly]);
 
@@ -217,4 +217,4 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   },
 );
 
-Button.displayName = 'gist-ui.Button';
+Button.displayName = 'webbo-ui.Button';

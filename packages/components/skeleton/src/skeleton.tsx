@@ -1,7 +1,7 @@
 'use server';
 
 import { forwardRef } from 'react';
-import { SkeletonVariantProps, skeleton, ClassValue } from '@gist-ui/theme';
+import { SkeletonVariantProps, skeleton, ClassValue } from '@webbo-ui/theme';
 
 export interface SkeletonProps extends SkeletonVariantProps {
   className?: ClassValue;
@@ -15,6 +15,6 @@ const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props, ref) => {
   return <div ref={ref} className={styles} />;
 });
 
-Skeleton.displayName = 'gist-ui.Skeleton';
+Skeleton.displayName = 'webbo-ui.Skeleton';
 
 export default Skeleton;

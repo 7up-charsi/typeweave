@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import { table } from '@gist-ui/theme';
-import { Button } from '@gist-ui/button';
-import { Checkbox } from '@gist-ui/checkbox';
+import { table } from '@webbo-ui/theme';
+import { Button } from '@webbo-ui/button';
+import { Checkbox } from '@webbo-ui/checkbox';
 
 import * as Table from '../src';
 

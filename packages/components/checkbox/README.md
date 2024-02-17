@@ -1,15 +1,15 @@
-# @gist-ui/checkbox
+# @webbo-ui/checkbox
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/checkbox
+pnpm add @webbo-ui/checkbox
 # or
-yarn add @gist-ui/checkbox
+yarn add @webbo-ui/checkbox
 # or
-npm i @gist-ui/checkbox
+npm i @webbo-ui/checkbox
 ```
 
 ## Licence

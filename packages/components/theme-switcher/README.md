@@ -1,15 +1,15 @@
-# @gist-ui/theme-switcher
+# @webbo-ui/theme-switcher
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/theme-switcher
+pnpm add @webbo-ui/theme-switcher
 # or
-yarn add @gist-ui/theme-switcher
+yarn add @webbo-ui/theme-switcher
 # or
-npm i @gist-ui/theme-switcher
+npm i @webbo-ui/theme-switcher
 ```
 
 ## Licence

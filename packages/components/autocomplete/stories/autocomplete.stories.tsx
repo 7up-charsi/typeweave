@@ -1,8 +1,8 @@
 import React from 'react';
-import { select } from '@gist-ui/theme';
+import { select } from '@webbo-ui/theme';
 
 import { Autocomplete, Option, mapInputProps } from '../src';
-import { Input } from '@gist-ui/input';
+import { Input } from '@webbo-ui/input';
 
 const meta = {
   title: 'Components/Autocomplete',

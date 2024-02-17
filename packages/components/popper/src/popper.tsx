@@ -1,8 +1,8 @@
 'use client';
 
-import { createContextScope } from '@gist-ui/context';
-import { Slot } from '@gist-ui/slot';
-import { useSize } from '@gist-ui/use-size';
+import { createContextScope } from '@webbo-ui/context';
+import { Slot } from '@webbo-ui/slot';
+import { useSize } from '@webbo-ui/use-size';
 import { forwardRef, useEffect, useState } from 'react';
 import {
   Boundary,
@@ -47,7 +47,7 @@ export const Root = (props: PopperProps) => {
   );
 };
 
-Root.displayName = 'gist-ui.' + Popper_Name;
+Root.displayName = 'webbo-ui.' + Popper_Name;
 
 const Reference_Name = 'Popper.Reference';
 
@@ -85,7 +85,7 @@ export const Reference = (props: ReferenceProps) => {
   );
 };
 
-Reference.displayName = 'gist-ui.' + Reference_Name;
+Reference.displayName = 'webbo-ui.' + Reference_Name;
 
 const Floating_Name = 'Popper.Reference';
 
@@ -267,7 +267,7 @@ export const Floating = (props: FloatingProps) => {
   );
 };
 
-Floating.displayName = 'gist-ui.' + Floating_Name;
+Floating.displayName = 'webbo-ui.' + Floating_Name;
 
 const Arrow_Name = 'Popper.Arrow';
 
@@ -323,4 +323,4 @@ export const Arrow = forwardRef<
   );
 });
 
-Arrow.displayName = 'gist-ui.' + Arrow_Name;
+Arrow.displayName = 'webbo-ui.' + Arrow_Name;

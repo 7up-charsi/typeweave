@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Button } from '@gist-ui/button';
+import { Button } from '@webbo-ui/button';
 
 import * as Popover from '../src';
 

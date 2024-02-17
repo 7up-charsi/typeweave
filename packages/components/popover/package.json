@@ -1,5 +1,5 @@
 {
-  "name": "@gist-ui/popover",
+  "name": "@webbo-ui/popover",
   "version": "1.0.0",
   "keywords": [
     "popover"
@@ -17,11 +17,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mzeeshan3597/gist-ui.git",
+    "url": "git+https://github.com/mzeeshan3597/webbo-ui.git",
     "directory": "packages/components/popover"
   },
   "bugs": {
-    "url": "https://github.com/mzeeshan3597/gist-ui/issues"
+    "url": "https://github.com/mzeeshan3597/webbo-ui/issues"
   },
   "main": "./src/index.ts",
   "scripts": {
@@ -36,20 +36,20 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@gist-ui/use-controllable-state": "workspace:*",
-    "@gist-ui/use-click-outside": "workspace:*",
-    "@gist-ui/use-callback-ref": "workspace:*",
-    "@gist-ui/focus-trap": "workspace:*",
-    "@gist-ui/error": "workspace:*",
-    "@gist-ui/slot": "workspace:*",
-    "@gist-ui/react-utils": "workspace:*",
-    "@gist-ui/use-is-disabled": "workspace:*",
-    "@gist-ui/visually-hidden": "workspace:*",
-    "@gist-ui/context": "workspace:*",
-    "@gist-ui/popper": "workspace:*",
+    "@webbo-ui/use-controllable-state": "workspace:*",
+    "@webbo-ui/use-click-outside": "workspace:*",
+    "@webbo-ui/use-callback-ref": "workspace:*",
+    "@webbo-ui/focus-trap": "workspace:*",
+    "@webbo-ui/error": "workspace:*",
+    "@webbo-ui/slot": "workspace:*",
+    "@webbo-ui/react-utils": "workspace:*",
+    "@webbo-ui/use-is-disabled": "workspace:*",
+    "@webbo-ui/visually-hidden": "workspace:*",
+    "@webbo-ui/context": "workspace:*",
+    "@webbo-ui/popper": "workspace:*",
     "@react-aria/interactions": "^3.20.0",
-    "@gist-ui/button": "workspace:*",
-    "@gist-ui/theme": "workspace:*"
+    "@webbo-ui/button": "workspace:*",
+    "@webbo-ui/theme": "workspace:*"
   },
   "devDependencies": {
     "clean-package": "^2.2.0"
@@ -57,8 +57,8 @@
   "clean-package": {
     "extends": "../../../../../../clean-package.config.json",
     "remove": [
-      "dependencies.@gist-ui/button",
-      "dependencies.@gist-ui/theme"
+      "dependencies.@webbo-ui/button",
+      "dependencies.@webbo-ui/theme"
     ]
   }
 }

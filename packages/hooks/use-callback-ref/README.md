@@ -1,15 +1,15 @@
-# @gist-ui/use-callback-ref
+# @webbo-ui/use-callback-ref
 
 
 
 ## Installation
 
 ```bash
-pnpm add @gist-ui/use-callback-ref
+pnpm add @webbo-ui/use-callback-ref
 # or
-yarn add @gist-ui/use-callback-ref
+yarn add @webbo-ui/use-callback-ref
 # or
-npm i @gist-ui/use-callback-ref
+npm i @webbo-ui/use-callback-ref
 ```
 
 ## Licence

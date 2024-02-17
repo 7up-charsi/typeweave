@@ -1,10 +1,10 @@
 import { ChangeEvent, forwardRef, useRef } from 'react';
 import Input, { InputProps } from './input';
-import { mergeRefs } from '@gist-ui/react-utils';
-import { NumberInputClassNames, numberInput } from '@gist-ui/theme';
-import { Button } from '@gist-ui/button';
-import { GistUiError } from '@gist-ui/error';
-import { useControllableState } from '@gist-ui/use-controllable-state';
+import { mergeRefs } from '@webbo-ui/react-utils';
+import { NumberInputClassNames, numberInput } from '@webbo-ui/theme';
+import { Button } from '@webbo-ui/button';
+import { CustomError } from '@webbo-ui/error';
+import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { useLongPress } from '@react-aria/interactions';
 
 export interface NumberInputProps extends Omit<InputProps, 'type'> {
@@ -278,10 +278,10 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     );
 
     if (process.env.NODE_ENV !== 'production' && min && max && min > max)
-      throw new GistUiError('NumberInput', '"min" must be lower than "max"');
+      throw new CustomError('NumberInput', '"min" must be lower than "max"');
 
     if (process.env.NODE_ENV !== 'production' && step > largeStep)
-      throw new GistUiError(
+      throw new CustomError(
         'NumberInput',
         '"step" must be lower than "largeStep"',
       );
@@ -313,6 +313,6 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
   },
 );
 
-NumberInput.displayName = 'gist-ui.NumberInput';
+NumberInput.displayName = 'webbo-ui.NumberInput';
 
 export default NumberInput;
