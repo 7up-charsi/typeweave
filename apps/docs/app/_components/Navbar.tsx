@@ -5,14 +5,18 @@ import Link from 'next/link';
 import { ThemeSwitcher } from '@webbo-ui/theme-switcher';
 
 const links = [
-  { title: 'docs', href: '/get-started' },
+  { title: 'docs', href: '/docs/installation' },
   { title: 'components', href: '/components' },
 ];
 
 export const Navbar = () => {
   return (
-    <div className="w-full h-16 border-b border-b-muted-6 dark:border-b-mutedDark-6 flex items-center px-12">
-      <Link href="/" className="inline-block leading-none mr-10">
+    <header className="w-full h-16 border-b border-b-muted-6 dark:border-b-mutedDark-6 flex items-center px-12">
+      <Link
+        href="/"
+        aria-label="home page"
+        className="inline-block leading-none mr-10"
+      >
         <Image
           src={lightLogo}
           alt="webbu-ui logo"
@@ -29,19 +33,16 @@ export const Navbar = () => {
         />
       </Link>
 
-      <nav>
-        <ul className="flex gap-5">
-          {links.map(({ href, title }, i) => (
-            <li key={i} className="first-letter:uppercase">
-              <Link
-                href={href}
-                className="text-muted-11/90 hover:text-muted-11 transition-colors dark:text-mutedDark-11/90 dark:hover:text-mutedDark-11 hover:bg-muted-3 dark:hover:bg-mutedDark-3 px-3 py-2 rounded"
-              >
-                {title}
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <nav aria-label="primary navigation links">
+        {links.map(({ href, title }, i) => (
+          <Link
+            key={i}
+            href={href}
+            className="inline-block first-letter:uppercase text-muted-11/90 hover:text-muted-11 transition-colors dark:text-mutedDark-11/90 dark:hover:text-mutedDark-11 hover:bg-muted-3 dark:hover:bg-mutedDark-3 px-3 py-2 rounded"
+          >
+            {title}
+          </Link>
+        ))}
       </nav>
 
       <div className="grow"></div>
@@ -80,6 +81,7 @@ export const Navbar = () => {
         href="https://github.com/7up-charsi/webbo-ui"
         target="_blank"
         rel="noreferrer"
+        aria-label="github source code"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -99,6 +101,6 @@ export const Navbar = () => {
           </g>
         </svg>
       </Link>
-    </div>
+    </header>
   );
 };
