@@ -185,7 +185,7 @@ export interface PortalProps {
 }
 
 export const Portal = (props: PortalProps) => {
-  const { children, container = document.body } = props;
+  const { children, container = globalThis?.document?.body } = props;
 
   const rootContext = useRootContext(Portal_Name);
 

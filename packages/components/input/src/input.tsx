@@ -38,6 +38,9 @@ export interface InputProps extends Omit<InputVariantProps, 'error'> {
     | 'onFocus'
     | 'required'
   >;
+  baseProps?: React.HTMLAttributes<HTMLDivElement>;
+  labelProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
+  helperTextProps?: React.HTMLAttributes<HTMLDivElement>;
   inputWrapperProps?: React.HTMLAttributes<HTMLDivElement>;
   baseRef?: React.ForwardedRef<HTMLDivElement>;
   inputRef?: React.ForwardedRef<HTMLInputElement>;
@@ -63,7 +66,10 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     placeholder,
     baseRef,
     inputRef,
+    baseProps = {},
     inputProps = {},
+    labelProps = {},
+    helperTextProps = {},
     inputWrapperProps = {},
     a11yFeedback = 'polite',
     fullWidth = false,
@@ -108,6 +114,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
 
   return (
     <div
+      {...baseProps}
       ref={baseRef}
       className={styles.base({ className: classNames?.base })}
       data-focused={isFocused}
@@ -117,6 +124,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     >
       {!hideLabel && !!label && (
         <label
+          {...labelProps}
           htmlFor={inputId}
           className={styles.label({ className: classNames?.label })}
         >
@@ -125,8 +133,6 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
       )}
 
       <div
-        ref={ref}
-        className={styles.inputWrapper({ className: classNames?.inputWrapper })}
         {...mergeProps(hoverProps, inputWrapperProps, {
           onPointerDown: (e: React.PointerEvent) => {
             if (isDisabled) return;
@@ -139,12 +145,14 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
             }
           },
         })}
+        ref={ref}
+        className={styles.inputWrapper({ className: classNames?.inputWrapper })}
       >
         {startContent}
 
         <input
-          ref={mergeRefs(innerInputRef, inputRef)}
           {...mergeProps(focusProps, focusRingProps, inputProps)}
+          ref={mergeRefs(innerInputRef, inputRef)}
           value={value}
           defaultValue={defaultValue}
           aria-label={hideLabel ? label : undefined}
@@ -165,6 +173,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
 
       {!error && helperText && (
         <div
+          {...helperTextProps}
           id={helperTextId}
           className={styles.helperText({ className: classNames?.helperText })}
         >
@@ -174,6 +183,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
 
       {error && errorMessage && (
         <div
+          {...helperTextProps}
           id={errorMessageId}
           aria-live={a11yFeedback}
           className={styles.helperText({ className: classNames?.helperText })}

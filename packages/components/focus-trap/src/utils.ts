@@ -4,12 +4,12 @@ export const focusFirst = (
   elements: HTMLElement[],
   { select = false } = {},
 ) => {
-  const previouslyFocusedElement = document.activeElement;
+  const previouslyFocusedElement = document?.activeElement;
   for (const ele of elements) {
     focus(ele, { select });
 
     // if statement is true, then focus moved
-    if (document.activeElement !== previouslyFocusedElement) return;
+    if (document?.activeElement !== previouslyFocusedElement) return;
   }
 };
 
@@ -35,7 +35,7 @@ export const lastTabbable = (container: HTMLElement) => {
 export const getTabbables = (container: HTMLElement) => {
   const nodes: HTMLElement[] = [];
 
-  const walker = document.createTreeWalker(
+  const walker = document?.createTreeWalker(
     container,
     NodeFilter.SHOW_ELEMENT,
     (node) => {
@@ -82,7 +82,7 @@ export const focus = (
   { select }: { select?: boolean } = {},
 ) => {
   if (element && element.focus) {
-    const previousFocusedElement = document.activeElement;
+    const previousFocusedElement = document?.activeElement;
 
     element.focus({ preventScroll: true });
 

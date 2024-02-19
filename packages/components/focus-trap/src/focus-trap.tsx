@@ -81,7 +81,7 @@ const FocusTrap = (props: FocusTrapProps) => {
     };
 
     // When the focused element gets removed from the DOM, browsers move focus
-    // back to the document.body. In this case, we move focus to the container
+    // back to the document?.body. In this case, we move focus to the container
     // to keep focus trapped correctly.
     const handleMutations = (mutations: MutationRecord[]) => {
       const focusedElement = document.activeElement as HTMLElement | null;

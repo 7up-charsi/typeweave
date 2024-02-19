@@ -198,14 +198,13 @@ export interface PortalProps {
   container?: Element;
 }
 
-export const Portal = ({ children, container }: PortalProps) => {
+export const Portal = ({
+  children,
+  container = globalThis?.document?.body,
+}: PortalProps) => {
   const rootContext = useRootContext(Portal_Name);
 
-  return (
-    <>
-      {rootContext.isOpen && createPortal(children, container || document.body)}
-    </>
-  );
+  return <>{rootContext.isOpen && createPortal(children, container)}</>;
 };
 
 Portal.displayName = 'webbo-ui.' + Portal_Name;

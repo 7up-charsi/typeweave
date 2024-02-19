@@ -1,3 +1,5 @@
+'use client';
+
 import { ChangeEvent, forwardRef, useRef } from 'react';
 import Input, { InputProps } from './input';
 import { mergeRefs } from '@webbo-ui/react-utils';
