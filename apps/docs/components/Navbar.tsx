@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import darkLogo from '@/app/_assets/dark-logo.png';
-import lightLogo from '@/app/_assets/light-logo.png';
+import darkLogo from '@/assets/dark-logo.png';
+import lightLogo from '@/assets/light-logo.png';
 import Link from 'next/link';
 import { ThemeSwitcher } from '@webbo-ui/theme-switcher';
 
 const links = [
-  { title: 'docs', href: '/docs/installation' },
+  { title: 'docs', href: '/docs/introduction' },
   { title: 'components', href: '/components' },
 ];
 
@@ -19,14 +19,14 @@ export const Navbar = () => {
       >
         <Image
           src={lightLogo}
-          alt="webbu-ui logo"
+          alt="webbu-ui dark logo"
           width={120}
           height={120}
           className="dark:inline-block hidden"
         />
         <Image
           src={darkLogo}
-          alt="webbu-ui logo"
+          alt="webbu-ui light logo"
           width={120}
           height={120}
           className="inline-block dark:hidden"
@@ -46,33 +46,6 @@ export const Navbar = () => {
       </nav>
 
       <div className="grow"></div>
-
-      {/* search docs placeholder input */}
-      <div
-        className="mr-5 w-52 h-9 ring-1 ring-muted-7 dark:ring-mutedDark-7 hover:ring-muted-8 dark:hover:ring-mutedDark-8 px-2 rounded flex items-center cursor-pointer transition-colors group select-none"
-        tabIndex={0}
-        aria-label="press to open command palette for docs search"
-      >
-        <span className="text-sm text-muted-11 dark:text-mutedDark-11 tracking-wide">
-          Search docs
-        </span>
-        <div className="grow"></div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 32 32"
-          width={17}
-          height={17}
-          className="text-muted-11 dark:text-mutedDark-11"
-        >
-          <g>
-            <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
-              <g fill="currentColor" transform="translate(-256 -1139)">
-                <path d="M269.46 1163.45c-6.29 0-11.389-5.01-11.389-11.2 0-6.19 5.099-11.21 11.389-11.21 6.29 0 11.39 5.02 11.39 11.21 0 6.19-5.1 11.2-11.39 11.2zm18.228 5.8l-8.259-8.13c2.162-2.35 3.491-5.45 3.491-8.87 0-7.32-6.026-13.25-13.46-13.25-7.434 0-13.46 5.93-13.46 13.25 0 7.31 6.026 13.24 13.46 13.24a13.52 13.52 0 008.472-2.96l8.292 8.16c.405.4 1.06.4 1.464 0 .405-.39.405-1.04 0-1.44z"></path>
-              </g>
-            </g>
-          </g>
-        </svg>
-      </div>
 
       <ThemeSwitcher size="sm" className="mr-5" />
 
