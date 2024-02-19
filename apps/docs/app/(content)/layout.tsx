@@ -1,15 +1,16 @@
-import Sidebar from '@/app/_components/Sidebar';
+import Sidebar from '@/components/Sidebar';
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface Props {
   children: React.ReactNode;
-}>) {
+}
+
+const layout = ({ children }: Props) => {
   return (
     <div className="grow flex px-12">
       <Sidebar />
       <main className="grow overflow-auto relative">{children}</main>
     </div>
   );
-}
+};
 
+export default layout;
