@@ -1,5 +1,3 @@
-'use client';
-
 import { useLayoutEffect, useState } from 'react';
 
 const useMediaQuery = (query: string) => {

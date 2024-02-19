@@ -1,4 +1,4 @@
-'use server';
+'use client';
 
 import { forwardRef } from 'react';
 import { AlertVariantProps, alert as alertStyles } from '@webbo-ui/theme';

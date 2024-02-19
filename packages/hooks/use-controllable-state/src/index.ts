@@ -1,5 +1,3 @@
-'use client';
-
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { useEffect, useRef, useState } from 'react';
 

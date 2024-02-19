@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 
@@ -51,10 +49,10 @@ const useClickOutside = <R extends HTMLElement>(
       callbackRef(e);
     };
 
-    document.addEventListener(onEvent, handler);
+    document?.addEventListener(onEvent, handler);
 
     return () => {
-      document.removeEventListener(onEvent, handler);
+      document?.removeEventListener(onEvent, handler);
     };
   }, [callbackRef, closeButton, element, isDisabled, onEvent]);
 

@@ -1,5 +1,3 @@
-'use client';
-
 import { useCallback } from 'react';
 
 export interface MinimalEvent {
@@ -57,7 +55,7 @@ const useRipple = ({
       const maxWidth = Math.max(clientX - left, width - clientX + left);
       const size = Math.hypot(maxHeight, maxWidth) * 2;
 
-      const element = document.createElement('span');
+      const element = document?.createElement('span');
 
       element.style.cssText = `
         position: absolute;
@@ -99,7 +97,7 @@ const useRipple = ({
         }, timeoutDuration);
       };
 
-      document.addEventListener('pointerup', removeRipple, {
+      document?.addEventListener('pointerup', removeRipple, {
         once: true,
         capture: true,
       });
@@ -125,7 +123,7 @@ const useRipple = ({
       const maxWidth = Math.max(clientX - left, width - clientX + left);
       const size = Math.hypot(maxHeight, maxWidth) * 2;
 
-      const element = document.createElement('span');
+      const element = document?.createElement('span');
 
       element.style.cssText = `
         position: absolute;
@@ -167,7 +165,7 @@ const useRipple = ({
         }, timeoutDuration);
       };
 
-      document.addEventListener('keyup', removeRipple, {
+      document?.addEventListener('keyup', removeRipple, {
         once: true,
         capture: true,
       });

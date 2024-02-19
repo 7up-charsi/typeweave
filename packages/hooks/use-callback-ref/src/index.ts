@@ -1,5 +1,3 @@
-'use client';
-
 import { DependencyList, useCallback, useEffect, useRef } from 'react';
 
 type Callback = (...args: never[]) => unknown;

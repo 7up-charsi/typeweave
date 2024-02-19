@@ -6,7 +6,7 @@ import {
   ToggleButtonGroupProps,
 } from '@webbo-ui/toggle-button';
 import { useMediaQuery } from '@webbo-ui/use-media-query';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import * as Tooltip from '@webbo-ui/tooltip';
 
 const dark_svg = (
@@ -89,10 +89,13 @@ const ThemeSwitcher = (props: ThemeSwitcherProps) => {
     defaultTheme = 'system',
   } = props;
 
-  const [theme, setTheme] = useState(
-    localStorage.getItem(storageKey) ?? defaultTheme,
-  );
+  const [theme, setTheme] = useState(defaultTheme);
   const matched = useMediaQuery('(prefers-color-scheme: dark)');
+
+  useLayoutEffect(() => {
+    const theme = localStorage.getItem(storageKey);
+    if (theme) setTheme(theme as never);
+  }, [storageKey]);
 
   useEffect(() => {
     document.documentElement.classList.remove('light', 'dark');
@@ -120,7 +123,7 @@ const ThemeSwitcher = (props: ThemeSwitcherProps) => {
       aria-label="toggle theme between light, dark and system"
       onChange={(_, val) => {
         if (val) {
-          setTheme(val);
+          setTheme(val as never);
           localStorage.setItem(storageKey, val);
         }
       }}

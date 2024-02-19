@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactNode, forwardRef, useState } from 'react';
 import Input, { InputProps } from './input';
 import { Button } from '@webbo-ui/button';

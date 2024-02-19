@@ -1,5 +1,3 @@
-'use client';
-
 import { RefObject, useEffect } from 'react';
 
 type Direction = 'horizontal' | 'vertical' | 'both';
@@ -7,7 +5,7 @@ type Direction = 'horizontal' | 'vertical' | 'both';
 export interface UseScrollLockProps<E> {
   /**
    * Ref of element on which scroll will be locked
-   * @default document.body
+   * @default document?.body
    */
   ref?: RefObject<E | null>;
   enabled?: boolean;
@@ -27,7 +25,7 @@ const useScrollLock = <E extends HTMLElement>(
     if (!enabled) return;
 
     const isBody = !(ref && ref.current);
-    const ele = ref?.current || document.body;
+    const ele = ref?.current || document?.body;
     const computedStyles = getComputedStyle(ele);
 
     const originalPaddingRight = computedStyles.paddingRight;
@@ -39,11 +37,11 @@ const useScrollLock = <E extends HTMLElement>(
     const styleOverflowX = ele.style.overflowX;
 
     const verticalScrollBarWidth = isBody
-      ? innerWidth - document.documentElement.offsetWidth
+      ? innerWidth - document?.documentElement.offsetWidth
       : ele.offsetWidth - ele.clientWidth;
 
     const horizontalScrollBarHeight = isBody
-      ? innerHeight - document.documentElement.offsetHeight
+      ? innerHeight - document?.documentElement.offsetHeight
       : ele.offsetHeight - ele.clientHeight;
 
     const paddingRight = `${

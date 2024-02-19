@@ -1,4 +1,4 @@
-'use server';
+'use client';
 
 import { BadgeClassNames, BadgeVariantProps, badge } from '@webbo-ui/theme';
 import { forwardRef } from 'react';
