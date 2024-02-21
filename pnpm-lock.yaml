@@ -86,9 +86,6 @@ importers:
 
   apps/docs:
     dependencies:
-      '@shikijs/rehype':
-        specifier: ^1.1.6
-        version: 1.1.6
       '@webbo-ui/button':
         specifier: workspace:*
         version: link:../../packages/components/button
@@ -140,9 +137,6 @@ importers:
       rehype-autolink-headings:
         specifier: ^7.1.0
         version: 7.1.0
-      rehype-pretty-code:
-        specifier: ^0.13.0
-        version: 0.13.0(shiki@1.1.6)
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
@@ -4849,23 +4843,6 @@ packages:
 
   /@shikijs/core@1.1.6:
     resolution: {integrity: sha512-kt9hhvrWTm0EPtRDIsoAZnSsFlIDBVBBI5CQewpA/NZCPin+MOKRXg+JiWc4y+8fZ/v0HzfDhu/UC+OTZGMt7A==}
-    dev: false
-
-  /@shikijs/rehype@1.1.6:
-    resolution: {integrity: sha512-Tk7PKoSUKDdOffmZgbCAh7FjI5/g56iU5AcecPRJ/8RoVqyx9UxJGB6N9my49PI8X6LV1M3IUHFjcuVYEppsrA==}
-    dependencies:
-      '@shikijs/transformers': 1.1.6
-      '@types/hast': 3.0.4
-      hast-util-to-string: 3.0.0
-      shiki: 1.1.6
-      unified: 11.0.4
-      unist-util-visit: 5.0.0
-    dev: false
-
-  /@shikijs/transformers@1.1.6:
-    resolution: {integrity: sha512-R+eI1I9sQv0MCJyfR4kAG1G1SKSctw5ILszP0tHVrAgzSHWTpaHbXreZrDueahqtUCNHjt+MKmKJ8EMFtiitOQ==}
-    dependencies:
-      shiki: 1.1.6
     dev: false
 
   /@sinclair/typebox@0.27.8:
@@ -12336,10 +12313,6 @@ packages:
       lines-and-columns: 1.2.4
     dev: true
 
-  /parse-numeric-range@1.3.0:
-    resolution: {integrity: sha512-twN+njEipszzlMJd4ONUYgSfZPDxgHhT9Ahed5uTigpQn90FggW4SA/AIPq/6a149fTbE9qBEcSwE3FAEp6wQQ==}
-    dev: false
-
   /parse-passwd@1.0.0:
     resolution: {integrity: sha512-1Y1A//QUXEZK7YKz+rD9WydcE1+EuPr6ZBgKecAB8tmoW6UFv0NREVJe1p+jRxtThkcbbKkfwIbWJe/IeE6m2Q==}
     engines: {node: '>=0.10.0'}
@@ -13117,29 +13090,6 @@ packages:
       '@ungap/structured-clone': 1.2.0
       hast-util-heading-rank: 3.0.0
       hast-util-is-element: 3.0.0
-      unified: 11.0.4
-      unist-util-visit: 5.0.0
-    dev: false
-
-  /rehype-parse@9.0.0:
-    resolution: {integrity: sha512-WG7nfvmWWkCR++KEkZevZb/uw41E8TsH4DsY9UxsTbIXCVGbAs4S+r8FrQ+OtH5EEQAs+5UxKC42VinkmpA1Yw==}
-    dependencies:
-      '@types/hast': 3.0.4
-      hast-util-from-html: 2.0.1
-      unified: 11.0.4
-    dev: false
-
-  /rehype-pretty-code@0.13.0(shiki@1.1.6):
-    resolution: {integrity: sha512-+22dz1StXlF7dlMyOySNaVxgcGhMI4BCxq0JxJJPWYGiKsI6cu5jyuIKGHXHvH18D8sv1rdKtvsY9UEfN3++SQ==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      shiki: ^1.0.0
-    dependencies:
-      '@types/hast': 3.0.4
-      hast-util-to-string: 3.0.0
-      parse-numeric-range: 1.3.0
-      rehype-parse: 9.0.0
-      shiki: 1.1.6
       unified: 11.0.4
       unist-util-visit: 5.0.0
     dev: false

@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@shikijs/rehype": "^1.1.6",
     "@webbo-ui/button": "workspace:*",
     "@webbo-ui/dialog": "workspace:*",
     "@webbo-ui/input": "workspace:*",
@@ -27,7 +26,6 @@
     "react-dom": "^18.2.0",
     "react-instantsearch": "^7.6.0",
     "rehype-autolink-headings": "^7.1.0",
-    "rehype-pretty-code": "^0.13.0",
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.0",
     "remark-parse": "^11.0.0",
