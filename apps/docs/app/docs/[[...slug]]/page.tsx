@@ -11,8 +11,6 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
 import { fromHtmlIsomorphic } from 'hast-util-from-html-isomorphic';
-import rehypeShiki from '@shikijs/rehype';
-import rehypePrettyCode from 'rehype-pretty-code';
 
 const components: MDXRemoteProps['components'] = {
   h1: (props) => <h2 {...props} className="scroll-mt-20" />,
@@ -48,8 +46,6 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
               mdxOptions: {
                 remarkPlugins: [remarkGfm],
                 rehypePlugins: [
-                  [rehypePrettyCode, {}],
-                  [rehypeShiki, { theme: 'one-dark-pro' }],
                   rehypeSlug,
                   [
                     rehypeAutolinkHeadings,
