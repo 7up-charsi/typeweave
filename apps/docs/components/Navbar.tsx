@@ -3,15 +3,11 @@ import darkLogo from '@/assets/dark-logo.png';
 import lightLogo from '@/assets/light-logo.png';
 import Link from 'next/link';
 import { ThemeSwitcher } from '@webbo-ui/theme-switcher';
-
-const links = [
-  { title: 'docs', href: '/docs/introduction' },
-  { title: 'components', href: '/components' },
-];
+import { navbarLinks } from '@/config/navbarLinks';
 
 export const Navbar = () => {
   return (
-    <header className="w-full h-16 border-b border-b-muted-6 dark:border-b-mutedDark-6 flex items-center px-12">
+    <header className="fixed top-0 left-0 z-50 w-full h-16 border-b border-b-muted-6 dark:border-b-mutedDark-6 flex items-center px-12 bg-muted-1 dark:bg-mutedDark-1">
       <Link
         href="/"
         aria-label="home page"
@@ -34,7 +30,7 @@ export const Navbar = () => {
       </Link>
 
       <nav aria-label="primary navigation links">
-        {links.map(({ href, title }, i) => (
+        {navbarLinks.map(({ href, title }, i) => (
           <Link
             key={i}
             href={href}

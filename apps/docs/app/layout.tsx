@@ -13,10 +13,10 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: Props) {
+export default function Layout({ children }: Props) {
   return (
     <html lang="en" className={GeistSans.variable}>
-      <body className="max-w-screen-2xl min-h-screen m-auto flex flex-col">
+      <body className="max-w-screen-2xl m-auto">
         <Navbar />
         {children}
       </body>
