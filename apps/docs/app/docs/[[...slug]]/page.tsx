@@ -7,18 +7,17 @@ import { componentsLinks } from '@/config/componentsLinks';
 import { getHeadings } from '@/lib/utils';
 import Toc from '@/components/Toc';
 import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
-import { fromHtmlIsomorphic } from 'hast-util-from-html-isomorphic';
+import rehypePrettyCode from 'rehype-pretty-code';
+import HeadingLink from '@/components/markdown/HeadingLink';
 
 const components: MDXRemoteProps['components'] = {
-  h1: (props) => <h2 {...props} className="scroll-mt-20" />,
-  h2: (props) => <h2 {...props} className="scroll-mt-20" />,
-  h3: (props) => <h2 {...props} className="scroll-mt-20" />,
-  h4: (props) => <h2 {...props} className="scroll-mt-20" />,
-  h5: (props) => <h2 {...props} className="scroll-mt-20" />,
-  h6: (props) => <h2 {...props} className="scroll-mt-20" />,
+  h2: (props) => <HeadingLink as="h2" {...props} />,
+  h3: (props) => <HeadingLink as="h3" {...props} />,
+  code: (props) => {
+    return <code {...props} className="" />;
+  },
+  pre: (props) => <pre {...props} className="p-4 rounded" />,
 };
 
 export default async function Page({ params }: { params: { slug: string[] } }) {
@@ -37,25 +36,18 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
   return (
     <div className="flex">
       <main className="grow">
-        <PageHeader heading={data.title} description={data.description} />
-        <div className="prose  data-[highlighted-line]">
+        <div className="py-4 px-10">
+          <PageHeader heading={data.title} description={data.description} />
+
           <MDXRemote
             source={content}
             components={components}
             options={{
               mdxOptions: {
-                remarkPlugins: [remarkGfm],
                 rehypePlugins: [
+                  // @ts-ignore
+                  [rehypePrettyCode, { theme: 'one-dark-pro', grid: false }],
                   rehypeSlug,
-                  [
-                    rehypeAutolinkHeadings,
-                    {
-                      behavior: 'append',
-                      content: fromHtmlIsomorphic('<span>#</span>', {
-                        fragment: true,
-                      }),
-                    },
-                  ],
                 ],
               },
             }}

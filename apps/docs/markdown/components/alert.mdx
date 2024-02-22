@@ -1,17 +1,31 @@
 ---
-title: YAML Front Matter
+title: alert
 description: A very simple way to add structured data to a page.
 ---
 
 ## import
 
+```tsx title="tailwind.config.js"
+import { webboUi, fullLibraryStyles } from '@webbo-ui/theme';
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    '../../packages/components/**/*.stories.tsx',
+    './.storybook/**/*.{ts,tsx}',
+    ...fullLibraryStyles,
+  ],
+  plugins: [webboUi()],
+};
+```
+
 ## styles
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eos explicabo, error neque assumenda, vitae velit fugit delectus quas odit ipsa laudantium eum quo nam sit ipsam dicta impedit dolor?
+Lorem ipsum dolor sit amet `const consectetur = [1, 2, 3]` elit. Facere eos explicabo, error neque assumenda, vitae velit fugit delectus quas odit ipsa laudantium eum quo nam sit ipsam dicta impedit dolor?
 
 ### full library
 
-```tsx
+```ts title="typescript.tsx"
 import Button from '@webbo-ui/button'
 
 interface Props {

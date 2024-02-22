@@ -1,13 +1,18 @@
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props {
   heading: string;
   description?: string;
 }
 
-export function PageHeader({ heading, description, ...props }: Props) {
+export function PageHeader({ heading, description }: Props) {
   return (
-    <div {...props}>
-      <h1>{heading}</h1>
-      {description && <p>{description}</p>}
+    <div className="text-muted-11 dark:text-mutedDark-11 mb-10 flex flex-col gap-2">
+      <h1
+        className="text-3xl first-letter:uppercase font-medium"
+        aria-description={description}
+      >
+        {heading}
+      </h1>
+      {description && <p className="first-letter:uppercase">{description}</p>}
     </div>
   );
 }

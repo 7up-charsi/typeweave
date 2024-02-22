@@ -35,6 +35,8 @@ const Toc = ({ headings, activeSlug }: Props) => {
     return () => observer.disconnect();
   }, [headings]);
 
+  if (!headings.length) return null;
+
   return (
     <aside className="min-w-52 shrink-0 h-[calc(100vh-theme(spacing.16))] sticky top-16 p-2 pt-4">
       <span className="text-muted-11 dark:text-mutedDark-11 text-sm">
