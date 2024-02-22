@@ -1,4 +1,4 @@
-const HeadingLink = ({
+export const HeadingLink = ({
   as,
   children,
   id,
@@ -35,5 +35,3 @@ const HeadingLink = ({
     </div>
   );
 };
-
-export default HeadingLink;
