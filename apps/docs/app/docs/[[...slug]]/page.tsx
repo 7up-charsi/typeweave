@@ -9,7 +9,7 @@ import Toc from '@/components/Toc';
 import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc';
 import rehypeSlug from 'rehype-slug';
 import rehypePrettyCode from 'rehype-pretty-code';
-import HeadingLink from '@/components/markdown/HeadingLink';
+import { HeadingLink } from '@/components/markdown/HeadingLink';
 
 const components: MDXRemoteProps['components'] = {
   h2: (props) => <HeadingLink as="h2" {...props} />,
@@ -46,7 +46,7 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
               mdxOptions: {
                 rehypePlugins: [
                   // @ts-ignore
-                  [rehypePrettyCode, { theme: 'one-dark-pro', grid: false }],
+                  [rehypePrettyCode, { theme: 'one-dark-pro' }],
                   rehypeSlug,
                 ],
               },
