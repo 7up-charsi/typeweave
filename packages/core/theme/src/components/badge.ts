@@ -72,7 +72,3 @@ export const badge = tv({
 
 export type BadgeVariantProps = VariantProps<typeof badge>;
 export type BadgeClassNames = ClassNames<typeof badge.slots>;
-
-export const badgeStyles = [
-  './node_modules/@webbo-ui/theme/src/components/badge.ts',
-];

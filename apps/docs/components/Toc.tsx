@@ -6,10 +6,9 @@ import { useEffect, useRef, useState } from 'react';
 
 interface Props {
   headings: Heading[];
-  activeSlug: string;
 }
 
-const Toc = ({ headings, activeSlug }: Props) => {
+export const Toc = ({ headings }: Props) => {
   const [activeId, setActiveId] = useState<string | null>();
 
   useEffect(() => {
@@ -67,5 +66,3 @@ const Toc = ({ headings, activeSlug }: Props) => {
     </aside>
   );
 };
-
-export default Toc;

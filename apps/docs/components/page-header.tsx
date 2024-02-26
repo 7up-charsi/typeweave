@@ -3,7 +3,7 @@ interface Props {
   description?: string;
 }
 
-export function PageHeader({ heading, description }: Props) {
+export const PageHeader = ({ heading, description }: Props) => {
   return (
     <div className="text-muted-11 dark:text-mutedDark-11 mb-10 flex flex-col gap-2">
       <h1
@@ -15,4 +15,4 @@ export function PageHeader({ heading, description }: Props) {
       {description && <p className="first-letter:uppercase">{description}</p>}
     </div>
   );
-}
+};

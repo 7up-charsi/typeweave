@@ -25,7 +25,3 @@ export const menu = tv({
 
 export type MenuVariantProps = VariantProps<typeof menu>;
 export type MenuClassNames = ClassNames<typeof menu.slots>;
-
-export const menuStyles = [
-  './node_modules/@webbo-ui/theme/src/components/menu.ts',
-];

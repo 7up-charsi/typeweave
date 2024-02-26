@@ -96,7 +96,3 @@ export const alert = tv({
 });
 
 export type AlertVariantProps = VariantProps<typeof alert>;
-
-export const alertStyles = [
-  './node_modules/@webbo-ui/theme/src/components/alert.ts',
-];

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { UseHitsProps, useHits } from 'react-instantsearch';
 
-const SearchResults = (props: UseHitsProps) => {
+export const SearchResults = (props: UseHitsProps) => {
   const { hits } = useHits(props);
 
   return (
@@ -14,5 +14,3 @@ const SearchResults = (props: UseHitsProps) => {
     </div>
   );
 };
-
-export default SearchResults;

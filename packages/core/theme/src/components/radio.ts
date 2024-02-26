@@ -61,8 +61,3 @@ export const radio = tv({
 
 export type RadioVariantProps = VariantProps<typeof radio>;
 export type RadioClassNames = ClassNames<typeof radio.slots>;
-
-export const radioStyles = [
-  './node_modules/@webbo-ui/theme/src/components/radio.ts',
-  './node_modules/@webbo-ui/theme/src/classes.ts',
-];

@@ -287,8 +287,3 @@ export const button = tv({
 
 export type ButtonGroupVariantProps = VariantProps<typeof buttonGroup>;
 export type ButtonVariantProps = VariantProps<typeof button>;
-
-export const buttonStyles = [
-  './node_modules/@webbo-ui/theme/src/components/button.ts',
-  './node_modules/@webbo-ui/theme/src/classes.ts',
-];

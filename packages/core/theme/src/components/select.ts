@@ -39,7 +39,3 @@ export type SelectClassNames = ClassNames<typeof select.slots>;
 
 export type SelectInputVariantProps = VariantProps<typeof selectInput>;
 export type SelectInputClassNames = ClassNames<typeof selectInput.slots>;
-
-export const selectStyles = [
-  './node_modules/@webbo-ui/theme/src/components/select.ts',
-];

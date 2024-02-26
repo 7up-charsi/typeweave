@@ -10,7 +10,3 @@ export const pagination = tv({
 
 export type PaginationVariantProps = VariantProps<typeof pagination>;
 export type PaginationClassNames = ClassNames<typeof pagination.slots>;
-
-export const paginationStyles = [
-  './node_modules/@webbo-ui/theme/src/components/pagination.ts',
-];

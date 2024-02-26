@@ -6,7 +6,7 @@ interface Props {
   links: NavigationLink[];
 }
 
-const PrevNextLinks = ({ activeSlug, links }: Props) => {
+export const PrevNextLinks = ({ activeSlug, links }: Props) => {
   if (links.length === 1) return null;
 
   const activeIndex = links.findIndex((link) => activeSlug === link.href);
@@ -35,5 +35,3 @@ const PrevNextLinks = ({ activeSlug, links }: Props) => {
     </div>
   );
 };
-
-export default PrevNextLinks;

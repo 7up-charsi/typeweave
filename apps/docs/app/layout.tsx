@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
-import { Navbar } from '@/components/Navbar';
+import { Navbar } from '@/components/navbar';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: Props) {
+const Layout = ({ children }: Props) => {
   return (
     <html lang="en" className={GeistSans.variable}>
       <body className="max-w-screen-2xl m-auto">
@@ -22,5 +22,6 @@ export default function Layout({ children }: Props) {
       </body>
     </html>
   );
-}
+};
 
+export default Layout;

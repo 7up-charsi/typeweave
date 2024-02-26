@@ -3,16 +3,16 @@
 import algoliasearch from 'algoliasearch/lite';
 import * as Dialog from '@webbo-ui/dialog';
 import { InstantSearch } from 'react-instantsearch';
-import SearchInput from './SearchInput';
+import { SearchInput } from './search-input';
 import SearchIcon from '../../assets/icons/search-icon';
-import SearchResults from './SearchResults';
+import { SearchResults } from './search-results';
 
 const searchClient = algoliasearch(
   'FQ038NK883',
   '190ce1541940bd897b8a1d6eb41d87cb',
 );
 
-const Search = () => {
+export const Search = () => {
   return (
     <InstantSearch searchClient={searchClient} indexName="search-box">
       <Dialog.Root>
@@ -42,5 +42,3 @@ const Search = () => {
     </InstantSearch>
   );
 };
-
-export default Search;

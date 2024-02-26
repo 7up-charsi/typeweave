@@ -54,7 +54,3 @@ export type AutocompleteInputVariantProps = VariantProps<
 export type AutocompleteInputClassNames = ClassNames<
   typeof autocompleteInput.slots
 >;
-
-export const autocompleteStyles = [
-  './node_modules/@webbo-ui/theme/src/components/autocomplete.ts',
-];
