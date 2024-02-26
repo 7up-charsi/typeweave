@@ -5,16 +5,13 @@ description: A very simple way to add structured data to a page.
 
 ## import
 
-```tsx title="tailwind.config.js"
+```tsx title="tailwind.config.js" showLineNumbers {1,6,7}#inserted {5}#deleted
 import { webboUi, fullLibraryStyles } from '@webbo-ui/theme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    '../../packages/components/**/*.stories.tsx',
-    './.storybook/**/*.{ts,tsx}',
-    ...fullLibraryStyles,
-  ],
+  content: ['./node_modules/@webbo-ui/theme/src/**/*.stories.tsx'],
+  content: ['./node_modules/@webbo-ui/theme/src/**/*.stories.tsx'],
   plugins: [webboUi()],
 };
 ```
@@ -25,7 +22,7 @@ Lorem ipsum dolor sit amet `const consectetur = [1, 2, 3]` elit. Facere eos expl
 
 ### full library
 
-```tsx title="typescript.tsx"
+```tsx title="typescript.tsx" showLineNumbers {1,3}
 import Button from '@webbo-ui/button'
 
 interface Props {

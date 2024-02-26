@@ -4,8 +4,8 @@ import { webboUi } from '@webbo-ui/theme';
 export default {
   content: [
     '../../packages/components/**/*.stories.tsx',
-    './.storybook/**/*.{ts,tsx}',
     '../../packages/core/theme/src/**/*.ts',
+    './.storybook/**/*.{ts,tsx}',
   ],
   plugins: [webboUi()],
 };

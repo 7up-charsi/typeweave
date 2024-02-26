@@ -1,0 +1,43 @@
+code[data-line-numbers] {
+  counter-reset: line;
+
+  & > [data-line]::before {
+    counter-increment: line;
+    content: counter(line);
+
+    /* Other styling */
+    display: inline-block;
+    width: 1rem;
+    margin-right: 2rem;
+    text-align: right;
+    color: gray;
+  }
+
+  &[data-line-numbers-max-digits='2'] > [data-line]::before {
+    width: 2rem;
+  }
+
+  &[data-line-numbers-max-digits='3'] > [data-line]::before {
+    width: 3rem;
+  }
+}
+
+span[data-line] {
+  @apply py-px;
+}
+
+span[data-highlighted-line] {
+  @apply bg-white/20;
+}
+
+span[data-highlighted-line-id='inserted'] {
+  @apply bg-success-9/40;
+}
+
+span[data-highlighted-line-id='deleted'] {
+  @apply bg-danger-9/40;
+}
+
+figcaption[data-rehype-pretty-code-title] {
+  @apply px-3 inline-block rounded-full mb-1 text-muted-11 italic;
+}
