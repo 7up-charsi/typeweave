@@ -1,11 +1,15 @@
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import rehypeSlug from 'rehype-slug';
 import { mdxComponents } from '@/mdx-components';
-import { visit } from 'unist-util-visit';
+import rehypePrettyCode, { Options } from 'rehype-pretty-code';
 
 interface Props {
   source: string;
 }
+
+const rehypePrettyCodeOptions: Options = {
+  theme: 'dracula-soft',
+};
 
 export const RenderMarkdown = ({ source }: Props) => {
   return (
@@ -16,13 +20,9 @@ export const RenderMarkdown = ({ source }: Props) => {
         mdxOptions: {
           rehypePlugins: [
             rehypeSlug,
-            () => (tree) => {
-              visit(tree, 'element', (node) => {
-                if (node.tagName === 'code' && node.data && node.data.meta) {
-                  node.properties.meta = node.data.meta;
-                }
-              });
-            },
+
+            // @ts-ignore
+            [rehypePrettyCode, rehypePrettyCodeOptions],
           ],
         },
       }}
