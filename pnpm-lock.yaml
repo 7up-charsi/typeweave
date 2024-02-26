@@ -104,6 +104,9 @@ importers:
       algoliasearch:
         specifier: ^4.22.1
         version: 4.22.1
+      clsx:
+        specifier: ^2.0.0
+        version: 2.1.0
       geist:
         specifier: ^1.2.2
         version: 1.2.2(next@14.1.0)

@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 export const HeadingLink = ({
   as,
   children,
@@ -9,7 +11,7 @@ export const HeadingLink = ({
   const Component = as;
 
   return (
-    <div className="mb-2 flex items-center group">
+    <div className="flex items-center group py-5">
       <Component
         {...props}
         id={id}
