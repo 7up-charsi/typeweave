@@ -38,6 +38,10 @@ span[data-highlighted-line-id='deleted'] {
   @apply bg-danger-9/40;
 }
 
+figure[data-rehype-pretty-code-figure] {
+  @apply py-5;
+}
+
 figcaption[data-rehype-pretty-code-title] {
   @apply px-3 inline-block rounded-full mb-1 text-muted-11 italic;
 }

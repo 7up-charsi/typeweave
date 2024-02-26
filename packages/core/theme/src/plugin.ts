@@ -15,7 +15,8 @@ type Colors =
   | 'danger'
   | 'info'
   | 'muted'
-  | 'overlay';
+  | 'overlay'
+  | 'focus';
 
 type Theme = Record<Colors, ColorScale>;
 
@@ -38,6 +39,7 @@ const defaultLightTheme: Theme = {
   danger: genColorScale(colors.red),
   info: genColorScale(colors.blue),
   muted: genColorScale(colors.gray),
+  focus: genColorScale(colors.sky),
   overlay: genColorScale(colors.blackA),
 };
 
@@ -49,6 +51,7 @@ const defaultDarkTheme: Theme = {
   danger: genColorScale(colors.redDark),
   info: genColorScale(colors.blueDark),
   muted: genColorScale(colors.grayDark),
+  focus: genColorScale(colors.skyDark),
   overlay: genColorScale(colors.whiteA),
 };
 
