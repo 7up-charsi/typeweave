@@ -1,4 +1,4 @@
-export default function Page() {
+const Page = () => {
   return (
     <div className="">
       <h1 className="text-center leading-tight text-6xl font-bold mt-32 text-muted-11 dark:text-mutedDark-11">
@@ -38,5 +38,6 @@ export default function Page() {
       </div>
     </div>
   );
-}
+};
 
+export default Page;

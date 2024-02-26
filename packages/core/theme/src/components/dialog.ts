@@ -24,7 +24,3 @@ export const dialog = tv({
 
 export type DialogVariantProps = VariantProps<typeof dialog>;
 export type DialogClassNames = ClassNames<typeof dialog.slots>;
-
-export const dialogStyles = [
-  './node_modules/@webbo-ui/theme/src/components/dialog.ts',
-];

@@ -1,11 +1,11 @@
-import { webboUi, fullLibraryStyles } from '@webbo-ui/theme';
+import { webboUi } from '@webbo-ui/theme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
     '../../packages/components/**/*.stories.tsx',
     './.storybook/**/*.{ts,tsx}',
-    ...fullLibraryStyles,
+    '../../packages/core/theme/src/**/*.ts',
   ],
   plugins: [webboUi()],
 };

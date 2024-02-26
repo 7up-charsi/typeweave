@@ -1,4 +1,4 @@
-const Loading = () => {
+export const Loading = () => {
   return (
     <div className="absolute inset-0 flex items-center justify-center">
       <div role="status">
@@ -23,5 +23,3 @@ const Loading = () => {
     </div>
   );
 };
-
-export default Loading;

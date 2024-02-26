@@ -139,7 +139,3 @@ export const toggleButton = tv({
 
 export type ToggleButtonVariantProps = VariantProps<typeof toggleButton>;
 export type ToggleButtonClassNames = ClassNames<typeof toggleButton.slots>;
-
-export const toggleButtonStyles = [
-  './node_modules/@webbo-ui/theme/src/components/toggle-button.ts',
-];

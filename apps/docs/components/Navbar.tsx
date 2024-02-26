@@ -3,7 +3,7 @@ import darkLogo from '@/assets/dark-logo.png';
 import lightLogo from '@/assets/light-logo.png';
 import Link from 'next/link';
 import { ThemeSwitcher } from '@webbo-ui/theme-switcher';
-import { navbarLinks } from '@/config/navbarLinks';
+import { navbarLinks } from '@/config/navbar-links';
 
 export const Navbar = () => {
   return (

@@ -71,8 +71,3 @@ export type SwitchVariantProps = VariantProps<typeof _switch>;
 export type SwitchClassNames = ClassNames<typeof _switch.slots>;
 
 export { _switch as switch };
-
-export const switchStyles = [
-  './node_modules/@webbo-ui/theme/src/components/switch.ts',
-  './node_modules/@webbo-ui/theme/src/classes.ts',
-];

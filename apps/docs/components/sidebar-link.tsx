@@ -8,7 +8,7 @@ interface Props {
   title: string;
 }
 
-const SidebarLink = ({ href, title }: Props) => {
+export const SidebarLink = ({ href, title }: Props) => {
   const pathname = usePathname();
 
   return (
@@ -20,5 +20,3 @@ const SidebarLink = ({ href, title }: Props) => {
     </Link>
   );
 };
-
-export default SidebarLink;

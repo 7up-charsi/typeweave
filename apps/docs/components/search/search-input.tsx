@@ -11,7 +11,7 @@ import {
   useSearchBox,
 } from 'react-instantsearch';
 
-const SearchInput = (props: UseSearchBoxProps) => {
+export const SearchInput = (props: UseSearchBoxProps) => {
   const { query, refine } = useSearchBox(props);
   const { status } = useInstantSearch();
   const [inputValue, setInputValue] = useState(query);
@@ -87,5 +87,3 @@ const SearchInput = (props: UseSearchBoxProps) => {
     </div>
   );
 };
-
-export default SearchInput;
