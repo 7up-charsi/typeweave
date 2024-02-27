@@ -8,7 +8,11 @@ interface Props {
 }
 
 const rehypePrettyCodeOptions: Options = {
-  theme: 'dracula-soft',
+  theme: {
+    light: 'github-light',
+    dark: 'github-dark',
+  },
+  keepBackground: false,
 };
 
 export const RenderMarkdown = ({ source }: Props) => {

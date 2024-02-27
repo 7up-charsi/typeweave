@@ -1,3 +1,4 @@
+/* line numbers */
 code[data-line-numbers] {
   counter-reset: line;
 
@@ -22,26 +23,47 @@ code[data-line-numbers] {
   }
 }
 
+/* code block line */
+
 span[data-line] {
   @apply py-px;
 }
+
+/* code block highlited line */
 
 span[data-highlighted-line] {
   @apply bg-white/20;
 }
 
 span[data-highlighted-line-id='inserted'] {
-  @apply bg-success-9/40;
+  @apply bg-success-9/20;
 }
 
 span[data-highlighted-line-id='deleted'] {
-  @apply bg-danger-9/40;
+  @apply bg-danger-9/20;
 }
 
+/* code block wrapper */
 figure[data-rehype-pretty-code-figure] {
   @apply py-5;
 }
 
+/* file title */
+
 figcaption[data-rehype-pretty-code-title] {
-  @apply px-3 inline-block rounded-full mb-1 text-muted-11 italic;
+  @apply px-3 inline-block rounded-full mb-1 text-muted-11 italic dark:text-mutedDark-11;
+}
+
+/* code block theme */
+
+code[data-theme*=' '],
+code[data-theme*=' '] span {
+  color: var(--shiki-light);
+}
+
+html.dark body {
+  code[data-theme*=' '],
+  code[data-theme*=' '] span {
+    color: var(--shiki-dark);
+  }
 }
