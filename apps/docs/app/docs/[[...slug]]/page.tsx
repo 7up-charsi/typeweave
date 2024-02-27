@@ -4,6 +4,8 @@ import { Toc } from '@/components/toc';
 import { RenderMarkdown } from '@/components/render-markdown';
 import { Metadata } from 'next';
 import { getContent } from '@/lib/get-content';
+import { readdir } from 'fs/promises';
+import path from 'path';
 import { compileMDX } from 'next-mdx-remote/rsc';
 
 interface PageProps {
@@ -22,8 +24,8 @@ export const generateMetadata = async ({
   }
 
   const { frontmatter } = await compileMDX<{
-    metaTitle?: string;
-    metaDescription?: string;
+    metaTitle: string;
+    metaDescription: string;
   }>({
     source: markdown,
     options: { parseFrontmatter: true },
@@ -34,6 +36,22 @@ export const generateMetadata = async ({
     description: frontmatter.metaDescription,
   };
 };
+
+export async function generateStaticParams() {
+  const files = await readdir(path.resolve('content/docs'), {
+    recursive: true,
+  });
+
+  const onlyFiles = files.reduce<string[][]>(
+    (acc, file) =>
+      file.endsWith('.mdx')
+        ? [...acc, file.replace('.mdx', '').split('\\')]
+        : acc,
+    [],
+  );
+
+  return onlyFiles.map((slug) => [{ slug }]);
+}
 
 const Page = async ({ params }: PageProps) => {
   const slug = params.slug?.join('/');
@@ -46,7 +64,6 @@ const Page = async ({ params }: PageProps) => {
   return (
     <div className="flex">
       <main className="grow py-4 px-16">
-        {/* <PageHeader title={data.title} description={data.description} /> */}
         <RenderMarkdown source={markdown} />
         <DocsPager activeSlug={slug} />
       </main>

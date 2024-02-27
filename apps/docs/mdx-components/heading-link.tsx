@@ -9,7 +9,7 @@ export const HeadingLink = ({
   const Component = as;
 
   return (
-    <div className="flex items-center group py-5">
+    <div className="flex items-center group mt-10 mb-2">
       <Component
         {...props}
         data-mdx-heading
@@ -20,7 +20,7 @@ export const HeadingLink = ({
         {children}
       </Component>
       <a href={`#${id}`} className="ml-4 hidden group-hover:flex">
-        <div className="inline-flex items-center justify-center w-7 h-5 text-primary-11 rounded bg-primary-3 hover:bg-primary-4 cursor-pointer dark:text-primaryDark-11 dark:bg-primaryDark-3 dark:hover:bg-primaryDark-4">
+        <div className="inline-flex items-center justify-center w-7 h-5 cursor-pointer rounded text-primary-11 bg-primary-3 hover:bg-primary-4 dark:text-primaryDark-11 dark:bg-primaryDark-3 dark:hover:bg-primaryDark-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -28,7 +28,7 @@ export const HeadingLink = ({
             width={15}
             height={15}
           >
-            <g stroke="#1C274C" strokeLinecap="round" strokeWidth="1.5">
+            <g stroke="currentColor" strokeLinecap="round" strokeWidth="1.5">
               <path d="M9 12h6M9 18H8A6 6 0 018 6h1M15 6h1a6 6 0 016 6m-7 6h1a5.973 5.973 0 003.318-1"></path>
             </g>
           </svg>

@@ -3,18 +3,18 @@ import { NavigationLink } from '@/lib/types';
 export const guidesLinks: NavigationLink[] = [
   {
     title: 'introduction',
-    href: '/docs/guide/introduction',
+    href: '/docs/guides/introduction',
   },
   {
     title: 'installation',
-    href: '/docs/guide/installation',
+    href: '/docs/guides/installation',
   },
   {
     title: 'theming',
-    href: '/docs/guide/theming',
+    href: '/docs/guides/theming',
   },
   {
     title: 'dark mode',
-    href: '/docs/guide/dark-mode',
+    href: '/docs/guides/dark-mode',
   },
 ];

@@ -45,7 +45,7 @@ span[data-highlighted-line-id='deleted'] {
 
 /* code block wrapper */
 figure[data-rehype-pretty-code-figure] {
-  @apply py-5;
+  @apply my-4;
 }
 
 /* file title */
