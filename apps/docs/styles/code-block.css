@@ -32,15 +32,15 @@ span[data-line] {
 /* code block highlited line */
 
 span[data-highlighted-line] {
-  @apply bg-white/20;
+  @apply bg-muted-5 dark:bg-mutedDark-5;
 }
 
 span[data-highlighted-line-id='inserted'] {
-  @apply bg-success-9/20;
+  @apply bg-success-9/20 dark:bg-successDark-9/20;
 }
 
 span[data-highlighted-line-id='deleted'] {
-  @apply bg-danger-9/20;
+  @apply bg-danger-9/20 dark:bg-dangerDark-9/20;
 }
 
 /* code block wrapper */

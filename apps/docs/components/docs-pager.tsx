@@ -55,14 +55,16 @@ const arrowRight = (
   </svg>
 );
 
-export const PrevNextLinks = ({ activeSlug }: Props) => {
+export const DocsPager = ({ activeSlug }: Props) => {
   if (!activeSlug) return null;
 
-  const links = activeSlug.startsWith('/docs/components')
+  const links = activeSlug.startsWith('components/')
     ? componentsLinks
     : guidesLinks;
 
-  const activeIndex = links.findIndex((link) => activeSlug === link.href);
+  const activeIndex = links.findIndex(
+    (link) => `/docs/${activeSlug}` === link.href,
+  );
 
   const prev = activeIndex > 0 ? links[activeIndex - 1] : null;
   const next =

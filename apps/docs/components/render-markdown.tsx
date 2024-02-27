@@ -21,6 +21,7 @@ export const RenderMarkdown = ({ source }: Props) => {
       source={source}
       components={mdxComponents}
       options={{
+        parseFrontmatter: true,
         mdxOptions: {
           rehypePlugins: [
             rehypeSlug,

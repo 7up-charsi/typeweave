@@ -1,33 +1,56 @@
 import { notFound } from 'next/navigation';
-import { readMarkdown } from '@/lib/read-markdown';
-import grayMatter from 'gray-matter';
-import { PageHeader } from '@/components/page-header';
-import { PrevNextLinks } from '@/components/prev-next-links';
-import { getHeadings } from '@/lib/utils';
+import { DocsPager } from '@/components/docs-pager';
 import { Toc } from '@/components/toc';
 import { RenderMarkdown } from '@/components/render-markdown';
+import { Metadata } from 'next';
+import { getContent } from '@/lib/get-content';
+import { compileMDX } from 'next-mdx-remote/rsc';
 
-const Page = async ({ params }: { params: { slug: string[] } }) => {
-  const activeSlug = `/docs/${params.slug?.join('/')}`;
+interface PageProps {
+  params: { slug: string[] };
+}
 
-  const markdown = await readMarkdown('markdown' + activeSlug);
+export const generateMetadata = async ({
+  params,
+}: {
+  params: PageProps['params'];
+}): Promise<Metadata> => {
+  const markdown = await getContent(`docs/${params.slug?.join('/')}`);
 
   if (!markdown) {
     notFound();
   }
 
-  const { content, data } = grayMatter(markdown);
+  const { frontmatter } = await compileMDX<{
+    metaTitle?: string;
+    metaDescription?: string;
+  }>({
+    source: markdown,
+    options: { parseFrontmatter: true },
+  });
 
-  const headings = await getHeadings(content);
+  return {
+    title: frontmatter.metaTitle,
+    description: frontmatter.metaDescription,
+  };
+};
+
+const Page = async ({ params }: PageProps) => {
+  const slug = params.slug?.join('/');
+  const markdown = await getContent(`docs/${slug}`);
+
+  if (!markdown) {
+    notFound();
+  }
 
   return (
     <div className="flex">
       <main className="grow py-4 px-16">
-        <PageHeader heading={data.title} description={data.description} />
-        <RenderMarkdown source={content} />
-        <PrevNextLinks activeSlug={activeSlug} />
+        {/* <PageHeader title={data.title} description={data.description} /> */}
+        <RenderMarkdown source={markdown} />
+        <DocsPager activeSlug={slug} />
       </main>
-      <Toc headings={headings} />
+      <Toc />
     </div>
   );
 };
