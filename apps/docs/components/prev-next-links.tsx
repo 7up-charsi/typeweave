@@ -1,13 +1,66 @@
-import { NavigationLink } from '@/lib/types';
+import { componentsLinks } from '@/config/components-links';
+import { guidesLinks } from '@/config/guides-links';
+import { Button } from '@webbo-ui/button';
 import Link from 'next/link';
 
 interface Props {
   activeSlug?: string;
-  links: NavigationLink[];
 }
 
-export const PrevNextLinks = ({ activeSlug, links }: Props) => {
-  if (links.length === 1) return null;
+const arrowLeft = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width={20}
+    height={20}
+  >
+    <g>
+      <g>
+        <g
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+        >
+          <path d="M7.6 7L2.5 12 7.6 17" data-name="Right"></path>
+          <path d="M21.5 12L4.8 12"></path>
+        </g>
+      </g>
+    </g>
+  </svg>
+);
+
+const arrowRight = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width={20}
+    height={20}
+  >
+    <g>
+      <g>
+        <g
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+        >
+          <path d="M16.4 7L21.5 12 16.4 17" data-name="Right"></path>
+          <path d="M2.5 12L19.2 12"></path>
+        </g>
+      </g>
+    </g>
+  </svg>
+);
+
+export const PrevNextLinks = ({ activeSlug }: Props) => {
+  if (!activeSlug) return null;
+
+  const links = activeSlug.startsWith('/docs/components')
+    ? componentsLinks
+    : guidesLinks;
 
   const activeIndex = links.findIndex((link) => activeSlug === link.href);
 
@@ -18,19 +71,19 @@ export const PrevNextLinks = ({ activeSlug, links }: Props) => {
       : null;
 
   return (
-    <div className="flex">
+    <div className="flex mt-10">
       {prev && (
-        <div>
+        <Button variant="flat" color="primary" asChild startContent={arrowLeft}>
           <Link href={prev?.href}>{prev?.title}</Link>
-        </div>
+        </Button>
       )}
 
       <div className="grow"></div>
 
       {next && (
-        <div>
+        <Button variant="flat" color="primary" asChild endContent={arrowRight}>
           <Link href={next?.href}>{next?.title}</Link>
-        </div>
+        </Button>
       )}
     </div>
   );

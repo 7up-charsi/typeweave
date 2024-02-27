@@ -16,7 +16,7 @@ interface Props {
 const Layout = ({ children }: Props) => {
   return (
     <html lang="en" className={GeistSans.variable}>
-      <body className="max-w-screen-2xl m-auto">
+      <body className="max-w-screen-2xl m-auto bg-muted-1 dark:bg-mutedDark-1 text-muted-11 dark:text-mutedDark-11">
         <Navbar />
         {children}
       </body>
@@ -25,3 +25,4 @@ const Layout = ({ children }: Props) => {
 };
 
 export default Layout;
+

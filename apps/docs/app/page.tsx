@@ -1,6 +1,6 @@
 const Page = () => {
   return (
-    <div className="">
+    <div className="pt-16">
       <h1 className="text-center leading-tight text-6xl font-bold mt-32 text-muted-11 dark:text-mutedDark-11">
         <span className="text-primary-11 dark:text-primaryDark-11">
           Fully featured

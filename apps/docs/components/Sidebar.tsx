@@ -1,6 +1,6 @@
 import { SidebarLink } from './sidebar-link';
 import { componentsLinks } from '@/config/components-links';
-import { docsLinks } from '@/config/docs-links';
+import { guidesLinks } from '@/config/guides-links';
 
 const navHeadingStyles =
   'h-8 inline-flex items-center capitalize font-medium text-muted-11 dark:text-mutedDark-11';
@@ -8,11 +8,11 @@ const navHeadingStyles =
 export const Sidebar = () => {
   return (
     <div className="w-64 relative shrink-0">
-      <aside className="w-64 fixed h-full border-r border-r-muted-6 dark:border-r-mutedDark-6 pr-5 pl-12 overflow-auto">
+      <aside className="w-64 fixed h-full pr-5 pl-12 overflow-auto">
         <nav className="flex flex-col gap-1 mt-5">
           <h2 className={navHeadingStyles}>getting started</h2>
 
-          {docsLinks.map(({ title, href }, i) => (
+          {guidesLinks.map(({ title, href }, i) => (
             <SidebarLink key={i} href={href} title={title} />
           ))}
         </nav>
