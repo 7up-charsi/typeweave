@@ -2,7 +2,7 @@ import { NavigationLink } from '@/lib/types';
 
 export const navbarLinks: NavigationLink[] = [
   {
-    title: 'documentation',
+    title: 'guides',
     href: '/docs/guide/introduction',
   },
   {

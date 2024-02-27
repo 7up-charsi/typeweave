@@ -1,7 +1,5 @@
-import clsx from 'clsx';
-
 export const HeadingLink = ({
-  as,
+  as = 'h1',
   children,
   id,
   ...props
@@ -14,6 +12,8 @@ export const HeadingLink = ({
     <div className="flex items-center group py-5">
       <Component
         {...props}
+        data-mdx-heading
+        data-depth={as.replace('h', '')}
         id={id}
         className="scroll-mt-20 text-xl text-muted-11 dark:text-mutedDark-11 font-medium first-letter:uppercase"
       >
