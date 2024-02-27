@@ -204,7 +204,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             children: (
               <>
                 {!isIconOnly && startContent}
-                {children.props.children}
+                <span>{children.props.children}</span>
                 {!isIconOnly && endContent}
               </>
             ),
@@ -212,7 +212,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ) : (
           <button>
             {!isIconOnly && startContent}
-            {children}
+            <span>{children}</span>
             {!isIconOnly && endContent}
           </button>
         )}
