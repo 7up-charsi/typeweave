@@ -15,7 +15,7 @@ export const HeadingLink = ({
         data-mdx-heading
         data-depth={as.replace('h', '')}
         id={id}
-        className="scroll-mt-20 text-xl text-muted-11 dark:text-mutedDark-11 font-medium first-letter:uppercase"
+        className="scroll-mt-20 text-xl font-medium first-letter:uppercase"
       >
         {children}
       </Component>

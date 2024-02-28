@@ -60,7 +60,7 @@ export const DocHeader = ({
   npm,
 }: Props) => {
   return (
-    <div className="text-muted-11 dark:text-mutedDark-11 flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       <h1
         className="text-3xl first-letter:uppercase font-medium"
         aria-description={description}
