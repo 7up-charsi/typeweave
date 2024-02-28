@@ -60,7 +60,7 @@ export const DocHeader = ({
   npm,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 mb-10">
       <h1
         className="text-3xl first-letter:uppercase font-medium"
         aria-description={description}
@@ -69,7 +69,7 @@ export const DocHeader = ({
       </h1>
       {description && <p className="first-letter:uppercase">{description}</p>}
 
-      <div className="flex gap-4 items-center mt-3">
+      <div className="flex gap-4 items-center justify-end mt-3">
         {[
           {
             icon: npm_svg,
@@ -104,7 +104,7 @@ export const DocHeader = ({
         ))}
       </div>
 
-      <div className="h-px bg-muted-6 mt-4 dark:bg-mutedDark-6"></div>
+      {/* <div className="h-px bg-muted-4 mt-4 dark:bg-mutedDark-4"></div> */}
     </div>
   );
 };

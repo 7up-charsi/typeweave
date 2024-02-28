@@ -11,6 +11,7 @@
   "dependencies": {
     "@webbo-ui/button": "workspace:*",
     "@webbo-ui/dialog": "workspace:*",
+    "@webbo-ui/alert": "workspace:*",
     "@webbo-ui/input": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/theme-switcher": "workspace:*",
@@ -42,3 +43,4 @@
     "typescript": "^5.3.3"
   }
 }
+
