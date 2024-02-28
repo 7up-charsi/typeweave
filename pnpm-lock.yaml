@@ -86,6 +86,9 @@ importers:
 
   apps/docs:
     dependencies:
+      '@webbo-ui/alert':
+        specifier: workspace:*
+        version: link:../../packages/components/alert
       '@webbo-ui/button':
         specifier: workspace:*
         version: link:../../packages/components/button

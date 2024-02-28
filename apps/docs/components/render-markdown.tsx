@@ -1,7 +1,8 @@
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import rehypeSlug from 'rehype-slug';
-import { mdxComponents } from '@/mdx-components';
 import rehypePrettyCode, { Options } from 'rehype-pretty-code';
+import { mdxComponents } from './mdx-components';
+import * as demosScope from './demos';
 
 interface Props {
   source: string;
@@ -22,10 +23,10 @@ export const RenderMarkdown = ({ source }: Props) => {
       components={mdxComponents}
       options={{
         parseFrontmatter: true,
+        scope: demosScope,
         mdxOptions: {
           rehypePlugins: [
             rehypeSlug,
-
             // @ts-ignore
             [rehypePrettyCode, rehypePrettyCodeOptions],
           ],
