@@ -1,6 +1,6 @@
 import { visit } from 'unist-util-visit';
 
-export const addLangToPre = () => (tree: any) => {
+export const rehypeClasses = () => (tree: any) => {
   visit(tree, 'element', function (node, _, parent) {
     if (node.tagName !== 'code' || !parent || parent.tagName !== 'pre') {
       return;
