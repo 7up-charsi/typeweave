@@ -60,7 +60,7 @@ export const DocHeader = ({
   npm,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-2 mb-10">
+    <div className="flex flex-col gap-2">
       <h1
         className="text-3xl first-letter:uppercase font-medium"
         aria-description={description}
@@ -104,7 +104,7 @@ export const DocHeader = ({
         ))}
       </div>
 
-      {/* <div className="h-px bg-muted-4 mt-4 dark:bg-mutedDark-4"></div> */}
+      <div className="h-px bg-muted-4 mt-4 dark:bg-mutedDark-4"></div>
     </div>
   );
 };
