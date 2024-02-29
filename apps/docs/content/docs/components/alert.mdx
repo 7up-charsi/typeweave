@@ -11,8 +11,6 @@ metaDescription: A very simple way to add structured data to a page.
   npm="npm.com"
 />
 
-## basic demo
-
 ## installation
 
 ```bash
@@ -21,16 +19,23 @@ pnpm add @webbo-ui/alert
 
 ## styles
 
-Copy and paste it in your <Highlight>tailwind.config.js</Highlight> content array
+Copy and paste it in your `tailwind.config.js` content array
 
-```text
-"./node_modules/@webbo-ui/theme/dist/components/alert.ts",
-"./node_modules/@webbo-ui/theme/dist/components/alert.ts"
+```json
+{
+  "content": [
+    "./node_modules/@webbo-ui/theme/dist/components/alert.ts",
+    "./node_modules/@webbo-ui/theme/dist/components/alert.ts"
+  ]
+}
 ```
 
 ## variants
 
-<CodeDemo code={alertContent.variants} />
+<CodePreview>
+  <AlertVariants />
+</CodePreview>
+<CodeSource source="alert-variants.tsx" />
 
 ## code
 
