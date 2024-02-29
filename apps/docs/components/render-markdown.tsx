@@ -1,7 +1,7 @@
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import rehypeSlug from 'rehype-slug';
 import { mdxComponents } from './mdx-components';
-import { addLangToPre } from '@/lib/add-lang-to-pre';
+import { rehypeClasses } from '@/lib/rehype-classes';
 
 interface Props {
   source: string;
@@ -15,7 +15,7 @@ export const RenderMarkdown = ({ source }: Props) => {
       options={{
         parseFrontmatter: true,
         mdxOptions: {
-          rehypePlugins: [rehypeSlug, addLangToPre],
+          rehypePlugins: [rehypeSlug, rehypeClasses],
         },
       }}
     />

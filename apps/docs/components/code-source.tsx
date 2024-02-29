@@ -12,12 +12,10 @@ export const CodeSource = ({ source }: Props) => {
   });
 
   return (
-    <div className="mt-5">
-      <pre className="language-tsx">
-        <code className="language-tsx">
-          <SyntaxHighlight code={file} language="tsx" />
-        </code>
-      </pre>
-    </div>
+    <pre className="language-tsx min-h-40 max-h-[400px]">
+      <code className="language-tsx">
+        <SyntaxHighlight code={file} language="tsx" />
+      </code>
+    </pre>
   );
 };
