@@ -24,7 +24,7 @@ export const CollapsibleCodeSource = (props: Props) => {
           overflow: isCollapsed ? 'hidden' : 'auto',
         }}
       >
-        {children}
+        <code className="language-tsx">{children}</code>
 
         {isCollapsed && (
           <div className="absolute inset-0 z-40 bg-gradient-to-t from-black"></div>
