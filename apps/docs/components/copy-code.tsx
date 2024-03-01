@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@webbo-ui/button';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const copy_svg = (
   <svg
@@ -42,6 +42,7 @@ export const CopyCode = (props: Props) => {
   const { code } = props;
 
   const [isCopied, setIsCopied] = useState(false);
+  const resetTimer = useRef<NodeJS.Timeout | undefined>(undefined);
 
   if (!code) return null;
 
@@ -53,10 +54,13 @@ export const CopyCode = (props: Props) => {
       className="absolute right-3 top-3 z-50 text-muted-8 bg-muted-11 data-[hovered=true]:bg-muted-10 data-[hovered=true]:text-muted-4"
       variant="flat"
       onPress={() => {
+        clearTimeout(resetTimer.current);
+
         navigator.clipboard.writeText(code);
         setIsCopied(true);
-        setTimeout(() => {
+        resetTimer.current = setTimeout(() => {
           setIsCopied(false);
+          resetTimer.current = undefined;
         }, 1000);
       }}
     >
