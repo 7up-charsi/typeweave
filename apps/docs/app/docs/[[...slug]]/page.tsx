@@ -62,13 +62,10 @@ const Page = async ({ params }: PageProps) => {
   }
 
   return (
-    <div className="flex">
-      <main className="grow py-4 px-16">
-        <RenderMarkdown source={markdown} />
-        <DocsPager activeSlug={slug} />
-      </main>
-      <Toc />
-    </div>
+    <main className="col-start-2 py-4 px-16 overflow-auto">
+      <RenderMarkdown source={markdown} />
+      <DocsPager activeSlug={slug} />
+    </main>
   );
 };
 
