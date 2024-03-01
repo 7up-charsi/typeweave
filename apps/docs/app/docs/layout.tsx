@@ -1,4 +1,5 @@
 import { Sidebar } from '@/components/sidebar';
+import { Toc } from '@/components/toc';
 
 interface Props {
   children: React.ReactNode;
@@ -6,9 +7,10 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   return (
-    <div className="pt-16 flex">
+    <div className="pt-16 grid grid-cols-[256px,_1fr_minmax(210px,230px)]">
       <Sidebar />
-      <div className="grow">{children}</div>
+      {children}
+      <Toc />
     </div>
   );
 };
