@@ -10,6 +10,7 @@ export const rehypeClasses = () => (tree: any) => {
     if (parent.tagName !== 'pre') {
       const lang = prefix + 'txt';
       node.properties['data-lang'] = lang.replace(prefix, '');
+      node.properties['data-inline'] = true;
 
       if (!node.properties.className) {
         node.properties.className = [lang];

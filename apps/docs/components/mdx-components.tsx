@@ -17,4 +17,5 @@ export const mdxComponents: MDXRemoteProps['components'] = {
   h3: (props) => <HeadingLink as="h3" {...props} />,
   code: (props) => <CodeBlock {...props} />,
   p: (props) => <p {...props} className="mt-4" />,
+  pre: (props) => <pre {...props} className={`${props.className} relative`} />,
 };
