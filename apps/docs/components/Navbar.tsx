@@ -7,7 +7,7 @@ import { navbarLinks } from '@/config/navbar-links';
 
 export const Navbar = () => {
   return (
-    <header className="fixed top-0 m-auto max-w-screen-2xl w-full z-50 h-16 flex items-center px-12 bg-muted-1/50 dark:bg-mutedDark-1 backdrop-blur-sm">
+    <header className="fixed top-0 m-auto max-w-screen-2xl w-full z-[999] h-16 flex items-center px-12 bg-muted-1/50 dark:bg-mutedDark-1 backdrop-blur-sm">
       <Link
         href="/"
         aria-label="home page"
