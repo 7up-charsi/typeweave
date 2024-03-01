@@ -12,6 +12,12 @@ export const AlertVariants = () => {
       <Alert color="warning" variant="solid">
         solid variant with dummy content
       </Alert>
+      <Alert color="warning" variant="flat">
+        flat variant with dummy content
+      </Alert>
+      <Alert color="warning" variant="solid">
+        solid variant with dummy content
+      </Alert>
     </div>
   );
 };

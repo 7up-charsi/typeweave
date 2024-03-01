@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import path from 'path';
 import { SyntaxHighlight } from './syntax-highlight';
+import { CollapsibleCodeSource } from './collapsible-code-source';
 
 interface Props {
   source?: string;
@@ -12,10 +13,10 @@ export const CodeSource = ({ source }: Props) => {
   });
 
   return (
-    <pre className="language-tsx min-h-40 max-h-[400px]">
+    <CollapsibleCodeSource>
       <code className="language-tsx">
         <SyntaxHighlight code={file} language="tsx" />
       </code>
-    </pre>
+    </CollapsibleCodeSource>
   );
 };

@@ -9,14 +9,7 @@ export const CodeBlock = ({ children: _children, ...props }: Props) => {
 
   if (!children) return null;
 
-  const isInline = !props['data-lang'];
-
-  if (isInline)
-    return (
-      <code className="mx-1 px-2 py-1 rounded text-primary-11 bg-primary-3 dark:text-primaryDark-11 dark:bg-primaryDark-3">
-        {children}
-      </code>
-    );
+  if (!props['data-lang']) return <code {...props}>{children}</code>;
 
   return (
     <code {...props}>
