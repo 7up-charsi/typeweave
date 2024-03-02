@@ -3,3 +3,39 @@
 @import 'tailwindcss/utilities';
 @import './prism-theme.css';
 
+@layer base {
+  /* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
+  /** {
+  scrollbar-width: thin;
+  scrollbar-color: #397524 #DFE9EB;
+}*/
+
+  /* Chrome, Edge and Safari */
+  *::-webkit-scrollbar {
+    height: 12px;
+    width: 12px;
+  }
+  *::-webkit-scrollbar-track {
+    @apply rounded-full bg-transparent;
+  }
+
+  *::-webkit-scrollbar-track:hover {
+    @apply bg-transparent;
+  }
+
+  *::-webkit-scrollbar-track:active {
+    @apply bg-transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-muted-5 dark:bg-mutedDark-7;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-5 dark:bg-mutedDark-7;
+  }
+
+  *::-webkit-scrollbar-thumb:active {
+    @apply bg-muted-5 dark:bg-mutedDark-7;
+  }
+}

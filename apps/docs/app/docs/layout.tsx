@@ -7,10 +7,9 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   return (
-    <div className="pt-16 grid grid-cols-[256px,_1fr_minmax(210px,230px)]">
+    <div className="pt-16 grid grid-cols-[theme(spacing.72),_1fr_theme(spacing.60)]">
       <Sidebar />
       {children}
-      <Toc />
     </div>
   );
 };

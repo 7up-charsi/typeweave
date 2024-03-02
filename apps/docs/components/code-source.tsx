@@ -2,7 +2,6 @@ import { readFileSync } from 'fs';
 import path from 'path';
 import { SyntaxHighlight } from './syntax-highlight';
 import { CollapsibleCodeSource } from './collapsible-code-source';
-import { CopyCode } from './copy-code';
 
 interface Props {
   source?: string;
