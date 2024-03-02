@@ -2,13 +2,15 @@
 
 import { Button } from '@webbo-ui/button';
 import { useRef, useState } from 'react';
+import { CopyCode } from './copy-code';
 
 interface Props {
   children?: React.ReactNode;
+  code?: string;
 }
 
 export const CollapsibleCodeSource = (props: Props) => {
-  const { children } = props;
+  const { children, code } = props;
 
   const [isCollapsed, setIsCollapsed] = useState(true);
 
@@ -30,6 +32,8 @@ export const CollapsibleCodeSource = (props: Props) => {
           <div className="absolute inset-0 z-40 bg-gradient-to-t from-black"></div>
         )}
       </pre>
+
+      <CopyCode code={code} />
 
       <Button
         className="absolute bottom-5 left-1/2 -translate-x-1/2 z-50"

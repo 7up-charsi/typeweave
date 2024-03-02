@@ -14,8 +14,7 @@ export const CodeSource = ({ source }: Props) => {
   });
 
   return (
-    <CollapsibleCodeSource>
-      <CopyCode code={file} />
+    <CollapsibleCodeSource code={file}>
       <SyntaxHighlight code={file} language="tsx" />
     </CollapsibleCodeSource>
   );
