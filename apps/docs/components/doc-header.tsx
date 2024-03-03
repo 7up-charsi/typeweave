@@ -71,37 +71,40 @@ export const DocHeader = ({
 
       <div className="flex gap-4 items-center justify-end mt-3">
         {[
-          {
+          npm && {
             icon: npm_svg,
             title: 'package',
             href: npm,
             a11yLabel: 'npm package',
           },
-          {
+          source && {
             icon: github_svg,
             title: 'source',
             href: source,
             a11yLabel: 'github source code',
           },
-          {
+          styles && {
             icon: github_svg,
             title: 'styles',
             href: styles,
             a11yLabel: 'github styles source',
           },
-        ].map(({ icon, title, href, a11yLabel }, i) => (
-          <Link
-            target="_blank"
-            rel="noreferrer"
-            aria-label={a11yLabel}
-            href={href}
-            key={i}
-            className="flex gap-4 items-center px-2 h-8 rounded bg-muted-3 dark:bg-mutedDark-3"
-          >
-            <span>{icon}</span>
-            <span className="first-letter:uppercase">{title}</span>
-          </Link>
-        ))}
+        ]
+          .filter(Boolean)
+          // @ts-ignore
+          .map(({ icon, title, href, a11yLabel }, i) => (
+            <Link
+              target="_blank"
+              rel="noreferrer"
+              aria-label={a11yLabel}
+              href={href}
+              key={i}
+              className="flex gap-4 items-center px-2 h-8 rounded bg-muted-3 dark:bg-mutedDark-3"
+            >
+              <span>{icon}</span>
+              <span className="first-letter:uppercase">{title}</span>
+            </Link>
+          ))}
       </div>
 
       <div className="h-px bg-muted-4 mt-4 dark:bg-mutedDark-4"></div>
