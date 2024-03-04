@@ -1,6 +1,5 @@
 import type { Config } from 'tailwindcss';
-import { webboUi } from '@webbo-ui/theme';
-import typographyPlugin from '@tailwindcss/typography';
+import { WebboUi } from '@webbo-ui/theme';
 
 const config: Config = {
   content: [
@@ -9,8 +8,7 @@ const config: Config = {
     './mdx-components/**/*.{js,ts,jsx,tsx,mdx}',
     './node_modules/@webbo-ui/theme/src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  plugins: [webboUi(), typographyPlugin],
+  plugins: [WebboUi()],
 };
 
 export default config;
-

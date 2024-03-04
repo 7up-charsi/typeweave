@@ -11,7 +11,7 @@ const SearchIcon = ({
       width={width}
       height={height}
       fill="none"
-      className={`text-muted-11 dark:text-mutedDark-11 ${className}`}
+      className={`text-muted-11 ${className}`}
       {...props}
     >
       <path

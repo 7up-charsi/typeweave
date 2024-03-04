@@ -13,7 +13,7 @@ const Template = () => (
   <>
     {Object.keys(alert.variants.variant).map((variant) => (
       <div key={variant} className="flex flex-col gap-4 first:mt-0 mt-4">
-        <span className="text-muted-11 dark:text-mutedDark-11 pl-3 uppercase font-bold place-self-start text-sm border-l-2 border-muted-9 dark:border-mutedDark-11">
+        <span className="text-muted-11 pl-3 uppercase font-bold place-self-start text-sm border-l-2 border-muted-9">
           {variant}
         </span>
 

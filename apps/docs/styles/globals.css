@@ -22,14 +22,14 @@
   }
 
   *::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-muted-5 dark:bg-mutedDark-7;
+    @apply rounded-full bg-muted-5;
   }
 
   *::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-6 dark:bg-mutedDark-8;
+    @apply bg-muted-6;
   }
 
   *::-webkit-scrollbar-thumb:active {
-    @apply bg-muted-6 dark:bg-mutedDark-8;
+    @apply bg-muted-6;
   }
 }

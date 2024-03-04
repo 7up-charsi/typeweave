@@ -28,7 +28,7 @@ export const SearchInput = (props: UseSearchBoxProps) => {
   return (
     <div>
       <form
-        className="w-full h-14 relative border-b border-muted-6 dark:border-mutedDark-6 flex gap-1 items-center px-5 cursor-text"
+        className="w-full h-14 relative border-b border-muted-6 flex gap-1 items-center px-5 cursor-text"
         action=""
         role="search"
         noValidate
@@ -68,7 +68,7 @@ export const SearchInput = (props: UseSearchBoxProps) => {
           onChange={(event) => {
             setQuery(event.currentTarget.value);
           }}
-          className="h-full bg-transparent outline-none grow mx-3 text-muted-11 dark:text-mutedDark-11"
+          className="h-full bg-transparent outline-none grow mx-3 text-muted-11"
         />
 
         {inputValue.length === 0 ||

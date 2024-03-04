@@ -55,9 +55,7 @@ const Template = () => {
     >
       <div className="flex flex-col gap-2">
         <div className="flex gap-2 items-center">
-          <span className="text-muted-11 dark:text-mutedDark-11 font-medium">
-            Data table
-          </span>
+          <span className="text-muted-11 font-medium">Data table</span>
           <span className="grow"></span>
 
           <Table.ColumnVisibility tableIdentifier="demo_table">

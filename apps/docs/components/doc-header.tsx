@@ -30,7 +30,7 @@ const github_svg = (
     viewBox="0 0 20 20"
     width={20}
     height={20}
-    className="text-muted-11/90 hover:text-muted-11 dark:text-mutedDark-11/90 dark:hover:text-mutedDark-11 transition-colors"
+    className="text-muted-11/90 hover:text-muted-11 transition-colors"
   >
     <g>
       <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
@@ -99,7 +99,7 @@ export const DocHeader = ({
               aria-label={a11yLabel}
               href={href}
               key={i}
-              className="flex gap-4 items-center px-2 h-8 rounded bg-muted-3 dark:bg-mutedDark-3"
+              className="flex gap-4 items-center px-2 h-8 rounded bg-muted-3"
             >
               <span>{icon}</span>
               <span className="first-letter:uppercase">{title}</span>
@@ -107,7 +107,7 @@ export const DocHeader = ({
           ))}
       </div>
 
-      <div className="h-px bg-muted-4 mt-4 dark:bg-mutedDark-4"></div>
+      <div className="h-px bg-muted-4 mt-4"></div>
     </div>
   );
 };

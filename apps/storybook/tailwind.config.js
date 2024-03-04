@@ -1,4 +1,4 @@
-import { webboUi } from '@webbo-ui/theme';
+import { WebboUi } from '@webbo-ui/theme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -7,5 +7,5 @@ export default {
     '../../packages/core/theme/src/**/*.ts',
     './.storybook/**/*.{ts,tsx}',
   ],
-  plugins: [webboUi()],
+  plugins: [WebboUi()],
 };

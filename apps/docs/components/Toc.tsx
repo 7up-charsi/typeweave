@@ -46,9 +46,7 @@ export const Toc = () => {
 
   return (
     <aside className="w-full shrink-0 h-[calc(100vh-theme(spacing.16))] sticky top-16 p-2 pt-4">
-      <span className="text-muted-11 dark:text-mutedDark-11 text-sm">
-        Table of contents
-      </span>
+      <span className="text-muted-11 text-sm">Table of contents</span>
       <nav aria-label="table of content" className="flex flex-col">
         {headings.map(({ id, innerText, dataset }, i) => {
           const depth = dataset.depth as unknown as string;
@@ -63,8 +61,8 @@ export const Toc = () => {
                 href={`#${id}`}
                 className={`text-sm ${
                   activeId === id
-                    ? 'text-primary-11 dark:text-primaryDark-11 hover:text-primary-12 dark:hover:text-primaryDark-12'
-                    : 'text-muted-11 dark:text-mutedDark-11 hover:text-muted-12 dark:hover:text-mutedDark-12'
+                    ? 'text-primary-11 hover:text-primary-12'
+                    : 'text-muted-11 hover:text-muted-12'
                 }`}
               >
                 <span className="inline-block first-letter:uppercase ">

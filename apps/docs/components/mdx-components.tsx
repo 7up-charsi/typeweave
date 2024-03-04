@@ -28,7 +28,7 @@ export const mdxComponents: MDXRemoteProps['components'] = {
     // @ts-ignore
     <Link
       {...props}
-      className="underline italic text-secondary-11 dark:text-secondaryDark-11 underline-offset-2"
+      className="underline italic text-secondary-11 underline-offset-2"
     />
   ),
 };

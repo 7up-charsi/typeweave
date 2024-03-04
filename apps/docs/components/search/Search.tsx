@@ -18,11 +18,11 @@ export const Search = () => {
       <Dialog.Root>
         <Dialog.Trigger>
           <div
-            className="mr-5 w-52 h-9 ring-1 ring-muted-7 dark:ring-mutedDark-7 hover:ring-muted-8 dark:hover:ring-mutedDark-8 px-2 rounded flex items-center cursor-pointer transition-colors group select-none"
+            className="mr-5 w-52 h-9 ring-1 ring-muted-7 hover:ring-muted-8 px-2 rounded flex items-center cursor-pointer transition-colors group select-none"
             tabIndex={0}
             aria-label="press to open command palette for docs search"
           >
-            <span className="text-sm text-muted-11 dark:text-mutedDark-11 tracking-wide">
+            <span className="text-sm text-muted-11 tracking-wide">
               Search docs
             </span>
             <div className="grow"></div>
