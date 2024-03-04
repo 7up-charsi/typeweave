@@ -9,12 +9,4 @@ export const guidesLinks: NavigationLink[] = [
     title: 'installation',
     href: '/docs/guides/installation',
   },
-  {
-    title: 'theming',
-    href: '/docs/guides/theming',
-  },
-  {
-    title: 'dark mode',
-    href: '/docs/guides/dark-mode',
-  },
 ];
