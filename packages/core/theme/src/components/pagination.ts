@@ -4,7 +4,7 @@ import { ClassNames } from '../types';
 export const pagination = tv({
   slots: {
     base: 'flex gap-2 group',
-    item: 'data-[selected=false]:text-muted-11 data-[selected=false]:data-[hovered=true]:bg-muted-3 data-[selected=false]:[--rippleBg:theme(colors.muted.11/20%)] dark:data-[selected=false]:text-mutedDark-11 dark:data-[selected=false]:data-[hovered=true]:bg-mutedDark-3 dark:data-[selected=false]:[--rippleBg:theme(colors.mutedDark.11/20%)]',
+    item: 'data-[selected=false]:text-muted-11 data-[selected=false]:data-[hovered=true]:bg-muted-3 data-[selected=false]:[--rippleBg:theme(colors.muted-11/20%)]',
   },
 });
 

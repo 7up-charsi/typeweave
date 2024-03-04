@@ -7,7 +7,7 @@ import { navbarLinks } from '@/config/navbar-links';
 
 export const Navbar = () => {
   return (
-    <header className="fixed top-0 m-auto max-w-screen-2xl w-full z-[999] h-16 flex items-center px-12 bg-muted-1/50 dark:bg-mutedDark-1 backdrop-blur-sm  border-b border-b-muted-6">
+    <header className="fixed top-0 m-auto max-w-screen-2xl w-full z-[999] h-16 flex items-center px-12 bg-muted-1/50 backdrop-blur-sm  border-b border-b-muted-6">
       <Link
         href="/"
         aria-label="home page"
@@ -34,7 +34,7 @@ export const Navbar = () => {
           <Link
             key={i}
             href={href}
-            className="inline-block first-letter:uppercase text-muted-11/90 hover:text-muted-11 transition-colors dark:text-mutedDark-11/90 dark:hover:text-mutedDark-11 hover:bg-muted-3 dark:hover:bg-mutedDark-3 px-3 py-2 rounded"
+            className="inline-block first-letter:uppercase text-muted-11/90 hover:text-muted-11 transition-colors hover:bg-muted-3 px-3 py-2 rounded"
           >
             {title}
           </Link>
@@ -57,7 +57,7 @@ export const Navbar = () => {
           viewBox="0 0 20 20"
           width={20}
           height={20}
-          className="text-muted-11/90 hover:text-muted-11 dark:text-mutedDark-11/90 dark:hover:text-mutedDark-11 transition-colors"
+          className="text-muted-11/90 hover:text-muted-11 transition-colors"
         >
           <g>
             <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">

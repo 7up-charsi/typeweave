@@ -15,14 +15,14 @@ export const badge = tv({
       },
     },
     color: {
-      primary: { content: 'bg-primary-9 dark:bg-primaryDark-9 text-white' },
+      primary: { content: 'bg-primary-9 text-white' },
       secondary: {
-        content: 'bg-secondary-9 dark:bg-secondaryDark-9 text-white',
+        content: 'bg-secondary-9 text-white',
       },
-      success: { content: 'bg-success-9 dark:bg-successDark-9 text-white' },
-      info: { content: 'bg-info-9 dark:bg-infoDark-9 text-white' },
-      warning: { content: 'bg-warning-9 dark:bg-warningDark-9 text-white' },
-      danger: { content: 'bg-danger-9 dark:bg-dangerDark-9 text-white' },
+      success: { content: 'bg-success-9 text-white' },
+      info: { content: 'bg-info-9 text-white' },
+      warning: { content: 'bg-warning-9 text-white' },
+      danger: { content: 'bg-danger-9 text-white' },
     },
     placement: {
       'top-left': { content: 'top-0 left-0' },

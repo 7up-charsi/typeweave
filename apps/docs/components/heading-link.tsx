@@ -20,7 +20,7 @@ export const HeadingLink = ({
         {children}
       </Component>
       <a href={`#${id}`} className="ml-4 hidden group-hover:flex">
-        <div className="inline-flex items-center justify-center w-7 h-5 cursor-pointer rounded text-primary-11 bg-primary-3 hover:bg-primary-4 dark:text-primaryDark-11 dark:bg-primaryDark-3 dark:hover:bg-primaryDark-4">
+        <div className="inline-flex items-center justify-center w-7 h-5 cursor-pointer rounded text-primary-11 bg-primary-3 hover:bg-primary-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

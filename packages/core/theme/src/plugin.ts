@@ -4,25 +4,39 @@ import tailwindcssForms from '@tailwindcss/forms';
 import { fontFamily } from 'tailwindcss/defaultTheme';
 import deepmerge from 'deepmerge';
 import * as colors from '@radix-ui/colors';
+import { flatten } from 'flat';
+import Color from 'color';
+import kebabcase from 'lodash.kebabcase';
 
 type ColorScale = Record<string, string>;
 
-type Colors =
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'warning'
-  | 'danger'
-  | 'info'
-  | 'muted'
-  | 'overlay'
-  | 'focus';
+type ThemeColors = {
+  primary?: ColorScale;
+  secondary?: ColorScale;
+  success?: ColorScale;
+  warning?: ColorScale;
+  danger?: ColorScale;
+  info?: ColorScale;
+  muted?: ColorScale;
+  overlay?: ColorScale;
+  focus?: ColorScale;
+};
 
-type Theme = Record<Colors, ColorScale>;
+type ThemeLayout = {
+  borderRadius?: string;
+};
+
+type Theme = {
+  base?: 'light' | 'dark';
+  colors?: ThemeColors;
+  layout?: ThemeLayout;
+};
+
+type Themes = Record<string, Theme>;
 
 type PluginConfig = {
-  lightTheme?: Theme;
-  darkTheme?: Theme;
+  defaultTheme?: string;
+  themes?: Themes;
 };
 
 const genColorScale = (color: ColorScale) =>
@@ -32,32 +46,103 @@ const genColorScale = (color: ColorScale) =>
   );
 
 const defaultLightTheme: Theme = {
-  primary: genColorScale(colors.violet),
-  secondary: genColorScale(colors.plum),
-  success: genColorScale(colors.green),
-  warning: genColorScale(colors.orange),
-  danger: genColorScale(colors.red),
-  info: genColorScale(colors.blue),
-  muted: genColorScale(colors.gray),
-  focus: genColorScale(colors.sky),
-  overlay: genColorScale(colors.blackA),
+  base: 'light',
+  colors: {
+    primary: genColorScale(colors.violet),
+    secondary: genColorScale(colors.plum),
+    success: genColorScale(colors.green),
+    warning: genColorScale(colors.orange),
+    danger: genColorScale(colors.red),
+    info: genColorScale(colors.blue),
+    muted: genColorScale(colors.gray),
+    focus: genColorScale(colors.sky),
+    overlay: genColorScale(colors.blackA),
+  },
+  layout: { borderRadius: '4px' },
 };
 
 const defaultDarkTheme: Theme = {
-  primary: genColorScale(colors.violetDark),
-  secondary: genColorScale(colors.plumDark),
-  success: genColorScale(colors.greenDark),
-  warning: genColorScale(colors.orangeDark),
-  danger: genColorScale(colors.redDark),
-  info: genColorScale(colors.blueDark),
-  muted: genColorScale(colors.grayDark),
-  focus: genColorScale(colors.skyDark),
-  overlay: genColorScale(colors.whiteA),
+  base: 'dark',
+  colors: {
+    primary: genColorScale(colors.violetDark),
+    secondary: genColorScale(colors.plumDark),
+    success: genColorScale(colors.greenDark),
+    warning: genColorScale(colors.orangeDark),
+    danger: genColorScale(colors.redDark),
+    info: genColorScale(colors.blueDark),
+    muted: genColorScale(colors.grayDark),
+    focus: genColorScale(colors.skyDark),
+    overlay: genColorScale(colors.whiteA),
+  },
+  layout: { borderRadius: '4px' },
 };
 
-export const webboUi = ({ lightTheme, darkTheme }: PluginConfig = {}) => {
-  const userLightTheme = deepmerge(lightTheme ?? {}, defaultLightTheme);
-  const userDarkTheme = deepmerge(darkTheme ?? {}, defaultDarkTheme);
+const baseThemes = {
+  light: defaultLightTheme,
+  dark: defaultDarkTheme,
+};
+
+export const WebboUi = (config: PluginConfig = {}) => {
+  const { themes: userThemes = {}, defaultTheme = 'light' } = config;
+
+  const themes: Themes = {
+    ...userThemes,
+    light: deepmerge(defaultLightTheme, userThemes.light || {}),
+    dark: deepmerge(defaultDarkTheme, userThemes.dark || {}),
+  };
+
+  Object.entries(themes).forEach(([themeName, theme]) => {
+    if (themeName === 'light' || themeName === 'dark') return;
+
+    const baseTheme = theme.base === 'dark' ? 'dark' : 'light';
+
+    themes[themeName] = deepmerge(baseThemes[baseTheme], theme);
+  });
+
+  const pluginColors: Record<string, string> = {};
+  const utilities: Record<string, Record<string, string>> = {};
+
+  Object.entries(themes).forEach(([themeName, { base, colors, layout }]) => {
+    let cssSelector = `.${themeName}, [data-theme="${themeName}"]`;
+
+    const scheme = base === 'dark' ? 'dark' : 'light';
+
+    if (themeName === defaultTheme) {
+      cssSelector = `:root,${cssSelector}`;
+    }
+
+    utilities[cssSelector] = { 'color-scheme': scheme };
+
+    const flatColors = flatten<ThemeColors | undefined, Record<string, string>>(
+      colors,
+      { delimiter: '-' },
+    );
+
+    Object.entries(flatColors).forEach(([colorName, colorValue]) => {
+      const color = Color(colorValue).hsl().round().array();
+
+      pluginColors[colorName] = `hsl(var(--${colorName}) / <alpha-value>)`;
+      utilities[cssSelector][`--${colorName}`] =
+        `${color[0]} ${color[1]} ${color[2]}`;
+    });
+
+    Object.entries(layout || {}).forEach(([key, value]) => {
+      key = kebabcase(key);
+
+      if (typeof value === 'object') {
+        Object.entries(value).forEach(([nestedKey, nestedValue]) => {
+          nestedKey = kebabcase(nestedKey);
+
+          // @ts-expect-error Type 'unknown' is not assignable to type 'string'
+          utilities[cssSelector][`--${key}-${nestedKey}`] = nestedValue;
+        });
+
+        return;
+      }
+
+      utilities[cssSelector][`--${key}`] = value;
+    });
+  });
 
   return plugin(
     ({ addUtilities, addBase }) => {
@@ -71,13 +156,16 @@ export const webboUi = ({ lightTheme, darkTheme }: PluginConfig = {}) => {
           'input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button':
             {
               '-webkit-appearance': 'none',
-              margin: 'px',
+              appearance: 'none',
+              margin: '0px',
             },
           'input[type="number"]': {
             '-moz-appearance': 'textfield',
           },
         },
       ]);
+
+      addUtilities(utilities);
 
       addUtilities([
         {
@@ -95,12 +183,9 @@ export const webboUi = ({ lightTheme, darkTheme }: PluginConfig = {}) => {
       darkMode: 'class',
       theme: {
         extend: {
-          colors: {
-            ...userLightTheme,
-            ...Object.entries(userDarkTheme).reduce<Record<string, ColorScale>>(
-              (acc, [key, value]) => ((acc[`${key}Dark`] = value), acc),
-              {},
-            ),
+          colors: pluginColors,
+          borderRadius: {
+            DEFAULT: 'var(--border-radius)',
           },
           fontFamily: {
             sans: ["var(--font-geist-sans, 'Nunito Sans')", ...fontFamily.sans],

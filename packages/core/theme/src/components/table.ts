@@ -7,13 +7,13 @@ export const table = tv({
     thead: '',
     tbody: '',
     tr: 'h-10',
-    th: 'px-3 text-muted-11 dark:text-mutedDark-11 font-normal first-letter:uppercase',
-    td: 'text-center text-muted-11 dark:text-mutedDark-11',
+    th: 'px-3 text-muted-11 font-normal first-letter:uppercase',
+    td: 'text-center text-muted-11',
   },
   variants: {
     variant: {
       strip: {
-        tr: 'even:bg-muted-3 [thead>&]:bg-muted-3 dark:even:bg-mutedDark-3 dark:[thead>&]:bg-mutedDark-3',
+        tr: 'even:bg-muted-3 [thead>&]:bg-muted-3',
       },
       grid: {
         th: 'border border-muted-6',

@@ -4,9 +4,9 @@ import { ClassNames } from '../types';
 export const popover = tv({
   slots: {
     content:
-      'border border-muted-6 dark:border-mutedDark-6 bg-muted-2 dark:bg-mutedDark-2 max-w-sm w-full rounded p-4 [--arrowFill:theme(colors.muted.9)] dark:[--arrowFill:theme(colors.mutedDark.9)]',
-    title: 'text-lg font-semibold text-muted-11 dark:text-mutedDark-11',
-    description: 'mt-2 text-normal text-muted-11 dark:text-mutedDark-11',
+      'border border-muted-6 bg-muted-2 max-w-sm w-full rounded p-4 [--arrowFill:theme(colors.muted-9)]',
+    title: 'text-lg font-semibold text-muted-11',
+    description: 'mt-2 text-normal text-muted-11',
   },
   variants: {
     shadow: {

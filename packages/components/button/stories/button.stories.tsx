@@ -49,7 +49,7 @@ const DefaultTemplate = (args: ButtonProps) => (
       ]
     ).map((variant, idx) => (
       <div key={idx} className="flex flex-col gap-4">
-        <span className="text-muted-11 dark:text-mutedDark-11 pl-3 uppercase font-bold place-self-start text-sm border-l-2 border-muted-9 dark:border-mutedDark-11">
+        <span className="text-muted-11 pl-3 uppercase font-bold place-self-start text-sm border-l-2 border-muted-9">
           {variant}
         </span>
 
