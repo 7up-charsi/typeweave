@@ -121,7 +121,8 @@ export const WebboUi = (config: PluginConfig = {}) => {
     Object.entries(flatColors).forEach(([colorName, colorValue]) => {
       const color = Color(colorValue).hsl().round().array();
 
-      pluginColors[colorName] = `hsl(var(--${colorName}) / <alpha-value>)`;
+      pluginColors[colorName] =
+        `hsl(var(--${colorName}) / ${color[3] ?? '<alpha-value>'})`;
       utilities[cssSelector][`--${colorName}`] =
         `${color[0]} ${color[1]} ${color[2]}`;
     });
