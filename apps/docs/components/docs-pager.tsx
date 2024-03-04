@@ -1,4 +1,5 @@
 import { componentsLinks } from '@/config/components-links';
+import { customizationLinks } from '@/config/customization-links';
 import { guidesLinks } from '@/config/guides-links';
 import { Button } from '@webbo-ui/button';
 import Link from 'next/link';
@@ -58,9 +59,7 @@ const arrowRight = (
 export const DocsPager = ({ activeSlug }: Props) => {
   if (!activeSlug) return null;
 
-  const links = activeSlug.startsWith('components/')
-    ? componentsLinks
-    : guidesLinks;
+  const links = [...guidesLinks, ...customizationLinks, ...componentsLinks];
 
   const activeIndex = links.findIndex(
     (link) => `/docs/${activeSlug}` === link.href,
