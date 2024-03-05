@@ -1,6 +1,8 @@
 import { MDXRemoteProps } from 'next-mdx-remote/rsc';
 import { HeadingLink } from './heading-link';
 import { DocHeader } from './doc-header';
+import { DocHeaderLinks } from './doc-header-links';
+import { Separator } from './separator';
 import { CodeBlock } from './code-block';
 import { CodePreview } from './code-preview';
 import { CodeSource } from './code-source';
@@ -17,6 +19,8 @@ export const mdxComponents: MDXRemoteProps['components'] = {
   CodePreview,
   CodeSource,
   DocHeader,
+  DocHeaderLinks,
+  Separator,
   Highlight,
   h2: (props) => <HeadingLink as="h2" {...props} />,
   h3: (props) => <HeadingLink as="h3" {...props} />,
