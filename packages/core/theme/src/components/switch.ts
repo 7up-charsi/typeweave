@@ -6,11 +6,11 @@ const _switch = tv({
   slots: {
     base: 'inline-flex gap-2 group',
     switch: [
-      'rounded relative flex items-center transition-colors cursor-pointer isolate bg-muted-5',
+      'rounded-full relative flex items-center transition-colors cursor-pointer isolate bg-muted-5',
       ...groupDataFocusVisible,
     ],
     indicator:
-      'absolute z-10 bg-white rounded left-[2px] translate-x-0 group-data-[checked=true]:left-[calc(100%-2px)] group-data-[checked=true]:-translate-x-full transition-[left,transform]',
+      'absolute z-10 bg-white rounded-full left-[2px] translate-x-0 group-data-[checked=true]:left-[calc(100%-2px)] group-data-[checked=true]:-translate-x-full transition-[left,transform]',
     nativeInput:
       'absolute z-50 outline-none w-full h-full border-test opacity-0 absolute inset-0 cursor-pointer',
     label: 'cursor-pointer select-none text-muted-11 first-letter:uppercase',
