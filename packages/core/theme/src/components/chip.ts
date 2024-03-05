@@ -4,7 +4,7 @@ import { ClassNames } from '../types';
 
 export const chip = tv({
   slots: {
-    base: 'relative inline-flex items-center gap-2 px-2 rounded select-none whitespace-nowrap',
+    base: 'relative inline-flex items-center gap-2 px-2 rounded select-none whitespace-nowrap max-w-full',
     content: 'truncate',
     deleteIcon: [
       'cursor-pointer outline-none transition-colors',
