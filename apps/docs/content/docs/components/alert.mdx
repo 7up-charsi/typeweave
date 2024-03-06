@@ -30,6 +30,29 @@ Copy and paste these <Highlight>style paths</Highlight> in <Highlight>tailwind.c
 "./node_modules/@webbo-ui/theme/dist/components/alert.ts"
 ```
 
+## anatomy
+
+The anatomy refers to the way a component is structured.
+
+```html
+<div role="alert" class="base-slot-styles">
+  <div class="icon-slot-styles">
+    <!-- icon -->
+  </div>
+
+  <div class="content-slot-styles">
+    <div class="title-slot-styles">
+      <!-- title -->
+    </div>
+    <!-- alert content -->
+  </div>
+
+  <div class="action-slot-styles">
+    <!-- action -->
+  </div>
+</div>
+```
+
 ## usage
 
 An alert is an element that displays a brief, important message in a way that attracts the user's attention without interrupting the user's task. Dynamically rendered alerts are automatically announced by most screen readers, and in some operating systems, they may trigger an alert sound. It is important to note that, at this time, screen readers do not inform users of alerts that are present on the page before page load completes.
