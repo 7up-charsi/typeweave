@@ -36,7 +36,8 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@webbo-ui/theme": "workspace:*"
+    "@webbo-ui/theme": "workspace:*",
+    "@webbo-ui/button": "workspace:*"
   },
   "devDependencies": {
     "clean-package": "^2.2.0"

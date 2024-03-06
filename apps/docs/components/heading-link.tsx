@@ -1,3 +1,12 @@
+const styles = {
+  h1: 'text-2xl',
+  h2: 'text-xl',
+  h3: 'text-lg',
+  h4: 'text-md',
+  h5: 'text-base',
+  h6: 'text-sm',
+};
+
 export const HeadingLink = ({
   as = 'h1',
   children,
@@ -15,7 +24,7 @@ export const HeadingLink = ({
         data-mdx-heading
         data-depth={as.replace('h', '')}
         id={id}
-        className="scroll-mt-20 text-xl font-medium first-letter:uppercase"
+        className={`scroll-mt-20 font-medium first-letter:uppercase ${styles[as]}`}
       >
         {children}
       </Component>

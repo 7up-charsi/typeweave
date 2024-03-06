@@ -3,14 +3,16 @@ import { Alert } from '@webbo-ui/alert';
 export const AlertVariants = () => {
   return (
     <div className="w-full flex flex-col gap-3">
-      <Alert color="warning" variant="border">
-        border variant with dummy content
+      <Alert color="success" variant="border">
+        This is a `border` variant Alert.
       </Alert>
-      <Alert color="warning" variant="flat">
-        flat variant with dummy content
+
+      <Alert color="success" variant="flat">
+        This is a `flat` variant Alert.
       </Alert>
-      <Alert color="warning" variant="solid">
-        solid variant with dummy content
+
+      <Alert color="success" variant="solid">
+        This is a `solid` variant Alert.
       </Alert>
     </div>
   );

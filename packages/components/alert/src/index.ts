@@ -4,4 +4,4 @@ import * as alert from './alert';
 export type { AlertProps } from './alert';
 
 // export component
-export const Alert = alert.default;
+export const Alert = alert.Alert;

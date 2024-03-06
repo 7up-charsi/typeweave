@@ -2,14 +2,15 @@
 
 import { forwardRef } from 'react';
 import { AlertVariantProps, alert as alertStyles } from '@webbo-ui/theme';
+import { Button } from '@webbo-ui/button';
 
 const success = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={24}
-    height={24}
+    width="1em"
+    height="1em"
   >
     <g fill="currentColor">
       <path d="M10.5 15.25A.74.74 0 0110 15l-3-3a.75.75 0 011-1l2.47 2.47L19 5a.75.75 0 011 1l-9 9a.74.74 0 01-.5.25z"></path>
@@ -23,8 +24,8 @@ const info = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={24}
-    height={24}
+    width="1em"
+    height="1em"
   >
     <path
       stroke="currentColor"
@@ -41,8 +42,8 @@ const warning = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={24}
-    height={24}
+    width="1em"
+    height="1em"
   >
     <g fill="currentColor" fillRule="evenodd" clipRule="evenodd">
       <path d="M12 2.988L22.292 21H1.708L12 2.988zM4.292 19.5h15.416L12 6.012 4.292 19.5z"></path>
@@ -56,8 +57,8 @@ const danger = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={24}
-    height={24}
+    width="1em"
+    height="1em"
   >
     <g fill="currentColor">
       <path d="M12 6.25a.75.75 0 01.75.75v6a.75.75 0 01-1.5 0V7a.75.75 0 01.75-.75zM12 17a1 1 0 100-2 1 1 0 000 2z"></path>
@@ -70,6 +71,25 @@ const danger = (
   </svg>
 );
 
+const close_svg = (
+  <svg
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    width={20}
+    height={20}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M6 18 18 6m0 12L6 6"
+    />
+  </svg>
+);
+
 const icons = {
   success,
   info,
@@ -79,28 +99,46 @@ const icons = {
 
 export interface AlertProps extends AlertVariantProps {
   children?: React.ReactNode;
-  icon?: React.ReactNode;
+  icon?: false | React.ReactNode;
+  action?: false | React.ReactNode;
+  title?: React.ReactNode;
+  onClose?: () => void;
 }
 
-const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
+export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
   const {
     variant = 'flat',
     color = 'danger',
-    fullWidth = true,
     children,
+    title,
+    onClose,
+    action,
+    fullWidth = true,
     icon = icons[color || 'danger'],
   } = props;
 
   const styles = alertStyles({ color, fullWidth, variant });
 
   return (
-    <div role="alert" ref={ref} className={styles}>
-      <span>{icon}</span>
-      <span>{children}</span>
+    <div role="alert" ref={ref} className={styles.base()}>
+      {icon === false ? null : <div className={styles.icon()}>{icon}</div>}
+
+      <div className={styles.content()}>
+        {title && <div className={styles.title()}>{title}</div>}
+        {children}
+      </div>
+
+      {action === false || !onClose ? null : (
+        <div className={styles.action()}>
+          {action || (
+            <Button isIconOnly variant="text" size="sm" color={color}>
+              {close_svg}
+            </Button>
+          )}
+        </div>
+      )}
     </div>
   );
 });
 
 Alert.displayName = 'webbo-ui.Alert';
-
-export default Alert;
