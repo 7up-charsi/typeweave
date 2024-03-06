@@ -1,17 +1,16 @@
 ---
 metaTitle: alert
-metaDescription: A very simple way to add structured data to a page.
+metaDescription: An alert is an element that displays a brief, important message in a way that attracts the user's attention without interrupting the user's task.
 ---
 
 <DocHeader
   title="alert"
-  description="A very simple way to add structured data to a page."
+  description="An alert is an element that displays a brief, important message in a way that attracts the user's attention without interrupting the user's task."
 />
 
 <DocHeaderLinks
   source="https://github.com/7up-charsi/webbo-ui/blob/main/packages/components/alert/src/alert.tsx"
   styles="https://github.com/7up-charsi/webbo-ui/blob/main/packages/core/theme/src/components/alert.ts"
-  npm="npm.com"
 />
 
 <Separator />
@@ -24,69 +23,61 @@ pnpm add @webbo-ui/alert
 
 ## styles
 
-Copy and paste it in your <Highlight>tailwind.config.js</Highlight> content array
+Copy and paste these <Highlight>style paths</Highlight> in <Highlight>tailwind.config.js</Highlight> content array
 
 ```txt
 "./node_modules/@webbo-ui/theme/dist/components/alert.ts",
 "./node_modules/@webbo-ui/theme/dist/components/alert.ts"
 ```
 
-## variants
+## usage
+
+An alert is an element that displays a brief, important message in a way that attracts the user's attention without interrupting the user's task. Dynamically rendered alerts are automatically announced by most screen readers, and in some operating systems, they may trigger an alert sound. It is important to note that, at this time, screen readers do not inform users of alerts that are present on the page before page load completes.
+
+Because alerts are intended to provide important and potentially time-sensitive information without interfering with the user's ability to continue working, it is crucial they do not affect keyboard focus. The [Alert Dialog](/docs/components/alert-dialog) Pattern is designed for situations where interrupting work flow is necessary.
+
+It is also important to avoid designing alerts that disappear automatically. An alert that disappears too quickly can lead to failure to meet [WCAG 2.0 success criterion 2.2.3](https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-no-exceptions.html). Another critical design consideration is the frequency of interruption caused by alerts. Frequent interruptions inhibit usability for people with visual and cognitive disabilities, which makes meeting the requirements of [WCAG 2.0 success criterion 2.2.4](https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-postponed.html) more difficult.
+
+### colors
+
+<CodePreview>
+  <AlertColors />
+</CodePreview>
+<CodeSource source="alert-colors.tsx" />
+
+### variants
+
+The Alert component comes with three alternative style options, border, filled and outlined. which you can set using the variant prop.
 
 <CodePreview>
   <AlertVariants />
 </CodePreview>
 <CodeSource source="alert-variants.tsx" />
 
-## code
+### titles
 
-```tsx
-import { webboUi } from '@webbo-ui/theme';
+use `title` prop to add neat title
 
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    // .......... other paths
-    './node_modules/@webbo-ui/theme/dist/components/alert.ts',
-  ],
-  plugins: [webboUi()],
-};
-```
+<CodePreview>
+  <AlertTitles />
+</CodePreview>
+<CodeSource source="alert-titles.tsx" />
 
-Lorem ipsum dolor sit amet `const consectetur = [1, 2, 3]` elit. Facere eos explicabo, error neque assumenda, vitae velit fugit delectus quas odit ipsa laudantium eum quo nam sit ipsam dicta impedit dolor?
+### Actions
 
-Lorem ipsum dolor sit amet `const consectetur = [1, 2, 3]` elit. Facere eos explicabo, error neque assumenda, vitae velit fugit delectus quas odit ipsa laudantium eum quo nam sit ipsam dicta impedit dolor?
+Add an action to your Alert with the `action` prop.
+If you provide an `onClose` callback to the Alert without setting the `action` prop, the component will display a close icon by default.
 
-### full library
+<CodePreview>
+  <AlertActions />
+</CodePreview>
+<CodeSource source="alert-actions.tsx" />
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit.
+## icons
 
-```tsx diff
-import Button from '@webbo-ui/button'
+Use the `icon` prop to override an Alert's icon
 
-+ interface Props {
-+     children?: React.ReactNode
-+ }
-
-export const Page = (props: Props) => {
-    return <Button>Awesome</BUtton>
-}
-```
-
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eos explicabo, error neque assumenda, vitae velit fugit delectus quas odit ipsa laudantium eum quo nam sit ipsam dicta impedit dolor?
-
-### component level
-
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eos explicabo, error neque assumenda, vitae velit fugit delectus quas odit ipsa laudantium eum quo nam sit ipsam dicta impedit dolor?
-
-## usages
-
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eos explicabo, error neque assumenda, vitae velit fugit delectus quas odit ipsa laudantium eum quo nam sit ipsam dicta impedit dolor?
-
-### colors
-
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eos explicabo, error neque assumenda, vitae velit fugit delectus quas odit ipsa laudantium eum quo nam sit ipsam dicta impedit dolor?
-
-### variants
-
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eos explicabo, error neque assumenda, vitae velit fugit delectus quas odit ipsa laudantium eum quo nam sit ipsam dicta impedit dolor?
+<CodePreview>
+  <AlertIcon />
+</CodePreview>
+<CodeSource source="alert-icon.tsx" />

@@ -19,66 +19,25 @@ pnpm add @webbo-ui/theme
 
 ### add theme plugin
 
-then configure it in your <Highlight>tailwindcss.config.ts</Highlight>, like this...
-
-Leave `content` array as is we will modify it later.
+then configure it in your <Highlight>tailwind.config.ts</Highlight>, leave `content` array as is we will modify it later.
 
 ```ts
-import { webboUi } from '@webbo-ui/theme';
+import { WebboUi } from '@webbo-ui/theme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
     // your stuff...
   ],
-  plugins: [webboUi()],
+  plugins: [WebboUi()],
 };
 ```
 
 </Steps>
 
-## main react package
+## component installation
 
-The easiest way to get started is to use the React package. It downloads all components and export them from one file. So you can import any component from one package.
-
-Asume you have configured tailwindcss as above then follow the steps below.
-
-<Steps>
-### Install react Package
-
-To install, run following command in your terminal
-
-```bash
-pnpm add @webbo-ui/react
-```
-
-### tailwind css styles
-
-you need to import styles from <Highlight>@webbo-ui/theme</Highlight> for components. you are using main react package so you need to import full library styles.
-
-add this in your `content` array
-
-```txt
-'./node_modules/@webbo-ui/theme/dist/**/*.{js,ts,jsx,tsx}',
-```
-
-### import any component
-
-then you can import and use any componet you want from <Highlight>@webbo-ui/react</Highlight>
-
-```tsx
-import { Button } from '@webbo-ui/react'
-
-export default funtion App() {
-  return <Button>webbo-ui</Button>
-}
-```
-
-</Steps>
-
-## individual component
-
-You can install each package separately. This is useful if you want to reduce the size of your CSS bundle as it will only include styles for the components you're actually using.
+Webbo-ui provides each component as individual package. Install the only components you need and don't forgot to add <Highlight>style paths</Highlight> in <Highlight>tailwind.config.ts</Highlight> as these paths are slightly different. **These** <Highlight>style paths</Highlight> **are given at every compnent page for you so you can copy and paste them**.
 
 Asume you have configured tailwindcss as above then follow the steps below.
 
@@ -93,9 +52,7 @@ pnpm add @webbo-ui/button
 
 ### tailwind css styles
 
-you need to import styles from <Highlight>@webbo-ui/theme</Highlight> for component. you are using components individually so you need to import styles separately. These <Highlight>style paths</Highlight> are given at every compnent page for you so you can copy and paste them.
-
-As we are using Button component so add this in your `content` array for button styles.
+Button component has installed. Now add its <Highlight>style paths</Highlight> in your `content` array in <Highlight>tailwind.config.ts</Highlight> for button styles.
 
 ```txt
 './node_modules/@webbo-ui/theme/dist/components/button.js',

@@ -1,29 +1,5 @@
 import Link from 'next/link';
 
-const npm_svg = (
-  <svg
-    viewBox="0 0 32 32"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    width={20}
-    height={20}
-  >
-    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-    <g
-      id="SVGRepo_tracerCarrier"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    ></g>
-    <g id="SVGRepo_iconCarrier">
-      <path d="M0 10V20H9V22H16V20H32V10H0Z" fill="#CB3837"></path>
-      <path
-        d="M5.46205 12H2V18H5.46205V13.6111H7.22344V18H8.98482V12H5.46205ZM10.7462 12V20H14.269V18H17.731V12H10.7462ZM15.9696 16.3889H14.269V13.6111H15.9696V16.3889ZM22.9545 12H19.4924V18H22.9545V13.6111H24.7158V18H26.4772V13.6111H28.2386V18H30V12H22.9545Z"
-        fill="white"
-      ></path>
-    </g>
-  </svg>
-);
-
 const github_svg = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -45,23 +21,16 @@ const github_svg = (
 );
 
 interface Props {
-  npm?: string;
   source?: string;
   styles?: string;
 }
 
 export const DocHeaderLinks = (props: Props) => {
-  const { npm, source, styles } = props;
+  const { source, styles } = props;
 
   return (
     <div className="flex gap-4 items-center justify-end mt-3">
       {[
-        npm && {
-          icon: npm_svg,
-          title: 'package',
-          href: npm,
-          a11yLabel: 'npm package',
-        },
         source && {
           icon: github_svg,
           title: 'source',
