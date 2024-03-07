@@ -1,34 +1,30 @@
-import { MDXRemoteProps } from 'next-mdx-remote/rsc';
 import { HeadingLink } from './heading-link';
 import { DocHeader } from './doc-header';
 import { DocHeaderLinks } from './doc-header-links';
 import { Separator } from './separator';
-import { CodeBlock } from './code-block';
-import { CodePreview } from './code-preview';
-import { CodeSource } from './code-source';
+import { CodeDemo } from './code-demo';
 import { Highlight } from './highlight';
 import { Gap } from './gap';
 import { Steps } from './steps';
 import * as demos from './demos';
 import Link from 'next/link';
+import { Code } from './code';
 
-export const mdxComponents: MDXRemoteProps['components'] = {
+export const mdxComponents: any = {
   ...demos,
+  CodeDemo,
   Steps,
   Gap,
-  CodePreview,
-  CodeSource,
   DocHeader,
   DocHeaderLinks,
   Separator,
   Highlight,
-  h2: (props) => <HeadingLink as="h2" {...props} />,
-  h3: (props) => <HeadingLink as="h3" {...props} />,
-  code: (props) => <CodeBlock {...props} />,
-  p: (props) => <p {...props} className="mt-4" />,
-  pre: (props) => <pre {...props} className={`${props.className} relative`} />,
-  ul: (props) => <ul {...props} className="list-disc list-inside" />,
-  a: (props) => (
+  code: Code,
+  h2: (props: any) => <HeadingLink as="h2" {...props} />,
+  h3: (props: any) => <HeadingLink as="h3" {...props} />,
+  p: (props: any) => <p {...props} className="mt-4" />,
+  ul: (props: any) => <ul {...props} className="list-disc list-inside" />,
+  a: (props: any) => (
     // @ts-ignore
     <Link
       {...props}

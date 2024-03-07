@@ -1,12 +1,19 @@
 import { notFound } from 'next/navigation';
 import { DocsPager } from '@/components/docs-pager';
 import { Toc } from '@/components/toc';
-import { RenderMarkdown } from '@/components/render-markdown';
 import { Metadata } from 'next';
 import { getContent } from '@/lib/get-content';
 import { readdir } from 'fs/promises';
+import { evaluate } from '@mdx-js/mdx';
 import path from 'path';
-import { compileMDX } from 'next-mdx-remote/rsc';
+import { mdxComponents } from '@/components/mdx-components';
+import remarkGfm from 'remark-gfm';
+import rehypeSlug from 'rehype-slug';
+import grayMatter from 'gray-matter';
+import { rehypeMeta } from '@/lib/rehype-meta';
+
+// @ts-expect-error untyped
+import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
 
 interface PageProps {
   params: { slug: string[] };
@@ -23,17 +30,11 @@ export const generateMetadata = async ({
     notFound();
   }
 
-  const { frontmatter } = await compileMDX<{
-    metaTitle: string;
-    metaDescription: string;
-  }>({
-    source: markdown,
-    options: { parseFrontmatter: true },
-  });
+  const { data } = grayMatter(markdown);
 
   return {
-    title: frontmatter.metaTitle,
-    description: frontmatter.metaDescription,
+    title: data.metaTitle,
+    description: data.metaDescription,
   };
 };
 
@@ -61,10 +62,20 @@ const Page = async ({ params }: PageProps) => {
     notFound();
   }
 
+  const { content } = grayMatter(markdown);
+
+  const { default: MdxContent } = await evaluate(content, {
+    Fragment,
+    jsx,
+    jsxs,
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypeSlug, rehypeMeta],
+  });
+
   return (
     <>
       <main className="col-start-2 py-4 px-16 overflow-auto">
-        <RenderMarkdown source={markdown} />
+        <MdxContent components={mdxComponents} />
         <DocsPager activeSlug={slug} />
       </main>
       <Toc />

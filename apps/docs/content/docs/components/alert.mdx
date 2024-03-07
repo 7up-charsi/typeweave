@@ -25,7 +25,7 @@ pnpm add @webbo-ui/alert
 
 Copy and paste these <Highlight>style paths</Highlight> in <Highlight>tailwind.config.js</Highlight> content array
 
-```txt
+```plaintext title='tailwind.config.ts'
 "./node_modules/@webbo-ui/theme/dist/components/alert.ts",
 "./node_modules/@webbo-ui/theme/dist/components/alert.ts"
 ```
@@ -63,44 +63,33 @@ It is also important to avoid designing alerts that disappear automatically. An 
 
 ### colors
 
-<CodePreview>
-  <AlertColors />
-</CodePreview>
-<CodeSource source="alert-colors.tsx" />
+<CodeDemo source="alert-colors.tsx" />
 
 ### variants
 
 The Alert component comes with three alternative style options, border, filled and outlined. which you can set using the variant prop.
 
-<CodePreview>
-  <AlertVariants />
-</CodePreview>
-<CodeSource source="alert-variants.tsx" />
+<CodeDemo source="alert-variants.tsx" />
 
 ### titles
 
 use `title` prop to add neat title
 
-<CodePreview>
-  <AlertTitles />
-</CodePreview>
-<CodeSource source="alert-titles.tsx" />
+<CodeDemo source="alert-titles.tsx" />
 
 ### Actions
 
 Add an action to your Alert with the `action` prop.
 If you provide an `onClose` callback to the Alert without setting the `action` prop, the component will display a close icon by default.
 
-<CodePreview>
-  <AlertActions />
-</CodePreview>
-<CodeSource source="alert-actions.tsx" />
+<CodeDemo source="alert-actions.tsx" />
 
 ## icons
 
 Use the `icon` prop to override an Alert's icon
 
-<CodePreview>
-  <AlertIcon />
-</CodePreview>
-<CodeSource source="alert-icon.tsx" />
+<CodeDemo source="alert-icon.tsx" />
+
+| prop    | type   | default | description     |
+| ------- | ------ | ------- | --------------- |
+| example | string | ''      | sadf asdlf; asd |
