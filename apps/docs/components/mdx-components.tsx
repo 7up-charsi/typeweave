@@ -9,10 +9,15 @@ import { Steps } from './steps';
 import * as demos from './demos';
 import Link from 'next/link';
 import { Code } from './code';
+import { Pre } from './pre';
+import { StylePaths } from './style-paths';
+import { Installation } from './installation';
 
 export const mdxComponents: any = {
   ...demos,
   CodeDemo,
+  Installation,
+  StylePaths,
   Steps,
   Gap,
   DocHeader,
@@ -20,6 +25,7 @@ export const mdxComponents: any = {
   Separator,
   Highlight,
   code: Code,
+  pre: Pre,
   h2: (props: any) => <HeadingLink as="h2" {...props} />,
   h3: (props: any) => <HeadingLink as="h3" {...props} />,
   p: (props: any) => <p {...props} className="mt-4" />,
