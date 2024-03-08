@@ -205,6 +205,9 @@ export const WebboUi = (config: PluginConfig = {}) => {
         },
       },
       plugins: [animatePlugin, tailwindcssForms],
+      future: {
+        hoverOnlyWhenSupported: true,
+      },
     },
   );
 };
