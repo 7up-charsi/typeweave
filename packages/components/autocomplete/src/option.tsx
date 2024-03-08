@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { mergeProps } from '@webbo-ui/react-utils';
-import { useHover, usePress } from '@react-aria/interactions';
+import { useHover } from '@react-aria/interactions';
 
 export interface OptionProps<V> {
   option: V;
@@ -28,13 +27,6 @@ export const Option = (
 
   const ref = useRef<HTMLLIElement>(null);
 
-  const { pressProps } = usePress({
-    onPress: () => {
-      if (isDisabled) return;
-      onSelect();
-    },
-  });
-
   const { hoverProps, isHovered } = useHover({
     isDisabled: isDisabled,
     onHoverStart: () => onHover(),
@@ -53,7 +45,15 @@ export const Option = (
   }, [isFocused]);
 
   return (
-    <li ref={ref} {...mergeProps(pressProps, hoverProps)} {...props}>
+    <li
+      ref={ref}
+      {...hoverProps}
+      onClick={() => {
+        if (isDisabled) return;
+        onSelect();
+      }}
+      {...props}
+    >
       {children ?? label}
     </li>
   );

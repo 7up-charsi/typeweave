@@ -45,11 +45,11 @@ const _switch = tv({
     size: {
       sm: {
         switch: 'w-9 h-5',
-        indicator: 'w-4 h-4 group-data-[pressed=true]:w-5',
+        indicator: 'w-4 h-4',
       },
       md: {
         switch: 'w-11 h-6',
-        indicator: 'w-5 h-5 group-data-[pressed=true]:w-6',
+        indicator: 'w-5 h-5',
       },
     },
     isDisabled: {

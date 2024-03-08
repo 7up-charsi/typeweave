@@ -3,13 +3,11 @@
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { Slot } from '@webbo-ui/slot';
 import { useClickOutside } from '@webbo-ui/use-click-outside';
-import { usePress } from '@react-aria/interactions';
 import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { createPortal } from 'react-dom';
 import { FocusTrap, FocusScope } from '@webbo-ui/focus-trap';
 import { createContextScope } from '@webbo-ui/context';
-import { useIsDisabled } from '@webbo-ui/use-is-disabled';
 import { useEffect, useId, useMemo, useRef } from 'react';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { DialogVariantProps, dialog } from '@webbo-ui/theme';
@@ -168,21 +166,13 @@ export const Trigger = (props: TriggerProps) => {
 
   const rootContext = useRootContext(Trigger_Name);
 
-  const { setElement, isDisabled } = useIsDisabled();
-
-  const { pressProps } = usePress({
-    isDisabled,
-    onPress: rootContext.handleOpen,
-  });
-
   return (
     <Slot
-      ref={setElement}
       aria-expanded={rootContext.isOpen}
       aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
       aria-label={a11yLabel}
       aria-describedby={a11yDescription}
-      {...pressProps}
+      onClick={rootContext.handleOpen}
     >
       {children}
     </Slot>
@@ -204,17 +194,12 @@ export const Close = (props: CloseProps) => {
 
   const { handleClose } = useRootContext(Close_Name);
 
-  const { setElement, isDisabled } = useIsDisabled();
-
-  const { pressProps } = usePress({
-    isDisabled,
-    onPress: () => {
-      handleClose('pointer');
-    },
-  });
-
   return (
-    <Slot ref={setElement} {...pressProps}>
+    <Slot
+      onClick={() => {
+        handleClose('pointer');
+      }}
+    >
       {children}
     </Slot>
   );

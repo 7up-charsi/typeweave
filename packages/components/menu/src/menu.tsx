@@ -5,13 +5,12 @@ import { Slot } from '@webbo-ui/slot';
 import * as Popper from '@webbo-ui/popper';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { useClickOutside } from '@webbo-ui/use-click-outside';
-import { useFocusVisible, useHover, usePress } from '@react-aria/interactions';
+import { useFocusVisible, useHover } from '@react-aria/interactions';
 import { createPortal } from 'react-dom';
-import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
+import { mergeRefs } from '@webbo-ui/react-utils';
 import { MenuVariantProps, menu, ClassValue } from '@webbo-ui/theme';
 import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
-import { useIsDisabled } from '@webbo-ui/use-is-disabled';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { forwardRef, useEffect, useId, useMemo, useRef, useState } from 'react';
 
@@ -88,24 +87,17 @@ export const Trigger = (props: TriggerProps) => {
 
   const rootContext = useRootContext(Trigger_Name);
 
-  const { setElement, isDisabled } = useIsDisabled();
-
-  const { pressProps } = usePress({
-    isDisabled,
-    onPress: rootContext.handleOpen,
-  });
-
   return (
     <Popper.Reference>
       <Slot
-        ref={mergeRefs(setElement, rootContext.triggerRef)}
+        ref={rootContext.triggerRef}
         role="button"
         aria-haspopup="menu"
         aria-expanded={rootContext.isOpen}
         aria-controls={rootContext.isOpen ? rootContext.id : undefined}
         aria-label={a11yLabel}
         aria-describedby={a11yDescription}
-        {...pressProps}
+        onClick={rootContext.handleOpen}
       >
         {children}
       </Slot>
@@ -303,13 +295,13 @@ const Item_Name = 'Menu.Item';
 export interface ItemProps {
   children?: React.ReactNode;
   isDisabled?: boolean;
-  disableCloseOnPress?: boolean;
+  disableCloseOnClick?: boolean;
   classNames?: {
     item?: ClassValue;
     itemIcon?: ClassValue;
     itemContent?: ClassValue;
   };
-  onPress?: () => void;
+  onClick?: () => void;
   asChild?: boolean;
 }
 
@@ -317,8 +309,8 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
   const {
     children,
     isDisabled,
-    onPress,
-    disableCloseOnPress,
+    onClick,
+    disableCloseOnClick,
     classNames,
     asChild,
   } = props;
@@ -342,13 +334,8 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
   });
 
   const handlePress = useCallbackRef(() => {
-    if (!disableCloseOnPress) handleClose();
-    onPress?.();
-  });
-
-  const { pressProps } = usePress({
-    isDisabled,
-    onPress: handlePress,
+    if (!disableCloseOnClick) handleClose();
+    onClick?.();
   });
 
   useEffect(() => {
@@ -376,7 +363,8 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
       data-disabled={!!isDisabled}
       aria-disabled={isDisabled}
       className={stylesContext.item({ className: classNames?.item })}
-      {...mergeProps(hoverProps, pressProps)}
+      {...hoverProps}
+      onClick={handlePress}
     >
       <span
         className={stylesContext.itemIcon({
@@ -515,11 +503,6 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
       onChange?.(!checked);
     });
 
-    const { pressProps } = usePress({
-      isDisabled,
-      onPress: hanldeChange,
-    });
-
     useEffect(() => {
       focusRef.callback = hanldeChange;
       focusRef.isDisabled = !!isDisabled;
@@ -547,7 +530,8 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
         aria-checked={checked}
         aria-disabled={isDisabled}
         className={stylesContext.item({ className: classNames?.item })}
-        {...mergeProps(hoverProps, pressProps)}
+        {...hoverProps}
+        onClick={hanldeChange}
       >
         <span
           className={stylesContext.itemIcon({
@@ -669,11 +653,6 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
       groupContext.onChange?.(value);
     });
 
-    const { pressProps } = usePress({
-      isDisabled,
-      onPress: hanldeChange,
-    });
-
     useEffect(() => {
       focusRef.callback = hanldeChange;
       focusRef.isDisabled = !!isDisabled;
@@ -703,7 +682,8 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
         aria-checked={checked}
         aria-disabled={isDisabled}
         className={stylesContext.item({ className: classNames?.item })}
-        {...mergeProps(hoverProps, pressProps)}
+        {...hoverProps}
+        onClick={hanldeChange}
       >
         <span
           className={stylesContext.itemIcon({

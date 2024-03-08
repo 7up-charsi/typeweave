@@ -131,7 +131,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
       {action === false || !onClose ? null : (
         <div className={styles.action()}>
           {action || (
-            <Button isIconOnly variant="text" size="sm" color={color}>
+            <Button isIconOnly size="sm" color={color}>
               {close_svg}
             </Button>
           )}

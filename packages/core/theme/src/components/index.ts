@@ -19,5 +19,6 @@ export * from './skeleton';
 export * from './pagination';
 export * from './table';
 export * from './toggle-button';
+export * from './tabs';
 
 export type { ClassValue } from 'tailwind-variants';

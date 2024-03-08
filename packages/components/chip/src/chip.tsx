@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 import { mergeProps } from '@webbo-ui/react-utils';
 import { ChipClassNames, ChipVariantProps, chip } from '@webbo-ui/theme';
 import { useFocusRing } from '@react-aria/focus';
-import { useHover, usePress } from '@react-aria/interactions';
+import { useHover } from '@react-aria/interactions';
 
 const delete_svg = (
   <svg
@@ -49,8 +49,6 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
     deleteIconA11yLabel = 'delete',
   } = props;
 
-  const { pressProps, isPressed } = usePress({ onPress: onDelete });
-
   const { hoverProps, isHovered } = useHover({});
 
   const { focusProps, isFocusVisible, isFocused } = useFocusRing();
@@ -76,10 +74,10 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
 
       {onDelete ? (
         <span
-          {...mergeProps(pressProps, focusProps, hoverProps, {
+          {...mergeProps(focusProps, hoverProps, {
             onKeyUp: handleKeyUp,
           })}
-          data-pressed={isPressed}
+          onClick={onDelete}
           data-hovered={isHovered}
           data-focused={isFocused}
           data-focus-visible={isFocusVisible && isFocused}

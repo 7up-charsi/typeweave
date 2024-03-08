@@ -2,7 +2,7 @@
 
 import { ChangeEvent, forwardRef, useRef } from 'react';
 import Input, { InputProps } from './input';
-import { mergeRefs } from '@webbo-ui/react-utils';
+import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
 import { NumberInputClassNames, numberInput } from '@webbo-ui/theme';
 import { Button } from '@webbo-ui/button';
 import { CustomError } from '@webbo-ui/error';
@@ -233,8 +233,9 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           isIconOnly
           size="sm"
           variant="text"
-          preventFocusOnPress
-          {...stepUpLongPressProps}
+          {...mergeProps(stepUpLongPressProps, {
+            onClick: (e: React.MouseEvent) => e.preventDefault(),
+          })}
           className={styles.button({
             className: classNames?.stepButton.button,
           })}
@@ -258,8 +259,9 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           isIconOnly
           size="sm"
           variant="text"
-          preventFocusOnPress
-          {...stepDownLongPressProps}
+          {...mergeProps(stepDownLongPressProps, {
+            onClick: (e: React.MouseEvent) => e.preventDefault(),
+          })}
           className={styles.button({
             className: classNames?.stepButton.button,
           })}
