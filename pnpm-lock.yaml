@@ -101,6 +101,9 @@ importers:
       '@webbo-ui/input':
         specifier: workspace:*
         version: link:../../packages/components/input
+      '@webbo-ui/tabs':
+        specifier: workspace:*
+        version: link:../../packages/components/tabs
       '@webbo-ui/theme':
         specifier: workspace:*
         version: link:../../packages/core/theme
@@ -1002,6 +1005,9 @@ importers:
       '@webbo-ui/react-utils':
         specifier: workspace:*
         version: link:../../utilities/react-utils
+      '@webbo-ui/slot':
+        specifier: workspace:*
+        version: link:../slot
       '@webbo-ui/theme':
         specifier: workspace:*
         version: link:../../core/theme

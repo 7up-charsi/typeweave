@@ -198,7 +198,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
               {...buttonProps}
               className={styles.item({ className: classNames?.item })}
               aria-label="first page"
-              onPress={() => setPage(1)}
+              onClick={() => setPage(1)}
               isDisabled={!!isDisabled || page === 1}
             >
               {firstButtonIcon}
@@ -212,7 +212,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
               {...buttonProps}
               className={styles.item({ className: classNames?.item })}
               aria-label="previous page"
-              onPress={() => setPage((prev) => prev - 1)}
+              onClick={() => setPage((prev) => prev - 1)}
               isDisabled={!!isDisabled || page === 1}
             >
               {previousButtonIcon}
@@ -265,7 +265,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
                 {...buttonProps}
                 className={styles.item({ className: classNames?.item })}
                 aria-label={getItemA11yLabel(ele)}
-                onPress={() => setPage(ele)}
+                onClick={() => setPage(ele)}
                 isDisabled={isDisabled}
                 data-selected={!!selected}
                 variant={(selected && 'solid') || 'text'}
@@ -282,7 +282,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
               {...buttonProps}
               className={styles.item({ className: classNames?.item })}
               aria-label="next page"
-              onPress={() => setPage((prev) => prev + 1)}
+              onClick={() => setPage((prev) => prev + 1)}
               isDisabled={!!isDisabled || page === count}
             >
               {nextButtonIcon}
@@ -296,7 +296,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
               {...buttonProps}
               className={styles.item({ className: classNames?.item })}
               aria-label="last page"
-              onPress={() => setPage(count)}
+              onClick={() => setPage(count)}
               isDisabled={!!isDisabled || page === count}
             >
               {lastButtonIcon}

@@ -3,7 +3,7 @@
 import { useRipple, UseRippleProps } from '@webbo-ui/use-ripple';
 import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
 import { useFocusRing } from '@react-aria/focus';
-import { usePress, useHover, PressProps } from '@react-aria/interactions';
+import { useHover } from '@react-aria/interactions';
 import {
   button,
   buttonGroup,
@@ -81,8 +81,7 @@ export interface ButtonProps
     Omit<
       ButtonHTMLAttributes<HTMLButtonElement>,
       'color' | 'className' | 'disabled'
-    >,
-    Omit<PressProps, 'isPressed' | 'ref'> {
+    > {
   startContent?: ReactNode;
   endContent?: ReactNode;
   className?: ClassValue;
@@ -101,19 +100,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       endContent,
       className,
       children,
-      onPress,
-      onPressEnd,
-      onPressStart,
-      onPressUp,
-      onPressChange,
       isIconOnly = false,
       rippleDuration = isIconOnly ? 450 : 500,
       rippleTimingFunction,
       rippleCompletedFactor,
       isDisabled: _isDisabled,
-      allowTextSelectionOnPress,
-      preventFocusOnPress,
-      shouldCancelOnPointerExit,
       asChild,
       disableRipple,
       size,
@@ -139,17 +130,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const { focusProps, isFocusVisible, isFocused } = useFocusRing();
     const { hoverProps, isHovered } = useHover({ isDisabled });
-    const { pressProps, isPressed } = usePress({
-      isDisabled,
-      onPress,
-      onPressEnd,
-      onPressStart,
-      onPressUp,
-      onPressChange,
-      allowTextSelectionOnPress,
-      preventFocusOnPress,
-      shouldCancelOnPointerExit,
-    });
 
     const ariaLabel = props['aria-label'];
     const ariaLabelledby = props['aria-labelledby'];
@@ -180,7 +160,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
         {...mergeProps(
-          pressProps,
           focusProps,
           hoverProps,
           buttonProps,
@@ -190,7 +169,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               ripplePointerProps.onPointerDown(isIconOnly ? undefined : e),
           },
         )}
-        data-pressed={isPressed}
         data-hovered={isHovered}
         data-focused={isFocused}
         data-focus-visible={isFocusVisible && isFocused}

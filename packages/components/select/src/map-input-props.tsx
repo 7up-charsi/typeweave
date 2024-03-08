@@ -69,9 +69,8 @@ export const mapInputProps = ({
           <Button
             isIconOnly
             variant="text"
-            onPress={handleClear}
+            onClick={handleClear}
             size="sm"
-            preventFocusOnPress
             tabIndex={-1}
             aria-label="clear value"
             className={styles.clearButton()}

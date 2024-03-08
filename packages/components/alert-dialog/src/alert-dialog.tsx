@@ -3,8 +3,6 @@
 import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
-import { useIsDisabled } from '@webbo-ui/use-is-disabled';
-import { usePress } from '@react-aria/interactions';
 import { useEffect, useId, useMemo, useRef } from 'react';
 import { Slot } from '@webbo-ui/slot';
 import { FocusScope, FocusTrap } from '@webbo-ui/focus-trap';
@@ -123,21 +121,13 @@ export const Trigger = (props: TriggerProps) => {
 
   const rootContext = useRootContext(Trigger_Name);
 
-  const { setElement, isDisabled } = useIsDisabled();
-
-  const { pressProps } = usePress({
-    isDisabled,
-    onPress: rootContext.handleOpen,
-  });
-
   return (
     <Slot
-      ref={setElement}
       aria-expanded={rootContext.isOpen}
       aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
       aria-label={a11yLabel}
       aria-describedby={a11yDescription}
-      {...pressProps}
+      onClick={rootContext.handleOpen}
     >
       {children}
     </Slot>
@@ -159,18 +149,7 @@ export const Close = (props: CloseProps) => {
 
   const { handleClose } = useRootContext(Close_Name);
 
-  const { setElement, isDisabled } = useIsDisabled();
-
-  const { pressProps } = usePress({
-    isDisabled,
-    onPress: handleClose,
-  });
-
-  return (
-    <Slot ref={setElement} {...pressProps}>
-      {children}
-    </Slot>
-  );
+  return <Slot onClick={handleClose}>{children}</Slot>;
 };
 
 Close.displayName = 'webbo-ui.' + Close_Name;

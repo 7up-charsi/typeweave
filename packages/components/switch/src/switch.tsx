@@ -3,7 +3,7 @@
 import { forwardRef, useId } from 'react';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { mergeProps } from '@webbo-ui/react-utils';
-import { useHover, usePress } from '@react-aria/interactions';
+import { useHover } from '@react-aria/interactions';
 import { useFocusRing } from '@react-aria/focus';
 import {
   SwitchClassNames,
@@ -47,30 +47,19 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
 
   const { isFocusVisible, focusProps, isFocused } = useFocusRing();
 
-  const { pressProps, isPressed } = usePress({
-    isDisabled,
-    onPressStart: (e) => e.continuePropagation(),
-    onPressEnd: (e) => e.continuePropagation(),
-    onPress: (e) => e.continuePropagation(),
-  });
-
   const { hoverProps, isHovered } = useHover({ isDisabled });
 
   const styles = switchStyles({ size, isDisabled, labelPlacement, color });
 
   return (
     <div
-      data-pressed={isPressed}
       data-hovered={isHovered}
       data-focus-visible={isFocusVisible && isFocused}
       data-disabled={isDisabled}
       data-checked={checked}
       className={styles.base({ className: classNames?.base })}
     >
-      <div
-        {...pressProps}
-        className={styles.switch({ className: classNames?.switch })}
-      >
+      <div className={styles.switch({ className: classNames?.switch })}>
         <input
           id={id}
           ref={ref}
