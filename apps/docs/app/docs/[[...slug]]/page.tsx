@@ -12,7 +12,7 @@ import rehypeSlug from 'rehype-slug';
 import grayMatter from 'gray-matter';
 import { rehypeMeta } from '@/lib/rehype-meta';
 
-// @ts-expect-error untyped
+// @ts-ignore
 import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
 
 interface PageProps {
@@ -66,7 +66,9 @@ const Page = async ({ params }: PageProps) => {
 
   const { default: MdxContent } = await evaluate(content, {
     Fragment,
+    // @ts-ignore
     jsx,
+    // @ts-ignore
     jsxs,
     remarkPlugins: [remarkGfm],
     rehypePlugins: [rehypeSlug, rehypeMeta],

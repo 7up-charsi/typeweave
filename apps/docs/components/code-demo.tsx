@@ -1,27 +1,32 @@
-import { readFileSync } from 'fs';
 import path from 'path';
 import { Code } from './code';
+import { readFile } from 'fs/promises';
+import { CollapsibleCode } from './collapsible-code';
 
 interface Props {
   source?: string;
+  preview?: React.ReactNode;
+  language?: string;
 }
 
-export const CodeDemo = async ({ source }: Props) => {
+export const CodeDemo = async (props: Props) => {
+  const { preview, source, language = 'tsx' } = props;
+
   if (!source) return;
 
-  const file = readFileSync(path.resolve(`./components/demos/${source}`), {
+  const file = await readFile(path.resolve(`./components/demos/${source}`), {
     encoding: 'utf-8',
   });
 
   return (
-    <>
-      <div className="border-test">
-        {/* <CodeDemoPreview code={result.code} /> */}
-      </div>
+    <div>
+      {preview && (
+        <div className="border border-muted-6 p-3 rounded">{preview}</div>
+      )}
 
-      <pre>
-        <Code code={file} language="tsx" />
-      </pre>
-    </>
+      <CollapsibleCode code={file}>
+        <Code children={file} className={`language-${language}`} />
+      </CollapsibleCode>
+    </div>
   );
 };
