@@ -2,19 +2,17 @@ import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { forwardRef, useId, useMemo } from 'react';
 import { Slot } from '@webbo-ui/slot';
-import { tabs } from '@webbo-ui/theme';
+import { TabsVariantProps, tabs } from '@webbo-ui/theme';
 
 // *-*-*-*-* Root *-*-*-*-*
 
-export interface RootProps {
-  /** The value for the selected tab, if controlled */
+export interface RootProps extends TabsVariantProps {
   value?: string;
-  /** The value of the tab to select by default, if uncontrolled */
   defaultValue?: string;
-  /** A function called when a new tab is selected */
   onValueChange?: (value: string) => void;
   children?: React.ReactNode;
   className?: string;
+  activationMode?: 'automatic' | 'manual';
 }
 
 const ROOT_NAME = 'Tabs.Root';
@@ -23,6 +21,8 @@ interface TabsContext {
   baseId: string;
   value?: string;
   onValueChange: (value: string) => void;
+  orientation?: RootProps['orientation'];
+  activationMode?: RootProps['activationMode'];
 }
 
 const [RootProvider, useRootContext] =
@@ -38,6 +38,8 @@ export const Root = (props: RootProps) => {
     onValueChange,
     defaultValue,
     className,
+    orientation = 'horizontal',
+    activationMode = 'automatic',
   } = props;
 
   const [value, setValue] = useControllableState({
@@ -48,10 +50,16 @@ export const Root = (props: RootProps) => {
 
   const baseId = useId();
 
-  const styles = useMemo(() => tabs(), []);
+  const styles = useMemo(() => tabs({ orientation }), [orientation]);
 
   return (
-    <RootProvider baseId={baseId} value={value} onValueChange={setValue}>
+    <RootProvider
+      baseId={baseId}
+      value={value}
+      onValueChange={setValue}
+      orientation={orientation}
+      activationMode={activationMode}
+    >
       <StylesProvider {...styles}>
         <div className={styles.wrapper({ className })}>{children}</div>
       </StylesProvider>
@@ -70,10 +78,16 @@ const List_NAME = 'Tabs.List';
 export const List = (props: ListProps) => {
   const { className, ...restProps } = props;
 
+  const context = useRootContext(List_NAME);
   const styles = useStylesContext(List_NAME);
 
   return (
-    <div {...restProps} role="tablist" className={styles.list({ className })} />
+    <div
+      {...restProps}
+      role="tablist"
+      aria-orientation={context.orientation}
+      className={styles.list({ className })}
+    />
   );
 };
 
@@ -96,9 +110,9 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
     const context = useRootContext(Trigger_NAME);
     const styles = useStylesContext(List_NAME);
 
-    const triggerId = makeTriggerId(context.baseId, value);
-    const contentId = makeContentId(context.baseId, value);
     const isSelected = value === context.value;
+    const triggerId = 'trigger-' + value;
+    const contentId = 'content-' + value;
 
     const handleClick = (event: React.MouseEvent) => {
       if (event.ctrlKey === false) {
@@ -112,28 +126,27 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       if ([' ', 'Enter'].includes(event.key)) context.onValueChange(value);
     };
 
-    // const handleFocus = () => {
-    //   // handle "automatic" activation if necessary
-    //   // ie. activate tab following focus
-    //   const isAutomaticActivation = context.activationMode !== 'manual';
-    //   if (!isSelected && !disabled && isAutomaticActivation) {
-    //     context.onValueChange(value);
-    //   }
-    // };
+    const handleFocus = () => {
+      if (!isSelected && context.activationMode === 'automatic') {
+        context.onValueChange(value);
+      }
+    };
 
     return (
       <Slot
         ref={ref}
         className={styles.trigger({ className })}
         type="button"
+        tabIndex={isSelected ? 0 : -1}
         role="tab"
         aria-selected={isSelected}
         aria-controls={contentId}
         data-selected={isSelected}
+        data-orientation={context.orientation}
         id={triggerId}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
-        // onFocus: handleFocus,
+        onFocus={handleFocus}
       >
         {children}
       </Slot>
@@ -158,15 +171,16 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     const context = useRootContext(Content_NAME);
     const styles = useStylesContext(List_NAME);
 
-    const triggerId = makeTriggerId(context.baseId, value);
-    const contentId = makeContentId(context.baseId, value);
     const isSelected = value === context.value;
+    const triggerId = 'trigger-' + value;
+    const contentId = 'content-' + value;
 
     return (
       <div
         ref={ref}
         className={styles.content({ className })}
-        data-state={isSelected ? 'active' : 'inactive'}
+        data-selected={isSelected}
+        data-orientation={context.orientation}
         role="tabpanel"
         aria-labelledby={triggerId}
         hidden={!isSelected}
@@ -181,13 +195,3 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 );
 
 Content.displayName = 'webbo-ui.' + Content_NAME;
-
-// *-*-*-*-* Utils *-*-*-*-*
-
-function makeTriggerId(baseId: string, value: string) {
-  return `${baseId}-trigger-${value}`;
-}
-
-function makeContentId(baseId: string, value: string) {
-  return `${baseId}-content-${value}`;
-}

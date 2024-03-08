@@ -999,6 +999,9 @@ importers:
 
   packages/components/tabs:
     dependencies:
+      '@webbo-ui/button':
+        specifier: workspace:*
+        version: link:../button
       '@webbo-ui/context':
         specifier: workspace:*
         version: link:../../core/context
