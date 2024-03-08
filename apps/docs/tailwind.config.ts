@@ -9,9 +9,6 @@ const config: Config = {
     './node_modules/@webbo-ui/theme/src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   plugins: [WebboUi()],
-  future: {
-    hoverOnlyWhenSupported: true,
-  },
 };
 
 export default config;
