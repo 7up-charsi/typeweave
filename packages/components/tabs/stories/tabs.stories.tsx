@@ -1,5 +1,6 @@
 import React from 'react';
 import { tabs } from '@webbo-ui/theme';
+import { Button } from '@webbo-ui/button';
 
 import * as Tabs from '../src';
 
@@ -10,21 +11,39 @@ const meta = {
 
 export default meta;
 
-const Template = () => (
-  <Tabs.Root defaultValue="tab-3">
-    <Tabs.List>
-      <Tabs.Trigger value="tab-1">tab 1</Tabs.Trigger>
-      <Tabs.Trigger value="tab-2">tab 2</Tabs.Trigger>
-      <Tabs.Trigger value="tab-3">tab 3</Tabs.Trigger>
-      <Tabs.Trigger value="tab-4">tab 4</Tabs.Trigger>
+const Template = (args) => (
+  <Tabs.Root {...args} defaultValue="tab-1">
+    <Tabs.List className="gap-3">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <Tabs.Trigger key={i} value={`tab-${i + 1}`}>
+          <Button size="sm">tab {i + 1}</Button>
+        </Tabs.Trigger>
+      ))}
     </Tabs.List>
-    <Tabs.Content value="tab-1">content 1</Tabs.Content>
-    <Tabs.Content value="tab-2">content 2</Tabs.Content>
-    <Tabs.Content value="tab-3">content 3</Tabs.Content>
-    <Tabs.Content value="tab-4">content 4</Tabs.Content>
+
+    {Array.from({ length: 3 }).map((_, i) => (
+      <Tabs.Content key={i} value={`tab-${i + 1}`}>
+        <div className="border border-muted-6 rounded p-3">
+          <h2 className="text-lg mb-2">Tab {i + 1}</h2>
+
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
+            natus ex exercitationem eius modi nihil, odit ducimus eaque
+            inventore? Vero recusandae delectus fugit error ratione ipsam
+            repudiandae dolorum accusamus possimus!
+          </p>
+        </div>
+      </Tabs.Content>
+    ))}
   </Tabs.Root>
 );
 
-export const Default = {
+export const Horizontal = {
   render: Template,
+};
+
+const VerticalTemplate = () => <Template orientation="vertical" />;
+
+export const Vertical = {
+  render: VerticalTemplate,
 };
