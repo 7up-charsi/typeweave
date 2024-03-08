@@ -9,27 +9,28 @@
     height: 12px;
     width: 12px;
   }
+
   *::-webkit-scrollbar-track {
-    @apply rounded-full bg-transparent;
+    @apply rounded-full bg-muted-4;
   }
 
   *::-webkit-scrollbar-track:hover {
-    @apply bg-transparent;
+    @apply bg-muted-4;
   }
 
   *::-webkit-scrollbar-track:active {
-    @apply bg-transparent;
+    @apply bg-muted-4;
   }
 
   *::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-muted-5;
+    @apply rounded-full bg-muted-7;
   }
 
   *::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-6;
+    @apply bg-muted-8;
   }
 
   *::-webkit-scrollbar-thumb:active {
-    @apply bg-muted-6;
+    @apply bg-muted-8;
   }
 }
