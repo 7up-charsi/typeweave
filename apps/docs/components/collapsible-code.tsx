@@ -44,7 +44,7 @@ export const CollapsibleCode = (props: Props) => {
           size="sm"
           color="primary"
           variant="solid"
-          onPress={() => {
+          onClick={() => {
             setIsCollapsed((prev) => !prev);
           }}
         >

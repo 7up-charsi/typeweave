@@ -14,6 +14,7 @@
     "@webbo-ui/button": "workspace:*",
     "@webbo-ui/dialog": "workspace:*",
     "@webbo-ui/input": "workspace:*",
+    "@webbo-ui/tabs": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/theme-switcher": "workspace:*",
     "algoliasearch": "^4.22.1",
@@ -46,4 +47,3 @@
     "typescript": "^5.3.3"
   }
 }
-
