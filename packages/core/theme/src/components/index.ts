@@ -18,5 +18,6 @@ export * from './pagination';
 export * from './table';
 export * from './toggle-button';
 export * from './tabs';
+export * from './checkbox';
 
 export type { ClassValue } from 'tailwind-variants';

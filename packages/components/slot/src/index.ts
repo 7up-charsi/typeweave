@@ -4,4 +4,4 @@ import * as slot from './slot';
 export type { SlotProps } from './slot';
 
 // export component
-export const Slot = slot.default;
+export const Slot = slot.Slot;

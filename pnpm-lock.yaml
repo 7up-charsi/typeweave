@@ -428,27 +428,12 @@ importers:
 
   packages/components/checkbox:
     dependencies:
-      '@react-aria/focus':
-        specifier: ^3.15.0
-        version: 3.16.2(react@18.2.0)
-      '@react-aria/interactions':
-        specifier: ^3.20.0
-        version: 3.21.1(react@18.2.0)
       '@webbo-ui/react-utils':
         specifier: workspace:*
         version: link:../../utilities/react-utils
       '@webbo-ui/theme':
         specifier: workspace:*
         version: link:../../core/theme
-      '@webbo-ui/use-callback-ref':
-        specifier: workspace:*
-        version: link:../../hooks/use-callback-ref
-      '@webbo-ui/use-controllable-state':
-        specifier: workspace:*
-        version: link:../../hooks/use-controllable-state
-      '@webbo-ui/use-ripple':
-        specifier: workspace:*
-        version: link:../../hooks/use-ripple
       react:
         specifier: '>=18'
         version: 18.2.0
@@ -793,43 +778,6 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
 
-  packages/components/radio:
-    dependencies:
-      '@react-aria/focus':
-        specifier: ^3.15.0
-        version: 3.16.2(react@18.2.0)
-      '@react-aria/interactions':
-        specifier: ^3.20.0
-        version: 3.21.1(react@18.2.0)
-      '@webbo-ui/context':
-        specifier: workspace:*
-        version: link:../../core/context
-      '@webbo-ui/react-utils':
-        specifier: workspace:*
-        version: link:../../utilities/react-utils
-      '@webbo-ui/theme':
-        specifier: workspace:*
-        version: link:../../core/theme
-      '@webbo-ui/use-callback-ref':
-        specifier: workspace:*
-        version: link:../../hooks/use-callback-ref
-      '@webbo-ui/use-controllable-state':
-        specifier: workspace:*
-        version: link:../../hooks/use-controllable-state
-      '@webbo-ui/use-ripple':
-        specifier: workspace:*
-        version: link:../../hooks/use-ripple
-      react:
-        specifier: '>=18'
-        version: 18.2.0
-      react-dom:
-        specifier: '>=18'
-        version: 18.2.0(react@18.2.0)
-    devDependencies:
-      clean-package:
-        specifier: ^2.2.0
-        version: 2.2.0
-
   packages/components/select:
     dependencies:
       '@react-aria/interactions':
@@ -919,27 +867,9 @@ importers:
 
   packages/components/switch:
     dependencies:
-      '@react-aria/focus':
-        specifier: ^3.15.0
-        version: 3.16.2(react@18.2.0)
-      '@react-aria/interactions':
-        specifier: ^3.20.0
-        version: 3.21.1(react@18.2.0)
-      '@webbo-ui/react-utils':
-        specifier: workspace:*
-        version: link:../../utilities/react-utils
       '@webbo-ui/theme':
         specifier: workspace:*
         version: link:../../core/theme
-      '@webbo-ui/use-callback-ref':
-        specifier: workspace:*
-        version: link:../../hooks/use-callback-ref
-      '@webbo-ui/use-controllable-state':
-        specifier: workspace:*
-        version: link:../../hooks/use-controllable-state
-      '@webbo-ui/use-ripple':
-        specifier: workspace:*
-        version: link:../../hooks/use-ripple
       react:
         specifier: '>=18'
         version: 18.2.0
@@ -953,9 +883,6 @@ importers:
 
   packages/components/table:
     dependencies:
-      '@react-aria/interactions':
-        specifier: ^3.20.0
-        version: 3.21.1(react@18.2.0)
       '@webbo-ui/button':
         specifier: workspace:*
         version: link:../button
@@ -1138,6 +1065,16 @@ importers:
       react-dom:
         specifier: '>=18'
         version: 18.2.0(react@18.2.0)
+    devDependencies:
+      clean-package:
+        specifier: ^2.2.0
+        version: 2.2.0
+
+  packages/core/collection:
+    dependencies:
+      '@webbo-ui/context':
+        specifier: workspace:*
+        version: link:../context
     devDependencies:
       clean-package:
         specifier: ^2.2.0
