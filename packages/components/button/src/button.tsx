@@ -1,7 +1,6 @@
 'use client';
 
-import { useRipple, UseRippleProps } from '@webbo-ui/use-ripple';
-import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
+import { mergeRefs } from '@webbo-ui/react-utils';
 import {
   button,
   buttonGroup,
@@ -84,10 +83,6 @@ export interface ButtonProps
   endContent?: ReactNode;
   className?: ClassValue;
   children?: ReactNode;
-  rippleDuration?: UseRippleProps['duration'];
-  rippleTimingFunction?: UseRippleProps['timingFunction'];
-  rippleCompletedFactor?: UseRippleProps['completedFactor'];
-  disableRipple?: boolean;
   asChild?: boolean;
 }
 
@@ -99,12 +94,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       children,
       isIconOnly = false,
-      rippleDuration = isIconOnly ? 450 : 500,
-      rippleTimingFunction,
-      rippleCompletedFactor,
       isDisabled: _isDisabled,
       asChild,
-      disableRipple,
       size,
       variant,
       color,
@@ -117,14 +108,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const innerRef = useRef<HTMLButtonElement | null>(null);
 
     const isDisabled = _isDisabled ?? groupContext?.isDisabled;
-
-    const { rippleKeyboardProps, ripplePointerProps } = useRipple({
-      containerRef: innerRef,
-      isDisabled: isDisabled ?? disableRipple,
-      duration: rippleDuration,
-      timingFunction: rippleTimingFunction,
-      completedFactor: rippleCompletedFactor,
-    });
 
     const ariaLabel = props['aria-label'];
     const ariaLabelledby = props['aria-labelledby'];
@@ -154,10 +137,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
-        {...mergeProps(buttonProps, rippleKeyboardProps, {
-          onPointerDown: (e: React.PointerEvent) =>
-            ripplePointerProps.onPointerDown(isIconOnly ? undefined : e),
-        })}
+        {...buttonProps}
         disabled={!!isDisabled}
         ref={mergeRefs(ref, innerRef)}
         className={styles}
