@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useHover } from '@react-aria/interactions';
 
 export interface OptionProps<V> {
   option: V;
@@ -26,11 +25,7 @@ export const Option = (
   } = _props;
 
   const ref = useRef<HTMLLIElement>(null);
-
-  const { hoverProps, isHovered } = useHover({
-    isDisabled: isDisabled,
-    onHoverStart: () => onHover(),
-  });
+  const isHovered = useRef(false);
 
   useEffect(() => {
     if (isSelected)
@@ -38,16 +33,21 @@ export const Option = (
   }, [isSelected]);
 
   useEffect(() => {
-    if (isFocused && !isHovered)
+    if (isFocused && !isHovered.current)
       ref.current?.scrollIntoView({ behavior: 'instant', block: 'nearest' });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);
 
   return (
     <li
       ref={ref}
-      {...hoverProps}
+      onMouseDown={(e) => e.preventDefault()}
+      onMouseEnter={() => {
+        isHovered.current = true;
+        onHover();
+      }}
+      onMouseLeave={() => {
+        isHovered.current = false;
+      }}
       onClick={() => {
         if (isDisabled) return;
         onSelect();
@@ -59,4 +59,4 @@ export const Option = (
   );
 };
 
-Option.displayName = 'webbo-ui.Select';
+Option.displayName = 'webbo-ui.Option';

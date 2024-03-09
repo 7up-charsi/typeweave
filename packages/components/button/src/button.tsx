@@ -2,8 +2,6 @@
 
 import { useRipple, UseRippleProps } from '@webbo-ui/use-ripple';
 import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
-import { useFocusRing } from '@react-aria/focus';
-import { useHover } from '@react-aria/interactions';
 import {
   button,
   buttonGroup,
@@ -128,9 +126,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       completedFactor: rippleCompletedFactor,
     });
 
-    const { focusProps, isFocusVisible, isFocused } = useFocusRing();
-    const { hoverProps, isHovered } = useHover({ isDisabled });
-
     const ariaLabel = props['aria-label'];
     const ariaLabelledby = props['aria-labelledby'];
 
@@ -159,19 +154,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
-        {...mergeProps(
-          focusProps,
-          hoverProps,
-          buttonProps,
-          rippleKeyboardProps,
-          {
-            onPointerDown: (e: React.PointerEvent) =>
-              ripplePointerProps.onPointerDown(isIconOnly ? undefined : e),
-          },
-        )}
-        data-hovered={isHovered}
-        data-focused={isFocused}
-        data-focus-visible={isFocusVisible && isFocused}
+        {...mergeProps(buttonProps, rippleKeyboardProps, {
+          onPointerDown: (e: React.PointerEvent) =>
+            ripplePointerProps.onPointerDown(isIconOnly ? undefined : e),
+        })}
         disabled={!!isDisabled}
         ref={mergeRefs(ref, innerRef)}
         className={styles}

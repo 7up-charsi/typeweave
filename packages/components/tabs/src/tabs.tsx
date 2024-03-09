@@ -122,11 +122,11 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       }
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent) => {
+    const onKeyDown = (event: React.KeyboardEvent) => {
       if ([' ', 'Enter'].includes(event.key)) context.onValueChange(value);
     };
 
-    const handleFocus = () => {
+    const onFocus = () => {
       if (!isSelected && context.activationMode === 'automatic') {
         context.onValueChange(value);
       }
@@ -145,8 +145,8 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
         data-orientation={context.orientation}
         id={triggerId}
         onClick={handleClick}
-        onKeyDown={handleKeyDown}
-        onFocus={handleFocus}
+        onKeyDown={onKeyDown}
+        onFocus={onFocus}
       >
         {children}
       </Slot>

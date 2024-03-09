@@ -6,8 +6,6 @@ export * from './dialog';
 export * from './select';
 export * from './autocomplete';
 export * from './menu';
-export * from './checkbox';
-export * from './radio';
 export * from './switch';
 export * from './popover';
 export * from './chip';

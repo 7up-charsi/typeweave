@@ -1,5 +1,5 @@
 import { VariantProps, tv } from 'tailwind-variants';
-import { dataFocusVisible } from '../classes';
+import { focusVisible } from '../classes';
 import { ClassNames } from '../types';
 
 export const chip = tv({
@@ -8,7 +8,7 @@ export const chip = tv({
     content: 'truncate',
     deleteIcon: [
       'cursor-pointer outline-none transition-colors',
-      ...dataFocusVisible,
+      ...focusVisible,
     ],
   },
   variants: {
@@ -40,7 +40,7 @@ export const chip = tv({
       color: 'default',
       class: {
         base: 'bg-muted-9 text-white',
-        deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
+        deleteIcon: 'text-white/70 hover:text-white',
       },
     },
     {
@@ -48,7 +48,7 @@ export const chip = tv({
       color: 'primary',
       class: {
         base: 'bg-primary-9 text-white',
-        deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
+        deleteIcon: 'text-white/70 hover:text-white',
       },
     },
     {
@@ -56,7 +56,7 @@ export const chip = tv({
       color: 'secondary',
       class: {
         base: 'bg-secondary-9 text-white',
-        deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
+        deleteIcon: 'text-white/70 hover:text-white',
       },
     },
     {
@@ -64,7 +64,7 @@ export const chip = tv({
       color: 'success',
       class: {
         base: 'bg-success-9 text-white',
-        deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
+        deleteIcon: 'text-white/70 hover:text-white',
       },
     },
     {
@@ -72,7 +72,7 @@ export const chip = tv({
       color: 'info',
       class: {
         base: 'bg-info-9 text-white',
-        deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
+        deleteIcon: 'text-white/70 hover:text-white',
       },
     },
     {
@@ -80,7 +80,7 @@ export const chip = tv({
       color: 'warning',
       class: {
         base: 'bg-warning-9 text-white',
-        deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
+        deleteIcon: 'text-white/70 hover:text-white',
       },
     },
     {
@@ -88,7 +88,7 @@ export const chip = tv({
       color: 'danger',
       class: {
         base: 'bg-danger-9 text-white',
-        deleteIcon: 'text-white/70 data-[hovered=true]:text-white',
+        deleteIcon: 'text-white/70 hover:text-white',
       },
     },
 
@@ -98,7 +98,7 @@ export const chip = tv({
       color: 'default',
       class: {
         base: 'bg-muted-3 text-muted-11',
-        deleteIcon: 'text-muted-11/70 data-[hovered=true]:text-muted-11',
+        deleteIcon: 'text-muted-11/70 hover:text-muted-11',
       },
     },
     {
@@ -106,7 +106,7 @@ export const chip = tv({
       color: 'primary',
       class: {
         base: 'bg-primary-3 text-primary-11',
-        deleteIcon: 'text-primary-11/70 data-[hovered=true]:text-primary-11',
+        deleteIcon: 'text-primary-11/70 hover:text-primary-11',
       },
     },
     {
@@ -114,8 +114,7 @@ export const chip = tv({
       color: 'secondary',
       class: {
         base: 'bg-secondary-3 text-secondary-11',
-        deleteIcon:
-          'text-secondary-11/70 data-[hovered=true]:text-secondary-11',
+        deleteIcon: 'text-secondary-11/70 hover:text-secondary-11',
       },
     },
     {
@@ -123,7 +122,7 @@ export const chip = tv({
       color: 'success',
       class: {
         base: 'bg-success-3 text-success-11',
-        deleteIcon: 'text-success-11/70 data-[hovered=true]:text-success-11',
+        deleteIcon: 'text-success-11/70 hover:text-success-11',
       },
     },
     {
@@ -131,7 +130,7 @@ export const chip = tv({
       color: 'info',
       class: {
         base: 'bg-info-3 text-info-11',
-        deleteIcon: 'text-info-11/70 data-[hovered=true]:text-info-11',
+        deleteIcon: 'text-info-11/70 hover:text-info-11',
       },
     },
     {
@@ -139,7 +138,7 @@ export const chip = tv({
       color: 'warning',
       class: {
         base: 'bg-warning-3 text-warning-11',
-        deleteIcon: 'text-warning-11/70 data-[hovered=true]:text-warning-11',
+        deleteIcon: 'text-warning-11/70 hover:text-warning-11',
       },
     },
     {
@@ -147,7 +146,7 @@ export const chip = tv({
       color: 'danger',
       class: {
         base: 'bg-danger-3 text-danger-11',
-        deleteIcon: 'text-danger-11/70 data-[hovered=true]:text-danger-11',
+        deleteIcon: 'text-danger-11/70 hover:text-danger-11',
       },
     },
 
@@ -157,7 +156,7 @@ export const chip = tv({
       color: 'default',
       class: {
         base: 'text-muted-11',
-        deleteIcon: 'text-muted-11/70 data-[hovered=true]:text-muted-11',
+        deleteIcon: 'text-muted-11/70 hover:text-muted-11',
       },
     },
     {
@@ -165,7 +164,7 @@ export const chip = tv({
       color: 'primary',
       class: {
         base: 'text-primary-11',
-        deleteIcon: 'text-primary-11/70 data-[hovered=true]:text-primary-11',
+        deleteIcon: 'text-primary-11/70 hover:text-primary-11',
       },
     },
     {
@@ -173,8 +172,7 @@ export const chip = tv({
       color: 'secondary',
       class: {
         base: 'text-secondary-11',
-        deleteIcon:
-          'text-secondary-11/70 data-[hovered=true]:text-secondary-11 ',
+        deleteIcon: 'text-secondary-11/70 hover:text-secondary-11 ',
       },
     },
     {
@@ -182,7 +180,7 @@ export const chip = tv({
       color: 'success',
       class: {
         base: 'text-success-11',
-        deleteIcon: 'text-success-11/70 data-[hovered=true]:text-success-11',
+        deleteIcon: 'text-success-11/70 hover:text-success-11',
       },
     },
     {
@@ -190,7 +188,7 @@ export const chip = tv({
       color: 'info',
       class: {
         base: 'text-info-11',
-        deleteIcon: 'text-info-11/70 data-[hovered=true]:text-info-11',
+        deleteIcon: 'text-info-11/70 hover:text-info-11',
       },
     },
     {
@@ -198,7 +196,7 @@ export const chip = tv({
       color: 'warning',
       class: {
         base: 'text-warning-11',
-        deleteIcon: 'text-warning-11/70 data-[hovered=true]:text-warning-11',
+        deleteIcon: 'text-warning-11/70 hover:text-warning-11',
       },
     },
     {
@@ -206,7 +204,7 @@ export const chip = tv({
       color: 'danger',
       class: {
         base: 'text-danger-11',
-        deleteIcon: 'text-danger-11/70 data-[hovered=true]:text-danger-11',
+        deleteIcon: 'text-danger-11/70 hover:text-danger-11',
       },
     },
 
@@ -216,7 +214,7 @@ export const chip = tv({
       color: 'default',
       class: {
         base: 'border-muted-6 text-muted-11',
-        deleteIcon: 'text-muted-11/70 data-[hovered=true]:text-muted-11',
+        deleteIcon: 'text-muted-11/70 hover:text-muted-11',
       },
     },
     {
@@ -224,7 +222,7 @@ export const chip = tv({
       color: 'primary',
       class: {
         base: 'border-primary-6 text-primary-11',
-        deleteIcon: 'text-primary-11/70 data-[hovered=true]:text-primary-11',
+        deleteIcon: 'text-primary-11/70 hover:text-primary-11',
       },
     },
     {
@@ -232,8 +230,7 @@ export const chip = tv({
       color: 'secondary',
       class: {
         base: 'border-secondary-6 text-secondary-11',
-        deleteIcon:
-          'text-secondary-11/70 data-[hovered=true]:text-secondary-11',
+        deleteIcon: 'text-secondary-11/70 hover:text-secondary-11',
       },
     },
     {
@@ -241,7 +238,7 @@ export const chip = tv({
       color: 'success',
       class: {
         base: 'border-success-6 text-success-11',
-        deleteIcon: 'text-success-11/70 data-[hovered=true]:text-success-11',
+        deleteIcon: 'text-success-11/70 hover:text-success-11',
       },
     },
     {
@@ -249,7 +246,7 @@ export const chip = tv({
       color: 'info',
       class: {
         base: 'border-info-6 text-info-11',
-        deleteIcon: 'text-info-11/70 data-[hovered=true]:text-info-11',
+        deleteIcon: 'text-info-11/70 hover:text-info-11',
       },
     },
     {
@@ -257,7 +254,7 @@ export const chip = tv({
       color: 'warning',
       class: {
         base: 'border-warning-6 text-warning-11',
-        deleteIcon: 'text-warning-11/70 data-[hovered=true]:text-warning-11',
+        deleteIcon: 'text-warning-11/70 hover:text-warning-11',
       },
     },
     {
@@ -265,7 +262,7 @@ export const chip = tv({
       color: 'danger',
       class: {
         base: 'border-danger-6 text-danger-11',
-        deleteIcon: 'text-danger-11/70 data-[hovered=true]:text-danger-11',
+        deleteIcon: 'text-danger-11/70 hover:text-danger-11',
       },
     },
   ],

@@ -2,9 +2,7 @@
 
 import * as Popper from '@webbo-ui/popper';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
-import { useClickOutside } from '@webbo-ui/use-click-outside';
 import { CustomError } from '@webbo-ui/error';
-import { useFocusVisible } from '@react-aria/interactions';
 import { useId, useMemo, useRef, useState } from 'react';
 import { Option, OptionProps } from './option';
 import lodashGroupBy from 'lodash.groupby';
@@ -213,7 +211,6 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const popperReferenceRef = useRef<HTMLElement>(null);
   const [focused, setFocused] = useState<object | null>(null);
-  const { isFocusVisible } = useFocusVisible({ isTextInput: true });
   const lisboxId = useId();
 
   const [isOpen, setIsOpen] = useControllableState({
@@ -233,15 +230,6 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     if (prevSelectedValue.current !== inputValue)
       setInputValue(prevSelectedValue.current);
   };
-
-  const setListboxOutsideEle = useClickOutside<HTMLUListElement>({
-    isDisabled: !isOpen,
-    onEvent: 'pointerdown',
-    callback: (e) => {
-      if (popperReferenceRef.current?.contains(e.target as Node)) return;
-      handleClose();
-    },
-  });
 
   const handleOpen = () => {
     if (isOpen) return;
@@ -443,9 +431,7 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
                   },
                 }))
               : null,
-            onBlur: () => {
-              if (isFocusVisible) handleClose();
-            },
+            onBlur: handleClose,
             isOpen,
             multiple: !!multiple,
             handleOpen,
@@ -480,7 +466,6 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
       {isOpen && (
         <Popper.Floating sticky="always" mainOffset={offset || 5}>
           <ul
-            ref={setListboxOutsideEle}
             id={lisboxId}
             className={styles.listbox({ className: classNames?.listbox })}
             role="listbox"
