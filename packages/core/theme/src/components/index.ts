@@ -19,5 +19,6 @@ export * from './table';
 export * from './toggle-button';
 export * from './tabs';
 export * from './checkbox';
+export * from './radio';
 
 export type { ClassValue } from 'tailwind-variants';
