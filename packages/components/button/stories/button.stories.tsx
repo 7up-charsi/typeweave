@@ -181,16 +181,42 @@ export const Spinner = {
   },
 };
 
-const GroupTemplate = () => (
-  <ButtonGroup variant="border">
-    <Button>Select</Button>
-    <Button color="danger">Delete</Button>
-    <Button color="info" isIconOnly aria-label="spinner">
-      <Circles wrapperClass="[&>svg]:fill-current" width={20} />
-    </Button>
-  </ButtonGroup>
+const GroupTemplate = (args) => (
+  <div className="flex flex-col items-start gap-4">
+    <ButtonGroup {...args} variant="flat">
+      <Button>Select</Button>
+      <Button color="danger">Delete</Button>
+      <Button color="info" isIconOnly aria-label="spinner">
+        <Circles wrapperClass="[&>svg]:fill-current" width={20} />
+      </Button>
+    </ButtonGroup>
+
+    <ButtonGroup {...args} variant="border">
+      <Button>Select</Button>
+      <Button color="danger">Delete</Button>
+      <Button color="info" isIconOnly aria-label="spinner">
+        <Circles wrapperClass="[&>svg]:fill-current" width={20} />
+      </Button>
+    </ButtonGroup>
+
+    <ButtonGroup {...args} variant="text">
+      <Button>Select</Button>
+      <Button color="danger">Delete</Button>
+      <Button color="info" isIconOnly aria-label="spinner">
+        <Circles wrapperClass="[&>svg]:fill-current" width={20} />
+      </Button>
+    </ButtonGroup>
+  </div>
 );
 
-export const Group = {
-  render: GroupTemplate,
+const HorizontalGroupTemplate = () => <GroupTemplate direction="horizontal" />;
+
+export const HorizontalGroup = {
+  render: HorizontalGroupTemplate,
+};
+
+const VerticalGroupTemplate = () => <GroupTemplate direction="vertical" />;
+
+export const VerticalGroup = {
+  render: VerticalGroupTemplate,
 };
