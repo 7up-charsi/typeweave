@@ -1,62 +1,93 @@
 'use client';
 
 import { forwardRef, useId } from 'react';
-import { useControllableState } from '@webbo-ui/use-controllable-state';
 import {
   SwitchClassNames,
   SwitchVariantProps,
   switch as switchStyles,
 } from '@webbo-ui/theme';
 
-export interface SwitchProps extends SwitchVariantProps {
-  defaultChecked?: boolean;
-  checked?: boolean;
-  onChange?: (event: { target: { value: boolean } }, value: boolean) => void;
-  classNames?: Omit<SwitchClassNames, 'input'>;
-  isDisabled?: boolean;
+const icon_svg = (
+  <svg
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    width={12}
+    height={12}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M6 18 18 6m0 12L6 6"
+    />
+  </svg>
+);
+
+const checked_svg = (
+  <svg
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    width={12}
+    height={12}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="m5 12 4.7 4.5 9.3-9"
+    />
+  </svg>
+);
+
+export interface SwitchProps
+  extends SwitchVariantProps,
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color' | 'size'> {
+  classNames?: SwitchClassNames;
   label?: string;
-  labelPlacement?: 'top' | 'bottom' | 'left' | 'right';
+  icon?: React.ReactNode;
+  checkedIcon?: React.ReactNode;
 }
 
 const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
   const {
-    defaultChecked,
-    checked: checkedProp,
-    onChange,
     classNames,
     label,
-    size = 'sm',
-    labelPlacement = 'right',
-    isDisabled = false,
+    id: idProp,
+    icon = icon_svg,
+    checkedIcon = checked_svg,
+    size = 'md',
     color = 'primary',
+    labelPlacement = 'right',
+    ...inpuProps
   } = props;
 
-  const id = useId();
+  const autoId = useId();
+  const id = idProp ?? autoId;
 
-  const [checked, setChecked] = useControllableState({
-    defaultValue: defaultChecked ?? false,
-    value: checkedProp,
-    onChange: (value) => {
-      onChange?.({ target: { value } }, value);
-    },
-    resetStateValue: false,
-  });
-
-  const styles = switchStyles({ size, isDisabled, labelPlacement, color });
+  const styles = switchStyles({ size, labelPlacement, color });
 
   return (
     <div className={styles.base({ className: classNames?.base })}>
-      <input
-        id={id}
-        ref={ref}
-        type="checkbox"
-        checked={checked}
-        className={styles.input()}
-        disabled={isDisabled}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-        }}
-      />
+      <div className={styles.switch({ className: classNames?.switch })}>
+        <input
+          {...inpuProps}
+          id={id}
+          ref={ref}
+          type="checkbox"
+          className={styles.input({ className: classNames?.input })}
+        />
+
+        <div className={styles.indicator({ className: classNames?.indicator })}>
+          {icon}
+          {checkedIcon}
+        </div>
+      </div>
 
       {label && (
         <label

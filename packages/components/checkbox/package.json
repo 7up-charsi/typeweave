@@ -1,8 +1,8 @@
 {
-  "name": "@webbo-ui/switch",
+  "name": "@webbo-ui/checkbox",
   "version": "1.0.0",
   "keywords": [
-    "switch"
+    "checkbox"
   ],
   "author": {
     "name": "Muhammad Zeeshan",
@@ -18,7 +18,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mzeeshan3597/webbo-ui.git",
-    "directory": "packages/components/switch"
+    "directory": "packages/components/checkbox"
   },
   "bugs": {
     "url": "https://github.com/mzeeshan3597/webbo-ui/issues"
@@ -36,7 +36,8 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@webbo-ui/theme": "workspace:*"
+    "@webbo-ui/theme": "workspace:*",
+    "@webbo-ui/react-utils": "workspace:*"
   },
   "devDependencies": {
     "clean-package": "^2.2.0"

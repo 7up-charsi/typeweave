@@ -322,16 +322,25 @@ export interface SelectAllRowsProps {
 
 export const SelectAllRows = (props: SelectAllRowsProps) => {
   const { children } = props;
+
+  const ref = useRef<HTMLInputElement>(null);
+
   const { selected, setSelected, rows } =
     useSelectRowContext(SelectAllRows_Name);
 
   return (
-    <Slot
-      checked={selected.length && selected.length === rows.current.length}
-      onChange={(event: { target: { value: boolean } }) => {
-        setSelected(event.target.value ? rows.current : []);
+    <Slot<
+      HTMLInputElement,
+      React.InputHTMLAttributes<HTMLInputElement> & { indeterminate?: boolean }
+    >
+      ref={ref}
+      checked={!!(selected.length && selected.length === rows.current.length)}
+      onChange={(event: { target: { checked: boolean } }) => {
+        setSelected(event.target.checked ? rows.current : []);
       }}
-      indeterminate={selected.length && selected.length !== rows.current.length}
+      indeterminate={
+        !!(selected.length && selected.length !== rows.current.length)
+      }
     >
       {children}
     </Slot>
@@ -363,11 +372,11 @@ export const SelectRow = (props: SelectRowProps) => {
   }, [identifier, rows]);
 
   return (
-    <Slot
+    <Slot<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>
       checked={selected.includes(identifier)}
-      onChange={(event: { target: { value: boolean } }) => {
+      onChange={(event: { target: { checked: boolean } }) => {
         setSelected((prev) =>
-          event.target.value
+          event.target.checked
             ? [...prev, identifier]
             : prev.filter((ele) => ele !== identifier),
         );

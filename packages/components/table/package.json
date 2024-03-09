@@ -41,12 +41,11 @@
     "@webbo-ui/use-callback-ref": "workspace:*",
     "@webbo-ui/react-utils": "workspace:*",
     "@webbo-ui/context": "workspace:*",
-    "@react-aria/interactions": "^3.20.0",
+    "@webbo-ui/checkbox": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/error": "workspace:*",
     "@webbo-ui/button": "workspace:*",
-    "@webbo-ui/slot": "workspace:*",
-    "@webbo-ui/checkbox": "workspace:*"
+    "@webbo-ui/slot": "workspace:*"
   },
   "devDependencies": {
     "clean-package": "^2.2.0"

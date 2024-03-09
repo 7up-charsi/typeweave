@@ -23,26 +23,35 @@ const Template = () => {
         {
           accessor: (row) => row.id,
           header: (data) => (
-            <Table.SelectAllRows>
-              <Checkbox
-                onChange={(checked) => {
-                  if (checked)
-                    selectedRows.current = data.reduce(
-                      (acc, ele) => ((acc[ele.id] = true), acc),
-                      {},
-                    );
-                  else selectedRows.current = {};
-                }}
-              />
-            </Table.SelectAllRows>
+            <div className="flex items-center justify-center">
+              <Table.SelectAllRows>
+                <Checkbox
+                  onChange={(e) => {
+                    const checked = e.target.checked;
+
+                    if (checked)
+                      selectedRows.current = data.reduce(
+                        (acc, ele) => ((acc[ele.id] = true), acc),
+                        {},
+                      );
+                    else selectedRows.current = {};
+                  }}
+                />
+              </Table.SelectAllRows>
+            </div>
           ),
           identifier: 'select-row',
           cell: (val) => (
-            <Table.SelectRow>
-              <Checkbox
-                onChange={(checked) => (selectedRows.current[val] = checked)}
-              />
-            </Table.SelectRow>
+            <div className="flex items-center justify-center">
+              <Table.SelectRow>
+                <Checkbox
+                  onChange={(e) => {
+                    const checked = e.target.checked;
+                    selectedRows.current[val] = checked;
+                  }}
+                />
+              </Table.SelectRow>
+            </div>
           ),
           visibilityTitle: 'select',
         },

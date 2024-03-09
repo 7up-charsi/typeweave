@@ -8,7 +8,7 @@ export interface SlotProps {
   children?: React.ReactNode;
 }
 
-const Slot = <E extends HTMLElement>(
+const _Slot = <E extends HTMLElement>(
   props: SlotProps,
   ref: React.ForwardedRef<E>,
 ) => {
@@ -31,8 +31,8 @@ const Slot = <E extends HTMLElement>(
   } as Partial<unknown>);
 };
 
-Slot.displayName = 'webbo-ui.Slot';
+_Slot.displayName = 'webbo-ui.Slot';
 
-export default forwardRef(Slot) as <T, P>(
+export const Slot = forwardRef(_Slot) as <T, P>(
   props: SlotProps & P & { ref?: React.ForwardedRef<T> },
-) => ReturnType<typeof Slot>;
+) => ReturnType<typeof _Slot>;
