@@ -1,13 +1,20 @@
-export const dataFocusVisible = [
-  'data-[focus-visible=true]:ring-2',
-  'data-[focus-visible=true]:ring-focus-8',
-  'data-[focus-visible=true]:ring-offset-2',
-  'data-[focus-visible=true]:ring-offset-background',
+export const focusVisible = [
+  'focus-visible:ring-2',
+  'focus-visible:ring-focus-8',
+  'focus-visible:ring-offset-2',
+  'focus-visible:ring-offset-background',
 ];
 
-export const groupDataFocusVisible = [
-  'group-data-[focus-visible=true]:ring-2',
-  'group-data-[focus-visible=true]:ring-focus-8',
-  'group-data-[focus-visible=true]:ring-offset-2',
-  'group-data-[focus-visible=true]:ring-offset-background',
+export const groupFocusVisible = [
+  'group-focus-visible:ring-2',
+  'group-focus-visible:ring-focus-8',
+  'group-focus-visible:ring-offset-2',
+  'group-focus-visible:ring-offset-background',
+];
+
+export const peerFocusVisible = [
+  'peer-focus-visible:ring-2',
+  'peer-focus-visible:ring-focus-8',
+  'peer-focus-visible:ring-offset-2',
+  'peer-focus-visible:ring-offset-background',
 ];

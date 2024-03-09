@@ -17,11 +17,11 @@ export const input = tv({
     variant: {
       filled: {
         inputWrapper:
-          'bg-muted-3 group-data-[hovered=true]:group-data-[focused=false]:bg-muted-4 border border-transparent group-data-[focused=true]:border-muted-8',
+          'bg-muted-3 group-hover:group-data-[focused=false]:bg-muted-4 border border-transparent group-data-[focused=true]:border-muted-8',
       },
       border: {
         inputWrapper:
-          'bg-transparent border border-muted-7 group-data-[hovered=true]:border-muted-8 group-data-[focused=true]:border-muted-8',
+          'bg-transparent border border-muted-7 group-hover:border-muted-8 group-data-[focused=true]:border-muted-8',
       },
     },
     size: {

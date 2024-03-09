@@ -1,5 +1,5 @@
 import { VariantProps, tv } from 'tailwind-variants';
-import { dataFocusVisible } from '../classes';
+import { focusVisible } from '../classes';
 
 export const buttonGroup = tv({
   base: 'inline-flex gap-0 [&>button]:rounded-none',
@@ -16,7 +16,7 @@ export const buttonGroup = tv({
 export const button = tv({
   base: [
     'z-0 group relative inline-flex items-center justify-center box-border rounded appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transition-colors outline-none [&>span]:first-letter:uppercase',
-    ...dataFocusVisible,
+    ...focusVisible,
   ],
   variants: {
     variant: {
@@ -112,43 +112,43 @@ export const button = tv({
       variant: 'solid',
       color: 'default',
       class:
-        'bg-muted-9 data-[hovered=true]:bg-muted-10 text-white [--rippleBg:theme(colors.white/30%)]',
+        'bg-muted-9 hover:bg-muted-10 text-white [--rippleBg:theme(colors.white/30%)]',
     },
     {
       variant: 'solid',
       color: 'primary',
       class:
-        'bg-primary-9 data-[hovered=true]:bg-primary-10 text-white [--rippleBg:theme(colors.white/30%)]',
+        'bg-primary-9 hover:bg-primary-10 text-white [--rippleBg:theme(colors.white/30%)]',
     },
     {
       variant: 'solid',
       color: 'secondary',
       class:
-        'bg-secondary-9 data-[hovered=true]:bg-secondary-10 text-white [--rippleBg:theme(colors.white/30%)]',
+        'bg-secondary-9 hover:bg-secondary-10 text-white [--rippleBg:theme(colors.white/30%)]',
     },
     {
       variant: 'solid',
       color: 'success',
       class:
-        'bg-success-9 data-[hovered=true]:bg-success-10 text-white [--rippleBg:theme(colors.white/30%)]',
+        'bg-success-9 hover:bg-success-10 text-white [--rippleBg:theme(colors.white/30%)]',
     },
     {
       variant: 'solid',
       color: 'info',
       class:
-        'bg-info-9 data-[hovered=true]:bg-info-10 text-white [--rippleBg:theme(colors.white/30%)]',
+        'bg-info-9 hover:bg-info-10 text-white [--rippleBg:theme(colors.white/30%)]',
     },
     {
       variant: 'solid',
       color: 'warning',
       class:
-        'bg-warning-9 data-[hovered=true]:bg-warning-10 text-white [--rippleBg:theme(colors.white/10%)]',
+        'bg-warning-9 hover:bg-warning-10 text-white [--rippleBg:theme(colors.white/10%)]',
     },
     {
       variant: 'solid',
       color: 'danger',
       class:
-        'bg-danger-9 data-[hovered=true]:bg-danger-10 text-white [--rippleBg:theme(colors.white/30%)]',
+        'bg-danger-9 hover:bg-danger-10 text-white [--rippleBg:theme(colors.white/30%)]',
     },
 
     // color / flat
@@ -156,43 +156,43 @@ export const button = tv({
       variant: 'flat',
       color: 'default',
       class:
-        'bg-muted-3 data-[hovered=true]:bg-muted-4 text-muted-11 [--rippleBg:theme(colors.muted-11/10%)]',
+        'bg-muted-3 hover:bg-muted-4 text-muted-11 [--rippleBg:theme(colors.muted-11/10%)]',
     },
     {
       variant: 'flat',
       color: 'primary',
       class:
-        'bg-primary-3 data-[hovered=true]:bg-primary-4 text-primary-11 [--rippleBg:theme(colors.primary-11/10%)]',
+        'bg-primary-3 hover:bg-primary-4 text-primary-11 [--rippleBg:theme(colors.primary-11/10%)]',
     },
     {
       variant: 'flat',
       color: 'secondary',
       class:
-        'bg-secondary-3 data-[hovered=true]:bg-secondary-4 text-secondary-11 [--rippleBg:theme(colors.secondary-11/10%)]',
+        'bg-secondary-3 hover:bg-secondary-4 text-secondary-11 [--rippleBg:theme(colors.secondary-11/10%)]',
     },
     {
       variant: 'flat',
       color: 'success',
       class:
-        'bg-success-3 data-[hovered=true]:bg-success-4 text-success-11 [--rippleBg:theme(colors.success-11/10%)]',
+        'bg-success-3 hover:bg-success-4 text-success-11 [--rippleBg:theme(colors.success-11/10%)]',
     },
     {
       variant: 'flat',
       color: 'info',
       class:
-        'bg-info-3 data-[hovered=true]:bg-info-4 text-info-11 [--rippleBg:theme(colors.info-11/10%)]',
+        'bg-info-3 hover:bg-info-4 text-info-11 [--rippleBg:theme(colors.info-11/10%)]',
     },
     {
       variant: 'flat',
       color: 'warning',
       class:
-        'bg-warning-3 data-[hovered=true]:bg-warning-4 text-warning-11 [--rippleBg:theme(colors.warning-11/10%)]',
+        'bg-warning-3 hover:bg-warning-4 text-warning-11 [--rippleBg:theme(colors.warning-11/10%)]',
     },
     {
       variant: 'flat',
       color: 'danger',
       class:
-        'bg-danger-3 data-[hovered=true]:bg-danger-4 text-danger-11 [--rippleBg:theme(colors.danger-11/10%)]',
+        'bg-danger-3 hover:bg-danger-4 text-danger-11 [--rippleBg:theme(colors.danger-11/10%)]',
     },
 
     // color / text
@@ -200,43 +200,43 @@ export const button = tv({
       variant: 'text',
       color: 'default',
       class:
-        'data-[hovered=true]:bg-muted-3 text-muted-11 [--rippleBg:theme(colors.muted-11/10%)]',
+        'hover:bg-muted-3 text-muted-11 [--rippleBg:theme(colors.muted-11/10%)]',
     },
     {
       variant: 'text',
       color: 'primary',
       class:
-        'data-[hovered=true]:bg-primary-3 text-primary-11 [--rippleBg:theme(colors.primary-11/10%)]',
+        'hover:bg-primary-3 text-primary-11 [--rippleBg:theme(colors.primary-11/10%)]',
     },
     {
       variant: 'text',
       color: 'secondary',
       class:
-        'data-[hovered=true]:bg-secondary-3 text-secondary-11 [--rippleBg:theme(colors.secondary-11/10%)]',
+        'hover:bg-secondary-3 text-secondary-11 [--rippleBg:theme(colors.secondary-11/10%)]',
     },
     {
       variant: 'text',
       color: 'success',
       class:
-        'data-[hovered=true]:bg-success-3 text-success-11 [--rippleBg:theme(colors.success-11/10%)]',
+        'hover:bg-success-3 text-success-11 [--rippleBg:theme(colors.success-11/10%)]',
     },
     {
       variant: 'text',
       color: 'info',
       class:
-        'data-[hovered=true]:bg-info-3 text-info-11 [--rippleBg:theme(colors.info-11/10%)]',
+        'hover:bg-info-3 text-info-11 [--rippleBg:theme(colors.info-11/10%)]',
     },
     {
       variant: 'text',
       color: 'warning',
       class:
-        'data-[hovered=true]:bg-warning-3 text-warning-11 [--rippleBg:theme(colors.warning-11/10%)]',
+        'hover:bg-warning-3 text-warning-11 [--rippleBg:theme(colors.warning-11/10%)]',
     },
     {
       variant: 'text',
       color: 'danger',
       class:
-        'data-[hovered=true]:bg-danger-3 text-danger-11 [--rippleBg:theme(colors.danger-11/10%)]',
+        'hover:bg-danger-3 text-danger-11 [--rippleBg:theme(colors.danger-11/10%)]',
     },
 
     // color / border
@@ -244,43 +244,43 @@ export const button = tv({
       variant: 'border',
       color: 'default',
       class:
-        'border-muted-7 data-[hovered=true]:border-muted-8 text-muted-11 [--rippleBg:theme(colors.muted-11/10%)]',
+        'border-muted-7 hover:border-muted-8 text-muted-11 [--rippleBg:theme(colors.muted-11/10%)]',
     },
     {
       variant: 'border',
       color: 'primary',
       class:
-        'border-primary-7 data-[hovered=true]:border-primary-8 text-primary-11 [--rippleBg:theme(colors.primary-11/10%)]',
+        'border-primary-7 hover:border-primary-8 text-primary-11 [--rippleBg:theme(colors.primary-11/10%)]',
     },
     {
       variant: 'border',
       color: 'secondary',
       class:
-        'border-secondary-7 data-[hovered=true]:border-secondary-8 text-secondary-11 [--rippleBg:theme(colors.secondary-11/10%)]',
+        'border-secondary-7 hover:border-secondary-8 text-secondary-11 [--rippleBg:theme(colors.secondary-11/10%)]',
     },
     {
       variant: 'border',
       color: 'success',
       class:
-        'border-success-7 data-[hovered=true]:border-success-8 text-success-11 [--rippleBg:theme(colors.success-11/10%)]',
+        'border-success-7 hover:border-success-8 text-success-11 [--rippleBg:theme(colors.success-11/10%)]',
     },
     {
       variant: 'border',
       color: 'info',
       class:
-        'border-info-7 data-[hovered=true]:border-info-8 text-info-11 [--rippleBg:theme(colors.info-11/10%)]',
+        'border-info-7 hover:border-info-8 text-info-11 [--rippleBg:theme(colors.info-11/10%)]',
     },
     {
       variant: 'border',
       color: 'warning',
       class:
-        'border-warning-7 data-[hovered=true]:border-warning-8 text-warning-11 [--rippleBg:theme(colors.warning-11/10%)]',
+        'border-warning-7 hover:border-warning-8 text-warning-11 [--rippleBg:theme(colors.warning-11/10%)]',
     },
     {
       variant: 'border',
       color: 'danger',
       class:
-        'border-danger-7 data-[hovered=true]:border-danger-8 text-danger-11 [--rippleBg:theme(colors.danger-11/10%)]',
+        'border-danger-7 hover:border-danger-8 text-danger-11 [--rippleBg:theme(colors.danger-11/10%)]',
     },
   ],
 });

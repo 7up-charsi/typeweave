@@ -1,9 +1,7 @@
 'use client';
 
 import { input, InputClassNames, InputVariantProps } from '@webbo-ui/theme';
-import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
-import { useFocusRing } from '@react-aria/focus';
-import { useFocus, useHover } from '@react-aria/interactions';
+import { mergeRefs } from '@webbo-ui/react-utils';
 import { forwardRef, useEffect, useId, useRef } from 'react';
 
 export interface InputProps extends Omit<InputVariantProps, 'error'> {
@@ -56,8 +54,6 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     endContent,
     value,
     defaultValue,
-    onBlur,
-    onFocus,
     classNames,
     required,
     onChange,
@@ -93,16 +89,6 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     }
   }, [label]);
 
-  const {
-    focusProps: focusRingProps,
-    isFocusVisible,
-    isFocused,
-  } = useFocusRing({ isTextInput: true });
-
-  const { hoverProps, isHovered } = useHover({ isDisabled });
-
-  const { focusProps } = useFocus<HTMLInputElement>({ onFocus, onBlur });
-
   const styles = input({
     isDisabled,
     fullWidth,
@@ -117,9 +103,6 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
       {...baseProps}
       ref={baseRef}
       className={styles.base({ className: classNames?.base })}
-      data-focused={isFocused}
-      data-focus-visible={isFocusVisible && isFocused}
-      data-hovered={isHovered}
       data-disabled={isDisabled}
     >
       {!hideLabel && !!label && (
@@ -133,25 +116,26 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
       )}
 
       <div
-        {...mergeProps(hoverProps, inputWrapperProps, {
-          onPointerDown: (e: React.PointerEvent) => {
-            if (isDisabled) return;
-            if (e.button !== 0) return;
+        {...inputWrapperProps}
+        onPointerDown={(e: React.PointerEvent<HTMLDivElement>) => {
+          inputWrapperProps?.onPointerDown?.(e);
 
-            if (e.target !== innerInputRef.current) {
-              e.preventDefault();
-              innerInputRef.current?.focus();
-              return;
-            }
-          },
-        })}
+          if (isDisabled) return;
+          if (e.button !== 0) return;
+
+          if (e.target !== innerInputRef.current) {
+            e.preventDefault();
+            innerInputRef.current?.focus();
+            return;
+          }
+        }}
         ref={ref}
         className={styles.inputWrapper({ className: classNames?.inputWrapper })}
       >
         {startContent}
 
         <input
-          {...mergeProps(focusProps, focusRingProps, inputProps)}
+          {...inputProps}
           ref={mergeRefs(innerInputRef, inputRef)}
           value={value}
           defaultValue={defaultValue}

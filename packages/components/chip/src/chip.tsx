@@ -1,10 +1,7 @@
 'use client';
 
 import { forwardRef } from 'react';
-import { mergeProps } from '@webbo-ui/react-utils';
 import { ChipClassNames, ChipVariantProps, chip } from '@webbo-ui/theme';
-import { useFocusRing } from '@react-aria/focus';
-import { useHover } from '@react-aria/interactions';
 
 const delete_svg = (
   <svg
@@ -49,10 +46,6 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
     deleteIconA11yLabel = 'delete',
   } = props;
 
-  const { hoverProps, isHovered } = useHover({});
-
-  const { focusProps, isFocusVisible, isFocused } = useFocusRing();
-
   const handleKeyUp = (e: React.KeyboardEvent) => {
     const Backspace = e.key === 'Backspace';
     const Delete = e.key === 'Delete';
@@ -74,13 +67,8 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
 
       {onDelete ? (
         <span
-          {...mergeProps(focusProps, hoverProps, {
-            onKeyUp: handleKeyUp,
-          })}
+          onKeyUp={handleKeyUp}
           onClick={onDelete}
-          data-hovered={isHovered}
-          data-focused={isFocused}
-          data-focus-visible={isFocusVisible && isFocused}
           tabIndex={excludeFromTabOrder ? -1 : 0}
           role="button"
           className={styles.deleteIcon({ className: classNames?.deleteIcon })}

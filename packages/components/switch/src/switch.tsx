@@ -2,9 +2,6 @@
 
 import { forwardRef, useId } from 'react';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
-import { mergeProps } from '@webbo-ui/react-utils';
-import { useHover } from '@react-aria/interactions';
-import { useFocusRing } from '@react-aria/focus';
 import {
   SwitchClassNames,
   SwitchVariantProps,
@@ -45,38 +42,21 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
     resetStateValue: false,
   });
 
-  const { isFocusVisible, focusProps, isFocused } = useFocusRing();
-
-  const { hoverProps, isHovered } = useHover({ isDisabled });
-
   const styles = switchStyles({ size, isDisabled, labelPlacement, color });
 
   return (
-    <div
-      data-hovered={isHovered}
-      data-focus-visible={isFocusVisible && isFocused}
-      data-disabled={isDisabled}
-      data-checked={checked}
-      className={styles.base({ className: classNames?.base })}
-    >
-      <div className={styles.switch({ className: classNames?.switch })}>
-        <input
-          id={id}
-          ref={ref}
-          type="checkbox"
-          checked={checked}
-          className={styles.nativeInput()}
-          disabled={isDisabled}
-          {...mergeProps(focusProps, hoverProps)}
-          onChange={(e) => {
-            setChecked(e.target.checked);
-          }}
-        />
-
-        <div
-          className={styles.indicator({ className: classNames?.indicator })}
-        />
-      </div>
+    <div className={styles.base({ className: classNames?.base })}>
+      <input
+        id={id}
+        ref={ref}
+        type="checkbox"
+        checked={checked}
+        className={styles.input()}
+        disabled={isDisabled}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+        }}
+      />
 
       {label && (
         <label
