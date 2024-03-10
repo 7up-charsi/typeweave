@@ -2,7 +2,7 @@ import { createContextScope } from '@webbo-ui/context';
 import { Slot } from '@webbo-ui/slot';
 import { useCallback, useEffect, useRef } from 'react';
 
-interface ParentProps {
+export interface ParentProps {
   children?: React.ReactNode;
 }
 

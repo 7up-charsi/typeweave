@@ -960,6 +960,9 @@ importers:
       '@webbo-ui/theme':
         specifier: workspace:*
         version: link:../../core/theme
+      '@webbo-ui/use-collection':
+        specifier: workspace:*
+        version: link:../../hooks/use-collection
       '@webbo-ui/use-controllable-state':
         specifier: workspace:*
         version: link:../../hooks/use-controllable-state
@@ -1084,22 +1087,6 @@ importers:
       react-dom:
         specifier: '>=18'
         version: 18.2.0(react@18.2.0)
-    devDependencies:
-      clean-package:
-        specifier: ^2.2.0
-        version: 2.2.0
-
-  packages/core/collection:
-    dependencies:
-      '@webbo-ui/context':
-        specifier: workspace:*
-        version: link:../context
-      '@webbo-ui/react-utils':
-        specifier: workspace:*
-        version: link:../../utilities/react-utils
-      '@webbo-ui/slot':
-        specifier: workspace:*
-        version: link:../../components/slot
     devDependencies:
       clean-package:
         specifier: ^2.2.0

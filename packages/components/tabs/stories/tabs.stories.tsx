@@ -47,3 +47,21 @@ const VerticalTemplate = () => <Template orientation="vertical" />;
 export const Vertical = {
   render: VerticalTemplate,
 };
+
+const HorizontalLoopTemplate = () => <Template loop />;
+
+export const HorizontalLoop = {
+  render: HorizontalLoopTemplate,
+};
+
+const VerticalLoopTemplate = () => <Template orientation="vertical" loop />;
+
+export const VerticalLoop = {
+  render: VerticalLoopTemplate,
+};
+
+const ManualSelectionTemplate = () => <Template loop activationMode="manual" />;
+
+export const ManualSelection = {
+  render: ManualSelectionTemplate,
+};
