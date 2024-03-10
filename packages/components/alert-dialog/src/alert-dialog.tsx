@@ -8,11 +8,7 @@ import { Slot } from '@webbo-ui/slot';
 import { FocusScope, FocusTrap } from '@webbo-ui/focus-trap';
 import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { createPortal } from 'react-dom';
-import {
-  AlertDialogVariantProps,
-  alertDialog,
-  ClassValue,
-} from '@webbo-ui/theme';
+import { AlertDialogVariantProps, alertDialog } from '@webbo-ui/theme';
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -182,7 +178,7 @@ const [StylesProvider, useStylesContext] =
 
 export interface ContentProps extends AlertDialogVariantProps {
   children?: React.ReactNode;
-  className?: ClassValue;
+  className?: string;
   noA11yTitle?: boolean;
   noA11yDescription?: boolean;
 }
@@ -235,7 +231,7 @@ const Title_Name = 'AlertDialog.Title';
 
 export interface TitleProps {
   children?: React.ReactNode;
-  className?: ClassValue;
+  className?: string;
 }
 
 export const Title = (props: TitleProps) => {
@@ -262,7 +258,7 @@ const Description_Name = 'AlertDialog.Description';
 
 export interface DescriptionProps {
   children?: React.ReactNode;
-  className?: ClassValue;
+  className?: string;
 }
 
 export const Description = (props: DescriptionProps) => {
@@ -288,7 +284,7 @@ Description.displayName = 'webbo-ui.' + Description_Name;
 const Actions_Name = 'AlertDialog.Actions';
 
 export interface OverlayProps {
-  className?: ClassValue;
+  className?: string;
   children?: React.ReactNode;
 }
 

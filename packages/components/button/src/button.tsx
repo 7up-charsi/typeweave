@@ -6,7 +6,6 @@ import {
   buttonGroup,
   ButtonGroupVariantProps,
   ButtonVariantProps,
-  ClassValue,
 } from '@webbo-ui/theme';
 import {
   cloneElement,
@@ -35,7 +34,7 @@ export interface ButtonGroupProps
       'color' | 'size' | 'className' | 'onChange'
     >,
     ButtonGroupVariantProps {
-  className?: ClassValue;
+  className?: string;
   disabled?: boolean;
 }
 
@@ -80,7 +79,7 @@ export interface ButtonProps
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color' | 'className'> {
   startContent?: ReactNode;
   endContent?: ReactNode;
-  className?: ClassValue;
+  className?: string;
   children?: ReactNode;
   asChild?: boolean;
 }

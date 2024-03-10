@@ -8,7 +8,7 @@ import { useClickOutside } from '@webbo-ui/use-click-outside';
 import { useFocusVisible, useHover } from '@react-aria/interactions';
 import { createPortal } from 'react-dom';
 import { mergeRefs } from '@webbo-ui/react-utils';
-import { MenuVariantProps, menu, ClassValue } from '@webbo-ui/theme';
+import { MenuVariantProps, menu } from '@webbo-ui/theme';
 import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
@@ -151,7 +151,7 @@ const [FocusProvider, useFocusContext] =
 
 export interface MenuProps extends Popper.FloatingProps, MenuVariantProps {
   children?: React.ReactNode;
-  className?: ClassValue;
+  className?: string;
   roleDescription?: string;
 }
 
@@ -297,9 +297,9 @@ export interface ItemProps {
   disabled?: boolean;
   disableCloseOnClick?: boolean;
   classNames?: {
-    item?: ClassValue;
-    itemIcon?: ClassValue;
-    itemContent?: ClassValue;
+    item?: string;
+    itemIcon?: string;
+    itemContent?: string;
   };
   onClick?: () => void;
   asChild?: boolean;
@@ -390,7 +390,7 @@ const Label_Name = 'Menu.Label';
 
 export interface LabelProps {
   children?: React.ReactNode;
-  className?: ClassValue;
+  className?: string;
 }
 
 export const Label = (props: LabelProps) => {
@@ -413,7 +413,7 @@ const Group_Name = 'Menu.Group';
 
 export interface GroupProps {
   children?: React.ReactNode;
-  className?: ClassValue;
+  className?: string;
   accessibleLabel?: string;
 }
 
@@ -442,7 +442,7 @@ Group.displayName = 'webbo-ui.' + Group_Name;
 const Separator_Name = 'Menu.Separator';
 
 export interface SeparatorProps {
-  className?: ClassValue;
+  className?: string;
 }
 
 export const Separator = (props: SeparatorProps) => {
@@ -470,9 +470,9 @@ export interface CheckboxItemProps {
   checked?: boolean;
   onChange?: (checked: boolean) => void;
   classNames?: {
-    item?: ClassValue;
-    itemIcon?: ClassValue;
-    itemContent?: ClassValue;
+    item?: string;
+    itemIcon?: string;
+    itemContent?: string;
   };
   asChild?: boolean;
 }
@@ -620,9 +620,9 @@ export interface RadioItemProps {
   disabled?: boolean;
   value: string;
   classNames?: {
-    item?: ClassValue;
-    itemIcon?: ClassValue;
-    itemContent?: ClassValue;
+    item?: string;
+    itemIcon?: string;
+    itemContent?: string;
   };
   asChild?: boolean;
 }

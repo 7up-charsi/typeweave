@@ -6,7 +6,7 @@ import { mergeProps } from '@webbo-ui/react-utils';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { Slot } from '@webbo-ui/slot';
-import { TooltipVariantProps, tooltip, ClassValue } from '@webbo-ui/theme';
+import { TooltipVariantProps, tooltip } from '@webbo-ui/theme';
 import { useIsDisabled } from '@webbo-ui/use-is-disabled';
 import { createContextScope } from '@webbo-ui/context';
 import * as Popper from '@webbo-ui/popper';
@@ -256,7 +256,7 @@ export interface ContentProps
     Popper.FloatingProps {
   children?: React.ReactNode;
   asChild?: boolean;
-  className?: ClassValue;
+  className?: string;
   disableInteractive?: boolean;
 }
 
