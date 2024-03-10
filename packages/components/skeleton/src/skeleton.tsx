@@ -1,10 +1,10 @@
 'use server';
 
 import { forwardRef } from 'react';
-import { SkeletonVariantProps, skeleton, ClassValue } from '@webbo-ui/theme';
+import { SkeletonVariantProps, skeleton } from '@webbo-ui/theme';
 
 export interface SkeletonProps extends SkeletonVariantProps {
-  className?: ClassValue;
+  className?: string;
 }
 
 const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props, ref) => {
