@@ -1094,6 +1094,12 @@ importers:
       '@webbo-ui/context':
         specifier: workspace:*
         version: link:../context
+      '@webbo-ui/react-utils':
+        specifier: workspace:*
+        version: link:../../utilities/react-utils
+      '@webbo-ui/slot':
+        specifier: workspace:*
+        version: link:../../components/slot
     devDependencies:
       clean-package:
         specifier: ^2.2.0
@@ -1170,6 +1176,25 @@ importers:
       '@webbo-ui/use-callback-ref':
         specifier: workspace:*
         version: link:../use-callback-ref
+      react:
+        specifier: '>=18'
+        version: 18.2.0
+      react-dom:
+        specifier: '>=18'
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      clean-package:
+        specifier: ^2.2.0
+        version: 2.2.0
+
+  packages/hooks/use-collection:
+    dependencies:
+      '@webbo-ui/context':
+        specifier: workspace:*
+        version: link:../../core/context
+      '@webbo-ui/slot':
+        specifier: workspace:*
+        version: link:../../components/slot
       react:
         specifier: '>=18'
         version: 18.2.0
