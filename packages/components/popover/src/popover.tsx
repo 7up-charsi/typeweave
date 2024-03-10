@@ -266,7 +266,7 @@ export const Content = (props: ContentProps) => {
   const rootContext = useRootContext(Content_Name);
 
   const setOutsideEle = useClickOutside({
-    isDisabled: !rootContext.isOpen,
+    disabled: !rootContext.isOpen,
     callback: () => {
       rootContext.handleClose();
     },

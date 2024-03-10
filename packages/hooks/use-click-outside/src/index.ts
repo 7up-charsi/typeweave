@@ -6,7 +6,7 @@ export interface UseClickOutsideProps {
    * This will execute when user click outside of `ref`
    */
   callback?: (e: PointerEvent) => void;
-  isDisabled?: boolean;
+  disabled?: boolean;
   /**
    * Indicates which button was pressed on the mouse to execute the `callback`
    *
@@ -28,19 +28,14 @@ export interface UseClickOutsideProps {
 const useClickOutside = <R extends HTMLElement>(
   props: UseClickOutsideProps,
 ) => {
-  const {
-    callback,
-    isDisabled,
-    closeButton = 0,
-    onEvent = 'pointerup',
-  } = props;
+  const { callback, disabled, closeButton = 0, onEvent = 'pointerup' } = props;
 
   const callbackRef = useCallbackRef(callback);
 
   const [element, setElement] = useState<R | null>(null);
 
   useEffect(() => {
-    if (!element || isDisabled) return;
+    if (!element || disabled) return;
 
     const handler = (e: PointerEvent) => {
       if (e.button !== closeButton) return;
@@ -54,7 +49,7 @@ const useClickOutside = <R extends HTMLElement>(
     return () => {
       document?.removeEventListener(onEvent, handler);
     };
-  }, [callbackRef, closeButton, element, isDisabled, onEvent]);
+  }, [callbackRef, closeButton, element, disabled, onEvent]);
 
   return setElement;
 };

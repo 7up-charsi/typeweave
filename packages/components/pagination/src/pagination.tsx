@@ -115,7 +115,7 @@ export interface PaginationProps extends PaginationVariantProps {
   nextButtonIcon?: boolean;
   color: ButtonProps['color'];
   size: ButtonProps['size'];
-  isDisabled?: boolean;
+  disabled?: boolean;
 }
 
 const range = (start: number, end: number) =>
@@ -130,7 +130,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
       getItemA11yLabel = (page: number) => `page ${page}`,
       a11yLabel,
       color,
-      isDisabled,
+      disabled,
       showFirstButton = true,
       showLastButton = true,
       showPreviousButton = true,
@@ -182,7 +182,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
       color: color ?? 'primary',
       variant: 'text' as ButtonProps['variant'],
       isIconOnly: true,
-      isDisabled,
+      disabled,
       'data-selected': false,
     };
 
@@ -199,7 +199,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
               className={styles.item({ className: classNames?.item })}
               aria-label="first page"
               onClick={() => setPage(1)}
-              isDisabled={!!isDisabled || page === 1}
+              disabled={!!disabled || page === 1}
             >
               {firstButtonIcon}
             </Button>
@@ -213,7 +213,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
               className={styles.item({ className: classNames?.item })}
               aria-label="previous page"
               onClick={() => setPage((prev) => prev - 1)}
-              isDisabled={!!isDisabled || page === 1}
+              disabled={!!disabled || page === 1}
             >
               {previousButtonIcon}
             </Button>
@@ -246,7 +246,6 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
                   <Button
                     {...buttonProps}
                     className={styles.item({ className: classNames?.item })}
-                    disableRipple
                     asChild
                   >
                     <div>{ellipsis_svg}</div>
@@ -266,7 +265,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
                 className={styles.item({ className: classNames?.item })}
                 aria-label={getItemA11yLabel(ele)}
                 onClick={() => setPage(ele)}
-                isDisabled={isDisabled}
+                disabled={disabled}
                 data-selected={!!selected}
                 variant={(selected && 'solid') || 'text'}
               >
@@ -283,7 +282,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
               className={styles.item({ className: classNames?.item })}
               aria-label="next page"
               onClick={() => setPage((prev) => prev + 1)}
-              isDisabled={!!isDisabled || page === count}
+              disabled={!!disabled || page === count}
             >
               {nextButtonIcon}
             </Button>
@@ -297,7 +296,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
               className={styles.item({ className: classNames?.item })}
               aria-label="last page"
               onClick={() => setPage(count)}
-              isDisabled={!!isDisabled || page === count}
+              disabled={!!disabled || page === count}
             >
               {lastButtonIcon}
             </Button>

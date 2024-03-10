@@ -15,7 +15,7 @@ export const buttonGroup = tv({
 
 export const button = tv({
   base: [
-    'z-0 group relative inline-flex items-center justify-center box-border rounded appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transition-colors outline-none [&>span]:first-letter:uppercase',
+    'z-0 group relative inline-flex items-center justify-center box-border rounded appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transition-colors outline-none [&>span]:first-letter:uppercase disabled:disabled',
     ...focusVisible,
   ],
   variants: {
@@ -41,9 +41,6 @@ export const button = tv({
     },
     fullWidth: {
       true: 'w-full',
-    },
-    isDisabled: {
-      true: 'disabled',
     },
     isIconOnly: {
       true: '[&>svg]:pointer-events-none rounded',

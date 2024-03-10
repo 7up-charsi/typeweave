@@ -1,0 +1,43 @@
+{
+  "name": "@webbo-ui/collection",
+  "version": "1.0.0",
+  "keywords": [
+    "collection"
+  ],
+  "author": {
+    "name": "Muhammad Zeeshan",
+    "email": "mzeeshan3597@gmail.com"
+  },
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mzeeshan3597/webbo-ui.git",
+    "directory": "packages/core/collection"
+  },
+  "bugs": {
+    "url": "https://github.com/mzeeshan3597/webbo-ui/issues"
+  },
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "tsup src --dts",
+    "clean": "rimraf dist .turbo",
+    "typecheck": "tsc --noEmit",
+    "prepack": "clean-package",
+    "postpack": "clean-package restore"
+  },
+  "dependencies": {
+    "@webbo-ui/context": "workspace:*"
+  },
+  "devDependencies": {
+    "clean-package": "^2.2.0"
+  },
+  "clean-package": {
+    "extends": "../../../../../../clean-package.config.json"
+  }
+}

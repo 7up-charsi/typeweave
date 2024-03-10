@@ -9,7 +9,6 @@ import {
   ClassValue,
 } from '@webbo-ui/theme';
 import {
-  ButtonHTMLAttributes,
   cloneElement,
   createContext,
   forwardRef,
@@ -21,27 +20,30 @@ import {
 } from 'react';
 import { Slot } from '@webbo-ui/slot';
 
-interface GroupContext extends ButtonVariantProps {}
+interface GroupContext extends ButtonVariantProps {
+  disabled?: boolean;
+}
 
 // *-*-*-*-* ButtonGroup *-*-*-*-*
 
 const Context = createContext<GroupContext | null>(null);
 
 export interface ButtonGroupProps
-  extends Pick<ButtonVariantProps, 'isDisabled' | 'color' | 'size' | 'variant'>,
+  extends Pick<ButtonVariantProps, 'color' | 'size' | 'variant'>,
     Omit<
       React.HTMLAttributes<HTMLDivElement>,
       'color' | 'size' | 'className' | 'onChange'
     >,
     ButtonGroupVariantProps {
   className?: ClassValue;
+  disabled?: boolean;
 }
 
 export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
   (props, ref) => {
     const {
       children,
-      isDisabled = false,
+      disabled,
       direction = 'horizontal',
       className,
       size = 'md',
@@ -55,7 +57,7 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
     return (
       <Context.Provider
         value={{
-          isDisabled,
+          disabled,
           color,
           size,
           variant,
@@ -75,10 +77,7 @@ ButtonGroup.displayName = 'webbo-ui.ButtonGroup';
 
 export interface ButtonProps
   extends Omit<ButtonVariantProps, 'isInGroup'>,
-    Omit<
-      ButtonHTMLAttributes<HTMLButtonElement>,
-      'color' | 'className' | 'disabled'
-    > {
+    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color' | 'className'> {
   startContent?: ReactNode;
   endContent?: ReactNode;
   className?: ClassValue;
@@ -94,7 +93,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       children,
       isIconOnly = false,
-      isDisabled: _isDisabled,
+      disabled: _disabled,
       asChild,
       size,
       variant,
@@ -107,7 +106,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const innerRef = useRef<HTMLButtonElement | null>(null);
 
-    const isDisabled = _isDisabled ?? groupContext?.isDisabled;
+    const disabled = _disabled ?? groupContext?.disabled;
 
     const ariaLabel = props['aria-label'];
     const ariaLabelledby = props['aria-labelledby'];
@@ -125,7 +124,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     }, [ariaLabel, ariaLabelledby, isIconOnly]);
 
     const styles = button({
-      isDisabled: isDisabled ?? groupContext?.isDisabled ?? false,
       isIconOnly,
       className,
       size: size ?? groupContext?.size ?? 'md',
@@ -138,7 +136,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
         {...buttonProps}
-        disabled={!!isDisabled}
+        disabled={!!disabled}
         ref={mergeRefs(ref, innerRef)}
         className={styles}
       >

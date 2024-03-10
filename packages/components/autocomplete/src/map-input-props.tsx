@@ -4,6 +4,7 @@ import { Chip } from '@webbo-ui/chip';
 import { Button } from '@webbo-ui/button';
 import { RenderInputProps } from './autocomplete';
 import { autocompleteInput } from '@webbo-ui/theme';
+import { InputProps } from '@webbo-ui/input';
 
 const clearIcon_svg = (
   <svg
@@ -52,7 +53,7 @@ export const mapInputProps = ({
   handleClear,
   handleOpen,
   inputRef,
-  isDisabled,
+  disabled,
   onBlur,
   onChange,
   onKeyDown,
@@ -62,7 +63,7 @@ export const mapInputProps = ({
   isOpen,
   multiple,
   inputValue,
-}: RenderInputProps<unknown>) => {
+}: RenderInputProps<unknown>): InputProps => {
   const styles = autocompleteInput({ multiple });
 
   return {
@@ -107,16 +108,17 @@ export const mapInputProps = ({
     inputWrapperProps: {
       onPointerDown: (e: React.PointerEvent) => {
         if (e.button !== 0) return;
-        if (isDisabled) return;
+        if (disabled) return;
         handleOpen();
       },
     },
+    // @ts-expect-error ----
     ref: popperReferenceRef,
     inputRef,
     onBlur,
     value: inputValue,
     onChange,
-    isDisabled: !!isDisabled,
+    disabled,
     inputProps: { onKeyDown, ...ariaProps },
   };
 };

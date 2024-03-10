@@ -21,7 +21,7 @@ export interface FocusTrapProps {
    */
   trapped?: boolean;
   children?: React.ReactNode;
-  isDisabled?: boolean;
+  disabled?: boolean;
   /**
    * **This prop is for internal use.**
    *
@@ -32,7 +32,7 @@ export interface FocusTrapProps {
 }
 
 const FocusTrap = (props: FocusTrapProps) => {
-  const { children, isDisabled, scope, loop = true, trapped = true } = props;
+  const { children, disabled, scope, loop = true, trapped = true } = props;
 
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
@@ -51,7 +51,7 @@ const FocusTrap = (props: FocusTrapProps) => {
   const focusScope = scope || _scope;
 
   useEffect(() => {
-    if (isDisabled) return;
+    if (disabled) return;
     if (!trapped) return;
 
     const handleFocusIn = (e: FocusEvent) => {
@@ -104,11 +104,11 @@ const FocusTrap = (props: FocusTrapProps) => {
       document.removeEventListener('focusout', handleFocusOut);
       mutationObserver.disconnect();
     };
-  }, [container, isDisabled, focusScope.paused, trapped]);
+  }, [container, disabled, focusScope.paused, trapped]);
 
   useEffect(() => {
     if (!container) return;
-    if (isDisabled) return;
+    if (disabled) return;
 
     const previouslyActiveElement =
       document.activeElement as HTMLElement | null;
@@ -129,12 +129,12 @@ const FocusTrap = (props: FocusTrapProps) => {
       if (previouslyActiveElement) previouslyActiveElement.focus?.();
       else document.body.focus();
     };
-  }, [container, focusScope, isDisabled]);
+  }, [container, focusScope, disabled]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!loop) return;
     if (focusScope.paused) return;
-    if (isDisabled) return;
+    if (disabled) return;
 
     const isTab = e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey;
     const focusedElement = document.activeElement as HTMLElement | null;

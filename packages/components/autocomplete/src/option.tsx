@@ -5,10 +5,14 @@ import { useEffect, useRef } from 'react';
 export interface OptionProps<V> {
   option: V;
   label: string;
-  state: { isSelected: boolean; isDisabled: boolean; isFocused: boolean };
+  state: { selected: boolean; disabled: boolean; focused: boolean };
   onSelect: () => void;
   onHover: () => void;
-  props: React.LiHTMLAttributes<HTMLLIElement>;
+  props: React.LiHTMLAttributes<HTMLLIElement> & {
+    'data-disabled': boolean;
+    'data-selected': boolean;
+    'data-focused': boolean;
+  };
   key: string;
 }
 
@@ -20,7 +24,7 @@ export const Option = (
     props,
     onSelect,
     onHover,
-    state: { isDisabled, isFocused, isSelected },
+    state: { disabled, focused, selected },
     children,
   } = _props;
 
@@ -28,14 +32,14 @@ export const Option = (
   const isHovered = useRef(false);
 
   useEffect(() => {
-    if (isSelected)
+    if (selected)
       ref.current?.scrollIntoView({ behavior: 'instant', block: 'center' });
-  }, [isSelected]);
+  }, [selected]);
 
   useEffect(() => {
-    if (isFocused && !isHovered.current)
+    if (focused && !isHovered.current)
       ref.current?.scrollIntoView({ behavior: 'instant', block: 'nearest' });
-  }, [isFocused]);
+  }, [focused]);
 
   return (
     <li
@@ -49,7 +53,7 @@ export const Option = (
         isHovered.current = false;
       }}
       onClick={() => {
-        if (isDisabled) return;
+        if (disabled) return;
         onSelect();
       }}
       {...props}
