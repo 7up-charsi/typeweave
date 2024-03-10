@@ -1,8 +1,9 @@
 import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
-import { forwardRef, useId, useMemo } from 'react';
+import { forwardRef, useId, useMemo, useState } from 'react';
 import { Slot } from '@webbo-ui/slot';
 import { TabsVariantProps, tabs } from '@webbo-ui/theme';
+import { createCollection } from '@webbo-ui/use-collection';
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -13,6 +14,7 @@ export interface RootProps extends TabsVariantProps {
   children?: React.ReactNode;
   className?: string;
   activationMode?: 'automatic' | 'manual';
+  loop?: boolean;
 }
 
 const ROOT_NAME = 'Tabs.Root';
@@ -23,6 +25,9 @@ interface TabsContext {
   onValueChange: (value: string) => void;
   orientation?: RootProps['orientation'];
   activationMode?: RootProps['activationMode'];
+  activeTabId: string;
+  onTabChange: (id: string) => void;
+  loop?: boolean;
 }
 
 const [RootProvider, useRootContext] =
@@ -31,6 +36,8 @@ const [RootProvider, useRootContext] =
 const [StylesProvider, useStylesContext] =
   createContextScope<ReturnType<typeof tabs>>(ROOT_NAME);
 
+const [Collection, useCollection] = createCollection('Tabs');
+
 export const Root = (props: RootProps) => {
   const {
     children,
@@ -38,6 +45,7 @@ export const Root = (props: RootProps) => {
     onValueChange,
     defaultValue,
     className,
+    loop,
     orientation = 'horizontal',
     activationMode = 'automatic',
   } = props;
@@ -47,6 +55,8 @@ export const Root = (props: RootProps) => {
     onChange: onValueChange,
     defaultValue,
   });
+
+  const [activeTabId, setActiveTabId] = useState('');
 
   const baseId = useId();
 
@@ -59,9 +69,14 @@ export const Root = (props: RootProps) => {
       onValueChange={setValue}
       orientation={orientation}
       activationMode={activationMode}
+      activeTabId={activeTabId}
+      onTabChange={(id: string) => setActiveTabId(id)}
+      loop={loop}
     >
       <StylesProvider {...styles}>
-        <div className={styles.wrapper({ className })}>{children}</div>
+        <Collection.Provider>
+          <div className={styles.wrapper({ className })}>{children}</div>
+        </Collection.Provider>
       </StylesProvider>
     </RootProvider>
   );
@@ -82,12 +97,14 @@ export const List = (props: ListProps) => {
   const styles = useStylesContext(List_NAME);
 
   return (
-    <div
-      {...restProps}
-      role="tablist"
-      aria-orientation={context.orientation}
-      className={styles.list({ className })}
-    />
+    <Collection.Parent>
+      <div
+        {...restProps}
+        role="tablist"
+        aria-orientation={context.orientation}
+        className={styles.list({ className })}
+      />
+    </Collection.Parent>
   );
 };
 
@@ -109,6 +126,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
 
     const context = useRootContext(Trigger_NAME);
     const styles = useStylesContext(List_NAME);
+    const getItems = useCollection();
 
     const isSelected = value === context.value;
     const triggerId = 'trigger-' + value;
@@ -122,34 +140,118 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       }
     };
 
-    const onKeyDown = (event: React.KeyboardEvent) => {
-      if ([' ', 'Enter'].includes(event.key)) context.onValueChange(value);
-    };
+    const onKeyDown = (e: React.KeyboardEvent) => {
+      if (e.repeat) return;
 
-    const onFocus = () => {
-      if (!isSelected && context.activationMode === 'automatic') {
-        context.onValueChange(value);
+      if ([' ', 'Enter'].includes(e.key)) context.onValueChange(value);
+
+      if (e.target !== e.currentTarget) return;
+
+      const key = e.key;
+
+      if (
+        context.orientation === 'horizontal' &&
+        (key === 'ArrowLeft' || key === 'ArrowRight')
+      ) {
+        e.preventDefault();
+      }
+
+      if (
+        context.orientation === 'vertical' &&
+        (key === 'ArrowUp' || key === 'ArrowDown')
+      ) {
+        e.preventDefault();
+      }
+
+      const Next =
+        context.orientation === 'horizontal'
+          ? key === 'ArrowRight'
+          : key === 'ArrowDown';
+
+      const Prev =
+        context.orientation === 'horizontal'
+          ? key === 'ArrowLeft'
+          : key === 'ArrowUp';
+
+      const activeItems = getItems().filter(
+        // @ts-expect-error ----
+        (item) => !item.ref.current?.disabled,
+      );
+
+      const elements = activeItems.map((item) => item.ref.current!);
+
+      const currentIndex = elements.indexOf(e.currentTarget as HTMLElement);
+
+      // last
+      if (currentIndex + 1 === elements.length) {
+        if (context.loop && Next) {
+          elements[0].focus();
+          return;
+        }
+
+        if (Prev) {
+          elements[currentIndex - 1].focus();
+          console.log('reached');
+          return;
+        }
+
+        return;
+      }
+
+      // first
+      if (currentIndex === 0) {
+        if (context.loop && Prev) {
+          elements[elements.length - 1].focus();
+          return;
+        }
+
+        if (Next) {
+          elements[currentIndex + 1].focus();
+          return;
+        }
+
+        return;
+      }
+
+      if (Next) {
+        elements[currentIndex + 1].focus();
+        return;
+      }
+
+      if (Prev) {
+        elements[currentIndex - 1].focus();
+        return;
       }
     };
 
+    const onFocus = () => {
+      if (context.activationMode === 'automatic') {
+        context.onValueChange(value);
+      }
+
+      context.onTabChange(triggerId);
+    };
+
     return (
-      <Slot
-        ref={ref}
-        className={styles.trigger({ className })}
-        type="button"
-        tabIndex={isSelected ? 0 : -1}
-        role="tab"
-        aria-selected={isSelected}
-        aria-controls={contentId}
-        data-selected={isSelected}
-        data-orientation={context.orientation}
-        id={triggerId}
-        onClick={handleClick}
-        onKeyDown={onKeyDown}
-        onFocus={onFocus}
-      >
-        {children}
-      </Slot>
+      <Collection.Item>
+        <Slot
+          ref={ref}
+          className={styles.trigger({ className })}
+          type="button"
+          tabIndex={context.activeTabId === triggerId ? 0 : -1}
+          role="tab"
+          aria-selected={isSelected}
+          aria-controls={contentId}
+          data-selected={isSelected}
+          data-orientation={context.orientation}
+          id={triggerId}
+          onClick={handleClick}
+          onKeyDown={onKeyDown}
+          onFocus={onFocus}
+        >
+          {children}
+        </Slot>
+      </Collection.Item>
     );
   },
 );
