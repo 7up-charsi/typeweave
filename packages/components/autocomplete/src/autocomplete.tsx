@@ -19,7 +19,7 @@ export interface RenderInputProps<Value> {
   tags: { label: string; onDelete: () => void }[] | null;
   inputRef: React.RefObject<HTMLInputElement>;
   popperReferenceRef: (instance: HTMLDivElement | null) => void;
-  isDisabled: boolean;
+  disabled: boolean;
   isOpen: boolean;
   multiple: boolean;
   value: Value;
@@ -42,7 +42,7 @@ export interface RenderInputProps<Value> {
 
 export type AutocompleteProps<Value, Multiple, DisableClearable> =
   (AutocompleteVariantProps & {
-    isDisabled?: boolean;
+    disabled?: boolean;
     classNames?: AutocompleteClassNames;
     offset?: Popper.FloatingProps['mainOffset'];
     options: Value[];
@@ -118,7 +118,7 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     onChange,
     shadow = 'md',
     options: optionsProp = [],
-    isDisabled,
+    disabled,
     multiple,
     disableClearable,
     disableCloseOnSelect,
@@ -367,10 +367,10 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     setOptions(filter(optionsProp, val));
   };
 
-  const getOptionProps = (ele: object, i: number) => {
+  const getOptionProps = (ele: object, i: number): OptionProps<object> => {
     const isFocused = ele === focused;
-    const isDisabled = getOptionDisabled?.(ele) ?? false;
-    const isSelected = Array.isArray(value)
+    const optionDisabled = getOptionDisabled?.(ele) ?? false;
+    const selected = Array.isArray(value)
       ? !!value.find((val) => val === ele)
       : ele === value;
 
@@ -382,17 +382,17 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
         className: styles.option({ className: classNames?.option }),
         id: `option-${i}`,
         role: 'option',
-        'aria-selected': isDisabled ? undefined : isSelected,
-        'data-disabled': isDisabled,
-        'data-selected': isSelected,
+        'aria-selected': optionDisabled ? undefined : selected,
+        'data-disabled': optionDisabled,
+        'data-selected': selected,
         'data-focused': isFocused,
       },
       onHover: () => onHover(ele),
       onSelect: () => onSelect(ele),
       state: {
-        isFocused,
-        isSelected,
-        isDisabled,
+        focused: isFocused,
+        selected: selected,
+        disabled: optionDisabled,
       },
     };
   };
@@ -446,7 +446,7 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
             value,
             inputValue,
             onChange: handleInputChange,
-            isDisabled: !!isDisabled,
+            disabled: !!disabled,
             onKeyDown: handleKeyDown,
             ariaProps: {
               role: 'combobox',

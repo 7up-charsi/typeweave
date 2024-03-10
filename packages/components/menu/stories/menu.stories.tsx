@@ -40,7 +40,7 @@ const Template = (args) => {
             <Menu.Group accessibleLabel="actions">
               <Menu.Item>add</Menu.Item>
               <Menu.Item>edit</Menu.Item>
-              <Menu.Item isDisabled>delete</Menu.Item>
+              <Menu.Item disabled>delete</Menu.Item>
             </Menu.Group>
 
             <Menu.Separator />
@@ -50,7 +50,7 @@ const Template = (args) => {
               <Menu.CheckboxItem checked={favrouite} onChange={setFavrouite}>
                 active
               </Menu.CheckboxItem>
-              <Menu.CheckboxItem isDisabled checked>
+              <Menu.CheckboxItem disabled checked>
                 notifications
               </Menu.CheckboxItem>
             </Menu.Group>
@@ -65,7 +65,7 @@ const Template = (args) => {
             >
               <Menu.RadioItem value="radio item 1">paid</Menu.RadioItem>
               <Menu.RadioItem value="radio item 2">unpaid</Menu.RadioItem>
-              <Menu.RadioItem value="radio item 3" isDisabled>
+              <Menu.RadioItem value="radio item 3" disabled>
                 always paid
               </Menu.RadioItem>
             </Menu.RadioGroup>

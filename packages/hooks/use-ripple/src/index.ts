@@ -18,7 +18,7 @@ export interface UseRippleProps {
    * @default cubic-bezier(.42,.36,.28,.88)
    */
   timingFunction?: string;
-  isDisabled?: boolean;
+  disabled?: boolean;
 
   /**
    * This prop means how much part of `duration` is used to appear the ripple and rest ot it used to disappear it
@@ -34,14 +34,14 @@ const useRipple = ({
   containerRef,
   duration = 500,
   timingFunction = 'cubic-bezier(.42,.36,.28,.88)',
-  isDisabled = false,
+  disabled = false,
   completedFactor = 0.5,
 }: UseRippleProps = {}) => {
   //
 
   const onPointerDown = useCallback(
     (e?: MinimalEvent) => {
-      if (isDisabled || !containerRef || !containerRef.current) return;
+      if (disabled || !containerRef || !containerRef.current) return;
 
       const target = containerRef.current;
       const begun = Date.now();
@@ -102,12 +102,12 @@ const useRipple = ({
         capture: true,
       });
     },
-    [completedFactor, containerRef, duration, isDisabled, timingFunction],
+    [completedFactor, containerRef, duration, disabled, timingFunction],
   );
 
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent, keys = ['Enter', ' ']) => {
-      if (isDisabled || !containerRef || !containerRef.current) return;
+      if (disabled || !containerRef || !containerRef.current) return;
       if (!keys.includes(e.key)) return;
       if (e.repeat) return;
 
@@ -170,7 +170,7 @@ const useRipple = ({
         capture: true,
       });
     },
-    [completedFactor, containerRef, duration, isDisabled, timingFunction],
+    [completedFactor, containerRef, duration, disabled, timingFunction],
   );
 
   return {

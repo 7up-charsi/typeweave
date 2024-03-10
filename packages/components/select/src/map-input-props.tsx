@@ -3,6 +3,7 @@
 import { Button } from '@webbo-ui/button';
 import { RenderInputProps } from './select';
 import { selectInput } from '@webbo-ui/theme';
+import { InputProps } from '@webbo-ui/input';
 
 const clearIcon_svg = (
   <svg
@@ -51,7 +52,7 @@ export const mapInputProps = ({
   handleClear,
   handleOpen,
   inputRef,
-  isDisabled,
+  disabled,
   onBlur,
   onKeyDown,
   popperReferenceRef,
@@ -59,7 +60,7 @@ export const mapInputProps = ({
   isOpen,
   inputValue,
   readOnly,
-}: RenderInputProps<unknown>) => {
+}: RenderInputProps<unknown>): InputProps => {
   const styles = selectInput();
 
   return {
@@ -90,15 +91,16 @@ export const mapInputProps = ({
     inputWrapperProps: {
       onPointerDown: (e: React.PointerEvent) => {
         if (e.button !== 0) return;
-        if (isDisabled) return;
+        if (disabled) return;
         handleOpen();
       },
     },
+    // @ts-expect-error ----
     ref: popperReferenceRef,
     inputRef,
     onBlur,
     value: inputValue,
-    isDisabled: !!isDisabled,
+    disabled: !!disabled,
     inputProps: { onKeyDown, ...ariaProps, readOnly },
   };
 };

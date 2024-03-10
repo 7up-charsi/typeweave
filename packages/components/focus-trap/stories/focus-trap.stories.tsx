@@ -37,6 +37,6 @@ export const Default = {
   args: {
     loop: true,
     trapped: true,
-    isDisabled: false,
+    disabled: false,
   },
 };

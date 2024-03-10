@@ -208,7 +208,7 @@ export const Content = (props: ContentProps) => {
         loop
         trapped
         scope={rootContext.scope}
-        isDisabled={!rootContext.isOpen}
+        disabled={!rootContext.isOpen}
       >
         <div
           role="alertdialog"

@@ -4,7 +4,7 @@ import { input, InputClassNames, InputVariantProps } from '@webbo-ui/theme';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { forwardRef, useEffect, useId, useRef } from 'react';
 
-export interface InputProps extends Omit<InputVariantProps, 'error'> {
+export interface InputProps extends InputVariantProps {
   defaultValue?: string;
   value?: string;
   label?: string;
@@ -14,7 +14,6 @@ export interface InputProps extends Omit<InputVariantProps, 'error'> {
   onFocus?: React.FocusEventHandler<HTMLInputElement>;
   required?: boolean;
   helperText?: string;
-  error?: boolean;
   errorMessage?: string;
   hideLabel?: boolean;
   startContent?: React.ReactNode;
@@ -69,7 +68,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     inputWrapperProps = {},
     a11yFeedback = 'polite',
     fullWidth = false,
-    isDisabled = false,
+    disabled = false,
     size = 'md',
     variant = 'filled',
   } = props;
@@ -90,7 +89,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
   }, [label]);
 
   const styles = input({
-    isDisabled,
+    disabled,
     fullWidth,
     size,
     variant,
@@ -103,7 +102,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
       {...baseProps}
       ref={baseRef}
       className={styles.base({ className: classNames?.base })}
-      data-disabled={isDisabled}
+      data-disabled={disabled}
     >
       {!hideLabel && !!label && (
         <label
@@ -120,7 +119,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
         onPointerDown={(e: React.PointerEvent<HTMLDivElement>) => {
           inputWrapperProps?.onPointerDown?.(e);
 
-          if (isDisabled) return;
+          if (disabled) return;
           if (e.button !== 0) return;
 
           if (e.target !== innerInputRef.current) {
@@ -145,7 +144,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
           aria-required={required}
           aria-invalid={error}
           id={inputId}
-          disabled={isDisabled}
+          disabled={disabled}
           placeholder={placeholder}
           onChange={onChange}
           className={styles.input({ className: classNames?.input })}

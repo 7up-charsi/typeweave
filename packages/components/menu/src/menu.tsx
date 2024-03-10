@@ -133,7 +133,7 @@ const Menu_Name = 'Menu.Menu';
 
 type FocusableItem = {
   index: number;
-  isDisabled: boolean;
+  disabled: boolean;
   callback: () => void;
 };
 
@@ -178,7 +178,7 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
   const { isFocusVisible } = useFocusVisible();
 
   const setOutsideEle = useClickOutside<HTMLUListElement>({
-    isDisabled: !rootContext.isOpen,
+    disabled: !rootContext.isOpen,
     callback: rootContext.handleClose,
   });
 
@@ -294,7 +294,7 @@ const Item_Name = 'Menu.Item';
 
 export interface ItemProps {
   children?: React.ReactNode;
-  isDisabled?: boolean;
+  disabled?: boolean;
   disableCloseOnClick?: boolean;
   classNames?: {
     item?: ClassValue;
@@ -308,7 +308,7 @@ export interface ItemProps {
 export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
   const {
     children,
-    isDisabled,
+    disabled,
     onClick,
     disableCloseOnClick,
     classNames,
@@ -322,13 +322,13 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
   const focusRef = useRef<FocusableItem>({
     callback: () => {},
     index: 0,
-    isDisabled: false,
+    disabled: false,
   }).current;
 
   const innerRef = useRef<HTMLLIElement>(null);
 
   const { hoverProps } = useHover({
-    isDisabled,
+    isDisabled: disabled,
     onHoverStart: () => setFocused(focusRef),
     onHoverEnd: () => setFocused(null),
   });
@@ -340,8 +340,8 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
 
   useEffect(() => {
     focusRef.callback = handlePress;
-    focusRef.isDisabled = !!isDisabled;
-  }, [focusRef, handlePress, isDisabled]);
+    focusRef.disabled = !!disabled;
+  }, [focusRef, handlePress, disabled]);
 
   useEffect(() => {
     const length = Object.keys(items).length;
@@ -360,8 +360,8 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
       ref={mergeRefs(ref, innerRef)}
       role="menuitem"
       data-focused={focused === focusRef}
-      data-disabled={!!isDisabled}
-      aria-disabled={isDisabled}
+      data-disabled={!!disabled}
+      aria-disabled={disabled}
       className={stylesContext.item({ className: classNames?.item })}
       {...hoverProps}
       onClick={handlePress}
@@ -466,7 +466,7 @@ const CheckboxItem_Name = 'Menu.CheckboxItem';
 
 export interface CheckboxItemProps {
   children?: React.ReactNode;
-  isDisabled?: boolean;
+  disabled?: boolean;
   checked?: boolean;
   onChange?: (checked: boolean) => void;
   classNames?: {
@@ -479,7 +479,7 @@ export interface CheckboxItemProps {
 
 export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
   (props, ref) => {
-    const { children, isDisabled, classNames, checked, onChange, asChild } =
+    const { children, disabled, classNames, checked, onChange, asChild } =
       props;
 
     const stylesContext = useStylesContext(CheckboxItem_Name);
@@ -488,13 +488,13 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
     const focusRef = useRef<FocusableItem>({
       callback: () => {},
       index: 0,
-      isDisabled: false,
+      disabled: false,
     }).current;
 
     const innerRef = useRef<HTMLLIElement>(null);
 
     const { hoverProps } = useHover({
-      isDisabled,
+      isDisabled: disabled,
       onHoverStart: () => setFocused(focusRef),
       onHoverEnd: () => setFocused(null),
     });
@@ -505,8 +505,8 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
 
     useEffect(() => {
       focusRef.callback = hanldeChange;
-      focusRef.isDisabled = !!isDisabled;
-    }, [focusRef, hanldeChange, isDisabled]);
+      focusRef.disabled = !!disabled;
+    }, [focusRef, hanldeChange, disabled]);
 
     useEffect(() => {
       const length = Object.keys(items).length;
@@ -525,10 +525,10 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
         ref={mergeRefs(ref, innerRef)}
         role="menuitemcheckbox"
         data-focused={focused === focusRef}
-        data-disabled={!!isDisabled}
+        data-disabled={!!disabled}
         data-checked={checked}
         aria-checked={checked}
-        aria-disabled={isDisabled}
+        aria-disabled={disabled}
         className={stylesContext.item({ className: classNames?.item })}
         {...hoverProps}
         onClick={hanldeChange}
@@ -617,7 +617,7 @@ const RadioItem_Name = 'Menu.RadioItem';
 
 export interface RadioItemProps {
   children?: React.ReactNode;
-  isDisabled?: boolean;
+  disabled?: boolean;
   value: string;
   classNames?: {
     item?: ClassValue;
@@ -629,7 +629,7 @@ export interface RadioItemProps {
 
 export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
   (props, ref) => {
-    const { children, isDisabled, classNames, value, asChild } = props;
+    const { children, disabled, classNames, value, asChild } = props;
 
     const stylesContext = useStylesContext(RadioItem_Name);
     const groupContext = useRadioGroupContext(RadioItem_Name);
@@ -638,13 +638,13 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
     const focusRef = useRef<FocusableItem>({
       callback: () => {},
       index: 0,
-      isDisabled: false,
+      disabled: false,
     }).current;
 
     const innerRef = useRef<HTMLLIElement>(null);
 
     const { hoverProps } = useHover({
-      isDisabled,
+      isDisabled: disabled,
       onHoverStart: () => setFocused(focusRef),
       onHoverEnd: () => setFocused(null),
     });
@@ -655,8 +655,8 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
 
     useEffect(() => {
       focusRef.callback = hanldeChange;
-      focusRef.isDisabled = !!isDisabled;
-    }, [focusRef, hanldeChange, isDisabled]);
+      focusRef.disabled = !!disabled;
+    }, [focusRef, hanldeChange, disabled]);
 
     useEffect(() => {
       const length = Object.keys(items).length;
@@ -677,10 +677,10 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
         ref={mergeRefs(ref, innerRef)}
         role="menuitemradio"
         data-focused={focused === focusRef}
-        data-disabled={!!isDisabled}
+        data-disabled={!!disabled}
         data-checked={checked}
         aria-checked={checked}
-        aria-disabled={isDisabled}
+        aria-disabled={disabled}
         className={stylesContext.item({ className: classNames?.item })}
         {...hoverProps}
         onClick={hanldeChange}
@@ -731,7 +731,7 @@ const getNext = (
 ) => {
   for (let i = current.index + 1; i <= Object.keys(items).length; i++) {
     const focused = items[i];
-    if (!focused.isDisabled) return focused;
+    if (!focused.disabled) return focused;
   }
 
   return current;
@@ -743,7 +743,7 @@ const getPrevious = (
 ) => {
   for (let i = current.index - 1; i > 0; i--) {
     const focused = items[i];
-    if (!focused.isDisabled) return focused;
+    if (!focused.disabled) return focused;
   }
 
   return current;
@@ -751,6 +751,6 @@ const getPrevious = (
 
 const createCustomItem = (index: number) => ({
   index,
-  isDisabled: false,
+  disabled: false,
   callback: () => {},
 });

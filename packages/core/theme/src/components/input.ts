@@ -29,7 +29,7 @@ export const input = tv({
       md: { inputWrapper: 'h-12' },
     },
     fullWidth: { true: { base: 'w-full' } },
-    isDisabled: { true: { base: 'disabled' } },
+    disabled: { true: { base: 'disabled' } },
     required: {
       true: {
         label:

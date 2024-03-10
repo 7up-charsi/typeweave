@@ -305,7 +305,7 @@ export const Content = (props: ContentProps) => {
   useScrollLock({ enabled: rootContext.isOpen });
 
   const setOutsideEle = useClickOutside<HTMLDivElement>({
-    isDisabled: !rootContext.isOpen,
+    disabled: !rootContext.isOpen,
     callback: () => {
       rootContext.handleClose('outside');
     },
@@ -319,7 +319,7 @@ export const Content = (props: ContentProps) => {
         loop
         trapped
         scope={rootContext.scope}
-        isDisabled={!rootContext.isOpen}
+        disabled={!rootContext.isOpen}
       >
         <div
           ref={setOutsideEle}
