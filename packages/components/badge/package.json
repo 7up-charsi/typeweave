@@ -6,7 +6,7 @@
   ],
   "author": {
     "name": "Muhammad Zeeshan",
-    "email": "mzeeshan3597@gmail.com"
+    "email": "7up.charsi@gmail.com"
   },
   "license": "MIT",
   "files": [
@@ -17,11 +17,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mzeeshan3597/webbo-ui.git",
+    "url": "git+https://github.com/7up-charsi/webbo-ui.git",
     "directory": "packages/components/badge"
   },
   "bugs": {
-    "url": "https://github.com/mzeeshan3597/webbo-ui/issues"
+    "url": "https://github.com/7up-charsi/webbo-ui/issues"
   },
   "main": "./src/index.ts",
   "scripts": {
