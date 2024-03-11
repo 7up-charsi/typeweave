@@ -145,7 +145,6 @@ const _Select = (props: SelectProps<object, false, false>) => {
   >({
     defaultValue,
     value: valueProp,
-    resetStateValue: undefined,
     onChange: (value, reason) => {
       if (!reason)
         throw new CustomError(
@@ -197,7 +196,6 @@ const _Select = (props: SelectProps<object, false, false>) => {
     defaultValue: defaultOpen ?? false,
     value: openProp,
     onChange: onOpenChange,
-    resetStateValue: false,
   });
 
   const handleClose = () => {
