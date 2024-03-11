@@ -143,7 +143,10 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
     const onKeyDown = (e: React.KeyboardEvent) => {
       if (e.repeat) return;
 
-      if ([' ', 'Enter'].includes(e.key)) context.onValueChange(value);
+      if ([' ', 'Enter'].includes(e.key)) {
+        context.onValueChange(value);
+        return;
+      }
 
       if (e.target !== e.currentTarget) return;
 
@@ -182,34 +185,15 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
 
       const currentIndex = elements.indexOf(e.currentTarget as HTMLElement);
 
-      // last
-      if (currentIndex + 1 === elements.length) {
-        if (context.loop && Next) {
-          elements[0].focus();
-          return;
-        }
-
-        if (Prev) {
-          elements[currentIndex - 1].focus();
-          console.log('reached');
-          return;
-        }
-
+      // loop from last to first
+      if (currentIndex + 1 === elements.length && context.loop && Next) {
+        elements[0].focus();
         return;
       }
 
-      // first
-      if (currentIndex === 0) {
-        if (context.loop && Prev) {
-          elements[elements.length - 1].focus();
-          return;
-        }
-
-        if (Next) {
-          elements[currentIndex + 1].focus();
-          return;
-        }
-
+      // loop from first to end
+      if (currentIndex === 0 && context.loop && Prev) {
+        elements[elements.length - 1].focus();
         return;
       }
 
