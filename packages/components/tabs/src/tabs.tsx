@@ -1,6 +1,6 @@
 import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
-import { forwardRef, useId, useMemo, useState } from 'react';
+import { forwardRef, useId, useMemo, useRef, useState } from 'react';
 import { Slot } from '@webbo-ui/slot';
 import { TabsVariantProps, tabs } from '@webbo-ui/theme';
 import { createCollection } from '@webbo-ui/use-collection';
@@ -28,6 +28,8 @@ interface TabsContext {
   activeTabId: string;
   onTabChange: (id: string) => void;
   loop?: boolean;
+  isTabbingBackOut: boolean;
+  setIsTabbingBackOut: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const [RootProvider, useRootContext] =
@@ -36,7 +38,14 @@ const [RootProvider, useRootContext] =
 const [StylesProvider, useStylesContext] =
   createContextScope<ReturnType<typeof tabs>>(ROOT_NAME);
 
-const [Collection, useCollection] = createCollection('Tabs');
+interface ItemData {
+  active: boolean;
+}
+
+const [Collection, useCollection] = createCollection<
+  HTMLButtonElement,
+  ItemData
+>('Tabs');
 
 export const Root = (props: RootProps) => {
   const {
@@ -57,6 +66,7 @@ export const Root = (props: RootProps) => {
   });
 
   const [activeTabId, setActiveTabId] = useState('');
+  const [isTabbingBackOut, setIsTabbingBackOut] = useState(false);
 
   const baseId = useId();
 
@@ -72,6 +82,8 @@ export const Root = (props: RootProps) => {
       activeTabId={activeTabId}
       onTabChange={(id: string) => setActiveTabId(id)}
       loop={loop}
+      isTabbingBackOut={isTabbingBackOut}
+      setIsTabbingBackOut={setIsTabbingBackOut}
     >
       <StylesProvider {...styles}>
         <Collection.Provider>
@@ -96,13 +108,34 @@ export const List = (props: ListProps) => {
   const context = useRootContext(List_NAME);
   const styles = useStylesContext(List_NAME);
 
+  const getItems = useCollection();
+  const isClickFocusRef = useRef(false);
+
   return (
     <Collection.Parent>
       <div
         {...restProps}
+        tabIndex={context.isTabbingBackOut ? -1 : 0}
         role="tablist"
         aria-orientation={context.orientation}
         className={styles.list({ className })}
+        onMouseDown={() => {
+          isClickFocusRef.current = true;
+        }}
+        onBlur={() => context.setIsTabbingBackOut(false)}
+        onFocus={(e) => {
+          if (e.target === e.currentTarget && !context.isTabbingBackOut) {
+            const activeItems = getItems().filter(
+              (item) => !item.ref.current?.disabled,
+            );
+
+            const activeItem = activeItems.find((item) => item.active);
+
+            activeItem?.ref.current?.focus();
+          }
+
+          isClickFocusRef.current = false;
+        }}
       />
     </Collection.Parent>
   );
@@ -141,6 +174,11 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
     };
 
     const onKeyDown = (e: React.KeyboardEvent) => {
+      if (e.key === 'Tab' && e.shiftKey) {
+        context.setIsTabbingBackOut(true);
+        return;
+      }
+
       if (e.repeat) return;
 
       if ([' ', 'Enter'].includes(e.key)) {
@@ -177,13 +215,14 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           : key === 'ArrowUp';
 
       const activeItems = getItems().filter(
-        // @ts-expect-error ----
         (item) => !item.ref.current?.disabled,
       );
 
       const elements = activeItems.map((item) => item.ref.current!);
 
-      const currentIndex = elements.indexOf(e.currentTarget as HTMLElement);
+      const currentIndex = elements.indexOf(
+        e.currentTarget as HTMLButtonElement,
+      );
 
       // loop from last to first
       if (currentIndex === elements.length - 1 && context.loop && Next) {
@@ -217,7 +256,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
     };
 
     return (
-      <Collection.Item>
+      <Collection.Item active={isSelected}>
         <Slot
           ref={ref}
           className={styles.trigger({ className })}
