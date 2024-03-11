@@ -193,7 +193,7 @@ const CustomTemplate = () => (
         <Option {...ele} key={ele.key}>
           <input
             type="checkbox"
-            checked={ele.state.isSelected}
+            checked={ele.state.selected}
             readOnly
             className="mr-2"
           />
