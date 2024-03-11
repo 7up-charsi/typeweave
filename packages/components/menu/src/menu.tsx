@@ -5,12 +5,12 @@ import { Slot } from '@webbo-ui/slot';
 import * as Popper from '@webbo-ui/popper';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { useClickOutside } from '@webbo-ui/use-click-outside';
-import { useFocusVisible, useHover } from '@react-aria/interactions';
 import { createPortal } from 'react-dom';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { MenuVariantProps, menu } from '@webbo-ui/theme';
 import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
+import { createCollection } from '@webbo-ui/use-collection';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { forwardRef, useEffect, useId, useMemo, useRef, useState } from 'react';
 
@@ -18,14 +18,26 @@ const Root_Name = 'Menu.Root';
 
 interface RootContext {
   isOpen: boolean;
-  handleOpen(): void;
-  handleClose(): void;
+  handleOpen: () => void;
+  handleClose: () => void;
   id: string;
   triggerRef: React.RefObject<HTMLButtonElement>;
+  loop?: boolean;
 }
 
 const [RootProvider, useRootContext] =
   createContextScope<RootContext>(Root_Name);
+
+type CollectionItem = {
+  disabled: boolean;
+  isFocused: boolean;
+  id: string;
+};
+
+const [Collection, useCollection] = createCollection<
+  HTMLLIElement,
+  CollectionItem
+>(Root_Name);
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -34,10 +46,17 @@ export interface RootProps {
   defaultOpen?: boolean;
   isOpen?: boolean;
   onOpenChange?: (isOpen: boolean) => void;
+  loop?: boolean;
 }
 
 export const Root = (props: RootProps) => {
-  const { children, defaultOpen, isOpen: isOpenProp, onOpenChange } = props;
+  const {
+    children,
+    defaultOpen,
+    isOpen: isOpenProp,
+    onOpenChange,
+    loop,
+  } = props;
 
   const [isOpen, setIsOpen] = useControllableState({
     defaultValue: defaultOpen ?? false,
@@ -55,6 +74,7 @@ export const Root = (props: RootProps) => {
 
   const handleClose = useCallbackRef(() => {
     setIsOpen(false);
+    triggerRef.current?.focus();
   });
 
   return (
@@ -64,8 +84,11 @@ export const Root = (props: RootProps) => {
       isOpen={isOpen}
       id={id}
       triggerRef={triggerRef}
+      loop={loop}
     >
-      <Popper.Root>{children}</Popper.Root>
+      <Collection.Provider>
+        <Popper.Root>{children}</Popper.Root>
+      </Collection.Provider>
     </RootProvider>
   );
 };
@@ -98,6 +121,14 @@ export const Trigger = (props: TriggerProps) => {
         aria-label={a11yLabel}
         aria-describedby={a11yDescription}
         onClick={rootContext.handleOpen}
+        onKeyDown={(e: React.KeyboardEvent) => {
+          const key = e.key;
+
+          if (![' ', 'Enter'].includes(key)) return;
+
+          e.preventDefault();
+          rootContext.handleOpen();
+        }}
       >
         {children}
       </Slot>
@@ -131,23 +162,16 @@ Portal.displayName = 'webbo-ui.' + Portal_Name;
 
 const Menu_Name = 'Menu.Menu';
 
-type FocusableItem = {
-  index: number;
-  disabled: boolean;
-  callback: () => void;
-};
-
-interface FocusContext {
-  items: Record<string, FocusableItem>;
-  focused: FocusableItem | null;
-  setFocused: React.Dispatch<React.SetStateAction<FocusableItem | null>>;
+interface MenuContext {
+  focused: string;
+  setFocused: React.Dispatch<React.SetStateAction<string>>;
 }
+
+const [MenuProvider, useMenuContext] =
+  createContextScope<MenuContext>(Menu_Name);
 
 const [StylesProvider, useStylesContext] =
   createContextScope<ReturnType<typeof menu>>(Menu_Name);
-
-const [FocusProvider, useFocusContext] =
-  createContextScope<FocusContext>(Menu_Name);
 
 export interface MenuProps extends Popper.FloatingProps, MenuVariantProps {
   children?: React.ReactNode;
@@ -170,12 +194,7 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
 
   const rootContext = useRootContext(Menu_Name);
 
-  const items = useRef<Record<string, FocusableItem>>({}).current;
-  const [focused, setFocused] = useState<FocusableItem | null>(null);
-
-  const itemsLength = Object.keys(items).length;
-
-  const { isFocusVisible } = useFocusVisible();
+  const [focused, setFocused] = useState('');
 
   const setOutsideEle = useClickOutside<HTMLUListElement>({
     disabled: !rootContext.isOpen,
@@ -184,69 +203,58 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
 
   useScrollLock({ enabled: rootContext.isOpen });
 
+  const getItems = useCollection();
+
   useEffect(() => {
-    if (!rootContext.isOpen) return;
+    innerRef.current?.focus();
+  }, []);
 
-    innerRef.current?.focus?.();
+  const onkeydown = (e: React.KeyboardEvent) => {
+    const key = e.key;
 
-    // index zero mean... we need to check 1st item also
-    if (isFocusVisible) setFocused(getNext(createCustomItem(0), items));
+    const ArrowDown = key === 'ArrowDown';
+    const ArrowUp = key === 'ArrowUp';
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFocusVisible]);
+    const activeItems = getItems().filter((item) => !item.disabled);
 
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    const Tab = e.key === 'Tab';
-    const ArrowDown = e.key === 'ArrowDown';
-    const ArrowUp = e.key === 'ArrowUp';
-    const Home = e.key === 'Home';
-    const End = e.key === 'End';
-    const Escape = e.key === 'Escape';
-    const Enter = e.key === 'Enter';
-    const Space = e.key === ' ';
+    const elements = activeItems.map((item) => item.ref.current!);
 
-    if (Escape) {
-      setFocused(null);
-      rootContext.handleClose();
-      rootContext.triggerRef.current?.focus?.();
+    const currentIndex = activeItems.findIndex((ele) => ele.isFocused);
+
+    // either no menuitem is focused or loop from end to first
+    if (
+      (currentIndex === -1 && ArrowDown) ||
+      (currentIndex === elements.length - 1 && rootContext.loop && ArrowDown)
+    ) {
+      const index = 0;
+      elements[index].focus();
+      setFocused(activeItems[index].id);
       return;
     }
 
-    if (Tab) {
-      rootContext.handleClose();
+    // loop from first to end when either no menuitem is focused or first is focused
+    if (
+      (currentIndex === 0 || currentIndex === -1) &&
+      rootContext.loop &&
+      ArrowUp
+    ) {
+      const index = elements.length - 1;
+      elements[index].focus();
+      setFocused(activeItems[index].id);
       return;
     }
 
-    if (!itemsLength) return;
-
-    if ((Enter || Space) && focused) {
-      e.preventDefault();
-      focused.callback();
+    if (ArrowDown && currentIndex >= 0 && currentIndex < elements.length - 1) {
+      const index = currentIndex + 1;
+      elements[index].focus();
+      setFocused(activeItems[index].id);
       return;
     }
 
-    if ((ArrowDown || ArrowUp) && !focused) {
-      setFocused(getNext(createCustomItem(0), items));
-      return;
-    }
-
-    if (ArrowDown && focused && focused.index < itemsLength) {
-      setFocused(getNext(focused, items));
-      return;
-    }
-
-    if (ArrowUp && focused && focused.index > 1) {
-      setFocused(getPrevious(focused, items));
-      return;
-    }
-
-    if (Home) {
-      setFocused(getNext(createCustomItem(0), items));
-      return;
-    }
-
-    if (End) {
-      setFocused(getPrevious(createCustomItem(itemsLength + 1), items));
+    if (ArrowUp && currentIndex > 0 && currentIndex <= elements.length - 1) {
+      const index = currentIndex - 1;
+      elements[index].focus();
+      setFocused(activeItems[index].id);
       return;
     }
   };
@@ -254,35 +262,40 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
   const styles = useMemo(() => menu({ shadow }), [shadow]);
 
   return (
-    <Popper.Floating
-      arrowPadding={arrowPadding}
-      boundaryPadding={boundaryPadding ?? 10}
-      {...restProps}
-    >
-      <ul
-        id={rootContext.id}
-        role="menu"
-        ref={mergeRefs(setOutsideEle, ref, innerRef)}
-        className={styles.menu({ className })}
-        onKeyDown={onKeyDown}
-        aria-roledescription={roleDescription}
-        tabIndex={-1}
-      >
-        <FocusProvider items={items} focused={focused} setFocused={setFocused}>
-          <StylesProvider {...styles}>
-            <VisuallyHidden>
-              <button onPointerUp={rootContext.handleClose}>close</button>
-            </VisuallyHidden>
+    <MenuProvider setFocused={setFocused} focused={focused}>
+      <Collection.Parent>
+        <Popper.Floating
+          arrowPadding={arrowPadding}
+          boundaryPadding={boundaryPadding ?? 10}
+          {...restProps}
+        >
+          <ul
+            id={rootContext.id}
+            role="menu"
+            ref={mergeRefs(setOutsideEle, ref, innerRef)}
+            className={styles.menu({ className })}
+            aria-roledescription={roleDescription}
+            tabIndex={-1}
+            onKeyDown={onkeydown}
+            onMouseLeave={() => {
+              setFocused('');
+            }}
+          >
+            <StylesProvider {...styles}>
+              <VisuallyHidden>
+                <button onPointerUp={rootContext.handleClose}>close</button>
+              </VisuallyHidden>
 
-            {children}
+              {children}
 
-            <VisuallyHidden>
-              <button onPointerUp={rootContext.handleClose}>close</button>
-            </VisuallyHidden>
-          </StylesProvider>
-        </FocusProvider>
-      </ul>
-    </Popper.Floating>
+              <VisuallyHidden>
+                <button onPointerUp={rootContext.handleClose}>close</button>
+              </VisuallyHidden>
+            </StylesProvider>
+          </ul>
+        </Popper.Floating>
+      </Collection.Parent>
+    </MenuProvider>
   );
 });
 
@@ -305,66 +318,74 @@ export interface ItemProps {
   asChild?: boolean;
 }
 
-export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
-  const {
-    children,
-    disabled,
-    onClick,
-    disableCloseOnClick,
-    classNames,
-    asChild,
-  } = props;
+const ItemImp = forwardRef<
+  HTMLLIElement,
+  ItemProps & React.LiHTMLAttributes<HTMLLIElement>
+>((props, ref) => {
+  const { children, disabled, asChild, onClick, ...rest } = props;
 
-  const { handleClose } = useRootContext(Item_Name);
-  const stylesContext = useStylesContext(Item_Name);
-  const { items, focused, setFocused } = useFocusContext(Item_Name);
+  const id = useId();
 
-  const focusRef = useRef<FocusableItem>({
-    callback: () => {},
-    index: 0,
-    disabled: false,
-  }).current;
-
-  const innerRef = useRef<HTMLLIElement>(null);
-
-  const { hoverProps } = useHover({
-    isDisabled: disabled,
-    onHoverStart: () => setFocused(focusRef),
-    onHoverEnd: () => setFocused(null),
-  });
-
-  const handlePress = useCallbackRef(() => {
-    if (!disableCloseOnClick) handleClose();
-    onClick?.();
-  });
-
-  useEffect(() => {
-    focusRef.callback = handlePress;
-    focusRef.disabled = !!disabled;
-  }, [focusRef, handlePress, disabled]);
-
-  useEffect(() => {
-    const length = Object.keys(items).length;
-
-    const index = length + 1;
-
-    focusRef.index = index;
-
-    items[index] = focusRef;
-  }, [focusRef, items]);
+  const menuContext = useMenuContext(Item_Name);
 
   const Component = asChild ? Slot : 'li';
 
+  const isFocused = menuContext.focused === id;
+
   return (
-    <Component
-      ref={mergeRefs(ref, innerRef)}
+    <Collection.Item disabled={!!disabled} isFocused={isFocused} id={id}>
+      <Component
+        {...rest}
+        ref={ref}
+        data-disabled={!!disabled}
+        aria-disabled={disabled}
+        data-focused={isFocused}
+        tabIndex={isFocused ? 0 : -1}
+        onMouseEnter={() => {
+          if (disabled) return;
+          menuContext.setFocused(id);
+        }}
+        onClick={() => onClick?.()}
+        onKeyDown={(e) => {
+          const key = e.key;
+
+          if (![' ', 'Tab'].includes(key)) return;
+          e.preventDefault();
+          onClick?.();
+        }}
+      >
+        {children}
+      </Component>
+    </Collection.Item>
+  );
+});
+
+ItemImp.displayName = 'webbo-ui.' + Item_Name;
+
+export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
+  const {
+    children,
+    onClick,
+    disableCloseOnClick,
+    classNames,
+    disabled,
+    asChild,
+  } = props;
+
+  const rootContext = useRootContext(Item_Name);
+  const stylesContext = useStylesContext(Item_Name);
+
+  return (
+    <ItemImp
+      ref={ref}
       role="menuitem"
-      data-focused={focused === focusRef}
-      data-disabled={!!disabled}
-      aria-disabled={disabled}
       className={stylesContext.item({ className: classNames?.item })}
-      {...hoverProps}
-      onClick={handlePress}
+      disabled={disabled}
+      asChild={asChild}
+      onClick={() => {
+        if (!disableCloseOnClick) rootContext.handleClose();
+        onClick?.();
+      }}
     >
       <span
         className={stylesContext.itemIcon({
@@ -378,13 +399,13 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
       >
         {children}
       </span>
-    </Component>
+    </ItemImp>
   );
 });
 
 Item.displayName = 'webbo-ui.' + Item_Name;
 
-// *-*-*-*-* Group *-*-*-*-*
+// *-*-*-*-* Label *-*-*-*-*
 
 const Label_Name = 'Menu.Label';
 
@@ -475,63 +496,37 @@ export interface CheckboxItemProps {
     itemContent?: string;
   };
   asChild?: boolean;
+  disableCloseOnChange?: boolean;
 }
 
 export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
   (props, ref) => {
-    const { children, disabled, classNames, checked, onChange, asChild } =
-      props;
+    const {
+      children,
+      classNames,
+      checked,
+      onChange,
+      disabled,
+      asChild,
+      disableCloseOnChange = true,
+    } = props;
 
     const stylesContext = useStylesContext(CheckboxItem_Name);
-    const { items, focused, setFocused } = useFocusContext(Item_Name);
-
-    const focusRef = useRef<FocusableItem>({
-      callback: () => {},
-      index: 0,
-      disabled: false,
-    }).current;
-
-    const innerRef = useRef<HTMLLIElement>(null);
-
-    const { hoverProps } = useHover({
-      isDisabled: disabled,
-      onHoverStart: () => setFocused(focusRef),
-      onHoverEnd: () => setFocused(null),
-    });
-
-    const hanldeChange = useCallbackRef(() => {
-      onChange?.(!checked);
-    });
-
-    useEffect(() => {
-      focusRef.callback = hanldeChange;
-      focusRef.disabled = !!disabled;
-    }, [focusRef, hanldeChange, disabled]);
-
-    useEffect(() => {
-      const length = Object.keys(items).length;
-
-      const index = length + 1;
-
-      focusRef.index = index;
-
-      items[index] = focusRef;
-    }, [focusRef, items]);
-
-    const Component = asChild ? Slot : 'li';
+    const rootContext = useRootContext(CheckboxItem_Name);
 
     return (
-      <Component
-        ref={mergeRefs(ref, innerRef)}
+      <ItemImp
+        ref={ref}
         role="menuitemcheckbox"
-        data-focused={focused === focusRef}
-        data-disabled={!!disabled}
         data-checked={checked}
         aria-checked={checked}
-        aria-disabled={disabled}
         className={stylesContext.item({ className: classNames?.item })}
-        {...hoverProps}
-        onClick={hanldeChange}
+        disabled={disabled}
+        asChild={asChild}
+        onClick={() => {
+          if (!disableCloseOnChange) rootContext.handleClose();
+          onChange?.(!checked);
+        }}
       >
         <span
           className={stylesContext.itemIcon({
@@ -564,7 +559,7 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
         >
           {children}
         </span>
-      </Component>
+      </ItemImp>
     );
   },
 );
@@ -625,65 +620,39 @@ export interface RadioItemProps {
     itemContent?: string;
   };
   asChild?: boolean;
+  disableCloseOnChange?: boolean;
 }
 
 export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
   (props, ref) => {
-    const { children, disabled, classNames, value, asChild } = props;
+    const {
+      children,
+      disabled,
+      classNames,
+      value,
+      asChild,
+      disableCloseOnChange = true,
+    } = props;
 
     const stylesContext = useStylesContext(RadioItem_Name);
+    const rootContext = useRootContext(CheckboxItem_Name);
     const groupContext = useRadioGroupContext(RadioItem_Name);
-    const { items, focused, setFocused } = useFocusContext(Item_Name);
-
-    const focusRef = useRef<FocusableItem>({
-      callback: () => {},
-      index: 0,
-      disabled: false,
-    }).current;
-
-    const innerRef = useRef<HTMLLIElement>(null);
-
-    const { hoverProps } = useHover({
-      isDisabled: disabled,
-      onHoverStart: () => setFocused(focusRef),
-      onHoverEnd: () => setFocused(null),
-    });
-
-    const hanldeChange = useCallbackRef(() => {
-      groupContext.onChange?.(value);
-    });
-
-    useEffect(() => {
-      focusRef.callback = hanldeChange;
-      focusRef.disabled = !!disabled;
-    }, [focusRef, hanldeChange, disabled]);
-
-    useEffect(() => {
-      const length = Object.keys(items).length;
-
-      const index = length + 1;
-
-      focusRef.index = index;
-
-      items[index] = focusRef;
-    }, [focusRef, items]);
 
     const checked = value === groupContext.value;
 
-    const Component = asChild ? Slot : 'li';
-
     return (
-      <Component
-        ref={mergeRefs(ref, innerRef)}
+      <ItemImp
+        ref={ref}
         role="menuitemradio"
-        data-focused={focused === focusRef}
-        data-disabled={!!disabled}
         data-checked={checked}
         aria-checked={checked}
-        aria-disabled={disabled}
         className={stylesContext.item({ className: classNames?.item })}
-        {...hoverProps}
-        onClick={hanldeChange}
+        disabled={disabled}
+        asChild={asChild}
+        onClick={() => {
+          if (!disableCloseOnChange) rootContext.handleClose();
+          groupContext.onChange?.(value);
+        }}
       >
         <span
           className={stylesContext.itemIcon({
@@ -716,41 +685,9 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
         >
           {children}
         </span>
-      </Component>
+      </ItemImp>
     );
   },
 );
 
 RadioItem.displayName = 'webbo-ui.' + RadioItem_Name;
-
-// *-*-*-*-* Utils *-*-*-*-*
-
-const getNext = (
-  current: FocusableItem,
-  items: Record<string, FocusableItem>,
-) => {
-  for (let i = current.index + 1; i <= Object.keys(items).length; i++) {
-    const focused = items[i];
-    if (!focused.disabled) return focused;
-  }
-
-  return current;
-};
-
-const getPrevious = (
-  current: FocusableItem,
-  items: Record<string, FocusableItem>,
-) => {
-  for (let i = current.index - 1; i > 0; i--) {
-    const focused = items[i];
-    if (!focused.disabled) return focused;
-  }
-
-  return current;
-};
-
-const createCustomItem = (index: number) => ({
-  index,
-  disabled: false,
-  callback: () => {},
-});

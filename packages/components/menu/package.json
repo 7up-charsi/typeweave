@@ -46,6 +46,7 @@
     "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/use-ripple": "workspace:*",
     "@webbo-ui/use-scroll-lock": "workspace:*",
+    "@webbo-ui/use-collection": "workspace:*",
     "@webbo-ui/context": "workspace:*",
     "@webbo-ui/visually-hidden": "workspace:*",
     "@webbo-ui/button": "workspace:*",
