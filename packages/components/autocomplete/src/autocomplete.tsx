@@ -156,7 +156,6 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
   >({
     defaultValue,
     value: valueProp,
-    resetStateValue: undefined,
     onChange: (value, reason) => {
       if (!reason)
         throw new CustomError(
@@ -177,7 +176,6 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     defaultValue: inputDefaultValue,
     value: inputValueProp,
     onChange: onInputChangeProp,
-    resetStateValue: '',
   });
 
   const [options, setOptions] = useState(optionsProp);
@@ -217,7 +215,6 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     defaultValue: defaultOpen ?? false,
     value: openProp,
     onChange: onOpenChange,
-    resetStateValue: false,
   });
 
   const handleClose = () => {

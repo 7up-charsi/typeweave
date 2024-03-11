@@ -8,18 +8,12 @@ export interface UseControllableStateProps<T, P> {
   value?: T;
   defaultValue?: T;
   onChange?: (value: T, payload?: P) => void;
-  resetStateValue?: T;
 }
 
 const useControllableState = <T, P = unknown>(
   props: UseControllableStateProps<T, P> = {},
 ) => {
-  const {
-    value: valueProp,
-    defaultValue,
-    onChange: onChangeProp,
-    resetStateValue,
-  } = props;
+  const { value: valueProp, defaultValue, onChange: onChangeProp } = props;
 
   const [state, setState] = useState(defaultValue);
   const onChange = useCallbackRef(onChangeProp);
@@ -33,10 +27,10 @@ const useControllableState = <T, P = unknown>(
     if (previouslyControlled.current === controlled) return;
 
     previouslyControlled.current = controlled;
-    setState(resetStateValue ?? defaultValue);
+    setState(defaultValue);
 
     //
-  }, [controlled, defaultValue, resetStateValue]);
+  }, [controlled, defaultValue]);
 
   const setValue = useCallbackRef(
     (next: React.SetStateAction<T>, payload?: P) => {
