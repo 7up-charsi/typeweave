@@ -622,6 +622,9 @@ importers:
       '@webbo-ui/use-click-outside':
         specifier: workspace:*
         version: link:../../hooks/use-click-outside
+      '@webbo-ui/use-collection':
+        specifier: workspace:*
+        version: link:../../hooks/use-collection
       '@webbo-ui/use-controllable-state':
         specifier: workspace:*
         version: link:../../hooks/use-controllable-state

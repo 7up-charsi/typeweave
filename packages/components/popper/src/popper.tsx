@@ -21,6 +21,7 @@ import {
   shift,
   useFloating,
 } from '@floating-ui/react-dom';
+import { mergeRefs } from '@webbo-ui/react-utils';
 
 interface PopperContext {
   reference: HTMLElement | null;
@@ -165,7 +166,7 @@ export interface FloatingProps {
   clippingBoundary?: Boundary;
 }
 
-export const Floating = (props: FloatingProps) => {
+export const Floating = forwardRef<HTMLElement, FloatingProps>((props, ref) => {
   const {
     children,
     placement: placementProp,
@@ -259,13 +260,16 @@ export const Floating = (props: FloatingProps) => {
       {typeof children === 'function' ? (
         children(childrenProps)
       ) : (
-        <Slot ref={refs.setFloating} style={childrenProps.style}>
+        <Slot<HTMLElement, React.HTMLAttributes<HTMLElement>>
+          ref={mergeRefs(refs.setFloating, ref)}
+          style={childrenProps.style}
+        >
           {children}
         </Slot>
       )}
     </ArrowProvider>
   );
-};
+});
 
 Floating.displayName = 'webbo-ui.' + Floating_Name;
 

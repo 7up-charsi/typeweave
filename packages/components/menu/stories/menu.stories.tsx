@@ -79,3 +79,9 @@ const Template = (args) => {
 export const Default = {
   render: Template,
 };
+
+const LoopTemplate = () => <Template loop />;
+
+export const Loop = {
+  render: LoopTemplate,
+};
