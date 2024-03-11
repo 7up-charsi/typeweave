@@ -186,7 +186,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       const currentIndex = elements.indexOf(e.currentTarget as HTMLElement);
 
       // loop from last to first
-      if (currentIndex + 1 === elements.length && context.loop && Next) {
+      if (currentIndex === elements.length - 1 && context.loop && Next) {
         elements[0].focus();
         return;
       }
@@ -197,12 +197,12 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
         return;
       }
 
-      if (Next) {
+      if (Next && currentIndex >= 0 && currentIndex < elements.length - 1) {
         elements[currentIndex + 1].focus();
         return;
       }
 
-      if (Prev) {
+      if (Prev && currentIndex > 0 && currentIndex <= elements.length - 1) {
         elements[currentIndex - 1].focus();
         return;
       }
