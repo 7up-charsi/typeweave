@@ -2,7 +2,7 @@ import Image from 'next/image';
 import darkLogo from '@/assets/dark-logo.png';
 import lightLogo from '@/assets/light-logo.png';
 import Link from 'next/link';
-import { ThemeSwitcher } from '@webbo-ui/theme-switcher';
+import { ThemeSwitcher } from './theme-switcher';
 import { navbarLinks } from '@/config/navbar-links';
 
 export const Navbar = () => {
@@ -43,7 +43,7 @@ export const Navbar = () => {
 
       <div className="grow"></div>
 
-      <ThemeSwitcher size="sm" className="mr-5" />
+      <ThemeSwitcher />
 
       {/* github link */}
       <Link

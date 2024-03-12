@@ -1,8 +1,8 @@
 {
-  "name": "@webbo-ui/theme-switcher",
+  "name": "@webbo-ui/themes",
   "version": "1.0.0",
   "keywords": [
-    "theme-switcher"
+    "themes"
   ],
   "author": {
     "name": "Muhammad Zeeshan",
@@ -18,7 +18,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/7up-charsi/webbo-ui.git",
-    "directory": "packages/components/theme-switcher"
+    "directory": "packages/components/themes"
   },
   "bugs": {
     "url": "https://github.com/7up-charsi/webbo-ui/issues"
@@ -36,10 +36,12 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/use-media-query": "workspace:*",
-    "@webbo-ui/toggle-button": "workspace:*",
-    "@webbo-ui/tooltip": "workspace:*"
+    "@webbo-ui/use-callback-ref": "workspace:*",
+    "@webbo-ui/context": "workspace:*",
+    "@webbo-ui/error": "workspace:*",
+    "@webbo-ui/button": "workspace:*",
+    "@webbo-ui/menu": "workspace:*"
   },
   "devDependencies": {
     "clean-package": "^2.2.0"

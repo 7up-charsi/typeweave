@@ -101,15 +101,18 @@ importers:
       '@webbo-ui/input':
         specifier: workspace:*
         version: link:../../packages/components/input
+      '@webbo-ui/menu':
+        specifier: workspace:*
+        version: link:../../packages/components/menu
       '@webbo-ui/tabs':
         specifier: workspace:*
         version: link:../../packages/components/tabs
       '@webbo-ui/theme':
         specifier: workspace:*
         version: link:../../packages/core/theme
-      '@webbo-ui/theme-switcher':
+      '@webbo-ui/themes':
         specifier: workspace:*
-        version: link:../../packages/components/theme-switcher
+        version: link:../../packages/components/themes
       algoliasearch:
         specifier: ^4.22.1
         version: 4.22.1
@@ -980,17 +983,23 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
 
-  packages/components/theme-switcher:
+  packages/components/themes:
     dependencies:
-      '@webbo-ui/theme':
+      '@webbo-ui/button':
         specifier: workspace:*
-        version: link:../../core/theme
-      '@webbo-ui/toggle-button':
+        version: link:../button
+      '@webbo-ui/context':
         specifier: workspace:*
-        version: link:../toggle-button
-      '@webbo-ui/tooltip':
+        version: link:../../core/context
+      '@webbo-ui/error':
         specifier: workspace:*
-        version: link:../tooltip
+        version: link:../../utilities/error
+      '@webbo-ui/menu':
+        specifier: workspace:*
+        version: link:../menu
+      '@webbo-ui/use-callback-ref':
+        specifier: workspace:*
+        version: link:../../hooks/use-callback-ref
       '@webbo-ui/use-media-query':
         specifier: workspace:*
         version: link:../../hooks/use-media-query

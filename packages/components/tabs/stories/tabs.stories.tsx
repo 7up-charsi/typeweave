@@ -22,17 +22,19 @@ const Template = (args) => (
     </Tabs.List>
 
     {Array.from({ length: 3 }).map((_, i) => (
-      <Tabs.Content key={i} value={`tab-${i + 1}`}>
-        <div className="border border-muted-6 rounded p-3">
-          <h2 className="text-lg mb-2">Tab {i + 1}</h2>
+      <Tabs.Content
+        key={i}
+        value={`tab-${i + 1}`}
+        className="border border-muted-6 rounded p-3"
+      >
+        <h2 className="text-lg mb-2">Tab {i + 1}</h2>
 
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            natus ex exercitationem eius modi nihil, odit ducimus eaque
-            inventore? Vero recusandae delectus fugit error ratione ipsam
-            repudiandae dolorum accusamus possimus!
-          </p>
-        </div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
+          natus ex exercitationem eius modi nihil, odit ducimus eaque inventore?
+          Vero recusandae delectus fugit error ratione ipsam repudiandae dolorum
+          accusamus possimus!
+        </p>
       </Tabs.Content>
     ))}
   </Tabs.Root>
