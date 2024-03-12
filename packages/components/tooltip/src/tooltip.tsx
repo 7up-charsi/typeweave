@@ -1,22 +1,19 @@
 'use client';
 
 import { createPortal } from 'react-dom';
-import { useHover, useFocus, useFocusVisible } from '@react-aria/interactions';
-import { mergeProps } from '@webbo-ui/react-utils';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { Slot } from '@webbo-ui/slot';
 import { TooltipVariantProps, tooltip } from '@webbo-ui/theme';
-import { useIsDisabled } from '@webbo-ui/use-is-disabled';
 import { createContextScope } from '@webbo-ui/context';
 import * as Popper from '@webbo-ui/popper';
-import { forwardRef, useEffect, useMemo, useRef } from 'react';
+import { forwardRef, useEffect, useId, useRef } from 'react';
 
 type Trigger = 'hover' | 'focus';
 
 interface TooltipContext {
-  showTooltip: (a?: boolean) => void;
-  hideTooltip: (a?: boolean) => void;
+  showTooltip: (immediate?: boolean) => void;
+  hideTooltip: (immediate?: boolean) => void;
   trigger?: Trigger;
   isOpen: boolean;
 }
@@ -27,7 +24,6 @@ const [RootProvider, useRootContext] =
   createContextScope<TooltipContext>(Tooltip_Name);
 
 const tooltips: Record<string, (a: boolean) => void> = {};
-let tooltipId = 0;
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -62,24 +58,22 @@ export const Root = (props: RootProps) => {
     onChange: onOpenChange,
   });
 
-  const tooltipIdentifier = useMemo(() => `${++tooltipId}`, []);
+  const identifier = useId();
 
   const showTimeout = useRef<NodeJS.Timeout>();
   const hideTimeout = useRef<NodeJS.Timeout>();
 
   const addOpenTooltip = () => {
-    tooltips[tooltipIdentifier] = hideTooltip;
+    tooltips[identifier] = hideTooltip;
   };
 
   const closeOpenTooltips = () => {
-    for (const hideId in tooltips) {
-      if (hideId !== tooltipIdentifier) {
-        if (Object.prototype.hasOwnProperty.call(tooltips, hideId)) {
-          tooltips[hideId](true);
-          delete tooltips[hideId];
-        }
-      }
-    }
+    Object.entries(tooltips).forEach(([toHideIdentifier, hideTooltip]) => {
+      if (toHideIdentifier !== identifier) return;
+
+      hideTooltip(true);
+      delete tooltips[toHideIdentifier];
+    });
   };
 
   const showTooltip = useCallbackRef((immediate?: boolean) => {
@@ -101,18 +95,19 @@ export const Root = (props: RootProps) => {
   });
 
   const hideTooltip = useCallbackRef((immediate?: boolean) => {
+    clearTimeout(showTimeout.current);
+    showTimeout.current = undefined;
+
     if (immediate || hideDelay <= 0) {
       clearTimeout(hideTimeout.current);
       hideTimeout.current = undefined;
       setOpen(false);
     } else {
       hideTimeout.current = setTimeout(() => {
+        hideTimeout.current = undefined;
         setOpen(false);
       }, hideDelay);
     }
-
-    clearTimeout(showTimeout.current);
-    showTimeout.current = undefined;
   });
 
   useEffect(() => {
@@ -135,15 +130,9 @@ export const Root = (props: RootProps) => {
     return () => {
       clearTimeout(showTimeout.current);
       clearTimeout(hideTimeout.current);
+      delete tooltips[identifier];
     };
-  }, []);
-
-  useEffect(() => {
-    if (!isOpen && hideTimeout.current) {
-      clearTimeout(hideTimeout.current);
-      hideTimeout.current = undefined;
-    }
-  }, [isOpen]);
+  }, [identifier]);
 
   return (
     <RootProvider
@@ -170,53 +159,44 @@ export interface TriggerProps {
 export const Trigger = ({ children }: TriggerProps) => {
   const context = useRootContext(Trigger_Name);
 
-  const { setElement, isDisabled } = useIsDisabled();
-
-  const { hoverProps } = useHover({
-    isDisabled,
-    onHoverStart: () => {
-      if (context.trigger === 'focus') return;
-
-      context.showTooltip(false);
-    },
-    onHoverEnd: () => {
-      if (context.trigger === 'focus') return;
-
-      context.hideTooltip(false);
-    },
-  });
-
-  const handlePointerDown = () => {
-    context.hideTooltip(true);
-  };
-
-  const { isFocusVisible } = useFocusVisible();
-
-  const { focusProps } = useFocus({
-    onFocus: () => {
-      if (context.trigger === 'hover') return;
-
-      if (isFocusVisible) {
-        context.showTooltip(true);
-      }
-    },
-    onBlur: () => {
-      if (context.trigger === 'hover') return;
-
-      context.hideTooltip(true);
-    },
-  });
+  const isMouseRef = useRef(false);
 
   return (
     <Popper.Reference>
-      <Slot
-        ref={setElement}
-        {...mergeProps(
-          hoverProps,
-          focusProps,
-          { onPointerDown: handlePointerDown },
-          { tabIndex: 0 },
-        )}
+      <Slot<HTMLElement, React.HTMLAttributes<HTMLElement>>
+        tabIndex={0}
+        onMouseDown={() => {
+          isMouseRef.current = true;
+          context.hideTooltip(true);
+        }}
+        onMouseEnter={() => {
+          if (context.trigger === 'focus') return;
+
+          context.showTooltip(false);
+        }}
+        onMouseLeave={() => {
+          isMouseRef.current = false;
+
+          if (context.trigger === 'focus') return;
+
+          context.hideTooltip(false);
+        }}
+        onKeyDown={(e) => {
+          const key = e.key;
+
+          if (key === 'Tab' || (key === 'Tab' && e.shiftKey))
+            isMouseRef.current = false;
+        }}
+        onFocus={() => {
+          if (context.trigger === 'hover' || isMouseRef.current) return;
+
+          context.showTooltip(true);
+        }}
+        onBlur={() => {
+          if (context.trigger === 'hover' || isMouseRef.current) return;
+
+          context.hideTooltip(true);
+        }}
       >
         {children}
       </Slot>
@@ -266,16 +246,6 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     const context = useRootContext(Content_Name);
 
-    const { hoverProps: tooltipHoverProps } = useHover({
-      isDisabled: disableInteractive,
-      onHoverStart: () => {
-        context.showTooltip(true);
-      },
-      onHoverEnd: () => {
-        context.hideTooltip();
-      },
-    });
-
     const styles = tooltip({ className });
 
     const Component = asChild ? Slot : 'div';
@@ -286,7 +256,15 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
           ref={ref}
           role="tooltip"
           className={styles}
-          {...tooltipHoverProps}
+          onMouseEnter={() => {
+            if (disableInteractive) return;
+
+            context.showTooltip(true);
+          }}
+          onMouseLeave={() => {
+            if (disableInteractive) return;
+            context.hideTooltip();
+          }}
         >
           {children}
         </Component>

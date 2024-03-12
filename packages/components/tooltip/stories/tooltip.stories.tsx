@@ -56,7 +56,12 @@ const Template = (args: Tooltip.RootProps & Tooltip.ContentProps) => {
             trigger={args.trigger}
           >
             <Tooltip.Trigger>
-              <button className="p-10 border">button</button>
+              <button
+                className="p-10 border disabled:disabled"
+                disabled={i === 2}
+              >
+                button
+              </button>
             </Tooltip.Trigger>
             <Tooltip.Portal>
               <Tooltip.Content disableInteractive={args.disableInteractive}>
