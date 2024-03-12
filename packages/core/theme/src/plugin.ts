@@ -39,24 +39,24 @@ type PluginConfig = {
   themes?: Themes;
 };
 
-const genColorScale = (color: ColorScale) =>
-  Object.values(color).reduce<ColorScale>(
-    (acc, value, i) => ((acc[i + 1] = value), acc),
+export const createColorScale = (color: ColorScale) =>
+  Object.entries(color).reduce<ColorScale>(
+    (acc, [key, value]) => ((acc[key.replace(/[a-zA-Z]+/, '')] = value), acc),
     {},
   );
 
 const defaultLightTheme: Theme = {
   base: 'light',
   colors: {
-    primary: genColorScale(colors.violet),
-    secondary: genColorScale(colors.plum),
-    success: genColorScale(colors.green),
-    warning: genColorScale(colors.orange),
-    danger: genColorScale(colors.red),
-    info: genColorScale(colors.blue),
-    muted: genColorScale(colors.gray),
-    focus: genColorScale(colors.sky),
-    overlay: genColorScale(colors.blackA),
+    primary: createColorScale(colors.violet),
+    secondary: createColorScale(colors.plum),
+    success: createColorScale(colors.green),
+    warning: createColorScale(colors.orange),
+    danger: createColorScale(colors.red),
+    info: createColorScale(colors.blue),
+    muted: createColorScale(colors.gray),
+    focus: createColorScale(colors.sky),
+    overlay: createColorScale(colors.blackA),
   },
   layout: { borderRadius: '4px' },
 };
@@ -64,15 +64,15 @@ const defaultLightTheme: Theme = {
 const defaultDarkTheme: Theme = {
   base: 'dark',
   colors: {
-    primary: genColorScale(colors.violetDark),
-    secondary: genColorScale(colors.plumDark),
-    success: genColorScale(colors.greenDark),
-    warning: genColorScale(colors.orangeDark),
-    danger: genColorScale(colors.redDark),
-    info: genColorScale(colors.blueDark),
-    muted: genColorScale(colors.grayDark),
-    focus: genColorScale(colors.skyDark),
-    overlay: genColorScale(colors.whiteA),
+    primary: createColorScale(colors.violetDark),
+    secondary: createColorScale(colors.plumDark),
+    success: createColorScale(colors.greenDark),
+    warning: createColorScale(colors.orangeDark),
+    danger: createColorScale(colors.redDark),
+    info: createColorScale(colors.blueDark),
+    muted: createColorScale(colors.grayDark),
+    focus: createColorScale(colors.skyDark),
+    overlay: createColorScale(colors.whiteA),
   },
   layout: { borderRadius: '4px' },
 };
@@ -101,9 +101,10 @@ export const WebboUi = (config: PluginConfig = {}) => {
 
   const pluginColors: Record<string, string> = {};
   const utilities: Record<string, Record<string, string>> = {};
+  const variants: { name: string; definition: string }[] = [];
 
   Object.entries(themes).forEach(([themeName, { base, colors, layout }]) => {
-    let cssSelector = `.${themeName}, [data-theme="${themeName}"]`;
+    let cssSelector = `:root.${themeName}, :root[data-theme="${themeName}"]`;
 
     const scheme = base === 'dark' ? 'dark' : 'light';
 
@@ -111,6 +112,7 @@ export const WebboUi = (config: PluginConfig = {}) => {
       cssSelector = `:root,${cssSelector}`;
     }
 
+    variants.push({ name: themeName, definition: `:is(.${themeName} &)` });
     utilities[cssSelector] = { 'color-scheme': scheme };
 
     const flatColors = flatten<ThemeColors | undefined, Record<string, string>>(
@@ -146,7 +148,7 @@ export const WebboUi = (config: PluginConfig = {}) => {
   });
 
   return plugin(
-    ({ addUtilities, addBase }) => {
+    ({ addUtilities, addBase, addVariant }) => {
       addBase([
         {
           ':root.dark': {
@@ -167,6 +169,10 @@ export const WebboUi = (config: PluginConfig = {}) => {
       ]);
 
       addUtilities(utilities);
+
+      variants.forEach((variant) =>
+        addVariant(variant.name, variant.definition),
+      );
 
       addUtilities([
         {
