@@ -21,7 +21,7 @@ export const CodeDemo = async (props: Props) => {
   return (
     <div>
       {preview && (
-        <div className="border border-muted-6 p-3 rounded">{preview}</div>
+        <div className="rounded border border-muted-6 p-3">{preview}</div>
       )}
 
       <CollapsibleCode code={file}>

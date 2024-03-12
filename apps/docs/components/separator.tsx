@@ -5,5 +5,5 @@ interface Props {
 export const Separator = (props: Props) => {
   const { className } = props;
 
-  return <div className={`h-px bg-muted-4 mt-4 ${className}`}></div>;
+  return <div className={`mt-4 h-px bg-muted-4 ${className}`}></div>;
 };

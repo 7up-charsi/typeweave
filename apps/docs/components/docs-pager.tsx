@@ -72,7 +72,7 @@ export const DocsPager = ({ activeSlug }: Props) => {
       : null;
 
   return (
-    <div className="flex mt-10">
+    <div className="mt-10 flex">
       {prev && (
         <Button variant="flat" color="primary" asChild startContent={arrowLeft}>
           <Link href={prev?.href}>{prev?.title}</Link>

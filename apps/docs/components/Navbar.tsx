@@ -7,18 +7,18 @@ import { navbarLinks } from '@/config/navbar-links';
 
 export const Navbar = () => {
   return (
-    <header className="fixed top-0 m-auto max-w-screen-2xl w-full z-[999] h-16 flex items-center px-12 bg-muted-1/50 backdrop-blur-sm  border-b border-b-muted-6">
+    <header className="fixed top-0 z-[999] m-auto flex h-16 w-full max-w-screen-2xl items-center border-b border-b-muted-6 bg-muted-1/50  px-12 backdrop-blur-sm">
       <Link
         href="/"
         aria-label="home page"
-        className="inline-block leading-none mr-10"
+        className="mr-10 inline-block leading-none"
       >
         <Image
           src={lightLogo}
           alt="webbu-ui dark logo"
           width={120}
           height={120}
-          className="dark:inline-block hidden"
+          className="hidden dark:inline-block"
         />
         <Image
           src={darkLogo}
@@ -34,7 +34,7 @@ export const Navbar = () => {
           <Link
             key={i}
             href={href}
-            className="inline-block first-letter:uppercase text-muted-11/90 hover:text-muted-11 transition-colors hover:bg-muted-3 px-3 py-2 rounded"
+            className="inline-block rounded px-3 py-2 text-muted-11/90 transition-colors first-letter:uppercase hover:bg-muted-3 hover:text-muted-11"
           >
             {title}
           </Link>
@@ -57,7 +57,7 @@ export const Navbar = () => {
           viewBox="0 0 20 20"
           width={20}
           height={20}
-          className="text-muted-11/90 hover:text-muted-11 transition-colors"
+          className="text-muted-11/90 transition-colors hover:text-muted-11"
         >
           <g>
             <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">

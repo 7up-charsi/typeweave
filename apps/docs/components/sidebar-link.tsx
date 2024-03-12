@@ -14,7 +14,7 @@ export const SidebarLink = ({ href, title }: Props) => {
   return (
     <Link
       href={href}
-      className={`h-8 inline-flex items-center px-3 rounded ${pathname === href ? 'bg-primary-4 text-primary-11' : 'text-muted-11 hover:bg-muted-3'}`}
+      className={`inline-flex h-8 items-center rounded px-3 ${pathname === href ? 'bg-primary-4 text-primary-11' : 'text-muted-11 hover:bg-muted-3'}`}
     >
       <span className="first-letter:uppercase">{title}</span>
     </Link>

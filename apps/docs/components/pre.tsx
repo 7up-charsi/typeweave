@@ -6,7 +6,7 @@ export const Pre = (props: Props) => {
   return (
     <pre
       {...props}
-      className="hljs rounded p-4 mt-4 relative overflow-auto border border-muted-6"
+      className="hljs relative mt-4 overflow-auto rounded border border-muted-6 p-4"
     />
   );
 };

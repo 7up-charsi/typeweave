@@ -6,7 +6,7 @@ const github_svg = (
     viewBox="0 0 20 20"
     width={20}
     height={20}
-    className="text-muted-11/90 hover:text-muted-11 transition-colors"
+    className="text-muted-11/90 transition-colors hover:text-muted-11"
   >
     <g>
       <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
@@ -29,7 +29,7 @@ export const DocHeaderLinks = (props: Props) => {
   const { source, styles } = props;
 
   return (
-    <div className="flex gap-4 items-center justify-end mt-3">
+    <div className="mt-3 flex items-center justify-end gap-4">
       {[
         source && {
           icon: github_svg,
@@ -53,7 +53,7 @@ export const DocHeaderLinks = (props: Props) => {
             aria-label={a11yLabel}
             href={href}
             key={i}
-            className="flex gap-4 items-center px-2 h-8 rounded bg-muted-3"
+            className="flex h-8 items-center gap-4 rounded bg-muted-3 px-2"
           >
             <span>{icon}</span>
             <span className="first-letter:uppercase">{title}</span>

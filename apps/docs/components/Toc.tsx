@@ -45,17 +45,17 @@ export const Toc = () => {
   }, [headings]);
 
   return (
-    <aside className="w-full shrink-0 h-[calc(100vh-theme(spacing.16))] sticky top-16 p-2 pt-4">
-      <span className="text-muted-11 text-sm">Table of contents</span>
+    <aside className="sticky top-16 h-[calc(100vh-theme(spacing.16))] w-full shrink-0 p-2 pt-4">
+      <span className="text-sm text-muted-11">Table of contents</span>
       <nav aria-label="table of content" className="flex flex-col">
         {headings.map(({ id, innerText, dataset }, i) => {
           const depth = dataset.depth as unknown as string;
 
           return (
-            <div key={i} className="h-8 flex items-center gap-2">
+            <div key={i} className="flex h-8 items-center gap-2">
               <div
                 style={{ marginLeft: +depth === 2 ? 0 : +depth * 5 }}
-                className={`w-1 h-1/3 rounded-full ${activeId === id ? 'bg-primary-9' : 'bg-transparent'}`}
+                className={`h-1/3 w-1 rounded-full ${activeId === id ? 'bg-primary-9' : 'bg-transparent'}`}
               ></div>
               <Link
                 href={`#${id}`}

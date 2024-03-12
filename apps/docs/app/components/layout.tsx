@@ -3,7 +3,7 @@ interface Props {
 }
 
 const Layout = ({ children }: Props) => {
-  return <div className="pt-16 flex"> {children}</div>;
+  return <div className="flex pt-16"> {children}</div>;
 };
 
 export default Layout;

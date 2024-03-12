@@ -5,7 +5,7 @@ import { Button } from '@webbo-ui/button';
 
 export const AlertActions = () => {
   return (
-    <div className="w-full flex flex-col gap-3">
+    <div className="flex w-full flex-col gap-3">
       <Alert color="danger" onClose={() => {}}>
         This is `danger` Alert with default action button.
       </Alert>

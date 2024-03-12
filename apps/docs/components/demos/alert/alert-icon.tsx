@@ -28,7 +28,7 @@ const faceMindBlowing_svg = (
 
 export const AlertIcon = () => {
   return (
-    <div className="w-full flex flex-col gap-3">
+    <div className="flex w-full flex-col gap-3">
       <Alert icon={heart_svg} color="success">
         This success Alert has a custom `heart` icon.
       </Alert>
