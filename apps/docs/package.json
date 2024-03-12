@@ -14,9 +14,10 @@
     "@webbo-ui/button": "workspace:*",
     "@webbo-ui/dialog": "workspace:*",
     "@webbo-ui/input": "workspace:*",
+    "@webbo-ui/menu": "workspace:*",
     "@webbo-ui/tabs": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
-    "@webbo-ui/theme-switcher": "workspace:*",
+    "@webbo-ui/themes": "workspace:*",
     "algoliasearch": "^4.22.1",
     "clsx": "^2.0.0",
     "geist": "^1.2.2",
@@ -47,3 +48,4 @@
     "typescript": "^5.3.3"
   }
 }
+

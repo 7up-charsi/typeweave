@@ -7,7 +7,7 @@ export const menu = tv({
     item: 'px-2 h-8 cursor-pointer select-none flex items-center gap-1 text-muted-11 outline-none data-[disabled=true]:cursor-default data-[disabled=true]:disabled data-[focused=true]:bg-muted-4 relative overflow-hidden',
     itemIcon:
       'w-[15px] h-full overflow-hidden flex items-center justify-center',
-    itemContent: 'first-letter:uppercase',
+    itemContent: 'grow first-letter:uppercase',
     label: 'px-4 py-1 text-sm text-muted-11 first-letter:uppercase',
     group: '',
     separator: 'h-px bg-muted-6 my-1',
