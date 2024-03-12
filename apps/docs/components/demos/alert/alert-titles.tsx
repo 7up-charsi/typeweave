@@ -2,7 +2,7 @@ import { Alert } from '@webbo-ui/alert';
 
 export const AlertTitles = () => {
   return (
-    <div className="w-full flex flex-col gap-3">
+    <div className="flex w-full flex-col gap-3">
       <Alert color="danger" title="danger">
         This is an `danger` Alert with a scary title.
       </Alert>

@@ -29,12 +29,12 @@ export const mdxComponents: any = {
   h2: (props: any) => <HeadingLink as="h2" {...props} />,
   h3: (props: any) => <HeadingLink as="h3" {...props} />,
   p: (props: any) => <p {...props} className="mt-4" />,
-  ul: (props: any) => <ul {...props} className="list-disc list-inside" />,
+  ul: (props: any) => <ul {...props} className="list-inside list-disc" />,
   a: (props: any) => (
     // @ts-ignore
     <Link
       {...props}
-      className="underline italic text-secondary-11 underline-offset-2"
+      className="italic text-secondary-11 underline underline-offset-2"
     />
   ),
 };

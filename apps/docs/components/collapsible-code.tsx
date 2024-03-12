@@ -40,7 +40,7 @@ export const CollapsibleCode = (props: Props) => {
 
       {isCollapsible && (
         <Button
-          className="absolute bottom-5 left-1/2 -translate-x-1/2 z-50"
+          className="absolute bottom-5 left-1/2 z-50 -translate-x-1/2"
           size="sm"
           color="primary"
           variant="solid"

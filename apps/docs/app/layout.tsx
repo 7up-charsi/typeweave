@@ -16,7 +16,7 @@ interface Props {
 const Layout = ({ children }: Props) => {
   return (
     <html lang="en" className={GeistSans.variable}>
-      <body className="max-w-screen-2xl m-auto bg-muted-1 text-muted-11">
+      <body className="m-auto max-w-screen-2xl bg-muted-1 text-muted-11">
         <Navbar />
         {children}
       </body>

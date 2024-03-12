@@ -74,24 +74,20 @@ const ThemeMenu = () => {
             onChange={onThemeChange}
             value={theme}
           >
-            <Menu.RadioItem
-              value="light"
-              classNames={{ itemContent: 'flex justify-between pr-3' }}
-            >
-              <span>Light</span> {light_svg}
-            </Menu.RadioItem>
-            <Menu.RadioItem
-              value="dark"
-              classNames={{ itemContent: 'flex justify-between pr-3' }}
-            >
-              <span>Dark</span> {dark_svg}
-            </Menu.RadioItem>
-            <Menu.RadioItem
-              value="system"
-              classNames={{ itemContent: 'flex justify-between pr-3' }}
-            >
-              <span>System</span> {system_svg}
-            </Menu.RadioItem>
+            {[
+              { title: 'green', icon: light_svg },
+              { title: 'light', icon: light_svg },
+              { title: 'dark', icon: dark_svg },
+              { title: 'system', icon: system_svg },
+            ].map(({ icon, title }) => (
+              <Menu.RadioItem
+                key={title}
+                value={title}
+                classNames={{ itemContent: 'flex justify-between pr-3' }}
+              >
+                <span className="first-letter:uppercase">{title}</span> {icon}
+              </Menu.RadioItem>
+            ))}
           </Menu.RadioGroup>
         </Menu.Menu>
       </Menu.Portal>

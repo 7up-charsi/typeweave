@@ -7,7 +7,7 @@ const navHeadingStyles = 'h-8 inline-flex items-center capitalize font-medium';
 
 export const Sidebar = () => {
   return (
-    <aside className="w-72 fixed top-16 h-[calc(100vh-theme(spacing.16))] pr-5 pl-12 overflow-auto border-r border-r-muted-6 py-5 flex flex-col gap-3">
+    <aside className="fixed top-16 flex h-[calc(100vh-theme(spacing.16))] w-72 flex-col gap-3 overflow-auto border-r border-r-muted-6 py-5 pl-12 pr-5">
       <nav className="flex flex-col gap-1">
         <h2 className={navHeadingStyles}>guides</h2>
 

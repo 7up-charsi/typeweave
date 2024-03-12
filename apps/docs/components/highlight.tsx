@@ -6,7 +6,7 @@ export const Highlight = (props: Props) => {
   const { children } = props;
 
   return (
-    <span className="mx-1 px-1 py-px rounded text-primary-11 bg-primary-3">
+    <span className="mx-1 rounded bg-primary-3 px-1 py-px text-primary-11">
       {children}
     </span>
   );
