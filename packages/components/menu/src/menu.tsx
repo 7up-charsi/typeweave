@@ -496,7 +496,26 @@ export interface CheckboxItemProps {
   };
   asChild?: boolean;
   disableCloseOnChange?: boolean;
+  icon?: React.ReactNode;
 }
+
+const checkbox_icon = (
+  <svg
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 16 12"
+    style={{ height: 11, width: 11 }}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M1 5.917 5.724 10.5 15 1.5"
+    />
+  </svg>
+);
 
 export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
   (props, ref) => {
@@ -507,6 +526,7 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
       onChange,
       disabled,
       asChild,
+      icon = checkbox_icon,
       disableCloseOnChange = true,
     } = props;
 
@@ -532,23 +552,7 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
             className: classNames?.itemIcon,
           })}
         >
-          {!checked ? null : (
-            <svg
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 16 12"
-              style={{ height: 11, width: 11 }}
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 5.917 5.724 10.5 15 1.5"
-              />
-            </svg>
-          )}
+          {!checked ? null : icon}
         </span>
 
         <span
@@ -619,8 +623,23 @@ export interface RadioItemProps {
     itemContent?: string;
   };
   asChild?: boolean;
+  icon?: React.ReactNode;
   disableCloseOnChange?: boolean;
 }
+
+const radio_icon = (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48">
+    <g>
+      <path fill="#fff" fillOpacity="0.01" d="M0 0H48V48H0z"></path>
+      <path
+        fill="currentColor"
+        stroke="currentColor"
+        strokeWidth="4"
+        d="M24 33a9 9 0 100-18 9 9 0 000 18z"
+      ></path>
+    </g>
+  </svg>
+);
 
 export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
   (props, ref) => {
@@ -630,6 +649,7 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
       classNames,
       value,
       asChild,
+      icon = radio_icon,
       disableCloseOnChange = true,
     } = props;
 
@@ -658,23 +678,7 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
             className: classNames?.itemIcon,
           })}
         >
-          {!checked ? null : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 48 48"
-            >
-              <g>
-                <path fill="#fff" fillOpacity="0.01" d="M0 0H48V48H0z"></path>
-                <path
-                  fill="currentColor"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  d="M24 33a9 9 0 100-18 9 9 0 000 18z"
-                ></path>
-              </g>
-            </svg>
-          )}
+          {!checked ? null : icon}
         </span>
 
         <span
