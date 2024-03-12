@@ -75,7 +75,6 @@ const ThemeMenu = () => {
             value={theme}
           >
             {[
-              { title: 'green', icon: light_svg },
               { title: 'light', icon: light_svg },
               { title: 'dark', icon: dark_svg },
               { title: 'system', icon: system_svg },
