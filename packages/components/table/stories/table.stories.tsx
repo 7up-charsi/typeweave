@@ -68,7 +68,7 @@ const Template = () => {
           <span className="grow"></span>
 
           <Table.ColumnVisibility tableIdentifier="demo_table">
-            <Button isIconOnly>
+            <Button isIconOnly aria-label="column visibility">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
