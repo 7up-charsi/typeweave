@@ -4,6 +4,7 @@ import { forwardRef, useId, useMemo, useRef, useState } from 'react';
 import { Slot } from '@webbo-ui/slot';
 import { TabsVariantProps, tabs } from '@webbo-ui/theme';
 import { createCollection } from '@webbo-ui/use-collection';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -165,7 +166,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
     const triggerId = 'trigger-' + value;
     const contentId = 'content-' + value;
 
-    const handleClick = (event: React.MouseEvent) => {
+    const handleClick = (event: React.PointerEvent) => {
       if (event.ctrlKey === false) {
         context.onValueChange(value);
       } else {
@@ -255,6 +256,8 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       context.onTabChange(triggerId);
     };
 
+    const pointerEvents = usePointerEvents({ onPress: handleClick });
+
     return (
       <Collection.Item active={isSelected}>
         <Slot
@@ -268,9 +271,9 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           data-selected={isSelected}
           data-orientation={context.orientation}
           id={triggerId}
-          onClick={handleClick}
           onKeyDown={onKeyDown}
           onFocus={onFocus}
+          {...pointerEvents}
         >
           {children}
         </Slot>

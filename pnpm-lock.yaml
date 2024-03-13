@@ -301,6 +301,9 @@ importers:
       '@webbo-ui/use-is-disabled':
         specifier: workspace:*
         version: link:../../hooks/use-is-disabled
+      '@webbo-ui/use-pointer-events':
+        specifier: workspace:*
+        version: link:../../hooks/use-pointer-events
       '@webbo-ui/use-scroll-lock':
         specifier: workspace:*
         version: link:../../hooks/use-scroll-lock
@@ -356,6 +359,9 @@ importers:
       '@webbo-ui/use-controllable-state':
         specifier: workspace:*
         version: link:../../hooks/use-controllable-state
+      '@webbo-ui/use-pointer-events':
+        specifier: workspace:*
+        version: link:../../hooks/use-pointer-events
       lodash.groupby:
         specifier: ^4.6.0
         version: 4.6.0
@@ -415,6 +421,9 @@ importers:
       '@webbo-ui/use-callback-ref':
         specifier: workspace:*
         version: link:../../hooks/use-callback-ref
+      '@webbo-ui/use-pointer-events':
+        specifier: workspace:*
+        version: link:../../hooks/use-pointer-events
       '@webbo-ui/use-ripple':
         specifier: workspace:*
         version: link:../../hooks/use-ripple
@@ -453,21 +462,15 @@ importers:
 
   packages/components/chip:
     dependencies:
-      '@react-aria/focus':
-        specifier: ^3.15.0
-        version: 3.16.2(react@18.2.0)
-      '@react-aria/interactions':
-        specifier: ^3.20.0
-        version: 3.21.1(react@18.2.0)
       '@webbo-ui/react-utils':
         specifier: workspace:*
         version: link:../../utilities/react-utils
       '@webbo-ui/theme':
         specifier: workspace:*
         version: link:../../core/theme
-      '@webbo-ui/use-ripple':
+      '@webbo-ui/use-pointer-events':
         specifier: workspace:*
-        version: link:../../hooks/use-ripple
+        version: link:../../hooks/use-pointer-events
       react:
         specifier: '>=18'
         version: 18.2.0
@@ -517,6 +520,9 @@ importers:
       '@webbo-ui/use-is-disabled':
         specifier: workspace:*
         version: link:../../hooks/use-is-disabled
+      '@webbo-ui/use-pointer-events':
+        specifier: workspace:*
+        version: link:../../hooks/use-pointer-events
       '@webbo-ui/use-scroll-lock':
         specifier: workspace:*
         version: link:../../hooks/use-scroll-lock
@@ -637,6 +643,9 @@ importers:
       '@webbo-ui/use-is-disabled':
         specifier: workspace:*
         version: link:../../hooks/use-is-disabled
+      '@webbo-ui/use-pointer-events':
+        specifier: workspace:*
+        version: link:../../hooks/use-pointer-events
       '@webbo-ui/use-ripple':
         specifier: workspace:*
         version: link:../../hooks/use-ripple
@@ -745,6 +754,9 @@ importers:
       '@webbo-ui/use-is-disabled':
         specifier: workspace:*
         version: link:../../hooks/use-is-disabled
+      '@webbo-ui/use-pointer-events':
+        specifier: workspace:*
+        version: link:../../hooks/use-pointer-events
       '@webbo-ui/visually-hidden':
         specifier: workspace:*
         version: link:../visually-hidden
@@ -841,6 +853,9 @@ importers:
       '@webbo-ui/use-controllable-state':
         specifier: workspace:*
         version: link:../../hooks/use-controllable-state
+      '@webbo-ui/use-pointer-events':
+        specifier: workspace:*
+        version: link:../../hooks/use-pointer-events
       lodash.groupby:
         specifier: ^4.6.0
         version: 4.6.0
@@ -975,6 +990,9 @@ importers:
       '@webbo-ui/use-controllable-state':
         specifier: workspace:*
         version: link:../../hooks/use-controllable-state
+      '@webbo-ui/use-pointer-events':
+        specifier: workspace:*
+        version: link:../../hooks/use-pointer-events
       react:
         specifier: '>=18'
         version: 18.2.0
@@ -1242,6 +1260,22 @@ importers:
 
   packages/hooks/use-media-query:
     dependencies:
+      react:
+        specifier: '>=18'
+        version: 18.2.0
+      react-dom:
+        specifier: '>=18'
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      clean-package:
+        specifier: ^2.2.0
+        version: 2.2.0
+
+  packages/hooks/use-pointer-events:
+    dependencies:
+      '@webbo-ui/use-callback-ref':
+        specifier: workspace:*
+        version: link:../use-callback-ref
       react:
         specifier: '>=18'
         version: 18.2.0

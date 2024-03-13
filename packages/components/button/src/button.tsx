@@ -18,6 +18,7 @@ import {
   useRef,
 } from 'react';
 import { Slot } from '@webbo-ui/slot';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 interface GroupContext extends ButtonVariantProps {
   disabled?: boolean;
@@ -82,6 +83,7 @@ export interface ButtonProps
   className?: string;
   children?: ReactNode;
   asChild?: boolean;
+  onPress?: (e: React.PointerEvent) => void;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -98,6 +100,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant,
       color,
       fullWidth,
+      onPointerDown,
+      onPointerUp,
+      onPress,
       ...buttonProps
     } = props;
 
@@ -109,6 +114,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const ariaLabel = props['aria-label'];
     const ariaLabelledby = props['aria-labelledby'];
+
+    const pointerEvents = usePointerEvents({
+      onPointerDown,
+      onPointerUp,
+      onPress,
+    });
 
     useEffect(() => {
       if (
@@ -135,6 +146,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
         {...buttonProps}
+        {...pointerEvents}
         disabled={!!disabled}
         ref={mergeRefs(ref, innerRef)}
         className={styles}

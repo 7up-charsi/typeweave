@@ -9,6 +9,7 @@ import { FocusScope, FocusTrap } from '@webbo-ui/focus-trap';
 import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { createPortal } from 'react-dom';
 import { AlertDialogVariantProps, alertDialog } from '@webbo-ui/theme';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -116,13 +117,17 @@ export const Trigger = (props: TriggerProps) => {
 
   const rootContext = useRootContext(Trigger_Name);
 
+  const pointerEvents = usePointerEvents({
+    onPress: rootContext.handleOpen,
+  });
+
   return (
     <Slot
       aria-expanded={rootContext.isOpen}
       aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
       aria-label={a11yLabel}
       aria-describedby={a11yDescription}
-      onClick={rootContext.handleOpen}
+      {...pointerEvents}
     >
       {children}
     </Slot>
@@ -142,9 +147,13 @@ export interface CloseProps {
 export const Close = (props: CloseProps) => {
   const { children } = props;
 
-  const { handleClose } = useRootContext(Close_Name);
+  const rootContext = useRootContext(Close_Name);
 
-  return <Slot onClick={handleClose}>{children}</Slot>;
+  const pointerEvents = usePointerEvents({
+    onPress: rootContext.handleClose,
+  });
+
+  return <Slot {...pointerEvents}>{children}</Slot>;
 };
 
 Close.displayName = 'webbo-ui.' + Close_Name;

@@ -27,7 +27,7 @@ export interface RenderInputProps<Value> {
   showClearButton: boolean;
   onBlur: () => void;
   handleOpen: () => void;
-  handleClear: (e: React.MouseEvent) => void;
+  handleClear: (e: React.PointerEvent) => void;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
   ariaProps: {
@@ -325,7 +325,7 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
     }
   };
 
-  const handleClear = (e: React.MouseEvent) => {
+  const handleClear = (e: React.PointerEvent) => {
     e.preventDefault();
     inputRef.current?.focus();
     setFocused(null);

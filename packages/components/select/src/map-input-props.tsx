@@ -70,7 +70,7 @@ export const mapInputProps = ({
           <Button
             isIconOnly
             variant="text"
-            onClick={handleClear}
+            onPress={handleClear}
             size="sm"
             tabIndex={-1}
             aria-label="clear value"

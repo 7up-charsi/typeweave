@@ -121,21 +121,21 @@ const ButtonThemeSwitcher = () => {
       <Button
         isIconOnly
         aria-label="light theme"
-        onClick={() => onThemeChange('light')}
+        onPress={() => onThemeChange('light')}
       >
         {light_svg}
       </Button>
       <Button
         isIconOnly
         aria-label="dark theme"
-        onClick={() => onThemeChange('dark')}
+        onPress={() => onThemeChange('dark')}
       >
         {dark_svg}
       </Button>
       <Button
         isIconOnly
         aria-label="system theme"
-        onClick={() => onThemeChange('system')}
+        onPress={() => onThemeChange('system')}
       >
         {system_svg}
       </Button>

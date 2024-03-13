@@ -11,6 +11,7 @@ import { createContextScope } from '@webbo-ui/context';
 import { useEffect, useId, useMemo, useRef } from 'react';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { DialogVariantProps, dialog } from '@webbo-ui/theme';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
 
@@ -165,13 +166,17 @@ export const Trigger = (props: TriggerProps) => {
 
   const rootContext = useRootContext(Trigger_Name);
 
+  const pointerEvents = usePointerEvents({
+    onPress: rootContext.handleOpen,
+  });
+
   return (
     <Slot
       aria-expanded={rootContext.isOpen}
       aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
       aria-label={a11yLabel}
       aria-describedby={a11yDescription}
-      onClick={rootContext.handleOpen}
+      {...pointerEvents}
     >
       {children}
     </Slot>
@@ -193,15 +198,13 @@ export const Close = (props: CloseProps) => {
 
   const { handleClose } = useRootContext(Close_Name);
 
-  return (
-    <Slot
-      onClick={() => {
-        handleClose('pointer');
-      }}
-    >
-      {children}
-    </Slot>
-  );
+  const pointerEvents = usePointerEvents({
+    onPress: () => {
+      handleClose('pointer');
+    },
+  });
+
+  return <Slot {...pointerEvents}>{children}</Slot>;
 };
 
 Close.displayName = 'webbo-ui.' + Close_Name;

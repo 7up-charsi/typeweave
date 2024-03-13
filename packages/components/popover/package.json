@@ -39,6 +39,7 @@
     "@webbo-ui/use-controllable-state": "workspace:*",
     "@webbo-ui/use-click-outside": "workspace:*",
     "@webbo-ui/use-callback-ref": "workspace:*",
+    "@webbo-ui/use-pointer-events": "workspace:*",
     "@webbo-ui/focus-trap": "workspace:*",
     "@webbo-ui/error": "workspace:*",
     "@webbo-ui/slot": "workspace:*",

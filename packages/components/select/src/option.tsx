@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 export interface OptionProps<V> {
   option: V;
@@ -31,6 +32,14 @@ export const Option = (
   const ref = useRef<HTMLLIElement>(null);
   const isHovered = useRef(false);
 
+  const pointerEvents = usePointerEvents({
+    onPointerDown: (e) => e.preventDefault(),
+    onPress: () => {
+      if (disabled) return;
+      onSelect();
+    },
+  });
+
   useEffect(() => {
     if (selected)
       ref.current?.scrollIntoView({ behavior: 'instant', block: 'center' });
@@ -44,7 +53,6 @@ export const Option = (
   return (
     <li
       ref={ref}
-      onPointerDown={(e) => e.preventDefault()}
       onPointerEnter={() => {
         isHovered.current = true;
         onHover();
@@ -52,10 +60,7 @@ export const Option = (
       onPointerLeave={() => {
         isHovered.current = false;
       }}
-      onClick={() => {
-        if (disabled) return;
-        onSelect();
-      }}
+      {...pointerEvents}
       {...props}
     >
       {children ?? label}
