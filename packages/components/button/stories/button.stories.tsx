@@ -152,6 +152,7 @@ const IconOnlyTemplate = (args: ButtonProps) => (
               variant={variant}
               color={color}
               isIconOnly
+              aria-label="react"
             >
               {reactIcon}
             </Button>

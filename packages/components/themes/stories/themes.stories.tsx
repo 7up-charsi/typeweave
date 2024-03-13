@@ -118,13 +118,25 @@ const ButtonThemeSwitcher = () => {
 
   return (
     <ButtonGroup>
-      <Button isIconOnly onClick={() => onThemeChange('light')}>
+      <Button
+        isIconOnly
+        aria-label="light theme"
+        onClick={() => onThemeChange('light')}
+      >
         {light_svg}
       </Button>
-      <Button isIconOnly onClick={() => onThemeChange('dark')}>
+      <Button
+        isIconOnly
+        aria-label="dark theme"
+        onClick={() => onThemeChange('dark')}
+      >
         {dark_svg}
       </Button>
-      <Button isIconOnly onClick={() => onThemeChange('system')}>
+      <Button
+        isIconOnly
+        aria-label="system theme"
+        onClick={() => onThemeChange('system')}
+      >
         {system_svg}
       </Button>
     </ButtonGroup>

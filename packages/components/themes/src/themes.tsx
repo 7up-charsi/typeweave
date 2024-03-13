@@ -3,7 +3,7 @@
 import { useMediaQuery } from '@webbo-ui/use-media-query';
 import { createContextScope } from '@webbo-ui/context';
 import { CustomError } from '@webbo-ui/error';
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 
 const ThemeProvider_Name = 'Themes.ThemeProvider';
@@ -15,6 +15,7 @@ export interface ThemeProviderProps {
   themeContainer?: HTMLElement;
   darkTheme?: string;
   lightTheme?: string;
+  localStorageKey?: false | string;
 }
 
 interface ThemeProviderContext {
@@ -33,6 +34,7 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
     lightTheme = 'light',
     themeContainer = globalThis?.document?.documentElement,
     dataAttribute = 'theme',
+    localStorageKey = 'theme',
   } = props;
 
   const matched = useMediaQuery('(prefers-color-scheme: dark)');
@@ -53,11 +55,18 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
     if (dataAttribute) themeContainer.dataset[dataAttribute] = newTheme;
 
     setValue(theme);
+
+    if (localStorageKey) localStorage.setItem(localStorageKey, theme);
   });
 
-  useEffect(() => {
-    onThemeChange(defaultTheme);
-  }, [onThemeChange, defaultTheme]);
+  useLayoutEffect(() => {
+    onThemeChange(
+      (localStorageKey ? localStorage.getItem(localStorageKey) : undefined) ??
+        defaultTheme,
+    );
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultTheme, localStorageKey]);
 
   return (
     <ThemeProviderProvider theme={value} onThemeChange={onThemeChange}>
