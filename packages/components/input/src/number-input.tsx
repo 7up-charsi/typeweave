@@ -204,11 +204,7 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         onKeyDown({ repeat: true, key } as never);
         document.addEventListener(
           'pointerup',
-          () => {
-            onKeyUp({ key } as never);
-            clearTimeout(longPressTimeout.current);
-            longPressTimeout.current = undefined;
-          },
+          () => onKeyUp({ key } as never),
           { once: true },
         );
       }, threshold);
