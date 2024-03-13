@@ -8,9 +8,9 @@ export interface OverlayProps
     React.HTMLAttributes<HTMLDivElement> {}
 
 const Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
-  const { className, ...restProps } = props;
+  const { className, variant = 'opaque', ...restProps } = props;
 
-  const styles = overlay({ className });
+  const styles = overlay({ variant, className });
 
   return <div {...restProps} ref={ref} className={styles} />;
 });
