@@ -2,12 +2,11 @@
 
 import { ChangeEvent, forwardRef, useRef } from 'react';
 import Input, { InputProps } from './input';
-import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
+import { mergeRefs } from '@webbo-ui/react-utils';
 import { NumberInputClassNames, numberInput } from '@webbo-ui/theme';
 import { Button } from '@webbo-ui/button';
 import { CustomError } from '@webbo-ui/error';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
-import { useLongPress } from '@react-aria/interactions';
 
 export interface NumberInputProps extends Omit<InputProps, 'type'> {
   classNames?: InputProps['classNames'] & { stepButton: NumberInputClassNames };
@@ -48,13 +47,11 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       },
     });
 
-    const state = useRef<{
-      longPressInterval?: NodeJS.Timeout;
-      keyDownInterval?: NodeJS.Timeout;
-      repeatedEvent?: boolean;
-    }>({});
+    const keyDownInterval = useRef<NodeJS.Timeout | undefined>(undefined);
+    const longPressTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
+    const sameSource = useRef(false);
 
-    const handleStepUp = (toAdd = step) => {
+    const increase = (toAdd: number) => {
       setValue((prev) => {
         const val = +prev;
 
@@ -66,7 +63,7 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       });
     };
 
-    const handleStepDown = (toAdd = step) => {
+    const decrease = (toAdd: number) => {
       setValue((prev) => {
         const val = +prev;
 
@@ -78,7 +75,7 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       });
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const onKeyDown = (e: React.KeyboardEvent) => {
       const ArrowUp = e.key === 'ArrowUp';
       const ArrowDown = e.key === 'ArrowDown';
       const PageUp = e.key === 'PageUp';
@@ -88,62 +85,64 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       const repeatEvent = e.repeat;
 
       if (ArrowUp || ArrowDown || PageUp || PageDown || Home || End)
-        e.preventDefault();
+        // when this function is used in long press then e.prevenDefault is not available
+        e.preventDefault?.();
 
-      if (ArrowUp && !repeatEvent) {
-        handleStepUp();
-        return;
+      if (!repeatEvent) {
+        if (ArrowUp) {
+          increase(step);
+          return;
+        }
+
+        if (ArrowDown) {
+          decrease(step);
+          return;
+        }
+
+        if (PageUp) {
+          increase(largeStep);
+          return;
+        }
+
+        if (PageDown) {
+          decrease(largeStep);
+          return;
+        }
       }
 
-      if (ArrowDown && !repeatEvent) {
-        handleStepDown();
-        return;
+      if (repeatEvent && !keyDownInterval.current) {
+        if (ArrowUp) {
+          keyDownInterval.current = setInterval(
+            () => increase(step),
+            repeatRate,
+          );
+          return;
+        }
+
+        if (ArrowDown) {
+          keyDownInterval.current = setInterval(
+            () => decrease(step),
+            repeatRate,
+          );
+          return;
+        }
+
+        if (PageUp) {
+          keyDownInterval.current = setInterval(() => {
+            increase(largeStep);
+          }, repeatRate);
+
+          return;
+        }
+
+        if (PageDown) {
+          keyDownInterval.current = setInterval(() => {
+            decrease(largeStep);
+          }, repeatRate);
+
+          return;
+        }
       }
-
-      if (PageUp && !repeatEvent) {
-        handleStepUp(largeStep);
-        return;
-      }
-
-      if (PageDown && !repeatEvent) {
-        handleStepDown(largeStep);
-        return;
-      }
-
-      if (ArrowUp && repeatEvent && !state.current.repeatedEvent) {
-        state.current.repeatedEvent = true;
-        state.current.keyDownInterval = setInterval(handleStepUp, repeatRate);
-        return;
-      }
-
-      if (ArrowDown && repeatEvent && !state.current.repeatedEvent) {
-        state.current.repeatedEvent = true;
-        state.current.keyDownInterval = setInterval(handleStepDown, repeatRate);
-        return;
-      }
-
-      if (PageUp && repeatEvent && !state.current.repeatedEvent) {
-        state.current.repeatedEvent = true;
-
-        state.current.keyDownInterval = setInterval(() => {
-          handleStepUp(largeStep);
-        }, repeatRate);
-
-        return;
-      }
-
-      if (PageDown && repeatEvent && !state.current.repeatedEvent) {
-        state.current.repeatedEvent = true;
-
-        state.current.keyDownInterval = setInterval(() => {
-          handleStepDown(largeStep);
-        }, repeatRate);
-
-        return;
-      }
-
-      const target = innerRef.current;
-      if (!target) return;
 
       if (Home && min) {
         setValue(min + '');
@@ -161,124 +160,59 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       }
     };
 
-    const handleKeyUp = (e: React.KeyboardEvent) => {
+    const onKeyUp = (e: React.KeyboardEvent) => {
       const ArrowUp = e.key === 'ArrowUp';
       const ArrowDown = e.key === 'ArrowDown';
       const PageUp = e.key === 'PageUp';
       const PageDown = e.key === 'PageDown';
+      const Home = e.key === 'Home';
+      const End = e.key === 'End';
+
+      if (ArrowUp || ArrowDown || PageUp || PageDown || Home || End)
+        // when this function is used in long press then e.prevenDefault is not available
+        e.preventDefault?.();
 
       if (ArrowUp || ArrowDown || PageUp || PageDown) {
-        clearInterval(state.current.keyDownInterval);
-        state.current.repeatedEvent = undefined;
-        state.current.keyDownInterval = undefined;
+        clearInterval(keyDownInterval.current);
+        keyDownInterval.current = undefined;
 
         return;
       }
     };
 
-    const { longPressProps: stepUpLongPressProps } = useLongPress({
-      threshold,
-      onLongPressStart: () => {
-        innerRef.current?.focus();
-        handleStepUp();
-      },
-      onLongPress: () => {
-        state.current.longPressInterval = setInterval(handleStepUp, repeatRate);
-        document.addEventListener(
-          'pointerup',
-          () => {
-            clearInterval(state.current.longPressInterval);
-            state.current.longPressInterval = undefined;
-          },
-          { once: true },
-        );
-      },
-    });
+    const onLongPress = (key: string) => (e: React.PointerEvent) => {
+      sameSource.current = true;
+      if (e.button !== 0) return;
 
-    const { longPressProps: stepDownLongPressProps } = useLongPress({
-      threshold,
-      onLongPressStart: () => {
-        innerRef.current?.focus();
-        handleStepDown();
-      },
-      onLongPress: () => {
-        state.current.longPressInterval = setInterval(
-          handleStepDown,
-          repeatRate,
-        );
+      e.preventDefault();
+      innerRef.current?.focus();
+
+      onKeyDown({ key } as never);
+
+      longPressTimeout.current = setTimeout(() => {
+        onKeyDown({ repeat: true, key } as never);
         document.addEventListener(
           'pointerup',
           () => {
-            clearInterval(state.current.longPressInterval);
-            state.current.longPressInterval = undefined;
+            onKeyUp({ key } as never);
+            clearTimeout(longPressTimeout.current);
+            longPressTimeout.current = undefined;
           },
           { once: true },
         );
-      },
-    });
+      }, threshold);
+    };
+
+    const onLongPressCancel = (e: React.PointerEvent) => {
+      if (!sameSource.current) return;
+      if (e.button !== 0) return;
+
+      sameSource.current = false;
+      clearTimeout(longPressTimeout.current);
+      longPressTimeout.current = undefined;
+    };
 
     const styles = numberInput();
-
-    const buttons = (
-      <div
-        ref={ref}
-        className={styles.base({ className: classNames?.stepButton.base })}
-      >
-        {/* step up */}
-        <Button
-          aria-label="increase value"
-          aria-description="long press to increase speedly"
-          tabIndex={-1}
-          isIconOnly
-          size="sm"
-          variant="text"
-          {...mergeProps(stepUpLongPressProps, {
-            onClick: (e: React.MouseEvent) => e.preventDefault(),
-          })}
-          className={styles.button({
-            className: classNames?.stepButton.button,
-          })}
-        >
-          <svg
-            className={styles.icon({ className: classNames?.stepButton.icon })}
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 10"
-            fill="currentColor"
-          >
-            <path d="M9.207 1A2 2 0 0 0 6.38 1L.793 6.586A2 2 0 0 0 2.207 10H13.38a2 2 0 0 0 1.414-3.414L9.207 1Z" />
-          </svg>
-        </Button>
-
-        {/* step down */}
-        <Button
-          aria-label="decrease value"
-          aria-description="long press to decrease speedly"
-          tabIndex={-1}
-          isIconOnly
-          size="sm"
-          variant="text"
-          {...mergeProps(stepDownLongPressProps, {
-            onClick: (e: React.MouseEvent) => e.preventDefault(),
-          })}
-          className={styles.button({
-            className: classNames?.stepButton.button,
-          })}
-        >
-          <svg
-            className={styles.icon({
-              className: classNames?.stepButton.icon,
-            })}
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 10"
-            fill="currentColor"
-          >
-            <path d="M15.434 1.235A2 2 0 0 0 13.586 0H2.414A2 2 0 0 0 1 3.414L6.586 9a2 2 0 0 0 2.828 0L15 3.414a2 2 0 0 0 .434-2.179Z" />
-          </svg>
-        </Button>
-      </div>
-    );
 
     if (process.env.NODE_ENV !== 'production' && min && max && min > max)
       throw new CustomError('NumberInput', '"min" must be lower than "max"');
@@ -298,8 +232,8 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         value={value}
         onChange={(e) => setValue(e.target.value)}
         inputProps={{
-          onKeyDown: handleKeyDown,
-          onKeyUp: handleKeyUp,
+          onKeyDown,
+          onKeyUp,
           inputMode,
           max: max,
           min: min,
@@ -308,7 +242,67 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         endContent={
           <>
             {endContent}
-            {buttons}
+
+            <div
+              ref={ref}
+              className={styles.base({
+                className: classNames?.stepButton.base,
+              })}
+            >
+              {/* increase */}
+              <Button
+                aria-label="increase value"
+                aria-description="long press to increase speedly"
+                tabIndex={-1}
+                isIconOnly
+                size="sm"
+                variant="text"
+                className={styles.button({
+                  className: classNames?.stepButton.button,
+                })}
+                onPointerDown={onLongPress('ArrowUp')}
+                onPointerUp={onLongPressCancel}
+              >
+                <svg
+                  className={styles.icon({
+                    className: classNames?.stepButton.icon,
+                  })}
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 10"
+                  fill="currentColor"
+                >
+                  <path d="M9.207 1A2 2 0 0 0 6.38 1L.793 6.586A2 2 0 0 0 2.207 10H13.38a2 2 0 0 0 1.414-3.414L9.207 1Z" />
+                </svg>
+              </Button>
+
+              {/* decrease */}
+              <Button
+                aria-label="decrease value"
+                aria-description="long press to decrease speedly"
+                tabIndex={-1}
+                isIconOnly
+                size="sm"
+                variant="text"
+                className={styles.button({
+                  className: classNames?.stepButton.button,
+                })}
+                onPointerDown={onLongPress('ArrowDown')}
+                onPointerUp={onLongPressCancel}
+              >
+                <svg
+                  className={styles.icon({
+                    className: classNames?.stepButton.icon,
+                  })}
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 10"
+                  fill="currentColor"
+                >
+                  <path d="M15.434 1.235A2 2 0 0 0 13.586 0H2.414A2 2 0 0 0 1 3.414L6.586 9a2 2 0 0 0 2.828 0L15 3.414a2 2 0 0 0 .434-2.179Z" />
+                </svg>
+              </Button>
+            </div>
           </>
         }
       />

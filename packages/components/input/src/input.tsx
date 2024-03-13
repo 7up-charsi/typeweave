@@ -116,13 +116,13 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
 
       <div
         {...inputWrapperProps}
-        onPointerDown={(e: React.PointerEvent<HTMLDivElement>) => {
+        onPointerDown={(e) => {
           inputWrapperProps?.onPointerDown?.(e);
 
           if (disabled) return;
           if (e.button !== 0) return;
 
-          if (e.target !== innerInputRef.current) {
+          if (e.target === e.currentTarget) {
             e.preventDefault();
             innerInputRef.current?.focus();
             return;
