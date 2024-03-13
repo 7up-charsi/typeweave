@@ -2,7 +2,6 @@
 
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { Slot } from '@webbo-ui/slot';
-import { useClickOutside } from '@webbo-ui/use-click-outside';
 import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { createPortal } from 'react-dom';
@@ -12,6 +11,10 @@ import { useEffect, useId, useMemo, useRef } from 'react';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { DialogVariantProps, dialog } from '@webbo-ui/theme';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
+import {
+  Overlay as BaseOverlay,
+  OverlayProps as BaseOverlayProps,
+} from '@webbo-ui/overlay';
 
 type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
 
@@ -288,6 +291,29 @@ export const Description = (props: DescriptionProps) => {
 
 Description.displayName = 'webbo-ui.' + Description_Name;
 
+// *-*-*-*-* Overlay *-*-*-*-*
+
+const Overlay_Name = 'Dialog.Overlay';
+
+export interface OverlayProps extends BaseOverlayProps {}
+
+export const Overlay = (props: OverlayProps) => {
+  const { className } = props;
+
+  const rootContext = useRootContext(Overlay_Name);
+
+  const pointerEvents = usePointerEvents({
+    onPress: (e) => {
+      if (e.target !== e.currentTarget) return;
+      rootContext.handleClose('outside');
+    },
+  });
+
+  return <BaseOverlay className={className} {...pointerEvents} />;
+};
+
+Overlay.displayName = 'webbo-ui.' + Overlay_Name;
+
 // *-*-*-*-* Content *-*-*-*-*
 
 const Content_Name = 'Dialog.Content';
@@ -304,14 +330,7 @@ export const Content = (props: ContentProps) => {
 
   const rootContext = useRootContext(Content_Name);
 
-  useScrollLock({ enabled: rootContext.isOpen });
-
-  const setOutsideEle = useClickOutside<HTMLDivElement>({
-    disabled: !rootContext.isOpen,
-    callback: () => {
-      rootContext.handleClose('outside');
-    },
-  });
+  useScrollLock();
 
   const styles = useMemo(() => dialog({ shadow }), [shadow]);
 
@@ -324,7 +343,6 @@ export const Content = (props: ContentProps) => {
         disabled={!rootContext.isOpen}
       >
         <div
-          ref={setOutsideEle}
           role="dialog"
           aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
           aria-describedby={
