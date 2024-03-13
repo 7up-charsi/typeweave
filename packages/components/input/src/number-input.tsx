@@ -84,8 +84,7 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       const repeatEvent = e.repeat;
 
       if (ArrowUp || ArrowDown || PageUp || PageDown || Home || End)
-        // when this function is used in long press then e.prevenDefault is not available
-        e.preventDefault?.();
+        e.preventDefault();
 
       if (!repeatEvent) {
         if (ArrowUp) {
@@ -157,6 +156,17 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         setValue(max + '');
         return;
       }
+
+      ['pointerdown', 'keyup'].forEach((event) =>
+        document.addEventListener(
+          event,
+          () => {
+            clearInterval(keyDownInterval.current);
+            keyDownInterval.current = undefined;
+          },
+          { once: true },
+        ),
+      );
     };
 
     const onKeyUp = (e: React.KeyboardEvent) => {
@@ -168,45 +178,59 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       const End = e.key === 'End';
 
       if (ArrowUp || ArrowDown || PageUp || PageDown || Home || End)
-        // when this function is used in long press then e.prevenDefault is not available
-        e.preventDefault?.();
-
-      if (ArrowUp || ArrowDown || PageUp || PageDown) {
-        clearInterval(keyDownInterval.current);
-        keyDownInterval.current = undefined;
-
-        return;
-      }
+        e.preventDefault();
     };
 
-    const onLongPress = (key: string) => (e: React.PointerEvent) => {
+    const onLongPress = (action: string) => (e: React.PointerEvent) => {
       if (e.button !== 0) return;
 
       e.preventDefault();
       innerRef.current?.focus();
 
-      onKeyDown({ key } as never);
+      if (action === 'decrease') {
+        decrease(step);
+      }
 
-      // why cleanup on document instead of button ?
-      // because onPointerUp on any target (e.g. button) only fires when we relase mouse button on target.
-      // but user can leave button before threshold and if we dont clear timeout then it will infinitly increase/decrase
+      if (action === 'increase') {
+        increase(step);
+      }
 
-      document.addEventListener(
-        'pointerup',
-        () => {
-          clearTimeout(longPressTimeout.current);
-          longPressTimeout.current = undefined;
-        },
-        { once: true },
+      ['pointerup', 'keydown'].forEach((event) =>
+        document.addEventListener(
+          event,
+          () => {
+            clearTimeout(longPressTimeout.current);
+            longPressTimeout.current = undefined;
+          },
+          { once: true },
+        ),
       );
 
       longPressTimeout.current = setTimeout(() => {
-        onKeyDown({ repeat: true, key } as never);
-        document.addEventListener(
-          'pointerup',
-          () => onKeyUp({ key } as never),
-          { once: true },
+        ['pointerup', 'keydown'].forEach((event) =>
+          document.addEventListener(
+            event,
+            () => {
+              clearInterval(keyDownInterval.current);
+              keyDownInterval.current = undefined;
+            },
+            { once: true },
+          ),
         );
+
+        if (action === 'increase') {
+          keyDownInterval.current = setInterval(
+            () => increase(step),
+            repeatRate,
+          );
+        }
+
+        if (action === 'decrease') {
+          keyDownInterval.current = setInterval(
+            () => decrease(step),
+            repeatRate,
+          );
+        }
       }, threshold);
     };
 
@@ -258,7 +282,7 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
                 className={styles.button({
                   className: classNames?.stepButton.button,
                 })}
-                onPointerDown={onLongPress('ArrowUp')}
+                onPointerDown={onLongPress('increase')}
               >
                 <svg
                   className={styles.icon({
@@ -284,7 +308,7 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
                 className={styles.button({
                   className: classNames?.stepButton.button,
                 })}
-                onPointerDown={onLongPress('ArrowDown')}
+                onPointerDown={onLongPress('decrease')}
               >
                 <svg
                   className={styles.icon({

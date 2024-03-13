@@ -13,6 +13,7 @@ import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { createCollection } from '@webbo-ui/use-collection';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { forwardRef, useEffect, useId, useMemo, useRef, useState } from 'react';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 const Root_Name = 'Menu.Root';
 
@@ -109,6 +110,8 @@ export const Trigger = (props: TriggerProps) => {
 
   const rootContext = useRootContext(Trigger_Name);
 
+  const pointerEvents = usePointerEvents({ onPress: rootContext.handleOpen });
+
   return (
     <Popper.Reference>
       <Slot
@@ -119,7 +122,7 @@ export const Trigger = (props: TriggerProps) => {
         aria-controls={rootContext.isOpen ? rootContext.id : undefined}
         aria-label={a11yLabel}
         aria-describedby={a11yDescription}
-        onClick={rootContext.handleOpen}
+        {...pointerEvents}
         onKeyDown={(e: React.KeyboardEvent) => {
           const key = e.key;
 
@@ -307,13 +310,13 @@ const Item_Name = 'Menu.Item';
 export interface ItemProps {
   children?: React.ReactNode;
   disabled?: boolean;
-  disableCloseOnClick?: boolean;
+  disableCloseOnPress?: boolean;
   classNames?: {
     item?: string;
     itemIcon?: string;
     itemContent?: string;
   };
-  onClick?: () => void;
+  onPress?: () => void;
   asChild?: boolean;
 }
 
@@ -321,7 +324,7 @@ const ItemImp = forwardRef<
   HTMLLIElement,
   ItemProps & React.LiHTMLAttributes<HTMLLIElement>
 >((props, ref) => {
-  const { children, disabled, asChild, onClick, ...rest } = props;
+  const { children, disabled, asChild, onPress, ...rest } = props;
 
   const id = useId();
 
@@ -330,6 +333,8 @@ const ItemImp = forwardRef<
   const Component = asChild ? Slot : 'li';
 
   const isFocused = menuContext.focused === id;
+
+  const pointerEvents = usePointerEvents({ onPress: () => onPress?.() });
 
   return (
     <Collection.Item disabled={!!disabled} isFocused={isFocused} id={id}>
@@ -344,13 +349,13 @@ const ItemImp = forwardRef<
           if (disabled) return;
           menuContext.setFocused(id);
         }}
-        onClick={() => onClick?.()}
+        {...pointerEvents}
         onKeyDown={(e) => {
           const key = e.key;
 
           if (![' ', 'Tab'].includes(key)) return;
           e.preventDefault();
-          onClick?.();
+          onPress?.();
         }}
       >
         {children}
@@ -364,8 +369,8 @@ ItemImp.displayName = 'webbo-ui.' + Item_Name;
 export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
   const {
     children,
-    onClick,
-    disableCloseOnClick,
+    onPress,
+    disableCloseOnPress,
     classNames,
     disabled,
     asChild,
@@ -381,9 +386,9 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
       className={stylesContext.item({ className: classNames?.item })}
       disabled={disabled}
       asChild={asChild}
-      onClick={() => {
-        if (!disableCloseOnClick) rootContext.handleClose();
-        onClick?.();
+      onPress={() => {
+        if (!disableCloseOnPress) rootContext.handleClose();
+        onPress?.();
       }}
     >
       <span
@@ -542,7 +547,7 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
         className={stylesContext.item({ className: classNames?.item })}
         disabled={disabled}
         asChild={asChild}
-        onClick={() => {
+        onPress={() => {
           if (!disableCloseOnChange) rootContext.handleClose();
           onChange?.(!checked);
         }}
@@ -668,7 +673,7 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
         className={stylesContext.item({ className: classNames?.item })}
         disabled={disabled}
         asChild={asChild}
-        onClick={() => {
+        onPress={() => {
           if (!disableCloseOnChange) rootContext.handleClose();
           groupContext.onChange?.(value);
         }}

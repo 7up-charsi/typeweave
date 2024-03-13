@@ -12,6 +12,7 @@ import { useEffect, useId, useMemo } from 'react';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { PopoverVariantProps, popover } from '@webbo-ui/theme';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 interface PopoverContext {
   isOpen: boolean;
@@ -132,6 +133,8 @@ export const Trigger = (props: TriggerProps) => {
 
   const rootContext = useRootContext(Trigger_Name);
 
+  const pointerEvents = usePointerEvents({ onPress: rootContext.handleOpen });
+
   return (
     <Popper.Reference>
       <Slot
@@ -139,7 +142,7 @@ export const Trigger = (props: TriggerProps) => {
         aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
         aria-label={a11yLabel}
         aria-describedby={a11yDescription}
-        onClick={rootContext.handleOpen}
+        {...pointerEvents}
       >
         {children}
       </Slot>
@@ -162,7 +165,9 @@ export const Close = (props: CloseProps) => {
 
   const rootContext = useRootContext(Close_Name);
 
-  return <Slot onClick={rootContext.handleClose}>{children}</Slot>;
+  const pointerEvents = usePointerEvents({ onPress: rootContext.handleClose });
+
+  return <Slot {...pointerEvents}>{children}</Slot>;
 };
 
 Close.displayName = 'webbo-ui.' + Close_Name;

@@ -23,7 +23,7 @@ export interface RenderInputProps<Value> {
   showClearButton: boolean;
   onBlur: () => void;
   handleOpen: () => void;
-  handleClear: (e: React.MouseEvent) => void;
+  handleClear: (e: React.PointerEvent) => void;
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
   ariaProps: {
     'aria-expanded': boolean;
@@ -343,7 +343,7 @@ const _Select = (props: SelectProps<object, false, false>) => {
     }
   };
 
-  const handleClear = (e: React.MouseEvent) => {
+  const handleClear = (e: React.PointerEvent) => {
     e.preventDefault();
     inputRef.current?.focus();
     setFocused(null);

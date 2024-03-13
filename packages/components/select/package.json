@@ -44,6 +44,7 @@
     "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/use-callback-ref": "workspace:*",
+    "@webbo-ui/use-pointer-events": "workspace:*",
     "@webbo-ui/use-click-outside": "workspace:*",
     "@webbo-ui/use-controllable-state": "workspace:*",
     "@react-aria/interactions": "^3.20.0",

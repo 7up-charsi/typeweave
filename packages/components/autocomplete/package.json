@@ -41,6 +41,7 @@
     "@webbo-ui/input": "workspace:*",
     "@webbo-ui/popper": "workspace:*",
     "@webbo-ui/react-utils": "workspace:*",
+    "@webbo-ui/use-pointer-events": "workspace:*",
     "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/chip": "workspace:*",
@@ -58,4 +59,3 @@
     "extends": "../../../../../../clean-package.config.json"
   }
 }
-

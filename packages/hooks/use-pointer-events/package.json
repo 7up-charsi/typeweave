@@ -1,8 +1,8 @@
 {
-  "name": "@webbo-ui/button",
-  "version": "0.0.0",
+  "name": "@webbo-ui/use-pointer-events",
+  "version": "1.0.0",
   "keywords": [
-    "button"
+    "use-pointer-events"
   ],
   "author": {
     "name": "Muhammad Zeeshan",
@@ -18,7 +18,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/7up-charsi/webbo-ui.git",
-    "directory": "packages/components/button"
+    "directory": "packages/hooks/use-pointer-events"
   },
   "bugs": {
     "url": "https://github.com/7up-charsi/webbo-ui/issues"
@@ -36,24 +36,12 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@webbo-ui/error": "workspace:*",
-    "@webbo-ui/react-utils": "workspace:*",
-    "@webbo-ui/slot": "workspace:*",
-    "@webbo-ui/theme": "workspace:*",
-    "@webbo-ui/use-callback-ref": "workspace:*",
-    "@webbo-ui/use-pointer-events": "workspace:*",
-    "@webbo-ui/use-ripple": "workspace:*",
-    "@react-aria/focus": "^3.15.0",
-    "@react-aria/interactions": "^3.20.0",
-    "react-loader-spinner": "^6.1.6"
+    "@webbo-ui/use-callback-ref": "workspace:*"
   },
   "devDependencies": {
     "clean-package": "^2.2.0"
   },
   "clean-package": {
-    "extends": "../../../../../../clean-package.config.json",
-    "remove": [
-      "dependencies.react-loader-spinner"
-    ]
+    "extends": "../../../../../../clean-package.config.json"
   }
 }

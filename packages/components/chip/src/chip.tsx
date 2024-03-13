@@ -2,6 +2,7 @@
 
 import { forwardRef } from 'react';
 import { ChipClassNames, ChipVariantProps, chip } from '@webbo-ui/theme';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 const delete_svg = (
   <svg
@@ -46,6 +47,8 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
     deleteIconA11yLabel = 'delete',
   } = props;
 
+  const pointerEvents = usePointerEvents({ onPress: onDelete });
+
   const handleKeyUp = (e: React.KeyboardEvent) => {
     const Backspace = e.key === 'Backspace';
     const Delete = e.key === 'Delete';
@@ -68,7 +71,7 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
       {onDelete ? (
         <span
           onKeyUp={handleKeyUp}
-          onClick={onDelete}
+          {...pointerEvents}
           tabIndex={excludeFromTabOrder ? -1 : 0}
           role="button"
           className={styles.deleteIcon({ className: classNames?.deleteIcon })}

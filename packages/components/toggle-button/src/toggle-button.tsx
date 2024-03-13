@@ -122,7 +122,7 @@ export interface ToggleButtonProps extends ButtonProps {
 
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
   (props, ref) => {
-    const { value: valueProp, onClick, className, ...rest } = props;
+    const { value: valueProp, onPress, className, ...rest } = props;
 
     const { setValue, value, exclusive } = useRootContext(Button_Name);
     const styles = useStylesContext(Button_Name);
@@ -144,8 +144,8 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
         className={styles.button({ className })}
         data-selected={selected}
         aria-pressed={selected}
-        onClick={(e) => {
-          onClick?.(e);
+        onPress={(e) => {
+          onPress?.(e);
 
           if (!valueProp) return;
 

@@ -38,6 +38,7 @@
   "dependencies": {
     "@webbo-ui/use-controllable-state": "workspace:*",
     "@webbo-ui/use-click-outside": "workspace:*",
+    "@webbo-ui/use-pointer-events": "workspace:*",
     "@webbo-ui/use-callback-ref": "workspace:*",
     "@webbo-ui/use-scroll-lock": "workspace:*",
     "@webbo-ui/use-is-disabled": "workspace:*",
