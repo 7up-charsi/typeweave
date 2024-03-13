@@ -57,10 +57,9 @@ const FocusTrap = (props: FocusTrapProps) => {
     const handleFocusIn = (e: FocusEvent) => {
       if (focusScope.paused || !container) return;
       const target = e.target as HTMLElement | null;
+
       if (container.contains(target)) {
         lastFocusedElement.current = target;
-      } else {
-        focus(lastFocusedElement.current, { select: true });
       }
     };
 

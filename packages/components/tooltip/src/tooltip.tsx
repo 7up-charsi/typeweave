@@ -165,16 +165,16 @@ export const Trigger = ({ children }: TriggerProps) => {
     <Popper.Reference>
       <Slot<HTMLElement, React.HTMLAttributes<HTMLElement>>
         tabIndex={0}
-        onMouseDown={() => {
+        onPointerDown={() => {
           isMouseRef.current = true;
           context.hideTooltip(true);
         }}
-        onMouseEnter={() => {
+        onPointerEnter={() => {
           if (context.trigger === 'focus') return;
 
           context.showTooltip(false);
         }}
-        onMouseLeave={() => {
+        onPointerLeave={() => {
           isMouseRef.current = false;
 
           if (context.trigger === 'focus') return;
@@ -256,12 +256,12 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
           ref={ref}
           role="tooltip"
           className={styles}
-          onMouseEnter={() => {
+          onPointerEnter={() => {
             if (disableInteractive) return;
 
             context.showTooltip(true);
           }}
-          onMouseLeave={() => {
+          onPointerLeave={() => {
             if (disableInteractive) return;
             context.hideTooltip();
           }}
