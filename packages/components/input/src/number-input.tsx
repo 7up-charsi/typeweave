@@ -49,7 +49,6 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const keyDownInterval = useRef<NodeJS.Timeout | undefined>(undefined);
     const longPressTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
-    const sameSource = useRef(false);
 
     const increase = (toAdd: number) => {
       setValue((prev) => {
@@ -181,13 +180,25 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     };
 
     const onLongPress = (key: string) => (e: React.PointerEvent) => {
-      sameSource.current = true;
       if (e.button !== 0) return;
 
       e.preventDefault();
       innerRef.current?.focus();
 
       onKeyDown({ key } as never);
+
+      // why cleanup on document instead of button ?
+      // because onPointerUp on any target (e.g. button) only fires when we relase mouse button on target.
+      // but user can leave button before threshold and if we dont clear timeout then it will infinitly increase/decrase
+
+      document.addEventListener(
+        'pointerup',
+        () => {
+          clearTimeout(longPressTimeout.current);
+          longPressTimeout.current = undefined;
+        },
+        { once: true },
+      );
 
       longPressTimeout.current = setTimeout(() => {
         onKeyDown({ repeat: true, key } as never);
@@ -201,15 +212,6 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           { once: true },
         );
       }, threshold);
-    };
-
-    const onLongPressCancel = (e: React.PointerEvent) => {
-      if (!sameSource.current) return;
-      if (e.button !== 0) return;
-
-      sameSource.current = false;
-      clearTimeout(longPressTimeout.current);
-      longPressTimeout.current = undefined;
     };
 
     const styles = numberInput();
@@ -261,7 +263,6 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
                   className: classNames?.stepButton.button,
                 })}
                 onPointerDown={onLongPress('ArrowUp')}
-                onPointerUp={onLongPressCancel}
               >
                 <svg
                   className={styles.icon({
@@ -288,7 +289,6 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
                   className: classNames?.stepButton.button,
                 })}
                 onPointerDown={onLongPress('ArrowDown')}
-                onPointerUp={onLongPressCancel}
               >
                 <svg
                   className={styles.icon({
