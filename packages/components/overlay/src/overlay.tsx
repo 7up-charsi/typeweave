@@ -1,19 +1,19 @@
 'use client';
 
 import { OverlayVariantProps, overlay } from '@webbo-ui/theme';
+import { forwardRef } from 'react';
 
-export interface OverlayProps extends OverlayVariantProps {
-  children?: React.ReactNode;
-  className?: string;
-}
+export interface OverlayProps
+  extends OverlayVariantProps,
+    React.HTMLAttributes<HTMLDivElement> {}
 
-const Overlay = (props: OverlayProps) => {
-  const { children, className } = props;
+const Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
+  const { className, ...restProps } = props;
 
   const styles = overlay({ className });
 
-  return <div className={styles}>{children}</div>;
-};
+  return <div {...restProps} ref={ref} className={styles} />;
+});
 
 Overlay.displayName = 'webbo-ui.Overlay';
 

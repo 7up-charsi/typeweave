@@ -8,7 +8,7 @@ export interface UseScrollLockProps<E> {
    * @default document?.body
    */
   ref?: RefObject<E | null>;
-  enabled?: boolean;
+  disabled?: boolean;
   /**
    * Which scroll dirction to lock
    * @default both
@@ -19,10 +19,10 @@ export interface UseScrollLockProps<E> {
 const useScrollLock = <E extends HTMLElement>(
   props: UseScrollLockProps<E> = {},
 ) => {
-  const { ref, enabled, direction = 'both' } = props;
+  const { ref, disabled, direction = 'both' } = props;
 
   useEffect(() => {
-    if (!enabled) return;
+    if (disabled) return;
 
     const isBody = !(ref && ref.current);
     const ele = ref?.current || document?.body;
@@ -82,7 +82,7 @@ const useScrollLock = <E extends HTMLElement>(
         ele.style.paddingBottom = stylePaddingBottom;
       }
     };
-  }, [direction, enabled, ref]);
+  }, [direction, disabled, ref]);
 };
 
 export type UseScrollLockReturn = ReturnType<typeof useScrollLock>;
