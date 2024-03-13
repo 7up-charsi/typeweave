@@ -276,7 +276,7 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
             aria-roledescription={roleDescription}
             tabIndex={-1}
             onKeyDown={onkeydown}
-            onMouseLeave={() => {
+            onPointerLeave={() => {
               setFocused('');
             }}
           >
@@ -340,7 +340,7 @@ const ItemImp = forwardRef<
         aria-disabled={disabled}
         data-focused={isFocused}
         tabIndex={isFocused ? 0 : -1}
-        onMouseEnter={() => {
+        onPointerEnter={() => {
           if (disabled) return;
           menuContext.setFocused(id);
         }}

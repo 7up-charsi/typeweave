@@ -119,7 +119,7 @@ export const List = (props: ListProps) => {
         role="tablist"
         aria-orientation={context.orientation}
         className={styles.list({ className })}
-        onMouseDown={() => {
+        onPointerDown={() => {
           isClickFocusRef.current = true;
         }}
         onBlur={() => context.setIsTabbingBackOut(false)}

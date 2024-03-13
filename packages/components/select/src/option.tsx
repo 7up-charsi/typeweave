@@ -44,12 +44,12 @@ export const Option = (
   return (
     <li
       ref={ref}
-      onMouseDown={(e) => e.preventDefault()}
-      onMouseEnter={() => {
+      onPointerDown={(e) => e.preventDefault()}
+      onPointerEnter={() => {
         isHovered.current = true;
         onHover();
       }}
-      onMouseLeave={() => {
+      onPointerLeave={() => {
         isHovered.current = false;
       }}
       onClick={() => {
