@@ -50,8 +50,7 @@
     "@webbo-ui/use-pointer-events": "workspace:*",
     "@webbo-ui/context": "workspace:*",
     "@webbo-ui/visually-hidden": "workspace:*",
-    "@webbo-ui/button": "workspace:*",
-    "@react-aria/interactions": "^3.20.0"
+    "@webbo-ui/button": "workspace:*"
   },
   "devDependencies": {
     "clean-package": "^2.2.0"
