@@ -48,7 +48,6 @@
     "@webbo-ui/use-callback-ref": "workspace:*",
     "@webbo-ui/use-click-outside": "workspace:*",
     "@webbo-ui/use-controllable-state": "workspace:*",
-    "@react-aria/interactions": "^3.20.0",
     "lodash.groupby": "^4.6.0"
   },
   "devDependencies": {

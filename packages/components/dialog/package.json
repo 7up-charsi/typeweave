@@ -48,7 +48,6 @@
     "@webbo-ui/context": "workspace:*",
     "@webbo-ui/overlay": "workspace:*",
     "@webbo-ui/visually-hidden": "workspace:*",
-    "@react-aria/interactions": "^3.20.0",
     "@webbo-ui/button": "workspace:*",
     "@webbo-ui/theme": "workspace:*"
   },
