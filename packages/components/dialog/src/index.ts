@@ -1,9 +1,10 @@
 import * as dialog from './dialog';
+export { Overlay } from '@webbo-ui/overlay';
+export type { OverlayProps } from '@webbo-ui/overlay';
 
 // export types
 export type {
   RootProps,
-  OverlayProps,
   ContentProps,
   PortalProps,
   TriggerProps,
@@ -18,6 +19,5 @@ export const Trigger = dialog.Trigger;
 export const Close = dialog.Close;
 export const Portal = dialog.Portal;
 export const Content = dialog.Content;
-export const Overlay = dialog.Overlay;
 export const Title = dialog.Title;
 export const Description = dialog.Description;

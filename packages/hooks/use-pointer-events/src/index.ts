@@ -8,12 +8,16 @@ export interface UsePointerEventsProps {
 }
 
 const usePointerEvents = (props: UsePointerEventsProps = {}) => {
-  const { ...events } = props;
+  const {
+    onPointerDown: onPointerDownProp,
+    onPointerUp: onPointerUpProp,
+    onPress,
+  } = props;
 
   const pointerRef = useRef(false);
 
   const onPointerDown = useCallbackRef((e: React.PointerEvent) => {
-    events.onPointerDown?.(e);
+    onPointerDownProp?.(e);
     pointerRef.current = true;
 
     ['pointerup', 'pointercancel', 'keydown'].forEach((event) =>
@@ -28,11 +32,13 @@ const usePointerEvents = (props: UsePointerEventsProps = {}) => {
   });
 
   const onPointerUp = useCallbackRef((e: React.PointerEvent) => {
-    events.onPointerUp?.(e);
+    onPointerUpProp?.(e);
 
     if (pointerRef.current === true && e.button === 0) {
-      events.onPress?.(e);
+      onPress?.(e);
     }
+
+    pointerRef.current = false;
   });
 
   return { onPointerDown, onPointerUp };

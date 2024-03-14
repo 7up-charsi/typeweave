@@ -8,7 +8,7 @@ import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import * as Popper from '@webbo-ui/popper';
 import { createPortal } from 'react-dom';
 import { createContextScope } from '@webbo-ui/context';
-import { useEffect, useId, useMemo } from 'react';
+import { useEffect, useId, useMemo, useRef } from 'react';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { PopoverVariantProps, popover } from '@webbo-ui/theme';
@@ -22,6 +22,7 @@ interface PopoverContext {
   contentId: string;
   titleId: string;
   descriptionId: string;
+  triggerRef: React.RefObject<HTMLButtonElement>;
 }
 
 const Popover_Name = 'Popover.Root';
@@ -76,6 +77,7 @@ export const Root = (props: RootProps) => {
   const contentId = useId();
   const titleId = useId();
   const descriptionId = useId();
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const handleOpen = useCallbackRef(() => {
     setOpen(true);
@@ -110,6 +112,7 @@ export const Root = (props: RootProps) => {
       contentId={contentId}
       titleId={titleId}
       descriptionId={descriptionId}
+      triggerRef={triggerRef}
     >
       <Popper.Root>{children}</Popper.Root>
     </RootProvider>
@@ -138,6 +141,7 @@ export const Trigger = (props: TriggerProps) => {
   return (
     <Popper.Reference>
       <Slot
+        ref={rootContext.triggerRef}
         aria-expanded={rootContext.isOpen}
         aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
         aria-label={a11yLabel}
@@ -270,8 +274,8 @@ export const Content = (props: ContentProps) => {
   const rootContext = useRootContext(Content_Name);
 
   const setOutsideEle = useClickOutside({
-    disabled: !rootContext.isOpen,
-    callback: () => {
+    callback: (e) => {
+      if (rootContext.triggerRef.current?.contains(e.target as Node)) return;
       rootContext.handleClose();
     },
   });
