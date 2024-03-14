@@ -199,11 +199,13 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
   const [focused, setFocused] = useState('');
 
   const setOutsideEle = useClickOutside<HTMLUListElement>({
-    disabled: !rootContext.isOpen,
-    callback: rootContext.handleClose,
+    callback: (e) => {
+      if (rootContext.triggerRef.current?.contains(e.target as Node)) return;
+      rootContext.handleClose();
+    },
   });
 
-  useScrollLock({ enabled: rootContext.isOpen });
+  useScrollLock();
 
   const getItems = useCollection();
 

@@ -2,6 +2,7 @@
 
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { Slot } from '@webbo-ui/slot';
+import { useClickOutside } from '@webbo-ui/use-click-outside';
 import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { createPortal } from 'react-dom';
@@ -11,10 +12,6 @@ import { useEffect, useId, useMemo, useRef } from 'react';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { DialogVariantProps, dialog } from '@webbo-ui/theme';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
-import {
-  Overlay as BaseOverlay,
-  OverlayProps as BaseOverlayProps,
-} from '@webbo-ui/overlay';
 
 type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
 
@@ -29,6 +26,7 @@ interface RootContext {
   contentId: string;
   titleId: string;
   descriptionId: string;
+  triggerRef: React.RefObject<HTMLButtonElement>;
 }
 
 const Root_Name = 'Dialog.Root';
@@ -85,6 +83,7 @@ export const Root = (props: RootProps) => {
   const contentId = useId();
   const titleId = useId();
   const descriptionId = useId();
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const scope = useRef<FocusScope>({
     paused: false,
@@ -146,6 +145,7 @@ export const Root = (props: RootProps) => {
       contentId={contentId}
       titleId={titleId}
       descriptionId={descriptionId}
+      triggerRef={triggerRef}
     >
       {children}
     </RootProvider>
@@ -175,6 +175,7 @@ export const Trigger = (props: TriggerProps) => {
 
   return (
     <Slot
+      ref={rootContext.triggerRef}
       aria-expanded={rootContext.isOpen}
       aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
       aria-label={a11yLabel}
@@ -291,29 +292,6 @@ export const Description = (props: DescriptionProps) => {
 
 Description.displayName = 'webbo-ui.' + Description_Name;
 
-// *-*-*-*-* Overlay *-*-*-*-*
-
-const Overlay_Name = 'Dialog.Overlay';
-
-export interface OverlayProps extends BaseOverlayProps {}
-
-export const Overlay = (props: OverlayProps) => {
-  const { className } = props;
-
-  const rootContext = useRootContext(Overlay_Name);
-
-  const pointerEvents = usePointerEvents({
-    onPress: (e) => {
-      if (e.target !== e.currentTarget) return;
-      rootContext.handleClose('outside');
-    },
-  });
-
-  return <BaseOverlay className={className} {...pointerEvents} />;
-};
-
-Overlay.displayName = 'webbo-ui.' + Overlay_Name;
-
 // *-*-*-*-* Content *-*-*-*-*
 
 const Content_Name = 'Dialog.Content';
@@ -332,6 +310,13 @@ export const Content = (props: ContentProps) => {
 
   useScrollLock();
 
+  const setOutsideEle = useClickOutside<HTMLElement>({
+    callback: (e) => {
+      if (rootContext.triggerRef.current?.contains(e.target as Node)) return;
+      rootContext.handleClose('outside');
+    },
+  });
+
   const styles = useMemo(() => dialog({ shadow }), [shadow]);
 
   return (
@@ -343,6 +328,7 @@ export const Content = (props: ContentProps) => {
         disabled={!rootContext.isOpen}
       >
         <div
+          ref={setOutsideEle}
           role="dialog"
           aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
           aria-describedby={
