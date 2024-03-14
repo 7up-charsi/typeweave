@@ -28,11 +28,17 @@ export interface FocusTrapProps {
    * This prop is used to pass custom scope and is usefull when more than one FocusTrap components are visible
    * @default undefined
    */
-  scope?: FocusScope;
+  focusScope?: FocusScope;
 }
 
 const FocusTrap = (props: FocusTrapProps) => {
-  const { children, disabled, scope, loop = true, trapped = true } = props;
+  const {
+    children,
+    disabled,
+    focusScope: focusScopeProp,
+    loop = true,
+    trapped = true,
+  } = props;
 
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
@@ -48,7 +54,7 @@ const FocusTrap = (props: FocusTrapProps) => {
     },
   }).current;
 
-  const focusScope = scope || _scope;
+  const focusScope = focusScopeProp || _scope;
 
   useEffect(() => {
     if (disabled) return;

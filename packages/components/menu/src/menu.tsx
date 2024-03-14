@@ -198,9 +198,10 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
 
   const [focused, setFocused] = useState('');
 
-  const setOutsideEle = useClickOutside<HTMLUListElement>({
+  const setOutsideEle = useClickOutside({
     callback: (e) => {
       if (rootContext.triggerRef.current?.contains(e.target as Node)) return;
+
       rootContext.handleClose();
     },
   });
