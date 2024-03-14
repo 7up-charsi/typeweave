@@ -21,7 +21,7 @@ interface RootContext {
   handleOpen: () => void;
   handleClose: (reason: Reason) => void;
   isOpen: boolean;
-  scope: FocusScope;
+  focusScope: FocusScope;
   keepMounted: boolean;
   contentId: string;
   titleId: string;
@@ -85,7 +85,7 @@ export const Root = (props: RootProps) => {
   const descriptionId = useId();
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  const scope = useRef<FocusScope>({
+  const focusScope = useRef<FocusScope>({
     paused: false,
     pause() {
       this.paused = true;
@@ -106,7 +106,7 @@ export const Root = (props: RootProps) => {
   });
 
   const handleClose = useCallbackRef((reason: Reason) => {
-    if (scope.paused) return;
+    if (focusScope.paused) return;
 
     const eventObj = { defaultPrevented: false };
 
@@ -140,7 +140,7 @@ export const Root = (props: RootProps) => {
       handleClose={handleClose}
       handleOpen={handleOpen}
       isOpen={isOpen}
-      scope={scope}
+      focusScope={focusScope}
       keepMounted={keepMounted}
       contentId={contentId}
       titleId={titleId}
@@ -310,9 +310,11 @@ export const Content = (props: ContentProps) => {
 
   useScrollLock();
 
-  const setOutsideEle = useClickOutside<HTMLElement>({
+  const setOutsideEle = useClickOutside({
     callback: (e) => {
       if (rootContext.triggerRef.current?.contains(e.target as Node)) return;
+      if ((e.target as HTMLElement).closest('[role=dialog]')) return;
+
       rootContext.handleClose('outside');
     },
   });
@@ -324,7 +326,7 @@ export const Content = (props: ContentProps) => {
       <FocusTrap
         loop
         trapped
-        scope={rootContext.scope}
+        focusScope={rootContext.focusScope}
         disabled={!rootContext.isOpen}
       >
         <div

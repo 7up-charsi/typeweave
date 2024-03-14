@@ -276,6 +276,8 @@ export const Content = (props: ContentProps) => {
   const setOutsideEle = useClickOutside({
     callback: (e) => {
       if (rootContext.triggerRef.current?.contains(e.target as Node)) return;
+      if ((e.target as HTMLElement).closest('[role=dialog]')) return;
+
       rootContext.handleClose();
     },
   });
