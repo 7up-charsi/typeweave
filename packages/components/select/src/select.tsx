@@ -98,7 +98,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
             ) => React.ReactNode;
           });
 
-const _Select = (props: SelectProps<object, false, false>) => {
+const SelectImp = (props: SelectProps<object, false, false>) => {
   const {
     classNames,
     offset,
@@ -545,9 +545,9 @@ const _Select = (props: SelectProps<object, false, false>) => {
   );
 };
 
-_Select.displayName = 'webbo-ui.Select';
+SelectImp.displayName = 'webbo-ui.Select';
 
-export const Select = _Select as unknown as <
+export const Select = SelectImp as unknown as <
   Value extends object,
   Multiple extends boolean = false,
   DisableClearable extends boolean = false,

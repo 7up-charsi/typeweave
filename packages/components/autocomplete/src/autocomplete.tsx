@@ -106,7 +106,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
             ) => React.ReactNode;
           });
 
-const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
+const AutocompleteImp = (props: AutocompleteProps<object, false, false>) => {
   const {
     classNames,
     offset,
@@ -552,9 +552,9 @@ const _Autocomplete = (props: AutocompleteProps<object, false, false>) => {
   );
 };
 
-_Autocomplete.displayName = 'webbo-ui.Select';
+AutocompleteImp.displayName = 'webbo-ui.Select';
 
-export const Autocomplete = _Autocomplete as unknown as <
+export const Autocomplete = AutocompleteImp as unknown as <
   Value extends object,
   Multiple extends boolean = false,
   DisableClearable extends boolean = false,

@@ -20,10 +20,6 @@ const config: StorybookConfig = {
     disableTelemetry: true,
     disableWhatsNewNotifications: true,
   },
-
-  features: {
-    storyStoreV7: true,
-  },
 };
 
 export default config;

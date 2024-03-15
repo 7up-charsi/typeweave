@@ -1,4 +1,0 @@
-{
-  "extends": "@webbo-ui/ts-config/base.json",
-  "include": ["packages"]
-}
