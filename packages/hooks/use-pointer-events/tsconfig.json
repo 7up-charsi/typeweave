@@ -1,4 +1,4 @@
 {
-  "extends": "../../../tsconfig.json",
-  "include": ["src", "index.ts"]
+  "extends": "@webbo-ui/ts-config/base.json",
+  "include": ["src"]
 }

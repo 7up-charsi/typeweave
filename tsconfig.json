@@ -1,25 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "jsx": "react-jsx",
-    "module": "ESNext",
-    "allowJs": true,
-    "checkJs": true,
-    "declaration": true,
-    "declarationMap": false,
-    "sourceMap": true,
-    "noEmit": true,
-    "strict": true,
-    "importHelpers": true,
-    "isolatedModules": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "downlevelIteration": true,
-    "moduleResolution": "Node",
-    "lib": ["ESNext", "DOM"]
-  },
-  "include": ["packages"],
-  "exclude": ["node_modules"]
+  "extends": "@webbo-ui/ts-config/base.json",
+  "include": ["packages"]
 }
