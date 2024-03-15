@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@types/lodash.groupby": "^4.6.9",
+    "@webbo-ui/ts-config": "workspace:*",
     "clean-package": "^2.2.0"
   },
   "clean-package": {

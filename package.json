@@ -23,6 +23,7 @@
     "create:hook": "plop hook"
   },
   "devDependencies": {
+    "@webbo-ui/ts-config": "workspace:*",
     "@changesets/cli": "^2.27.1",
     "@commitlint/cli": "^17.8.1",
     "@commitlint/config-conventional": "^17.8.1",

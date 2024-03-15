@@ -32,6 +32,7 @@
     "postpack": "clean-package restore"
   },
   "devDependencies": {
+    "@webbo-ui/ts-config": "workspace:*",
     "clean-package": "^2.2.0"
   },
   "dependencies": {
