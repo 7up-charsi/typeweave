@@ -56,6 +56,8 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     classNames,
     required,
     onChange,
+    onFocus,
+    onBlur,
     error,
     hideLabel,
     placeholder,
@@ -135,6 +137,8 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
 
         <input
           {...inputProps}
+          onFocus={onFocus}
+          onBlur={onBlur}
           ref={mergeRefs(innerInputRef, inputRef)}
           value={value}
           defaultValue={defaultValue}
