@@ -20,3 +20,4 @@ export * from './toggle-button';
 export * from './tabs';
 export * from './checkbox';
 export * from './radio';
+export * from './accordion';

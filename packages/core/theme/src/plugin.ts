@@ -1,6 +1,4 @@
 import plugin from 'tailwindcss/plugin';
-import animatePlugin from 'tailwindcss-animate';
-import tailwindcssForms from '@tailwindcss/forms';
 import { fontFamily } from 'tailwindcss/defaultTheme';
 import deepmerge from 'deepmerge';
 import * as colors from '@radix-ui/colors';
@@ -205,7 +203,6 @@ export const WebboUi = (config: PluginConfig = {}) => {
           },
         },
       },
-      plugins: [animatePlugin, tailwindcssForms],
       future: {
         hoverOnlyWhenSupported: true,
       },

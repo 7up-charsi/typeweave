@@ -1,8 +1,8 @@
 {
-  "name": "@webbo-ui/theme",
-  "version": "0.0.0",
+  "name": "@webbo-ui/accordion",
+  "version": "1.0.0",
   "keywords": [
-    "theme"
+    "accordion"
   ],
   "author": {
     "name": "Muhammad Zeeshan",
@@ -18,7 +18,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/7up-charsi/webbo-ui.git",
-    "directory": "packages/core/theme"
+    "directory": "packages/components/accordion"
   },
   "bugs": {
     "url": "https://github.com/7up-charsi/webbo-ui/issues"
@@ -32,20 +32,19 @@
     "postpack": "clean-package restore"
   },
   "peerDependencies": {
-    "tailwindcss": "^3.3.3"
+    "react": ">=18",
+    "react-dom": ">=18"
   },
   "dependencies": {
-    "@radix-ui/colors": "^3.0.0",
+    "@webbo-ui/theme": "workspace:*",
+    "@webbo-ui/context": "workspace:*",
+    "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/error": "workspace:*",
-    "color": "^4.2.3",
-    "deepmerge": "^4.3.1",
-    "flat": "^6.0.1",
-    "lodash.kebabcase": "^4.1.1",
-    "tailwind-variants": "^0.1.14"
+    "@webbo-ui/react-utils": "workspace:*",
+    "@webbo-ui/use-controllable-state": "workspace:*",
+    "@webbo-ui/use-pointer-events": "workspace:*"
   },
   "devDependencies": {
-    "@types/color": "^3.0.6",
-    "@types/lodash.kebabcase": "^4.1.9",
     "@webbo-ui/ts-config": "workspace:*",
     "clean-package": "^2.2.0"
   },
@@ -53,4 +52,3 @@
     "extends": "../../../../../../clean-package.config.json"
   }
 }
-

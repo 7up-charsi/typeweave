@@ -249,6 +249,9 @@ importers:
       '@webbo-ui/context':
         specifier: workspace:*
         version: link:../../core/context
+      '@webbo-ui/error':
+        specifier: workspace:*
+        version: link:../../utilities/error
       '@webbo-ui/react-utils':
         specifier: workspace:*
         version: link:../../utilities/react-utils
