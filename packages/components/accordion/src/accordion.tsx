@@ -181,6 +181,7 @@ interface ItemContext {
   triggerId: string;
   contentId: string;
   isExpended: boolean;
+  disabled?: boolean;
 }
 
 const [ItemProvider, useItemContext] =
@@ -191,10 +192,11 @@ export interface ItemProps {
   value: string;
   asChild?: boolean;
   className?: string;
+  disabled?: boolean;
 }
 
 export const Item = (props: ItemProps) => {
-  const { children, value, asChild, className } = props;
+  const { children, value, asChild, className, disabled } = props;
 
   const rootContext = useRootContext(TRIGGER_NAME);
 
@@ -217,6 +219,7 @@ export const Item = (props: ItemProps) => {
       triggerId={triggerId}
       contentId={contentId}
       isExpended={isExpended}
+      disabled={disabled}
     >
       <Component className={styles.item({ className })}>{children}</Component>
     </ItemProvider>
@@ -314,7 +317,7 @@ export const Trigger = (props: TriggerProps) => {
         onKeyDown={onKeyDown}
         data-state={itemContext.isExpended ? 'expanded' : 'collapsed'}
         className={styles.trigger({ className })}
-        disabled={rootContext.disabled}
+        disabled={itemContext.disabled ?? rootContext.disabled}
         id={itemContext.triggerId}
         aria-expanded={isExpended}
         aria-controls={itemContext.contentId}

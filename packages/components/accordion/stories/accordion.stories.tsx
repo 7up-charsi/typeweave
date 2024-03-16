@@ -52,7 +52,7 @@ const Template = (args) => (
   <Accordion.Root {...args}>
     {Array.from({ length: 10 }).map((_, i, arr) => (
       <Fragment key={i}>
-        <Accordion.Item value={`accordion-item-${i + 1}`}>
+        <Accordion.Item value={`accordion-item-${i + 1}`} disabled={i === 7}>
           <Accordion.Header>
             <Accordion.Trigger>
               {chevron_down_svg}
