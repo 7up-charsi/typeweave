@@ -589,6 +589,46 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
 
+  packages/components/disclosure:
+    dependencies:
+      '@webbo-ui/context':
+        specifier: workspace:*
+        version: link:../../core/context
+      '@webbo-ui/error':
+        specifier: workspace:*
+        version: link:../../utilities/error
+      '@webbo-ui/react-utils':
+        specifier: workspace:*
+        version: link:../../utilities/react-utils
+      '@webbo-ui/slot':
+        specifier: workspace:*
+        version: link:../slot
+      '@webbo-ui/theme':
+        specifier: workspace:*
+        version: link:../../core/theme
+      '@webbo-ui/use-collection':
+        specifier: workspace:*
+        version: link:../../hooks/use-collection
+      '@webbo-ui/use-controllable-state':
+        specifier: workspace:*
+        version: link:../../hooks/use-controllable-state
+      '@webbo-ui/use-pointer-events':
+        specifier: workspace:*
+        version: link:../../hooks/use-pointer-events
+      react:
+        specifier: '>=18'
+        version: 18.2.0
+      react-dom:
+        specifier: '>=18'
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@webbo-ui/ts-config':
+        specifier: workspace:*
+        version: link:../../core/ts-config
+      clean-package:
+        specifier: ^2.2.0
+        version: 2.2.0
+
   packages/components/focus-trap:
     dependencies:
       '@webbo-ui/button':
