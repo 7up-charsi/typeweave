@@ -5,6 +5,13 @@ export const focusVisible = [
   'focus-visible:ring-offset-background',
 ];
 
+export const focusWithIn = [
+  'focus-within:ring-2',
+  'focus-within:ring-focus-8',
+  'focus-within:ring-offset-2',
+  'focus-within:ring-offset-background',
+];
+
 export const groupFocusVisible = [
   'group-focus-visible:ring-2',
   'group-focus-visible:ring-focus-8',

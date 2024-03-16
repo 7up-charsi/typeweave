@@ -5,6 +5,7 @@ import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { Slot } from '@webbo-ui/slot';
 import { useId, useMemo } from 'react';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
+import { createCollection } from '@webbo-ui/use-collection';
 import { CustomError } from '@webbo-ui/error';
 import { accordion } from '@webbo-ui/theme';
 
@@ -25,6 +26,10 @@ const [RootProvider, useRootContext] =
 
 const [StylesProvider, useStylesContext] =
   createContextScope<ReturnType<typeof accordion>>(ROOT_NAME);
+
+const [Collection, useCollection] = createCollection<HTMLButtonElement, object>(
+  ROOT_NAME,
+);
 
 type BaseProps = {
   children?: React.ReactNode;
@@ -153,7 +158,13 @@ export const Root = <
       value={value}
     >
       <StylesProvider {...styles}>
-        <Component className={styles.base({ className })}>{children}</Component>
+        <Collection.Provider>
+          <Collection.Parent>
+            <Component className={styles.base({ className })}>
+              {children}
+            </Component>
+          </Collection.Parent>
+        </Collection.Provider>
       </StylesProvider>
     </RootProvider>
   );
@@ -255,27 +266,63 @@ export const Trigger = (props: TriggerProps) => {
 
   const isExpended = itemContext.isExpended;
 
-  const poitnerEvents = usePointerEvents({
-    onPress: () => {
-      if (isExpended) rootContext.onCollapse(itemContext.value);
-      else rootContext.onExpand(itemContext.value);
-    },
-  });
+  const onPress = () => {
+    if (isExpended) rootContext.onCollapse(itemContext.value);
+    else rootContext.onExpand(itemContext.value);
+  };
+
+  const poitnerEvents = usePointerEvents({ onPress });
 
   const styles = useStylesContext(TRIGGER_NAME);
 
+  const getItems = useCollection();
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    const key = e.key;
+
+    if (key === 'Tab' || (key === 'Tab' && e.shiftKey)) return;
+
+    if ([' ', 'Enter'].includes(key)) {
+      onPress();
+
+      return;
+    }
+
+    const ArrowDown = key === 'ArrowDown';
+    const ArrowUp = key === 'ArrowUp';
+    const Home = key === 'Home';
+    const End = key === 'End';
+
+    const activeItems = getItems().filter((ele) => !ele.ref.current?.disabled);
+    const elements = activeItems.map((ele) => ele.ref.current);
+
+    const currentIndex = elements.findIndex((ele) => ele === e.currentTarget);
+
+    const next = elements[Math.min(currentIndex + 1, elements.length - 1)];
+
+    const prev = elements[Math.max(currentIndex - 1, 0)];
+
+    if (ArrowDown) next?.focus();
+    if (ArrowUp) prev?.focus();
+    if (Home) elements[0]?.focus();
+    if (End) elements[elements.length - 1]?.focus();
+  };
+
   return (
-    <button
-      data-state={itemContext.isExpended ? 'expanded' : 'collapsed'}
-      className={styles.trigger({ className })}
-      disabled={rootContext.disabled}
-      id={itemContext.triggerId}
-      aria-expanded={isExpended}
-      aria-controls={itemContext.contentId}
-      {...poitnerEvents}
-    >
-      {children}
-    </button>
+    <Collection.Item>
+      <button
+        onKeyDown={onKeyDown}
+        data-state={itemContext.isExpended ? 'expanded' : 'collapsed'}
+        className={styles.trigger({ className })}
+        disabled={rootContext.disabled}
+        id={itemContext.triggerId}
+        aria-expanded={isExpended}
+        aria-controls={itemContext.contentId}
+        {...poitnerEvents}
+      >
+        {children}
+      </button>
+    </Collection.Item>
   );
 };
 
