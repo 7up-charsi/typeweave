@@ -11,7 +11,11 @@ import {
   useControllableState,
 } from '@webbo-ui/use-controllable-state';
 
-type Column<Row> = {
+type VisibilityState = Record<string, boolean>;
+
+type _Row = Record<string, unknown>;
+
+type Column<Row = _Row> = {
   [K in keyof Row]: {
     accessor: (row: Row) => Row[K];
     header: (data: Row[]) => React.ReactNode;
@@ -23,19 +27,26 @@ type Column<Row> = {
   };
 }[keyof Row];
 
-type GetRowKey<R> = (row: R) => string;
-type _Row = Record<string, string>;
-type VisibilityState = Record<string, boolean>;
+type GetRowKey<R = _Row> = (row: R) => string;
 
 // ********** ROOT **********
 
 const Root_Name = 'Table.Root';
 
-interface RootContext {
-  data?: _Row[];
-  columns?: Column<_Row>[];
+export interface RootProps<R = _Row> {
+  data?: R[];
+  columns?: Column<R>[];
+  getRowKey?: GetRowKey<R>;
+  children?: React.ReactNode;
   visibilityState?: VisibilityState;
-  getRowKey?: GetRowKey<_Row>;
+  onChange?: (value: VisibilityState, changedIdentifier: string) => void;
+}
+
+interface RootContext {
+  data?: RootProps['data'];
+  columns?: RootProps['columns'];
+  visibilityState?: RootProps['visibilityState'];
+  getRowKey?: RootProps['getRowKey'];
   setVisibilityState: UseControllableStateReturn<
     VisibilityState,
     string | null
@@ -45,16 +56,7 @@ interface RootContext {
 const [RootProvider, useRootContext] =
   createContextScope<RootContext>(Root_Name);
 
-export interface RootProps<R> {
-  data?: R[];
-  columns?: Column<R>[];
-  getRowKey?: GetRowKey<R>;
-  children?: React.ReactNode;
-  visibilityState?: VisibilityState;
-  onChange?: (value: VisibilityState, changedIdentifier: string) => void;
-}
-
-const RootComp = (props: RootProps<_Row>) => {
+const RootImp = (props: RootProps) => {
   const {
     columns: userColumns,
     data,
@@ -105,9 +107,9 @@ const RootComp = (props: RootProps<_Row>) => {
   );
 };
 
-RootComp.displayName = 'webbo-ui.' + Root_Name;
+RootImp.displayName = 'webbo-ui.' + Root_Name;
 
-export const Root = RootComp as <R>(props: RootProps<R>) => React.ReactNode;
+export const Root = RootImp as <R>(props: RootProps<R>) => React.ReactNode;
 
 // ********** Table **********
 
@@ -155,12 +157,19 @@ export const Table = (props: TableProps) => {
               {columns.map(({ accessor, cell, identifier, visibility }) => {
                 const visible = visibilityState?.[identifier] ?? visibility;
 
+                const tdValue = accessor(row);
+
                 return !visible ? undefined : (
                   <td
                     className={styles.td({ className: classNames?.td })}
                     key={identifier}
                   >
-                    {cell ? cell(accessor(row), row, data) : accessor(row)}
+                    {cell
+                      ? cell(tdValue, row, data)
+                      : typeof tdValue === 'string' ||
+                          typeof tdValue === 'number'
+                        ? tdValue
+                        : '[object, object]'}
                   </td>
                 );
               })}

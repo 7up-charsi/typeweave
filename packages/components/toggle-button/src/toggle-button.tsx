@@ -53,7 +53,7 @@ export type ToggleButtonGroupProps<Exclusive> = ToggleButtonVariantProps &
         ) => void;
       });
 
-export const _ToggleButtonGroup = (props: ToggleButtonGroupProps<false>) => {
+export const ToggleButtonGroupImp = (props: ToggleButtonGroupProps<false>) => {
   const {
     exclusive,
     value: valueProp,
@@ -104,9 +104,9 @@ export const _ToggleButtonGroup = (props: ToggleButtonGroupProps<false>) => {
   );
 };
 
-_ToggleButtonGroup.displayName = 'webbo-ui.' + Group_Name;
+ToggleButtonGroupImp.displayName = 'webbo-ui.' + Group_Name;
 
-export const ToggleButtonGroup = _ToggleButtonGroup as <
+export const ToggleButtonGroup = ToggleButtonGroupImp as <
   Exclusive extends boolean = false,
 >(
   props: ToggleButtonGroupProps<Exclusive>,
