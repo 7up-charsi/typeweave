@@ -150,6 +150,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={!!disabled}
         ref={mergeRefs(ref, innerRef)}
         className={styles}
+        onKeyDown={(e) => {
+          buttonProps.onKeyDown?.(e);
+
+          const key = e.key;
+
+          if (![' ', 'Enter'].includes(key)) return;
+
+          onPress?.(e as never);
+        }}
       >
         {asChild ? (
           isValidElement(children) &&

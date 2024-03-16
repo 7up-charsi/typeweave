@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import * as Accordion from '../src';
 
@@ -50,39 +50,27 @@ const chevron_up_svg = (
 
 const Template = (args) => (
   <Accordion.Root {...args}>
-    <Accordion.Item value="accordion-item-1">
-      <Accordion.Header>
-        <Accordion.Trigger>
-          {chevron_down_svg}
-          {chevron_up_svg}
-          <span>Accordion 1</span>
-        </Accordion.Trigger>
-      </Accordion.Header>
-      <Accordion.Content>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-        pariatur vitae consectetur ullam repellendus illo suscipit perspiciatis
-        at maxime neque exercitationem qui doloribus architecto reiciendis modi
-        debitis aliquid, ex id!
-      </Accordion.Content>
-    </Accordion.Item>
+    {Array.from({ length: 10 }).map((_, i, arr) => (
+      <Fragment key={i}>
+        <Accordion.Item value={`accordion-item-${i + 1}`}>
+          <Accordion.Header>
+            <Accordion.Trigger>
+              {chevron_down_svg}
+              {chevron_up_svg}
+              <span>Accordion {i + 1}</span>
+            </Accordion.Trigger>
+          </Accordion.Header>
+          <Accordion.Content>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
+            pariatur vitae consectetur ullam repellendus illo suscipit
+            perspiciatis at maxime neque exercitationem qui doloribus architecto
+            reiciendis modi debitis aliquid, ex id!
+          </Accordion.Content>
+        </Accordion.Item>
 
-    <hr className="" />
-
-    <Accordion.Item value="accordion-item-2">
-      <Accordion.Header>
-        <Accordion.Trigger>
-          {chevron_down_svg}
-          {chevron_up_svg}
-          <span>Accordion 1</span>
-        </Accordion.Trigger>
-      </Accordion.Header>
-      <Accordion.Content>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-        pariatur vitae consectetur ullam repellendus illo suscipit perspiciatis
-        at maxime neque exercitationem qui doloribus architecto reiciendis modi
-        debitis aliquid, ex id!
-      </Accordion.Content>
-    </Accordion.Item>
+        {i === arr.length - 1 ? null : <hr className="" />}
+      </Fragment>
+    ))}
   </Accordion.Root>
 );
 
