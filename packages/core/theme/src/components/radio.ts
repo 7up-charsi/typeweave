@@ -7,7 +7,7 @@ export const radio = tv({
     base: 'inline-flex gap-2',
     radio: 'relative w-5 h-5',
     input: [
-      'peer/input outline-none rounded-full appearance-none cursor-pointer transition-colors disabled:disabled absolute inset-0',
+      'peer/input rounded-full appearance-none cursor-pointer transition-colors disabled:disabled absolute inset-0',
       ...focusVisible,
     ],
     icon: 'pointer-events-none absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-muted-11 block peer-checked/input:hidden',

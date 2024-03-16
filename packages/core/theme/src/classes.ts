@@ -1,4 +1,5 @@
 export const focusVisible = [
+  'outline-none',
   'focus-visible:ring-2',
   'focus-visible:ring-focus-8',
   'focus-visible:ring-offset-2',

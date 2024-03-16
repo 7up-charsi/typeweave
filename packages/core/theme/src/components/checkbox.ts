@@ -7,7 +7,7 @@ export const checkbox = tv({
     base: 'inline-flex gap-2',
     checkbox: 'relative',
     input: [
-      'peer/input outline-none rounded appearance-none cursor-pointer transition-colors border border-muted-8 disabled:disabled absolute inset-0',
+      'peer/input rounded appearance-none cursor-pointer transition-colors border border-muted-8 disabled:disabled absolute inset-0',
       ...focusVisible,
     ],
     icon: 'pointer-events-none absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-muted-11 block peer-indeterminate/input:hidden peer-checked/input:hidden',

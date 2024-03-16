@@ -7,7 +7,7 @@ const _switch = tv({
     base: 'inline-flex gap-2',
     switch: 'relative',
     input: [
-      'peer/input outline-none rounded-full appearance-none cursor-pointer transition-colors border border-muted-8 disabled:disabled absolute inset-0',
+      'peer/input rounded-full appearance-none cursor-pointer transition-colors border border-muted-8 disabled:disabled absolute inset-0',
       ...focusVisible,
     ],
     indicator:
