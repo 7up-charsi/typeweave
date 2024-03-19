@@ -8,7 +8,7 @@ export const radio = tv({
     radio: 'relative w-5 h-5',
     input: [
       'peer/input rounded-full appearance-none cursor-pointer transition-colors disabled:disabled absolute inset-0',
-      ...focusVisible,
+      focusVisible,
     ],
     icon: 'pointer-events-none absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-muted-11 block peer-checked/input:hidden',
     checkedIcon:
