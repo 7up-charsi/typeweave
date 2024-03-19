@@ -129,7 +129,12 @@ export const Item = (props: ItemProps) => {
       isExpended={isExpended}
       disabled={disabled}
     >
-      <Component className={styles.item({ className })}>{children}</Component>
+      <Component
+        className={styles.item({ className })}
+        data-state={isExpended ? 'expanded' : 'collapsed'}
+      >
+        {children}
+      </Component>
     </ItemProvider>
   );
 };
@@ -177,7 +182,6 @@ export const Trigger = (props: TriggerProps) => {
   return (
     <button
       onKeyDown={onKeyDown}
-      data-state={itemContext.isExpended ? 'expanded' : 'collapsed'}
       className={styles.trigger({ className })}
       disabled={itemContext.disabled ?? rootContext.disabled}
       id={itemContext.triggerId}

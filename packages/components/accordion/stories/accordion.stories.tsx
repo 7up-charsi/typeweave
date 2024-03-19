@@ -10,7 +10,7 @@ export default meta;
 
 const chevron_down_svg = (
   <svg
-    className="mr-3 group-data-[state=expanded]/trigger:hidden block"
+    className="mr-3 group-data-[state=expanded]/item:hidden block"
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -30,7 +30,7 @@ const chevron_down_svg = (
 
 const chevron_up_svg = (
   <svg
-    className="mr-3 group-data-[state=expanded]/trigger:block hidden"
+    className="mr-3 group-data-[state=expanded]/item:block hidden"
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -50,14 +50,18 @@ const chevron_up_svg = (
 
 const Template = (args) => (
   <Accordion.Root {...args}>
-    {Array.from({ length: 10 }).map((_, i, arr) => (
+    {Array.from({ length: 10 }).map((_, i) => (
       <Fragment key={i}>
         <Accordion.Item value={`accordion-item-${i + 1}`} disabled={i === 7}>
           <Accordion.Header>
             <Accordion.Trigger>
               {chevron_down_svg}
               {chevron_up_svg}
-              <span>Accordion {i + 1}</span>
+              {i === 7 ? (
+                <span>DISABLED Accordion with dummy content</span>
+              ) : (
+                <span>Accordion no. {i + 1} with dummy content</span>
+              )}
             </Accordion.Trigger>
           </Accordion.Header>
           <Accordion.Content>
@@ -67,8 +71,6 @@ const Template = (args) => (
             reiciendis modi debitis aliquid, ex id!
           </Accordion.Content>
         </Accordion.Item>
-
-        {i === arr.length - 1 ? null : <hr className="" />}
       </Fragment>
     ))}
   </Accordion.Root>
