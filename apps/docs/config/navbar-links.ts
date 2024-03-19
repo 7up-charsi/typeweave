@@ -6,6 +6,10 @@ export const navbarLinks: NavigationLink[] = [
     href: '/docs/guides/introduction',
   },
   {
+    title: 'customization',
+    href: '/docs/customization/theme',
+  },
+  {
     title: 'components',
     href: '/components',
   },

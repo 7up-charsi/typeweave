@@ -76,7 +76,7 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <>
-      <main className="col-start-2 overflow-auto px-16 py-4">
+      <main className="overflow-auto px-16 py-4">
         <MdxContent components={mdxComponents} />
         <DocsPager activeSlug={slug} />
       </main>
