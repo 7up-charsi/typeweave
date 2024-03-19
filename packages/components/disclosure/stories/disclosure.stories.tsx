@@ -57,9 +57,9 @@ const Template = (args) => (
             {chevron_down_svg}
             {chevron_up_svg}
             {i === 7 ? (
-              <span>DISABLED Accordion with dummy content</span>
+              <span>DISABLED Disclosure with dummy content</span>
             ) : (
-              <span>Accordion no. {i + 1} with dummy content</span>
+              <span>Disclosure no. {i + 1} with dummy content</span>
             )}
           </Disclosure.Trigger>
 

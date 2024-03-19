@@ -16,7 +16,7 @@ export const buttonGroup = tv({
 export const button = tv({
   base: [
     'z-0 group relative inline-flex items-center justify-center box-border rounded appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transition-colors [&>span]:first-letter:uppercase disabled:disabled',
-    ...focusVisible,
+    focusVisible,
   ],
   variants: {
     variant: {

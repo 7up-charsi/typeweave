@@ -8,7 +8,7 @@ const _switch = tv({
     switch: 'relative',
     input: [
       'peer/input rounded-full appearance-none cursor-pointer transition-colors border border-muted-8 disabled:disabled absolute inset-0',
-      ...focusVisible,
+      focusVisible,
     ],
     indicator:
       'pointer-events-none bg-muted-9 text-white absolute z-10 rounded-full left-[4px] top-1/2 -translate-y-1/2 translate-x-0 peer-checked/input:left-[calc(100%-4px)] peer-checked/input:-translate-x-full transition-[left,transform] [&_svg:first-of-type]:inline-block peer-checked/input:[&_svg:first-of-type]:hidden [&_svg:last-of-type]:hidden peer-checked/input:[&_svg:last-of-type]:inline-block flex items-center justify-center',
