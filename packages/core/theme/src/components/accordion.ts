@@ -5,10 +5,11 @@ import { focusWithIn } from '../classes';
 export const accordion = tv({
   slots: {
     base: '',
-    item: ['group/item', ...focusWithIn],
-    header: '',
+    item: ['group/item first:mt-0 last:mb-0 my-1', ...focusWithIn],
+    header:
+      'text-primary-11 bg-primary-3 hover:bg-primary-4 group-data-[state=expanded]/item:bg-primary-5 rounded overflow-hidden',
     trigger:
-      'group/trigger flex items-center w-full text-left px-3 py-2 first-letter:uppercase text-muted-11 hover:text-primary-11 data-[state=expanded]:text-primary-11 outline-none disabled:disabled',
+      'flex items-center w-full text-left px-3 py-2 first-letter:uppercase outline-none disabled:disabled',
     content: 'px-3 py-2',
   },
   variants: {},
