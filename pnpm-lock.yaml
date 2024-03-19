@@ -98,6 +98,9 @@ importers:
       '@webbo-ui/dialog':
         specifier: workspace:*
         version: link:../../packages/components/dialog
+      '@webbo-ui/disclosure':
+        specifier: workspace:*
+        version: link:../../packages/components/disclosure
       '@webbo-ui/input':
         specifier: workspace:*
         version: link:../../packages/components/input
@@ -113,6 +116,9 @@ importers:
       '@webbo-ui/themes':
         specifier: workspace:*
         version: link:../../packages/components/themes
+      '@webbo-ui/use-pointer-events':
+        specifier: workspace:*
+        version: link:../../packages/hooks/use-pointer-events
       algoliasearch:
         specifier: ^4.22.1
         version: 4.22.1

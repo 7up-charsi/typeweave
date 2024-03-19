@@ -59,7 +59,13 @@ const arrowRight = (
 export const DocsPager = ({ activeSlug }: Props) => {
   if (!activeSlug) return null;
 
-  const links = [...guidesLinks, ...customizationLinks, ...componentsLinks];
+  const links = [
+    ...guidesLinks,
+    ...customizationLinks,
+    ...Object.values(componentsLinks)
+      .map((arr) => arr.sort())
+      .flat(),
+  ];
 
   const activeIndex = links.findIndex(
     (link) => `/docs/${activeSlug}` === link.href,
