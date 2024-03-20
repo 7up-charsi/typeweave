@@ -17,7 +17,7 @@ interface RootContext {
   handleOpen: () => void;
   handleClose: () => void;
   isOpen: boolean;
-  scope: FocusScope;
+  focusScope: FocusScope;
   contentId: string;
   titleId: string;
   descriptionId: string;
@@ -44,7 +44,7 @@ export const Root = (props: RootProps) => {
   const titleId = useId();
   const descriptionId = useId();
 
-  const scope = useRef<FocusScope>({
+  const focusScope = useRef<FocusScope>({
     paused: false,
     pause() {
       this.paused = true;
@@ -65,7 +65,7 @@ export const Root = (props: RootProps) => {
   });
 
   const handleClose = useCallbackRef(() => {
-    if (scope.paused) return;
+    if (focusScope.paused) return;
     setOpen(false);
   });
 
@@ -90,7 +90,7 @@ export const Root = (props: RootProps) => {
       handleClose={handleClose}
       handleOpen={handleOpen}
       isOpen={isOpen}
-      scope={scope}
+      focusScope={focusScope}
       contentId={contentId}
       titleId={titleId}
       descriptionId={descriptionId}
@@ -202,7 +202,7 @@ export const Content = (props: ContentProps) => {
 
   const rootContext = useRootContext(Content_Name);
 
-  useScrollLock({ enabled: rootContext.isOpen });
+  useScrollLock();
 
   const styles = useMemo(() => alertDialog({ shadow }), [shadow]);
 
@@ -211,7 +211,7 @@ export const Content = (props: ContentProps) => {
       <FocusTrap
         loop
         trapped
-        scope={rootContext.scope}
+        focusScope={rootContext.focusScope}
         disabled={!rootContext.isOpen}
       >
         <div
