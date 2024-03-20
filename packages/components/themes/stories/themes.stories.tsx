@@ -15,8 +15,8 @@ const light_svg = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={20}
-    height={20}
+    width="1em"
+    height="1em"
   >
     <g>
       <path fill="transparent" d="M0 0H24V24H0z"></path>
@@ -35,8 +35,8 @@ const dark_svg = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={20}
-    height={20}
+    width="1em"
+    height="1em"
   >
     <path
       fill="currentColor"
@@ -50,8 +50,8 @@ const system_svg = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={20}
-    height={20}
+    width="1em"
+    height="1em"
   >
     <g fill="currentColor">
       <path d="M17.56 17.97H6.44c-3.98 0-5.19-1.21-5.19-5.19V6.44c0-3.98 1.21-5.19 5.19-5.19h11.11c3.98 0 5.19 1.21 5.19 5.19v6.33c.01 3.99-1.2 5.2-5.18 5.2zM6.44 2.75c-3.14 0-3.69.55-3.69 3.69v6.33c0 3.14.55 3.69 3.69 3.69h11.11c3.14 0 3.69-.55 3.69-3.69V6.44c0-3.14-.55-3.69-3.69-3.69H6.44z"></path>
@@ -61,7 +61,7 @@ const system_svg = (
   </svg>
 );
 
-const MenuThemeSwitcher = () => {
+const MenuThemeComp = () => {
   const { onThemeChange, theme } = useTheme();
 
   return (
@@ -80,19 +80,25 @@ const MenuThemeSwitcher = () => {
           >
             <Menu.RadioItem
               value="light"
-              classNames={{ itemContent: 'flex justify-between pr-3' }}
+              classNames={{
+                itemContent: 'flex items-center justify-between pr-3',
+              }}
             >
               <span>Light</span> {light_svg}
             </Menu.RadioItem>
             <Menu.RadioItem
               value="dark"
-              classNames={{ itemContent: 'flex justify-between pr-3' }}
+              classNames={{
+                itemContent: 'flex items-center justify-between pr-3',
+              }}
             >
               <span>Dark</span> {dark_svg}
             </Menu.RadioItem>
             <Menu.RadioItem
               value="system"
-              classNames={{ itemContent: 'flex justify-between pr-3' }}
+              classNames={{
+                itemContent: 'flex items-center justify-between pr-3',
+              }}
             >
               <span>System</span> {system_svg}
             </Menu.RadioItem>
@@ -105,7 +111,7 @@ const MenuThemeSwitcher = () => {
 
 const MenuTemplate = () => (
   <ThemeProvider defaultTheme="light">
-    <MenuThemeSwitcher />
+    <MenuThemeComp />
   </ThemeProvider>
 );
 

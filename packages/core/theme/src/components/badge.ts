@@ -41,33 +41,7 @@ export const badge = tv({
       md: { content: 'shadow-md' },
       lg: { content: 'shadow-lg' },
     },
-    overlap: {
-      circular: '',
-      rectangular: '',
-    },
   },
-  compoundVariants: [
-    {
-      overlap: 'circular',
-      placement: ['top-left', 'top-right'],
-      className: { content: 'top-2' },
-    },
-    {
-      overlap: 'circular',
-      placement: ['bottom-left', 'bottom-right'],
-      className: { content: 'bottom-2' },
-    },
-    {
-      overlap: 'circular',
-      placement: ['top-left', 'bottom-left'],
-      className: { content: 'left-2' },
-    },
-    {
-      overlap: 'circular',
-      placement: ['top-right', 'bottom-right'],
-      className: { content: 'right-2' },
-    },
-  ],
 });
 
 export type BadgeVariantProps = VariantProps<typeof badge>;

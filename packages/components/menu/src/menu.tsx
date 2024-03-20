@@ -512,15 +512,16 @@ const checkbox_icon = (
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
-    viewBox="0 0 16 12"
-    style={{ height: 11, width: 11 }}
+    viewBox="0 0 24 24"
+    width="1em"
+    height="1em"
   >
     <path
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
-      d="M1 5.917 5.724 10.5 15 1.5"
+      d="M5 11.917 9.724 16.5 19 7.5"
     />
   </svg>
 );
@@ -636,7 +637,13 @@ export interface RadioItemProps {
 }
 
 const radio_icon = (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 48 48"
+    width="1em"
+    height="1em"
+  >
     <g>
       <path fill="#fff" fillOpacity="0.01" d="M0 0H48V48H0z"></path>
       <path

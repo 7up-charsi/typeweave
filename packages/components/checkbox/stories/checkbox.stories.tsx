@@ -12,7 +12,18 @@ const meta = {
 export default meta;
 
 const Template = (args: CheckboxProps) => (
-  <Checkbox {...args} label="i agree... Lorem ipsum dolor sit" />
+  <div className="flex flex-col gap-4">
+    <Checkbox {...args} indeterminate label="indeterminate and md size" />
+    <Checkbox {...args} label="default and md size" />
+
+    <Checkbox
+      {...args}
+      indeterminate
+      label="indeterminate and sm size"
+      size="sm"
+    />
+    <Checkbox {...args} label="default and sm size" size="sm" />
+  </div>
 );
 
 export const Default = {

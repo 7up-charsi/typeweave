@@ -39,6 +39,11 @@ export const radio = tv({
         checkedIcon: 'text-danger-9',
       },
     },
+    size: {
+      sm: { icon: 'text-base', checkedIcon: 'text-base' },
+      md: { icon: 'text-lg', checkedIcon: 'text-lg' },
+      lg: { icon: 'text-xl', checkedIcon: 'text-xl' },
+    },
     labelPlacement: {
       top: { base: 'flex-col items-center', label: '-order-1' },
       bottom: { base: 'flex-col items-center', label: 'order-1' },

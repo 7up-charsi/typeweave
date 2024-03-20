@@ -8,46 +8,6 @@ const meta = {
 
 export default meta;
 
-const chevron_down_svg = (
-  <svg
-    className="mr-3 group-data-[state=expanded]/item:hidden block"
-    aria-hidden="true"
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    fill="none"
-    viewBox="0 0 24 24"
-  >
-    <path
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      d="m8 10 4 4 4-4"
-    />
-  </svg>
-);
-
-const chevron_up_svg = (
-  <svg
-    className="mr-3 group-data-[state=expanded]/item:block hidden"
-    aria-hidden="true"
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    fill="none"
-    viewBox="0 0 24 24"
-  >
-    <path
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      d="m16 14-4-4-4 4"
-    />
-  </svg>
-);
-
 const Template = (args) => (
   <Accordion.Root {...args}>
     {Array.from({ length: 10 }).map((_, i) => (
@@ -55,8 +15,26 @@ const Template = (args) => (
         <Accordion.Item value={`accordion-item-${i + 1}`} disabled={i === 7}>
           <Accordion.Header>
             <Accordion.Trigger>
-              {chevron_down_svg}
-              {chevron_up_svg}
+              <span className="flex w-6 items-center justify-center">
+                <svg
+                  className="transition-transform rotate-0 group-data-[state=expanded]/item:-rotate-180"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1.5em"
+                  height="1.5em"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m8 10 4 4 4-4"
+                  />
+                </svg>
+              </span>
+
               {i === 7 ? (
                 <span>DISABLED Accordion with dummy content</span>
               ) : (

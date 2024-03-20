@@ -50,8 +50,8 @@ const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProps>(
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 20 14"
-                width={20}
-                height={20}
+                width="1em"
+                height="1em"
               >
                 <g
                   stroke="currentColor"
@@ -70,8 +70,8 @@ const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProps>(
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 20 18"
-                width={20}
-                height={20}
+                width="1em"
+                height="1em"
               >
                 <path
                   stroke="currentColor"

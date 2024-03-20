@@ -8,8 +8,8 @@ const icon_svg = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={20}
-    height={20}
+    width="1em"
+    height="1em"
   >
     <path
       fill="currentColor"
@@ -25,8 +25,8 @@ const checked_svg = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={20}
-    height={20}
+    width="1em"
+    height="1em"
   >
     <g fill="currentColor">
       <path
@@ -56,6 +56,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
     checked,
     icon = icon_svg,
     checkedIcon = checked_svg,
+    size = 'md',
     color = 'primary',
     labelPlacement = 'right',
     ...inpuProps
@@ -64,7 +65,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   const autoId = useId();
   const id = idProp ?? autoId;
 
-  const styles = radio({ labelPlacement, color });
+  const styles = radio({ labelPlacement, color, size });
 
   return (
     <div className={styles.base({ className: classNames?.base })}>

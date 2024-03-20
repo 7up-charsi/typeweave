@@ -20,10 +20,9 @@ const Badge = forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
     color = 'info',
     placement = 'top-right',
     shadow = 'md',
-    overlap = 'rectangular',
   } = props;
 
-  const styles = badge({ color, variant, placement, shadow, overlap });
+  const styles = badge({ color, variant, placement, shadow });
 
   return (
     <div ref={ref} className={styles.base({ className: classNames?.base })}>

@@ -51,7 +51,9 @@ export const CopyCode = (props: Props) => {
       isIconOnly
       size="sm"
       aria-label="copy code"
-      className="absolute right-3 top-3 z-50 text-muted-8 hover:bg-muted-11 hover:text-muted-6 active:bg-muted-10"
+      classNames={{
+        base: 'absolute right-3 top-3 z-50 text-muted-8 hover:bg-muted-11 hover:text-muted-6 active:bg-muted-10',
+      }}
       variant="text"
       onPress={() => {
         clearTimeout(resetTimer.current);

@@ -75,8 +75,8 @@ const Template = () => {
                 stroke="#000"
                 strokeLinecap="round"
                 viewBox="0 0 24 24"
-                width={20}
-                height={20}
+                width="1em"
+                height="1em"
               >
                 <g>
                   <rect width="18" height="18" x="3" y="3" rx="0"></rect>

@@ -8,8 +8,8 @@ import { InputProps } from '@webbo-ui/input';
 
 const clearIcon_svg = (
   <svg
-    width={18}
-    height={18}
+    width="1em"
+    height="1em"
     viewBox="-2.4 -2.4 28.80 28.80"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -29,8 +29,8 @@ const clearIcon_svg = (
 
 const openIndicator_svg = (
   <svg
-    width={20}
-    height={20}
+    width="1em"
+    height="1em"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +91,7 @@ export const mapInputProps = ({
             size="sm"
             tabIndex={-1}
             aria-label="clear value"
-            className={styles.clearButton()}
+            classNames={{ content: styles.clearButton() }}
           >
             {clearIcon_svg}
           </Button>

@@ -14,8 +14,8 @@ const ellipsis_svg = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={18}
-    height={18}
+    width="1em"
+    height="1em"
   >
     <g fill="currentColor">
       <path d="M12 13.75a1.75 1.75 0 100-3.5 1.75 1.75 0 000 3.5zM19 13.75a1.75 1.75 0 100-3.5 1.75 1.75 0 000 3.5zM5 13.75a1.75 1.75 0 100-3.5 1.75 1.75 0 000 3.5z"></path>
@@ -28,8 +28,8 @@ const first_svg = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={20}
-    height={20}
+    width="1em"
+    height="1em"
   >
     <path
       stroke="currentColor"
@@ -46,8 +46,8 @@ const last_svg = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={20}
-    height={20}
+    width="1em"
+    height="1em"
   >
     <path
       stroke="currentColor"
@@ -64,8 +64,8 @@ const next_svg = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={20}
-    height={20}
+    width="1em"
+    height="1em"
   >
     <path
       stroke="currentColor"
@@ -82,8 +82,8 @@ const prev_svg = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={20}
-    height={20}
+    width="1em"
+    height="1em"
   >
     <path
       stroke="currentColor"
@@ -178,7 +178,6 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
 
     const buttonProps = {
       size,
-      color: color ?? 'primary',
       variant: 'text' as ButtonProps['variant'],
       isIconOnly: true,
       disabled,
@@ -195,7 +194,9 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
           <li>
             <Button
               {...buttonProps}
-              className={styles.item({ className: classNames?.item })}
+              classNames={{
+                base: styles.item({ className: classNames?.item }),
+              }}
               aria-label="first page"
               onPress={() => setPage(1)}
               disabled={!!disabled || page === 1}
@@ -209,7 +210,9 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
           <li>
             <Button
               {...buttonProps}
-              className={styles.item({ className: classNames?.item })}
+              classNames={{
+                base: styles.item({ className: classNames?.item }),
+              }}
               aria-label="previous page"
               onPress={() => setPage((prev) => prev - 1)}
               disabled={!!disabled || page === 1}
@@ -244,7 +247,9 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
                 <li key={i}>
                   <Button
                     {...buttonProps}
-                    className={styles.item({ className: classNames?.item })}
+                    classNames={{
+                      base: styles.item({ className: classNames?.item }),
+                    }}
                     asChild
                   >
                     <div>{ellipsis_svg}</div>
@@ -261,12 +266,15 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
             <li key={i}>
               <Button
                 {...buttonProps}
-                className={styles.item({ className: classNames?.item })}
+                classNames={{
+                  base: styles.item({ className: classNames?.item }),
+                }}
                 aria-label={getItemA11yLabel(ele)}
                 onPress={() => setPage(ele)}
                 disabled={disabled}
                 data-selected={!!selected}
                 variant={(selected && 'solid') || 'text'}
+                color={((selected && color) ?? 'primary') || 'default'}
               >
                 {ele}
               </Button>
@@ -278,7 +286,9 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
           <li>
             <Button
               {...buttonProps}
-              className={styles.item({ className: classNames?.item })}
+              classNames={{
+                base: styles.item({ className: classNames?.item }),
+              }}
               aria-label="next page"
               onPress={() => setPage((prev) => prev + 1)}
               disabled={!!disabled || page === count}
@@ -292,7 +302,9 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
           <li>
             <Button
               {...buttonProps}
-              className={styles.item({ className: classNames?.item })}
+              classNames={{
+                base: styles.item({ className: classNames?.item }),
+              }}
               aria-label="last page"
               onPress={() => setPage(count)}
               disabled={!!disabled || page === count}
