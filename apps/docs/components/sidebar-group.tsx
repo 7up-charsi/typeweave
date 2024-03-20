@@ -12,14 +12,35 @@ export interface SidebarGroupProps
   heading: string;
 }
 
+const LocalStorageKey = 'sidebar';
+
 export const SidebarGroup = (props: SidebarGroupProps) => {
   const { children, heading, ...restProps } = props;
 
-  const [isExpanded, setIsExpanded] = useState(true);
+  const key = heading.replace(' ', '-');
+
+  const [isExpanded, setIsExpanded] = useState<boolean>(
+    JSON.parse(globalThis?.localStorage?.getItem(LocalStorageKey) ?? '{}')[
+      key
+    ] ?? false,
+  );
 
   const pointerEvents = usePointerEvents({
     onPress: () => {
-      setIsExpanded((prev) => !prev);
+      setIsExpanded((prevIsExpanded) => {
+        const nextState = !prevIsExpanded;
+
+        const localStorageObject = JSON.parse(
+          localStorage.getItem(LocalStorageKey) ?? '{}',
+        );
+
+        localStorage.setItem(
+          LocalStorageKey,
+          JSON.stringify({ ...localStorageObject, [key]: nextState }),
+        );
+
+        return nextState;
+      });
     },
   });
 

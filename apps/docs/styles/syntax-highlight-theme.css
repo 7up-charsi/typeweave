@@ -11,6 +11,10 @@
 .hljs {
   color: #c9d1d9;
   background: #0d1117;
+  @apply font-code;
+}
+code:not(pre > code) {
+  @apply font-code mx-1 rounded bg-muted-4 px-1 py-px text-muted-11;
 }
 .hljs-doctag,
 .hljs-keyword,
