@@ -1,0 +1,38 @@
+[
+  {
+    "name": "variant",
+    "type": ["solid", "flat", "border"],
+    "default": "solid",
+    "description": "description description description description"
+  },
+  {
+    "name": "variant",
+    "type": ["solid", "flat", "border"],
+    "default": "solid",
+    "description": "description description description description"
+  },
+  {
+    "name": "variant",
+    "type": ["solid", "flat", "border"],
+    "default": "solid",
+    "description": "description description description description"
+  },
+  {
+    "name": "variant",
+    "type": ["solid", "flat", "border"],
+    "default": "solid",
+    "description": "description description description description"
+  },
+  {
+    "name": "variant",
+    "type": ["solid", "flat", "border"],
+    "default": "solid",
+    "description": "description description description description"
+  },
+  {
+    "name": "variant",
+    "type": ["solid", "flat", "border"],
+    "default": "solid",
+    "description": "description description description description"
+  }
+]

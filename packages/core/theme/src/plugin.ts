@@ -1,5 +1,4 @@
 import plugin from 'tailwindcss/plugin';
-import { fontFamily } from 'tailwindcss/defaultTheme';
 import deepmerge from 'deepmerge';
 import * as colors from '@radix-ui/colors';
 import { flatten } from 'flat';
@@ -186,10 +185,6 @@ export const WebboUi = (config: PluginConfig = {}) => {
           colors: pluginColors,
           borderRadius: {
             DEFAULT: 'var(--border-radius)',
-          },
-          fontFamily: {
-            sans: ["var(--font-geist-sans, 'Nunito Sans')", ...fontFamily.sans],
-            mono: ['var(--font-geist-mono)', ...fontFamily.mono],
           },
           keyframes: {
             skeletonWave: {
