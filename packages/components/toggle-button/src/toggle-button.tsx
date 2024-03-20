@@ -58,7 +58,6 @@ export const ToggleButtonGroupImp = (props: ToggleButtonGroupProps<false>) => {
     exclusive,
     value: valueProp,
     onChange,
-    variant = 'flat',
     color = 'default',
     defaultValue,
     ...rest
@@ -84,21 +83,12 @@ export const ToggleButtonGroupImp = (props: ToggleButtonGroupProps<false>) => {
       '`value` must be `string[]`, when `exclusive` is false',
     );
 
-  const styles = useMemo(
-    () => toggleButton({ color, variant }),
-    [color, variant],
-  );
+  const styles = useMemo(() => toggleButton({ color }), [color]);
 
   return (
     <RootProvider value={value} setValue={setValue} exclusive={!!exclusive}>
       <StylesProvider {...styles}>
-        <ButtonGroup
-          {...rest}
-          color={color}
-          variant={
-            ({ border: 'border', flat: 'flat' }[variant] ?? 'flat') as never
-          }
-        />
+        <ButtonGroup {...rest} color={color} variant="border" />
       </StylesProvider>
     </RootProvider>
   );
@@ -122,7 +112,7 @@ export interface ToggleButtonProps extends ButtonProps {
 
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
   (props, ref) => {
-    const { value: valueProp, onPress, className, ...rest } = props;
+    const { value: valueProp, onPress, classNames, ...rest } = props;
 
     const { setValue, value, exclusive } = useRootContext(Button_Name);
     const styles = useStylesContext(Button_Name);
@@ -141,7 +131,10 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       <Button
         ref={ref}
         {...rest}
-        className={styles.button({ className })}
+        classNames={{
+          ...classNames,
+          base: styles.button({ className: classNames?.base }),
+        }}
         data-selected={selected}
         aria-pressed={selected}
         onPress={(e) => {
