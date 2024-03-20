@@ -82,16 +82,38 @@ export const DocsPager = ({ activeSlug }: Props) => {
   return (
     <div className="mt-10 flex">
       {prev && (
-        <Button variant="flat" color="primary" asChild startContent={arrowLeft}>
-          <Link href={prev?.href}>{prev?.title}</Link>
+        <Button
+          asChild
+          startContent={arrowLeft}
+          classNames={{ base: 'h-auto py-2 px-4 min-w-52 justify-start gap-4' }}
+        >
+          <Link href={prev.href}>
+            <div className="flex flex-col">
+              <div className="text-sm first-letter:uppercase">
+                {prev.href.split('/')[2]}
+              </div>
+              <div className="first-letter:uppercase">{prev.title}</div>
+            </div>
+          </Link>
         </Button>
       )}
 
       <div className="grow"></div>
 
       {next && (
-        <Button variant="flat" color="primary" asChild endContent={arrowRight}>
-          <Link href={next?.href}>{next?.title}</Link>
+        <Button
+          asChild
+          endContent={arrowRight}
+          classNames={{ base: 'h-auto py-2 px-4 min-w-52 justify-end gap-4' }}
+        >
+          <Link href={next.href}>
+            <div className="flex flex-col items-end">
+              <div className="text-sm first-letter:uppercase">
+                {next.href.split('/')[2]}
+              </div>
+              <div className="first-letter:uppercase">{next.title}</div>
+            </div>
+          </Link>
         </Button>
       )}
     </div>
