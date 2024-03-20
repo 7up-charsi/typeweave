@@ -1,32 +1,19 @@
 import React from 'react';
-import { switch as _switch } from '@webbo-ui/theme';
 
 import { Switch, SwitchProps } from '../src';
 
 const meta = {
   title: 'Components/Switch',
   component: Switch,
-  args: _switch.defaultVariants,
-  argTypes: {
-    size: {
-      control: { type: 'select' },
-      options: Object.keys(_switch.variants.size),
-    },
-    color: {
-      control: { type: 'select' },
-      options: Object.keys(_switch.variants.color),
-    },
-    labelPlacement: {
-      control: { type: 'select' },
-      options: Object.keys(_switch.variants.labelPlacement),
-    },
-  },
 };
 
 export default meta;
 
 const Template = (args: SwitchProps) => (
-  <Switch {...args} label="switch label" />
+  <div className="flex flex-col gap-4">
+    <Switch {...args} label="switch md" />
+    <Switch {...args} label="switch sm" size="sm" />
+  </div>
 );
 
 export const Default = {

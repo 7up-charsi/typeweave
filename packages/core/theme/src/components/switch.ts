@@ -7,59 +7,54 @@ const _switch = tv({
     base: 'inline-flex gap-2',
     switch: 'relative',
     input: [
-      'peer/input rounded-full appearance-none cursor-pointer transition-colors border border-muted-8 disabled:disabled absolute inset-0',
+      'peer/input rounded-full appearance-none cursor-pointer transition-colors bg-muted-9 disabled:disabled absolute inset-0',
       focusVisible,
     ],
     indicator:
-      'pointer-events-none bg-muted-9 text-white absolute z-10 rounded-full left-[4px] top-1/2 -translate-y-1/2 translate-x-0 peer-checked/input:left-[calc(100%-4px)] peer-checked/input:-translate-x-full transition-[left,transform] [&_svg:first-of-type]:inline-block peer-checked/input:[&_svg:first-of-type]:hidden [&_svg:last-of-type]:hidden peer-checked/input:[&_svg:last-of-type]:inline-block flex items-center justify-center',
+      'pointer-events-none border border-muted-9 bg-white text-muted-11 absolute z-10 rounded-full left-0 top-1/2 -translate-y-1/2 translate-x-0 peer-checked/input:left-full peer-checked/input:-translate-x-full transition-[left,transform] [&_svg:first-of-type]:inline-block peer-checked/input:[&_svg:first-of-type]:hidden [&_svg:last-of-type]:hidden peer-checked/input:[&_svg:last-of-type]:inline-block flex items-center justify-center',
     label: 'cursor-pointer select-none text-muted-11 first-letter:uppercase',
   },
   variants: {
     color: {
-      default: {
-        input: 'checked:bg-muted-9 checked:border-muted-9',
-        indicator:
-          'peer-checked/input:bg-white peer-checked/input:text-muted-11',
-      },
       primary: {
-        input: 'checked:bg-primary-9 checked:border-primary-9',
+        input: 'checked:bg-primary-9',
         indicator:
-          'peer-checked/input:bg-white peer-checked/input:text-muted-11',
+          'peer-checked/input:border-primary-9 peer-checked/input:text-primary-11',
       },
       secondary: {
         input: 'checked:bg-secondary-9 checked:border-secondary-9',
         indicator:
-          'peer-checked/input:bg-white peer-checked/input:text-muted-11',
+          'peer-checked/input:border-secondary-9 peer-checked/input:text-secondary-11',
       },
       success: {
         input: 'checked:bg-success-9 checked:border-success-9',
         indicator:
-          'peer-checked/input:bg-white peer-checked/input:text-muted-11',
+          'peer-checked/input:border-success-9 peer-checked/input:text-success-11',
       },
       info: {
         input: 'checked:bg-info-9 checked:border-info-9',
         indicator:
-          'peer-checked/input:bg-white peer-checked/input:text-muted-11',
+          'peer-checked/input:border-info-9 peer-checked/input:text-info-11',
       },
       warning: {
         input: 'checked:bg-warning-9 checked:border-warning-9',
         indicator:
-          'peer-checked/input:bg-white peer-checked/input:text-muted-11',
+          'peer-checked/input:border-warning-9 peer-checked/input:text-warning-11',
       },
       danger: {
         input: 'checked:bg-danger-9 checked:border-danger-9',
         indicator:
-          'peer-checked/input:bg-white peer-checked/input:text-muted-11',
+          'peer-checked/input:border-danger-9 peer-checked/input:text-danger-11',
       },
     },
     size: {
       sm: {
-        switch: 'w-9 h-5',
-        indicator: 'w-3 h-3',
+        switch: 'w-8 h-3',
+        indicator: 'w-5 h-5 text-xs',
       },
       md: {
-        switch: 'w-11 h-6',
-        indicator: 'w-4 h-4',
+        switch: 'w-10 h-4',
+        indicator: 'w-6 h-6 text-base',
       },
     },
     labelPlacement: {
