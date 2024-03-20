@@ -1,60 +1,42 @@
 import React from 'react';
-import { input } from '@webbo-ui/theme';
 
-import {
-  NumberInput,
-  NumberInputProps,
-  PasswordInput,
-  PasswordInputProps,
-  Input as InputComp,
-  InputProps,
-} from '../src';
+import { NumberInput, PasswordInput, Input as InputComp } from '../src';
 
 const meta = {
   title: 'Components/Input',
-  args: {
-    ...input.defaultVariants,
-    placeholder: '',
-    helperText: 'helper text',
-    errorMessage: 'error message',
-    label: 'label',
-    error: false,
-    hideLabel: false,
-  },
-  argTypes: {
-    variant: {
-      control: 'select',
-      options: Object.keys(input.variants.variant),
-    },
-    size: {
-      control: { type: 'select' },
-      options: Object.keys(input.variants.size),
-      if: { arg: 'size', exists: true },
-    },
-    fullWidth: {
-      control: { type: 'boolean' },
-      if: { arg: 'fullWidth', exists: true },
-      name: 'full width',
-    },
-  },
 };
 
 export default meta;
 
-const InputTemplate = (args: InputProps) => (
-  <InputComp
-    {...args}
-    startContent={args.startContent && <p className="text-muted-11">kg</p>}
-    endContent={args.endContent && <p className="text-muted-11">$$$</p>}
-    required
-  />
+const InputTemplate = (args) => (
+  <div className="flex flex-col gap-5">
+    <InputComp
+      startContent={
+        args.startContent && <p className="text-muted-11 text-base">kg</p>
+      }
+      endContent={
+        args.endContent && <p className="text-muted-11 text-base">$$$</p>
+      }
+      required
+      placeholder="placeholder"
+      size="sm"
+    />
+
+    <InputComp
+      startContent={
+        args.startContent && <p className="text-muted-11 text-base">kg</p>
+      }
+      endContent={
+        args.endContent && <p className="text-muted-11 text-base">$$$</p>
+      }
+      required
+      placeholder="placeholder"
+    />
+  </div>
 );
 
 export const Input = {
   render: InputTemplate,
-  args: {
-    placeholder: 'Placeholder',
-  },
 };
 
 export const StartEndContent = {
@@ -66,15 +48,23 @@ export const StartEndContent = {
   },
 };
 
-const PasswordTemplate = (args: PasswordInputProps) => (
-  <PasswordInput {...args} />
+const PasswordTemplate = () => (
+  <div className="flex flex-col gap-5">
+    <PasswordInput required placeholder="placeholder" size="sm" />
+    <PasswordInput required placeholder="placeholder" />
+  </div>
 );
 
 export const Password = {
   render: PasswordTemplate,
 };
 
-const NumberTemplate = (args: NumberInputProps) => <NumberInput {...args} />;
+const NumberTemplate = () => (
+  <div className="flex flex-col gap-5">
+    <NumberInput required placeholder="placeholder" size="sm" />
+    <NumberInput required placeholder="placeholder" />
+  </div>
+);
 
 export const Number = {
   render: NumberTemplate,

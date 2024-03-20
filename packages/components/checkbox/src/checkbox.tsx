@@ -14,8 +14,8 @@ const checked_svg = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={20}
-    height={20}
+    width="1em"
+    height="1em"
   >
     <path
       stroke="currentColor"
@@ -31,8 +31,8 @@ const indeterminate_svg = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 16 16"
-    width={10}
-    height={10}
+    width="1em"
+    height="1em"
     fill="currentColor"
   >
     <path d="M2 8a1 1 0 011-1h10a1 1 0 110 2H3a1 1 0 01-1-1z"></path>
@@ -100,8 +100,8 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
           {checkedIcon}
         </div>
         <div
-          className={styles.indeterminate({
-            className: classNames?.indeterminate,
+          className={styles.indeterminateIcon({
+            className: classNames?.indeterminateIcon,
           })}
         >
           {indeterminateIcon}

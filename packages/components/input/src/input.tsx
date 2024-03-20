@@ -133,7 +133,15 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
         ref={ref}
         className={styles.inputWrapper({ className: classNames?.inputWrapper })}
       >
-        {startContent}
+        {!!startContent && (
+          <span
+            className={styles.startContent({
+              className: classNames?.startContent,
+            })}
+          >
+            {startContent}
+          </span>
+        )}
 
         <input
           {...inputProps}
@@ -155,7 +163,15 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
           autoComplete="off"
         />
 
-        {endContent}
+        {!!endContent && (
+          <span
+            className={styles.endContent({
+              className: classNames?.endContent,
+            })}
+          >
+            {endContent}
+          </span>
+        )}
       </div>
 
       {!error && helperText && (

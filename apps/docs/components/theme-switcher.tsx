@@ -61,7 +61,7 @@ const ThemeMenu = () => {
   return (
     <Menu.Root>
       <Menu.Trigger>
-        <Button className="mr-5" size="sm">
+        <Button classNames={{ base: 'mr-5' }} size="sm">
           theme
         </Button>
       </Menu.Trigger>

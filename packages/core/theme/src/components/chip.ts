@@ -25,9 +25,9 @@ export const chip = tv({
       danger: { base: '' },
     },
     size: {
-      sm: { base: 'text-xs h-6' },
-      md: { base: 'text-sm h-7' },
-      lg: { base: 'h-8' },
+      sm: { base: 'text-xs h-6', deleteIcon: 'text-xs' },
+      md: { base: 'text-sm h-7', deleteIcon: 'text-sm' },
+      lg: { base: 'text-base h-8', deleteIcon: 'text-base' },
     },
   },
   compoundVariants: [

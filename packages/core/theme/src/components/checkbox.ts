@@ -13,7 +13,7 @@ export const checkbox = tv({
     icon: 'pointer-events-none absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-muted-11 block peer-indeterminate/input:hidden peer-checked/input:hidden',
     checkedIcon:
       'pointer-events-none absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden peer-checked/input:block',
-    indeterminate:
+    indeterminateIcon:
       'pointer-events-none absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden peer-indeterminate/input:block',
     label: 'cursor-pointer select-none text-muted-11 first-letter:uppercase',
   },
@@ -22,45 +22,51 @@ export const checkbox = tv({
       default: {
         input: 'checked:bg-muted-9 checked:border-muted-9',
         checkedIcon: 'text-white',
-        indeterminate: 'text-default-11',
+        indeterminateIcon: 'text-default-11',
       },
       primary: {
         input: 'checked:bg-primary-9 checked:border-primary-9',
         checkedIcon: 'text-white',
-        indeterminate: 'text-primary-11',
+        indeterminateIcon: 'text-primary-11',
       },
       secondary: {
         input: 'checked:bg-secondary-9 checked:border-secondary-9',
         checkedIcon: 'text-white',
-        indeterminate: 'text-secondary-11',
+        indeterminateIcon: 'text-secondary-11',
       },
       success: {
         input: 'checked:bg-success-9 checked:border-success-9',
         checkedIcon: 'text-white',
-        indeterminate: 'text-success-11',
+        indeterminateIcon: 'text-success-11',
       },
       info: {
         input: 'checked:bg-info-9 checked:border-info-9',
         checkedIcon: 'text-white',
-        indeterminate: 'text-info-11',
+        indeterminateIcon: 'text-info-11',
       },
       warning: {
         input: 'checked:bg-warning-9 checked:border-warning-9',
         checkedIcon: 'text-white',
-        indeterminate: 'text-warning-11',
+        indeterminateIcon: 'text-warning-11',
       },
       danger: {
         input: 'checked:bg-danger-9 checked:border-danger-9',
         checkedIcon: 'text-white',
-        indeterminate: 'text-danger-11',
+        indeterminateIcon: 'text-danger-11',
       },
     },
     size: {
       sm: {
         checkbox: 'w-4 h-4',
+        icon: 'text-base',
+        checkedIcon: 'text-base',
+        indeterminateIcon: 'text-xs',
       },
       md: {
         checkbox: 'w-5 h-5 ',
+        icon: 'text-lg',
+        checkedIcon: 'text-lg',
+        indeterminateIcon: 'text-sm',
       },
     },
     labelPlacement: {

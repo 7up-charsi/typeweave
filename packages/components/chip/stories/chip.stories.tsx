@@ -25,7 +25,7 @@ const meta = {
 
 export default meta;
 
-const Template = () => (
+const Template = (args) => (
   <div className="p-5 flex flex-col gap-6 items-center">
     {(
       Object.keys(chip.variants.variant) as [keyof typeof chip.variants.variant]
@@ -47,6 +47,7 @@ const Template = () => (
               variant={variant}
               label="Chip Comp"
               onDelete={() => {}}
+              size={args.size}
             />
           ))}
         </div>

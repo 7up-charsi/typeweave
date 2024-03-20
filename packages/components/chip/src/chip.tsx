@@ -9,8 +9,8 @@ const delete_svg = (
     viewBox="0 0 18 18"
     xmlns="http://www.w3.org/2000/svg"
     fill="currentColor"
-    width={15}
-    height={15}
+    width="1em"
+    height="1em"
   >
     <g strokeWidth="0"></g>
     <g strokeLinecap="round" strokeLinejoin="round"></g>

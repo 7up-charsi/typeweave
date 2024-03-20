@@ -12,6 +12,8 @@ export const input = tv({
       'appearance-none bg-transparent outline-none grow w-0 text-muted-11 placeholder:text-muted-11/80',
     helperText:
       'first-letter:uppercase px-1 pt-1 text-sm leading-none text-muted-10',
+    startContent: '',
+    endContent: '',
   },
   variants: {
     variant: {
@@ -25,8 +27,16 @@ export const input = tv({
       },
     },
     size: {
-      sm: { inputWrapper: 'h-10' },
-      md: { inputWrapper: 'h-12' },
+      sm: {
+        inputWrapper: 'h-10',
+        startContent: 'text-lg',
+        endContent: 'text-lg',
+      },
+      md: {
+        inputWrapper: 'h-12',
+        startContent: 'text-xl',
+        endContent: 'text-xl',
+      },
     },
     fullWidth: { true: { base: 'w-full' } },
     disabled: { true: { base: 'disabled' } },

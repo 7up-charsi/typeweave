@@ -1,5 +1,4 @@
 import React from 'react';
-import { badge } from '@webbo-ui/theme';
 import { Button } from '@webbo-ui/button';
 
 import { Badge } from '../src';
@@ -7,27 +6,8 @@ import { Badge } from '../src';
 const meta = {
   title: 'Components/Badge',
   component: Badge,
-  args: { ...badge.defaultVariants, overlap: undefined },
   parameters: {
     layout: 'centered',
-  },
-  argTypes: {
-    variant: {
-      control: 'select',
-      options: Object.keys(badge.variants.variant),
-    },
-    placement: {
-      control: 'select',
-      options: Object.keys(badge.variants.placement),
-    },
-    color: {
-      control: 'select',
-      options: Object.keys(badge.variants.color),
-    },
-    shadow: {
-      control: 'select',
-      options: Object.keys(badge.variants.shadow),
-    },
   },
 };
 
@@ -46,8 +26,8 @@ const Template = (args) => (
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
             viewBox="0 0 48 48"
-            width={23}
-            height={23}
+            width="1.4rem"
+            height="1.4rem"
           >
             <path
               stroke="currentColor"
@@ -71,8 +51,8 @@ const Template = (args) => (
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
             viewBox="0 0 48 48"
-            width={23}
-            height={23}
+            width="1.4rem"
+            height="1.4rem"
           >
             <path
               stroke="currentColor"

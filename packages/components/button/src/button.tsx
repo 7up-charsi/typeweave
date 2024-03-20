@@ -3,6 +3,7 @@
 import { mergeRefs } from '@webbo-ui/react-utils';
 import {
   button,
+  ButtonClassNames,
   buttonGroup,
   ButtonGroupVariantProps,
   ButtonVariantProps,
@@ -80,7 +81,7 @@ export interface ButtonProps
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color' | 'className'> {
   startContent?: ReactNode;
   endContent?: ReactNode;
-  className?: string;
+  classNames?: ButtonClassNames;
   children?: ReactNode;
   asChild?: boolean;
   onPress?: (e: React.PointerEvent) => void;
@@ -91,7 +92,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const {
       startContent,
       endContent,
-      className,
+      classNames,
       children,
       isIconOnly = false,
       disabled: _disabled,
@@ -135,7 +136,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const styles = button({
       isIconOnly,
-      className,
       size: size ?? groupContext?.size ?? 'md',
       variant: variant ?? groupContext?.variant ?? 'flat',
       color: color ?? groupContext?.color ?? 'default',
@@ -143,13 +143,33 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       isInGroup: !!groupContext,
     });
 
+    const __startContent = !isIconOnly && !!startContent && (
+      <span
+        className={styles.startContent({
+          className: classNames?.startContent,
+        })}
+      >
+        {startContent}
+      </span>
+    );
+
+    const __endContent = !isIconOnly && !!endContent && (
+      <span
+        className={styles.endContent({
+          className: classNames?.endContent,
+        })}
+      >
+        {endContent}
+      </span>
+    );
+
     return (
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
         {...buttonProps}
         {...pointerEvents}
         disabled={!!disabled}
         ref={mergeRefs(ref, innerRef)}
-        className={styles}
+        className={styles.base({ className: classNames?.base })}
         onKeyDown={(e) => {
           buttonProps.onKeyDown?.(e);
 
@@ -165,17 +185,31 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           cloneElement(children, {
             children: (
               <>
-                {!isIconOnly && startContent}
-                <span>{children.props.children}</span>
-                {!isIconOnly && endContent}
+                {__startContent}
+                <span
+                  className={styles.content({
+                    className: classNames?.content,
+                  })}
+                >
+                  {children.props.children}
+                </span>
+                {__endContent}
               </>
             ),
           } as Partial<unknown>)
         ) : (
           <button>
-            {!isIconOnly && startContent}
-            <span>{children}</span>
-            {!isIconOnly && endContent}
+            {__startContent}
+
+            <span
+              className={styles.content({
+                className: classNames?.content,
+              })}
+            >
+              {children}
+            </span>
+
+            {__endContent}
           </button>
         )}
       </Slot>
