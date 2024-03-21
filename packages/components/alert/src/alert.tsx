@@ -97,8 +97,9 @@ const icons = {
   danger,
 };
 
-export interface AlertProps extends AlertVariantProps {
-  children?: React.ReactNode;
+export interface AlertProps
+  extends AlertVariantProps,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'color' | 'title'> {
   icon?: false | React.ReactNode;
   action?: false | React.ReactNode;
   title?: React.ReactNode;
@@ -115,12 +116,13 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
     action,
     fullWidth = true,
     icon = icons[color || 'danger'],
+    ...restProps
   } = props;
 
   const styles = alertStyles({ color, fullWidth, variant });
 
   return (
-    <div role="alert" ref={ref} className={styles.base()}>
+    <div {...restProps} ref={ref} role="alert" className={styles.base()}>
       {icon === false ? null : <div className={styles.icon()}>{icon}</div>}
 
       <div className={styles.content()}>
