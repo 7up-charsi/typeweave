@@ -21,8 +21,8 @@ export const button = tv({
       focusVisible,
     ],
     content: 'first-letter:uppercase',
-    startContent: '',
-    endContent: '',
+    startContent: 'flex gap-1 items-center',
+    endContent: 'flex gap-1 items-center',
   },
   variants: {
     variant: {

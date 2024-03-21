@@ -1,10 +1,10 @@
 'use client';
 
-import { Chip } from '@webbo-ui/chip';
 import { Button } from '@webbo-ui/button';
+import { Chip } from '@webbo-ui/chip';
 import { RenderInputProps } from './autocomplete';
-import { autocompleteInput } from '@webbo-ui/theme';
 import { InputProps } from '@webbo-ui/input';
+import { autocompleteInput } from '@webbo-ui/theme';
 
 const clearIcon_svg = (
   <svg
@@ -50,8 +50,9 @@ const openIndicator_svg = (
 
 export const mapInputProps = ({
   ariaProps,
-  handleClear,
-  handleOpen,
+  onClear,
+  onClearPointerDown,
+  onOpen,
   inputRef,
   disabled,
   onBlur,
@@ -59,7 +60,7 @@ export const mapInputProps = ({
   onKeyDown,
   popperReferenceRef,
   showClearButton,
-  tags,
+  selected,
   isOpen,
   multiple,
   inputValue,
@@ -70,8 +71,11 @@ export const mapInputProps = ({
     classNames: {
       inputWrapper: styles.inputWrapper(),
       input: styles.input(),
+      startContent: styles.startContent(),
+      endContent: styles.endContent(),
     },
-    startContent: tags?.map((opt, i) => (
+
+    startContent: selected?.map((opt, i) => (
       <Chip
         key={i}
         color="default"
@@ -82,16 +86,17 @@ export const mapInputProps = ({
       />
     )),
     endContent: (
-      <div className={styles.endContent()}>
+      <>
         {showClearButton && (
           <Button
             isIconOnly
             variant="text"
-            onPress={handleClear}
+            onPress={onClear}
+            onPointerDown={onClearPointerDown}
             size="sm"
             tabIndex={-1}
             aria-label="clear value"
-            classNames={{ content: styles.clearButton() }}
+            classNames={{ base: styles.clearButton() }}
           >
             {clearIcon_svg}
           </Button>
@@ -103,16 +108,24 @@ export const mapInputProps = ({
         >
           {openIndicator_svg}
         </span>
-      </div>
+      </>
     ),
     inputWrapperProps: {
+      // @ts-expect-error ----
+      'data-chips': !!selected?.length,
       onPointerDown: (e: React.PointerEvent) => {
-        if (e.button !== 0) return;
-        if (disabled) return;
-        handleOpen();
+        e.preventDefault();
+        if (
+          (e.target as HTMLElement).closest('button') ||
+          e.button !== 0 ||
+          disabled
+        )
+          return;
+
+        inputRef.current?.focus();
+        onOpen();
       },
     },
-    // @ts-expect-error ----
     ref: popperReferenceRef,
     inputRef,
     onBlur,

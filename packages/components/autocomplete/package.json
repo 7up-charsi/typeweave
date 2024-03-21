@@ -38,6 +38,8 @@
   "dependencies": {
     "@webbo-ui/button": "workspace:*",
     "@webbo-ui/error": "workspace:*",
+    "@webbo-ui/popover": "workspace:*",
+    "@webbo-ui/checkbox": "workspace:*",
     "@webbo-ui/input": "workspace:*",
     "@webbo-ui/popper": "workspace:*",
     "@webbo-ui/react-utils": "workspace:*",

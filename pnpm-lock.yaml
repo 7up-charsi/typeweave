@@ -375,6 +375,9 @@ importers:
       '@webbo-ui/button':
         specifier: workspace:*
         version: link:../button
+      '@webbo-ui/checkbox':
+        specifier: workspace:*
+        version: link:../checkbox
       '@webbo-ui/chip':
         specifier: workspace:*
         version: link:../chip
@@ -384,6 +387,9 @@ importers:
       '@webbo-ui/input':
         specifier: workspace:*
         version: link:../input
+      '@webbo-ui/popover':
+        specifier: workspace:*
+        version: link:../popover
       '@webbo-ui/popper':
         specifier: workspace:*
         version: link:../popper
