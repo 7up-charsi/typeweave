@@ -1,7 +1,8 @@
 'use client';
 
+import { mergeRefs } from '@webbo-ui/react-utils';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
-import { useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 
 export interface OptionProps<V> extends React.HTMLAttributes<HTMLLIElement> {
   option: V;
@@ -14,9 +15,10 @@ export interface OptionProps<V> extends React.HTMLAttributes<HTMLLIElement> {
   'data-focused': boolean;
 }
 
-export const Option = (
-  props: OptionProps<object> & { children?: React.ReactNode },
-) => {
+export const Option = forwardRef<
+  HTMLLIElement,
+  OptionProps<object> & { children?: React.ReactNode }
+>((props, ref) => {
   const {
     label,
     onSelect,
@@ -30,7 +32,7 @@ export const Option = (
     ...restProps
   } = props;
 
-  const ref = useRef<HTMLLIElement>(null);
+  const innerRef = useRef<HTMLLIElement>(null);
   const isHovered = useRef(false);
 
   const pointerEvents = usePointerEvents({
@@ -47,17 +49,23 @@ export const Option = (
 
   useEffect(() => {
     if (selected)
-      ref.current?.scrollIntoView({ behavior: 'instant', block: 'center' });
+      innerRef.current?.scrollIntoView({
+        behavior: 'instant',
+        block: 'center',
+      });
   }, [selected]);
 
   useEffect(() => {
     if (focused && !isHovered.current)
-      ref.current?.scrollIntoView({ behavior: 'instant', block: 'nearest' });
+      innerRef.current?.scrollIntoView({
+        behavior: 'instant',
+        block: 'nearest',
+      });
   }, [focused]);
 
   return (
     <li
-      ref={ref}
+      ref={mergeRefs(ref, innerRef)}
       onPointerEnter={(e) => {
         onPointerEnter?.(e);
         isHovered.current = true;
@@ -73,6 +81,6 @@ export const Option = (
       {children ?? label}
     </li>
   );
-};
+});
 
 Option.displayName = 'webbo-ui.Option';
