@@ -3,7 +3,7 @@
 import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
-import { useEffect, useId, useMemo, useRef } from 'react';
+import { forwardRef, useEffect, useId, useMemo, useRef } from 'react';
 import { Slot } from '@webbo-ui/slot';
 import { FocusScope, FocusTrap } from '@webbo-ui/focus-trap';
 import { useScrollLock } from '@webbo-ui/use-scroll-lock';
@@ -106,33 +106,32 @@ Root.displayName = 'webbo-ui.' + Root_Name;
 
 const Trigger_Name = 'AlertDialog.Trigger';
 
-export interface TriggerProps {
-  children: React.ReactNode;
-  a11yLabel?: string;
-  a11yDescription?: string;
-}
+export interface TriggerProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Trigger = (props: TriggerProps) => {
-  const { children, a11yLabel, a11yDescription } = props;
+export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
+  (props, ref) => {
+    const { onPointerDown, onPointerUp, ...restProps } = props;
 
-  const rootContext = useRootContext(Trigger_Name);
+    const rootContext = useRootContext(Trigger_Name);
 
-  const pointerEvents = usePointerEvents({
-    onPress: rootContext.handleOpen,
-  });
+    const pointerEvents = usePointerEvents({
+      onPress: rootContext.handleOpen,
+      onPointerDown,
+      onPointerUp,
+    });
 
-  return (
-    <Slot
-      aria-expanded={rootContext.isOpen}
-      aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
-      aria-label={a11yLabel}
-      aria-describedby={a11yDescription}
-      {...pointerEvents}
-    >
-      {children}
-    </Slot>
-  );
-};
+    return (
+      <Slot
+        {...restProps}
+        ref={ref}
+        aria-expanded={rootContext.isOpen}
+        aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
+        {...pointerEvents}
+      />
+    );
+  },
+);
 
 Trigger.displayName = 'webbo-ui.' + Trigger_Name;
 
@@ -140,21 +139,22 @@ Trigger.displayName = 'webbo-ui.' + Trigger_Name;
 
 const Close_Name = 'AlertDialog.Close';
 
-export interface CloseProps {
-  children: React.ReactNode;
-}
+export interface CloseProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Close = (props: CloseProps) => {
-  const { children } = props;
+export const Close = forwardRef<HTMLButtonElement, CloseProps>((props, ref) => {
+  const { onPointerDown, onPointerUp, ...restProps } = props;
 
   const rootContext = useRootContext(Close_Name);
 
   const pointerEvents = usePointerEvents({
     onPress: rootContext.handleClose,
+    onPointerDown,
+    onPointerUp,
   });
 
-  return <Slot {...pointerEvents}>{children}</Slot>;
-};
+  return <Slot {...restProps} ref={ref} {...pointerEvents} />;
+});
 
 Close.displayName = 'webbo-ui.' + Close_Name;
 
@@ -184,52 +184,54 @@ const Content_Name = 'AlertDialog.Content';
 const [StylesProvider, useStylesContext] =
   createContextScope<ReturnType<typeof alertDialog>>(Content_Name);
 
-export interface ContentProps extends AlertDialogVariantProps {
-  children?: React.ReactNode;
-  className?: string;
+export interface ContentProps
+  extends AlertDialogVariantProps,
+    React.HTMLAttributes<HTMLDivElement> {
   noA11yTitle?: boolean;
   noA11yDescription?: boolean;
 }
 
-export const Content = (props: ContentProps) => {
-  const {
-    children,
-    className,
-    noA11yDescription,
-    noA11yTitle,
-    shadow = 'md',
-  } = props;
+export const Content = forwardRef<HTMLDivElement, ContentProps>(
+  (props, ref) => {
+    const {
+      className,
+      noA11yDescription,
+      noA11yTitle,
+      shadow = 'md',
+      ...restProps
+    } = props;
 
-  const rootContext = useRootContext(Content_Name);
+    const rootContext = useRootContext(Content_Name);
 
-  useScrollLock();
+    useScrollLock();
 
-  const styles = useMemo(() => alertDialog({ shadow }), [shadow]);
+    const styles = useMemo(() => alertDialog({ shadow }), [shadow]);
 
-  return (
-    <StylesProvider {...styles}>
-      <FocusTrap
-        loop
-        trapped
-        focusScope={rootContext.focusScope}
-        disabled={!rootContext.isOpen}
-      >
-        <div
-          role="alertdialog"
-          aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
-          aria-describedby={
-            noA11yDescription ? undefined : rootContext.descriptionId
-          }
-          aria-modal={true}
-          id={rootContext.contentId}
-          className={styles.content({ className })}
+    return (
+      <StylesProvider {...styles}>
+        <FocusTrap
+          loop
+          trapped
+          focusScope={rootContext.focusScope}
+          disabled={!rootContext.isOpen}
         >
-          {children}
-        </div>
-      </FocusTrap>
-    </StylesProvider>
-  );
-};
+          <div
+            {...restProps}
+            ref={ref}
+            role="alertdialog"
+            aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
+            aria-describedby={
+              noA11yDescription ? undefined : rootContext.descriptionId
+            }
+            aria-modal={true}
+            id={rootContext.contentId}
+            className={styles.content({ className })}
+          />
+        </FocusTrap>
+      </StylesProvider>
+    );
+  },
+);
 
 Content.displayName = 'webbo-ui.' + Content_Name;
 
@@ -237,26 +239,23 @@ Content.displayName = 'webbo-ui.' + Content_Name;
 
 const Title_Name = 'AlertDialog.Title';
 
-export interface TitleProps {
-  children?: React.ReactNode;
-  className?: string;
-}
+export interface TitleProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Title = (props: TitleProps) => {
-  const { children, className } = props;
+export const Title = forwardRef<HTMLDivElement, TitleProps>((props, ref) => {
+  const { className, ...restProps } = props;
 
   const rootContext = useRootContext(Title_Name);
   const stylesContext = useStylesContext(Title_Name);
 
   return (
     <div
+      {...restProps}
+      ref={ref}
       id={rootContext.titleId}
       className={stylesContext.title({ className })}
-    >
-      {children}
-    </div>
+    />
   );
-};
+});
 
 Title.displayName = 'webbo-ui.' + Title_Name;
 
@@ -264,26 +263,26 @@ Title.displayName = 'webbo-ui.' + Title_Name;
 
 const Description_Name = 'AlertDialog.Description';
 
-export interface DescriptionProps {
-  children?: React.ReactNode;
-  className?: string;
-}
+export interface DescriptionProps
+  extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Description = (props: DescriptionProps) => {
-  const { children, className } = props;
+export const Description = forwardRef<HTMLDivElement, DescriptionProps>(
+  (props, ref) => {
+    const { className, ...restProps } = props;
 
-  const rootContext = useRootContext(Description_Name);
-  const stylesContext = useStylesContext(Description_Name);
+    const rootContext = useRootContext(Description_Name);
+    const stylesContext = useStylesContext(Description_Name);
 
-  return (
-    <div
-      id={rootContext.descriptionId}
-      className={stylesContext.description({ className })}
-    >
-      {children}
-    </div>
-  );
-};
+    return (
+      <div
+        {...restProps}
+        ref={ref}
+        id={rootContext.descriptionId}
+        className={stylesContext.description({ className })}
+      />
+    );
+  },
+);
 
 Description.displayName = 'webbo-ui.' + Description_Name;
 
@@ -291,17 +290,22 @@ Description.displayName = 'webbo-ui.' + Description_Name;
 
 const Actions_Name = 'AlertDialog.Actions';
 
-export interface OverlayProps {
-  className?: string;
-  children?: React.ReactNode;
-}
+export interface OverlayProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Actions = (props: OverlayProps) => {
-  const { className, children } = props;
+export const Actions = forwardRef<HTMLDivElement, OverlayProps>(
+  (props, ref) => {
+    const { className, ...restProps } = props;
 
-  const stylesContext = useStylesContext(Actions_Name);
+    const stylesContext = useStylesContext(Actions_Name);
 
-  return <div className={stylesContext.actions({ className })}>{children}</div>;
-};
+    return (
+      <div
+        {...restProps}
+        ref={ref}
+        className={stylesContext.actions({ className })}
+      />
+    );
+  },
+);
 
 Actions.displayName = 'webbo-ui.' + Actions_Name;
