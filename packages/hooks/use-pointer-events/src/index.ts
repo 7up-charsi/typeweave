@@ -1,13 +1,15 @@
 import { useRef } from 'react';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 
-export interface UsePointerEventsProps {
-  onPointerDown?: React.PointerEventHandler;
-  onPointerUp?: React.PointerEventHandler;
-  onPress?: React.PointerEventHandler;
+export interface UsePointerEventsProps<E> {
+  onPointerDown?: React.PointerEventHandler<E>;
+  onPointerUp?: React.PointerEventHandler<E>;
+  onPress?: React.PointerEventHandler<E>;
 }
 
-const usePointerEvents = (props: UsePointerEventsProps = {}) => {
+const usePointerEvents = <E extends HTMLElement = HTMLElement>(
+  props: UsePointerEventsProps<E> = {},
+) => {
   const {
     onPointerDown: onPointerDownProp,
     onPointerUp: onPointerUpProp,
@@ -16,7 +18,7 @@ const usePointerEvents = (props: UsePointerEventsProps = {}) => {
 
   const pointerRef = useRef(false);
 
-  const onPointerDown = useCallbackRef((e: React.PointerEvent) => {
+  const onPointerDown = useCallbackRef((e: React.PointerEvent<E>) => {
     onPointerDownProp?.(e);
     pointerRef.current = true;
 
@@ -31,7 +33,7 @@ const usePointerEvents = (props: UsePointerEventsProps = {}) => {
     );
   });
 
-  const onPointerUp = useCallbackRef((e: React.PointerEvent) => {
+  const onPointerUp = useCallbackRef((e: React.PointerEvent<E>) => {
     onPointerUpProp?.(e);
 
     if (pointerRef.current === true && e.button === 0) {
