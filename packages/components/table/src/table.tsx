@@ -117,7 +117,7 @@ const Table_Name = 'Table.Table';
 
 export interface TableProps
   extends TableVariantProps,
-    React.TableHTMLAttributes<HTMLTableElement> {
+    Omit<React.TableHTMLAttributes<HTMLTableElement>, 'className'> {
   classNames?: TableClassNames;
 }
 

@@ -34,11 +34,12 @@ export interface InputProps extends InputVariantProps {
     | 'onBlur'
     | 'onFocus'
     | 'required'
+    | 'className'
   >;
-  baseProps?: React.HTMLAttributes<HTMLDivElement>;
-  labelProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
-  helperTextProps?: React.HTMLAttributes<HTMLDivElement>;
-  inputWrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  baseProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
+  labelProps?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'className'>;
+  helperTextProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
+  inputWrapperProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   baseRef?: React.ForwardedRef<HTMLDivElement>;
   inputRef?: React.ForwardedRef<HTMLInputElement>;
 }
