@@ -3,7 +3,7 @@
 import * as Popper from '@webbo-ui/popper';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { CustomError } from '@webbo-ui/error';
-import { useId, useMemo, useRef, useState } from 'react';
+import { forwardRef, useId, useMemo, useRef, useState } from 'react';
 import { Option, OptionProps } from './option';
 import lodashGroupBy from 'lodash.groupby';
 import {
@@ -41,30 +41,31 @@ export interface RenderInputProps<Value> {
 }
 
 export type AutocompleteProps<Value, Multiple, DisableClearable> =
-  (AutocompleteVariantProps & {
-    disabled?: boolean;
-    classNames?: AutocompleteClassNames;
-    offset?: Popper.FloatingProps['mainOffset'];
-    options: Value[];
-    isOpen?: boolean;
-    onOpenChange?: (open: boolean) => void;
-    defaultOpen?: boolean;
-    getOptionDisabled?: (option: Value) => boolean;
-    disableCloseOnSelect?: boolean;
-    getOptionLabel?: (option: Value) => string;
-    getOptionKey?: (options: Value) => string;
-    noOptionsText?: string;
-    loading?: boolean;
-    loadingText?: string;
-    groupBy?: (option: Value) => string;
-    children?: (props: {
-      groupedOptions: Record<string, OptionProps<Value>[]> | null;
-      options: OptionProps<Value>[] | null;
-    }) => React.ReactNode;
-    inputValue?: string;
-    onInputChange?: (val: string) => void;
-    filterOptions?: (options: Value[], inputValue: string) => Value[];
-  }) &
+  (AutocompleteVariantProps &
+    React.HTMLAttributes<HTMLUListElement> & {
+      disabled?: boolean;
+      classNames?: AutocompleteClassNames;
+      offset?: Popper.FloatingProps['mainOffset'];
+      options: Value[];
+      isOpen?: boolean;
+      onOpenChange?: (open: boolean) => void;
+      defaultOpen?: boolean;
+      getOptionDisabled?: (option: Value) => boolean;
+      disableCloseOnSelect?: boolean;
+      getOptionLabel?: (option: Value) => string;
+      getOptionKey?: (options: Value) => string;
+      noOptionsText?: string;
+      loading?: boolean;
+      loadingText?: string;
+      groupBy?: (option: Value) => string;
+      children?: (props: {
+        groupedOptions: Record<string, OptionProps<Value>[]> | null;
+        options: OptionProps<Value>[] | null;
+      }) => React.ReactNode;
+      inputValue?: string;
+      onInputChange?: (val: string) => void;
+      filterOptions?: (options: Value[], inputValue: string) => Value[];
+    }) &
     (Multiple extends true
       ? {
           multiple: Multiple;
@@ -106,7 +107,10 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
             ) => React.ReactNode;
           });
 
-const AutocompleteImp = (props: AutocompleteProps<object, false, false>) => {
+const AutocompleteImp = forwardRef<
+  HTMLUListElement,
+  AutocompleteProps<object, false, false>
+>((props, ref) => {
   const {
     classNames,
     offset,
@@ -134,6 +138,7 @@ const AutocompleteImp = (props: AutocompleteProps<object, false, false>) => {
     onInputChange: onInputChangeProp,
     filterOptions,
     renderInput,
+    ...restProps
   } = props;
 
   const getOptionLabel = (option: object) => {
@@ -364,7 +369,10 @@ const AutocompleteImp = (props: AutocompleteProps<object, false, false>) => {
     setOptions(filter(optionsProp, val));
   };
 
-  const getOptionProps = (ele: object, i: number): OptionProps<object> => {
+  const getOptionProps = (
+    ele: object,
+    i: number,
+  ): OptionProps<object> & { key: string } => {
     const isFocused = ele === focused;
     const optionDisabled = getOptionDisabled?.(ele) ?? false;
     const selected = Array.isArray(value)
@@ -375,15 +383,6 @@ const AutocompleteImp = (props: AutocompleteProps<object, false, false>) => {
       option: ele,
       label: getOptionLabel(ele),
       key: getOptionKey?.(ele) ?? getOptionLabel(ele).replaceAll(' ', '-'),
-      props: {
-        className: styles.option({ className: classNames?.option }),
-        id: `option-${i}`,
-        role: 'option',
-        'aria-selected': optionDisabled ? undefined : selected,
-        'data-disabled': optionDisabled,
-        'data-selected': selected,
-        'data-focused': isFocused,
-      },
       onHover: () => onHover(ele),
       onSelect: () => onSelect(ele),
       state: {
@@ -391,6 +390,13 @@ const AutocompleteImp = (props: AutocompleteProps<object, false, false>) => {
         selected: selected,
         disabled: optionDisabled,
       },
+      className: styles.option({ className: classNames?.option }),
+      id: `option-${i}`,
+      role: 'option',
+      'aria-selected': optionDisabled ? undefined : selected,
+      'data-disabled': optionDisabled,
+      'data-selected': selected,
+      'data-focused': isFocused,
     };
   };
 
@@ -463,6 +469,8 @@ const AutocompleteImp = (props: AutocompleteProps<object, false, false>) => {
       {isOpen && (
         <Popper.Floating sticky="always" mainOffset={offset || 5}>
           <ul
+            {...restProps}
+            ref={ref}
             id={lisboxId}
             className={styles.listbox({ className: classNames?.listbox })}
             role="listbox"
@@ -550,7 +558,7 @@ const AutocompleteImp = (props: AutocompleteProps<object, false, false>) => {
       )}
     </Popper.Root>
   );
-};
+});
 
 AutocompleteImp.displayName = 'webbo-ui.Select';
 
@@ -559,7 +567,8 @@ export const Autocomplete = AutocompleteImp as unknown as <
   Multiple extends boolean = false,
   DisableClearable extends boolean = false,
 >(
-  props: AutocompleteProps<Value, Multiple, DisableClearable>,
+  props: AutocompleteProps<Value, Multiple, DisableClearable> &
+    React.RefAttributes<HTMLUListElement>,
 ) => React.ReactNode;
 
 // *-*-*-*-* Utils *-*-*-*-*

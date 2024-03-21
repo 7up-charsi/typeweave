@@ -3,37 +3,42 @@
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import { useEffect, useRef } from 'react';
 
-export interface OptionProps<V> {
+export interface OptionProps<V> extends React.HTMLAttributes<HTMLLIElement> {
   option: V;
   label: string;
   state: { selected: boolean; disabled: boolean; focused: boolean };
   onSelect: () => void;
   onHover: () => void;
-  props: React.LiHTMLAttributes<HTMLLIElement> & {
-    'data-disabled': boolean;
-    'data-selected': boolean;
-    'data-focused': boolean;
-  };
-  key: string;
+  'data-disabled': boolean;
+  'data-selected': boolean;
+  'data-focused': boolean;
 }
 
 export const Option = (
-  _props: OptionProps<object> & { children?: React.ReactNode },
+  props: OptionProps<object> & { children?: React.ReactNode },
 ) => {
   const {
     label,
-    props,
     onSelect,
     onHover,
     state: { disabled, focused, selected },
     children,
-  } = _props;
+    onPointerDown,
+    onPointerUp,
+    onPointerEnter,
+    onPointerLeave,
+    ...restProps
+  } = props;
 
   const ref = useRef<HTMLLIElement>(null);
   const isHovered = useRef(false);
 
   const pointerEvents = usePointerEvents({
-    onPointerDown: (e) => e.preventDefault(),
+    onPointerDown: (e) => {
+      onPointerDown?.(e);
+      e.preventDefault();
+    },
+    onPointerUp,
     onPress: () => {
       if (disabled) return;
       onSelect();
@@ -53,15 +58,17 @@ export const Option = (
   return (
     <li
       ref={ref}
-      onPointerEnter={() => {
+      onPointerEnter={(e) => {
+        onPointerEnter?.(e);
         isHovered.current = true;
         onHover();
       }}
-      onPointerLeave={() => {
+      onPointerLeave={(e) => {
+        onPointerLeave?.(e);
         isHovered.current = false;
       }}
       {...pointerEvents}
-      {...props}
+      {...restProps}
     >
       {children ?? label}
     </li>
