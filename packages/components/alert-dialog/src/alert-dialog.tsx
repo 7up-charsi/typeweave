@@ -214,6 +214,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
           trapped
           focusScope={rootContext.focusScope}
           disabled={!rootContext.isOpen}
+          asChild
         >
           <div
             {...restProps}

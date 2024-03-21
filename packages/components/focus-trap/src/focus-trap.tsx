@@ -3,11 +3,12 @@
 import { focus, getTabbableEdges } from './utils';
 import { Slot } from '@webbo-ui/slot';
 import { CustomError } from '@webbo-ui/error';
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
+import { mergeRefs } from '@webbo-ui/react-utils';
 
 export type FocusScope = { paused: boolean; pause(): void; resume(): void };
 
-export interface FocusTrapProps {
+export interface FocusTrapProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * When this prop is true, focus with **keyboard** will loop,
    *
@@ -29,15 +30,17 @@ export interface FocusTrapProps {
    * @default undefined
    */
   focusScope?: FocusScope;
+  asChild?: boolean;
 }
 
-const FocusTrap = (props: FocusTrapProps) => {
+const FocusTrap = forwardRef<HTMLDivElement, FocusTrapProps>((props, ref) => {
   const {
-    children,
+    asChild,
     disabled,
     focusScope: focusScopeProp,
     loop = true,
     trapped = true,
+    ...restProps
   } = props;
 
   const [container, setContainer] = useState<HTMLElement | null>(null);
@@ -168,17 +171,21 @@ const FocusTrap = (props: FocusTrapProps) => {
     }
   };
 
+  const Comp = asChild ? Slot : 'div';
+
   return (
-    <Slot<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>
+    <Comp
+      {...restProps}
       tabIndex={-1}
-      ref={setContainer}
-      onKeyDown={handleKeyDown}
-      style={{ outline: 'none' }}
-    >
-      {children}
-    </Slot>
+      ref={mergeRefs(ref, setContainer)}
+      onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
+        restProps.onKeyDown?.(e);
+        handleKeyDown(e);
+      }}
+      style={{ outline: 'none', ...restProps.style }}
+    />
   );
-};
+});
 
 FocusTrap.displayName = 'webbo-ui.FocusTrap';
 

@@ -115,12 +115,14 @@ export const Root = RootImp as <R>(props: RootProps<R>) => React.ReactNode;
 
 const Table_Name = 'Table.Table';
 
-export interface TableProps extends TableVariantProps {
+export interface TableProps
+  extends TableVariantProps,
+    React.TableHTMLAttributes<HTMLTableElement> {
   classNames?: TableClassNames;
 }
 
 export const Table = (props: TableProps) => {
-  const { classNames, variant = 'grid' } = props;
+  const { classNames, variant = 'grid', ...restProps } = props;
 
   const { data, columns, getRowKey, visibilityState } =
     useRootContext(Table_Name);
@@ -130,7 +132,10 @@ export const Table = (props: TableProps) => {
   return (
     data &&
     columns && (
-      <table className={styles.table({ className: classNames?.table })}>
+      <table
+        {...restProps}
+        className={styles.table({ className: classNames?.table })}
+      >
         <thead className={styles.thead({ className: classNames?.thead })}>
           <tr className={styles.tr({ className: classNames?.tr })}>
             {columns?.map(({ header, identifier, visibility }) => {
@@ -188,7 +193,7 @@ Table.displayName = 'webbo-ui.' + Table_Name;
 const ColumnVisibility_Name = 'Table.ColumnVisibility';
 
 export interface ColumnVisibilityProps
-  extends Omit<Menu.MenuProps, 'className' | 'roleDescription'> {
+  extends Omit<Menu.MenuProps, 'className' | 'onChange'> {
   children?: React.ReactNode;
   tableIdentifier?: string;
   onChange?: (identifier: string, visibility: boolean) => void;
@@ -219,12 +224,12 @@ export const ColumnVisibility = (props: ColumnVisibilityProps) => {
 
   return (
     <Menu.Root>
-      <Menu.Trigger a11yLabel="open table column visibility">
+      <Menu.Trigger aria-label="open table column visibility">
         {children}
       </Menu.Trigger>
       <Menu.Portal>
         <Menu.Menu
-          roleDescription="toggle table column visibility"
+          aria-roledescription="toggle table column visibility"
           {...menuProps}
           className={classNames?.menu}
         >

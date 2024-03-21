@@ -8,7 +8,9 @@ import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 // *-*-*-*-* Root *-*-*-*-*
 
-export interface RootProps extends TabsVariantProps {
+export interface RootProps
+  extends TabsVariantProps,
+    React.HTMLAttributes<HTMLDivElement> {
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
@@ -48,9 +50,8 @@ const [Collection, useCollection] = createCollection<
   ItemData
 >('Tabs');
 
-export const Root = (props: RootProps) => {
+export const Root = forwardRef<HTMLDivElement, RootProps>((props, ref) => {
   const {
-    children,
     value: valueProp,
     onValueChange,
     defaultValue,
@@ -58,6 +59,7 @@ export const Root = (props: RootProps) => {
     loop,
     orientation = 'horizontal',
     activationMode = 'automatic',
+    ...restProps
   } = props;
 
   const [value, setValue] = useControllableState({
@@ -88,12 +90,16 @@ export const Root = (props: RootProps) => {
     >
       <StylesProvider {...styles}>
         <Collection.Provider>
-          <div className={styles.wrapper({ className })}>{children}</div>
+          <div
+            {...restProps}
+            ref={ref}
+            className={styles.wrapper({ className })}
+          />
         </Collection.Provider>
       </StylesProvider>
     </RootProvider>
   );
-};
+});
 
 Root.displayName = 'webbo-ui.' + ROOT_NAME;
 
@@ -103,7 +109,7 @@ export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const List_NAME = 'Tabs.List';
 
-export const List = (props: ListProps) => {
+export const List = forwardRef<HTMLDivElement, ListProps>((props, ref) => {
   const { className, ...restProps } = props;
 
   const context = useRootContext(List_NAME);
@@ -116,6 +122,7 @@ export const List = (props: ListProps) => {
     <Collection.Parent>
       <div
         {...restProps}
+        ref={ref}
         tabIndex={context.isTabbingBackOut ? -1 : 0}
         role="tablist"
         aria-orientation={context.orientation}
@@ -140,23 +147,22 @@ export const List = (props: ListProps) => {
       />
     </Collection.Parent>
   );
-};
+});
 
 List.displayName = 'webbo-ui.' + List_NAME;
 
 // *-*-*-*-* Trigger *-*-*-*-*
 
-export interface TriggerProps {
+export interface TriggerProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   value: string;
-  className?: string;
-  children?: React.ReactNode;
 }
 
 const Trigger_NAME = 'Tabs.Trigger';
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { value, className, children } = props;
+    const { value, className, ...restProps } = props;
 
     const context = useRootContext(Trigger_NAME);
     const styles = useStylesContext(List_NAME);
@@ -261,6 +267,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
     return (
       <Collection.Item active={isSelected}>
         <Slot
+          {...restProps}
           ref={ref}
           className={styles.trigger({ className })}
           type="button"
@@ -274,9 +281,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           onKeyDown={onKeyDown}
           onFocus={onFocus}
           {...pointerEvents}
-        >
-          {children}
-        </Slot>
+        />
       </Collection.Item>
     );
   },
@@ -294,7 +299,7 @@ const Content_NAME = 'Tabs.Content';
 
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
   (props, ref) => {
-    const { value, children, className, ...contentProps } = props;
+    const { value, className, ...contentProps } = props;
 
     const context = useRootContext(Content_NAME);
     const styles = useStylesContext(List_NAME);
@@ -311,13 +316,10 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         data-orientation={context.orientation}
         role="tabpanel"
         aria-labelledby={triggerId}
-        hidden={!isSelected}
         id={contentId}
         tabIndex={0}
         {...contentProps}
-      >
-        {isSelected && children}
-      </div>
+      />
     );
   },
 );

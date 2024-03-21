@@ -49,8 +49,9 @@ const openIndicator_svg = (
 
 export const mapInputProps = ({
   ariaProps,
-  handleClear,
-  handleOpen,
+  onClear,
+  onClearPointerDown,
+  onOpen,
   inputRef,
   disabled,
   onBlur,
@@ -65,16 +66,17 @@ export const mapInputProps = ({
 
   return {
     endContent: (
-      <div className={styles.endContent()}>
+      <>
         {showClearButton && (
           <Button
             isIconOnly
             variant="text"
-            onPress={handleClear}
+            onPress={onClear}
+            onPointerDown={onClearPointerDown}
             size="sm"
             tabIndex={-1}
             aria-label="clear value"
-            classNames={{ content: styles.clearButton() }}
+            classNames={{ base: styles.clearButton() }}
           >
             {clearIcon_svg}
           </Button>
@@ -86,13 +88,20 @@ export const mapInputProps = ({
         >
           {openIndicator_svg}
         </span>
-      </div>
+      </>
     ),
     inputWrapperProps: {
       onPointerDown: (e: React.PointerEvent) => {
-        if (e.button !== 0) return;
-        if (disabled) return;
-        handleOpen();
+        e.preventDefault();
+        if (
+          (e.target as HTMLElement).closest('button') ||
+          e.button !== 0 ||
+          disabled
+        )
+          return;
+
+        inputRef.current?.focus();
+        onOpen();
       },
     },
     // @ts-expect-error ----

@@ -560,6 +560,9 @@ importers:
       '@webbo-ui/overlay':
         specifier: workspace:*
         version: link:../overlay
+      '@webbo-ui/react-utils':
+        specifier: workspace:*
+        version: link:../../utilities/react-utils
       '@webbo-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -930,6 +933,9 @@ importers:
       '@webbo-ui/button':
         specifier: workspace:*
         version: link:../button
+      '@webbo-ui/checkbox':
+        specifier: workspace:*
+        version: link:../checkbox
       '@webbo-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error

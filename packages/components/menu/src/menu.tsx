@@ -99,44 +99,44 @@ Root.displayName = 'webbo-ui.' + Root_Name;
 
 const Trigger_Name = 'Menu.Trigger';
 
-export interface TriggerProps {
-  children?: React.ReactNode;
-  a11yLabel?: string;
-  a11yDescription?: string;
-}
+export interface TriggerProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Trigger = (props: TriggerProps) => {
-  const { children, a11yLabel, a11yDescription } = props;
+export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
+  (props, ref) => {
+    const { onPointerDown, onPointerUp, ...restProps } = props;
 
-  const rootContext = useRootContext(Trigger_Name);
+    const rootContext = useRootContext(Trigger_Name);
 
-  const pointerEvents = usePointerEvents({ onPress: rootContext.handleOpen });
+    const pointerEvents = usePointerEvents({
+      onPress: rootContext.handleOpen,
+      onPointerDown,
+      onPointerUp,
+    });
 
-  return (
-    <Popper.Reference>
-      <Slot
-        ref={rootContext.triggerRef}
-        role="button"
-        aria-haspopup="menu"
-        aria-expanded={rootContext.isOpen}
-        aria-controls={rootContext.isOpen ? rootContext.id : undefined}
-        aria-label={a11yLabel}
-        aria-describedby={a11yDescription}
-        {...pointerEvents}
-        onKeyDown={(e: React.KeyboardEvent) => {
-          const key = e.key;
+    return (
+      <Popper.Reference>
+        <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
+          {...restProps}
+          ref={mergeRefs(ref, rootContext.triggerRef)}
+          role="button"
+          aria-haspopup="menu"
+          aria-expanded={rootContext.isOpen}
+          aria-controls={rootContext.isOpen ? rootContext.id : undefined}
+          {...pointerEvents}
+          onKeyDown={(e: React.KeyboardEvent) => {
+            const key = e.key;
 
-          if (![' ', 'Enter'].includes(key)) return;
+            if (![' ', 'Enter'].includes(key)) return;
 
-          e.preventDefault();
-          rootContext.handleOpen();
-        }}
-      >
-        {children}
-      </Slot>
-    </Popper.Reference>
-  );
-};
+            e.preventDefault();
+            rootContext.handleOpen();
+          }}
+        />
+      </Popper.Reference>
+    );
+  },
+);
 
 Trigger.displayName = 'webbo-ui.' + Trigger_Name;
 
@@ -175,18 +175,27 @@ const [MenuProvider, useMenuContext] =
 const [StylesProvider, useStylesContext] =
   createContextScope<ReturnType<typeof menu>>(Menu_Name);
 
-export interface MenuProps extends Popper.FloatingProps, MenuVariantProps {
-  children?: React.ReactNode;
-  className?: string;
-  roleDescription?: string;
-}
+export interface MenuProps
+  extends Omit<Popper.FloatingProps, 'children'>,
+    MenuVariantProps,
+    React.HTMLAttributes<HTMLUListElement> {}
 
 export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
   const {
     children,
     className,
+    placement,
+    updatePositionStrategy,
+    mainOffset,
+    alignOffset,
+    arrow,
+    sticky,
+    hideWhenDetached,
+    fallbackPlacements,
+    allowMainAxisFlip,
+    allowCrossAxisFlip,
+    clippingBoundary,
     shadow = 'md',
-    roleDescription,
     arrowPadding = 10,
     boundaryPadding = 10,
     ...restProps
@@ -272,17 +281,28 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
         <Popper.Floating
           arrowPadding={arrowPadding}
           boundaryPadding={boundaryPadding ?? 10}
-          {...restProps}
+          placement={placement}
+          updatePositionStrategy={updatePositionStrategy}
+          mainOffset={mainOffset}
+          alignOffset={alignOffset}
+          arrow={arrow}
+          sticky={sticky}
+          hideWhenDetached={hideWhenDetached}
+          fallbackPlacements={fallbackPlacements}
+          allowMainAxisFlip={allowMainAxisFlip}
+          allowCrossAxisFlip={allowCrossAxisFlip}
+          clippingBoundary={clippingBoundary}
         >
           <ul
+            {...restProps}
             id={rootContext.id}
             role="menu"
             ref={mergeRefs(setOutsideEle, ref, innerRef)}
             className={styles.menu({ className })}
-            aria-roledescription={roleDescription}
             tabIndex={-1}
             onKeyDown={onkeydown}
-            onPointerLeave={() => {
+            onPointerLeave={(e) => {
+              restProps.onPointerLeave?.(e);
               setFocused('');
             }}
           >
@@ -310,8 +330,7 @@ Menu.displayName = 'webbo-ui.' + Menu_Name;
 
 const Item_Name = 'Menu.Item';
 
-export interface ItemProps {
-  children?: React.ReactNode;
+export interface ItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
   disabled?: boolean;
   disableCloseOnPress?: boolean;
   classNames?: {
@@ -320,49 +339,48 @@ export interface ItemProps {
     itemContent?: string;
   };
   onPress?: () => void;
-  asChild?: boolean;
 }
 
-const ItemImp = forwardRef<
-  HTMLLIElement,
-  ItemProps & React.LiHTMLAttributes<HTMLLIElement>
->((props, ref) => {
-  const { children, disabled, asChild, onPress, ...rest } = props;
+const ItemImp = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
+  const { onPointerDown, onPointerUp, disabled, onPress, ...restProps } = props;
 
   const id = useId();
 
   const menuContext = useMenuContext(Item_Name);
 
-  const Component = asChild ? Slot : 'li';
-
   const isFocused = menuContext.focused === id;
 
-  const pointerEvents = usePointerEvents({ onPress: () => onPress?.() });
+  const pointerEvents = usePointerEvents({
+    onPress: () => onPress?.(),
+    onPointerDown,
+    onPointerUp,
+  });
 
   return (
     <Collection.Item disabled={!!disabled} isFocused={isFocused} id={id}>
-      <Component
-        {...rest}
+      <li
+        {...restProps}
         ref={ref}
         data-disabled={!!disabled}
         aria-disabled={disabled}
         data-focused={isFocused}
         tabIndex={isFocused ? 0 : -1}
-        onPointerEnter={() => {
+        onPointerEnter={(e) => {
+          restProps.onPointerEnter?.(e);
           if (disabled) return;
           menuContext.setFocused(id);
         }}
         {...pointerEvents}
         onKeyDown={(e) => {
+          restProps.onKeyDown?.(e);
+
           const key = e.key;
 
           if (![' ', 'Tab'].includes(key)) return;
           e.preventDefault();
           onPress?.();
         }}
-      >
-        {children}
-      </Component>
+      />
     </Collection.Item>
   );
 });
@@ -376,7 +394,7 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
     disableCloseOnPress,
     classNames,
     disabled,
-    asChild,
+    ...restProps
   } = props;
 
   const rootContext = useRootContext(Item_Name);
@@ -384,11 +402,11 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
 
   return (
     <ItemImp
+      {...restProps}
       ref={ref}
       role="menuitem"
       className={stylesContext.item({ className: classNames?.item })}
       disabled={disabled}
-      asChild={asChild}
       onPress={() => {
         if (!disableCloseOnPress) rootContext.handleClose();
         onPress?.();
@@ -416,22 +434,22 @@ Item.displayName = 'webbo-ui.' + Item_Name;
 
 const Label_Name = 'Menu.Label';
 
-export interface LabelProps {
-  children?: React.ReactNode;
-  className?: string;
-}
+export interface LabelProps extends React.LiHTMLAttributes<HTMLLIElement> {}
 
-export const Label = (props: LabelProps) => {
-  const { children, className } = props;
+export const Label = forwardRef<HTMLLIElement, LabelProps>((props, ref) => {
+  const { className, ...restProps } = props;
 
   const stylesContext = useStylesContext(Label_Name);
 
   return (
-    <li role="none" className={stylesContext.label({ className })}>
-      {children}
-    </li>
+    <li
+      {...restProps}
+      ref={ref}
+      role="none"
+      className={stylesContext.label({ className })}
+    />
   );
-};
+});
 
 Label.displayName = 'webbo-ui.' + Label_Name;
 
@@ -439,29 +457,24 @@ Label.displayName = 'webbo-ui.' + Label_Name;
 
 const Group_Name = 'Menu.Group';
 
-export interface GroupProps {
-  children?: React.ReactNode;
-  className?: string;
-  accessibleLabel?: string;
-}
+export interface GroupProps extends React.HTMLAttributes<HTMLUListElement> {}
 
-export const Group = (props: GroupProps) => {
-  const { children, className, accessibleLabel } = props;
+export const Group = forwardRef<HTMLUListElement, GroupProps>((props, ref) => {
+  const { className, ...restProps } = props;
 
   const stylesContext = useStylesContext(Group_Name);
 
   return (
     <li role="none">
       <ul
+        {...restProps}
+        ref={ref}
         role="group"
-        aria-label={accessibleLabel}
         className={stylesContext.group({ className })}
-      >
-        {children}
-      </ul>
+      />
     </li>
   );
-};
+});
 
 Group.displayName = 'webbo-ui.' + Group_Name;
 
@@ -469,22 +482,25 @@ Group.displayName = 'webbo-ui.' + Group_Name;
 
 const Separator_Name = 'Menu.Separator';
 
-export interface SeparatorProps {
-  className?: string;
-}
+export interface SeparatorProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {}
 
-export const Separator = (props: SeparatorProps) => {
-  const { className } = props;
+export const Separator = forwardRef<HTMLDivElement, SeparatorProps>(
+  (props, ref) => {
+    const { className, ...restProps } = props;
 
-  const stylesContext = useStylesContext(Separator_Name);
+    const stylesContext = useStylesContext(Separator_Name);
 
-  return (
-    <div
-      role="separator"
-      className={stylesContext.separator({ className })}
-    ></div>
-  );
-};
+    return (
+      <div
+        {...restProps}
+        ref={ref}
+        role="separator"
+        className={stylesContext.separator({ className })}
+      />
+    );
+  },
+);
 
 Separator.displayName = 'webbo-ui.' + Separator_Name;
 
@@ -492,8 +508,8 @@ Separator.displayName = 'webbo-ui.' + Separator_Name;
 
 const CheckboxItem_Name = 'Menu.CheckboxItem';
 
-export interface CheckboxItemProps {
-  children?: React.ReactNode;
+export interface CheckboxItemProps
+  extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'onChange'> {
   disabled?: boolean;
   checked?: boolean;
   onChange?: (checked: boolean) => void;
@@ -502,7 +518,6 @@ export interface CheckboxItemProps {
     itemIcon?: string;
     itemContent?: string;
   };
-  asChild?: boolean;
   disableCloseOnChange?: boolean;
   icon?: React.ReactNode;
 }
@@ -534,9 +549,9 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
       checked,
       onChange,
       disabled,
-      asChild,
       icon = checkbox_icon,
       disableCloseOnChange = true,
+      ...restProps
     } = props;
 
     const stylesContext = useStylesContext(CheckboxItem_Name);
@@ -544,13 +559,13 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
 
     return (
       <ItemImp
+        {...restProps}
         ref={ref}
         role="menuitemcheckbox"
         data-checked={checked}
         aria-checked={checked}
         className={stylesContext.item({ className: classNames?.item })}
         disabled={disabled}
-        asChild={asChild}
         onPress={() => {
           if (!disableCloseOnChange) rootContext.handleClose();
           onChange?.(!checked);
@@ -590,28 +605,19 @@ interface RadioGroupContext {
 const [RadioGroupProvider, useRadioGroupContext] =
   createContextScope<RadioGroupContext>(RadioGroup_Name);
 
-export interface RadioGroupProps extends GroupProps {
-  children?: React.ReactNode;
+export interface RadioGroupProps extends Omit<GroupProps, 'onChange'> {
   onChange?: (value: string) => void;
   value?: string;
 }
 
 export const RadioGroup = (props: RadioGroupProps) => {
-  const {
-    children,
-    onChange: onChangeProp,
-    value,
-    accessibleLabel,
-    className,
-  } = props;
+  const { onChange: onChangeProp, value, ...restProps } = props;
 
   const onChange = useCallbackRef(onChangeProp);
 
   return (
     <RadioGroupProvider onChange={onChange} value={value}>
-      <Group accessibleLabel={accessibleLabel} className={className}>
-        {children}
-      </Group>
+      <Group {...restProps} />
     </RadioGroupProvider>
   );
 };
@@ -622,8 +628,7 @@ RadioGroup.displayName = 'webbo-ui.' + RadioGroup_Name;
 
 const RadioItem_Name = 'Menu.RadioItem';
 
-export interface RadioItemProps {
-  children?: React.ReactNode;
+export interface RadioItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
   disabled?: boolean;
   value: string;
   classNames?: {
@@ -663,9 +668,9 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
       disabled,
       classNames,
       value,
-      asChild,
       icon = radio_icon,
       disableCloseOnChange = true,
+      ...restProps
     } = props;
 
     const stylesContext = useStylesContext(RadioItem_Name);
@@ -676,13 +681,13 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
 
     return (
       <ItemImp
+        {...restProps}
         ref={ref}
         role="menuitemradio"
         data-checked={checked}
         aria-checked={checked}
         className={stylesContext.item({ className: classNames?.item })}
         disabled={disabled}
-        asChild={asChild}
         onPress={() => {
           if (!disableCloseOnChange) rootContext.handleClose();
           groupContext.onChange?.(value);
