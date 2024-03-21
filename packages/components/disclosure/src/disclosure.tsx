@@ -3,7 +3,7 @@
 import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { Slot } from '@webbo-ui/slot';
-import { useId, useMemo } from 'react';
+import { forwardRef, useId, useMemo } from 'react';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import { disclosure } from '@webbo-ui/theme';
 
@@ -99,16 +99,13 @@ interface ItemContext {
 const [ItemProvider, useItemContext] =
   createContextScope<ItemContext>(ITEM_NAME);
 
-export interface ItemProps {
-  children?: React.ReactNode;
+export interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
   value: string;
-  asChild?: boolean;
-  className?: string;
   disabled?: boolean;
 }
 
-export const Item = (props: ItemProps) => {
-  const { children, value, asChild, className, disabled } = props;
+export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
+  const { value, className, disabled, ...restProps } = props;
 
   const rootContext = useRootContext(TRIGGER_NAME);
 
@@ -119,8 +116,6 @@ export const Item = (props: ItemProps) => {
 
   const isExpended = !!rootContext.value.find((ele) => ele === value);
 
-  const Component = asChild ? Slot : 'div';
-
   return (
     <ItemProvider
       value={value}
@@ -129,15 +124,15 @@ export const Item = (props: ItemProps) => {
       isExpended={isExpended}
       disabled={disabled}
     >
-      <Component
+      <div
+        {...restProps}
+        ref={ref}
         className={styles.item({ className })}
         data-state={isExpended ? 'expanded' : 'collapsed'}
-      >
-        {children}
-      </Component>
+      />
     </ItemProvider>
   );
-};
+});
 
 Item.displayName = 'webbo-ui.' + ITEM_NAME;
 
@@ -145,54 +140,58 @@ Item.displayName = 'webbo-ui.' + ITEM_NAME;
 
 const TRIGGER_NAME = 'Accordion.Trigger';
 
-export interface TriggerProps {
-  children?: React.ReactNode;
-  className?: string;
-}
+export interface TriggerProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Trigger = (props: TriggerProps) => {
-  const { children, className } = props;
+export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
+  (props, ref) => {
+    const { className, onPointerDown, onPointerUp, ...restProps } = props;
 
-  const rootContext = useRootContext(TRIGGER_NAME);
-  const itemContext = useItemContext(TRIGGER_NAME);
+    const rootContext = useRootContext(TRIGGER_NAME);
+    const itemContext = useItemContext(TRIGGER_NAME);
 
-  const isExpended = itemContext.isExpended;
+    const isExpended = itemContext.isExpended;
 
-  const onPress = () => {
-    if (isExpended) rootContext.onCollapse(itemContext.value);
-    else rootContext.onExpand(itemContext.value);
-  };
+    const onPress = () => {
+      if (isExpended) rootContext.onCollapse(itemContext.value);
+      else rootContext.onExpand(itemContext.value);
+    };
 
-  const poitnerEvents = usePointerEvents({ onPress });
+    const poitnerEvents = usePointerEvents({
+      onPress,
+      onPointerDown,
+      onPointerUp,
+    });
 
-  const styles = useStylesContext(TRIGGER_NAME);
+    const styles = useStylesContext(TRIGGER_NAME);
 
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    const key = e.key;
+    const onKeyDown = (e: React.KeyboardEvent) => {
+      const key = e.key;
 
-    if (key === 'Tab' || (key === 'Tab' && e.shiftKey)) return;
+      if (key === 'Tab' || (key === 'Tab' && e.shiftKey)) return;
 
-    if ([' ', 'Enter'].includes(key)) {
-      onPress();
+      if ([' ', 'Enter'].includes(key)) {
+        onPress();
 
-      return;
-    }
-  };
+        return;
+      }
+    };
 
-  return (
-    <button
-      onKeyDown={onKeyDown}
-      className={styles.trigger({ className })}
-      disabled={itemContext.disabled ?? rootContext.disabled}
-      id={itemContext.triggerId}
-      aria-expanded={isExpended}
-      aria-controls={itemContext.contentId}
-      {...poitnerEvents}
-    >
-      {children}
-    </button>
-  );
-};
+    return (
+      <button
+        {...restProps}
+        ref={ref}
+        onKeyDown={onKeyDown}
+        className={styles.trigger({ className })}
+        disabled={itemContext.disabled ?? rootContext.disabled}
+        id={itemContext.triggerId}
+        aria-expanded={isExpended}
+        aria-controls={itemContext.contentId}
+        {...poitnerEvents}
+      />
+    );
+  },
+);
 
 Trigger.displayName = 'webbo-ui.' + TRIGGER_NAME;
 
@@ -200,31 +199,27 @@ Trigger.displayName = 'webbo-ui.' + TRIGGER_NAME;
 
 const CONTENT_NAME = 'Accordion.Content';
 
-export interface ContentProps {
-  children?: React.ReactNode;
-  asChild?: boolean;
-  className?: string;
-}
+export interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Content = (props: ContentProps) => {
-  const { children, asChild, className } = props;
+export const Content = forwardRef<HTMLDivElement, ContentProps>(
+  (props, ref) => {
+    const { className, ...restProps } = props;
 
-  const itemContext = useItemContext(CONTENT_NAME);
+    const itemContext = useItemContext(CONTENT_NAME);
 
-  const styles = useStylesContext(CONTENT_NAME);
+    const styles = useStylesContext(CONTENT_NAME);
 
-  const Component = asChild ? Slot : 'div';
-
-  return (
-    <Component
-      data-state={itemContext.isExpended ? 'expanded' : 'collapsed'}
-      id={itemContext.contentId}
-      hidden={!itemContext.isExpended}
-      className={styles.content({ className })}
-    >
-      {children}
-    </Component>
-  );
-};
+    return (
+      <div
+        {...restProps}
+        ref={ref}
+        data-state={itemContext.isExpended ? 'expanded' : 'collapsed'}
+        id={itemContext.contentId}
+        hidden={!itemContext.isExpended}
+        className={styles.content({ className })}
+      />
+    );
+  },
+);
 
 Content.displayName = 'webbo-ui.' + CONTENT_NAME;

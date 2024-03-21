@@ -3,7 +3,7 @@
 import * as Popper from '@webbo-ui/popper';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { CustomError } from '@webbo-ui/error';
-import { useId, useMemo, useRef, useState } from 'react';
+import { forwardRef, useId, useMemo, useRef, useState } from 'react';
 import { Option, OptionProps } from './option';
 import lodashGroupBy from 'lodash.groupby';
 import { SelectClassNames, SelectVariantProps, select } from '@webbo-ui/theme';
@@ -22,8 +22,9 @@ export interface RenderInputProps<Value> {
   readOnly: true;
   showClearButton: boolean;
   onBlur: () => void;
-  handleOpen: () => void;
-  handleClear: (e: React.PointerEvent) => void;
+  onOpen: () => void;
+  onClear: (e: React.PointerEvent) => void;
+  onClearPointerDown: (e: React.PointerEvent) => void;
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
   ariaProps: {
     'aria-expanded': boolean;
@@ -36,27 +37,31 @@ export interface RenderInputProps<Value> {
 }
 
 export type SelectProps<Value, Multiple, DisableClearable> =
-  (SelectVariantProps & {
-    disabled?: boolean;
-    classNames?: SelectClassNames;
-    offset?: Popper.FloatingProps['mainOffset'];
-    options: Value[];
-    isOpen?: boolean;
-    onOpenChange?: (open: boolean) => void;
-    defaultOpen?: boolean;
-    getOptionDisabled?: (option: Value) => boolean;
-    disableCloseOnSelect?: boolean;
-    getOptionLabel?: (option: Value) => string;
-    getOptionKey?: (options: Value) => string;
-    noOptionsText?: string;
-    loading?: boolean;
-    loadingText?: string;
-    groupBy?: (option: Value) => string;
-    children?: (props: {
-      groupedOptions: Record<string, OptionProps<Value>[]> | null;
-      options: OptionProps<Value>[] | null;
-    }) => React.ReactNode;
-  }) &
+  (SelectVariantProps &
+    Omit<
+      React.HTMLAttributes<HTMLUListElement>,
+      'className' | 'defaultValue' | 'children'
+    > & {
+      disabled?: boolean;
+      classNames?: SelectClassNames;
+      offset?: Popper.FloatingProps['mainOffset'];
+      options: Value[];
+      isOpen?: boolean;
+      onOpenChange?: (open: boolean) => void;
+      defaultOpen?: boolean;
+      getOptionDisabled?: (option: Value) => boolean;
+      disableCloseOnSelect?: boolean;
+      getOptionLabel?: (option: Value) => string;
+      getOptionKey?: (options: Value) => string;
+      noOptionsText?: string;
+      loading?: boolean;
+      loadingText?: string;
+      groupBy?: (option: Value) => string;
+      children?: (props: {
+        groupedOptions: Record<string, OptionProps<Value>[]> | null;
+        options: OptionProps<Value>[] | null;
+      }) => React.ReactNode;
+    }) &
     (Multiple extends true
       ? {
           multiple: Multiple;
@@ -98,7 +103,10 @@ export type SelectProps<Value, Multiple, DisableClearable> =
             ) => React.ReactNode;
           });
 
-const SelectImp = (props: SelectProps<object, false, false>) => {
+const SelectImp = forwardRef<
+  HTMLUListElement,
+  SelectProps<object, false, false>
+>((props, ref) => {
   const {
     classNames,
     offset,
@@ -123,6 +131,7 @@ const SelectImp = (props: SelectProps<object, false, false>) => {
     getOptionKey,
     groupBy,
     renderInput,
+    ...restProps
   } = props;
 
   const getOptionLabel = (option: object) => {
@@ -203,7 +212,7 @@ const SelectImp = (props: SelectProps<object, false, false>) => {
     setFocused(null);
   };
 
-  const handleOpen = () => {
+  const onOpen = () => {
     if (isOpen) return;
 
     setIsOpen(true);
@@ -249,7 +258,7 @@ const SelectImp = (props: SelectProps<object, false, false>) => {
     const End = e.key === 'End';
 
     if (ArrowDown && !isOpen) {
-      handleOpen();
+      onOpen();
       return;
     }
 
@@ -343,7 +352,7 @@ const SelectImp = (props: SelectProps<object, false, false>) => {
     }
   };
 
-  const handleClear = (e: React.PointerEvent) => {
+  const onClear = (e: React.PointerEvent) => {
     e.preventDefault();
     inputRef.current?.focus();
     setFocused(null);
@@ -353,6 +362,10 @@ const SelectImp = (props: SelectProps<object, false, false>) => {
     } else {
       setValue(null, 'clear');
     }
+  };
+
+  const onClearPointerDown = (e: React.PointerEvent) => {
+    e.preventDefault();
   };
 
   const getInputValue = (value: object | null | object[]) => {
@@ -377,15 +390,6 @@ const SelectImp = (props: SelectProps<object, false, false>) => {
       option: ele,
       label: getOptionLabel(ele),
       key: getOptionKey?.(ele) ?? getOptionLabel(ele).replaceAll(' ', '-'),
-      props: {
-        className: styles.option({ className: classNames?.option }),
-        id: `option-${i}`,
-        role: 'option',
-        'aria-selected': optionDisabled ? undefined : selected,
-        'data-disabled': optionDisabled,
-        'data-selected': selected,
-        'data-focused': isFocused,
-      },
       onHover: () => onHover(ele),
       onSelect: () => onSelect(ele),
       state: {
@@ -393,6 +397,13 @@ const SelectImp = (props: SelectProps<object, false, false>) => {
         selected: selected,
         disabled: optionDisabled,
       },
+      className: styles.option({ className: classNames?.option }),
+      id: `option-${i}`,
+      role: 'option',
+      'aria-selected': optionDisabled ? undefined : selected,
+      'data-disabled': optionDisabled,
+      'data-selected': selected,
+      'data-focused': isFocused,
     };
   };
 
@@ -421,8 +432,9 @@ const SelectImp = (props: SelectProps<object, false, false>) => {
             onBlur: handleClose,
             isOpen,
             multiple: !!multiple,
-            handleOpen,
-            handleClear,
+            onOpen,
+            onClear,
+            onClearPointerDown,
             showClearButton: disableClearable
               ? false
               : Array.isArray(value)
@@ -456,6 +468,8 @@ const SelectImp = (props: SelectProps<object, false, false>) => {
       {isOpen && (
         <Popper.Floating sticky="always" mainOffset={offset || 5}>
           <ul
+            {...restProps}
+            ref={ref}
             id={lisboxId}
             className={styles.listbox({ className: classNames?.listbox })}
             role="listbox"
@@ -543,7 +557,7 @@ const SelectImp = (props: SelectProps<object, false, false>) => {
       )}
     </Popper.Root>
   );
-};
+});
 
 SelectImp.displayName = 'webbo-ui.Select';
 
@@ -552,7 +566,8 @@ export const Select = SelectImp as unknown as <
   Multiple extends boolean = false,
   DisableClearable extends boolean = false,
 >(
-  props: SelectProps<Value, Multiple, DisableClearable>,
+  props: SelectProps<Value, Multiple, DisableClearable> &
+    React.RefAttributes<HTMLUListElement>,
 ) => React.ReactNode;
 
 // *-*-*-*-* Utils *-*-*-*-*

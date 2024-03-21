@@ -8,7 +8,7 @@ import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import * as Popper from '@webbo-ui/popper';
 import { createPortal } from 'react-dom';
 import { createContextScope } from '@webbo-ui/context';
-import { useEffect, useId, useMemo, useRef } from 'react';
+import { forwardRef, useEffect, useId, useMemo, useRef } from 'react';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { PopoverVariantProps, popover } from '@webbo-ui/theme';
@@ -125,34 +125,34 @@ Root.displayName = 'webbo-ui.' + Popover_Name;
 
 const Trigger_Name = 'Popover.Trigger';
 
-export interface TriggerProps {
-  children: React.ReactNode;
-  a11yLabel?: string;
-  a11yDescription?: string;
-}
+export interface TriggerProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Trigger = (props: TriggerProps) => {
-  const { children, a11yLabel, a11yDescription } = props;
+export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
+  (props, ref) => {
+    const { onPointerDown, onPointerUp, ...restProps } = props;
 
-  const rootContext = useRootContext(Trigger_Name);
+    const rootContext = useRootContext(Trigger_Name);
 
-  const pointerEvents = usePointerEvents({ onPress: rootContext.handleOpen });
+    const pointerEvents = usePointerEvents({
+      onPress: rootContext.handleOpen,
+      onPointerDown,
+      onPointerUp,
+    });
 
-  return (
-    <Popper.Reference>
-      <Slot
-        ref={rootContext.triggerRef}
-        aria-expanded={rootContext.isOpen}
-        aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
-        aria-label={a11yLabel}
-        aria-describedby={a11yDescription}
-        {...pointerEvents}
-      >
-        {children}
-      </Slot>
-    </Popper.Reference>
-  );
-};
+    return (
+      <Popper.Reference>
+        <Slot
+          {...restProps}
+          ref={mergeRefs(ref, rootContext.triggerRef)}
+          aria-expanded={rootContext.isOpen}
+          aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
+          {...pointerEvents}
+        />
+      </Popper.Reference>
+    );
+  },
+);
 
 Trigger.displayName = 'webbo-ui.' + Trigger_Name;
 
@@ -160,19 +160,22 @@ Trigger.displayName = 'webbo-ui.' + Trigger_Name;
 
 const Close_Name = 'Popover.Close';
 
-export interface CloseProps {
-  children: React.ReactNode;
-}
+export interface CloseProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Close = (props: CloseProps) => {
-  const { children } = props;
+export const Close = forwardRef<HTMLButtonElement, CloseProps>((props, ref) => {
+  const { onPointerDown, onPointerUp, ...restProps } = props;
 
   const rootContext = useRootContext(Close_Name);
 
-  const pointerEvents = usePointerEvents({ onPress: rootContext.handleClose });
+  const pointerEvents = usePointerEvents({
+    onPress: rootContext.handleClose,
+    onPointerDown,
+    onPointerUp,
+  });
 
-  return <Slot {...pointerEvents}>{children}</Slot>;
-};
+  return <Slot {...restProps} ref={ref} {...pointerEvents} />;
+});
 
 Close.displayName = 'webbo-ui.' + Close_Name;
 
@@ -200,23 +203,23 @@ Portal.displayName = 'webbo-ui.' + Portal_Name;
 
 const Title_Name = 'Dialog.Title';
 
-export interface TitleProps {
-  children?: React.ReactNode;
-  className?: string;
-}
+export interface TitleProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Title = (props: TitleProps) => {
-  const { children, className } = props;
+export const Title = forwardRef<HTMLDivElement, TitleProps>((props, ref) => {
+  const { className, ...restProps } = props;
 
   const rootContext = useRootContext(Title_Name);
   const styles = useStylesContext(Title_Name);
 
   return (
-    <div id={rootContext.titleId} className={styles.title({ className })}>
-      {children}
-    </div>
+    <div
+      {...restProps}
+      ref={ref}
+      id={rootContext.titleId}
+      className={styles.title({ className })}
+    />
   );
-};
+});
 
 Title.displayName = 'webbo-ui.' + Title_Name;
 
@@ -224,26 +227,26 @@ Title.displayName = 'webbo-ui.' + Title_Name;
 
 const Description_Name = 'Dialog.Description';
 
-export interface DescriptionProps {
-  children?: React.ReactNode;
-  className?: string;
-}
+export interface DescriptionProps
+  extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Description = (props: DescriptionProps) => {
-  const { children, className } = props;
+export const Description = forwardRef<HTMLDivElement, DescriptionProps>(
+  (props, ref) => {
+    const { className, ...restProps } = props;
 
-  const rootContext = useRootContext(Description_Name);
-  const styles = useStylesContext(Description_Name);
+    const rootContext = useRootContext(Description_Name);
+    const styles = useStylesContext(Description_Name);
 
-  return (
-    <div
-      id={rootContext.descriptionId}
-      className={styles.description({ className })}
-    >
-      {children}
-    </div>
-  );
-};
+    return (
+      <div
+        {...restProps}
+        ref={ref}
+        id={rootContext.descriptionId}
+        className={styles.description({ className })}
+      />
+    );
+  },
+);
 
 Description.displayName = 'webbo-ui.' + Description_Name;
 
@@ -252,45 +255,75 @@ Description.displayName = 'webbo-ui.' + Description_Name;
 const Content_Name = 'Popover.Content';
 
 export interface ContentProps
-  extends Popper.FloatingProps,
-    PopoverVariantProps {
-  children?: React.ReactNode;
-  className?: string;
+  extends Omit<Popper.FloatingProps, 'children'>,
+    PopoverVariantProps,
+    React.HTMLAttributes<HTMLDivElement> {
   noA11yTitle?: boolean;
   noA11yDescription?: boolean;
+  loop?: boolean;
+  trapped?: boolean;
 }
 
-export const Content = (props: ContentProps) => {
-  const {
-    children,
-    arrowPadding = 10,
-    className,
-    noA11yDescription,
-    noA11yTitle,
-    shadow,
-    ...restProps
-  } = props;
+export const Content = forwardRef<HTMLDivElement, ContentProps>(
+  (props, ref) => {
+    const {
+      children,
+      className,
+      noA11yDescription,
+      noA11yTitle,
+      placement,
+      updatePositionStrategy,
+      mainOffset,
+      alignOffset,
+      arrow,
+      sticky,
+      hideWhenDetached,
+      fallbackPlacements,
+      allowMainAxisFlip,
+      allowCrossAxisFlip,
+      clippingBoundary,
+      shadow = 'md',
+      loop = true,
+      trapped = true,
+      arrowPadding = 10,
+      boundaryPadding = 10,
+      ...restProps
+    } = props;
 
-  const rootContext = useRootContext(Content_Name);
+    const rootContext = useRootContext(Content_Name);
 
-  const setOutsideEle = useClickOutside({
-    callback: (e) => {
-      if (rootContext.triggerRef.current?.contains(e.target as Node)) return;
-      if ((e.target as HTMLElement).closest('[role=dialog]')) return;
+    const setOutsideEle = useClickOutside({
+      callback: (e) => {
+        if (rootContext.triggerRef.current?.contains(e.target as Node)) return;
+        if ((e.target as HTMLElement).closest('[role=dialog]')) return;
 
-      rootContext.handleClose();
-    },
-  });
+        rootContext.handleClose();
+      },
+    });
 
-  const styles = useMemo(() => popover({ shadow }), [shadow]);
+    const styles = useMemo(() => popover({ shadow }), [shadow]);
 
-  return (
-    <Popper.Floating arrowPadding={arrowPadding} {...restProps}>
-      {({ floatingRef, style }) => (
-        <StylesProvider {...styles}>
-          <FocusTrap loop trapped>
+    return (
+      <StylesProvider {...styles}>
+        <Popper.Floating
+          arrowPadding={arrowPadding}
+          placement={placement}
+          updatePositionStrategy={updatePositionStrategy}
+          mainOffset={mainOffset}
+          alignOffset={alignOffset}
+          arrow={arrow}
+          sticky={sticky}
+          hideWhenDetached={hideWhenDetached}
+          fallbackPlacements={fallbackPlacements}
+          allowMainAxisFlip={allowMainAxisFlip}
+          allowCrossAxisFlip={allowCrossAxisFlip}
+          clippingBoundary={clippingBoundary}
+          boundaryPadding={boundaryPadding}
+        >
+          <FocusTrap loop={loop} trapped={trapped} asChild>
             <div
-              ref={mergeRefs(floatingRef, setOutsideEle)}
+              {...restProps}
+              ref={mergeRefs(ref, setOutsideEle)}
               role="dialog"
               aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
               aria-describedby={
@@ -298,7 +331,6 @@ export const Content = (props: ContentProps) => {
               }
               id={rootContext.contentId}
               className={styles.content({ className })}
-              style={style}
             >
               <VisuallyHidden>
                 <button onPointerUp={rootContext.handleClose}>close </button>
@@ -311,10 +343,10 @@ export const Content = (props: ContentProps) => {
               </VisuallyHidden>
             </div>
           </FocusTrap>
-        </StylesProvider>
-      )}
-    </Popper.Floating>
-  );
-};
+        </Popper.Floating>
+      </StylesProvider>
+    );
+  },
+);
 
 Content.displayName = 'webbo-ui.' + Content_Name;

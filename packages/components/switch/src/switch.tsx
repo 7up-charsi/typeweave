@@ -47,7 +47,10 @@ const checked_svg = (
 
 export interface SwitchProps
   extends SwitchVariantProps,
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color' | 'size'> {
+    Omit<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      'color' | 'size' | 'className'
+    > {
   classNames?: SwitchClassNames;
   label?: string;
   icon?: React.ReactNode;
@@ -64,7 +67,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
     size = 'md',
     color = 'primary',
     labelPlacement = 'right',
-    ...inpuProps
+    ...restProps
   } = props;
 
   const autoId = useId();
@@ -76,7 +79,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
     <div className={styles.base({ className: classNames?.base })}>
       <div className={styles.switch({ className: classNames?.switch })}>
         <input
-          {...inpuProps}
+          {...restProps}
           id={id}
           ref={ref}
           type="checkbox"

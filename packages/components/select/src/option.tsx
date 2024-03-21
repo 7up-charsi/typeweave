@@ -1,39 +1,48 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { mergeRefs } from '@webbo-ui/react-utils';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
+import { forwardRef, useEffect, useRef } from 'react';
 
-export interface OptionProps<V> {
+export interface OptionProps<V> extends React.HTMLAttributes<HTMLLIElement> {
   option: V;
   label: string;
   state: { selected: boolean; disabled: boolean; focused: boolean };
   onSelect: () => void;
   onHover: () => void;
-  props: React.LiHTMLAttributes<HTMLLIElement> & {
-    'data-disabled': boolean;
-    'data-selected': boolean;
-    'data-focused': boolean;
-  };
+  'data-disabled': boolean;
+  'data-selected': boolean;
+  'data-focused': boolean;
+  // this is custom key
   key: string;
 }
 
-export const Option = (
-  _props: OptionProps<object> & { children?: React.ReactNode },
-) => {
+export const Option = forwardRef<
+  HTMLLIElement,
+  OptionProps<object> & { children?: React.ReactNode }
+>((props, ref) => {
   const {
     label,
-    props,
     onSelect,
     onHover,
     state: { disabled, focused, selected },
     children,
-  } = _props;
+    onPointerDown,
+    onPointerUp,
+    onPointerEnter,
+    onPointerLeave,
+    ...restProps
+  } = props;
 
-  const ref = useRef<HTMLLIElement>(null);
+  const innerRef = useRef<HTMLLIElement>(null);
   const isHovered = useRef(false);
 
   const pointerEvents = usePointerEvents({
-    onPointerDown: (e) => e.preventDefault(),
+    onPointerDown: (e) => {
+      onPointerDown?.(e);
+      e.preventDefault();
+    },
+    onPointerUp,
     onPress: () => {
       if (disabled) return;
       onSelect();
@@ -42,30 +51,38 @@ export const Option = (
 
   useEffect(() => {
     if (selected)
-      ref.current?.scrollIntoView({ behavior: 'instant', block: 'center' });
+      innerRef.current?.scrollIntoView({
+        behavior: 'instant',
+        block: 'center',
+      });
   }, [selected]);
 
   useEffect(() => {
     if (focused && !isHovered.current)
-      ref.current?.scrollIntoView({ behavior: 'instant', block: 'nearest' });
+      innerRef.current?.scrollIntoView({
+        behavior: 'instant',
+        block: 'nearest',
+      });
   }, [focused]);
 
   return (
     <li
-      ref={ref}
-      onPointerEnter={() => {
+      ref={mergeRefs(ref, innerRef)}
+      onPointerEnter={(e) => {
+        onPointerEnter?.(e);
         isHovered.current = true;
         onHover();
       }}
-      onPointerLeave={() => {
+      onPointerLeave={(e) => {
+        onPointerLeave?.(e);
         isHovered.current = false;
       }}
       {...pointerEvents}
-      {...props}
+      {...restProps}
     >
       {children ?? label}
     </li>
   );
-};
+});
 
 Option.displayName = 'webbo-ui.Option';

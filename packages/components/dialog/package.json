@@ -43,6 +43,7 @@
     "@webbo-ui/use-is-disabled": "workspace:*",
     "@webbo-ui/use-pointer-events": "workspace:*",
     "@webbo-ui/focus-trap": "workspace:*",
+    "@webbo-ui/react-utils": "workspace:*",
     "@webbo-ui/error": "workspace:*",
     "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/context": "workspace:*",

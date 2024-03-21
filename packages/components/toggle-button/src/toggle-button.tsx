@@ -60,7 +60,7 @@ export const ToggleButtonGroupImp = (props: ToggleButtonGroupProps<false>) => {
     onChange,
     color = 'default',
     defaultValue,
-    ...rest
+    ...restProps
   } = props;
 
   const [value, setValue] = useControllableState<string | null | string[]>({
@@ -88,7 +88,7 @@ export const ToggleButtonGroupImp = (props: ToggleButtonGroupProps<false>) => {
   return (
     <RootProvider value={value} setValue={setValue} exclusive={!!exclusive}>
       <StylesProvider {...styles}>
-        <ButtonGroup {...rest} color={color} variant="border" />
+        <ButtonGroup {...restProps} color={color} variant="border" />
       </StylesProvider>
     </RootProvider>
   );
@@ -112,7 +112,7 @@ export interface ToggleButtonProps extends ButtonProps {
 
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
   (props, ref) => {
-    const { value: valueProp, onPress, classNames, ...rest } = props;
+    const { value: valueProp, onPress, classNames, ...restProps } = props;
 
     const { setValue, value, exclusive } = useRootContext(Button_Name);
     const styles = useStylesContext(Button_Name);
@@ -130,7 +130,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     return (
       <Button
         ref={ref}
-        {...rest}
+        {...restProps}
         classNames={{
           ...classNames,
           base: styles.button({ className: classNames?.base }),

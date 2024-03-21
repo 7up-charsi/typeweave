@@ -41,7 +41,10 @@ const checked_svg = (
 
 export interface RadioProps
   extends RadioVariantProps,
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color' | 'size'> {
+    Omit<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      'color' | 'size' | 'className'
+    > {
   classNames?: RadioClassNames;
   label?: string;
   icon?: React.ReactNode;

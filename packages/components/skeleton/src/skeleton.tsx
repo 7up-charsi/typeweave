@@ -3,16 +3,21 @@
 import { forwardRef } from 'react';
 import { SkeletonVariantProps, skeleton } from '@webbo-ui/theme';
 
-export interface SkeletonProps extends SkeletonVariantProps {
-  className?: string;
-}
+export interface SkeletonProps
+  extends SkeletonVariantProps,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {}
 
 const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props, ref) => {
-  const { className, variant = 'text', animation = 'pulse' } = props;
+  const {
+    className,
+    variant = 'text',
+    animation = 'pulse',
+    ...restProps
+  } = props;
 
   const styles = skeleton({ variant, className, animation });
 
-  return <div ref={ref} className={styles} />;
+  return <div {...restProps} ref={ref} className={styles} />;
 });
 
 Skeleton.displayName = 'webbo-ui.Skeleton';

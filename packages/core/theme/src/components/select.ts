@@ -26,7 +26,6 @@ export const select = tv({
 
 export const selectInput = tv({
   slots: {
-    endContent: 'flex items-center',
     openIndecator: 'text-muted-11 text-lg',
     clearButton: 'text-muted-11',
   },

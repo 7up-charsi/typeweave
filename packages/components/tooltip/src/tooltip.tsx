@@ -152,11 +152,11 @@ Root.displayName = 'webbo-ui.' + Tooltip_Name;
 
 const Trigger_Name = 'Tooltip.Trigger';
 
-export interface TriggerProps {
-  children?: React.ReactNode;
-}
+export interface TriggerProps extends React.HTMLAttributes<HTMLElement> {}
 
-export const Trigger = ({ children }: TriggerProps) => {
+export const Trigger = forwardRef<HTMLElement, TriggerProps>((props, ref) => {
+  const { ...restProps } = props;
+
   const context = useRootContext(Trigger_Name);
 
   const isMouseRef = useRef(false);
@@ -164,17 +164,25 @@ export const Trigger = ({ children }: TriggerProps) => {
   return (
     <Popper.Reference>
       <Slot<HTMLElement, React.HTMLAttributes<HTMLElement>>
+        {...restProps}
+        ref={ref}
         tabIndex={0}
-        onPointerDown={() => {
+        onPointerDown={(e) => {
+          restProps.onPointerDown?.(e);
+
           isMouseRef.current = true;
           context.hideTooltip(true);
         }}
-        onPointerEnter={() => {
+        onPointerEnter={(e) => {
+          restProps.onPointerEnter?.(e);
+
           if (context.trigger === 'focus') return;
 
           context.showTooltip(false);
         }}
-        onPointerLeave={() => {
+        onPointerLeave={(e) => {
+          restProps.onPointerLeave?.(e);
+
           isMouseRef.current = false;
 
           if (context.trigger === 'focus') return;
@@ -182,27 +190,31 @@ export const Trigger = ({ children }: TriggerProps) => {
           context.hideTooltip(false);
         }}
         onKeyDown={(e) => {
+          restProps.onKeyDown?.(e);
+
           const key = e.key;
 
           if (key === 'Tab' || (key === 'Tab' && e.shiftKey))
             isMouseRef.current = false;
         }}
-        onFocus={() => {
+        onFocus={(e) => {
+          restProps?.onFocus?.(e);
+
           if (context.trigger === 'hover' || isMouseRef.current) return;
 
           context.showTooltip(true);
         }}
-        onBlur={() => {
+        onBlur={(e) => {
+          restProps.onBlur?.(e);
+
           if (context.trigger === 'hover' || isMouseRef.current) return;
 
           context.hideTooltip(true);
         }}
-      >
-        {children}
-      </Slot>
+      />
     </Popper.Reference>
   );
-};
+});
 
 Trigger.displayName = 'webbo-ui.' + Trigger_Name;
 
@@ -232,27 +244,54 @@ const Content_Name = 'Tooltip.Content';
 
 export interface ContentProps
   extends TooltipVariantProps,
-    Popper.FloatingProps {
-  children?: React.ReactNode;
-  asChild?: boolean;
-  className?: string;
+    Omit<Popper.FloatingProps, 'children'>,
+    React.HTMLAttributes<HTMLDivElement> {
   disableInteractive?: boolean;
 }
 
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
   (props, ref) => {
-    const { children, asChild, disableInteractive, className, ...popperProps } =
-      props;
+    const {
+      disableInteractive,
+      className,
+      placement,
+      updatePositionStrategy,
+      mainOffset,
+      alignOffset,
+      arrow,
+      sticky,
+      hideWhenDetached,
+      fallbackPlacements,
+      allowMainAxisFlip,
+      allowCrossAxisFlip,
+      clippingBoundary,
+      arrowPadding = 10,
+      boundaryPadding = 10,
+      ...restProps
+    } = props;
 
     const context = useRootContext(Content_Name);
 
     const styles = tooltip({ className });
 
-    const Component = asChild ? Slot : 'div';
-
     return (
-      <Popper.Floating {...popperProps}>
-        <Component
+      <Popper.Floating
+        placement={placement}
+        updatePositionStrategy={updatePositionStrategy}
+        mainOffset={mainOffset}
+        alignOffset={alignOffset}
+        arrow={arrow}
+        sticky={sticky}
+        hideWhenDetached={hideWhenDetached}
+        fallbackPlacements={fallbackPlacements}
+        allowMainAxisFlip={allowMainAxisFlip}
+        allowCrossAxisFlip={allowCrossAxisFlip}
+        clippingBoundary={clippingBoundary}
+        arrowPadding={arrowPadding}
+        boundaryPadding={boundaryPadding}
+      >
+        <div
+          {...restProps}
           ref={ref}
           role="tooltip"
           className={styles}
@@ -265,9 +304,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
             if (disableInteractive) return;
             context.hideTooltip();
           }}
-        >
-          {children}
-        </Component>
+        />
       </Popper.Floating>
     );
   },
