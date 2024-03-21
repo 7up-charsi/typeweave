@@ -3,14 +3,18 @@
 import { BadgeClassNames, BadgeVariantProps, badge } from '@webbo-ui/theme';
 import { forwardRef } from 'react';
 
-export interface BadgeProps extends BadgeVariantProps {
-  children?: React.ReactNode;
+export interface BadgeProps
+  extends BadgeVariantProps,
+    Omit<
+      React.HTMLAttributes<HTMLSpanElement>,
+      'color' | 'className' | 'content'
+    > {
   content?: number;
   max?: number;
   classNames?: BadgeClassNames;
 }
 
-const Badge = forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
+const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
   const {
     children,
     content,
@@ -20,12 +24,17 @@ const Badge = forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
     color = 'info',
     placement = 'top-right',
     shadow = 'md',
+    ...restProps
   } = props;
 
   const styles = badge({ color, variant, placement, shadow });
 
   return (
-    <div ref={ref} className={styles.base({ className: classNames?.base })}>
+    <span
+      {...restProps}
+      ref={ref}
+      className={styles.base({ className: classNames?.base })}
+    >
       {children}
       {content && variant === 'standard' && (
         <span className={styles.content({ className: classNames?.content })}>
@@ -37,7 +46,7 @@ const Badge = forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
           className={styles.content({ className: classNames?.content })}
         ></span>
       )}
-    </div>
+    </span>
   );
 });
 
