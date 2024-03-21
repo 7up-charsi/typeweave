@@ -265,7 +265,7 @@ export interface TriggerProps
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { className, ...restProps } = props;
+    const { className, onPointerDown, onPointerUp, ...restProps } = props;
 
     const rootContext = useRootContext(TRIGGER_NAME);
     const itemContext = useItemContext(TRIGGER_NAME);
@@ -277,7 +277,11 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       else rootContext.onExpand(itemContext.value);
     };
 
-    const poitnerEvents = usePointerEvents({ onPress });
+    const poitnerEvents = usePointerEvents({
+      onPress,
+      onPointerDown,
+      onPointerUp,
+    });
 
     const styles = useStylesContext(TRIGGER_NAME);
 

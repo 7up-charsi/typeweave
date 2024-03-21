@@ -162,7 +162,8 @@ const Trigger_NAME = 'Tabs.Trigger';
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { value, className, ...restProps } = props;
+    const { value, className, onPointerDown, onPointerUp, ...restProps } =
+      props;
 
     const context = useRootContext(Trigger_NAME);
     const styles = useStylesContext(List_NAME);
@@ -262,7 +263,11 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       context.onTabChange(triggerId);
     };
 
-    const pointerEvents = usePointerEvents({ onPress: handleClick });
+    const pointerEvents = usePointerEvents({
+      onPress: handleClick,
+      onPointerDown,
+      onPointerUp,
+    });
 
     return (
       <Collection.Item active={isSelected}>

@@ -40,6 +40,8 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
     label,
     avatar,
     onDelete,
+    onPointerDown,
+    onPointerUp,
     size = 'md',
     variant = 'solid',
     color = 'primary',
@@ -50,7 +52,11 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const pointerEvents = usePointerEvents({ onPress: onDelete });
+  const pointerEvents = usePointerEvents({
+    onPress: onDelete,
+    onPointerDown,
+    onPointerUp,
+  });
 
   const handleKeyUp = (e: React.KeyboardEvent) => {
     const Backspace = e.key === 'Backspace';
