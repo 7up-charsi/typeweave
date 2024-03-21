@@ -13,10 +13,10 @@ import {
 } from '@webbo-ui/theme';
 import { mergeRefs } from '@webbo-ui/react-utils';
 
-export type Reason = 'select' | 'clear';
+export type Reason = 'select' | 'clear' | 'remove';
 
 export interface RenderInputProps<Value> {
-  tags: { label: string; onDelete: () => void }[] | null;
+  selected: { label: string; onDelete: () => void }[] | null;
   inputRef: React.RefObject<HTMLInputElement>;
   popperReferenceRef: (instance: HTMLDivElement | null) => void;
   disabled: boolean;
@@ -26,8 +26,9 @@ export interface RenderInputProps<Value> {
   inputValue: string;
   showClearButton: boolean;
   onBlur: () => void;
-  handleOpen: () => void;
-  handleClear: (e: React.PointerEvent) => void;
+  onOpen: () => void;
+  onClear: (e: React.PointerEvent) => void;
+  onClearPointerDown: (e: React.PointerEvent) => void;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
   ariaProps: {
@@ -42,7 +43,10 @@ export interface RenderInputProps<Value> {
 
 export type AutocompleteProps<Value, Multiple, DisableClearable> =
   (AutocompleteVariantProps &
-    React.HTMLAttributes<HTMLUListElement> & {
+    Omit<
+      React.HTMLAttributes<HTMLUListElement>,
+      'className' | 'defaultValue' | 'children'
+    > & {
       disabled?: boolean;
       classNames?: AutocompleteClassNames;
       offset?: Popper.FloatingProps['mainOffset'];
@@ -233,7 +237,7 @@ const AutocompleteImp = forwardRef<
       setInputValue(prevSelectedValue.current);
   };
 
-  const handleOpen = () => {
+  const onOpen = () => {
     if (isOpen) return;
 
     setIsOpen(true);
@@ -287,7 +291,7 @@ const AutocompleteImp = forwardRef<
     if (ArrowDown || ArrowUp) e.preventDefault();
 
     if (ArrowDown && !isOpen) {
-      handleOpen();
+      onOpen();
       return;
     }
 
@@ -330,8 +334,7 @@ const AutocompleteImp = forwardRef<
     }
   };
 
-  const handleClear = (e: React.PointerEvent) => {
-    e.preventDefault();
+  const onClear = () => {
     inputRef.current?.focus();
     setFocused(null);
     setInputValue('');
@@ -343,6 +346,10 @@ const AutocompleteImp = forwardRef<
     } else {
       setValue(null, 'clear');
     }
+  };
+
+  const onClearPointerDown = (e: React.PointerEvent) => {
+    e.preventDefault();
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -369,10 +376,7 @@ const AutocompleteImp = forwardRef<
     setOptions(filter(optionsProp, val));
   };
 
-  const getOptionProps = (
-    ele: object,
-    i: number,
-  ): OptionProps<object> & { key: string } => {
+  const getOptionProps = (ele: object, i: number): OptionProps<object> => {
     const isFocused = ele === focused;
     const optionDisabled = getOptionDisabled?.(ele) ?? false;
     const selected = Array.isArray(value)
@@ -422,14 +426,16 @@ const AutocompleteImp = forwardRef<
       <Popper.Reference>
         {({ referenceRef }) =>
           renderInput({
-            tags: Array.isArray(value)
+            selected: Array.isArray(value)
               ? value.map((opt) => ({
                   label: getOptionLabel(opt),
                   onDelete: () => {
-                    setValue((prev) =>
-                      Array.isArray(prev)
-                        ? prev.filter((ele) => ele !== opt)
-                        : null,
+                    setValue(
+                      (prev) =>
+                        Array.isArray(prev)
+                          ? prev.filter((ele) => ele !== opt)
+                          : null,
+                      'remove',
                     );
                   },
                 }))
@@ -437,8 +443,9 @@ const AutocompleteImp = forwardRef<
             onBlur: handleClose,
             isOpen,
             multiple: !!multiple,
-            handleOpen,
-            handleClear,
+            onOpen,
+            onClear,
+            onClearPointerDown,
             showClearButton: disableClearable
               ? false
               : Array.isArray(value)

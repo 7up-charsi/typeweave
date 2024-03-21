@@ -7,13 +7,13 @@ export const input = tv({
     label:
       'first-letter:uppercase cursor-pointer self-start px-1 pb-1 text-base leading-none text-muted-11/70 group-data-[focused=true]:text-muted-11',
     inputWrapper:
-      'w-full relative flex items-center gap-2 rounded px-3 cursor-text',
+      'w-full relative flex items-center gap-x-2 rounded px-3 cursor-text',
     input:
       'appearance-none bg-transparent outline-none grow w-0 text-muted-11 placeholder:text-muted-11/80',
     helperText:
       'first-letter:uppercase px-1 pt-1 text-sm leading-none text-muted-10',
-    startContent: '',
-    endContent: '',
+    startContent: 'flex gap-1 items-center',
+    endContent: 'flex gap-1 items-center',
   },
   variants: {
     variant: {
@@ -28,12 +28,12 @@ export const input = tv({
     },
     size: {
       sm: {
-        inputWrapper: 'h-10',
+        input: 'h-10',
         startContent: 'text-lg',
         endContent: 'text-lg',
       },
       md: {
-        inputWrapper: 'h-12',
+        input: 'h-12',
         startContent: 'text-xl',
         endContent: 'text-xl',
       },

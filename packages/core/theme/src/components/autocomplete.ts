@@ -26,18 +26,21 @@ export const autocomplete = tv({
 
 export const autocompleteInput = tv({
   slots: {
-    endContent: 'flex items-center',
     openIndecator: 'text-muted-11 text-lg',
     clearButton: 'text-muted-11',
+    endContent: '',
+    startContent: '',
     inputWrapper: '',
     input: '',
   },
   variants: {
     multiple: {
       true: {
-        inputWrapper: 'relative flex-wrap min-h-[48px] h-auto py-2 pr-[68px]',
-        endContent: 'absolute right-2 h-full ',
-        input: 'w-0 min-w-[60px]',
+        inputWrapper: 'group/inputWrapper grid grid-cols-[1fr_auto] gap-0',
+        startContent:
+          'col-start-1 col-end-3 row-start-2 row-end-3 flex flex-wrap gap-1 group-data-[chips=true]/inputWrapper:border-t group-data-[chips=true]/inputWrapper:border-t-muted-6 group-data-[chips=true]/inputWrapper:py-2',
+        input: 'w-full col-start-1 col-end-2 ',
+        endContent: 'max-w-max h-full col-start-2 col-end-3',
       },
     },
   },

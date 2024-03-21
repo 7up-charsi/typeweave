@@ -3,6 +3,7 @@ import { select } from '@webbo-ui/theme';
 
 import { Autocomplete, Option, mapInputProps } from '../src';
 import { Input } from '@webbo-ui/input';
+import { Checkbox } from '@webbo-ui/checkbox';
 
 const meta = {
   title: 'Components/Autocomplete',
@@ -218,11 +219,11 @@ const CustomTemplate = () => (
     {({ options }) =>
       options?.map((ele) => (
         <Option {...ele} key={ele.key}>
-          <input
-            type="checkbox"
+          <Checkbox
             checked={ele.state.selected}
             readOnly
-            className="mr-2"
+            classNames={{ base: 'mr-2' }}
+            size="sm"
           />
           <span className="truncate">{ele.label}</span>
         </Option>

@@ -41,7 +41,10 @@ const indeterminate_svg = (
 
 export interface CheckboxProps
   extends CheckboxVariantProps,
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color' | 'size'> {
+    Omit<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      'color' | 'size' | 'className'
+    > {
   classNames?: CheckboxClassNames;
   label?: string;
   indeterminate?: boolean;

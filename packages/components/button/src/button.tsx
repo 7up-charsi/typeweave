@@ -84,7 +84,7 @@ export interface ButtonProps
   classNames?: ButtonClassNames;
   children?: ReactNode;
   asChild?: boolean;
-  onPress?: (e: React.PointerEvent) => void;
+  onPress?: (e: React.PointerEvent<HTMLButtonElement>) => void;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(

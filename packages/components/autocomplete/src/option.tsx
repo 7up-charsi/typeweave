@@ -13,6 +13,8 @@ export interface OptionProps<V> extends React.HTMLAttributes<HTMLLIElement> {
   'data-disabled': boolean;
   'data-selected': boolean;
   'data-focused': boolean;
+  // this is custom key
+  key: string;
 }
 
 export const Option = forwardRef<
