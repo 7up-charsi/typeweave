@@ -97,7 +97,7 @@ const prev_svg = (
 
 export interface PaginationProps
   extends PaginationVariantProps,
-    React.HTMLAttributes<HTMLUListElement> {
+    Omit<React.HTMLAttributes<HTMLUListElement>, 'className'> {
   count?: number;
   boundaryCount?: number;
   siblingCount?: number;

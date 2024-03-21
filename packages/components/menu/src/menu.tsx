@@ -330,7 +330,8 @@ Menu.displayName = 'webbo-ui.' + Menu_Name;
 
 const Item_Name = 'Menu.Item';
 
-export interface ItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
+export interface ItemProps
+  extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'className'> {
   disabled?: boolean;
   disableCloseOnPress?: boolean;
   classNames?: {
@@ -341,49 +342,52 @@ export interface ItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
   onPress?: () => void;
 }
 
-const ItemImp = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
-  const { onPointerDown, onPointerUp, disabled, onPress, ...restProps } = props;
+const ItemImp = forwardRef<HTMLLIElement, ItemProps & { className?: string }>(
+  (props, ref) => {
+    const { onPointerDown, onPointerUp, disabled, onPress, ...restProps } =
+      props;
 
-  const id = useId();
+    const id = useId();
 
-  const menuContext = useMenuContext(Item_Name);
+    const menuContext = useMenuContext(Item_Name);
 
-  const isFocused = menuContext.focused === id;
+    const isFocused = menuContext.focused === id;
 
-  const pointerEvents = usePointerEvents({
-    onPress: () => onPress?.(),
-    onPointerDown,
-    onPointerUp,
-  });
+    const pointerEvents = usePointerEvents({
+      onPress: () => onPress?.(),
+      onPointerDown,
+      onPointerUp,
+    });
 
-  return (
-    <Collection.Item disabled={!!disabled} isFocused={isFocused} id={id}>
-      <li
-        {...restProps}
-        ref={ref}
-        data-disabled={!!disabled}
-        aria-disabled={disabled}
-        data-focused={isFocused}
-        tabIndex={isFocused ? 0 : -1}
-        onPointerEnter={(e) => {
-          restProps.onPointerEnter?.(e);
-          if (disabled) return;
-          menuContext.setFocused(id);
-        }}
-        {...pointerEvents}
-        onKeyDown={(e) => {
-          restProps.onKeyDown?.(e);
+    return (
+      <Collection.Item disabled={!!disabled} isFocused={isFocused} id={id}>
+        <li
+          {...restProps}
+          ref={ref}
+          data-disabled={!!disabled}
+          aria-disabled={disabled}
+          data-focused={isFocused}
+          tabIndex={isFocused ? 0 : -1}
+          onPointerEnter={(e) => {
+            restProps.onPointerEnter?.(e);
+            if (disabled) return;
+            menuContext.setFocused(id);
+          }}
+          {...pointerEvents}
+          onKeyDown={(e) => {
+            restProps.onKeyDown?.(e);
 
-          const key = e.key;
+            const key = e.key;
 
-          if (![' ', 'Tab'].includes(key)) return;
-          e.preventDefault();
-          onPress?.();
-        }}
-      />
-    </Collection.Item>
-  );
-});
+            if (![' ', 'Tab'].includes(key)) return;
+            e.preventDefault();
+            onPress?.();
+          }}
+        />
+      </Collection.Item>
+    );
+  },
+);
 
 ItemImp.displayName = 'webbo-ui.' + Item_Name;
 
@@ -509,7 +513,10 @@ Separator.displayName = 'webbo-ui.' + Separator_Name;
 const CheckboxItem_Name = 'Menu.CheckboxItem';
 
 export interface CheckboxItemProps
-  extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'onChange'> {
+  extends Omit<
+    React.LiHTMLAttributes<HTMLLIElement>,
+    'onChange' | 'className'
+  > {
   disabled?: boolean;
   checked?: boolean;
   onChange?: (checked: boolean) => void;
@@ -628,7 +635,8 @@ RadioGroup.displayName = 'webbo-ui.' + RadioGroup_Name;
 
 const RadioItem_Name = 'Menu.RadioItem';
 
-export interface RadioItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
+export interface RadioItemProps
+  extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'className'> {
   disabled?: boolean;
   value: string;
   classNames?: {
