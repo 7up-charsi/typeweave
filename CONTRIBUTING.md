@@ -31,9 +31,9 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 ## Code of Conduct
 
 This project and everyone participating in it is governed by the
-[webbo-ui Code of Conduct](https://github.com/7up-charsi/webbo-uiblob/master/CODE_OF_CONDUCT.md).
+[webbo-ui Code of Conduct](https://github.com/7up-charsi/webbo-ui/blob/main/CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code. Please report unacceptable behavior
-to <contact@webbo.com>.
+to <7up.charsi@gmail.com>.
 
 ## I Have a Question
 
@@ -48,21 +48,6 @@ If you then still feel the need to ask a question and need clarification, we rec
 - Provide project and platform versions (nodejs, npm, etc), depending on what seems relevant.
 
 We will then take care of the issue as soon as possible.
-
-<!--
-You might want to create a separate issue tag for questions and include it in this description. People should then tag their issues accordingly.
-
-Depending on how large the project is, you may want to outsource the questioning, e.g. to Stack Overflow or Gitter. You may add additional contact and information possibilities:
-- IRC
-- Slack
-- Gitter
-- Stack Overflow tag
-- Blog
-- FAQ
-- Roadmap
-- E-Mail List
-- Forum
--->
 
 ## I Want To Contribute
 
@@ -80,7 +65,7 @@ A good bug report shouldn't leave others needing to chase you up for more inform
 
 - Make sure that you are using the latest version.
 - Determine if your bug is really a bug and not an error on your side e.g. using incompatible environment components/versions (Make sure that you have read the [documentation](https://www.ui.webbo.com). If you are looking for support, you might want to check [this section](#i-have-a-question)).
-- To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/7up-charsi/webbo-uiissues?q=label%3Abug).
+- To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/7up-charsi/webbo-ui/issues?q=label%3Abug).
 - Also make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.
 - Collect information about the bug:
   - Stack trace (Traceback)
@@ -93,9 +78,7 @@ A good bug report shouldn't leave others needing to chase you up for more inform
 
 #### How Do I Submit a Good Bug Report?
 
-> You must never report security related issues, vulnerabilities or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead sensitive bugs must be sent by email to <admin@webbo.com>.
-
-<!-- You may add a PGP key to allow the messages to be sent encrypted as well. -->
+> You must never report security related issues, vulnerabilities or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead sensitive bugs must be sent by email to <7up.charsi@gmail.com>.
 
 We use GitHub issues to track bugs and errors. If you run into an issue with the project:
 
@@ -109,8 +92,6 @@ Once it's filed:
 - The project team will label the issue accordingly.
 - A team member will try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for those steps and mark the issue as `needs-repro`. Bugs with the `needs-repro` tag will not be addressed until they are reproduced.
 - If the team is able to reproduce the issue, it will be marked `needs-fix`, as well as possibly other tags (such as `critical`), and the issue will be left to be [implemented by someone](#your-first-code-contribution).
-
-<!-- You might want to create an issue template for bugs and errors that can be used as a guide and that defines the structure of the information to be included. If you do so, reference it here in the description. -->
 
 ### Suggesting Enhancements
 
@@ -137,37 +118,93 @@ Enhancement suggestions are tracked as [GitHub issues](https://github.com/7up-ch
 - You may want to **include screenshots and animated GIFs** which help you demonstrate the steps or point out the part which the suggestion is related to. You can use [this tool](https://www.cockos.com/licecap/) to record GIFs on macOS and Windows, and [this tool](https://github.com/colinkeenan/silentcast) or [this tool](https://github.com/GNOME/byzanz) on Linux. <!-- this should only be included if the project has a GUI -->
 - **Explain why this enhancement would be useful** to most webbo-ui users. You may also want to point out the other projects that solved it better and which could serve as inspiration.
 
-<!-- You might want to create an issue template for enhancement suggestions that can be used as a guide and that defines the structure of the information to be included. If you do so, reference it here in the description. -->
-
 ### Your First Code Contribution
 
-<!-- TODO
-include Setup of env, IDE and typical getting started instructions?
+After cloning the repository, execute the following commands in the root folder:
 
--->
+1. Install dependencies
+
+```bash
+pnpm install
+```
+
+We use [Turbo Repo](https://turborepo.org/) for the project management.
+
+2. If you will be working on the components source code, you can use the following command to start the webpack dev server:
+
+```bash
+pnpm dev:pkg ## Start the storybook
+
+pnpm dev:docs ## this will start the documentation
+```
+
+Remember that these commands must be executed in the root folder of the project.
+
+3. Create a branch for your feature or fix:
+
+```bash
+# Move into a new branch for your feature
+git switch -c feat/thing
+```
+
+```bash
+# Move into a new branch for your fix
+git switch -c fix/something
+```
+
+4. Be sure the package builds.
+
+```bash
+pnpm build # Build current code
+```
+
+> Note: ensure your version of Node is 16 or higher to run scripts
+
+5. Send your pull request:
+
+- Send your pull request to the `main` branch
+- Your pull request will be reviewed by the maintainers and the maintainers will decide if it is accepted or not
+- Once the pull request is accepted, the maintainers will merge it to the `main` branch
 
 ### Improving The Documentation
 
-<!-- TODO
-Updating, improving and correcting the documentation
+Please update the docs with any API changes, the code and docs should always be in sync.
 
--->
+The main documentation lives in the apps/docs/content folder and the project uses MDX.
+
+All mdx components lives in components/mdx-components file.
 
 ## Styleguides
 
 ### Commit Messages
 
-<!-- TODO
+Before you create a Pull Request, please check whether your commits comply with
+the commit conventions used in this repository.
 
--->
+When you create a commit we kindly ask you to follow the convention
+`category(scope or module): message` in your commit message while using one of
+the following categories:
 
-## Join The Project Team
+- `feat`: all changes that introduce completely new code or new
+  features
+- `fix`: changes that fix a bug (ideally you will additionally reference an
+  issue if present)
+- `refactor`: any code related change that is not a fix nor a feature
+- `docs`: changing existing or creating new documentation (i.e. README, docs for
+  usage of a lib or cli usage)
+- `build`: all changes regarding the build of the software, changes to
+  dependencies or the addition of new dependencies
+- `test`: all changes regarding tests (adding new tests or changing existing
+  ones)
+- `ci`: all changes regarding the configuration of continuous integration (i.e.
+  github actions, ci system)
+- `chore`: all changes to the repository that do not fit into any of the above
+  categories
 
-<!-- TODO -->
+  e.g. `feat(components): add new prop to the avatar component`
 
-<!-- omit in toc -->
+If you are interested in the detailed specification you can visit [conventional commits](https://www.conventionalcommits.org/)
 
 ## Attribution
 
 This guide is based on the **contributing-gen**. [Make your own](https://github.com/bttger/contributing-gen)!
-
