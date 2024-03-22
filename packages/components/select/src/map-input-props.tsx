@@ -49,8 +49,7 @@ const openIndicator_svg = (
 
 export const mapInputProps = ({
   ariaProps,
-  onClear,
-  onClearPointerDown,
+  clearButtonProps: { onClear, ...clearButtonProps },
   onOpen,
   inputRef,
   disabled,
@@ -69,13 +68,11 @@ export const mapInputProps = ({
       <>
         {showClearButton && (
           <Button
+            {...clearButtonProps}
             isIconOnly
             variant="text"
             onPress={onClear}
-            onPointerDown={onClearPointerDown}
             size="sm"
-            tabIndex={-1}
-            aria-label="clear value"
             classNames={{ base: styles.clearButton() }}
           >
             {clearIcon_svg}

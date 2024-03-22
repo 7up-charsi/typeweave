@@ -23,8 +23,12 @@ export interface RenderInputProps<Value> {
   showClearButton: boolean;
   onBlur: () => void;
   onOpen: () => void;
-  onClear: (e: React.PointerEvent) => void;
-  onClearPointerDown: (e: React.PointerEvent) => void;
+  clearButtonProps: {
+    onClear: (e: React.PointerEvent) => void;
+    onPointerDown: (e: React.PointerEvent) => void;
+    tabIndex: number;
+    'aria-label': string;
+  };
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
   ariaProps: {
     'aria-expanded': boolean;
@@ -363,10 +367,6 @@ const SelectImp = forwardRef<
     }
   };
 
-  const onClearPointerDown = (e: React.PointerEvent) => {
-    e.preventDefault();
-  };
-
   const getInputValue = (value: object | null | object[]) => {
     if (!value) return '';
 
@@ -432,8 +432,12 @@ const SelectImp = forwardRef<
             isOpen,
             multiple: !!multiple,
             onOpen,
-            onClear,
-            onClearPointerDown,
+            clearButtonProps: {
+              onClear,
+              onPointerDown: (e) => e.preventDefault(),
+              tabIndex: -1,
+              'aria-label': 'clear value button',
+            },
             showClearButton: disableClearable
               ? false
               : Array.isArray(value)

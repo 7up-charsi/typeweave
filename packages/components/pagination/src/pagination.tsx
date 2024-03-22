@@ -117,6 +117,10 @@ export interface PaginationProps
   color: ButtonProps['color'];
   size: ButtonProps['size'];
   disabled?: boolean;
+  firstPageA11yLabel?: string;
+  lastPageA11yLabel?: string;
+  nextPageA11yLabel?: string;
+  previousPageA11yLabel?: string;
 }
 
 const range = (start: number, end: number) =>
@@ -139,6 +143,10 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
       lastButtonIcon = last_svg,
       previousButtonIcon = prev_svg,
       nextButtonIcon = next_svg,
+      firstPageA11yLabel = 'first page',
+      lastPageA11yLabel = 'last page',
+      nextPageA11yLabel = 'next page',
+      previousPageA11yLabel = 'previous page',
       size = 'sm',
       defaultPage = 1,
       count = 10,
@@ -199,7 +207,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
               classNames={{
                 base: styles.item({ className: classNames?.item }),
               }}
-              aria-label="first page"
+              aria-label={firstPageA11yLabel}
               onPress={() => setPage(1)}
               disabled={!!disabled || page === 1}
             >
@@ -215,7 +223,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
               classNames={{
                 base: styles.item({ className: classNames?.item }),
               }}
-              aria-label="previous page"
+              aria-label={previousPageA11yLabel}
               onPress={() => setPage((prev) => prev - 1)}
               disabled={!!disabled || page === 1}
             >
@@ -291,7 +299,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
               classNames={{
                 base: styles.item({ className: classNames?.item }),
               }}
-              aria-label="next page"
+              aria-label={nextPageA11yLabel}
               onPress={() => setPage((prev) => prev + 1)}
               disabled={!!disabled || page === count}
             >
@@ -307,7 +315,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
               classNames={{
                 base: styles.item({ className: classNames?.item }),
               }}
-              aria-label="last page"
+              aria-label={lastPageA11yLabel}
               onPress={() => setPage(count)}
               disabled={!!disabled || page === count}
             >

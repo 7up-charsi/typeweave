@@ -6,29 +6,6 @@ import { Bars, Circles } from 'react-loader-spinner';
 const meta = {
   title: 'Components/Button',
   component: Button,
-  args: button.defaultVariants,
-  argTypes: {
-    variant: {
-      control: { type: 'select' },
-      options: Object.keys(button.variants.variant),
-      if: { arg: 'variant', exists: true },
-    },
-    color: {
-      control: { type: 'select' },
-      options: Object.keys(button.variants.color),
-      if: { arg: 'color', exists: true },
-    },
-    size: {
-      control: { type: 'select' },
-      options: Object.keys(button.variants.size),
-      if: { arg: 'size', exists: true },
-    },
-    fullWidth: {
-      control: { type: 'boolean' },
-      if: { arg: 'fullWidth', exists: true },
-      name: 'full width',
-    },
-  },
 };
 
 export default meta;
@@ -152,7 +129,7 @@ const IconOnlyTemplate = (args: ButtonProps) => (
               variant={variant}
               color={color}
               isIconOnly
-              aria-label="react"
+              // aria-label="react"
             >
               {reactIcon}
             </Button>
@@ -165,12 +142,6 @@ const IconOnlyTemplate = (args: ButtonProps) => (
 
 export const IconOnly = {
   render: IconOnlyTemplate,
-  args: {
-    'aria-label': 'house button',
-    fullWidth: undefined,
-    variant: undefined,
-    color: undefined,
-  },
 };
 
 export const Spinner = {

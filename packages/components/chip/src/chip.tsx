@@ -1,8 +1,9 @@
 'use client';
 
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { ChipClassNames, ChipVariantProps, chip } from '@webbo-ui/theme';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
+import { accessibilityWarning } from '@webbo-ui/error';
 
 const delete_svg = (
   <svg
@@ -69,6 +70,20 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
   };
 
   const styles = chip({ color, size, variant });
+
+  const ariaLabel = props['aria-label'];
+  const ariaLabelledby = props['aria-labelledby'];
+
+  if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+      if (!ariaLabel && !ariaLabelledby)
+        accessibilityWarning(
+          'Chip',
+          'You must provide `aria-label` or `aria-labelledby` when `onDelete` is provided',
+        );
+    }, [ariaLabel, ariaLabelledby]);
+  }
 
   return (
     <div

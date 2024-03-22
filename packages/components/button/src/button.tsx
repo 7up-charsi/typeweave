@@ -20,6 +20,7 @@ import {
 } from 'react';
 import { Slot } from '@webbo-ui/slot';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
+import { accessibilityWarning } from '@webbo-ui/error';
 
 interface GroupContext extends ButtonVariantProps {
   disabled?: boolean;
@@ -85,6 +86,7 @@ export interface ButtonProps
   children?: ReactNode;
   asChild?: boolean;
   onPress?: (e: React.PointerEvent<HTMLButtonElement>) => void;
+  excludeFromTabOrder?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -94,7 +96,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       endContent,
       classNames,
       children,
-      isIconOnly = false,
       disabled: _disabled,
       asChild,
       size,
@@ -104,6 +105,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onPointerDown,
       onPointerUp,
       onPress,
+      tabIndex,
+      excludeFromTabOrder = false,
+      isIconOnly = false,
       ...buttonProps
     } = props;
 
@@ -122,17 +126,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onPress,
     });
 
-    useEffect(() => {
-      if (
-        process.env.NODE_ENV !== 'production' &&
-        isIconOnly &&
-        !ariaLabel &&
-        !ariaLabelledby
-      )
-        console.warn(
-          'webbo-ui button: icon button must provide "aria-label" or "aria-labelledby"',
-        );
-    }, [ariaLabel, ariaLabelledby, isIconOnly]);
+    if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useEffect(() => {
+        if (isIconOnly && !ariaLabel && !ariaLabelledby)
+          accessibilityWarning(
+            'Button',
+            'You must provide `aria-label` or `aria-labelledby` when `isIconOnly` is true',
+          );
+      }, [ariaLabel, ariaLabelledby, isIconOnly]);
+    }
 
     const styles = button({
       isIconOnly,
@@ -170,6 +173,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={!!disabled}
         ref={mergeRefs(ref, innerRef)}
         className={styles.base({ className: classNames?.base })}
+        tabIndex={excludeFromTabOrder ? -1 : tabIndex ?? 0}
         onKeyDown={(e) => {
           buttonProps.onKeyDown?.(e);
 
