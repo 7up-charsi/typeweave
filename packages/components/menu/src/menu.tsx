@@ -207,6 +207,11 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
 
   const [focused, setFocused] = useState('');
 
+  const searchState = useRef<{
+    timer?: ReturnType<typeof setTimeout>;
+    chars: string;
+  }>({ chars: '' }).current;
+
   const setOutsideEle = useClickOutside({
     callback: (e) => {
       if (rootContext.triggerRef.current?.contains(e.target as Node)) return;
@@ -273,6 +278,67 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
     }
   };
 
+  const handleCharSearch = (e: React.KeyboardEvent) => {
+    const char = e.key;
+
+    if (char.length !== 1 || e.repeat) return;
+
+    const activeItems = getItems().filter((item) => !item.disabled);
+
+    const elements = activeItems.map((item) => item.ref.current!);
+
+    const currentIndex = activeItems.findIndex((ele) => ele.isFocused);
+
+    if (!elements.length) return;
+
+    clearTimeout(searchState.timer);
+
+    searchState.timer = setTimeout(() => {
+      searchState.chars = '';
+    }, 500);
+
+    searchState.chars += char;
+
+    const startIndex =
+      currentIndex || currentIndex === 0 ? currentIndex + 1 : 0;
+
+    const orderedOptions = [
+      ...activeItems.slice(startIndex),
+      ...activeItems.slice(0, startIndex),
+    ];
+
+    const filter = searchState.chars.toLowerCase();
+
+    const excatMatch = orderedOptions.find((ele) => {
+      const span = ele.ref.current?.querySelectorAll('span')[1];
+
+      if (span && span.firstChild?.nodeType === Node.TEXT_NODE)
+        return span.firstChild.nodeValue?.toLowerCase().startsWith(filter);
+      else return false;
+    });
+
+    if (excatMatch) {
+      setFocused(excatMatch.id);
+      return;
+    }
+
+    const sameLetters = filter
+      .split('')
+      .every((letter) => letter.toLowerCase() === filter[0]);
+
+    if (sameLetters) {
+      const matched = orderedOptions.find((ele) => {
+        const span = ele.ref.current?.querySelectorAll('span')[1];
+
+        if (span && span.firstChild?.nodeType === Node.TEXT_NODE)
+          return span.firstChild.nodeValue?.toLowerCase().startsWith(filter);
+        else return false;
+      });
+
+      if (matched) setFocused(matched.id);
+    }
+  };
+
   const styles = useMemo(() => menu({ shadow }), [shadow]);
 
   return (
@@ -300,7 +366,10 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
             ref={mergeRefs(setOutsideEle, ref, innerRef)}
             className={styles.menu({ className })}
             tabIndex={-1}
-            onKeyDown={onkeydown}
+            onKeyDown={(e) => {
+              onkeydown(e);
+              handleCharSearch(e);
+            }}
             onPointerLeave={(e) => {
               restProps.onPointerLeave?.(e);
               setFocused('');

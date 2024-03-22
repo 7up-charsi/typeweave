@@ -304,8 +304,7 @@ const SelectImp = forwardRef<
   const handleCharSearch = (e: React.KeyboardEvent) => {
     const char = e.key;
 
-    if (char.length !== 1) return;
-    if (!options.length) return;
+    if (char.length !== 1 || e.repeat || !options.length) return;
 
     setIsOpen(true);
 
