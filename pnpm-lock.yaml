@@ -520,6 +520,12 @@ importers:
 
   packages/components/chip:
     dependencies:
+      '@webbo-ui/button':
+        specifier: workspace:*
+        version: link:../button
+      '@webbo-ui/error':
+        specifier: workspace:*
+        version: link:../../utilities/error
       '@webbo-ui/react-utils':
         specifier: workspace:*
         version: link:../../utilities/react-utils
