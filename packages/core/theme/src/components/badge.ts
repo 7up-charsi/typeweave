@@ -24,6 +24,9 @@ export const badge = tv({
       warning: { content: 'bg-warning-9 text-white' },
       danger: { content: 'bg-danger-9 text-white' },
     },
+    invisible: {
+      true: { content: 'hidden' },
+    },
     placement: {
       'top-left': { content: 'top-0 left-0' },
       'top-center': { content: 'top-0 left-1/2' },

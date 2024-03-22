@@ -12,6 +12,7 @@ export interface BadgeProps
   content?: number;
   max?: number;
   classNames?: BadgeClassNames;
+  showZero?: boolean;
 }
 
 const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
@@ -20,6 +21,8 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
     content,
     max,
     classNames,
+    showZero = false,
+    invisible = false,
     variant = 'standard',
     color = 'info',
     placement = 'top-right',
@@ -27,7 +30,7 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const styles = badge({ color, variant, placement, shadow });
+  const styles = badge({ color, variant, placement, shadow, invisible });
 
   return (
     <span
@@ -36,7 +39,7 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
       className={styles.base({ className: classNames?.base })}
     >
       {children}
-      {content && variant === 'standard' && (
+      {((showZero && content === 0) || !!content) && variant === 'standard' && (
         <span className={styles.content({ className: classNames?.content })}>
           {max && content > max ? `${max}+` : content}
         </span>
