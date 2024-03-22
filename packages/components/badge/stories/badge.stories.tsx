@@ -20,7 +20,7 @@ const Template = (args) => (
         <Button variant="flat">Notifications</Button>
       </Badge>
 
-      <Badge {...args} content={100} max={99} overlap="circular">
+      <Badge {...args} content={100} max={99} showZero>
         <Button variant="flat" isIconOnly aria-label="mail">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -41,11 +41,11 @@ const Template = (args) => (
     </div>
 
     <div className="flex gap-10 items-center">
-      <Badge {...args} content={100} max={99} variant="dot">
+      <Badge {...args} variant="dot">
         <Button variant="flat">Notifications</Button>
       </Badge>
 
-      <Badge {...args} content={100} max={99} overlap="circular" variant="dot">
+      <Badge {...args} variant="dot">
         <Button variant="flat" isIconOnly aria-label="mail">
           <svg
             xmlns="http://www.w3.org/2000/svg"
