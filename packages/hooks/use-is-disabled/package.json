@@ -39,9 +39,6 @@
     "@webbo-ui/ts-config": "workspace:*",
     "clean-package": "^2.2.0"
   },
-  "dependencies": {
-    "@webbo-ui/use-callback-ref": "workspace:*"
-  },
   "clean-package": {
     "extends": "../../../../../../clean-package.config.json"
   }

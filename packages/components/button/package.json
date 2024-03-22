@@ -40,9 +40,7 @@
     "@webbo-ui/react-utils": "workspace:*",
     "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
-    "@webbo-ui/use-callback-ref": "workspace:*",
     "@webbo-ui/use-pointer-events": "workspace:*",
-    "@webbo-ui/use-ripple": "workspace:*",
     "react-loader-spinner": "^6.1.6"
   },
   "devDependencies": {

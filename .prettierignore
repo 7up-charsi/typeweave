@@ -5,7 +5,6 @@ coverage
 .changeset
 .next
 build
-scripts
 pnpm-lock.yaml
 !.storybook
 !.lintstagedrc.cjs

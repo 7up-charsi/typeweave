@@ -18,6 +18,7 @@
     "format:write": "prettier --write ./packages/**/**/src --cache",
     "lint:pkg": "eslint -c .eslintrc.cjs ./packages/**/**/*.{ts,tsx}",
     "lint:pkg-fix": "eslint -c .eslintrc.cjs ./packages/**/**/*.{ts,tsx} --fix",
+    "check:deps": "tsx ./scripts/check-deps.ts",
     "create:cmp": "plop component",
     "create:pkg": "plop package",
     "create:hook": "plop hook"
@@ -32,6 +33,7 @@
     "@types/react-dom": "^18.2.20",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
+    "depcheck": "^1.4.7",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
@@ -47,7 +49,7 @@
     "tailwind-variants": "^0.1.20",
     "tslib": "^2.6.2",
     "tsup": "^8.0.2",
+    "tsx": "^4.7.1",
     "turbo": "latest"
   }
 }
-

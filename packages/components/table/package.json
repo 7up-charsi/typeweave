@@ -38,8 +38,6 @@
   "dependencies": {
     "@webbo-ui/menu": "workspace:*",
     "@webbo-ui/use-controllable-state": "workspace:*",
-    "@webbo-ui/use-callback-ref": "workspace:*",
-    "@webbo-ui/react-utils": "workspace:*",
     "@webbo-ui/context": "workspace:*",
     "@webbo-ui/checkbox": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
