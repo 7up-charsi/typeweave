@@ -38,17 +38,13 @@
   "dependencies": {
     "@webbo-ui/button": "workspace:*",
     "@webbo-ui/error": "workspace:*",
-    "@webbo-ui/popover": "workspace:*",
     "@webbo-ui/checkbox": "workspace:*",
     "@webbo-ui/input": "workspace:*",
     "@webbo-ui/popper": "workspace:*",
     "@webbo-ui/react-utils": "workspace:*",
     "@webbo-ui/use-pointer-events": "workspace:*",
-    "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/chip": "workspace:*",
-    "@webbo-ui/use-callback-ref": "workspace:*",
-    "@webbo-ui/use-click-outside": "workspace:*",
     "@webbo-ui/use-controllable-state": "workspace:*",
     "lodash.groupby": "^4.6.0"
   },

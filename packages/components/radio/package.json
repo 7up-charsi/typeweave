@@ -36,8 +36,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@webbo-ui/theme": "workspace:*",
-    "@webbo-ui/react-utils": "workspace:*"
+    "@webbo-ui/theme": "workspace:*"
   },
   "devDependencies": {
     "@webbo-ui/ts-config": "workspace:*",

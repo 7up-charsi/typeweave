@@ -37,17 +37,13 @@
   },
   "dependencies": {
     "@webbo-ui/use-controllable-state": "workspace:*",
-    "@webbo-ui/use-click-outside": "workspace:*",
     "@webbo-ui/use-pointer-events": "workspace:*",
     "@webbo-ui/use-callback-ref": "workspace:*",
     "@webbo-ui/use-scroll-lock": "workspace:*",
-    "@webbo-ui/use-is-disabled": "workspace:*",
     "@webbo-ui/focus-trap": "workspace:*",
-    "@webbo-ui/error": "workspace:*",
     "@webbo-ui/overlay": "workspace:*",
     "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/context": "workspace:*",
-    "@webbo-ui/visually-hidden": "workspace:*",
     "@webbo-ui/button": "workspace:*",
     "@webbo-ui/theme": "workspace:*"
   },
