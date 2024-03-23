@@ -21,6 +21,7 @@ import {
 import { Slot } from '@webbo-ui/slot';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import { accessibilityWarning } from '@webbo-ui/error';
+import { Icon } from '@webbo-ui/icon';
 
 interface GroupContext extends ButtonVariantProps {
   disabled?: boolean;
@@ -195,7 +196,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                     className: classNames?.content,
                   })}
                 >
-                  {children.props.children}
+                  {isIconOnly ? (
+                    <Icon>{children.props.children}</Icon>
+                  ) : (
+                    children.props.children
+                  )}
                 </span>
                 {__endContent}
               </>
@@ -210,7 +215,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                 className: classNames?.content,
               })}
             >
-              {children}
+              {isIconOnly ? <Icon>{children}</Icon> : children}
             </span>
 
             {__endContent}

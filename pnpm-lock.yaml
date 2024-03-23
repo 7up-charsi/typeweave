@@ -107,6 +107,9 @@ importers:
       '@webbo-ui/disclosure':
         specifier: workspace:*
         version: link:../../packages/components/disclosure
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../../packages/components/icon
       '@webbo-ui/input':
         specifier: workspace:*
         version: link:../../packages/components/input
@@ -298,6 +301,9 @@ importers:
       '@webbo-ui/button':
         specifier: workspace:*
         version: link:../button
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/theme':
         specifier: workspace:*
         version: link:../../core/theme
@@ -375,6 +381,9 @@ importers:
       '@webbo-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/input':
         specifier: workspace:*
         version: link:../input
@@ -440,6 +449,9 @@ importers:
       '@webbo-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/react-utils':
         specifier: workspace:*
         version: link:../../utilities/react-utils
@@ -471,6 +483,9 @@ importers:
 
   packages/components/checkbox:
     dependencies:
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/react-utils':
         specifier: workspace:*
         version: link:../../utilities/react-utils
@@ -496,6 +511,9 @@ importers:
       '@webbo-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/theme':
         specifier: workspace:*
         version: link:../../core/theme
@@ -663,6 +681,9 @@ importers:
       '@webbo-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/react-utils':
         specifier: workspace:*
         version: link:../../utilities/react-utils
@@ -694,6 +715,9 @@ importers:
       '@webbo-ui/context':
         specifier: workspace:*
         version: link:../../core/context
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/popper':
         specifier: workspace:*
         version: link:../popper
@@ -765,6 +789,9 @@ importers:
       '@webbo-ui/button':
         specifier: workspace:*
         version: link:../button
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/theme':
         specifier: workspace:*
         version: link:../../core/theme
@@ -870,6 +897,9 @@ importers:
 
   packages/components/radio:
     dependencies:
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/theme':
         specifier: workspace:*
         version: link:../../core/theme
@@ -898,6 +928,9 @@ importers:
       '@webbo-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/input':
         specifier: workspace:*
         version: link:../input
@@ -979,6 +1012,9 @@ importers:
 
   packages/components/switch:
     dependencies:
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/theme':
         specifier: workspace:*
         version: link:../../core/theme
@@ -1010,6 +1046,9 @@ importers:
       '@webbo-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/menu':
         specifier: workspace:*
         version: link:../menu
@@ -1084,6 +1123,9 @@ importers:
       '@webbo-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/menu':
         specifier: workspace:*
         version: link:../menu

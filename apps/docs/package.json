@@ -12,6 +12,7 @@
     "@mdx-js/mdx": "^3.0.1",
     "@webbo-ui/alert": "workspace:*",
     "@webbo-ui/button": "workspace:*",
+    "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/dialog": "workspace:*",
     "@webbo-ui/input": "workspace:*",
     "@webbo-ui/menu": "workspace:*",

@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@webbo-ui/theme": "workspace:*",
+    "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/react-utils": "workspace:*"
   },
   "devDependencies": {

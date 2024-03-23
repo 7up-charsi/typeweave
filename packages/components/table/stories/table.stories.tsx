@@ -70,13 +70,10 @@ const Template = () => {
           <Table.ColumnVisibility tableIdentifier="demo_table">
             <Button isIconOnly aria-label="column visibility">
               <svg
-                xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 stroke="#000"
                 strokeLinecap="round"
                 viewBox="0 0 24 24"
-                width="1em"
-                height="1em"
               >
                 <g>
                   <rect width="18" height="18" x="3" y="3" rx="0"></rect>

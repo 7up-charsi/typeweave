@@ -4,24 +4,21 @@ import { forwardRef, useEffect } from 'react';
 import { ChipClassNames, ChipVariantProps, chip } from '@webbo-ui/theme';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import { accessibilityWarning } from '@webbo-ui/error';
+import { Icon } from '@webbo-ui/icon';
 
 const delete_svg = (
-  <svg
-    viewBox="0 0 18 18"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
-    width="1em"
-    height="1em"
-  >
-    <g strokeWidth="0"></g>
-    <g strokeLinecap="round" strokeLinejoin="round"></g>
-    <g>
-      <path
-        fill="currentColor"
-        d="M9,0a9,9,0,1,0,9,9A9,9,0,0,0,9,0Zm4.707,12.293a1,1,0,1,1-1.414,1.414L9,10.414,5.707,13.707a1,1,0,0,1-1.414-1.414L7.586,9,4.293,5.707A1,1,0,0,1,5.707,4.293L9,7.586l3.293-3.293a1,1,0,0,1,1.414,1.414L10.414,9Z"
-      ></path>
-    </g>
-  </svg>
+  <Icon>
+    <svg viewBox="0 0 18 18" fill="currentColor">
+      <g strokeWidth="0"></g>
+      <g strokeLinecap="round" strokeLinejoin="round"></g>
+      <g>
+        <path
+          fill="currentColor"
+          d="M9,0a9,9,0,1,0,9,9A9,9,0,0,0,9,0Zm4.707,12.293a1,1,0,1,1-1.414,1.414L9,10.414,5.707,13.707a1,1,0,0,1-1.414-1.414L7.586,9,4.293,5.707A1,1,0,0,1,5.707,4.293L9,7.586l3.293-3.293a1,1,0,0,1,1.414,1.414L10.414,9Z"
+        ></path>
+      </g>
+    </svg>
+  </Icon>
 );
 
 export interface ChipProps

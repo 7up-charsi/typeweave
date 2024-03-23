@@ -45,14 +45,7 @@ const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProps>(
       >
         {isPassword
           ? showIcon || (
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 14"
-                width="1em"
-                height="1em"
-              >
+              <svg fill="none" viewBox="0 0 20 14">
                 <g
                   stroke="currentColor"
                   strokeLinecap="round"
@@ -65,14 +58,7 @@ const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProps>(
               </svg>
             )
           : hideIcon || (
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 18"
-                width="1em"
-                height="1em"
-              >
+              <svg fill="none" viewBox="0 0 20 18">
                 <path
                   stroke="currentColor"
                   strokeLinecap="round"

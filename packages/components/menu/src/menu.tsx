@@ -14,6 +14,7 @@ import { createCollection } from '@webbo-ui/use-collection';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { forwardRef, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
+import { Icon } from '@webbo-ui/icon';
 
 const Root_Name = 'Menu.Root';
 
@@ -599,22 +600,17 @@ export interface CheckboxItemProps
 }
 
 const checkbox_icon = (
-  <svg
-    aria-hidden="true"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    width="1em"
-    height="1em"
-  >
-    <path
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      d="M5 11.917 9.724 16.5 19 7.5"
-    />
-  </svg>
+  <Icon>
+    <svg fill="none" viewBox="0 0 24 24">
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M5 11.917 9.724 16.5 19 7.5"
+      />
+    </svg>
+  </Icon>
 );
 
 export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
@@ -719,23 +715,19 @@ export interface RadioItemProps
 }
 
 const radio_icon = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 48 48"
-    width="1em"
-    height="1em"
-  >
-    <g>
-      <path fill="#fff" fillOpacity="0.01" d="M0 0H48V48H0z"></path>
-      <path
-        fill="currentColor"
-        stroke="currentColor"
-        strokeWidth="4"
-        d="M24 33a9 9 0 100-18 9 9 0 000 18z"
-      ></path>
-    </g>
-  </svg>
+  <Icon>
+    <svg fill="none" viewBox="0 0 48 48">
+      <g>
+        <path fill="#fff" fillOpacity="0.01" d="M0 0H48V48H0z"></path>
+        <path
+          fill="currentColor"
+          stroke="currentColor"
+          strokeWidth="4"
+          d="M24 33a9 9 0 100-18 9 9 0 000 18z"
+        ></path>
+      </g>
+    </svg>
+  </Icon>
 );
 
 export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
