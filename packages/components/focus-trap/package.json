@@ -38,17 +38,14 @@
   "dependencies": {
     "@webbo-ui/error": "workspace:*",
     "@webbo-ui/slot": "workspace:*",
-    "@webbo-ui/react-utils": "workspace:*",
-    "@webbo-ui/button": "workspace:*"
+    "@webbo-ui/react-utils": "workspace:*"
   },
   "devDependencies": {
-    "@webbo-ui/ts-config": "workspace:*",
+    
+    "@webbo-ui/button": "workspace:*",
     "clean-package": "^2.2.0"
   },
   "clean-package": {
-    "extends": "../../../../../../clean-package.config.json",
-    "remove": [
-      "dependencies.@webbo-ui/button"
-    ]
+    "extends": "../../../../../../clean-package.config.json"
   }
 }

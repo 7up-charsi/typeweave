@@ -1,6 +1,5 @@
 import React from 'react';
 import { radio } from '@webbo-ui/theme';
-
 import { Radio, RadioProps } from '../src';
 
 const meta = {

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { tooltip } from '@webbo-ui/theme';
-
 import * as Tooltip from '../src';
 
 const meta = {

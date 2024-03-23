@@ -1,7 +1,6 @@
 import React from 'react';
 import { alertDialog } from '@webbo-ui/theme';
 import { Button } from '@webbo-ui/button';
-
 import * as AlertDialog from '../src';
 
 const meta = {

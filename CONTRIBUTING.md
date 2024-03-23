@@ -133,7 +133,7 @@ We use [Turbo Repo](https://turborepo.org/) for the project management.
 2. If you will be working on the components source code, you can use the following command to start the webpack dev server:
 
 ```bash
-pnpm dev:pkg ## Start the storybook
+pnpm dev:sb ## Start the storybook
 
 pnpm dev:docs ## this will start the documentation
 ```

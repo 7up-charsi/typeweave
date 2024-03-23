@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from '@webbo-ui/button';
-
 import * as Dialog from '../src';
 
 const meta = {

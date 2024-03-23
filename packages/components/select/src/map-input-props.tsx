@@ -3,7 +3,7 @@
 import { Button } from '@webbo-ui/button';
 import { RenderInputProps } from './select';
 import { selectInput } from '@webbo-ui/theme';
-import { InputProps } from '@webbo-ui/input';
+import { type InputProps } from '@webbo-ui/input';
 import { Icon } from '@webbo-ui/icon';
 
 const clearIcon_svg = (

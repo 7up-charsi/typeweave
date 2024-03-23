@@ -40,7 +40,7 @@
     "@webbo-ui/slot": "workspace:*"
   },
   "devDependencies": {
-    "@webbo-ui/ts-config": "workspace:*",
+    
     "clean-package": "^2.2.0"
   },
   "clean-package": {

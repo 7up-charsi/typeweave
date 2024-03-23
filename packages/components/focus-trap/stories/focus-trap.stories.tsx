@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from '@webbo-ui/button';
-
 import { FocusTrap, FocusTrapProps } from '../src';
 
 const meta = {

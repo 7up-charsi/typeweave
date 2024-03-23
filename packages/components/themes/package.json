@@ -37,16 +37,16 @@
   },
   "dependencies": {
     "@webbo-ui/use-media-query": "workspace:*",
-    "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/use-callback-ref": "workspace:*",
     "@webbo-ui/context": "workspace:*",
-    "@webbo-ui/error": "workspace:*",
-    "@webbo-ui/button": "workspace:*",
-    "@webbo-ui/menu": "workspace:*"
+    "@webbo-ui/error": "workspace:*"
   },
   "devDependencies": {
-    "@webbo-ui/ts-config": "workspace:*",
-    "clean-package": "^2.2.0"
+    
+    "clean-package": "^2.2.0",
+    "@webbo-ui/icon": "workspace:*",
+    "@webbo-ui/button": "workspace:*",
+    "@webbo-ui/menu": "workspace:*"
   },
   "clean-package": {
     "extends": "../../../../../../clean-package.config.json"
