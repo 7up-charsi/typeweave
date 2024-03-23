@@ -80,11 +80,7 @@ module.exports = function main(
         const data = {
           name,
           description,
-          outDir:
-            gen === 'package'
-              ? outDir
-              : (gen === 'component' && 'components') ||
-                (gen === 'hook' && 'hooks'),
+          outDir: gen === 'package' ? outDir : defaultOutDirs[gen],
         };
 
         actions.push({

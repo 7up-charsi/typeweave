@@ -16,9 +16,9 @@ const _Slot = <E extends HTMLElement>(
 
   const count = Children.count(children);
   if (!count) return;
-  if (count > 1) throw new CustomError('slot', 'must have only one child');
+  if (count > 1) throw new CustomError('Slot', 'must have only one child');
   if (!isValidElement(children))
-    throw new CustomError('slot', 'child must be valid element');
+    throw new CustomError('Slot', 'child must be valid element');
 
   return cloneElement(children, {
     ...mergeProps(slotProps, children.props),

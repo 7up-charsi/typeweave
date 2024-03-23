@@ -630,6 +630,31 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
 
+  packages/components/icon:
+    dependencies:
+      '@webbo-ui/error':
+        specifier: workspace:*
+        version: link:../../utilities/error
+      '@webbo-ui/react-utils':
+        specifier: workspace:*
+        version: link:../../utilities/react-utils
+      '@webbo-ui/theme':
+        specifier: workspace:*
+        version: link:../../core/theme
+      react:
+        specifier: '>=18'
+        version: 18.2.0
+      react-dom:
+        specifier: '>=18'
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@webbo-ui/ts-config':
+        specifier: workspace:*
+        version: link:../../core/ts-config
+      clean-package:
+        specifier: ^2.2.0
+        version: 2.2.0
+
   packages/components/input:
     dependencies:
       '@webbo-ui/button':
@@ -1171,6 +1196,12 @@ importers:
       '@webbo-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
+      react:
+        specifier: '>=18'
+        version: 18.2.0
+      react-dom:
+        specifier: '>=18'
+        version: 18.2.0(react@18.2.0)
     devDependencies:
       '@webbo-ui/ts-config':
         specifier: workspace:*
@@ -1184,9 +1215,6 @@ importers:
       '@radix-ui/colors':
         specifier: ^3.0.0
         version: 3.0.0
-      '@webbo-ui/error':
-        specifier: workspace:*
-        version: link:../../utilities/error
       color:
         specifier: ^4.2.3
         version: 4.2.3
@@ -1303,9 +1331,6 @@ importers:
 
   packages/hooks/use-is-disabled:
     dependencies:
-      '@webbo-ui/use-callback-ref':
-        specifier: workspace:*
-        version: link:../use-callback-ref
       react:
         specifier: '>=18'
         version: 18.2.0
