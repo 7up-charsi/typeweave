@@ -3,13 +3,13 @@
 import { useMediaQuery } from '@webbo-ui/use-media-query';
 import { createContextScope } from '@webbo-ui/context';
 import { CustomError } from '@webbo-ui/error';
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 
 const ThemeProvider_Name = 'Themes.ThemeProvider';
 
 export interface ThemeProviderProps {
-  defaultTheme: string;
+  defaultTheme?: string;
   dataAttribute?: false | string;
   children?: React.ReactNode;
   themeContainer?: HTMLElement;
@@ -18,18 +18,18 @@ export interface ThemeProviderProps {
   localStorageKey?: false | string;
 }
 
-interface ThemeProviderContext {
-  theme?: string;
+interface RootContext {
+  theme: string | null;
   onThemeChange: (theme: string) => void;
 }
 
-const [ThemeProviderProvider, useThemeProviderContext] =
-  createContextScope<ThemeProviderContext>(ThemeProvider_Name);
+const [RootProvider, useRootContext] =
+  createContextScope<RootContext>(ThemeProvider_Name);
 
 export const ThemeProvider = (props: ThemeProviderProps) => {
   const {
     children,
-    defaultTheme,
+    defaultTheme = 'system',
     darkTheme = 'dark',
     lightTheme = 'light',
     themeContainer = globalThis?.document?.documentElement,
@@ -39,14 +39,17 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
 
   const matched = useMediaQuery('(prefers-color-scheme: dark)');
 
-  const [value, setValue] = useState(defaultTheme);
+  const [value, setValue] = useState<string | null>(null);
+
+  const prevTheme = useRef('');
 
   const onThemeChange = useCallbackRef((theme: string) => {
     if (!theme)
       throw new CustomError(ThemeProvider_Name, '`theme` is required');
 
-    if (value) themeContainer.classList.remove(value);
-    if (dataAttribute) delete themeContainer.dataset[dataAttribute];
+    if (prevTheme.current) themeContainer.classList.remove(prevTheme.current);
+    if (prevTheme.current && dataAttribute)
+      delete themeContainer.dataset[dataAttribute];
 
     const newTheme =
       theme === 'system' ? (matched ? darkTheme : lightTheme) : theme;
@@ -54,8 +57,9 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
     themeContainer.classList.add(newTheme);
     if (dataAttribute) themeContainer.dataset[dataAttribute] = newTheme;
 
-    setValue(theme);
+    prevTheme.current = newTheme;
 
+    setValue(theme);
     if (localStorageKey) localStorage.setItem(localStorageKey, theme);
   });
 
@@ -64,14 +68,12 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
       (localStorageKey ? localStorage.getItem(localStorageKey) : undefined) ??
         defaultTheme,
     );
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultTheme, localStorageKey]);
+  }, [defaultTheme, localStorageKey, onThemeChange]);
 
   return (
-    <ThemeProviderProvider theme={value} onThemeChange={onThemeChange}>
+    <RootProvider theme={value} onThemeChange={onThemeChange}>
       {children}
-    </ThemeProviderProvider>
+    </RootProvider>
   );
 };
 
@@ -82,7 +84,7 @@ ThemeProvider.displayName = 'webbo-ui.' + ThemeProvider_Name;
 const useTheme_Name = 'Themes.useTheme';
 
 export const useTheme = () => {
-  const rootContext = useThemeProviderContext(useTheme_Name);
+  const rootContext = useRootContext(useTheme_Name);
 
   return {
     onThemeChange: rootContext.onThemeChange,

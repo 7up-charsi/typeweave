@@ -70,9 +70,9 @@ const ThemeMenu = () => {
         <Menu.Menu className="z-[9999]">
           <Menu.Arrow />
           <Menu.RadioGroup
-            accessibleLabel="theme switcher"
+            aria-label="theme switcher"
             onChange={onThemeChange}
-            value={theme}
+            value={theme ?? undefined}
           >
             {[
               { title: 'light', icon: light_svg },
@@ -96,7 +96,7 @@ const ThemeMenu = () => {
 
 export const ThemeSwitcher = () => {
   return (
-    <ThemeProvider defaultTheme="light">
+    <ThemeProvider>
       <ThemeMenu />
     </ThemeProvider>
   );
