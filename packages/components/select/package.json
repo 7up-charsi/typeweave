@@ -40,6 +40,7 @@
     "@webbo-ui/error": "workspace:*",
     "@webbo-ui/input": "workspace:*",
     "@webbo-ui/popper": "workspace:*",
+    "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/react-utils": "workspace:*",
     "@webbo-ui/checkbox": "workspace:*",
     "@webbo-ui/theme": "workspace:*",

@@ -18,6 +18,7 @@ const Icon = forwardRef<SVGAElement, IconProps>((props, ref) => {
 
   return cloneElement(children, {
     ...mergeProps(restProps, children.props),
+    xmlns: 'http://www.w3.org/2000/svg',
     width: '1em',
     height: '1em',
     'aria-hidden': true,

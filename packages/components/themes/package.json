@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@webbo-ui/use-media-query": "workspace:*",
+    "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/use-callback-ref": "workspace:*",
     "@webbo-ui/context": "workspace:*",
     "@webbo-ui/error": "workspace:*",

@@ -41,6 +41,7 @@
     "@webbo-ui/use-callback-ref": "workspace:*",
     "@webbo-ui/popper": "workspace:*",
     "@webbo-ui/use-click-outside": "workspace:*",
+    "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/use-scroll-lock": "workspace:*",
