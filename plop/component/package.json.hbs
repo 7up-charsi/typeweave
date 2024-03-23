@@ -25,7 +25,7 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-    "build": "tsup src --dts",
+    "build": "tsup --config ../../../tsup.config.ts",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
