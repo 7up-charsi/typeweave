@@ -586,6 +586,9 @@ importers:
         specifier: '>=18'
         version: 18.2.0(react@18.2.0)
     devDependencies:
+      '@webbo-ui/button':
+        specifier: workspace:*
+        version: link:../button
       clean-package:
         specifier: ^2.2.0
         version: 2.2.0

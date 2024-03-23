@@ -178,7 +178,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
     };
 
     return (
-      <button
+      <Slot
         {...restProps}
         ref={ref}
         onKeyDown={onKeyDown}
