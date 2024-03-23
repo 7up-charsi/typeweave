@@ -38,7 +38,6 @@
   "dependencies": {
     "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/react-utils": "workspace:*",
-    "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/use-controllable-state": "workspace:*",
     "@webbo-ui/error": "workspace:*",
     "@webbo-ui/button": "workspace:*"

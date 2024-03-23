@@ -656,9 +656,6 @@ importers:
       '@webbo-ui/react-utils':
         specifier: workspace:*
         version: link:../../utilities/react-utils
-      '@webbo-ui/theme':
-        specifier: workspace:*
-        version: link:../../core/theme
       react:
         specifier: '>=18'
         version: 18.2.0
@@ -681,9 +678,6 @@ importers:
       '@webbo-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
-      '@webbo-ui/icon':
-        specifier: workspace:*
-        version: link:../icon
       '@webbo-ui/react-utils':
         specifier: workspace:*
         version: link:../../utilities/react-utils
@@ -1046,9 +1040,6 @@ importers:
       '@webbo-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
-      '@webbo-ui/icon':
-        specifier: workspace:*
-        version: link:../icon
       '@webbo-ui/menu':
         specifier: workspace:*
         version: link:../menu
