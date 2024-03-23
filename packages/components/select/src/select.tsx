@@ -44,7 +44,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
   (SelectVariantProps &
     Omit<
       React.HTMLAttributes<HTMLUListElement>,
-      'className' | 'defaultValue' | 'children'
+      'defaultValue' | 'children'
     > & {
       disabled?: boolean;
       classNames?: SelectClassNames;
@@ -113,6 +113,7 @@ const SelectImp = forwardRef<
 >((props, ref) => {
   const {
     classNames,
+    className,
     offset,
     isOpen: openProp,
     onOpenChange,
@@ -474,7 +475,9 @@ const SelectImp = forwardRef<
             {...restProps}
             ref={ref}
             id={lisboxId}
-            className={styles.listbox({ className: classNames?.listbox })}
+            className={styles.listbox({
+              className: classNames?.listbox ?? className,
+            })}
             role="listbox"
             aria-multiselectable={multiple}
             aria-roledescription={

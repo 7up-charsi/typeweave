@@ -19,6 +19,7 @@ export interface InputProps extends InputVariantProps {
   startContent?: React.ReactNode;
   endContent?: React.ReactNode;
   classNames?: InputClassNames;
+  className?: string;
   placeholder?: string;
   inputProps?: Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
@@ -50,6 +51,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     value,
     defaultValue,
     classNames,
+    className,
     required,
     onChange,
     onFocus,
@@ -98,7 +100,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     <div
       {...baseProps}
       ref={baseRef}
-      className={styles.base({ className: classNames?.base })}
+      className={styles.base({ className: classNames?.base ?? className })}
       data-disabled={disabled}
     >
       {!hideLabel && !!label && (

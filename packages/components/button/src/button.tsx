@@ -33,12 +33,8 @@ const Context = createContext<GroupContext | null>(null);
 
 export interface ButtonGroupProps
   extends Pick<ButtonVariantProps, 'color' | 'size' | 'variant'>,
-    Omit<
-      React.HTMLAttributes<HTMLDivElement>,
-      'color' | 'size' | 'className' | 'onChange'
-    >,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'color' | 'size' | 'onChange'>,
     ButtonGroupVariantProps {
-  className?: string;
   disabled?: boolean;
 }
 
@@ -80,7 +76,7 @@ ButtonGroup.displayName = 'webbo-ui.ButtonGroup';
 
 export interface ButtonProps
   extends Omit<ButtonVariantProps, 'isInGroup'>,
-    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color' | 'className'> {
+    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'> {
   startContent?: ReactNode;
   endContent?: ReactNode;
   classNames?: ButtonClassNames;
@@ -96,6 +92,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       startContent,
       endContent,
       classNames,
+      className,
       children,
       disabled: _disabled,
       asChild,
@@ -173,7 +170,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...pointerEvents}
         disabled={!!disabled}
         ref={mergeRefs(ref, innerRef)}
-        className={styles.base({ className: classNames?.base })}
+        className={styles.base({ className: classNames?.base ?? className })}
         tabIndex={excludeFromTabOrder ? -1 : tabIndex ?? 0}
         onKeyDown={(e) => {
           buttonProps.onKeyDown?.(e);

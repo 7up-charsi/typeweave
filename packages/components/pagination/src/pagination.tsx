@@ -78,7 +78,7 @@ const prev_svg = (
 
 export interface PaginationProps
   extends PaginationVariantProps,
-    Omit<React.HTMLAttributes<HTMLUListElement>, 'className'> {
+    React.HTMLAttributes<HTMLUListElement> {
   count?: number;
   boundaryCount?: number;
   siblingCount?: number;
@@ -111,6 +111,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
   (props, ref) => {
     const {
       classNames,
+      className,
       page: pageProp,
       onPageChange,
       getItemA11yLabel = (page: number) => `page ${page}`,
@@ -178,7 +179,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
       <ul
         {...restProps}
         ref={ref}
-        className={styles.base({ className: classNames?.base })}
+        className={styles.base({ className: classNames?.base ?? className })}
         aria-label={restProps['aria-label'] || 'pagination navigation'}
       >
         {showFirstButton && (

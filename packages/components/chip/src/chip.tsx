@@ -23,7 +23,7 @@ const delete_svg = (
 
 export interface ChipProps
   extends ChipVariantProps,
-    Omit<React.HTMLAttributes<HTMLDivElement>, 'color' | 'className'> {
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'color'> {
   label?: string;
   avatar?: React.ReactNode;
   deleteIcon?: React.ReactNode;
@@ -44,6 +44,7 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
     variant = 'solid',
     color = 'primary',
     classNames,
+    className,
     excludeFromTabOrder,
     deleteIcon = delete_svg,
     deleteIconA11yLabel = 'delete',
@@ -86,7 +87,7 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
     <div
       {...restProps}
       ref={ref}
-      className={styles.base({ className: classNames?.base })}
+      className={styles.base({ className: classNames?.base ?? className })}
     >
       {avatar}
       <span className={styles.content({ className: classNames?.content })}>
