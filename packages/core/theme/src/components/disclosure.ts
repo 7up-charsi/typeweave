@@ -1,15 +1,11 @@
 import { tv, VariantProps } from 'tailwind-variants';
 import { ClassNames } from '../types';
-import { focusVisible } from '../classes';
 
 export const disclosure = tv({
   slots: {
     base: 'space-y-2',
     item: ['group/item'],
-    trigger: [
-      'text-primary-11 bg-primary-3 hover:bg-primary-4 group-data-[state=expanded]/item:bg-primary-5 rounded overflow-hidden flex items-center w-full text-left px-3 py-2 first-letter:uppercase outline-none disabled:disabled',
-      focusVisible,
-    ],
+    trigger: '',
     content: 'px-3 py-2',
   },
   variants: {},

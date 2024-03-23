@@ -1,0 +1,38 @@
+[
+  {
+    "name": "variant",
+    "default": "flat",
+    "type": ["solid", "flat", "text", "border"],
+    "description": ""
+  },
+  {
+    "name": "color",
+    "default": "default",
+    "type": ["default", "primary", "secondary", "success", "danger", "info"],
+    "description": ""
+  },
+  {
+    "name": "size",
+    "default": "md",
+    "type": ["sm", "md", "lg"],
+    "description": ""
+  },
+  {
+    "name": "isIconOnly",
+    "default": "false",
+    "type": "boolean",
+    "description": ""
+  },
+  {
+    "name": "isInGroup",
+    "default": "false",
+    "type": "boolean",
+    "description": "either it is child of ButtonGroup or simple button"
+  },
+  {
+    "name": "fullWidth",
+    "default": "false",
+    "type": "boolean",
+    "description": ""
+  }
+]
