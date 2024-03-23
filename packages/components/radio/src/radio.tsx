@@ -34,10 +34,7 @@ const checked_svg = (
 
 export interface RadioProps
   extends RadioVariantProps,
-    Omit<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      'color' | 'size' | 'className'
-    > {
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color' | 'size'> {
   classNames?: RadioClassNames;
   label?: string;
   icon?: React.ReactNode;
@@ -47,6 +44,7 @@ export interface RadioProps
 const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   const {
     classNames,
+    className,
     label,
     id: idProp,
     checked,
@@ -64,7 +62,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   const styles = radio({ labelPlacement, color, size });
 
   return (
-    <div className={styles.base({ className: classNames?.base })}>
+    <div className={styles.base({ className: classNames?.base ?? className })}>
       <div className={styles.radio({ className: classNames?.radio })}>
         <input
           {...inpuProps}

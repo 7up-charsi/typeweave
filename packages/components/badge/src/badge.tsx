@@ -5,10 +5,7 @@ import { forwardRef } from 'react';
 
 export interface BadgeProps
   extends BadgeVariantProps,
-    Omit<
-      React.HTMLAttributes<HTMLSpanElement>,
-      'color' | 'className' | 'content'
-    > {
+    Omit<React.HTMLAttributes<HTMLSpanElement>, 'color' | 'content'> {
   content?: number;
   max?: number;
   classNames?: BadgeClassNames;
@@ -21,6 +18,7 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
     content,
     max,
     classNames,
+    className,
     showZero = false,
     invisible = false,
     variant = 'standard',
@@ -36,7 +34,7 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
     <span
       {...restProps}
       ref={ref}
-      className={styles.base({ className: classNames?.base })}
+      className={styles.base({ className: classNames?.base ?? className })}
     >
       {children}
       {((showZero && content === 0) || !!content) && variant === 'standard' && (

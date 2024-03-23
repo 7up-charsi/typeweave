@@ -33,10 +33,7 @@ const indeterminate_svg = (
 
 export interface CheckboxProps
   extends CheckboxVariantProps,
-    Omit<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      'color' | 'size' | 'className'
-    > {
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color' | 'size'> {
   classNames?: CheckboxClassNames;
   label?: string;
   indeterminate?: boolean;
@@ -48,6 +45,7 @@ export interface CheckboxProps
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
   const {
     classNames,
+    className,
     label,
     id: idProp,
     checked,
@@ -75,7 +73,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
   }, [indeterminate]);
 
   return (
-    <div className={styles.base({ className: classNames?.base })}>
+    <div className={styles.base({ className: classNames?.base ?? className })}>
       <div className={styles.checkbox({ className: classNames?.checkbox })}>
         <input
           {...inpuProps}

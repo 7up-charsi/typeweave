@@ -400,8 +400,7 @@ Menu.displayName = 'webbo-ui.' + Menu_Name;
 
 const Item_Name = 'Menu.Item';
 
-export interface ItemProps
-  extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'className'> {
+export interface ItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
   disabled?: boolean;
   disableCloseOnPress?: boolean;
   classNames?: {
@@ -467,6 +466,7 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
     onPress,
     disableCloseOnPress,
     classNames,
+    className,
     disabled,
     ...restProps
   } = props;
@@ -479,7 +479,9 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
       {...restProps}
       ref={ref}
       role="menuitem"
-      className={stylesContext.item({ className: classNames?.item })}
+      className={stylesContext.item({
+        className: classNames?.item ?? className,
+      })}
       disabled={disabled}
       onPress={() => {
         if (!disableCloseOnPress) rootContext.handleClose();
@@ -583,10 +585,7 @@ Separator.displayName = 'webbo-ui.' + Separator_Name;
 const CheckboxItem_Name = 'Menu.CheckboxItem';
 
 export interface CheckboxItemProps
-  extends Omit<
-    React.LiHTMLAttributes<HTMLLIElement>,
-    'onChange' | 'className'
-  > {
+  extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'onChange'> {
   disabled?: boolean;
   checked?: boolean;
   onChange?: (checked: boolean) => void;
@@ -618,6 +617,7 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
     const {
       children,
       classNames,
+      className,
       checked,
       onChange,
       disabled,
@@ -636,7 +636,9 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
         role="menuitemcheckbox"
         data-checked={checked}
         aria-checked={checked}
-        className={stylesContext.item({ className: classNames?.item })}
+        className={stylesContext.item({
+          className: classNames?.item ?? className,
+        })}
         disabled={disabled}
         onPress={() => {
           if (!disableCloseOnChange) rootContext.handleClose();
@@ -700,8 +702,7 @@ RadioGroup.displayName = 'webbo-ui.' + RadioGroup_Name;
 
 const RadioItem_Name = 'Menu.RadioItem';
 
-export interface RadioItemProps
-  extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'className'> {
+export interface RadioItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
   disabled?: boolean;
   value: string;
   classNames?: {
@@ -736,6 +737,7 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
       children,
       disabled,
       classNames,
+      className,
       value,
       icon = radio_icon,
       disableCloseOnChange = true,
@@ -755,7 +757,9 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
         role="menuitemradio"
         data-checked={checked}
         aria-checked={checked}
-        className={stylesContext.item({ className: classNames?.item })}
+        className={stylesContext.item({
+          className: classNames?.item ?? className,
+        })}
         disabled={disabled}
         onPress={() => {
           if (!disableCloseOnChange) rootContext.handleClose();

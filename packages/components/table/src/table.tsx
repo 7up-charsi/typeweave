@@ -117,12 +117,12 @@ const Table_Name = 'Table.Table';
 
 export interface TableProps
   extends TableVariantProps,
-    Omit<React.TableHTMLAttributes<HTMLTableElement>, 'className'> {
+    React.TableHTMLAttributes<HTMLTableElement> {
   classNames?: TableClassNames;
 }
 
 export const Table = (props: TableProps) => {
-  const { classNames, variant = 'grid', ...restProps } = props;
+  const { classNames, className, variant = 'grid', ...restProps } = props;
 
   const { data, columns, getRowKey, visibilityState } =
     useRootContext(Table_Name);
@@ -134,7 +134,7 @@ export const Table = (props: TableProps) => {
     columns && (
       <table
         {...restProps}
-        className={styles.table({ className: classNames?.table })}
+        className={styles.table({ className: classNames?.table ?? className })}
       >
         <thead className={styles.thead({ className: classNames?.thead })}>
           <tr className={styles.tr({ className: classNames?.tr })}>
@@ -193,7 +193,7 @@ Table.displayName = 'webbo-ui.' + Table_Name;
 const ColumnVisibility_Name = 'Table.ColumnVisibility';
 
 export interface ColumnVisibilityProps
-  extends Omit<Menu.MenuProps, 'className' | 'onChange'> {
+  extends Omit<Menu.MenuProps, 'onChange'> {
   children?: React.ReactNode;
   tableIdentifier?: string;
   onChange?: (identifier: string, visibility: boolean) => void;
@@ -204,8 +204,14 @@ export interface ColumnVisibilityProps
 }
 
 export const ColumnVisibility = (props: ColumnVisibilityProps) => {
-  const { children, classNames, onChange, tableIdentifier, ...menuProps } =
-    props;
+  const {
+    children,
+    classNames,
+    className,
+    onChange,
+    tableIdentifier,
+    ...menuProps
+  } = props;
 
   const { columns, data, setVisibilityState, visibilityState } = useRootContext(
     ColumnVisibility_Name,
@@ -231,7 +237,7 @@ export const ColumnVisibility = (props: ColumnVisibilityProps) => {
         <Menu.Menu
           aria-roledescription="toggle table column visibility"
           {...menuProps}
-          className={classNames?.menu}
+          className={classNames?.menu ?? className}
         >
           <Menu.Arrow />
 

@@ -49,7 +49,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
   (AutocompleteVariantProps &
     Omit<
       React.HTMLAttributes<HTMLUListElement>,
-      'className' | 'defaultValue' | 'children'
+      'defaultValue' | 'children'
     > & {
       disabled?: boolean;
       classNames?: AutocompleteClassNames;
@@ -121,6 +121,7 @@ const AutocompleteImp = forwardRef<
 >((props, ref) => {
   const {
     classNames,
+    className,
     offset,
     isOpen: openProp,
     onOpenChange,
@@ -483,7 +484,9 @@ const AutocompleteImp = forwardRef<
             {...restProps}
             ref={ref}
             id={lisboxId}
-            className={styles.listbox({ className: classNames?.listbox })}
+            className={styles.listbox({
+              className: classNames?.listbox ?? className,
+            })}
             role="listbox"
             aria-multiselectable={multiple}
             aria-roledescription={
