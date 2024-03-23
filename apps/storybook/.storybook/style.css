@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply bg-muted-1;
+    @apply bg-muted-1 text-muted-11;
   }
 }
