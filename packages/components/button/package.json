@@ -41,17 +41,14 @@
     "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
-    "@webbo-ui/use-pointer-events": "workspace:*",
-    "react-loader-spinner": "^6.1.6"
+    "@webbo-ui/use-pointer-events": "workspace:*"
   },
   "devDependencies": {
-    "@webbo-ui/ts-config": "workspace:*",
+    
+    "react-loader-spinner": "^6.1.6",
     "clean-package": "^2.2.0"
   },
   "clean-package": {
-    "extends": "../../../../../../clean-package.config.json",
-    "remove": [
-      "dependencies.react-loader-spinner"
-    ]
+    "extends": "../../../../../../clean-package.config.json"
   }
 }

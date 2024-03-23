@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-
 import * as Disclosure from '../src';
 
 const meta = {

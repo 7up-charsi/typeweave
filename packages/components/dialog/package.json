@@ -47,18 +47,14 @@
     "@webbo-ui/context": "workspace:*",
     "@webbo-ui/overlay": "workspace:*",
     "@webbo-ui/visually-hidden": "workspace:*",
-    "@webbo-ui/button": "workspace:*",
     "@webbo-ui/theme": "workspace:*"
   },
   "devDependencies": {
-    "@webbo-ui/ts-config": "workspace:*",
+    
+    "@webbo-ui/button": "workspace:*",
     "clean-package": "^2.2.0"
   },
   "clean-package": {
-    "extends": "../../../../../../clean-package.config.json",
-    "remove": [
-      "dependencies.@webbo-ui/button",
-      "dependencies.@webbo-ui/theme"
-    ]
+    "extends": "../../../../../../clean-package.config.json"
   }
 }

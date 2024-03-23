@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from '@webbo-ui/button';
-
 import { Badge } from '../src';
 
 const meta = {

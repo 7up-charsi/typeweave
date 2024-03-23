@@ -1,6 +1,5 @@
 import React from 'react';
 import { skeleton } from '@webbo-ui/theme';
-
 import { Skeleton } from '../src';
 
 const meta = {

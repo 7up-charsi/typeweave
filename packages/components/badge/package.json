@@ -36,11 +36,11 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@webbo-ui/theme": "workspace:*",
-    "@webbo-ui/button": "workspace:*"
+    "@webbo-ui/theme": "workspace:*"
   },
   "devDependencies": {
-    "@webbo-ui/ts-config": "workspace:*",
+    
+    "@webbo-ui/button": "workspace:*",
     "clean-package": "^2.2.0"
   },
   "clean-package": {

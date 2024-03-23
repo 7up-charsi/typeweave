@@ -1,6 +1,5 @@
 import React from 'react';
 import { checkbox } from '@webbo-ui/theme';
-
 import { Checkbox, CheckboxProps } from '../src';
 
 const meta = {

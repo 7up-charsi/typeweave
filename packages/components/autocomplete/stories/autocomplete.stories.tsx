@@ -1,7 +1,6 @@
 import React from 'react';
-import { select } from '@webbo-ui/theme';
-
 import { Autocomplete, Option, mapInputProps } from '../src';
+import { select } from '@webbo-ui/theme';
 import { Input } from '@webbo-ui/input';
 import { Checkbox } from '@webbo-ui/checkbox';
 

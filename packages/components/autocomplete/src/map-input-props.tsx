@@ -3,7 +3,7 @@
 import { Button } from '@webbo-ui/button';
 import { Chip } from '@webbo-ui/chip';
 import { RenderInputProps } from './autocomplete';
-import { InputProps } from '@webbo-ui/input';
+import { type InputProps } from '@webbo-ui/input';
 import { autocompleteInput } from '@webbo-ui/theme';
 import { Icon } from '@webbo-ui/icon';
 

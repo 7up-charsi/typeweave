@@ -1,6 +1,5 @@
 import React from 'react';
 import { chip } from '@webbo-ui/theme';
-
 import { Chip } from '../src';
 
 const meta = {

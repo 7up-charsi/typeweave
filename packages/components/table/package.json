@@ -39,20 +39,17 @@
     "@webbo-ui/menu": "workspace:*",
     "@webbo-ui/use-controllable-state": "workspace:*",
     "@webbo-ui/context": "workspace:*",
-    "@webbo-ui/checkbox": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/error": "workspace:*",
-    "@webbo-ui/button": "workspace:*",
     "@webbo-ui/slot": "workspace:*"
   },
   "devDependencies": {
-    "@webbo-ui/ts-config": "workspace:*",
+    
+    "@webbo-ui/checkbox": "workspace:*",
+    "@webbo-ui/button": "workspace:*",
     "clean-package": "^2.2.0"
   },
   "clean-package": {
-    "extends": "../../../../../../clean-package.config.json",
-    "remove": [
-      "dependencies.@webbo-ui/button"
-    ]
+    "extends": "../../../../../../clean-package.config.json"
   }
 }

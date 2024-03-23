@@ -38,8 +38,6 @@
   "dependencies": {
     "@webbo-ui/button": "workspace:*",
     "@webbo-ui/error": "workspace:*",
-    "@webbo-ui/checkbox": "workspace:*",
-    "@webbo-ui/input": "workspace:*",
     "@webbo-ui/popper": "workspace:*",
     "@webbo-ui/react-utils": "workspace:*",
     "@webbo-ui/icon": "workspace:*",
@@ -51,7 +49,9 @@
   },
   "devDependencies": {
     "@types/lodash.groupby": "^4.6.9",
-    "@webbo-ui/ts-config": "workspace:*",
+    
+    "@webbo-ui/checkbox": "workspace:*",
+    "@webbo-ui/input": "workspace:*",
     "clean-package": "^2.2.0"
   },
   "clean-package": {

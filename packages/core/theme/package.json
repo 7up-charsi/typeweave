@@ -45,7 +45,7 @@
   "devDependencies": {
     "@types/color": "^3.0.6",
     "@types/lodash.kebabcase": "^4.1.9",
-    "@webbo-ui/ts-config": "workspace:*",
+    
     "clean-package": "^2.2.0"
   },
   "clean-package": {

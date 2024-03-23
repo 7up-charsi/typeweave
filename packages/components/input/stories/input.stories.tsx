@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { NumberInput, PasswordInput, Input as InputComp } from '../src';
 
 const meta = {
