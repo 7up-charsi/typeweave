@@ -20,11 +20,6 @@ export interface InputProps extends InputVariantProps {
   endContent?: React.ReactNode;
   classNames?: InputClassNames;
   placeholder?: string;
-  /**
-   * When error prop is true, its value is used in "errorMessage" aria-live attribute
-   * @default polite
-   */
-  a11yFeedback?: 'polite' | 'assertive';
   inputProps?: Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
     | 'defaultValue'
@@ -69,7 +64,6 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     labelProps = {},
     helperTextProps = {},
     inputWrapperProps = {},
-    a11yFeedback = 'polite',
     fullWidth = false,
     disabled = false,
     size = 'md',
@@ -189,7 +183,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
         <div
           {...helperTextProps}
           id={errorMessageId}
-          aria-live={a11yFeedback}
+          aria-live="polite"
           className={styles.helperText({ className: classNames?.helperText })}
         >
           {errorMessage}
