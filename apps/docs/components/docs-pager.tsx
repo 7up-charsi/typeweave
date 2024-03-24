@@ -79,6 +79,9 @@ export const DocsPager = ({ activeSlug }: Props) => {
       ? links[activeIndex + 1]
       : null;
 
+  const prevCategory = prev?.href.split('/')[2] ?? '';
+  const nextCategory = next?.href.split('/')[2] ?? '';
+
   return (
     <div className="mt-10 flex">
       {prev && (
@@ -86,10 +89,11 @@ export const DocsPager = ({ activeSlug }: Props) => {
           asChild
           startContent={arrowLeft}
           classNames={{ base: 'h-auto py-2 px-4 min-w-52 justify-start gap-4' }}
+          aria-label={`got to prev docs ${prev.title} page in ${prevCategory}`}
         >
           <Link href={prev.href}>
             <div className="flex flex-col">
-              <div className="text-sm first-letter:uppercase">
+              <div className="text-sm text-muted-11/80 first-letter:uppercase">
                 {prev.href.split('/')[2]}
               </div>
               <div className="first-letter:uppercase">{prev.title}</div>
@@ -105,10 +109,11 @@ export const DocsPager = ({ activeSlug }: Props) => {
           asChild
           endContent={arrowRight}
           classNames={{ base: 'h-auto py-2 px-4 min-w-52 justify-end gap-4' }}
+          aria-label={`got to next docs ${next.title} page in ${nextCategory}`}
         >
           <Link href={next.href}>
             <div className="flex flex-col items-end">
-              <div className="text-sm first-letter:uppercase">
+              <div className="text-sm text-muted-11/80 first-letter:uppercase">
                 {next.href.split('/')[2]}
               </div>
               <div className="first-letter:uppercase">{next.title}</div>
