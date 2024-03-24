@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import * as Disclosure from '../src';
 import { Button } from '@webbo-ui/button';
+import { Icon } from '@webbo-ui/icon';
 
 const meta = {
   title: 'Components/Disclosure',
@@ -24,23 +25,25 @@ const Template = (args) => (
 
             <Disclosure.Trigger>
               <Button isIconOnly aria-label="expand" size="sm">
-                <svg
-                  className="transition-transform rotate-0 group-data-[state=expanded]/item:-rotate-180"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="1.5em"
-                  height="1.5em"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m8 10 4 4 4-4"
-                  />
-                </svg>
+                <Icon>
+                  <svg
+                    className="transition-transform rotate-0 group-data-[state=expanded]/item:-rotate-180"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.5em"
+                    height="1.5em"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m8 10 4 4 4-4"
+                    />
+                  </svg>
+                </Icon>
               </Button>
             </Disclosure.Trigger>
           </div>

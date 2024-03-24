@@ -622,7 +622,7 @@ export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
       onChange,
       disabled,
       icon = checkbox_icon,
-      disableCloseOnChange = true,
+      disableCloseOnChange,
       ...restProps
     } = props;
 
@@ -740,7 +740,7 @@ export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
       className,
       value,
       icon = radio_icon,
-      disableCloseOnChange = true,
+      disableCloseOnChange,
       ...restProps
     } = props;
 

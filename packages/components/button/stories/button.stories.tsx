@@ -1,8 +1,8 @@
 import React from 'react';
 import { button } from '@webbo-ui/theme';
-import { Icon } from '@webbo-ui/icon';
 import { Button, ButtonGroup, ButtonProps } from '../src';
 import { Bars, Circles } from 'react-loader-spinner';
+import { Icon } from '@webbo-ui/icon';
 
 const meta = {
   title: 'Components/Button',
@@ -132,7 +132,7 @@ const IconOnlyTemplate = (args: ButtonProps) => (
               variant={variant}
               color={color}
               isIconOnly
-              // aria-label="react"
+              aria-label="react"
             >
               {reactIcon}
             </Button>

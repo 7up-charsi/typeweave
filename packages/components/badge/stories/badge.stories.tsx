@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@webbo-ui/button';
+import { Icon } from '@webbo-ui/icon';
 import { Badge } from '../src';
 
 const meta = {
@@ -21,20 +22,22 @@ const Template = (args) => (
 
       <Badge {...args} content={100} max={99} showZero>
         <Button variant="flat" isIconOnly aria-label="mail">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 48 48"
-            width="1.4rem"
-            height="1.4rem"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6.47 10.71a2 2 0 00-2 2v22.61a2 2 0 002 2h35.06a2 2 0 002-2V12.68a2 2 0 00-2-2H6.47zm33.21 3.82L24 26.07 8.32 14.53"
-            ></path>
-          </svg>
+          <Icon>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 48 48"
+              width="1.4rem"
+              height="1.4rem"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6.47 10.71a2 2 0 00-2 2v22.61a2 2 0 002 2h35.06a2 2 0 002-2V12.68a2 2 0 00-2-2H6.47zm33.21 3.82L24 26.07 8.32 14.53"
+              ></path>
+            </svg>
+          </Icon>
         </Button>
       </Badge>
     </div>
@@ -46,20 +49,22 @@ const Template = (args) => (
 
       <Badge {...args} variant="dot">
         <Button variant="flat" isIconOnly aria-label="mail">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 48 48"
-            width="1.4rem"
-            height="1.4rem"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6.47 10.71a2 2 0 00-2 2v22.61a2 2 0 002 2h35.06a2 2 0 002-2V12.68a2 2 0 00-2-2H6.47zm33.21 3.82L24 26.07 8.32 14.53"
-            ></path>
-          </svg>
+          <Icon>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 48 48"
+              width="1.4rem"
+              height="1.4rem"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6.47 10.71a2 2 0 00-2 2v22.61a2 2 0 002 2h35.06a2 2 0 002-2V12.68a2 2 0 00-2-2H6.47zm33.21 3.82L24 26.07 8.32 14.53"
+              ></path>
+            </svg>
+          </Icon>
         </Button>
       </Badge>
     </div>
