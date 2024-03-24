@@ -15,7 +15,7 @@ export const Code = (props: Props) => {
     return (
       <code
         {...restProps}
-        className="mx-1 inline-block rounded bg-muted-3 px-1 py-px font-code text-muted-11"
+        className="mx-1 inline-block rounded border border-muted-6 bg-muted-3 px-1 font-sans text-muted-11"
       >
         {children}
       </code>
