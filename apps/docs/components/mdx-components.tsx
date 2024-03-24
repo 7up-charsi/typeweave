@@ -12,13 +12,11 @@ import { Code } from './code';
 import { Pre } from './pre';
 import { StylePaths } from './style-paths';
 import { Installation } from './installation';
-import { ApiLink } from './api-link';
 import { Props } from './props';
 
 export const mdxComponents: any = {
   ...demos,
   Props,
-  ApiLink,
   CodeDemo,
   Installation,
   StylePaths,
