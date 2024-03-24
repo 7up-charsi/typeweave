@@ -10,7 +10,6 @@ import { mdxComponents } from '@/components/mdx-components';
 import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
 import grayMatter from 'gray-matter';
-import { rehypeMeta } from '@/lib/rehype-meta';
 
 // @ts-ignore
 import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
@@ -71,7 +70,7 @@ const Page = async ({ params }: PageProps) => {
     // @ts-ignore
     jsxs,
     remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypeSlug, rehypeMeta],
+    rehypePlugins: [rehypeSlug],
   });
 
   return (

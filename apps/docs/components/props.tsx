@@ -6,7 +6,6 @@ import { Button } from '@webbo-ui/button';
 import { Fragment } from 'react';
 import { Icon } from '@webbo-ui/icon';
 import { LinkIndicator } from './link-indicator';
-import { notFound } from 'next/navigation';
 
 export interface PropsProps {
   source?: string;
@@ -20,12 +19,12 @@ export const Props = async (props: PropsProps) => {
 
   if (!source) return;
 
-  const filePath = path.resolve(`content/docs/props/${source}`);
+  const filePath = path.resolve(`content/docs/components/${source}/props.json`);
 
   try {
     await access(filePath);
   } catch (err) {
-    notFound();
+    return null;
   }
 
   const file = await readFile(filePath, { encoding: 'utf-8' });

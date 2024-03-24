@@ -1,4 +1,3 @@
-import { componentsApiLinks } from '@/config/components-api-links';
 import { componentsLinks } from '@/config/components-links';
 import { customizationLinks } from '@/config/customization-links';
 import { guidesLinks } from '@/config/guides-links';
@@ -66,7 +65,6 @@ export const DocsPager = ({ activeSlug }: Props) => {
     ...Object.values(componentsLinks)
       .map((arr) => arr.sort())
       .flat(),
-    ...componentsApiLinks,
   ];
 
   const activeIndex = links.findIndex(

@@ -3,7 +3,7 @@
 import { Alert } from '@webbo-ui/alert';
 import { Button } from '@webbo-ui/button';
 
-export const AlertActions = () => {
+export default function App() {
   return (
     <div className="flex w-full flex-col gap-3">
       <Alert color="danger" onClose={() => {}}>
@@ -39,4 +39,4 @@ export const AlertActions = () => {
       </Alert>
     </div>
   );
-};
+}

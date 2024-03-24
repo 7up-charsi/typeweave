@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { SidebarGroup } from './sidebar-group';
 import { focusVisible } from '@webbo-ui/theme';
-import { componentsApiLinks } from '@/config/components-api-links';
 
 const linkStyles = (href: string, pathname: string) =>
   `flex h-8 items-center rounded px-3 ${pathname === href ? 'bg-primary-4 text-primary-11' : 'text-muted-11 hover:bg-muted-3'} ${focusVisible}`;
@@ -66,16 +65,6 @@ export const Sidebar = () => {
               </li>
             );
           })}
-        </SidebarGroup>
-
-        <SidebarGroup heading="components api">
-          {componentsApiLinks.map(({ href, title }, i) => (
-            <li key={i}>
-              <Link href={href} className={linkStyles(href, pathname)}>
-                <span className="first-letter:uppercase">{title}</span>
-              </Link>
-            </li>
-          ))}
         </SidebarGroup>
       </nav>
     </aside>
