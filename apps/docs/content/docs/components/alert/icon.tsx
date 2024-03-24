@@ -17,7 +17,7 @@ const faceMindBlowing_svg = (
   </Icon>
 );
 
-export const AlertIcon = () => {
+export default function App() {
   return (
     <div className="flex w-full flex-col gap-3">
       <Alert icon={heart_svg} color="success">
@@ -28,4 +28,4 @@ export const AlertIcon = () => {
       </Alert>
     </div>
   );
-};
+}

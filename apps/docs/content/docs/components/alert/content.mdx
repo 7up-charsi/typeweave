@@ -21,15 +21,11 @@ metaDescription: An alert is an element that displays a brief, important message
 
 ## styles
 
-<StylePaths>
-  <CodeDemo source="alert/style-paths.txt" language="plaintext" />
-</StylePaths>
+<StylePaths source="alert" />
 
 ## anatomy
 
-The anatomy refers to the way a component is structured.
-
-<CodeDemo source="alert/anatomy.html" language="html" />
+<Anatomy source="alert" />
 
 ## usage
 
@@ -41,33 +37,33 @@ It is also important to avoid designing alerts that disappear automatically. An 
 
 ### colors
 
-<CodeDemo source="alert/alert-colors.tsx" preview={<AlertColors />} />
+<CodeDemo source="alert/colors" />
 
 ### variants
 
 The Alert component comes with three alternative style options, border, filled and outlined. which you can set using the variant prop.
 
-<CodeDemo source="alert/alert-variants.tsx" preview={<AlertVariants />} />
+<CodeDemo source="alert/variants" />
 
 ### titles
 
 use `title` prop to add neat title
 
-<CodeDemo source="alert/alert-titles.tsx" preview={<AlertTitles />} />
+<CodeDemo source="alert/titles" />
 
 ### Actions
 
 Add an action to your Alert with the `action` prop.
 If you provide an `onClose` callback to the Alert without setting the `action` prop, the component will display a close icon by default.
 
-<CodeDemo source="alert/alert-actions.tsx" preview={<AlertActions />} />
+<CodeDemo source="alert/actions" />
 
 ### icons
 
 Use the `icon` prop to override an Alert's icon
 
-<CodeDemo source="alert/alert-icon.tsx" preview={<AlertIcon />} />
+<CodeDemo source="alert/icon" />
 
 ## props
 
-<Props source="alert.json" />
+<Props source="alert" />

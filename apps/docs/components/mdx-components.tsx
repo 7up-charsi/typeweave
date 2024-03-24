@@ -6,16 +6,16 @@ import { CodeDemo } from './code-demo';
 import { Highlight } from './highlight';
 import { Gap } from './gap';
 import { Steps } from './steps';
-import * as demos from './demos';
 import Link from 'next/link';
 import { Code } from './code';
 import { Pre } from './pre';
 import { StylePaths } from './style-paths';
 import { Installation } from './installation';
 import { Props } from './props';
+import { Anatomy } from './anatomy';
 
 export const mdxComponents: any = {
-  ...demos,
+  Anatomy,
   Props,
   CodeDemo,
   Installation,

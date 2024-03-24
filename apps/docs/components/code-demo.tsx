@@ -1,32 +1,39 @@
 import path from 'path';
 import { Code } from './code';
-import { readFile } from 'fs/promises';
+import { access, readFile } from 'fs/promises';
 import { CollapsibleCode } from './collapsible-code';
+import { ReactRunner } from './react-runner';
+import * as React from 'react';
 
 interface Props {
   source?: string;
-  preview?: React.ReactNode;
   language?: string;
 }
 
 export const CodeDemo = async (props: Props) => {
-  const { preview, source, language = 'tsx' } = props;
+  const { source, language = 'tsx' } = props;
 
   if (!source) return;
 
-  const file = await readFile(path.resolve(`./components/demos/${source}`), {
-    encoding: 'utf-8',
-  });
+  const filePath = path.resolve(`content/docs/components/${source}.tsx`);
+
+  try {
+    await access(filePath);
+  } catch (err) {
+    return null;
+  }
+
+  const file = await readFile(filePath, { encoding: 'utf-8' });
 
   return (
-    <div>
-      {preview && (
-        <div className="mt-4 rounded border border-muted-6 p-3">{preview}</div>
-      )}
+    <>
+      <div className="mt-4 rounded border border-muted-6 p-3">
+        <ReactRunner code={file} />
+      </div>
 
       <CollapsibleCode code={file}>
         <Code children={file} className={`language-${language}`} />
       </CollapsibleCode>
-    </div>
+    </>
   );
 };

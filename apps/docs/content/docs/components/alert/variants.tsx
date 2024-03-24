@@ -1,6 +1,6 @@
 import { Alert } from '@webbo-ui/alert';
 
-export const AlertVariants = () => {
+export default function App() {
   return (
     <div className="flex w-full flex-col gap-3">
       <Alert color="success" variant="border">
@@ -16,4 +16,4 @@ export const AlertVariants = () => {
       </Alert>
     </div>
   );
-};
+}
