@@ -1,3 +1,6 @@
+import { Icon } from '@webbo-ui/icon';
+import { LinkIndicator } from './link-indicator';
+
 const styles = {
   h1: 'text-2xl',
   h2: 'text-xl',
@@ -28,21 +31,8 @@ export const HeadingLink = ({
       >
         {children}
       </Component>
-      <a href={`#${id}`} className="ml-4 hidden group-hover:flex">
-        <div className="inline-flex h-5 w-7 cursor-pointer items-center justify-center rounded bg-primary-3 text-primary-11 hover:bg-primary-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            width={15}
-            height={15}
-          >
-            <g stroke="currentColor" strokeLinecap="round" strokeWidth="1.5">
-              <path d="M9 12h6M9 18H8A6 6 0 018 6h1M15 6h1a6 6 0 016 6m-7 6h1a5.973 5.973 0 003.318-1"></path>
-            </g>
-          </svg>
-        </div>
-      </a>
+
+      <LinkIndicator id={id} />
     </div>
   );
 };
