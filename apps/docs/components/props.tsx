@@ -12,7 +12,8 @@ export interface PropsProps {
   source?: string;
 }
 
-const typeStyles = 'font-code mx-1 rounded bg-muted-3 px-1 py-px text-muted-11';
+const typeStyles =
+  'mx-1 inline-block rounded bg-muted-3 px-1 font-sans text-muted-11';
 
 export const Props = async (props: PropsProps) => {
   const { source } = props;
