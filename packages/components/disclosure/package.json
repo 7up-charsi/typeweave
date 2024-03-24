@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@webbo-ui/button": "workspace:*",
+    "@webbo-ui/icon": "workspace:*",
     "clean-package": "^2.2.0"
   },
   "clean-package": {

@@ -25,7 +25,7 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-      "build": "tsup --config ../../../tsup.config.ts",
+    "build": "tsup --config ../../../tsup.config.ts",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
@@ -39,12 +39,11 @@
     "@webbo-ui/error": "workspace:*",
     "@webbo-ui/react-utils": "workspace:*",
     "@webbo-ui/slot": "workspace:*",
-    "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/use-pointer-events": "workspace:*"
   },
   "devDependencies": {
-    
+    "@webbo-ui/icon": "workspace:*",
     "react-loader-spinner": "^6.1.6",
     "clean-package": "^2.2.0"
   },

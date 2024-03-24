@@ -65,7 +65,7 @@ const MenuThemeComp = () => {
           <Menu.RadioGroup
             aria-label="theme switcher"
             onChange={onThemeChange}
-            value={theme}
+            value={theme ?? undefined}
           >
             <Menu.RadioItem
               value="light"

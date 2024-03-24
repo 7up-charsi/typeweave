@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { table } from '@webbo-ui/theme';
 import { Button } from '@webbo-ui/button';
 import { Checkbox } from '@webbo-ui/checkbox';
+import { Icon } from '@webbo-ui/icon';
 
 import * as Table from '../src';
 
@@ -69,18 +70,20 @@ const Template = () => {
 
           <Table.ColumnVisibility tableIdentifier="demo_table">
             <Button isIconOnly aria-label="column visibility">
-              <svg
-                fill="none"
-                stroke="#000"
-                strokeLinecap="round"
-                viewBox="0 0 24 24"
-              >
-                <g>
-                  <rect width="18" height="18" x="3" y="3" rx="0"></rect>
-                  <path d="M9 3L9 21"></path>
-                  <path d="M15 3L15 21"></path>
-                </g>
-              </svg>
+              <Icon>
+                <svg
+                  fill="none"
+                  stroke="#000"
+                  strokeLinecap="round"
+                  viewBox="0 0 24 24"
+                >
+                  <g>
+                    <rect width="18" height="18" x="3" y="3" rx="0"></rect>
+                    <path d="M9 3L9 21"></path>
+                    <path d="M15 3L15 21"></path>
+                  </g>
+                </svg>
+              </Icon>
             </Button>
           </Table.ColumnVisibility>
         </div>
