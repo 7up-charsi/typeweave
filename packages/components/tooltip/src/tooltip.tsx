@@ -69,7 +69,7 @@ export const Root = (props: RootProps) => {
 
   const closeOpenTooltips = () => {
     Object.entries(tooltips).forEach(([toHideIdentifier, hideTooltip]) => {
-      if (toHideIdentifier !== identifier) return;
+      if (toHideIdentifier === identifier) return;
 
       hideTooltip(true);
       delete tooltips[toHideIdentifier];
@@ -297,12 +297,11 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
           className={styles}
           onPointerEnter={() => {
             if (disableInteractive) return;
-
             context.showTooltip(true);
           }}
           onPointerLeave={() => {
             if (disableInteractive) return;
-            context.hideTooltip();
+            context.hideTooltip(false);
           }}
         />
       </Popper.Floating>

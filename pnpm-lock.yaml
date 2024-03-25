@@ -101,6 +101,9 @@ importers:
       '@webbo-ui/button':
         specifier: workspace:*
         version: link:../../packages/components/button
+      '@webbo-ui/context':
+        specifier: workspace:*
+        version: link:../../packages/core/context
       '@webbo-ui/dialog':
         specifier: workspace:*
         version: link:../../packages/components/dialog
@@ -125,6 +128,9 @@ importers:
       '@webbo-ui/themes':
         specifier: workspace:*
         version: link:../../packages/components/themes
+      '@webbo-ui/tooltip':
+        specifier: workspace:*
+        version: link:../../packages/components/tooltip
       '@webbo-ui/use-pointer-events':
         specifier: workspace:*
         version: link:../../packages/hooks/use-pointer-events
@@ -149,6 +155,9 @@ importers:
       interweave-ssr:
         specifier: ^2.0.0
         version: 2.0.0
+      lz-string:
+        specifier: ^1.5.0
+        version: 1.5.0
       next:
         specifier: 14.1.0
         version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
@@ -161,9 +170,9 @@ importers:
       react-instantsearch:
         specifier: ^7.6.0
         version: 7.7.0(algoliasearch@4.22.1)(react-dom@18.2.0)(react@18.2.0)
-      react-runner:
-        specifier: ^1.0.3
-        version: 1.0.3(react-dom@18.2.0)(react@18.2.0)
+      react-simple-code-editor:
+        specifier: ^0.13.1
+        version: 0.13.1(react-dom@18.2.0)(react@18.2.0)
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
@@ -173,9 +182,9 @@ importers:
       sharp:
         specifier: ^0.33.2
         version: 0.33.3
-      unist-util-visit:
-        specifier: ^5.0.0
-        version: 5.0.0
+      sucrase:
+        specifier: ^3.35.0
+        version: 3.35.0
     devDependencies:
       '@types/node':
         specifier: ^20.11.17
@@ -10241,6 +10250,11 @@ packages:
     dependencies:
       yallist: 4.0.0
 
+  /lz-string@1.5.0:
+    resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
+    hasBin: true
+    dev: false
+
   /magic-string@0.27.0:
     resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
     engines: {node: '>=12'}
@@ -12173,15 +12187,14 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /react-runner@1.0.3(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-KyAzNzSVdrBc4A7aGW3FD0wVuujfgcBlyIGF0QVicJu0ucMpLYyTHE+PgBu82Iq698TPKRH+eEi6Mrq/e7OffA==}
+  /react-simple-code-editor@0.13.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-XYeVwRZwgyKtjNIYcAEgg2FaQcCZwhbarnkJIV20U2wkCU9q/CPFBo8nRXrK4GXUz3AvbqZFsZRrpUTkqqEYyQ==}
     peerDependencies:
-      react: ^16.0.0 || ^17 || ^18
-      react-dom: ^16.0.0 || ^17 || ^18
+      react: '*'
+      react-dom: '*'
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      sucrase: 3.35.0
     dev: false
 
   /react@18.2.0:

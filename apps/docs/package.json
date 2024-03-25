@@ -12,6 +12,7 @@
     "@mdx-js/mdx": "^3.0.1",
     "@webbo-ui/alert": "workspace:*",
     "@webbo-ui/button": "workspace:*",
+    "@webbo-ui/context": "workspace:*",
     "@webbo-ui/dialog": "workspace:*",
     "@webbo-ui/disclosure": "workspace:*",
     "@webbo-ui/icon": "workspace:*",
@@ -20,6 +21,7 @@
     "@webbo-ui/tabs": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/themes": "workspace:*",
+    "@webbo-ui/tooltip": "workspace:*",
     "@webbo-ui/use-pointer-events": "workspace:*",
     "algoliasearch": "^4.22.1",
     "clsx": "^2.0.0",
@@ -28,15 +30,16 @@
     "highlight.js": "^11.9.0",
     "interweave": "^13.1.0",
     "interweave-ssr": "^2.0.0",
+    "lz-string": "^1.5.0",
     "next": "14.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-instantsearch": "^7.6.0",
-    "react-runner": "^1.0.3",
+    "react-simple-code-editor": "^0.13.1",
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.0",
     "sharp": "^0.33.2",
-    "unist-util-visit": "^5.0.0"
+    "sucrase": "^3.35.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
@@ -53,3 +56,4 @@
     "typescript": "^5.3.3"
   }
 }
+

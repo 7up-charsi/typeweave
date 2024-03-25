@@ -1,6 +1,19 @@
 import { Alert } from '@webbo-ui/alert';
 import { Icon } from '@webbo-ui/icon';
 
+export default function App() {
+  return (
+    <div className="flex w-full flex-col gap-3">
+      <Alert icon={heart_svg} color="success">
+        This success Alert has a custom `heart` icon.
+      </Alert>
+      <Alert icon={faceMindBlowing_svg} color="danger">
+        This danger Alert has a custom `mind blowing` icon.
+      </Alert>
+    </div>
+  );
+}
+
 const heart_svg = (
   <Icon>
     <svg fill="currentColor" viewBox="0 0 24 24">
@@ -16,16 +29,3 @@ const faceMindBlowing_svg = (
     </svg>
   </Icon>
 );
-
-export default function App() {
-  return (
-    <div className="flex w-full flex-col gap-3">
-      <Alert icon={heart_svg} color="success">
-        This success Alert has a custom `heart` icon.
-      </Alert>
-      <Alert icon={faceMindBlowing_svg} color="danger">
-        This danger Alert has a custom `mind blowing` icon.
-      </Alert>
-    </div>
-  );
-}
