@@ -1,10 +1,6 @@
-'use client';
-
 import { Button } from '@webbo-ui/button';
 import * as Tabs from '@webbo-ui/tabs';
 import { Code } from './code';
-import { Pre } from './pre';
-import { CopyCode } from './copy-code';
 
 interface Props {
   package?: string;
@@ -14,7 +10,7 @@ export const Installation = (props: Props) => {
   const { package: pkg } = props;
 
   return (
-    <Tabs.Root defaultValue="pnpm">
+    <Tabs.Root defaultValue="pnpm" className="mt-4">
       <Tabs.List className="gap-3">
         {[{ value: 'pnpm' }, { value: 'npm' }, { value: 'yarn' }].map(
           ({ value }, i) => (
@@ -31,10 +27,9 @@ export const Installation = (props: Props) => {
         { value: 'yarn', bash: `yarn add ${pkg}` },
       ].map(({ bash, value }, i) => (
         <Tabs.Content key={i} value={value}>
-          <Pre style={{ marginTop: 0 }}>
+          <pre className="mt-0">
             <Code className="language-bash">{bash}</Code>
-            <CopyCode code={bash} />
-          </Pre>
+          </pre>
         </Tabs.Content>
       ))}
     </Tabs.Root>

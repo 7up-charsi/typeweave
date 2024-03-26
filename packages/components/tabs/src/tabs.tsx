@@ -1,3 +1,5 @@
+'use client';
+
 import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { forwardRef, useId, useMemo, useRef, useState } from 'react';

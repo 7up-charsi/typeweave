@@ -1,4 +1,7 @@
-import { SyntaxHighlight } from './syntax-highlight';
+import { highlightCode } from '@/lib/highlight-code';
+import { Markup } from 'interweave';
+import { polyfill } from 'interweave-ssr';
+polyfill();
 
 interface Props {
   children?: string;
@@ -6,24 +9,23 @@ interface Props {
 }
 
 export const Code = (props: Props) => {
-  const { children, className, ...restProps } = props;
+  const { children, className } = props;
+
+  if (!children) return;
 
   const lang = className?.match(/(?<prefix>language-)(?<lang>\w+)/)?.groups
     ?.lang;
 
   if (!lang)
     return (
-      <code
-        {...restProps}
-        className="mx-1 inline-block rounded border border-muted-6 bg-muted-3 px-1 font-sans text-muted-11"
-      >
+      <code className="mx-1 inline-block rounded border border-muted-6 bg-muted-3 px-1 font-sans text-muted-11">
         {children}
       </code>
     );
 
   return (
-    <code {...restProps}>
-      <SyntaxHighlight code={children} language={lang} />
+    <code className={className}>
+      <Markup content={highlightCode(children, lang)} noWrap />
     </code>
   );
 };
