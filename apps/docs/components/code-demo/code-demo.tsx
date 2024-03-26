@@ -23,7 +23,7 @@ export const CodeDemo = async (props: CodeDemoProps) => {
 
   const language = 'tsx';
 
-  return <CodeDemoContainer code={file} language={language} />;
+  return <CodeDemoContainer code={file.trim()} language={language} />;
 };
 
 CodeDemo.displayName = 'CodeDemo';
