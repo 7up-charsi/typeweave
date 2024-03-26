@@ -1,7 +1,7 @@
 import React from 'react';
 import { createContextScope } from '@webbo-ui/context';
 
-type CodeVariant = 'Js' | 'Ts';
+type CodeVariant = 'js' | 'ts';
 
 interface Context {
   code: string;
@@ -28,7 +28,7 @@ export const CodeDemoProvider = (props: CodeDemoProviderProps) => {
   const { children, code: codeProp, language } = props;
 
   const [code, setCode] = React.useState(codeProp);
-  const [codeVariant, setCodeVariant] = React.useState<CodeVariant>('Ts');
+  const [codeVariant, setCodeVariant] = React.useState<CodeVariant>('ts');
 
   return (
     <Provider

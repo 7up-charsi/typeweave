@@ -8,7 +8,6 @@ import { Gap } from './gap';
 import { Steps } from './steps';
 import Link from 'next/link';
 import { Code } from './code';
-import { Pre } from './pre';
 import { StylePaths } from './style-paths';
 import { Installation } from './installation';
 import { Props } from './props';
@@ -27,7 +26,6 @@ export const mdxComponents: any = {
   Separator,
   Highlight,
   code: Code,
-  pre: Pre,
   h2: (props: any) => <HeadingLink as="h2" {...props} />,
   h3: (props: any) => <HeadingLink as="h3" {...props} />,
   p: (props: any) => <p {...props} className="mt-4" />,

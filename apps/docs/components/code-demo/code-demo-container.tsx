@@ -11,7 +11,7 @@ interface Props {
   language: string;
 }
 
-export const CodeDemoContainer = async (props: Props) => {
+export const CodeDemoContainer = (props: Props) => {
   const { code, language } = props;
 
   return (

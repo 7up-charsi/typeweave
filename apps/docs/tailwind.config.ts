@@ -13,7 +13,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-geist-sans, 'Nunito Sans')"],
-        code: ['var(--Source_Code_Pro)'],
+        code: ['var(--font-code)'],
       },
     },
   },

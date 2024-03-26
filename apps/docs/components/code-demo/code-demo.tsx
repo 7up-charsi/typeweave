@@ -4,11 +4,10 @@ import { CodeDemoContainer } from './code-demo-container';
 
 interface CodeDemoProps {
   source?: string;
-  language?: string;
 }
 
 export const CodeDemo = async (props: CodeDemoProps) => {
-  const { source, language = 'tsx' } = props;
+  const { source } = props;
 
   if (!source) return;
 
@@ -21,6 +20,8 @@ export const CodeDemo = async (props: CodeDemoProps) => {
   }
 
   const file = await readFile(filePath, { encoding: 'utf-8' });
+
+  const language = 'tsx';
 
   return <CodeDemoContainer code={file} language={language} />;
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, useState } from 'react';
+import { useState } from 'react';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import { focusVisible } from '@webbo-ui/theme';
 

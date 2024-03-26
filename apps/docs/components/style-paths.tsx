@@ -1,7 +1,6 @@
 import path from 'path';
 import { Highlight } from './highlight';
 import { access, readFile } from 'fs/promises';
-import { Pre } from './pre';
 import { Code } from './code';
 
 interface Props {
@@ -28,13 +27,13 @@ export const StylePaths = async (props: Props) => {
   return (
     <>
       <p>
-        Copy and paste these <Highlight>style paths</Highlight> in{' '}
+        Copy and paste these <Highlight>style paths</Highlight> in
         <Highlight>tailwind.config.js</Highlight> content array
       </p>
 
-      <Pre>
+      <pre>
         <Code className="language-plaintext">{file}</Code>
-      </Pre>
+      </pre>
     </>
   );
 };
