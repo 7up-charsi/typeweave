@@ -1,7 +1,6 @@
 import { access, readFile } from 'fs/promises';
 import path from 'path';
 import { Code } from './code';
-import { Pre } from './pre';
 
 export interface AnatomyProps {
   source?: string;
@@ -28,9 +27,9 @@ export const Anatomy = async (props: AnatomyProps) => {
     <>
       <p>The anatomy refers to the way a component is structured.</p>
 
-      <Pre>
+      <pre>
         <Code className="language-html">{file}</Code>
-      </Pre>
+      </pre>
     </>
   );
 };
