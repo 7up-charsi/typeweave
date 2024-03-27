@@ -1,3 +1,5 @@
+'use client';
+
 import { Alert } from '@webbo-ui/alert';
 import { Button } from '@webbo-ui/button';
 

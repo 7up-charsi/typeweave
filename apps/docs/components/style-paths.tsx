@@ -4,16 +4,16 @@ import { access, readFile } from 'fs/promises';
 import { Code } from './code';
 
 interface Props {
-  source?: string;
+  component?: string;
 }
 
 export const StylePaths = async (props: Props) => {
-  const { source } = props;
+  const { component } = props;
 
-  if (!source) return;
+  if (!component) return;
 
   const filePath = path.resolve(
-    `content/docs/components/${source}/style-paths.txt`,
+    `components/demos/${component}/style-paths.txt`,
   );
 
   try {
