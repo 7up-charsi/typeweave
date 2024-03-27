@@ -35,7 +35,7 @@ export const CodeDemoCopy = () => {
       <Tooltip.Portal>
         <Tooltip.Content>
           <Tooltip.Arrow />
-          Copy code
+          {isCopied ? 'copied' : 'Copy code'}
         </Tooltip.Content>
       </Tooltip.Portal>
     </Tooltip.Root>

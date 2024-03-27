@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createContextScope } from '@webbo-ui/context';
 
 type CodeVariant = 'js' | 'ts';
@@ -11,6 +11,9 @@ interface Context {
   onReset: () => void;
   onCopy: () => void;
   codeVariant: CodeVariant;
+  onCodeVariantChange: (val: CodeVariant) => void;
+  isEditorHide: boolean;
+  toggleEditor: () => void;
 }
 
 const CodeDemoContext = createContextScope<Context>('CodeDemoProvider');
@@ -29,6 +32,7 @@ export const CodeDemoProvider = (props: CodeDemoProviderProps) => {
 
   const [code, setCode] = React.useState(codeProp);
   const [codeVariant, setCodeVariant] = React.useState<CodeVariant>('ts');
+  const [isEditorHide, setIsEditorHide] = React.useState(true);
 
   return (
     <Provider
@@ -39,6 +43,9 @@ export const CodeDemoProvider = (props: CodeDemoProviderProps) => {
       onReset={() => setCode(codeProp)}
       onCopy={() => navigator.clipboard.writeText(code)}
       codeVariant={codeVariant}
+      onCodeVariantChange={setCodeVariant}
+      isEditorHide={isEditorHide}
+      toggleEditor={() => setIsEditorHide((prev) => !prev)}
     >
       {children}
     </Provider>
