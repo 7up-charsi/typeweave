@@ -3,17 +3,15 @@ import path from 'path';
 import { Code } from './code';
 
 export interface AnatomyProps {
-  source?: string;
+  component?: string;
 }
 
 export const Anatomy = async (props: AnatomyProps) => {
-  const { source } = props;
+  const { component } = props;
 
-  if (!source) return;
+  if (!component) return;
 
-  const filePath = path.resolve(
-    `content/docs/components/${source}/anatomy.html`,
-  );
+  const filePath = path.resolve(`components/demos/${component}/anatomy.html`);
 
   try {
     await access(filePath);

@@ -2,7 +2,7 @@ import { HeadingLink } from './heading-link';
 import { DocHeader } from './doc-header';
 import { DocHeaderLinks } from './doc-header-links';
 import { Separator } from './separator';
-import { CodeDemo } from './code-demo/code-demo';
+import { CodeDemo } from './code-demo';
 import { Highlight } from './highlight';
 import { Gap } from './gap';
 import { Steps } from './steps';
@@ -12,8 +12,10 @@ import { StylePaths } from './style-paths';
 import { Installation } from './installation';
 import { Props } from './props';
 import { Anatomy } from './anatomy';
+import * as demos from './demos';
 
 export const mdxComponents: any = {
+  ...demos,
   Anatomy,
   Props,
   CodeDemo,

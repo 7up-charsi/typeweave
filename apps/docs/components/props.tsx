@@ -8,18 +8,18 @@ import { Icon } from '@webbo-ui/icon';
 import { LinkIndicator } from './link-indicator';
 
 export interface PropsProps {
-  source?: string;
+  component?: string;
 }
 
 const typeStyles =
   'mx-1 inline-block rounded bg-muted-3 px-1 font-sans text-muted-11';
 
 export const Props = async (props: PropsProps) => {
-  const { source } = props;
+  const { component } = props;
 
-  if (!source) return;
+  if (!component) return;
 
-  const filePath = path.resolve(`content/docs/components/${source}/props.json`);
+  const filePath = path.resolve(`components/demos/${component}/props.json`);
 
   try {
     await access(filePath);

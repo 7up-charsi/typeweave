@@ -2,13 +2,16 @@ import { Button } from '@webbo-ui/button';
 import { Icon } from '@webbo-ui/icon';
 import React from 'react';
 import * as Tooltip from '@webbo-ui/tooltip';
-import { useCodeDemoContext } from './code-demo-provider';
 
-export const CodeDemoCopy = () => {
+interface CopyCodeProps {
+  code: string;
+}
+
+export const CopyCode = (props: CopyCodeProps) => {
+  const { code } = props;
+
   const [isCopied, setIsCopied] = React.useState(false);
   const resetTimer = React.useRef<NodeJS.Timeout | undefined>(undefined);
-
-  const { onCopy } = useCodeDemoContext('CodeDemoCopy');
 
   return (
     <Tooltip.Root>
@@ -20,7 +23,7 @@ export const CodeDemoCopy = () => {
           onPress={() => {
             clearTimeout(resetTimer.current);
 
-            onCopy();
+            navigator.clipboard.writeText(code);
             setIsCopied(true);
             resetTimer.current = setTimeout(() => {
               setIsCopied(false);
@@ -42,7 +45,7 @@ export const CodeDemoCopy = () => {
   );
 };
 
-CodeDemoCopy.displayName = 'CodeDemoCopy';
+CopyCode.displayName = 'CopyCode';
 
 const copy_svg = (
   <Icon>

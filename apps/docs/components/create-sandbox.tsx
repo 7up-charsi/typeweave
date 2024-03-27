@@ -1,13 +1,10 @@
 import LZString from 'lz-string';
-import { useCodeDemoContext } from './code-demo-provider';
 import * as Tooltip from '@webbo-ui/tooltip';
 import { Button } from '@webbo-ui/button';
 import { Icon } from '@webbo-ui/icon';
 import React from 'react';
 
-export const CodeDemoSandbox = () => {
-  const { originalCode, codeVariant } = useCodeDemoContext('CodeDemoSandbox');
-
+export const CreateSandbox = () => {
   return (
     <Tooltip.Root>
       <Tooltip.Trigger>
@@ -38,7 +35,7 @@ export const CodeDemoSandbox = () => {
   );
 };
 
-CodeDemoSandbox.displayName = 'CodeDemoSandbox';
+CreateSandbox.displayName = 'CreateSandbox';
 
 const openSandbox = ({ files, codeVariant, initialFile }: any) => {
   const parameters = LZString.compressToBase64(JSON.stringify({ files }))
