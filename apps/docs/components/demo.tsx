@@ -1,14 +1,14 @@
 import path from 'path';
 import { access, readFile } from 'fs/promises';
-import { CodeDemoCode } from './code-demo-code';
-import { CodeDemoPreview } from './code-demo-preview';
+import { DemoCode } from './demo-code';
+import { DemoPreview } from './demo-preview';
 
-interface CodeDemoProps {
+interface DemoProps {
   source?: string;
   preview?: string;
 }
 
-export const CodeDemo = async (props: CodeDemoProps) => {
+export const Demo = async (props: DemoProps) => {
   const { source, preview } = props;
 
   if (!source) return;
@@ -25,10 +25,10 @@ export const CodeDemo = async (props: CodeDemoProps) => {
 
   return (
     <div className="border-muted-6">
-      <CodeDemoPreview>{preview}</CodeDemoPreview>
-      <CodeDemoCode code={code} />
+      <DemoPreview>{preview}</DemoPreview>
+      <DemoCode code={code} />
     </div>
   );
 };
 
-CodeDemo.displayName = 'CodeDemo';
+Demo.displayName = 'Demo';

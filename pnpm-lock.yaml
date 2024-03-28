@@ -1066,9 +1066,6 @@ importers:
       '@webbo-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
-      '@webbo-ui/use-callback-ref':
-        specifier: workspace:*
-        version: link:../../hooks/use-callback-ref
       '@webbo-ui/use-media-query':
         specifier: workspace:*
         version: link:../../hooks/use-media-query
