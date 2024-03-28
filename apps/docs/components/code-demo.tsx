@@ -1,7 +1,7 @@
 import path from 'path';
 import { access, readFile } from 'fs/promises';
-import { Code } from './code';
-import { CodeContainer } from './code-container';
+import { CodeDemoCode } from './code-demo-code';
+import { CodeDemoPreview } from './code-demo-preview';
 
 interface CodeDemoProps {
   source?: string;
@@ -25,11 +25,8 @@ export const CodeDemo = async (props: CodeDemoProps) => {
 
   return (
     <div className="border-muted-6">
-      <div className="mt-4 flex min-h-48 items-center justify-center rounded-t border border-b-0 border-inherit p-5">
-        {preview}
-      </div>
-
-      <CodeContainer code={code} language="tsx" />
+      <CodeDemoPreview>{preview}</CodeDemoPreview>
+      <CodeDemoCode code={code} />
     </div>
   );
 };
