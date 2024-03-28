@@ -4,7 +4,7 @@ import { ClassNames } from '../types';
 export const disclosure = tv({
   slots: {
     base: 'space-y-2',
-    item: ['group/item'],
+    item: '',
     trigger: '',
     content: 'px-3 py-2',
   },

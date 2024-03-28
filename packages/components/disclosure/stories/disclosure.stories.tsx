@@ -14,7 +14,7 @@ const Template = (args) => (
     {Array.from({ length: 10 }).map((_, i, arr) => (
       <Fragment key={i}>
         <Disclosure.Item value={'' + (i + 1)}>
-          <div className="flex items-center p-2">
+          <div className="flex items-center px-4 py-1">
             {i === 7 ? (
               <span>DISABLED Disclosure with dummy content</span>
             ) : (
@@ -24,10 +24,15 @@ const Template = (args) => (
             <div className="grow"></div>
 
             <Disclosure.Trigger>
-              <Button isIconOnly aria-label="expand" size="sm">
+              <Button
+                isIconOnly
+                aria-label="expand"
+                size="sm"
+                className="group"
+              >
                 <Icon>
                   <svg
-                    className="transition-transform rotate-0 group-data-[state=expanded]/item:-rotate-180"
+                    className="transition-transform rotate-0 group-data-[expanded=true]:-rotate-180"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="1.5em"
