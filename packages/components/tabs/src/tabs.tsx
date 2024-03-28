@@ -315,11 +315,10 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     const triggerId = 'trigger-' + value;
     const contentId = 'content-' + value;
 
-    return (
+    return !isSelected ? null : (
       <div
         ref={ref}
         className={styles.content({ className })}
-        data-selected={isSelected}
         data-orientation={context.orientation}
         role="tabpanel"
         aria-labelledby={triggerId}

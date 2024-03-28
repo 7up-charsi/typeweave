@@ -59,10 +59,11 @@ export const Props = async (props: PropsProps) => {
                       isIconOnly
                       aria-label={`expand ${name} prop`}
                       size="sm"
+                      className="group"
                     >
                       <Icon>
                         <svg
-                          className="rotate-0 transition-transform group-data-[state=expanded]/item:-rotate-180"
+                          className="rotate-0 transition-transform group-data-[expanded=true]:-rotate-180"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           width="1.5em"

@@ -241,6 +241,7 @@ export const Header = forwardRef<HTMLHeadingElement, HeaderProps>(
     const { asChild, className, ...restProps } = props;
 
     const styles = useStylesContext(HEADER_NAME);
+    const itemContext = useItemContext(HEADER_NAME);
 
     const Component = asChild ? Slot : 'h3';
 
@@ -249,6 +250,7 @@ export const Header = forwardRef<HTMLHeadingElement, HeaderProps>(
         {...restProps}
         ref={ref}
         className={styles.header({ className })}
+        data-expanded={itemContext.isExpended}
       />
     );
   },
@@ -331,6 +333,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           id={itemContext.triggerId}
           aria-expanded={isExpended}
           aria-controls={itemContext.contentId}
+          data-expanded={isExpended}
           {...poitnerEvents}
         />
       </Collection.Item>
@@ -354,11 +357,10 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     const styles = useStylesContext(CONTENT_NAME);
 
-    return (
+    return !itemContext.isExpended ? null : (
       <div
         {...restProps}
         ref={ref}
-        data-expanded={itemContext.isExpended}
         id={itemContext.contentId}
         className={styles.content({ className })}
       />

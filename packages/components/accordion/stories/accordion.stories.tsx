@@ -16,10 +16,10 @@ const Template = (args) => (
         disabled={i === 7}
       >
         <Accordion.Header>
-          <Accordion.Trigger>
+          <Accordion.Trigger className="group">
             <span className="flex w-6 items-center justify-center">
               <svg
-                className="transition-transform rotate-0 group-data-[state=expanded]/item:-rotate-180"
+                className="transition-transform rotate-0 group-data-[expanded=true]:-rotate-180"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="1.5em"

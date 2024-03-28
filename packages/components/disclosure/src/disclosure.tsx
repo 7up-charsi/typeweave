@@ -128,7 +128,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
         {...restProps}
         ref={ref}
         className={styles.item({ className })}
-        data-state={isExpended ? 'expanded' : 'collapsed'}
+        data-expanded={isExpended}
       />
     </ItemProvider>
   );
@@ -187,6 +187,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
         id={itemContext.triggerId}
         aria-expanded={isExpended}
         aria-controls={itemContext.contentId}
+        data-expanded={isExpended}
         {...poitnerEvents}
       />
     );
@@ -209,11 +210,10 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     const styles = useStylesContext(CONTENT_NAME);
 
-    return (
+    return !itemContext.isExpended ? null : (
       <div
         {...restProps}
         ref={ref}
-        data-state={itemContext.isExpended ? 'expanded' : 'collapsed'}
         id={itemContext.contentId}
         hidden={!itemContext.isExpended}
         className={styles.content({ className })}
