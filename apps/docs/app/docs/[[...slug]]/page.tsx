@@ -64,6 +64,7 @@ const Page = async ({ params }: PageProps) => {
   const { content } = grayMatter(markdown);
 
   const { default: MdxContent } = await evaluate(content, {
+    format: 'mdx',
     Fragment,
     // @ts-ignore
     jsx,

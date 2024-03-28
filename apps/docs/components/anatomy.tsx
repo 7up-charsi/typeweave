@@ -11,7 +11,9 @@ export const Anatomy = async (props: AnatomyProps) => {
 
   if (!component) return;
 
-  const filePath = path.resolve(`components/demos/${component}/anatomy.html`);
+  const filePath = path.resolve(
+    `content/docs/components/${component}/anatomy.html`,
+  );
 
   try {
     await access(filePath);

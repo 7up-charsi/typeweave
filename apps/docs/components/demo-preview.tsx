@@ -1,8 +1,8 @@
-export interface CodeDemoPreviewProps {
+export interface DemoPreviewProps {
   children?: React.ReactNode;
 }
 
-export const CodeDemoPreview = (props: CodeDemoPreviewProps) => {
+export const DemoPreview = (props: DemoPreviewProps) => {
   const { children } = props;
 
   return (
@@ -12,4 +12,4 @@ export const CodeDemoPreview = (props: CodeDemoPreviewProps) => {
   );
 };
 
-CodeDemoPreview.displayName = 'CodeDemoPreview';
+DemoPreview.displayName = 'DemoPreview';

@@ -10,7 +10,7 @@ interface Props {
   code: string;
 }
 
-export const CodeDemoCode = (props: Props) => {
+export const DemoCode = (props: Props) => {
   const { code } = props;
 
   const [isCodeHide, setIsCodeHide] = React.useState(true);
@@ -54,4 +54,4 @@ export const CodeDemoCode = (props: Props) => {
   );
 };
 
-CodeDemoCode.displayName = 'CodeDemoCode';
+DemoCode.displayName = 'DemoCode';

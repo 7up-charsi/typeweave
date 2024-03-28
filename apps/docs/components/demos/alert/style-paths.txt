@@ -1,2 +1,0 @@
-"./node_modules/@webbo-ui/theme/dist/components/alert.ts",
-"./node_modules/@webbo-ui/theme/dist/components/alert.ts",
