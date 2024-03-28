@@ -11,6 +11,7 @@ const generators = ['component', 'hook', 'package', 'component-docs'];
 const defaultOutDirs = {
   component: 'components',
   hook: 'hooks',
+  package: 'utilities',
 };
 
 module.exports = function main(
@@ -77,28 +78,30 @@ module.exports = function main(
         const { outDir } = answers;
 
         if (gen === 'component-docs') {
-          actions.push({
-            type: 'append',
-            path: `./apps/docs/components/demos/index.ts`,
-            template: "export * from './{{dashCase name}}';",
-          });
-
           actions.push(
-            // demos
+            // demo
             {
-              type: 'addMany',
-              templateFiles: `plop/${gen}/demos/**`,
-              destination: `./apps/docs/components/demos/{{dashCase name}}`,
-              base: `plop/${gen}/demos`,
+              type: 'add',
+              templateFile: `plop/${gen}/demo.tsx.hbs`,
+              path: `./apps/docs/components/demos/{{dashCase name}}.tsx`,
+              base: `plop/${gen}`,
               abortOnFail: true,
             },
 
-            // mdx content
+            // export demo from index.ts
             {
-              type: 'add',
-              templateFile: `plop/${gen}/content.mdx.hbs`,
-              path: `./apps/docs/content/docs/components/{{dashCase name}}.mdx`,
-              base: `plop/${gen}`,
+              type: 'append',
+              path: `./apps/docs/components/demos/index.ts`,
+              template:
+                "export { default as {{capitalize name}}Demo } from './{{dashCase name}}';",
+            },
+
+            // content
+            {
+              type: 'addMany',
+              templateFiles: `plop/${gen}/content/**`,
+              destination: `./apps/docs/content/docs/components/{{dashCase name}}`,
+              base: `plop/${gen}/content`,
               abortOnFail: true,
             },
           );
@@ -107,7 +110,7 @@ module.exports = function main(
         }
 
         const data = {
-          outDir: gen === 'package' ? outDir : defaultOutDirs[gen],
+          outDir: gen === 'package' ? outDir : undefined,
         };
 
         actions.push({
