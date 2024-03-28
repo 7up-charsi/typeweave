@@ -21,26 +21,26 @@ const github_svg = (
 );
 
 interface Props {
-  source?: string;
-  styles?: string;
+  component: string;
+  styles?: boolean;
 }
 
 export const DocHeaderLinks = (props: Props) => {
-  const { source, styles } = props;
+  const { component, styles = true } = props;
 
   return (
     <div className="mt-3 flex items-center justify-end gap-4">
       {[
-        source && {
+        {
           icon: github_svg,
           title: 'source',
-          href: source,
-          a11yLabel: 'github source code',
+          href: process.env.REPO_COMPONENTS + `${component}.tsx`,
+          a11yLabel: 'github component source code',
         },
         styles && {
           icon: github_svg,
           title: 'styles',
-          href: styles,
+          href: process.env.REPO_STYLES + `${component}.ts`,
           a11yLabel: 'github styles source',
         },
       ]
