@@ -3,8 +3,7 @@
 import { useMediaQuery } from '@webbo-ui/use-media-query';
 import { createContextScope } from '@webbo-ui/context';
 import { CustomError } from '@webbo-ui/error';
-import { useLayoutEffect, useRef, useState } from 'react';
-import { useCallbackRef } from '@webbo-ui/use-callback-ref';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 
 const ThemeProvider_Name = 'Themes.ThemeProvider';
 
@@ -43,25 +42,30 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
 
   const prevTheme = useRef('');
 
-  const onThemeChange = useCallbackRef((theme: string) => {
-    if (!theme)
-      throw new CustomError(ThemeProvider_Name, '`theme` is required');
+  const onThemeChange = useCallback(
+    (theme: string) => {
+      if (!theme)
+        throw new CustomError(ThemeProvider_Name, '`theme` is required');
 
-    if (prevTheme.current) themeContainer.classList.remove(prevTheme.current);
-    if (prevTheme.current && dataAttribute)
-      delete themeContainer.dataset[dataAttribute];
+      if (prevTheme.current) themeContainer.classList.remove(prevTheme.current);
+      if (prevTheme.current && dataAttribute)
+        delete themeContainer.dataset[dataAttribute];
 
-    const newTheme =
-      theme === 'system' ? (matched ? darkTheme : lightTheme) : theme;
+      const newTheme =
+        theme === 'system' ? (matched ? darkTheme : lightTheme) : theme;
 
-    themeContainer.classList.add(newTheme);
-    if (dataAttribute) themeContainer.dataset[dataAttribute] = newTheme;
+      themeContainer.classList.add(newTheme);
+      if (dataAttribute) themeContainer.dataset[dataAttribute] = newTheme;
 
-    prevTheme.current = newTheme;
+      prevTheme.current = newTheme;
 
-    setValue(theme);
-    if (localStorageKey) localStorage.setItem(localStorageKey, theme);
-  });
+      setValue(theme);
+      if (localStorageKey) localStorage.setItem(localStorageKey, theme);
+    },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [darkTheme, dataAttribute, lightTheme, localStorageKey, matched],
+  );
 
   useLayoutEffect(() => {
     onThemeChange(
