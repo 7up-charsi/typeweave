@@ -6,12 +6,11 @@ const camelCase = (str) => {
   return str.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
 };
 
-const generators = ['component', 'hook', 'package'];
+const generators = ['component', 'hook', 'package', 'component-docs'];
 
 const defaultOutDirs = {
   component: 'components',
   hook: 'hooks',
-  package: 'utilities',
 };
 
 module.exports = function main(
@@ -75,11 +74,39 @@ module.exports = function main(
 
         if (!answers) return actions;
 
-        const { description, outDir, name } = answers;
+        const { outDir } = answers;
+
+        if (gen === 'component-docs') {
+          actions.push({
+            type: 'append',
+            path: `./apps/docs/components/demos/index.ts`,
+            template: "export * from './{{dashCase name}}';",
+          });
+
+          actions.push(
+            // demos
+            {
+              type: 'addMany',
+              templateFiles: `plop/${gen}/demos/**`,
+              destination: `./apps/docs/components/demos/{{dashCase name}}`,
+              base: `plop/${gen}/demos`,
+              abortOnFail: true,
+            },
+
+            // mdx content
+            {
+              type: 'add',
+              templateFile: `plop/${gen}/content.mdx.hbs`,
+              path: `./apps/docs/content/docs/components/{{dashCase name}}.mdx`,
+              base: `plop/${gen}`,
+              abortOnFail: true,
+            },
+          );
+
+          return actions;
+        }
 
         const data = {
-          name,
-          description,
           outDir: gen === 'package' ? outDir : defaultOutDirs[gen],
         };
 
