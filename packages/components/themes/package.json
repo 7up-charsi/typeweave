@@ -25,7 +25,7 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-      "build": "tsup --config ../../../tsup.config.ts",
+    "build": "tsup --config ../../../tsup.config.ts",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
@@ -37,12 +37,10 @@
   },
   "dependencies": {
     "@webbo-ui/use-media-query": "workspace:*",
-    "@webbo-ui/use-callback-ref": "workspace:*",
     "@webbo-ui/context": "workspace:*",
     "@webbo-ui/error": "workspace:*"
   },
   "devDependencies": {
-    
     "clean-package": "^2.2.0",
     "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/button": "workspace:*",
