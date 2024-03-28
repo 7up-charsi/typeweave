@@ -21,7 +21,8 @@
     "check:deps": "tsx ./scripts/check-deps.ts",
     "create:cmp": "plop component",
     "create:pkg": "plop package",
-    "create:hook": "plop hook"
+    "create:hook": "plop hook",
+    "create:cmp-docs": "plop component-docs"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
@@ -53,4 +54,3 @@
     "turbo": "latest"
   }
 }
-
