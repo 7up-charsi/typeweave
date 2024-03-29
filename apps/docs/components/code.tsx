@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const Code = (props: Props) => {
-  const { children, className } = props;
+  const { children, className, ...restProps } = props;
 
   if (!children) return;
 
@@ -18,13 +18,13 @@ export const Code = (props: Props) => {
 
   if (!lang)
     return (
-      <code className="mx-1 inline-block rounded border border-muted-6 bg-muted-3 px-1 font-sans text-muted-11">
+      <code {...restProps} className={className}>
         {children}
       </code>
     );
 
   return (
-    <code className={className}>
+    <code {...restProps} className={className}>
       <Markup content={highlightCode(children, lang)} noWrap />
     </code>
   );

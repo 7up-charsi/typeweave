@@ -3,7 +3,8 @@
 import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { Slot } from '@webbo-ui/slot';
-import { forwardRef, useId, useMemo } from 'react';
+import { Icon } from '@webbo-ui/icon';
+import React, { forwardRef, isValidElement, useId, useMemo } from 'react';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import { createCollection } from '@webbo-ui/use-collection';
 import { CustomError } from '@webbo-ui/error';
@@ -228,46 +229,26 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
 
 Item.displayName = 'webbo-ui.' + ITEM_NAME;
 
-// *-*-*-*-* Header *-*-*-*-*
-
-const HEADER_NAME = 'Accordion.Header';
-
-export interface HeaderProps extends React.HTMLAttributes<HTMLHeadingElement> {
-  asChild?: boolean;
-}
-
-export const Header = forwardRef<HTMLHeadingElement, HeaderProps>(
-  (props, ref) => {
-    const { asChild, className, ...restProps } = props;
-
-    const styles = useStylesContext(HEADER_NAME);
-    const itemContext = useItemContext(HEADER_NAME);
-
-    const Component = asChild ? Slot : 'h3';
-
-    return (
-      <Component
-        {...restProps}
-        ref={ref}
-        className={styles.header({ className })}
-        data-expanded={itemContext.isExpended}
-      />
-    );
-  },
-);
-
-Header.displayName = 'webbo-ui.' + HEADER_NAME;
-
 // *-*-*-*-* Trigger *-*-*-*-*
 
 const TRIGGER_NAME = 'Accordion.Trigger';
 
 export interface TriggerProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean;
+}
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { className, onPointerDown, onPointerUp, ...restProps } = props;
+    const {
+      asChild,
+      className,
+      onPointerDown,
+      onPointerUp,
+      children,
+      disabled,
+      ...restProps
+    } = props;
 
     const rootContext = useRootContext(TRIGGER_NAME);
     const itemContext = useItemContext(TRIGGER_NAME);
@@ -324,24 +305,67 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
 
     return (
       <Collection.Item>
-        <button
+        <Slot
           {...restProps}
           ref={ref}
           onKeyDown={onKeyDown}
           className={styles.trigger({ className })}
-          disabled={itemContext.disabled ?? rootContext.disabled}
+          disabled={disabled ?? itemContext.disabled ?? rootContext.disabled}
           id={itemContext.triggerId}
           aria-expanded={isExpended}
           aria-controls={itemContext.contentId}
           data-expanded={isExpended}
           {...poitnerEvents}
-        />
+        >
+          {asChild ? (
+            isValidElement(children) &&
+            React.cloneElement(children, {
+              children: <button>{children.props.children}</button>,
+            } as Partial<unknown>)
+          ) : (
+            <button>{children}</button>
+          )}
+        </Slot>
       </Collection.Item>
     );
   },
 );
 
 Trigger.displayName = 'webbo-ui.' + TRIGGER_NAME;
+
+// *-*-*-*-* Arrow *-*-*-*-*
+
+const Arrow_NAME = 'Accordion.Arrow';
+
+export interface ArrowProps extends React.SVGProps<SVGSVGElement> {
+  asChild?: boolean;
+}
+
+export const Arrow = forwardRef<SVGSVGElement, ArrowProps>((props, ref) => {
+  const { children, className, asChild, ...restProps } = props;
+
+  const styles = useStylesContext(Arrow_NAME);
+
+  return (
+    <Icon {...restProps} ref={ref} className={styles.arrow({ className })}>
+      {asChild ? (
+        children
+      ) : (
+        <svg fill="none" viewBox="0 0 24 24">
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M6 9l6 6 6-6"
+          ></path>
+        </svg>
+      )}
+    </Icon>
+  );
+});
+
+Arrow.displayName = 'webbo-ui.' + Arrow_NAME;
 
 // *-*-*-*-* Content *-*-*-*-*
 

@@ -1,13 +1,15 @@
 import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
-import { Fira_Mono } from 'next/font/google';
+import local from 'next/font/local';
 import { Navbar } from '@/components/navbar';
 import '@/styles/globals.css';
 
-const Font_Code = Fira_Mono({
-  subsets: ['latin'],
+const Font_Code = local({
+  src: '../assets/fonts/Menlo-Regular.ttf',
+  display: 'swap',
+  preload: true,
   variable: '--font-code',
-  weight: ['400', '500', '700'],
+  adjustFontFallback: 'Arial',
 });
 
 export const metadata: Metadata = {

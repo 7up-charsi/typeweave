@@ -1,5 +1,4 @@
 import path from 'path';
-import { Highlight } from './highlight';
 import { access, readFile } from 'fs/promises';
 import { Code } from './code';
 
@@ -27,12 +26,12 @@ export const StylePaths = async (props: Props) => {
   return (
     <>
       <p>
-        Copy and paste these <Highlight>style paths</Highlight> in
-        <Highlight>tailwind.config.js</Highlight> content array
+        Copy and paste these <code data-highlight>style paths</code> in
+        <code data-highlight>tailwind.config.ts</code> content array
       </p>
 
       <pre>
-        <Code className="language-plaintext">{file}</Code>
+        <Code className="language-plaintext">{file.trim()}</Code>
       </pre>
     </>
   );

@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^3.0.1",
+    "@webbo-ui/accordion": "workspace:*",
     "@webbo-ui/alert": "workspace:*",
     "@webbo-ui/button": "workspace:*",
     "@webbo-ui/context": "workspace:*",
@@ -23,6 +23,7 @@
     "@webbo-ui/themes": "workspace:*",
     "@webbo-ui/tooltip": "workspace:*",
     "@webbo-ui/use-pointer-events": "workspace:*",
+    "@mdx-js/mdx": "^3.0.1",
     "algoliasearch": "^4.22.1",
     "clsx": "^2.0.0",
     "geist": "^1.2.2",
@@ -57,3 +58,4 @@
     "typescript": "^5.3.3"
   }
 }
+
