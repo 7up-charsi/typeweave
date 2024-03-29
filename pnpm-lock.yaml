@@ -95,6 +95,9 @@ importers:
       '@mdx-js/mdx':
         specifier: ^3.0.1
         version: 3.0.1
+      '@webbo-ui/accordion':
+        specifier: workspace:*
+        version: link:../../packages/components/accordion
       '@webbo-ui/alert':
         specifier: workspace:*
         version: link:../../packages/components/alert
@@ -282,6 +285,9 @@ importers:
       '@webbo-ui/error':
         specifier: workspace:*
         version: link:../../utilities/error
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@webbo-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -641,12 +647,9 @@ importers:
 
   packages/components/icon:
     dependencies:
-      '@webbo-ui/error':
+      '@webbo-ui/slot':
         specifier: workspace:*
-        version: link:../../utilities/error
-      '@webbo-ui/react-utils':
-        specifier: workspace:*
-        version: link:../../utilities/react-utils
+        version: link:../slot
       react:
         specifier: '>=18'
         version: 18.2.0

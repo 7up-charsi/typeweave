@@ -6,11 +6,10 @@ export const accordion = tv({
   slots: {
     base: 'space-y-2',
     item: [focusWithIn],
-    header:
-      'text-primary-11 bg-primary-3 hover:bg-primary-4 data-[expanded=true]:bg-primary-5 rounded overflow-hidden',
     trigger:
-      'flex items-center w-full text-left px-3 py-2 first-letter:uppercase outline-none disabled:disabled',
-    content: 'px-3 py-2',
+      'group w-full flex items-center overflow-hidden rounded bg-primary-3 px-3 py-2 text-left text-primary-11 outline-none first-letter:uppercase hover:bg-primary-4 disabled:disabled data-[expanded=true]:bg-primary-5',
+    content: 'w-full px-3 py-2',
+    arrow: 'rotate-0 group-data-[expanded=true]:-rotate-180',
   },
   variants: {},
 });

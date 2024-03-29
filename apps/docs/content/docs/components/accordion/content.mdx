@@ -1,0 +1,122 @@
+---
+metaTitle: accordion
+metaDescription: An accordion is a vertically stacked set of interactive headings that each contain a title representing a section of content.
+---
+
+<DocHeader
+  title="accordion"
+  description="An accordion is a vertically stacked set of interactive headings that each contain a title representing a section of content. "
+/>
+
+<DocHeaderLinks component="accordion" />
+
+<Separator />
+
+## demo
+
+<Demo source="accordion" preview={<AccordionDemo />} />
+
+## installation
+
+<Installation package="@webbo-ui/accordion" />
+
+## styles
+
+<StylePaths component="accordion" />
+
+## anatomy
+
+<Anatomy component="accordion" />
+
+## props
+
+### root
+
+Contains all the parts of an accordion.
+
+<Props
+  data={[
+    {
+      name: 'type',
+      type: ['"single"', '"multiple"'],
+      default: '"multiple"',
+      description: (
+        <>
+          Determines whether one or multiple items can be opened at the same
+          time.
+        </>
+      ),
+    },
+    {
+      name: 'value',
+      type: ['string', 'string[]'],
+      default: 'undefined',
+      description: (
+        <>
+          the controlled value of the item to expand.
+          <ul>
+            <li>
+              it must be <TsType>string</TsType> when <Prop>type</Prop> is{' '}
+              <TsType>"single"</TsType>
+            </li>
+            <li>
+              it must be <TsType>string[]</TsType> when <Prop>type</Prop> is{' '}
+              <TsType>"multiple"</TsType>
+            </li>
+          </ul>
+        </>
+      ),
+    },
+    {
+      name: 'defaultValue',
+      type: ['string', 'string[]'],
+      default: 'undefined',
+      description: (
+        <>
+          The value of the item to expand when initially rendered. it must be{' '}
+          <TsType>string</TsType> when <Prop>type</Prop> is{' '}
+          <TsType>"single"</TsType>
+          and must be <TsType>string[]</TsType> when <Prop>type</Prop> is <TsType>
+            "multiple"
+          </TsType>.
+        </>
+      ),
+    },
+    {
+      name: 'onValueChange',
+      type: '(value: string | null | string[]) => void',
+      default: 'undefined',
+      description: (
+        <>
+          Event handler called when the state of an item changes.
+          <ul>
+            <li>
+              value is <TsType>string</TsType> when <Prop>type</Prop> is{' '}
+              <TsType>"single"</TsType>.
+            </li>
+            <li>
+              value is <TsType>string[]</TsType> when <Prop>type</Prop> is{' '}
+              <TsType>"multiple"</TsType>.
+            </li>
+            <li>
+              value is <TsType>string</TsType> or <TsType>null</TsType> when{' '}
+              <Prop>type</Prop> is <TsType>"single"</TsType> and{' '}
+              <Prop>isSingleCollapsible</Prop> is <TsType>true</TsType>
+            </li>
+          </ul>
+        </>
+      ),
+    },
+    {
+      name: 'isSingleCollapsible',
+      type: 'boolean',
+      default: 'true',
+      description: (
+        <>
+          When <Prop>type</Prop> is <TsType>"single"</TsType>, allows closing
+          content when clicking trigger for an open item.
+        </>
+      ),
+    },
+  ]}
+/>

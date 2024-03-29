@@ -10,26 +10,19 @@ const meta = {
 export default meta;
 
 const Template = (args) => (
-  <Disclosure.Root {...args}>
+  <Disclosure.Root {...args} className="rounded border border-muted-6">
     {Array.from({ length: 10 }).map((_, i, arr) => (
       <Fragment key={i}>
-        <Disclosure.Item value={'' + (i + 1)}>
-          <div className="flex items-center px-4 py-1">
+        <Disclosure.Item value={'' + (i + 1)} className="first:mt-2 last:!mb-2">
+          <div className="flex items-center px-4 py-1 has-[button:disabled]:disabled">
             {i === 7 ? (
               <span>DISABLED Disclosure with dummy content</span>
             ) : (
               <span>Disclosure no. {i + 1} with dummy content</span>
             )}
 
-            <div className="grow"></div>
-
-            <Disclosure.Trigger>
-              <Button
-                isIconOnly
-                aria-label="expand"
-                size="sm"
-                className="group"
-              >
+            <Disclosure.Trigger className="group ml-auto" disabled={i === 7}>
+              <Button isIconOnly aria-label="expand" size="sm">
                 <Icon>
                   <svg
                     className="transition-transform rotate-0 group-data-[expanded=true]:-rotate-180"

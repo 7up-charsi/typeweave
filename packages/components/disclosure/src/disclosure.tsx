@@ -145,7 +145,8 @@ export interface TriggerProps
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { className, onPointerDown, onPointerUp, ...restProps } = props;
+    const { className, onPointerDown, onPointerUp, disabled, ...restProps } =
+      props;
 
     const rootContext = useRootContext(TRIGGER_NAME);
     const itemContext = useItemContext(TRIGGER_NAME);
@@ -183,7 +184,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
         ref={ref}
         onKeyDown={onKeyDown}
         className={styles.trigger({ className })}
-        disabled={itemContext.disabled ?? rootContext.disabled}
+        disabled={disabled ?? itemContext.disabled ?? rootContext.disabled}
         id={itemContext.triggerId}
         aria-expanded={isExpended}
         aria-controls={itemContext.contentId}

@@ -3,7 +3,6 @@ import { DocHeader } from './doc-header';
 import { DocHeaderLinks } from './doc-header-links';
 import { Separator } from './separator';
 import { Demo } from './demo';
-import { Highlight } from './highlight';
 import { Gap } from './gap';
 import { Steps } from './steps';
 import Link from 'next/link';
@@ -12,10 +11,14 @@ import { StylePaths } from './style-paths';
 import { Installation } from './installation';
 import { Props } from './props';
 import { Anatomy } from './anatomy';
+import { Prop } from './prop';
+import { TsType } from './ts-type';
 import * as demos from './demos';
 
 export const mdxComponents: any = {
   ...demos,
+  Prop,
+  TsType,
   Anatomy,
   Props,
   Demo,
@@ -26,7 +29,6 @@ export const mdxComponents: any = {
   DocHeader,
   DocHeaderLinks,
   Separator,
-  Highlight,
   code: Code,
   h2: (props: any) => <HeadingLink as="h2" {...props} />,
   h3: (props: any) => <HeadingLink as="h3" {...props} />,
