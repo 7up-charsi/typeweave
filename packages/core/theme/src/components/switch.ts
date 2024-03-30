@@ -49,11 +49,11 @@ const _switch = tv({
     },
     size: {
       sm: {
-        switch: 'w-[26px] h-[10px]',
+        switch: 'w-[27px] h-[10px]',
         indicator: 'w-4 h-4 text-xs',
       },
       md: {
-        switch: 'w-[34px] h-[14px]',
+        switch: 'w-[35px] h-[14px]',
         indicator: 'w-5 h-5 text-base',
       },
     },
