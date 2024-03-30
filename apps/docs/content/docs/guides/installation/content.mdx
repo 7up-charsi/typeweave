@@ -19,7 +19,7 @@ pnpm add @webbo-ui/theme
 
 ### add theme plugin
 
-then configure it in your <Highlight>tailwind.config.ts</Highlight>, leave `content` array as is we will modify it later.
+then configure it in your <code data-highlight>tailwind.config.ts</code>, leave `content` array as is we will modify it later.
 
 ```ts
 import { WebboUi } from '@webbo-ui/theme';
@@ -37,7 +37,7 @@ export default {
 
 ## component installation
 
-Webbo-ui provides each component as individual package. Install the only components you need and don't forgot to add <Highlight>style paths</Highlight> in <Highlight>tailwind.config.ts</Highlight> as these paths are slightly different. **These** <Highlight>style paths</Highlight> **are given at every compnent page for you so you can copy and paste them**.
+Webbo-ui provides each component as individual package. Install the only components you need and don't forgot to add <code data-highlight>style paths</code> in <code data-highlight>tailwind.config.ts</code> as these paths are slightly different. **These** <code data-highlight>style paths</code> **are given at every compnent page for you so you can copy and paste them**.
 
 Asume you have configured tailwindcss as above then follow the steps below.
 
@@ -52,10 +52,11 @@ pnpm add @webbo-ui/button
 
 ### tailwind css styles
 
-Button component has installed. Now add its <Highlight>style paths</Highlight> in your `content` array in <Highlight>tailwind.config.ts</Highlight> for button styles.
+Button component has installed. Now add its <code data-highlight>style paths</code> in your `content` array in <code data-highlight>tailwind.config.ts</code> for button styles.
 
 ```txt
 './node_modules/@webbo-ui/theme/dist/components/button.js',
+'./node_modules/@webbo-ui/theme/dist/classes.js',
 ```
 
 ### import component

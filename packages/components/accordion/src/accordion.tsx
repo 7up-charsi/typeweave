@@ -2,7 +2,6 @@
 
 import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
-import { Slot } from '@webbo-ui/slot';
 import { Icon } from '@webbo-ui/icon';
 import React, { forwardRef, isValidElement, useId, useMemo } from 'react';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
@@ -271,6 +270,8 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
     const getItems = useCollection();
 
     const onKeyDown = (e: React.KeyboardEvent) => {
+      if (rootContext.disabled) return;
+
       const key = e.key;
 
       if (key === 'Tab' || (key === 'Tab' && e.shiftKey)) return;
@@ -303,30 +304,34 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       if (End) elements[elements.length - 1]?.focus();
     };
 
-    return (
-      <Collection.Item>
-        <Slot
-          {...restProps}
-          ref={ref}
-          onKeyDown={onKeyDown}
-          className={styles.trigger({ className })}
-          disabled={disabled ?? itemContext.disabled ?? rootContext.disabled}
-          id={itemContext.triggerId}
-          aria-expanded={isExpended}
-          aria-controls={itemContext.contentId}
-          data-expanded={isExpended}
-          {...poitnerEvents}
-        >
-          {asChild ? (
-            isValidElement(children) &&
-            React.cloneElement(children, {
-              children: <button>{children.props.children}</button>,
-            } as Partial<unknown>)
-          ) : (
-            <button>{children}</button>
-          )}
-        </Slot>
-      </Collection.Item>
+    const buttonProps = {
+      ...restProps,
+      ref,
+      onKeyDown: onKeyDown,
+      className: styles.trigger({ className }),
+      disabled: rootContext.disabled ?? disabled ?? itemContext.disabled,
+      id: itemContext.triggerId,
+      'aria-expanded': isExpended,
+      'aria-controls': itemContext.contentId,
+      'data-expanded': isExpended,
+      ...poitnerEvents,
+    };
+
+    return asChild ? (
+      isValidElement(children) &&
+        React.cloneElement(children, {
+          children: (
+            <Collection.Item>
+              <button {...buttonProps}>{children.props.children}</button>
+            </Collection.Item>
+          ),
+        } as Partial<unknown>)
+    ) : (
+      <h3>
+        <Collection.Item>
+          <button {...buttonProps}>{children}</button>
+        </Collection.Item>
+      </h3>
     );
   },
 );
@@ -337,30 +342,25 @@ Trigger.displayName = 'webbo-ui.' + TRIGGER_NAME;
 
 const Arrow_NAME = 'Accordion.Arrow';
 
-export interface ArrowProps extends React.SVGProps<SVGSVGElement> {
-  asChild?: boolean;
-}
+export interface ArrowProps
+  extends Omit<React.SVGProps<SVGSVGElement>, 'children'> {}
 
 export const Arrow = forwardRef<SVGSVGElement, ArrowProps>((props, ref) => {
-  const { children, className, asChild, ...restProps } = props;
+  const { className, ...restProps } = props;
 
   const styles = useStylesContext(Arrow_NAME);
 
   return (
     <Icon {...restProps} ref={ref} className={styles.arrow({ className })}>
-      {asChild ? (
-        children
-      ) : (
-        <svg fill="none" viewBox="0 0 24 24">
-          <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M6 9l6 6 6-6"
-          ></path>
-        </svg>
-      )}
+      <svg fill="none" viewBox="0 0 24 24">
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M6 9l6 6 6-6"
+        ></path>
+      </svg>
     </Icon>
   );
 });

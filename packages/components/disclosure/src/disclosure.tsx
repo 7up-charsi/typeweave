@@ -167,9 +167,9 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
     const styles = useStylesContext(TRIGGER_NAME);
 
     const onKeyDown = (e: React.KeyboardEvent) => {
-      const key = e.key;
+      if (rootContext.disabled) return;
 
-      if (key === 'Tab' || (key === 'Tab' && e.shiftKey)) return;
+      const key = e.key;
 
       if ([' ', 'Enter'].includes(key)) {
         onPress();
@@ -184,7 +184,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
         ref={ref}
         onKeyDown={onKeyDown}
         className={styles.trigger({ className })}
-        disabled={disabled ?? itemContext.disabled ?? rootContext.disabled}
+        disabled={rootContext.disabled ?? disabled ?? itemContext.disabled}
         id={itemContext.triggerId}
         aria-expanded={isExpended}
         aria-controls={itemContext.contentId}
