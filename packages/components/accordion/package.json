@@ -39,7 +39,6 @@
     "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/context": "workspace:*",
     "@webbo-ui/icon": "workspace:*",
-    "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/error": "workspace:*",
     "@webbo-ui/use-controllable-state": "workspace:*",
     "@webbo-ui/use-collection": "workspace:*",

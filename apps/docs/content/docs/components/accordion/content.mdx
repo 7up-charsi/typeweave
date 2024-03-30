@@ -73,12 +73,17 @@ Contains all the parts of an accordion.
       default: 'undefined',
       description: (
         <>
-          The value of the item to expand when initially rendered. it must be{' '}
-          <TsType>string</TsType> when <Prop>type</Prop> is{' '}
-          <TsType>"single"</TsType>
-          and must be <TsType>string[]</TsType> when <Prop>type</Prop> is <TsType>
-            "multiple"
-          </TsType>.
+          The value of the item to expand when initially rendered.
+          <ul>
+            <li>
+              it must be <TsType>string</TsType> when <Prop>type</Prop> is{' '}
+              <TsType>"single"</TsType>
+            </li>
+            <li>
+              it must be <TsType>string[]</TsType> when <Prop>type</Prop> is{' '}
+              <TsType>"multiple"</TsType>
+            </li>
+          </ul>
         </>
       ),
     },
@@ -118,5 +123,72 @@ Contains all the parts of an accordion.
         </>
       ),
     },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'undefined',
+      description: (
+        <>
+          When <TsType>true</TsType>, prevents the user from interacting with
+          the accordion and all its items.
+        </>
+      ),
+    },
   ]}
 />
+
+### item
+
+Contains all the parts of a collapsible section. by default trigger wraps button in h3 heading but you can change heading level with <Prop>asChild</Prop>
+
+<Props
+  data={[
+    {
+      name: 'value',
+      type: 'string',
+      default: 'undefined',
+      required: true,
+      description: <>A unique value for the item.</>,
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'undefined',
+      description: (
+        <>
+          When <TsType>true</TsType>, prevents the user from interacting with
+          the item.
+        </>
+      ),
+    },
+  ]}
+/>
+
+### trigger
+
+Toggles the collapsed state of its associated item. it must be nested inside <Prop>Accordion.Item</Prop>
+
+<Props
+  data={[
+    {
+      name: 'asChild',
+      type: 'boolean',
+      default: 'undefined',
+      description: (
+        <>
+          by default trigger wraps button in <code>h3</code> heading and you can
+          change this heading level with this prop.{' '}
+          <a href="#change-default-heading-level-example">see example</a>
+        </>
+      ),
+    },
+  ]}
+/>
+
+### content
+
+Contains the collapsible content for an item and it does not accept any props rather than <code>React.HTMLAttributes</code>.
+
+### arrow
+
+it does not accept any props rather than <code>React.SVGProps</code>. By default it renders a svg chevron and if you want to change this icon and animate it on expand/collapse then [see example](#custom-indicator-example)
