@@ -164,31 +164,41 @@ Contains all the parts of a collapsible section. by default trigger wraps button
   ]}
 />
 
+### header
+
+by default renders <code>h3</code> element. it must be nested inside <Prop>Accordion.Item</Prop>
+
+<Props data={[{ name: 'asChild' }]} />
+
 ### trigger
 
 Toggles the collapsed state of its associated item. it must be nested inside <Prop>Accordion.Item</Prop>
 
-<Props
-  data={[
-    {
-      name: 'asChild',
-      type: 'boolean',
-      default: 'undefined',
-      description: (
-        <>
-          by default trigger wraps button in <code>h3</code> heading and you can
-          change this heading level with this prop.{' '}
-          <a href="#change-default-heading-level-example">see example</a>
-        </>
-      ),
-    },
-  ]}
-/>
+<Props data={[{ name: 'asChild' }]} />
 
 ### content
 
-Contains the collapsible content for an item and it does not accept any props rather than <code>React.HTMLAttributes</code>.
+Contains the collapsible content for an item and it does not accept any props other than <code>React.HTMLAttributes</code>.
 
 ### arrow
 
-it does not accept any props rather than <code>React.SVGProps</code>. By default it renders a svg chevron and if you want to change this icon and animate it on expand/collapse then [see example](#custom-indicator-example)
+it does not accept any props other than <code>React.SVGProps</code>. it must be nested inside <Prop>Accordion.Trigger</Prop>
+. By default it renders a svg chevron and if you want to change this icon and animate it on expand/collapse then [see example](#custom-indicator-example)
+
+## examples
+
+### change heading
+
+lets say you want to render <code>h2</code> instead of <code>h3</code>
+
+```tsx
+// stuff...
+
+<Accordion.Header asChild>
+  <h2>
+    accordion heading
+  <h2>
+</Accordion.Header>
+
+// stuff...
+```

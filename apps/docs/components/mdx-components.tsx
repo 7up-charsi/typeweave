@@ -5,7 +5,6 @@ import { Separator } from './separator';
 import { Demo } from './demo';
 import { Gap } from './gap';
 import { Steps } from './steps';
-import Link from 'next/link';
 import { Code } from './code';
 import { StylePaths } from './style-paths';
 import { Installation } from './installation';
@@ -15,6 +14,7 @@ import { Prop } from './prop';
 import { Highlight } from './highlight';
 import { TsType } from './ts-type';
 import * as demos from './demos';
+import { Link } from './Link';
 
 export const mdxComponents: any = {
   ...demos,
@@ -36,13 +36,5 @@ export const mdxComponents: any = {
   h3: (props: any) => <HeadingLink as="h3" {...props} />,
   p: (props: any) => <p {...props} className="mt-4" />,
   ul: (props: any) => <ul {...props} className="list-inside list-disc" />,
-  a: (props: any) => {
-    const className = 'text-info-11 underline underline-offset-2';
-    return props.href?.startsWith('#') ? (
-      <a {...props} className={className} />
-    ) : (
-      // @ts-ignore
-      <Link {...props} className={className} />
-    );
-  },
+  a: Link,
 };

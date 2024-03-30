@@ -3,10 +3,11 @@
 import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { Icon } from '@webbo-ui/icon';
-import React, { forwardRef, isValidElement, useId, useMemo } from 'react';
+import React, { forwardRef, useId, useMemo } from 'react';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import { createCollection } from '@webbo-ui/use-collection';
 import { CustomError } from '@webbo-ui/error';
+import { Slot } from '@webbo-ui/slot';
 import { accordion } from '@webbo-ui/theme';
 
 // *-*-*-*-* Root *-*-*-*-*
@@ -228,6 +229,37 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
 
 Item.displayName = 'webbo-ui.' + ITEM_NAME;
 
+// *-*-*-*-* Header *-*-*-*-*
+
+const Header_NAME = 'Accordion.Header';
+
+export interface HeaderProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  asChild?: boolean;
+}
+
+export const Header = forwardRef<HTMLHeadingElement, HeaderProps>(
+  (props, ref) => {
+    const { asChild, className, ...restProps } = props;
+
+    const itemContext = useItemContext(TRIGGER_NAME);
+
+    const styles = useStylesContext(Header_NAME);
+
+    const Comp = asChild ? Slot : 'h3';
+
+    return (
+      <Comp
+        {...restProps}
+        ref={ref}
+        className={styles.header({ className })}
+        data-expanded={itemContext.isExpended}
+      />
+    );
+  },
+);
+
+Header.displayName = 'webbo-ui.' + Header_NAME;
+
 // *-*-*-*-* Trigger *-*-*-*-*
 
 const TRIGGER_NAME = 'Accordion.Trigger';
@@ -304,34 +336,25 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       if (End) elements[elements.length - 1]?.focus();
     };
 
-    const buttonProps = {
-      ...restProps,
-      ref,
-      onKeyDown: onKeyDown,
-      className: styles.trigger({ className }),
-      disabled: rootContext.disabled ?? disabled ?? itemContext.disabled,
-      id: itemContext.triggerId,
-      'aria-expanded': isExpended,
-      'aria-controls': itemContext.contentId,
-      'data-expanded': isExpended,
-      ...poitnerEvents,
-    };
+    const Comp = asChild ? Slot : 'button';
 
-    return asChild ? (
-      isValidElement(children) &&
-        React.cloneElement(children, {
-          children: (
-            <Collection.Item>
-              <button {...buttonProps}>{children.props.children}</button>
-            </Collection.Item>
-          ),
-        } as Partial<unknown>)
-    ) : (
-      <h3>
-        <Collection.Item>
-          <button {...buttonProps}>{children}</button>
-        </Collection.Item>
-      </h3>
+    return (
+      <Collection.Item>
+        <Comp
+          {...restProps}
+          ref={ref}
+          onKeyDown={onKeyDown}
+          className={styles.trigger({ className })}
+          disabled={rootContext.disabled ?? disabled ?? itemContext.disabled}
+          id={itemContext.triggerId}
+          aria-expanded={isExpended}
+          aria-controls={itemContext.contentId}
+          data-expanded={isExpended}
+          {...poitnerEvents}
+        >
+          {children}
+        </Comp>
+      </Collection.Item>
     );
   },
 );
