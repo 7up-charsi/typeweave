@@ -5,5 +5,5 @@ export type ComponentProp = {
   type: string;
   default: string;
   required?: boolean;
-  description: string;
+  description: React.ReactNode;
 };

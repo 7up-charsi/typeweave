@@ -15,15 +15,17 @@ const Template = (args) => (
         value={`accordion-item-${i + 1}`}
         disabled={i === 7}
       >
-        <Accordion.Trigger className="group">
-          {i === 7 ? (
-            <span>DISABLED Accordion with dummy content</span>
-          ) : (
-            <span>Accordion no. {i + 1} with dummy content</span>
-          )}
+        <Accordion.Header>
+          <Accordion.Trigger className="group">
+            {i === 7 ? (
+              <span>DISABLED Accordion with dummy content</span>
+            ) : (
+              <span>Accordion no. {i + 1} with dummy content</span>
+            )}
 
-          <Accordion.Arrow className="ml-auto" />
-        </Accordion.Trigger>
+            <Accordion.Arrow className="ml-auto" />
+          </Accordion.Trigger>
+        </Accordion.Header>
 
         <Accordion.Content>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
