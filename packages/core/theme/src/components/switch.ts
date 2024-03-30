@@ -49,12 +49,12 @@ const _switch = tv({
     },
     size: {
       sm: {
-        switch: 'w-8 h-3',
-        indicator: 'w-5 h-5 text-xs',
+        switch: 'w-[26px] h-[10px]',
+        indicator: 'w-4 h-4 text-xs',
       },
       md: {
-        switch: 'w-10 h-4',
-        indicator: 'w-6 h-6 text-base',
+        switch: 'w-[34px] h-[14px]',
+        indicator: 'w-5 h-5 text-base',
       },
     },
     labelPlacement: {
