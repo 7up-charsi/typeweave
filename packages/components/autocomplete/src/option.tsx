@@ -1,4 +1,4 @@
-'use client';
+
 
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';

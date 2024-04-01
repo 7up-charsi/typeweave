@@ -1,4 +1,4 @@
-'use client';
+
 
 import { ReactNode, forwardRef, useState } from 'react';
 import Input, { InputProps } from './input';

@@ -1,4 +1,4 @@
-'use client';
+
 
 import { createContextScope } from '@webbo-ui/context';
 import { Slot } from '@webbo-ui/slot';

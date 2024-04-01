@@ -1,4 +1,4 @@
-'use client';
+
 
 import { Children, cloneElement, forwardRef, isValidElement } from 'react';
 import { CustomError } from '@webbo-ui/error';

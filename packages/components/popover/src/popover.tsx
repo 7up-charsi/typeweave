@@ -1,4 +1,4 @@
-'use client';
+
 
 import { Slot } from '@webbo-ui/slot';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
