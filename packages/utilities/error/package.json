@@ -25,14 +25,13 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-      "build": "tsup --config ../../../tsup.config.ts",
+    "build": "tsup --config ../../../tsup.config.ts",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
     "postpack": "clean-package restore"
   },
   "devDependencies": {
-    
     "clean-package": "^2.2.0"
   },
   "clean-package": {
