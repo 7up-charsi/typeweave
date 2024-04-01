@@ -1,4 +1,4 @@
-'use client';
+
 
 import { focus, getTabbableEdges } from './utils';
 import { Slot } from '@webbo-ui/slot';

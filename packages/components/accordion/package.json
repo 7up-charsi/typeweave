@@ -1,6 +1,6 @@
 {
   "name": "@webbo-ui/accordion",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "accordion"
   ],
@@ -25,7 +25,7 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-    "build": "tsup --config ../../../tsup.config.ts",
+    "build": "tsup",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",

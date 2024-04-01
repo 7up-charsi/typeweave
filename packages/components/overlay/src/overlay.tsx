@@ -1,4 +1,4 @@
-'use client';
+
 
 import { OverlayVariantProps, overlay } from '@webbo-ui/theme';
 import { forwardRef } from 'react';

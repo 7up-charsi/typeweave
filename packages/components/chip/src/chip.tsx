@@ -1,4 +1,4 @@
-'use client';
+
 
 import { forwardRef, useEffect } from 'react';
 import { ChipClassNames, ChipVariantProps, chip } from '@webbo-ui/theme';

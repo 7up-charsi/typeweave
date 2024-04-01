@@ -1,4 +1,4 @@
-'use client';
+
 
 import { Button } from '@webbo-ui/button';
 import { Chip } from '@webbo-ui/chip';

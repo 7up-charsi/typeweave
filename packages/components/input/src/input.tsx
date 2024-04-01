@@ -1,4 +1,4 @@
-'use client';
+
 
 import { input, InputClassNames, InputVariantProps } from '@webbo-ui/theme';
 import { mergeRefs } from '@webbo-ui/react-utils';

@@ -1,4 +1,4 @@
-'use client';
+
 
 import { useMediaQuery } from '@webbo-ui/use-media-query';
 import { createContextScope } from '@webbo-ui/context';
