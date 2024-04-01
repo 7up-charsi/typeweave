@@ -2,11 +2,11 @@
   "name": "webbo-ui",
   "private": true,
   "scripts": {
-    "build": "turbo build",
+    "build:pkg": "turbo build --filter=!@webbo-ui/docs --filter=!@webbo-ui/storybook",
     "dev:sb": "pnpm --filter @webbo-ui/storybook dev",
     "dev:docs": "pnpm --filter @webbo-ui/docs dev",
     "typecheck": "turbo typecheck",
-    "release:prepare": "changeset && pnpm clean && pnpm build",
+    "release:prepare": "changeset && pnpm clean && pnpm install && pnpm build:pkg",
     "release:bump": "changeset version",
     "release": "changeset publish",
     "clean": "pnpm turbo:clean && pnpm clean:node-modules && pnpm clean:lock",

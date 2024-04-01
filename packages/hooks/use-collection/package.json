@@ -25,7 +25,7 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-      "build": "tsup --config ../../../tsup.config.ts",
+    "build": "tsup --config ../../../tsup.config.ts",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
@@ -40,7 +40,6 @@
     "@webbo-ui/slot": "workspace:*"
   },
   "devDependencies": {
-    
     "clean-package": "^2.2.0"
   },
   "clean-package": {
