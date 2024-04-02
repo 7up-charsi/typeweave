@@ -1,5 +1,3 @@
-
-
 import { forwardRef, useEffect, useId, useRef } from 'react';
 import {
   CheckboxClassNames,

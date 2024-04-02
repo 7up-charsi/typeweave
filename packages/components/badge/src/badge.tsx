@@ -1,5 +1,3 @@
-
-
 import { BadgeClassNames, BadgeVariantProps, badge } from '@webbo-ui/theme';
 import { forwardRef } from 'react';
 

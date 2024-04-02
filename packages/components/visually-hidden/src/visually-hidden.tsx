@@ -1,5 +1,3 @@
-
-
 import { Slot } from '@webbo-ui/slot';
 
 export interface VisuallyHiddenProps {

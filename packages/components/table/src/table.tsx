@@ -1,5 +1,3 @@
-
-
 import { createContextScope } from '@webbo-ui/context';
 import { TableClassNames, TableVariantProps, table } from '@webbo-ui/theme';
 import * as Menu from '@webbo-ui/menu';

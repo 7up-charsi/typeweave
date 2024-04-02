@@ -1,5 +1,3 @@
-
-
 import { forwardRef, useId } from 'react';
 import {
   SwitchClassNames,

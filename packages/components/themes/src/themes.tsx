@@ -1,5 +1,3 @@
-
-
 import { useMediaQuery } from '@webbo-ui/use-media-query';
 import { createContextScope } from '@webbo-ui/context';
 import { CustomError } from '@webbo-ui/error';
