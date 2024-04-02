@@ -1,5 +1,3 @@
-
-
 import { forwardRef, useEffect } from 'react';
 import { ChipClassNames, ChipVariantProps, chip } from '@webbo-ui/theme';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';

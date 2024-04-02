@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Slot } from '@webbo-ui/slot';
 

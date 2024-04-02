@@ -1,5 +1,3 @@
-
-
 import { Button } from '@webbo-ui/button';
 import { Chip } from '@webbo-ui/chip';
 import { RenderInputProps } from './autocomplete';
@@ -126,6 +124,7 @@ export const mapInputProps = ({
     value: inputValue,
     onChange,
     disabled,
-    inputProps: { onKeyDown, ...ariaProps },
+    onKeyDown,
+    ...ariaProps,
   };
 };

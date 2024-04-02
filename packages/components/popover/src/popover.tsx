@@ -1,5 +1,3 @@
-
-
 import { Slot } from '@webbo-ui/slot';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { FocusTrap } from '@webbo-ui/focus-trap';

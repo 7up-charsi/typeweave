@@ -1,5 +1,3 @@
-
-
 import { Button } from '@webbo-ui/button';
 import { RenderInputProps } from './select';
 import { selectInput } from '@webbo-ui/theme';
@@ -103,6 +101,8 @@ export const mapInputProps = ({
     onBlur,
     value: inputValue,
     disabled: !!disabled,
-    inputProps: { onKeyDown, ...ariaProps, readOnly },
+    onKeyDown,
+    ...ariaProps,
+    readOnly,
   };
 };
