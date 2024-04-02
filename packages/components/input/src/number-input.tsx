@@ -1,16 +1,18 @@
-
-
 import { ChangeEvent, forwardRef, useRef } from 'react';
 import Input, { InputProps } from './input';
 import { mergeRefs } from '@webbo-ui/react-utils';
-import { NumberInputClassNames, numberInput } from '@webbo-ui/theme';
+import { numberInput } from '@webbo-ui/theme';
 import { Button } from '@webbo-ui/button';
 import { CustomError } from '@webbo-ui/error';
 import { Icon } from '@webbo-ui/icon';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 
 export interface NumberInputProps extends Omit<InputProps, 'type'> {
-  classNames?: InputProps['classNames'] & { stepButton: NumberInputClassNames };
+  classNames?: InputProps['classNames'] & {
+    buttonsBase?: string;
+    increaseButton?: string;
+    decreaseButton?: string;
+  };
   inputMode?: 'decimal' | 'numeric';
   min?: number;
   max?: number;
@@ -254,22 +256,18 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         ref={ref}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        inputProps={{
-          onKeyDown,
-          onKeyUp,
-          inputMode,
-          max: max,
-          min: min,
-          step: step,
-        }}
+        onKeyDown={onKeyDown}
+        onKeyUp={onKeyUp}
+        inputMode={inputMode}
+        max={max}
+        min={min}
+        step={step}
         endContent={
           <>
-            {endContent}
-
             <div
               ref={ref}
               className={styles.base({
-                className: classNames?.stepButton.base,
+                className: classNames?.buttonsBase,
               })}
             >
               {/* increase */}
@@ -281,18 +279,21 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
                 size="sm"
                 variant="text"
                 classNames={{
-                  base: styles.button({
-                    className: classNames?.stepButton.button,
-                  }),
-                  content: styles.icon({
-                    className: classNames?.stepButton.button,
+                  base: styles.buttonBase({
+                    className: classNames?.increaseButton,
                   }),
                 }}
                 onPointerDown={onLongPress('increase')}
               >
                 <Icon>
-                  <svg viewBox="0 0 16 10" fill="currentColor">
-                    <path d="M9.207 1A2 2 0 0 0 6.38 1L.793 6.586A2 2 0 0 0 2.207 10H13.38a2 2 0 0 0 1.414-3.414L9.207 1Z" />
+                  <svg fill="none" viewBox="0 0 24 24">
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 15l6-6 6 6"
+                    ></path>
                   </svg>
                 </Icon>
               </Button>
@@ -306,22 +307,27 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
                 size="sm"
                 variant="text"
                 classNames={{
-                  base: styles.button({
-                    className: classNames?.stepButton.button,
-                  }),
-                  content: styles.icon({
-                    className: classNames?.stepButton.button,
+                  base: styles.buttonBase({
+                    className: classNames?.decreaseButton,
                   }),
                 }}
                 onPointerDown={onLongPress('decrease')}
               >
                 <Icon>
-                  <svg viewBox="0 0 16 10" fill="currentColor">
-                    <path d="M15.434 1.235A2 2 0 0 0 13.586 0H2.414A2 2 0 0 0 1 3.414L6.586 9a2 2 0 0 0 2.828 0L15 3.414a2 2 0 0 0 .434-2.179Z" />
+                  <svg fill="none" viewBox="0 0 24 24">
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 9l6 6 6-6"
+                    ></path>
                   </svg>
                 </Icon>
               </Button>
             </div>
+
+            {endContent}
           </>
         }
       />

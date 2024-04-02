@@ -8,30 +8,17 @@ const meta = {
 export default meta;
 
 const InputTemplate = (args) => (
-  <div className="flex flex-col gap-5">
-    <InputComp
-      startContent={
-        args.startContent && <p className="text-muted-11 text-base">kg</p>
-      }
-      endContent={
-        args.endContent && <p className="text-muted-11 text-base">$$$</p>
-      }
-      required
-      placeholder="placeholder"
-      size="sm"
-    />
-
-    <InputComp
-      startContent={
-        args.startContent && <p className="text-muted-11 text-base">kg</p>
-      }
-      endContent={
-        args.endContent && <p className="text-muted-11 text-base">$$$</p>
-      }
-      required
-      placeholder="placeholder"
-    />
-  </div>
+  <InputComp
+    required
+    label="input label"
+    placeholder="Placeholder"
+    startContent={
+      args.startContent && <p className="text-muted-11 text-base">kg</p>
+    }
+    endContent={
+      args.endContent && <p className="text-muted-11 text-base">$$$</p>
+    }
+  />
 );
 
 export const Input = {
@@ -48,10 +35,7 @@ export const StartEndContent = {
 };
 
 const PasswordTemplate = () => (
-  <div className="flex flex-col gap-5">
-    <PasswordInput required placeholder="placeholder" size="sm" />
-    <PasswordInput required placeholder="placeholder" />
-  </div>
+  <PasswordInput required label="input label" placeholder="placeholder" />
 );
 
 export const Password = {
@@ -59,10 +43,7 @@ export const Password = {
 };
 
 const NumberTemplate = () => (
-  <div className="flex flex-col gap-5">
-    <NumberInput required placeholder="placeholder" size="sm" />
-    <NumberInput required placeholder="placeholder" />
-  </div>
+  <NumberInput required label="input label" placeholder="placeholder" />
 );
 
 export const Number = {

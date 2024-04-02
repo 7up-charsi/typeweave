@@ -1,9 +1,8 @@
-
-
 import { ReactNode, forwardRef, useState } from 'react';
 import Input, { InputProps } from './input';
 import { Button } from '@webbo-ui/button';
 import { Icon } from '@webbo-ui/icon';
+import { passwordInput } from '@webbo-ui/theme';
 
 export interface PasswordInputProps extends Omit<InputProps, 'type'> {
   /**
@@ -32,8 +31,11 @@ const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProps>(
 
     const [isPassword, setIsPassword] = useState(true);
 
+    const styles = passwordInput();
+
     const toggleButton = (
       <Button
+        className={styles.button()}
         type="button"
         isIconOnly
         size="sm"
@@ -79,9 +81,7 @@ const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProps>(
         ref={ref}
         {...rest}
         label={label}
-        inputProps={{
-          type: isPassword ? 'password' : 'text',
-        }}
+        type={isPassword ? 'password' : 'text'}
         endContent={
           <>
             {toggleButton}
