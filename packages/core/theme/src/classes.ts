@@ -3,6 +3,9 @@ export const focusVisible =
 
 export const focusWithIn = 'focus-within:ring-2 focus-within:ring-focus-8';
 
+export const groupFocusWithIn =
+  'group-focus-within:ring-2 group-focus-within:ring-focus-8';
+
 export const groupFocusVisible =
   'group-focus-visible:ring-2 group-focus-visible:ring-focus-8';
 

@@ -1,10 +1,10 @@
-
-
 import { input, InputClassNames, InputVariantProps } from '@webbo-ui/theme';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { forwardRef, useEffect, useId, useRef } from 'react';
 
-export interface InputProps extends InputVariantProps {
+export interface InputProps
+  extends InputVariantProps,
+    React.InputHTMLAttributes<HTMLInputElement> {
   defaultValue?: string;
   value?: string;
   label?: string;
@@ -21,17 +21,6 @@ export interface InputProps extends InputVariantProps {
   classNames?: InputClassNames;
   className?: string;
   placeholder?: string;
-  inputProps?: Omit<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    | 'defaultValue'
-    | 'value'
-    | 'onChange'
-    | 'id'
-    | 'onBlur'
-    | 'onFocus'
-    | 'required'
-    | 'className'
-  >;
   baseProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   labelProps?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'className'>;
   helperTextProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
@@ -62,14 +51,12 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     baseRef,
     inputRef,
     baseProps = {},
-    inputProps = {},
     labelProps = {},
     helperTextProps = {},
     inputWrapperProps = {},
     fullWidth = false,
     disabled = false,
-    size = 'md',
-    variant = 'filled',
+    ...restProps
   } = props;
 
   const labelId = useId();
@@ -90,8 +77,6 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
   const styles = input({
     disabled,
     fullWidth,
-    size,
-    variant,
     required: !!required,
     error: !!error,
   });
@@ -141,7 +126,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
         )}
 
         <input
-          {...inputProps}
+          {...restProps}
           onFocus={onFocus}
           onBlur={onBlur}
           ref={mergeRefs(innerInputRef, inputRef)}
