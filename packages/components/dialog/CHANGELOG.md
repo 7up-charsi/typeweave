@@ -1,5 +1,14 @@
 # @webbo-ui/dialog
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/theme@1.0.2
+  - @webbo-ui/overlay@1.0.2
+  - @webbo-ui/focus-trap@1.0.1
+
 ## 1.0.1
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @webbo-ui/input
 
+## 1.0.2
+
+### Patch Changes
+
+- change input styles
+- Updated dependencies
+  - @webbo-ui/theme@1.0.2
+  - @webbo-ui/button@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes

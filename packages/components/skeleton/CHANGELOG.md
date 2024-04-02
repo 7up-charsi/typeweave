@@ -1,5 +1,12 @@
 # @webbo-ui/skeleton
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/theme@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
