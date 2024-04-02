@@ -10,7 +10,6 @@ import { createContextScope } from '@webbo-ui/context';
 import { forwardRef, useEffect, useId, useMemo, useRef } from 'react';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { DialogVariantProps, dialog } from '@webbo-ui/theme';
-import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
 
@@ -162,23 +161,18 @@ export interface TriggerProps
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { onPointerDown, onPointerUp, ...restProps } = props;
+    const { ...restProps } = props;
 
     const rootContext = useRootContext(Trigger_Name);
 
-    const pointerEvents = usePointerEvents({
-      onPress: rootContext.handleOpen,
-      onPointerDown,
-      onPointerUp,
-    });
-
     return (
-      <Slot
+      <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
         {...restProps}
+        // @ts-expect-error onPress does not exist
+        onPress={rootContext.handleOpen}
         ref={mergeRefs(ref, rootContext.triggerRef)}
         aria-expanded={rootContext.isOpen}
         aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
-        {...pointerEvents}
       />
     );
   },
@@ -195,19 +189,19 @@ export interface CloseProps
 
 export const Close = forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { onPointerDown, onPointerUp, ...restProps } = props;
+    const { ...restProps } = props;
 
     const { handleClose } = useRootContext(Close_Name);
 
-    const pointerEvents = usePointerEvents({
-      onPress: () => {
-        handleClose('pointer');
-      },
-      onPointerDown,
-      onPointerUp,
-    });
-
-    return <Slot {...restProps} {...pointerEvents} ref={ref} />;
+    return (
+      <Slot
+        {...restProps}
+        ref={ref}
+        onPress={() => {
+          handleClose('pointer');
+        }}
+      />
+    );
   },
 );
 

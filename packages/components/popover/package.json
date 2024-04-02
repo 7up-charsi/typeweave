@@ -1,6 +1,6 @@
 {
   "name": "@webbo-ui/popover",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "keywords": [
     "popover"
   ],
@@ -39,7 +39,6 @@
     "@webbo-ui/use-controllable-state": "workspace:*",
     "@webbo-ui/use-click-outside": "workspace:*",
     "@webbo-ui/use-callback-ref": "workspace:*",
-    "@webbo-ui/use-pointer-events": "workspace:*",
     "@webbo-ui/focus-trap": "workspace:*",
     "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/react-utils": "workspace:*",

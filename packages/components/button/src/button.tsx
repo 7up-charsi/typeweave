@@ -176,6 +176,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
           if (![' ', 'Enter'].includes(key)) return;
 
+          e.preventDefault();
           onPress?.(e as never);
         }}
       >

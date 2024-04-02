@@ -7,7 +7,6 @@ import { FocusScope, FocusTrap } from '@webbo-ui/focus-trap';
 import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { createPortal } from 'react-dom';
 import { AlertDialogVariantProps, alertDialog } from '@webbo-ui/theme';
-import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -109,15 +108,9 @@ export interface TriggerProps
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { onPointerDown, onPointerUp, ...restProps } = props;
+    const { ...restProps } = props;
 
     const rootContext = useRootContext(Trigger_Name);
-
-    const pointerEvents = usePointerEvents({
-      onPress: rootContext.handleOpen,
-      onPointerDown,
-      onPointerUp,
-    });
 
     return (
       <Slot
@@ -125,7 +118,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
         ref={ref}
         aria-expanded={rootContext.isOpen}
         aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
-        {...pointerEvents}
+        onPress={rootContext.handleOpen}
       />
     );
   },
@@ -141,17 +134,11 @@ export interface CloseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export const Close = forwardRef<HTMLButtonElement, CloseProps>((props, ref) => {
-  const { onPointerDown, onPointerUp, ...restProps } = props;
+  const { ...restProps } = props;
 
   const rootContext = useRootContext(Close_Name);
 
-  const pointerEvents = usePointerEvents({
-    onPress: rootContext.handleClose,
-    onPointerDown,
-    onPointerUp,
-  });
-
-  return <Slot {...restProps} ref={ref} {...pointerEvents} />;
+  return <Slot {...restProps} onPress={rootContext.handleClose} ref={ref} />;
 });
 
 Close.displayName = 'webbo-ui.' + Close_Name;

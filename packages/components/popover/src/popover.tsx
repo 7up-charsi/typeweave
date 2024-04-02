@@ -10,7 +10,6 @@ import { forwardRef, useEffect, useId, useMemo, useRef } from 'react';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { PopoverVariantProps, popover } from '@webbo-ui/theme';
-import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 interface PopoverContext {
   isOpen: boolean;
@@ -128,24 +127,19 @@ export interface TriggerProps
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { onPointerDown, onPointerUp, ...restProps } = props;
+    const { ...restProps } = props;
 
     const rootContext = useRootContext(Trigger_Name);
 
-    const pointerEvents = usePointerEvents({
-      onPress: rootContext.handleOpen,
-      onPointerDown,
-      onPointerUp,
-    });
-
     return (
       <Popper.Reference>
-        <Slot
+        <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
           {...restProps}
           ref={mergeRefs(ref, rootContext.triggerRef)}
           aria-expanded={rootContext.isOpen}
           aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
-          {...pointerEvents}
+          // @ts-expect-error onPress does not exist
+          onPress={rootContext.handleOpen}
         />
       </Popper.Reference>
     );
@@ -162,17 +156,11 @@ export interface CloseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export const Close = forwardRef<HTMLButtonElement, CloseProps>((props, ref) => {
-  const { onPointerDown, onPointerUp, ...restProps } = props;
+  const { ...restProps } = props;
 
   const rootContext = useRootContext(Close_Name);
 
-  const pointerEvents = usePointerEvents({
-    onPress: rootContext.handleClose,
-    onPointerDown,
-    onPointerUp,
-  });
-
-  return <Slot {...restProps} ref={ref} {...pointerEvents} />;
+  return <Slot {...restProps} ref={ref} onPress={rootContext.handleClose} />;
 });
 
 Close.displayName = 'webbo-ui.' + Close_Name;
