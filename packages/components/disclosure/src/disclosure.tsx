@@ -2,7 +2,6 @@ import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { Slot } from '@webbo-ui/slot';
 import { forwardRef, useId, useMemo } from 'react';
-import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import { disclosure } from '@webbo-ui/theme';
 
 // *-*-*-*-* Root *-*-*-*-*
@@ -143,8 +142,7 @@ export interface TriggerProps
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { className, onPointerDown, onPointerUp, disabled, ...restProps } =
-      props;
+    const { className, disabled, ...restProps } = props;
 
     const rootContext = useRootContext(TRIGGER_NAME);
     const itemContext = useItemContext(TRIGGER_NAME);
@@ -155,12 +153,6 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       if (isExpended) rootContext.onCollapse(itemContext.value);
       else rootContext.onExpand(itemContext.value);
     };
-
-    const poitnerEvents = usePointerEvents({
-      onPress,
-      onPointerDown,
-      onPointerUp,
-    });
 
     const styles = useStylesContext(TRIGGER_NAME);
 
@@ -187,7 +179,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
         aria-expanded={isExpended}
         aria-controls={itemContext.contentId}
         data-expanded={isExpended}
-        {...poitnerEvents}
+        onPress={onPress}
       />
     );
   },

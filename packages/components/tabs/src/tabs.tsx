@@ -4,7 +4,6 @@ import { forwardRef, useId, useMemo, useRef, useState } from 'react';
 import { Slot } from '@webbo-ui/slot';
 import { TabsVariantProps, tabs } from '@webbo-ui/theme';
 import { createCollection } from '@webbo-ui/use-collection';
-import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -162,8 +161,7 @@ const Trigger_NAME = 'Tabs.Trigger';
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { value, className, onPointerDown, onPointerUp, ...restProps } =
-      props;
+    const { value, className, ...restProps } = props;
 
     const context = useRootContext(Trigger_NAME);
     const styles = useStylesContext(List_NAME);
@@ -263,12 +261,6 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       context.onTabChange(triggerId);
     };
 
-    const pointerEvents = usePointerEvents({
-      onPress: handleClick,
-      onPointerDown,
-      onPointerUp,
-    });
-
     return (
       <Collection.Item active={isSelected}>
         <Slot
@@ -285,7 +277,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           id={triggerId}
           onKeyDown={onKeyDown}
           onFocus={onFocus}
-          {...pointerEvents}
+          onPress={handleClick}
         />
       </Collection.Item>
     );

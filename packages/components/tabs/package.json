@@ -1,6 +1,6 @@
 {
   "name": "@webbo-ui/tabs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "keywords": [
     "tabs"
   ],
@@ -40,7 +40,6 @@
     "@webbo-ui/context": "workspace:*",
     "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/use-controllable-state": "workspace:*",
-    "@webbo-ui/use-pointer-events": "workspace:*",
     "@webbo-ui/use-collection": "workspace:*"
   },
   "devDependencies": {

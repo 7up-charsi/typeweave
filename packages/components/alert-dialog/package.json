@@ -1,6 +1,6 @@
 {
   "name": "@webbo-ui/alert-dialog",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "keywords": [
     "alert-dialog"
   ],
@@ -37,7 +37,6 @@
   },
   "dependencies": {
     "@webbo-ui/use-controllable-state": "workspace:*",
-    "@webbo-ui/use-pointer-events": "workspace:*",
     "@webbo-ui/use-callback-ref": "workspace:*",
     "@webbo-ui/use-scroll-lock": "workspace:*",
     "@webbo-ui/focus-trap": "workspace:*",

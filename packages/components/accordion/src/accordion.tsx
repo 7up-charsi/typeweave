@@ -2,7 +2,6 @@ import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { Icon } from '@webbo-ui/icon';
 import React, { forwardRef, useId, useMemo } from 'react';
-import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import { createCollection } from '@webbo-ui/use-collection';
 import { CustomError } from '@webbo-ui/error';
 import { Slot } from '@webbo-ui/slot';
@@ -269,35 +268,21 @@ export interface TriggerProps
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const {
-      asChild,
-      className,
-      onPointerDown,
-      onPointerUp,
-      children,
-      disabled,
-      ...restProps
-    } = props;
+    const { asChild, className, children, disabled, ...restProps } = props;
 
     const rootContext = useRootContext(TRIGGER_NAME);
     const itemContext = useItemContext(TRIGGER_NAME);
 
     const isExpended = itemContext.isExpended;
 
+    const styles = useStylesContext(TRIGGER_NAME);
+
+    const getItems = useCollection();
+
     const onPress = () => {
       if (isExpended) rootContext.onCollapse(itemContext.value);
       else rootContext.onExpand(itemContext.value);
     };
-
-    const poitnerEvents = usePointerEvents({
-      onPress,
-      onPointerDown,
-      onPointerUp,
-    });
-
-    const styles = useStylesContext(TRIGGER_NAME);
-
-    const getItems = useCollection();
 
     const onKeyDown = (e: React.KeyboardEvent) => {
       if (rootContext.disabled) return;
@@ -348,7 +333,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           aria-expanded={isExpended}
           aria-controls={itemContext.contentId}
           data-expanded={isExpended}
-          {...poitnerEvents}
+          onPress={onPress}
         >
           {children}
         </Comp>

@@ -103,15 +103,9 @@ export interface TriggerProps
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { onPointerDown, onPointerUp, ...restProps } = props;
+    const { ...restProps } = props;
 
     const rootContext = useRootContext(Trigger_Name);
-
-    const pointerEvents = usePointerEvents({
-      onPress: rootContext.handleOpen,
-      onPointerDown,
-      onPointerUp,
-    });
 
     return (
       <Popper.Reference>
@@ -122,7 +116,8 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           aria-haspopup="menu"
           aria-expanded={rootContext.isOpen}
           aria-controls={rootContext.isOpen ? rootContext.id : undefined}
-          {...pointerEvents}
+          // @ts-expect-error onPress does not exist
+          onPress={rootContext.handleOpen}
           onKeyDown={(e: React.KeyboardEvent) => {
             const key = e.key;
 

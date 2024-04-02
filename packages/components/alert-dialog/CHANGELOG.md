@@ -1,5 +1,12 @@
 # @webbo-ui/alert-dialog
 
+## 1.0.3
+
+### Patch Changes
+
+- fix: does not open onKeyDown
+  - @webbo-ui/focus-trap@1.0.1
+
 ## 1.0.2
 
 ### Patch Changes

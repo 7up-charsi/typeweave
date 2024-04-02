@@ -1,5 +1,11 @@
 # @webbo-ui/accordion
 
+## 1.0.3
+
+### Patch Changes
+
+- fix: does not open onKeyDown
+
 ## 1.0.2
 
 ### Patch Changes
