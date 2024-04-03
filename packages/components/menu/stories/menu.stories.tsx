@@ -35,8 +35,7 @@ const Template = (args) => {
           <Menu.Menu aria-roledescription="control menu" className="w-[170px]">
             <Menu.Arrow />
 
-            <Menu.Label>actions</Menu.Label>
-            <Menu.Group aria-label="actions">
+            <Menu.Group label="actions">
               <Menu.Item>add</Menu.Item>
               <Menu.Item>edit</Menu.Item>
               <Menu.Item disabled>delete</Menu.Item>
@@ -44,8 +43,7 @@ const Template = (args) => {
 
             <Menu.Separator />
 
-            <Menu.Label>Status</Menu.Label>
-            <Menu.Group aria-label="status">
+            <Menu.Group label="status">
               <Menu.CheckboxItem checked={favrouite} onChange={setFavrouite}>
                 active
               </Menu.CheckboxItem>
@@ -56,9 +54,8 @@ const Template = (args) => {
 
             <Menu.Separator />
 
-            <Menu.Label>Current Bill</Menu.Label>
             <Menu.RadioGroup
-              aria-label="current bill"
+              label="current bill"
               onChange={setRadioValue}
               value={radioValue}
             >

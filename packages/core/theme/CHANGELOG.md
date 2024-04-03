@@ -1,5 +1,11 @@
 # @webbo-ui/theme
 
+## 1.0.6
+
+### Patch Changes
+
+- fix(Menu): styles
+
 ## 1.0.5
 
 ### Patch Changes

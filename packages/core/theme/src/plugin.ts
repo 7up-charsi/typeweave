@@ -8,6 +8,8 @@ import kebabcase from 'lodash.kebabcase';
 type ColorScale = Record<string, string>;
 
 type ThemeColors = {
+  background?: string;
+  foreground?: string;
   primary?: ColorScale;
   secondary?: ColorScale;
   success?: ColorScale;
@@ -45,6 +47,8 @@ export const createColorScale = (color: ColorScale) =>
 const defaultLightTheme: Theme = {
   base: 'light',
   colors: {
+    background: '#ffffff',
+    foreground: colors.gray.gray11,
     primary: createColorScale(colors.violet),
     secondary: createColorScale(colors.plum),
     success: createColorScale(colors.green),
@@ -61,6 +65,8 @@ const defaultLightTheme: Theme = {
 const defaultDarkTheme: Theme = {
   base: 'dark',
   colors: {
+    background: colors.grayDark.gray1,
+    foreground: colors.grayDark.gray11,
     primary: createColorScale(colors.violetDark),
     secondary: createColorScale(colors.plumDark),
     success: createColorScale(colors.greenDark),
