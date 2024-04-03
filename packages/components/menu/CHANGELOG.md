@@ -1,5 +1,11 @@
 # @webbo-ui/menu
 
+## 1.0.8
+
+### Patch Changes
+
+- feat(Menu): add escape key close
+
 ## 1.0.7
 
 ### Patch Changes

@@ -10,7 +10,14 @@ import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { createCollection } from '@webbo-ui/use-collection';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
-import { forwardRef, useEffect, useId, useMemo, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import { Icon } from '@webbo-ui/icon';
 
@@ -47,6 +54,7 @@ export interface RootProps {
   isOpen?: boolean;
   onOpenChange?: (isOpen: boolean) => void;
   loop?: boolean;
+  disableCloseOnEscape?: boolean;
 }
 
 export const Root = (props: RootProps) => {
@@ -56,6 +64,7 @@ export const Root = (props: RootProps) => {
     isOpen: isOpenProp,
     onOpenChange,
     loop,
+    disableCloseOnEscape,
   } = props;
 
   const [isOpen, setIsOpen] = useControllableState({
@@ -75,6 +84,22 @@ export const Root = (props: RootProps) => {
     setIsOpen(false);
     triggerRef.current?.focus();
   });
+
+  React.useEffect(() => {
+    if (disableCloseOnEscape) return;
+
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleClose();
+      }
+    };
+
+    document.addEventListener('keydown', handler);
+
+    return () => {
+      document.removeEventListener('keydown', handler);
+    };
+  }, [disableCloseOnEscape, handleClose]);
 
   return (
     <RootProvider
