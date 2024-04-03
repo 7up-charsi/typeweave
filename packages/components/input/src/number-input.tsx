@@ -7,8 +7,8 @@ import { CustomError } from '@webbo-ui/error';
 import { Icon } from '@webbo-ui/icon';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 
-export interface NumberInputProps extends Omit<InputProps, 'type'> {
-  classNames?: InputProps['classNames'] & {
+export interface NumberInputProps extends Omit<InputProps<false>, 'type'> {
+  classNames?: InputProps<false>['classNames'] & {
     buttonsBase?: string;
     increaseButton?: string;
     decreaseButton?: string;

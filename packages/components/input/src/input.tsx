@@ -2,23 +2,31 @@ import { input, InputClassNames, InputVariantProps } from '@webbo-ui/theme';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { forwardRef, useEffect, useId, useRef } from 'react';
 
-export interface InputProps
-  extends InputVariantProps,
-    React.InputHTMLAttributes<HTMLInputElement> {
+type InputBaseProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement>;
+  inputRef?: React.ForwardedRef<HTMLInputElement>;
+  textareaRef?: undefined;
+  classNames?: Omit<InputClassNames, 'textarea'>;
+  startContent?: React.ReactNode;
+  endContent?: React.ReactNode;
+};
+
+type TextareaBaseProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  textareaRef?: React.ForwardedRef<HTMLTextAreaElement>;
+  classNames?: Omit<InputClassNames, 'input'>;
+};
+
+type BaseProps = InputVariantProps & {
   defaultValue?: string;
   value?: string;
   label?: string;
   id?: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  onBlur?: React.FocusEventHandler<HTMLInputElement>;
-  onFocus?: React.FocusEventHandler<HTMLInputElement>;
   required?: boolean;
   helperText?: string;
   errorMessage?: string;
   hideLabel?: boolean;
-  startContent?: React.ReactNode;
-  endContent?: React.ReactNode;
-  classNames?: InputClassNames;
   className?: string;
   placeholder?: string;
   baseProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
@@ -26,10 +34,24 @@ export interface InputProps
   helperTextProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   inputWrapperProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   baseRef?: React.ForwardedRef<HTMLDivElement>;
-  inputRef?: React.ForwardedRef<HTMLInputElement>;
-}
+};
 
-const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
+export type InputProps<Multiline> = BaseProps &
+  (Multiline extends true
+    ? TextareaBaseProps & {
+        multiline: Multiline;
+      }
+    : InputBaseProps & {
+        multiline?: false;
+      });
+
+type InputImplProps = BaseProps & { multiline?: boolean } & InputBaseProps &
+  TextareaBaseProps;
+
+const InputImpl = (
+  props: InputImplProps,
+  ref: React.ForwardedRef<HTMLDivElement>,
+) => {
   const {
     label,
     id,
@@ -56,6 +78,8 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     inputWrapperProps = {},
     fullWidth = false,
     disabled = false,
+    multiline,
+    textareaRef,
     ...restProps
   } = props;
 
@@ -65,6 +89,7 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
   const inputId = id || labelId;
 
   const innerInputRef = useRef<HTMLInputElement | null>(null);
+  const innerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production' && !label) {
@@ -79,7 +104,25 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     fullWidth,
     required: !!required,
     error: !!error,
+    multiline,
   });
+
+  const sharedProps = {
+    onFocus,
+    onBlur,
+    value,
+    defaultValue,
+    'aria-label': hideLabel ? label : undefined,
+    'aria-describedby': helperText ? helperTextId : undefined,
+    'aria-errormessage': error && errorMessage ? errorMessageId : undefined,
+    'aria-required': required,
+    'aria-invalid': error,
+    id: inputId,
+    disabled,
+    placeholder,
+    onChange,
+    autoComplete: 'off',
+  };
 
   return (
     <div
@@ -109,13 +152,14 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
           if (e.target === e.currentTarget) {
             e.preventDefault();
             innerInputRef.current?.focus();
+            innerTextareaRef.current?.focus();
             return;
           }
         }}
         ref={ref}
         className={styles.inputWrapper({ className: classNames?.inputWrapper })}
       >
-        {!!startContent && (
+        {!!startContent && !multiline && (
           <span
             className={styles.startContent({
               className: classNames?.startContent,
@@ -125,27 +169,28 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
           </span>
         )}
 
-        <input
-          {...restProps}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          ref={mergeRefs(innerInputRef, inputRef)}
-          value={value}
-          defaultValue={defaultValue}
-          aria-label={hideLabel ? label : undefined}
-          aria-describedby={helperText ? helperTextId : undefined}
-          aria-errormessage={error && errorMessage ? errorMessageId : undefined}
-          aria-required={required}
-          aria-invalid={error}
-          id={inputId}
-          disabled={disabled}
-          placeholder={placeholder}
-          onChange={onChange}
-          className={styles.input({ className: classNames?.input })}
-          autoComplete="off"
-        />
+        {!multiline ? null : (
+          <textarea
+            rows={5}
+            {...restProps}
+            className={styles.textarea({
+              className: classNames?.textarea,
+            })}
+            ref={mergeRefs(innerTextareaRef, textareaRef)}
+            {...sharedProps}
+          ></textarea>
+        )}
 
-        {!!endContent && (
+        {multiline ? null : (
+          <input
+            {...restProps}
+            className={styles.input({ className: classNames?.input })}
+            ref={mergeRefs(innerInputRef, inputRef)}
+            {...sharedProps}
+          />
+        )}
+
+        {!!endContent && !multiline && (
           <span
             className={styles.endContent({
               className: classNames?.endContent,
@@ -178,8 +223,12 @@ const Input = forwardRef<HTMLDivElement, InputProps>((props, ref) => {
       )}
     </div>
   );
-});
+};
 
-Input.displayName = 'webbo-ui.Input';
+InputImpl.displayName = 'webbo-ui.Input';
 
-export default Input;
+export default forwardRef(InputImpl) as unknown as <
+  Multiline extends boolean = false,
+>(
+  props: InputProps<Multiline> & React.RefAttributes<HTMLDivElement>,
+) => React.ReactNode;

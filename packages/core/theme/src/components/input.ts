@@ -8,7 +8,7 @@ export const input = tv({
     label:
       'first-letter:uppercase cursor-pointer self-start px-1 text-sm font-semibold leading-none text-muted-11 mb-2',
     inputWrapper: [
-      'w-full relative flex items-center gap-x-2 rounded px-3 cursor-text bg-transparent border border-muted-7 hover:border-muted-8 focus-within:hover:border-transparent focus-within:border-transparent',
+      'w-full relative flex items-center gap-x-2 rounded px-3 cursor-text bg-transparent border border-muted-7 hover:border-muted-8 focus-within:hover:border-transparent focus-within:border-transparent overflow-hidden',
       focusWithIn,
     ],
     input:
@@ -17,6 +17,8 @@ export const input = tv({
       'first-letter:uppercase px-1 pt-1 text-sm leading-none text-muted-10',
     startContent: 'flex gap-1 items-center text-base',
     endContent: 'flex gap-1 items-center text-base',
+    textarea:
+      'appearance-none bg-transparent outline-none grow w-0 text-muted-11 placeholder:text-muted-11/80 text-sm resize-none',
   },
   variants: {
     fullWidth: { true: { base: 'w-full' } },
@@ -31,6 +33,14 @@ export const input = tv({
       true: {
         label: 'text-danger-11',
         helperText: 'text-danger-11',
+      },
+    },
+    multiline: {
+      true: {
+        inputWrapper: 'p-0',
+        textarea: 'p-3',
+        startContent: 'hidden',
+        endContent: 'hidden',
       },
     },
   },

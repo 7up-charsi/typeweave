@@ -57,7 +57,7 @@ export const mapInputProps = ({
   isOpen,
   multiple,
   inputValue,
-}: RenderInputProps<unknown>): InputProps => {
+}: RenderInputProps<unknown>): InputProps<false> => {
   const styles = autocompleteInput({ multiple });
 
   return {
