@@ -4,7 +4,7 @@ import { Button } from '@webbo-ui/button';
 import { Icon } from '@webbo-ui/icon';
 import { passwordInput } from '@webbo-ui/theme';
 
-export interface PasswordInputProps extends Omit<InputProps, 'type'> {
+export interface PasswordInputProps extends Omit<InputProps<false>, 'type'> {
   /**
    * This prop value is used in `aria-label` of ToggleButton when it is not in pressed state
    */

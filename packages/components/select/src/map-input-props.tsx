@@ -54,7 +54,7 @@ export const mapInputProps = ({
   isOpen,
   inputValue,
   readOnly,
-}: RenderInputProps<unknown>): InputProps => {
+}: RenderInputProps<unknown>): InputProps<false> => {
   const styles = selectInput();
 
   return {

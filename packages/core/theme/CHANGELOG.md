@@ -1,5 +1,11 @@
 # @webbo-ui/theme
 
+## 1.0.3
+
+### Patch Changes
+
+- feat(Input): add multiline (textarea)
+
 ## 1.0.2
 
 ### Patch Changes

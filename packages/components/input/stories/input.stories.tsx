@@ -57,3 +57,11 @@ export const Number = {
     largeStep: 5,
   },
 };
+
+const MultilineTemplate = () => (
+  <InputComp required label="multiline input" multiline />
+);
+
+export const Multiline = {
+  render: MultilineTemplate,
+};
