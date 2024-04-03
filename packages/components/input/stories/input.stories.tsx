@@ -7,31 +7,41 @@ const meta = {
 
 export default meta;
 
-const InputTemplate = (args) => (
-  <InputComp
-    required
-    label="input label"
-    placeholder="Placeholder"
-    startContent={
-      args.startContent && <p className="text-muted-11 text-base">kg</p>
-    }
-    endContent={
-      args.endContent && <p className="text-muted-11 text-base">$$$</p>
-    }
-  />
+const InputTemplate = () => (
+  <div className="flex flex-col gap-5">
+    <InputComp
+      label="input label"
+      placeholder="Placeholder"
+      helperText="this input is optional"
+    />
+
+    <InputComp
+      required
+      label="input label"
+      placeholder="Placeholder"
+      error
+      errorMessage="this input is required"
+    />
+  </div>
 );
 
 export const Input = {
   render: InputTemplate,
 };
 
+const ContentTemplate = () => (
+  <InputComp
+    label="input label"
+    placeholder="Placeholder"
+    helperText="this input is optional"
+    startContent={<p className="text-sm">kg</p>}
+    endContent={<p className="text-sm">$$$</p>}
+  />
+);
+
 export const StartEndContent = {
   name: 'Start / End content',
-  render: InputTemplate,
-  args: {
-    startContent: 'kg',
-    endContent: '$$$',
-  },
+  render: ContentTemplate,
 };
 
 const PasswordTemplate = () => (

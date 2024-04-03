@@ -1,5 +1,11 @@
 # @webbo-ui/theme
 
+## 1.0.5
+
+### Patch Changes
+
+- feat(Input): seperate helpertext and errorMessage
+
 ## 1.0.4
 
 ### Patch Changes

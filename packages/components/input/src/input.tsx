@@ -32,8 +32,10 @@ type BaseProps = InputVariantProps & {
   baseProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   labelProps?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'className'>;
   helperTextProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
+  errorMessageProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   inputWrapperProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   baseRef?: React.ForwardedRef<HTMLDivElement>;
+  error?: boolean;
 };
 
 export type InputProps<Multiline> = BaseProps &
@@ -76,6 +78,7 @@ const InputImpl = (
     labelProps = {},
     helperTextProps = {},
     inputWrapperProps = {},
+    errorMessageProps = {},
     fullWidth = false,
     disabled = false,
     multiline,
@@ -103,7 +106,6 @@ const InputImpl = (
     disabled,
     fullWidth,
     required: !!required,
-    error: !!error,
     multiline,
   });
 
@@ -213,10 +215,12 @@ const InputImpl = (
 
       {error && errorMessage && (
         <div
-          {...helperTextProps}
+          {...errorMessageProps}
           id={errorMessageId}
           aria-live="polite"
-          className={styles.helperText({ className: classNames?.helperText })}
+          className={styles.errorMessage({
+            className: classNames?.errorMessage,
+          })}
         >
           {errorMessage}
         </div>

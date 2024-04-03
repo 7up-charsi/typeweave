@@ -1,5 +1,13 @@
 # @webbo-ui/popover
 
+## 1.0.6
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/theme@1.0.5
+  - @webbo-ui/focus-trap@1.0.1
+
 ## 1.0.5
 
 ### Patch Changes
