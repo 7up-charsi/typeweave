@@ -1,5 +1,11 @@
 # @webbo-ui/theme
 
+## 1.0.4
+
+### Patch Changes
+
+- fix(Theme): switch outline
+
 ## 1.0.3
 
 ### Patch Changes
