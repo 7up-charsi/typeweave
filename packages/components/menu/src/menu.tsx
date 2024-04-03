@@ -402,6 +402,7 @@ export interface ItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
     itemContent?: string;
   };
   onPress?: () => void;
+  icon?: React.ReactNode;
 }
 
 const ItemImp = forwardRef<HTMLLIElement, ItemProps & { className?: string }>(
@@ -461,6 +462,7 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
     classNames,
     className,
     disabled,
+    icon,
     ...restProps
   } = props;
 
@@ -481,11 +483,16 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
         onPress?.();
       }}
     >
-      <span
-        className={stylesContext.itemIcon({
-          className: classNames?.itemIcon,
-        })}
-      ></span>
+      {!!icon && (
+        <span
+          className={stylesContext.itemIcon({
+            className: classNames?.itemIcon,
+          })}
+        >
+          {icon}
+        </span>
+      )}
+
       <span
         className={stylesContext.itemContent({
           className: classNames?.itemContent,
@@ -499,47 +506,39 @@ export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
 
 Item.displayName = 'webbo-ui.' + Item_Name;
 
-// *-*-*-*-* Label *-*-*-*-*
-
-const Label_Name = 'Menu.Label';
-
-export interface LabelProps extends React.LiHTMLAttributes<HTMLLIElement> {}
-
-export const Label = forwardRef<HTMLLIElement, LabelProps>((props, ref) => {
-  const { className, ...restProps } = props;
-
-  const stylesContext = useStylesContext(Label_Name);
-
-  return (
-    <li
-      {...restProps}
-      ref={ref}
-      role="none"
-      className={stylesContext.label({ className })}
-    />
-  );
-});
-
-Label.displayName = 'webbo-ui.' + Label_Name;
-
 // *-*-*-*-* Group *-*-*-*-*
 
 const Group_Name = 'Menu.Group';
 
-export interface GroupProps extends React.HTMLAttributes<HTMLUListElement> {}
+export interface GroupProps extends React.HTMLAttributes<HTMLUListElement> {
+  label: React.ReactNode;
+  classNames?: {
+    label?: string;
+    group?: string;
+  };
+}
 
 export const Group = forwardRef<HTMLUListElement, GroupProps>((props, ref) => {
-  const { className, ...restProps } = props;
+  const { className, classNames, label, ...restProps } = props;
 
   const stylesContext = useStylesContext(Group_Name);
 
   return (
     <li role="none">
+      <div
+        role="presentation"
+        className={stylesContext.label({ className: classNames?.label })}
+      >
+        {label}
+      </div>
+
       <ul
         {...restProps}
         ref={ref}
         role="group"
-        className={stylesContext.group({ className })}
+        className={stylesContext.group({
+          className: classNames?.group ?? className,
+        })}
       />
     </li>
   );

@@ -13,7 +13,6 @@ export type {
   SeparatorProps,
   RootProps,
   RadioItemProps,
-  LabelProps,
 } from './menu';
 
 // export component
@@ -23,7 +22,6 @@ export const Portal = menu.Portal;
 export const Menu = menu.Menu;
 export const Item = menu.Item;
 export const Group = menu.Group;
-export const Label = menu.Label;
 export const CheckboxItem = menu.CheckboxItem;
 export const RadioGroup = menu.RadioGroup;
 export const RadioItem = menu.RadioItem;
