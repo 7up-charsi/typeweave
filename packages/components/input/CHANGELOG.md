@@ -1,5 +1,14 @@
 # @webbo-ui/input
 
+## 1.0.6
+
+### Patch Changes
+
+- feat(Input): seperate helpertext and errorMessage
+- Updated dependencies
+  - @webbo-ui/theme@1.0.5
+  - @webbo-ui/button@1.0.6
+
 ## 1.0.5
 
 ### Patch Changes

@@ -182,6 +182,7 @@ export const WebboUi = (config: PluginConfig = {}) => {
       darkMode: 'class',
       theme: {
         extend: {
+          fontFamily: { sans: 'Segoe UI' },
           colors: pluginColors,
           borderRadius: {
             DEFAULT: 'var(--border-radius)',
