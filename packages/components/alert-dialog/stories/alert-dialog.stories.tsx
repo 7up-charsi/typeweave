@@ -13,17 +13,17 @@ export default meta;
 const Template = () => (
   <AlertDialog.Root defaultOpen>
     <AlertDialog.Trigger>
-      <Button>Open alert dialog</Button>
+      <Button color="danger">delete account</Button>
     </AlertDialog.Trigger>
 
     <AlertDialog.Portal>
       <AlertDialog.Overlay />
 
       <AlertDialog.Content>
-        <AlertDialog.Title>Lorem ipsum dolor, sit amet?</AlertDialog.Title>
+        <AlertDialog.Title>Are your sure...?</AlertDialog.Title>
         <AlertDialog.Description>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo
-          quasi
+          this action can not be undone. it will delete account and all of your
+          saved content.
         </AlertDialog.Description>
         <AlertDialog.Actions>
           <AlertDialog.Close>
