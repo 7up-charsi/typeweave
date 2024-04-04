@@ -1,5 +1,11 @@
 # @webbo-ui/menu
 
+## 1.0.10
+
+### Patch Changes
+
+- fix(Menu): incorrect return focus
+
 ## 1.0.9
 
 ### Patch Changes
