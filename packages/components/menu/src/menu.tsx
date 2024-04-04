@@ -81,6 +81,8 @@ export const Root = (props: RootProps) => {
   });
 
   const handleClose = useCallbackRef(() => {
+    if (!isOpen) return;
+
     setIsOpen(false);
     triggerRef.current?.focus();
   });

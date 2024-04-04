@@ -1,5 +1,13 @@
 # @webbo-ui/docs
 
+## 0.1.11
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/menu@1.0.10
+  - @webbo-ui/themes@1.0.1
+
 ## 0.1.10
 
 ### Patch Changes
