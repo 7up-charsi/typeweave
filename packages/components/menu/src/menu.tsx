@@ -391,10 +391,6 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
               onkeydown(e);
               handleCharSearch(e);
             }}
-            onPointerLeave={(e) => {
-              restProps.onPointerLeave?.(e);
-              setFocused('');
-            }}
           >
             <StylesProvider {...styles}>
               <VisuallyHidden>
@@ -462,6 +458,10 @@ const ItemImp = forwardRef<HTMLLIElement, ItemProps & { className?: string }>(
             restProps.onPointerEnter?.(e);
             if (disabled) return;
             menuContext.setFocused(id);
+          }}
+          onPointerLeave={(e) => {
+            restProps.onPointerLeave?.(e);
+            menuContext.setFocused('');
           }}
           {...pointerEvents}
           onKeyDown={(e) => {

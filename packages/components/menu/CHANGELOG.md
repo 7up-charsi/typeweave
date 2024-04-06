@@ -1,5 +1,11 @@
 # @webbo-ui/menu
 
+## 1.0.11
+
+### Patch Changes
+
+- fix(Menu): on item leave focused stays
+
 ## 1.0.10
 
 ### Patch Changes
