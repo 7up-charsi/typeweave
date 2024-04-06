@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { menu } from '@webbo-ui/theme';
 import { Button } from '@webbo-ui/button';
 import * as Menu from '../src';
@@ -11,12 +11,12 @@ const meta = {
 export default meta;
 
 const Template = (args) => {
-  const ref = useRef<HTMLButtonElement>(null);
+  const ref = React.useRef<HTMLButtonElement>(null);
 
-  const [favrouite, setFavrouite] = useState(true);
-  const [radioValue, setRadioValue] = useState('radio item 1');
+  const [favrouite, setFavrouite] = React.useState(true);
+  const [radioValue, setRadioValue] = React.useState('radio item 1');
 
-  useEffect(() => {
+  React.useEffect(() => {
     ref.current?.scrollIntoView({
       behavior: 'instant',
       block: 'center',

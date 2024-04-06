@@ -1,5 +1,11 @@
 # @webbo-ui/overlay
 
+## 1.0.8
+
+### Patch Changes
+
+- refractor: use default React export
+
 ## 1.0.7
 
 ### Patch Changes

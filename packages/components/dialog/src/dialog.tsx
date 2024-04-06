@@ -7,9 +7,10 @@ import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { createPortal } from 'react-dom';
 import { FocusTrap, FocusScope } from '@webbo-ui/focus-trap';
 import { createContextScope } from '@webbo-ui/context';
-import { forwardRef, useEffect, useId, useMemo, useRef } from 'react';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { DialogVariantProps, dialog } from '@webbo-ui/theme';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
+import React from 'react';
 
 type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
 
@@ -24,7 +25,7 @@ interface RootContext {
   contentId: string;
   titleId: string;
   descriptionId: string;
-  triggerRef: React.RefObject<HTMLButtonElement>;
+  triggerRef: React.MutableRefObject<HTMLElement | null>;
 }
 
 const Root_Name = 'Dialog.Root';
@@ -78,12 +79,12 @@ export const Root = (props: RootProps) => {
     keepMounted = false,
   } = props;
 
-  const contentId = useId();
-  const titleId = useId();
-  const descriptionId = useId();
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const contentId = React.useId();
+  const titleId = React.useId();
+  const descriptionId = React.useId();
+  const triggerRef = React.useRef<HTMLButtonElement | null>(null);
 
-  const focusScope = useRef<FocusScope>({
+  const focusScope = React.useRef<FocusScope>({
     paused: false,
     pause() {
       this.paused = true;
@@ -117,7 +118,7 @@ export const Root = (props: RootProps) => {
     if (!eventObj.defaultPrevented) setOpen(false);
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isOpen) return;
 
     const handleKeydown = (e: KeyboardEvent) => {
@@ -157,22 +158,57 @@ Root.displayName = 'webbo-ui.' + Root_Name;
 const Trigger_Name = 'Dialog.Trigger';
 
 export interface TriggerProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  virtualElement?: HTMLElement | null;
+}
 
-export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
+export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { ...restProps } = props;
+    const { virtualElement, ...restProps } = props;
 
     const rootContext = useRootContext(Trigger_Name);
+
+    const pointerEvents = usePointerEvents({ onPress: rootContext.handleOpen });
+
+    const ariaHaspopup = 'dialog';
+    const ariaExpanded = rootContext.isOpen;
+    const ariaControls = rootContext.isOpen ? rootContext.contentId : undefined;
+
+    React.useEffect(() => {
+      if (!virtualElement) return;
+
+      virtualElement.ariaExpanded = ariaExpanded + '';
+      virtualElement.ariaHasPopup = ariaHaspopup;
+
+      rootContext.triggerRef.current = virtualElement;
+
+      // @ts-expect-error ----
+      virtualElement.onpointerdown = pointerEvents.onPointerDown;
+
+      // @ts-expect-error ----
+      virtualElement.onpointerup = pointerEvents.onPointerUp;
+    }, [
+      ariaExpanded,
+      pointerEvents.onPointerDown,
+      pointerEvents.onPointerUp,
+      rootContext.triggerRef,
+      virtualElement,
+    ]);
+
+    if (virtualElement) return null;
 
     return (
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
         {...restProps}
-        // @ts-expect-error onPress does not exist
-        onPress={rootContext.handleOpen}
-        ref={mergeRefs(ref, rootContext.triggerRef)}
-        aria-expanded={rootContext.isOpen}
-        aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
+        {...pointerEvents}
+        ref={mergeRefs(
+          ref,
+          rootContext.triggerRef as React.MutableRefObject<HTMLButtonElement | null>,
+        )}
+        role="button"
+        aria-haspopup={ariaHaspopup}
+        aria-expanded={ariaExpanded}
+        aria-controls={ariaControls}
       />
     );
   },
@@ -187,21 +223,19 @@ const Close_Name = 'Dialog.Close';
 export interface CloseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Close = forwardRef<HTMLButtonElement, TriggerProps>(
+export const Close = React.forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
     const { ...restProps } = props;
 
     const { handleClose } = useRootContext(Close_Name);
 
-    return (
-      <Slot
-        {...restProps}
-        ref={ref}
-        onPress={() => {
-          handleClose('pointer');
-        }}
-      />
-    );
+    const pointerEvents = usePointerEvents({
+      onPress: () => {
+        handleClose('pointer');
+      },
+    });
+
+    return <Slot {...restProps} ref={ref} {...pointerEvents} />;
   },
 );
 
@@ -241,21 +275,23 @@ const Title_Name = 'Dialog.Title';
 
 export interface TitleProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Title = forwardRef<HTMLDivElement, TitleProps>((props, ref) => {
-  const { className, ...restProps } = props;
+export const Title = React.forwardRef<HTMLDivElement, TitleProps>(
+  (props, ref) => {
+    const { className, ...restProps } = props;
 
-  const rootContext = useRootContext(Title_Name);
-  const styles = useStylesContext(Description_Name);
+    const rootContext = useRootContext(Title_Name);
+    const styles = useStylesContext(Description_Name);
 
-  return (
-    <div
-      {...restProps}
-      ref={ref}
-      id={rootContext.titleId}
-      className={styles.title({ className })}
-    />
-  );
-});
+    return (
+      <div
+        {...restProps}
+        ref={ref}
+        id={rootContext.titleId}
+        className={styles.title({ className })}
+      />
+    );
+  },
+);
 
 Title.displayName = 'webbo-ui.' + Title_Name;
 
@@ -266,7 +302,7 @@ const Description_Name = 'Dialog.Description';
 export interface DescriptionProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Description = forwardRef<HTMLDivElement, TitleProps>(
+export const Description = React.forwardRef<HTMLDivElement, TitleProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
 
@@ -297,7 +333,7 @@ export interface ContentProps
   noA11yDescription?: boolean;
 }
 
-export const Content = forwardRef<HTMLDivElement, ContentProps>(
+export const Content = React.forwardRef<HTMLDivElement, ContentProps>(
   (props, ref) => {
     const {
       children,
@@ -315,13 +351,14 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     const setOutsideEle = useClickOutside({
       callback: (e) => {
         if (rootContext.triggerRef.current?.contains(e.target as Node)) return;
+
         if ((e.target as HTMLElement).closest('[role=dialog]')) return;
 
         rootContext.handleClose('outside');
       },
     });
 
-    const styles = useMemo(() => dialog({ shadow }), [shadow]);
+    const styles = React.useMemo(() => dialog({ shadow }), [shadow]);
 
     return (
       <StylesProvider {...styles}>

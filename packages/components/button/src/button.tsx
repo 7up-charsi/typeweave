@@ -6,19 +6,10 @@ import {
   ButtonGroupVariantProps,
   ButtonVariantProps,
 } from '@webbo-ui/theme';
-import {
-  cloneElement,
-  createContext,
-  forwardRef,
-  isValidElement,
-  ReactNode,
-  useContext,
-  useEffect,
-  useRef,
-} from 'react';
 import { Slot } from '@webbo-ui/slot';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import { accessibilityWarning } from '@webbo-ui/error';
+import React from 'react';
 
 interface GroupContext extends ButtonVariantProps {
   disabled?: boolean;
@@ -26,7 +17,7 @@ interface GroupContext extends ButtonVariantProps {
 
 // *-*-*-*-* ButtonGroup *-*-*-*-*
 
-const Context = createContext<GroupContext | null>(null);
+const Context = React.createContext<GroupContext | null>(null);
 
 export interface ButtonGroupProps
   extends Pick<ButtonVariantProps, 'color' | 'size' | 'variant'>,
@@ -35,7 +26,7 @@ export interface ButtonGroupProps
   disabled?: boolean;
 }
 
-export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
+export const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
   (props, ref) => {
     const {
       children,
@@ -74,16 +65,16 @@ ButtonGroup.displayName = 'webbo-ui.ButtonGroup';
 export interface ButtonProps
   extends Omit<ButtonVariantProps, 'isInGroup'>,
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'> {
-  startContent?: ReactNode;
-  endContent?: ReactNode;
+  startContent?: React.ReactNode;
+  endContent?: React.ReactNode;
   classNames?: ButtonClassNames;
-  children?: ReactNode;
+  children?: React.ReactNode;
   asChild?: boolean;
   onPress?: (e: React.PointerEvent<HTMLButtonElement>) => void;
   excludeFromTabOrder?: boolean;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     const {
       startContent,
@@ -106,9 +97,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       ...buttonProps
     } = props;
 
-    const groupContext = useContext(Context);
+    const groupContext = React.useContext(Context);
 
-    const innerRef = useRef<HTMLButtonElement | null>(null);
+    const innerRef = React.useRef<HTMLButtonElement | null>(null);
 
     const disabled = _disabled ?? groupContext?.disabled;
 
@@ -123,7 +114,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      useEffect(() => {
+      React.useEffect(() => {
         if (isIconOnly && !ariaLabel && !ariaLabelledby)
           accessibilityWarning(
             'Button',
@@ -181,8 +172,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         }}
       >
         {asChild ? (
-          isValidElement(children) &&
-          cloneElement(children, {
+          React.isValidElement(children) &&
+          React.cloneElement(children, {
             children: (
               <>
                 {__startContent}

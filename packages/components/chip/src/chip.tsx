@@ -1,8 +1,8 @@
-import { forwardRef, useEffect } from 'react';
 import { ChipClassNames, ChipVariantProps, chip } from '@webbo-ui/theme';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import { accessibilityWarning } from '@webbo-ui/error';
 import { Icon } from '@webbo-ui/icon';
+import React from 'react';
 
 const delete_svg = (
   <Icon>
@@ -31,7 +31,7 @@ export interface ChipProps
   excludeFromTabOrder?: boolean;
 }
 
-const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
+const Chip = React.forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
   const {
     label,
     avatar,
@@ -72,7 +72,7 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
 
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
+    React.useEffect(() => {
       if (!ariaLabel && !ariaLabelledby)
         accessibilityWarning(
           'Chip',

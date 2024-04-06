@@ -1,9 +1,9 @@
 'use client';
 
-import { forwardRef } from 'react';
 import { AlertVariantProps, alert as alertStyles } from '@webbo-ui/theme';
 import { Button } from '@webbo-ui/button';
 import { Icon } from '@webbo-ui/icon';
+import React from 'react';
 
 const success = (
   <Icon>
@@ -86,46 +86,48 @@ export interface AlertProps
   onClose?: () => void;
 }
 
-export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
-  const {
-    variant = 'flat',
-    color = 'danger',
-    children,
-    title,
-    onClose,
-    action,
-    fullWidth = true,
-    icon = icons[color || 'danger'],
-    ...restProps
-  } = props;
+export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  (props, ref) => {
+    const {
+      variant = 'flat',
+      color = 'danger',
+      children,
+      title,
+      onClose,
+      action,
+      fullWidth = true,
+      icon = icons[color || 'danger'],
+      ...restProps
+    } = props;
 
-  const styles = alertStyles({ color, fullWidth, variant });
+    const styles = alertStyles({ color, fullWidth, variant });
 
-  return (
-    <div {...restProps} ref={ref} role="alert" className={styles.base()}>
-      {icon === false ? null : <div className={styles.icon()}>{icon}</div>}
+    return (
+      <div {...restProps} ref={ref} role="alert" className={styles.base()}>
+        {icon === false ? null : <div className={styles.icon()}>{icon}</div>}
 
-      <div className={styles.content()}>
-        {title && <div className={styles.title()}>{title}</div>}
-        {children}
-      </div>
-
-      {action === false || !onClose ? null : (
-        <div className={styles.action()}>
-          {action || (
-            <Button
-              isIconOnly
-              size="sm"
-              color={color}
-              aria-label="remove alert"
-            >
-              {close_svg}
-            </Button>
-          )}
+        <div className={styles.content()}>
+          {title && <div className={styles.title()}>{title}</div>}
+          {children}
         </div>
-      )}
-    </div>
-  );
-});
+
+        {action === false || !onClose ? null : (
+          <div className={styles.action()}>
+            {action || (
+              <Button
+                isIconOnly
+                size="sm"
+                color={color}
+                aria-label="remove alert"
+              >
+                {close_svg}
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  },
+);
 
 Alert.displayName = 'webbo-ui.Alert';

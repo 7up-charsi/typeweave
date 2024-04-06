@@ -1,9 +1,10 @@
 import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
-import { forwardRef, useId, useMemo, useRef, useState } from 'react';
+import React from 'react';
 import { Slot } from '@webbo-ui/slot';
 import { TabsVariantProps, tabs } from '@webbo-ui/theme';
 import { createCollection } from '@webbo-ui/use-collection';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -49,56 +50,58 @@ const [Collection, useCollection] = createCollection<
   ItemData
 >('Tabs');
 
-export const Root = forwardRef<HTMLDivElement, RootProps>((props, ref) => {
-  const {
-    value: valueProp,
-    onValueChange,
-    defaultValue,
-    className,
-    loop,
-    orientation = 'horizontal',
-    activationMode = 'automatic',
-    ...restProps
-  } = props;
+export const Root = React.forwardRef<HTMLDivElement, RootProps>(
+  (props, ref) => {
+    const {
+      value: valueProp,
+      onValueChange,
+      defaultValue,
+      className,
+      loop,
+      orientation = 'horizontal',
+      activationMode = 'automatic',
+      ...restProps
+    } = props;
 
-  const [value, setValue] = useControllableState({
-    value: valueProp,
-    onChange: onValueChange,
-    defaultValue,
-  });
+    const [value, setValue] = useControllableState({
+      value: valueProp,
+      onChange: onValueChange,
+      defaultValue,
+    });
 
-  const [activeTabId, setActiveTabId] = useState('');
-  const [isTabbingBackOut, setIsTabbingBackOut] = useState(false);
+    const [activeTabId, setActiveTabId] = React.useState('');
+    const [isTabbingBackOut, setIsTabbingBackOut] = React.useState(false);
 
-  const baseId = useId();
+    const baseId = React.useId();
 
-  const styles = useMemo(() => tabs({ orientation }), [orientation]);
+    const styles = React.useMemo(() => tabs({ orientation }), [orientation]);
 
-  return (
-    <RootProvider
-      baseId={baseId}
-      value={value}
-      onValueChange={setValue}
-      orientation={orientation}
-      activationMode={activationMode}
-      activeTabId={activeTabId}
-      onTabChange={(id: string) => setActiveTabId(id)}
-      loop={loop}
-      isTabbingBackOut={isTabbingBackOut}
-      setIsTabbingBackOut={setIsTabbingBackOut}
-    >
-      <StylesProvider {...styles}>
-        <Collection.Provider>
-          <div
-            {...restProps}
-            ref={ref}
-            className={styles.wrapper({ className })}
-          />
-        </Collection.Provider>
-      </StylesProvider>
-    </RootProvider>
-  );
-});
+    return (
+      <RootProvider
+        baseId={baseId}
+        value={value}
+        onValueChange={setValue}
+        orientation={orientation}
+        activationMode={activationMode}
+        activeTabId={activeTabId}
+        onTabChange={(id: string) => setActiveTabId(id)}
+        loop={loop}
+        isTabbingBackOut={isTabbingBackOut}
+        setIsTabbingBackOut={setIsTabbingBackOut}
+      >
+        <StylesProvider {...styles}>
+          <Collection.Provider>
+            <div
+              {...restProps}
+              ref={ref}
+              className={styles.wrapper({ className })}
+            />
+          </Collection.Provider>
+        </StylesProvider>
+      </RootProvider>
+    );
+  },
+);
 
 Root.displayName = 'webbo-ui.' + ROOT_NAME;
 
@@ -108,45 +111,47 @@ export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const List_NAME = 'Tabs.List';
 
-export const List = forwardRef<HTMLDivElement, ListProps>((props, ref) => {
-  const { className, ...restProps } = props;
+export const List = React.forwardRef<HTMLDivElement, ListProps>(
+  (props, ref) => {
+    const { className, ...restProps } = props;
 
-  const context = useRootContext(List_NAME);
-  const styles = useStylesContext(List_NAME);
+    const context = useRootContext(List_NAME);
+    const styles = useStylesContext(List_NAME);
 
-  const getItems = useCollection();
-  const isClickFocusRef = useRef(false);
+    const getItems = useCollection();
+    const isClickFocusRef = React.useRef(false);
 
-  return (
-    <Collection.Parent>
-      <div
-        {...restProps}
-        ref={ref}
-        tabIndex={context.isTabbingBackOut ? -1 : 0}
-        role="tablist"
-        aria-orientation={context.orientation}
-        className={styles.list({ className })}
-        onPointerDown={() => {
-          isClickFocusRef.current = true;
-        }}
-        onBlur={() => context.setIsTabbingBackOut(false)}
-        onFocus={(e) => {
-          if (e.target === e.currentTarget && !context.isTabbingBackOut) {
-            const activeItems = getItems().filter(
-              (item) => !item.ref.current?.disabled,
-            );
+    return (
+      <Collection.Parent>
+        <div
+          {...restProps}
+          ref={ref}
+          tabIndex={context.isTabbingBackOut ? -1 : 0}
+          role="tablist"
+          aria-orientation={context.orientation}
+          className={styles.list({ className })}
+          onPointerDown={() => {
+            isClickFocusRef.current = true;
+          }}
+          onBlur={() => context.setIsTabbingBackOut(false)}
+          onFocus={(e) => {
+            if (e.target === e.currentTarget && !context.isTabbingBackOut) {
+              const activeItems = getItems().filter(
+                (item) => !item.ref.current?.disabled,
+              );
 
-            const activeItem = activeItems.find((item) => item.active);
+              const activeItem = activeItems.find((item) => item.active);
 
-            activeItem?.ref.current?.focus();
-          }
+              activeItem?.ref.current?.focus();
+            }
 
-          isClickFocusRef.current = false;
-        }}
-      />
-    </Collection.Parent>
-  );
-});
+            isClickFocusRef.current = false;
+          }}
+        />
+      </Collection.Parent>
+    );
+  },
+);
 
 List.displayName = 'webbo-ui.' + List_NAME;
 
@@ -159,7 +164,7 @@ export interface TriggerProps
 
 const Trigger_NAME = 'Tabs.Trigger';
 
-export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
+export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
     const { value, className, ...restProps } = props;
 
@@ -261,6 +266,8 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       context.onTabChange(triggerId);
     };
 
+    const pointerEvents = usePointerEvents({ onPress: handleClick });
+
     return (
       <Collection.Item active={isSelected}>
         <Slot
@@ -277,7 +284,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           id={triggerId}
           onKeyDown={onKeyDown}
           onFocus={onFocus}
-          onPress={handleClick}
+          {...pointerEvents}
         />
       </Collection.Item>
     );
@@ -294,7 +301,7 @@ export interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Content_NAME = 'Tabs.Content';
 
-export const Content = forwardRef<HTMLDivElement, ContentProps>(
+export const Content = React.forwardRef<HTMLDivElement, ContentProps>(
   (props, ref) => {
     const { value, className, ...contentProps } = props;
 

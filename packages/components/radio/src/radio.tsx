@@ -1,4 +1,4 @@
-import { forwardRef, useId } from 'react';
+import React from 'react';
 import { RadioClassNames, RadioVariantProps, radio } from '@webbo-ui/theme';
 import { Icon } from '@webbo-ui/icon';
 
@@ -39,7 +39,7 @@ export interface RadioProps
   checkedIcon?: React.ReactNode;
 }
 
-const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
+const Radio = React.forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   const {
     classNames,
     className,
@@ -54,7 +54,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
     ...inpuProps
   } = props;
 
-  const autoId = useId();
+  const autoId = React.useId();
   const id = idProp ?? autoId;
 
   const styles = radio({ labelPlacement, color, size });

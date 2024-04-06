@@ -1,7 +1,7 @@
 import { useMediaQuery } from '@webbo-ui/use-media-query';
 import { createContextScope } from '@webbo-ui/context';
 import { CustomError } from '@webbo-ui/error';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import React from 'react';
 
 const ThemeProvider_Name = 'Themes.ThemeProvider';
 
@@ -36,11 +36,11 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
 
   const matched = useMediaQuery('(prefers-color-scheme: dark)');
 
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = React.useState<string | null>(null);
 
-  const prevTheme = useRef('');
+  const prevTheme = React.useRef('');
 
-  const onThemeChange = useCallback(
+  const onThemeChange = React.useCallback(
     (theme: string) => {
       if (!theme)
         throw new CustomError(ThemeProvider_Name, '`theme` is required');
@@ -65,7 +65,7 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
     [darkTheme, dataAttribute, lightTheme, localStorageKey, matched],
   );
 
-  useLayoutEffect(() => {
+  React.useLayoutEffect(() => {
     onThemeChange(
       (localStorageKey ? localStorage.getItem(localStorageKey) : undefined) ??
         defaultTheme,

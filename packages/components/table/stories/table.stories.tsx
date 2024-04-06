@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { table } from '@webbo-ui/theme';
 import { Button } from '@webbo-ui/button';
 import { Checkbox } from '@webbo-ui/checkbox';
@@ -14,7 +14,7 @@ const meta = {
 export default meta;
 
 const Template = () => {
-  const selectedRows = useRef({});
+  const selectedRows = React.useRef({});
 
   return (
     <Table.Root

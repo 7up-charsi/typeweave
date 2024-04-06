@@ -1,5 +1,20 @@
 # @webbo-ui/alert-dialog
 
+## 1.0.10
+
+### Patch Changes
+
+- refractor: use default React export
+- Updated dependencies
+  - @webbo-ui/use-controllable-state@1.0.2
+  - @webbo-ui/use-pointer-events@1.0.2
+  - @webbo-ui/use-callback-ref@1.0.2
+  - @webbo-ui/focus-trap@1.0.3
+  - @webbo-ui/use-scroll-lock@1.0.2
+  - @webbo-ui/overlay@1.0.8
+  - @webbo-ui/slot@1.0.2
+  - @webbo-ui/context@1.0.2
+
 ## 1.0.9
 
 ### Patch Changes

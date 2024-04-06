@@ -1,5 +1,15 @@
 # @webbo-ui/popper
 
+## 1.0.2
+
+### Patch Changes
+
+- refractor: use default React export
+- Updated dependencies
+  - @webbo-ui/slot@1.0.2
+  - @webbo-ui/use-size@1.0.2
+  - @webbo-ui/context@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes

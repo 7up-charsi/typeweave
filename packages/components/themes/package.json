@@ -1,6 +1,6 @@
 {
   "name": "@webbo-ui/themes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "keywords": [
     "themes"
   ],
@@ -42,7 +42,6 @@
   },
   "devDependencies": {
     "clean-package": "^2.2.0",
-    "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/button": "workspace:*",
     "@webbo-ui/menu": "workspace:*"
   },

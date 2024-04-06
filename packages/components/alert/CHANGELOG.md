@@ -1,5 +1,14 @@
 # @webbo-ui/alert
 
+## 1.0.9
+
+### Patch Changes
+
+- refractor: use default React export
+- Updated dependencies
+  - @webbo-ui/button@1.0.9
+  - @webbo-ui/icon@1.0.2
+
 ## 1.0.8
 
 ### Patch Changes

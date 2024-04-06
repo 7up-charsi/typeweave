@@ -1,11 +1,12 @@
 import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { Icon } from '@webbo-ui/icon';
-import React, { forwardRef, useId, useMemo } from 'react';
+import React from 'react';
 import { createCollection } from '@webbo-ui/use-collection';
 import { CustomError } from '@webbo-ui/error';
 import { Slot } from '@webbo-ui/slot';
 import { accordion } from '@webbo-ui/theme';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -56,7 +57,7 @@ export type RootProps<Type, IsSingleCollapsible> = {
           isSingleCollapsible: IsSingleCollapsible;
         });
 
-const RootImpl = forwardRef<
+const RootImpl = React.forwardRef<
   HTMLDivElement,
   RootProps<'multiple' | 'single', true>
 >((props, ref) => {
@@ -107,7 +108,7 @@ const RootImpl = forwardRef<
     }
   };
 
-  const styles = useMemo(() => accordion(), []);
+  const styles = React.useMemo(() => accordion(), []);
 
   if (
     valueProp &&
@@ -190,39 +191,41 @@ export interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
 }
 
-export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
-  const { value, className, disabled, ...restProps } = props;
+export const Item = React.forwardRef<HTMLDivElement, ItemProps>(
+  (props, ref) => {
+    const { value, className, disabled, ...restProps } = props;
 
-  const rootContext = useRootContext(TRIGGER_NAME);
+    const rootContext = useRootContext(TRIGGER_NAME);
 
-  const triggerId = useId();
-  const contentId = useId();
+    const triggerId = React.useId();
+    const contentId = React.useId();
 
-  const styles = useStylesContext(ITEM_NAME);
+    const styles = useStylesContext(ITEM_NAME);
 
-  const isExpended =
-    rootContext.type === 'multiple'
-      ? Array.isArray(rootContext.value) &&
-        !!rootContext.value.find((ele) => ele === value)
-      : rootContext.value === value;
+    const isExpended =
+      rootContext.type === 'multiple'
+        ? Array.isArray(rootContext.value) &&
+          !!rootContext.value.find((ele) => ele === value)
+        : rootContext.value === value;
 
-  return (
-    <ItemProvider
-      value={value}
-      triggerId={triggerId}
-      contentId={contentId}
-      isExpended={isExpended}
-      disabled={disabled}
-    >
-      <div
-        {...restProps}
-        ref={ref}
-        className={styles.item({ className })}
-        data-expanded={isExpended}
-      />
-    </ItemProvider>
-  );
-});
+    return (
+      <ItemProvider
+        value={value}
+        triggerId={triggerId}
+        contentId={contentId}
+        isExpended={isExpended}
+        disabled={disabled}
+      >
+        <div
+          {...restProps}
+          ref={ref}
+          className={styles.item({ className })}
+          data-expanded={isExpended}
+        />
+      </ItemProvider>
+    );
+  },
+);
 
 Item.displayName = 'webbo-ui.' + ITEM_NAME;
 
@@ -234,7 +237,7 @@ export interface HeaderProps extends React.HTMLAttributes<HTMLHeadingElement> {
   asChild?: boolean;
 }
 
-export const Header = forwardRef<HTMLHeadingElement, HeaderProps>(
+export const Header = React.forwardRef<HTMLHeadingElement, HeaderProps>(
   (props, ref) => {
     const { asChild, className, ...restProps } = props;
 
@@ -266,7 +269,7 @@ export interface TriggerProps
   asChild?: boolean;
 }
 
-export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
+export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
     const { asChild, className, children, disabled, ...restProps } = props;
 
@@ -319,6 +322,8 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       if (End) elements[elements.length - 1]?.focus();
     };
 
+    const pointerEvents = usePointerEvents({ onPress });
+
     const Comp = asChild ? Slot : 'button';
 
     return (
@@ -333,7 +338,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           aria-expanded={isExpended}
           aria-controls={itemContext.contentId}
           data-expanded={isExpended}
-          onPress={onPress}
+          {...pointerEvents}
         >
           {children}
         </Comp>
@@ -351,25 +356,27 @@ const Arrow_NAME = 'Accordion.Arrow';
 export interface ArrowProps
   extends Omit<React.SVGProps<SVGSVGElement>, 'children'> {}
 
-export const Arrow = forwardRef<SVGSVGElement, ArrowProps>((props, ref) => {
-  const { className, ...restProps } = props;
+export const Arrow = React.forwardRef<SVGSVGElement, ArrowProps>(
+  (props, ref) => {
+    const { className, ...restProps } = props;
 
-  const styles = useStylesContext(Arrow_NAME);
+    const styles = useStylesContext(Arrow_NAME);
 
-  return (
-    <Icon {...restProps} ref={ref} className={styles.arrow({ className })}>
-      <svg fill="none" viewBox="0 0 24 24">
-        <path
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M6 9l6 6 6-6"
-        ></path>
-      </svg>
-    </Icon>
-  );
-});
+    return (
+      <Icon {...restProps} ref={ref} className={styles.arrow({ className })}>
+        <svg fill="none" viewBox="0 0 24 24">
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M6 9l6 6 6-6"
+          ></path>
+        </svg>
+      </Icon>
+    );
+  },
+);
 
 Arrow.displayName = 'webbo-ui.' + Arrow_NAME;
 
@@ -379,7 +386,7 @@ const CONTENT_NAME = 'Accordion.Content';
 
 export interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Content = forwardRef<HTMLDivElement, ContentProps>(
+export const Content = React.forwardRef<HTMLDivElement, ContentProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
 

@@ -1,8 +1,9 @@
 import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { Slot } from '@webbo-ui/slot';
-import { forwardRef, useId, useMemo } from 'react';
 import { disclosure } from '@webbo-ui/theme';
+import React from 'react';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -61,7 +62,7 @@ export const Root = (props: RootProps) => {
     setValue((prev) => prev.filter((ele) => ele !== value));
   };
 
-  const styles = useMemo(() => disclosure(), []);
+  const styles = React.useMemo(() => disclosure(), []);
 
   const Component = asChild ? Slot : 'div';
 
@@ -101,35 +102,37 @@ export interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
 }
 
-export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
-  const { value, className, disabled, ...restProps } = props;
+export const Item = React.forwardRef<HTMLDivElement, ItemProps>(
+  (props, ref) => {
+    const { value, className, disabled, ...restProps } = props;
 
-  const rootContext = useRootContext(TRIGGER_NAME);
+    const rootContext = useRootContext(TRIGGER_NAME);
 
-  const triggerId = useId();
-  const contentId = useId();
+    const triggerId = React.useId();
+    const contentId = React.useId();
 
-  const styles = useStylesContext(ITEM_NAME);
+    const styles = useStylesContext(ITEM_NAME);
 
-  const isExpended = !!rootContext.value.find((ele) => ele === value);
+    const isExpended = !!rootContext.value.find((ele) => ele === value);
 
-  return (
-    <ItemProvider
-      value={value}
-      triggerId={triggerId}
-      contentId={contentId}
-      isExpended={isExpended}
-      disabled={disabled}
-    >
-      <div
-        {...restProps}
-        ref={ref}
-        className={styles.item({ className })}
-        data-expanded={isExpended}
-      />
-    </ItemProvider>
-  );
-});
+    return (
+      <ItemProvider
+        value={value}
+        triggerId={triggerId}
+        contentId={contentId}
+        isExpended={isExpended}
+        disabled={disabled}
+      >
+        <div
+          {...restProps}
+          ref={ref}
+          className={styles.item({ className })}
+          data-expanded={isExpended}
+        />
+      </ItemProvider>
+    );
+  },
+);
 
 Item.displayName = 'webbo-ui.' + ITEM_NAME;
 
@@ -140,7 +143,7 @@ const TRIGGER_NAME = 'Accordion.Trigger';
 export interface TriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
+export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
     const { className, disabled, ...restProps } = props;
 
@@ -168,6 +171,8 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       }
     };
 
+    const pointerEvents = usePointerEvents({ onPress });
+
     return (
       <Slot
         {...restProps}
@@ -179,7 +184,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
         aria-expanded={isExpended}
         aria-controls={itemContext.contentId}
         data-expanded={isExpended}
-        onPress={onPress}
+        {...pointerEvents}
       />
     );
   },
@@ -193,7 +198,7 @@ const CONTENT_NAME = 'Accordion.Content';
 
 export interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Content = forwardRef<HTMLDivElement, ContentProps>(
+export const Content = React.forwardRef<HTMLDivElement, ContentProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
 

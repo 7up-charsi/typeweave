@@ -1,5 +1,13 @@
 # @webbo-ui/use-click-outside
 
+## 1.0.2
+
+### Patch Changes
+
+- refractor: use default React export
+- Updated dependencies
+  - @webbo-ui/use-callback-ref@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes

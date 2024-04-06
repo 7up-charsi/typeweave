@@ -1,4 +1,3 @@
-import { forwardRef, useEffect, useId, useRef } from 'react';
 import {
   CheckboxClassNames,
   CheckboxVariantProps,
@@ -6,6 +5,7 @@ import {
 } from '@webbo-ui/theme';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { Icon } from '@webbo-ui/icon';
+import React from 'react';
 
 const checked_svg = (
   <Icon>
@@ -40,76 +40,82 @@ export interface CheckboxProps
   checkedIcon?: React.ReactNode;
 }
 
-const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
-  const {
-    classNames,
-    className,
-    label,
-    id: idProp,
-    checked,
-    indeterminate,
-    icon,
-    checkedIcon = checked_svg,
-    indeterminateIcon = indeterminate_svg,
-    size = 'md',
-    color = 'primary',
-    labelPlacement = 'right',
-    ...inpuProps
-  } = props;
+const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
+  (props, ref) => {
+    const {
+      classNames,
+      className,
+      label,
+      id: idProp,
+      checked,
+      indeterminate,
+      icon,
+      checkedIcon = checked_svg,
+      indeterminateIcon = indeterminate_svg,
+      size = 'md',
+      color = 'primary',
+      labelPlacement = 'right',
+      ...inpuProps
+    } = props;
 
-  const innerRef = useRef<HTMLInputElement>(null);
+    const innerRef = React.useRef<HTMLInputElement>(null);
 
-  const autoId = useId();
-  const id = idProp ?? autoId;
+    const autoId = React.useId();
+    const id = idProp ?? autoId;
 
-  const styles = checkbox({ size, labelPlacement, color });
+    const styles = checkbox({ size, labelPlacement, color });
 
-  useEffect(() => {
-    if (!innerRef.current) return;
+    React.useEffect(() => {
+      if (!innerRef.current) return;
 
-    innerRef.current.indeterminate = !!indeterminate;
-  }, [indeterminate]);
+      innerRef.current.indeterminate = !!indeterminate;
+    }, [indeterminate]);
 
-  return (
-    <div className={styles.base({ className: classNames?.base ?? className })}>
-      <div className={styles.checkbox({ className: classNames?.checkbox })}>
-        <input
-          {...inpuProps}
-          checked={checked}
-          id={id}
-          ref={mergeRefs(ref, innerRef)}
-          type="checkbox"
-          className={styles.input({ className: classNames?.input })}
-        />
+    return (
+      <div
+        className={styles.base({ className: classNames?.base ?? className })}
+      >
+        <div className={styles.checkbox({ className: classNames?.checkbox })}>
+          <input
+            {...inpuProps}
+            checked={checked}
+            id={id}
+            ref={mergeRefs(ref, innerRef)}
+            type="checkbox"
+            className={styles.input({ className: classNames?.input })}
+          />
 
-        <div className={styles.icon({ className: classNames?.icon })}>
-          {icon}
+          <div className={styles.icon({ className: classNames?.icon })}>
+            {icon}
+          </div>
+          <div
+            className={styles.checkedIcon({
+              className: classNames?.checkedIcon,
+            })}
+          >
+            {checkedIcon}
+          </div>
+          <div
+            className={styles.indeterminateIcon({
+              className: classNames?.indeterminateIcon,
+            })}
+          >
+            {indeterminateIcon}
+          </div>
         </div>
-        <div
-          className={styles.checkedIcon({ className: classNames?.checkedIcon })}
-        >
-          {checkedIcon}
-        </div>
-        <div
-          className={styles.indeterminateIcon({
-            className: classNames?.indeterminateIcon,
-          })}
-        >
-          {indeterminateIcon}
-        </div>
+
+        {label && (
+          <label
+            htmlFor={id}
+            className={styles.label({ className: classNames?.label })}
+          >
+            {label}
+          </label>
+        )}
       </div>
-
-      {label && (
-        <label
-          htmlFor={id}
-          className={styles.label({ className: classNames?.label })}
-        >
-          {label}
-        </label>
-      )}
-    </div>
-  );
-});
+    );
+  },
+);
 
 Checkbox.displayName = 'webbo-ui.Checkbox';
 

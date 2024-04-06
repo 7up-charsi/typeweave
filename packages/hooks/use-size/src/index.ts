@@ -1,11 +1,11 @@
-import { useLayoutEffect, useState } from 'react';
+import React from 'react';
 
 const useSize = <E extends HTMLElement>(element: E | null) => {
-  const [size, setSize] = useState<
+  const [size, setSize] = React.useState<
     { width: number; height: number } | undefined
   >(undefined);
 
-  useLayoutEffect(() => {
+  React.useLayoutEffect(() => {
     if (element) {
       setSize({
         width: element.offsetWidth,

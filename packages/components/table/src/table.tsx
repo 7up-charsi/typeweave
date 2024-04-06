@@ -1,7 +1,7 @@
 import { createContextScope } from '@webbo-ui/context';
 import { TableClassNames, TableVariantProps, table } from '@webbo-ui/theme';
 import * as Menu from '@webbo-ui/menu';
-import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import React from 'react';
 import { CustomError } from '@webbo-ui/error';
 import { Slot } from '@webbo-ui/slot';
 import {
@@ -81,7 +81,7 @@ const RootImp = (props: RootProps) => {
     },
   });
 
-  const columns = useMemo(
+  const columns = React.useMemo(
     () =>
       userColumns?.map((ele) => ({
         ...ele,
@@ -215,7 +215,7 @@ export const ColumnVisibility = (props: ColumnVisibilityProps) => {
     ColumnVisibility_Name,
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (tableIdentifier) {
       setVisibilityState(
         JSON.parse(localStorage.getItem(tableIdentifier) ?? `{}`),
@@ -314,8 +314,8 @@ export interface SelectRowProviderProps {
 export const SelectRowProvider = (props: SelectRowProviderProps) => {
   const { children } = props;
 
-  const rows = useRef<string[]>([]);
-  const [selected, setSelected] = useState<string[]>([]);
+  const rows = React.useRef<string[]>([]);
+  const [selected, setSelected] = React.useState<string[]>([]);
 
   return (
     <SelectRowContextProvider
@@ -341,7 +341,7 @@ export interface SelectAllRowsProps {
 export const SelectAllRows = (props: SelectAllRowsProps) => {
   const { children } = props;
 
-  const ref = useRef<HTMLInputElement>(null);
+  const ref = React.useRef<HTMLInputElement>(null);
 
   const { selected, setSelected, rows } =
     useSelectRowContext(SelectAllRows_Name);
@@ -379,9 +379,9 @@ export const SelectRow = (props: SelectRowProps) => {
   const { children } = props;
   const { selected, setSelected, rows } = useSelectRowContext(SelectRow_Name);
 
-  const identifier = useId();
+  const identifier = React.useId();
 
-  useEffect(() => {
+  React.useEffect(() => {
     rows.current.push(identifier);
 
     return () => {

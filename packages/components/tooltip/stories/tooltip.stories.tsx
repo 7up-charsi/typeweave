@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import * as Tooltip from '../src';
 
 const meta = {
@@ -8,9 +8,9 @@ const meta = {
 export default meta;
 
 const Template = (args: Tooltip.RootProps & Tooltip.ContentProps) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = React.useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     ref.current?.scrollIntoView({
       behavior: 'instant',
       block: 'center',

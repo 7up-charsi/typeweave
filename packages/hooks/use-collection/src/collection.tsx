@@ -1,6 +1,6 @@
 import { createContextScope } from '@webbo-ui/context';
 import { Slot } from '@webbo-ui/slot';
-import { useCallback, useEffect, useRef } from 'react';
+import React from 'react';
 
 export interface ParentProps {
   children?: React.ReactNode;
@@ -27,9 +27,9 @@ export const createCollection = <E extends HTMLElement, ItemData = object>(
   const Provider = (props: { children?: React.ReactNode }) => {
     const { children } = props;
 
-    const ref = useRef<HTMLElement>(null);
+    const ref = React.useRef<HTMLElement>(null);
 
-    const map = useRef<CollectionContext['map']>(new Map()).current;
+    const map = React.useRef<CollectionContext['map']>(new Map()).current;
 
     return (
       <CollectionProvider parentRef={ref} map={map}>
@@ -68,9 +68,9 @@ export const createCollection = <E extends HTMLElement, ItemData = object>(
 
     const context = useCollectionContext(Item_Name);
 
-    const ref = useRef<E>(null);
+    const ref = React.useRef<E>(null);
 
-    useEffect(() => {
+    React.useEffect(() => {
       context.map.set(ref, {
         ref,
         ...(itemData as unknown as ItemData),
@@ -94,7 +94,7 @@ export const createCollection = <E extends HTMLElement, ItemData = object>(
   const useCollection = () => {
     const context = useCollectionContext(UseCollection_Name);
 
-    const getItems = useCallback(() => {
+    const getItems = React.useCallback(() => {
       const parent = context.parentRef.current;
 
       if (!parent) return [];

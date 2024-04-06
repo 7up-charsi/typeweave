@@ -5,7 +5,7 @@ import { Slot } from '@webbo-ui/slot';
 import { TooltipVariantProps, tooltip } from '@webbo-ui/theme';
 import { createContextScope } from '@webbo-ui/context';
 import * as Popper from '@webbo-ui/popper';
-import { forwardRef, useEffect, useId, useRef } from 'react';
+import React from 'react';
 
 type Trigger = 'hover' | 'focus';
 
@@ -56,10 +56,10 @@ export const Root = (props: RootProps) => {
     onChange: onOpenChange,
   });
 
-  const identifier = useId();
+  const identifier = React.useId();
 
-  const showTimeout = useRef<NodeJS.Timeout>();
-  const hideTimeout = useRef<NodeJS.Timeout>();
+  const showTimeout = React.useRef<NodeJS.Timeout>();
+  const hideTimeout = React.useRef<NodeJS.Timeout>();
 
   const addOpenTooltip = () => {
     tooltips[identifier] = hideTooltip;
@@ -108,7 +108,7 @@ export const Root = (props: RootProps) => {
     }
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isOpen) return;
 
     const onKeyDown = (e: KeyboardEvent) => {
@@ -124,7 +124,7 @@ export const Root = (props: RootProps) => {
     };
   }, [hideTooltip, isOpen]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     return () => {
       clearTimeout(showTimeout.current);
       clearTimeout(hideTimeout.current);
@@ -152,67 +152,69 @@ const Trigger_Name = 'Tooltip.Trigger';
 
 export interface TriggerProps extends React.HTMLAttributes<HTMLElement> {}
 
-export const Trigger = forwardRef<HTMLElement, TriggerProps>((props, ref) => {
-  const { ...restProps } = props;
+export const Trigger = React.forwardRef<HTMLElement, TriggerProps>(
+  (props, ref) => {
+    const { ...restProps } = props;
 
-  const context = useRootContext(Trigger_Name);
+    const context = useRootContext(Trigger_Name);
 
-  const isMouseRef = useRef(false);
+    const isMouseRef = React.useRef(false);
 
-  return (
-    <Popper.Reference>
-      <Slot<HTMLElement, React.HTMLAttributes<HTMLElement>>
-        {...restProps}
-        ref={ref}
-        tabIndex={0}
-        onPointerDown={(e) => {
-          restProps.onPointerDown?.(e);
+    return (
+      <Popper.Reference>
+        <Slot<HTMLElement, React.HTMLAttributes<HTMLElement>>
+          {...restProps}
+          ref={ref}
+          tabIndex={0}
+          onPointerDown={(e) => {
+            restProps.onPointerDown?.(e);
 
-          isMouseRef.current = true;
-          context.hideTooltip(true);
-        }}
-        onPointerEnter={(e) => {
-          restProps.onPointerEnter?.(e);
+            isMouseRef.current = true;
+            context.hideTooltip(true);
+          }}
+          onPointerEnter={(e) => {
+            restProps.onPointerEnter?.(e);
 
-          if (context.trigger === 'focus') return;
+            if (context.trigger === 'focus') return;
 
-          context.showTooltip(false);
-        }}
-        onPointerLeave={(e) => {
-          restProps.onPointerLeave?.(e);
+            context.showTooltip(false);
+          }}
+          onPointerLeave={(e) => {
+            restProps.onPointerLeave?.(e);
 
-          isMouseRef.current = false;
-
-          if (context.trigger === 'focus') return;
-
-          context.hideTooltip(false);
-        }}
-        onKeyDown={(e) => {
-          restProps.onKeyDown?.(e);
-
-          const key = e.key;
-
-          if (key === 'Tab' || (key === 'Tab' && e.shiftKey))
             isMouseRef.current = false;
-        }}
-        onFocus={(e) => {
-          restProps?.onFocus?.(e);
 
-          if (context.trigger === 'hover' || isMouseRef.current) return;
+            if (context.trigger === 'focus') return;
 
-          context.showTooltip(true);
-        }}
-        onBlur={(e) => {
-          restProps.onBlur?.(e);
+            context.hideTooltip(false);
+          }}
+          onKeyDown={(e) => {
+            restProps.onKeyDown?.(e);
 
-          if (context.trigger === 'hover' || isMouseRef.current) return;
+            const key = e.key;
 
-          context.hideTooltip(true);
-        }}
-      />
-    </Popper.Reference>
-  );
-});
+            if (key === 'Tab' || (key === 'Tab' && e.shiftKey))
+              isMouseRef.current = false;
+          }}
+          onFocus={(e) => {
+            restProps?.onFocus?.(e);
+
+            if (context.trigger === 'hover' || isMouseRef.current) return;
+
+            context.showTooltip(true);
+          }}
+          onBlur={(e) => {
+            restProps.onBlur?.(e);
+
+            if (context.trigger === 'hover' || isMouseRef.current) return;
+
+            context.hideTooltip(true);
+          }}
+        />
+      </Popper.Reference>
+    );
+  },
+);
 
 Trigger.displayName = 'webbo-ui.' + Trigger_Name;
 
@@ -247,7 +249,7 @@ export interface ContentProps
   disableInteractive?: boolean;
 }
 
-export const Content = forwardRef<HTMLDivElement, ContentProps>(
+export const Content = React.forwardRef<HTMLDivElement, ContentProps>(
   (props, ref) => {
     const {
       disableInteractive,

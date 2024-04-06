@@ -1,16 +1,16 @@
-import { createContext, useContext as _useContext, useMemo } from 'react';
+import React from 'react';
 import { CustomError } from '@webbo-ui/error';
 
 export const createContextScope = <ContextValue extends object>(
   rootName: string,
   defaultContext?: ContextValue,
 ) => {
-  const Context = createContext(defaultContext);
+  const Context = React.createContext(defaultContext);
 
   const Provider = (props: ContextValue & { children?: React.ReactNode }) => {
     const { children, ...context } = props;
 
-    const value = useMemo(
+    const value = React.useMemo(
       () => context,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       Object.values(context),
@@ -20,7 +20,7 @@ export const createContextScope = <ContextValue extends object>(
   };
 
   const useContext = (consumerName: string) => {
-    const context = _useContext(Context);
+    const context = React.useContext(Context);
 
     if (!context)
       throw new CustomError(

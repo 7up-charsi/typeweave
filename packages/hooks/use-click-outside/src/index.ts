@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 
 export interface UseClickOutsideProps {
@@ -32,9 +32,9 @@ const useClickOutside = <R extends HTMLElement>(
 
   const callbackRef = useCallbackRef(callback);
 
-  const [element, setElement] = useState<R | null>(null);
+  const [element, setElement] = React.useState<R | null>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!element || disabled) return;
 
     const handler = (e: PointerEvent) => {

@@ -10,14 +10,7 @@ import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import { createCollection } from '@webbo-ui/use-collection';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
-import React, {
-  forwardRef,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React from 'react';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import { Icon } from '@webbo-ui/icon';
 
@@ -73,8 +66,8 @@ export const Root = (props: RootProps) => {
     onChange: onOpenChange,
   });
 
-  const id = useId();
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const id = React.useId();
+  const triggerRef = React.useRef<HTMLButtonElement>(null);
 
   const handleOpen = useCallbackRef(() => {
     setIsOpen(true);
@@ -128,11 +121,13 @@ const Trigger_Name = 'Menu.Trigger';
 export interface TriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
+export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
     const { ...restProps } = props;
 
     const rootContext = useRootContext(Trigger_Name);
+
+    const pointerEvents = usePointerEvents({ onPress: rootContext.handleOpen });
 
     return (
       <Popper.Reference>
@@ -143,8 +138,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           aria-haspopup="menu"
           aria-expanded={rootContext.isOpen}
           aria-controls={rootContext.isOpen ? rootContext.id : undefined}
-          // @ts-expect-error onPress does not exist
-          onPress={rootContext.handleOpen}
+          {...pointerEvents}
           onKeyDown={(e: React.KeyboardEvent) => {
             const key = e.key;
 
@@ -201,154 +195,141 @@ export interface MenuProps
     MenuVariantProps,
     React.HTMLAttributes<HTMLUListElement> {}
 
-export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
-  const {
-    children,
-    className,
-    placement,
-    updatePositionStrategy,
-    mainOffset,
-    alignOffset,
-    arrow,
-    sticky,
-    hideWhenDetached,
-    fallbackPlacements,
-    allowMainAxisFlip,
-    allowCrossAxisFlip,
-    clippingBoundary,
-    shadow = 'md',
-    arrowPadding = 10,
-    boundaryPadding = 10,
-    ...restProps
-  } = props;
+export const Menu = React.forwardRef<HTMLUListElement, MenuProps>(
+  (props, ref) => {
+    const {
+      children,
+      className,
+      placement,
+      updatePositionStrategy,
+      mainOffset,
+      alignOffset,
+      arrow,
+      sticky,
+      hideWhenDetached,
+      fallbackPlacements,
+      allowMainAxisFlip,
+      allowCrossAxisFlip,
+      clippingBoundary,
+      shadow = 'md',
+      arrowPadding = 10,
+      boundaryPadding = 10,
+      ...restProps
+    } = props;
 
-  const innerRef = useRef<HTMLUListElement>(null);
+    const innerRef = React.useRef<HTMLUListElement>(null);
 
-  const rootContext = useRootContext(Menu_Name);
+    const rootContext = useRootContext(Menu_Name);
 
-  const [focused, setFocused] = useState('');
+    const [focused, setFocused] = React.useState('');
 
-  const searchState = useRef<{
-    timer?: ReturnType<typeof setTimeout>;
-    chars: string;
-  }>({ chars: '' }).current;
+    const searchState = React.useRef<{
+      timer?: ReturnType<typeof setTimeout>;
+      chars: string;
+    }>({ chars: '' }).current;
 
-  const setOutsideEle = useClickOutside({
-    callback: (e) => {
-      if (rootContext.triggerRef.current?.contains(e.target as Node)) return;
+    const setOutsideEle = useClickOutside({
+      callback: (e) => {
+        if (rootContext.triggerRef.current?.contains(e.target as Node)) return;
 
-      rootContext.handleClose();
-    },
-  });
-
-  useScrollLock();
-
-  const getItems = useCollection();
-
-  useEffect(() => {
-    innerRef.current?.focus();
-  }, []);
-
-  const onkeydown = (e: React.KeyboardEvent) => {
-    const key = e.key;
-
-    const ArrowDown = key === 'ArrowDown';
-    const ArrowUp = key === 'ArrowUp';
-
-    const activeItems = getItems().filter((item) => !item.disabled);
-
-    const elements = activeItems.map((item) => item.ref.current!);
-
-    const currentIndex = activeItems.findIndex((ele) => ele.isFocused);
-
-    // either no menuitem is focused or loop from end to first
-    if (
-      (currentIndex === -1 && ArrowDown) ||
-      (currentIndex === elements.length - 1 && rootContext.loop && ArrowDown)
-    ) {
-      const index = 0;
-      elements[index].focus();
-      setFocused(activeItems[index].id);
-      return;
-    }
-
-    // loop from first to end when either no menuitem is focused or first is focused
-    if (
-      (currentIndex === 0 || currentIndex === -1) &&
-      rootContext.loop &&
-      ArrowUp
-    ) {
-      const index = elements.length - 1;
-      elements[index].focus();
-      setFocused(activeItems[index].id);
-      return;
-    }
-
-    if (ArrowDown && currentIndex >= 0 && currentIndex < elements.length - 1) {
-      const index = currentIndex + 1;
-      elements[index].focus();
-      setFocused(activeItems[index].id);
-      return;
-    }
-
-    if (ArrowUp && currentIndex > 0 && currentIndex <= elements.length - 1) {
-      const index = currentIndex - 1;
-      elements[index].focus();
-      setFocused(activeItems[index].id);
-      return;
-    }
-  };
-
-  const handleCharSearch = (e: React.KeyboardEvent) => {
-    const char = e.key;
-
-    if (char.length !== 1 || e.repeat) return;
-
-    const activeItems = getItems().filter((item) => !item.disabled);
-
-    const elements = activeItems.map((item) => item.ref.current!);
-
-    const currentIndex = activeItems.findIndex((ele) => ele.isFocused);
-
-    if (!elements.length) return;
-
-    clearTimeout(searchState.timer);
-
-    searchState.timer = setTimeout(() => {
-      searchState.chars = '';
-    }, 500);
-
-    searchState.chars += char;
-
-    const startIndex =
-      currentIndex || currentIndex === 0 ? currentIndex + 1 : 0;
-
-    const orderedOptions = [
-      ...activeItems.slice(startIndex),
-      ...activeItems.slice(0, startIndex),
-    ];
-
-    const filter = searchState.chars.toLowerCase();
-
-    const excatMatch = orderedOptions.find((ele) => {
-      const span = ele.ref.current?.querySelectorAll('span')[1];
-
-      if (span && span.firstChild?.nodeType === Node.TEXT_NODE)
-        return span.firstChild.nodeValue?.toLowerCase().startsWith(filter);
-      else return false;
+        rootContext.handleClose();
+      },
     });
 
-    if (excatMatch) {
-      setFocused(excatMatch.id);
-      return;
-    }
+    useScrollLock();
 
-    const sameLetters = filter
-      .split('')
-      .every((letter) => letter.toLowerCase() === filter[0]);
+    const getItems = useCollection();
 
-    if (sameLetters) {
-      const matched = orderedOptions.find((ele) => {
+    React.useEffect(() => {
+      innerRef.current?.focus();
+    }, []);
+
+    const onkeydown = (e: React.KeyboardEvent) => {
+      const key = e.key;
+
+      const ArrowDown = key === 'ArrowDown';
+      const ArrowUp = key === 'ArrowUp';
+
+      const activeItems = getItems().filter((item) => !item.disabled);
+
+      const elements = activeItems.map((item) => item.ref.current!);
+
+      const currentIndex = activeItems.findIndex((ele) => ele.isFocused);
+
+      // either no menuitem is focused or loop from end to first
+      if (
+        (currentIndex === -1 && ArrowDown) ||
+        (currentIndex === elements.length - 1 && rootContext.loop && ArrowDown)
+      ) {
+        const index = 0;
+        elements[index].focus();
+        setFocused(activeItems[index].id);
+        return;
+      }
+
+      // loop from first to end when either no menuitem is focused or first is focused
+      if (
+        (currentIndex === 0 || currentIndex === -1) &&
+        rootContext.loop &&
+        ArrowUp
+      ) {
+        const index = elements.length - 1;
+        elements[index].focus();
+        setFocused(activeItems[index].id);
+        return;
+      }
+
+      if (
+        ArrowDown &&
+        currentIndex >= 0 &&
+        currentIndex < elements.length - 1
+      ) {
+        const index = currentIndex + 1;
+        elements[index].focus();
+        setFocused(activeItems[index].id);
+        return;
+      }
+
+      if (ArrowUp && currentIndex > 0 && currentIndex <= elements.length - 1) {
+        const index = currentIndex - 1;
+        elements[index].focus();
+        setFocused(activeItems[index].id);
+        return;
+      }
+    };
+
+    const handleCharSearch = (e: React.KeyboardEvent) => {
+      const char = e.key;
+
+      if (char.length !== 1 || e.repeat) return;
+
+      const activeItems = getItems().filter((item) => !item.disabled);
+
+      const elements = activeItems.map((item) => item.ref.current!);
+
+      const currentIndex = activeItems.findIndex((ele) => ele.isFocused);
+
+      if (!elements.length) return;
+
+      clearTimeout(searchState.timer);
+
+      searchState.timer = setTimeout(() => {
+        searchState.chars = '';
+      }, 500);
+
+      searchState.chars += char;
+
+      const startIndex =
+        currentIndex || currentIndex === 0 ? currentIndex + 1 : 0;
+
+      const orderedOptions = [
+        ...activeItems.slice(startIndex),
+        ...activeItems.slice(0, startIndex),
+      ];
+
+      const filter = searchState.chars.toLowerCase();
+
+      const excatMatch = orderedOptions.find((ele) => {
         const span = ele.ref.current?.querySelectorAll('span')[1];
 
         if (span && span.firstChild?.nodeType === Node.TEXT_NODE)
@@ -356,59 +337,78 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>((props, ref) => {
         else return false;
       });
 
-      if (matched) setFocused(matched.id);
-    }
-  };
+      if (excatMatch) {
+        setFocused(excatMatch.id);
+        return;
+      }
 
-  const styles = useMemo(() => menu({ shadow }), [shadow]);
+      const sameLetters = filter
+        .split('')
+        .every((letter) => letter.toLowerCase() === filter[0]);
 
-  return (
-    <MenuProvider setFocused={setFocused} focused={focused}>
-      <Collection.Parent>
-        <Popper.Floating
-          arrowPadding={arrowPadding}
-          boundaryPadding={boundaryPadding ?? 10}
-          placement={placement}
-          updatePositionStrategy={updatePositionStrategy}
-          mainOffset={mainOffset}
-          alignOffset={alignOffset}
-          arrow={arrow}
-          sticky={sticky}
-          hideWhenDetached={hideWhenDetached}
-          fallbackPlacements={fallbackPlacements}
-          allowMainAxisFlip={allowMainAxisFlip}
-          allowCrossAxisFlip={allowCrossAxisFlip}
-          clippingBoundary={clippingBoundary}
-        >
-          <ul
-            {...restProps}
-            id={rootContext.id}
-            role="menu"
-            ref={mergeRefs(setOutsideEle, ref, innerRef)}
-            className={styles.menu({ className })}
-            tabIndex={-1}
-            onKeyDown={(e) => {
-              onkeydown(e);
-              handleCharSearch(e);
-            }}
+      if (sameLetters) {
+        const matched = orderedOptions.find((ele) => {
+          const span = ele.ref.current?.querySelectorAll('span')[1];
+
+          if (span && span.firstChild?.nodeType === Node.TEXT_NODE)
+            return span.firstChild.nodeValue?.toLowerCase().startsWith(filter);
+          else return false;
+        });
+
+        if (matched) setFocused(matched.id);
+      }
+    };
+
+    const styles = React.useMemo(() => menu({ shadow }), [shadow]);
+
+    return (
+      <MenuProvider setFocused={setFocused} focused={focused}>
+        <Collection.Parent>
+          <Popper.Floating
+            arrowPadding={arrowPadding}
+            boundaryPadding={boundaryPadding ?? 10}
+            placement={placement}
+            updatePositionStrategy={updatePositionStrategy}
+            mainOffset={mainOffset}
+            alignOffset={alignOffset}
+            arrow={arrow}
+            sticky={sticky}
+            hideWhenDetached={hideWhenDetached}
+            fallbackPlacements={fallbackPlacements}
+            allowMainAxisFlip={allowMainAxisFlip}
+            allowCrossAxisFlip={allowCrossAxisFlip}
+            clippingBoundary={clippingBoundary}
           >
-            <StylesProvider {...styles}>
-              <VisuallyHidden>
-                <button onPointerUp={rootContext.handleClose}>close</button>
-              </VisuallyHidden>
+            <ul
+              {...restProps}
+              id={rootContext.id}
+              role="menu"
+              ref={mergeRefs(setOutsideEle, ref, innerRef)}
+              className={styles.menu({ className })}
+              tabIndex={-1}
+              onKeyDown={(e) => {
+                onkeydown(e);
+                handleCharSearch(e);
+              }}
+            >
+              <StylesProvider {...styles}>
+                <VisuallyHidden>
+                  <button onPointerUp={rootContext.handleClose}>close</button>
+                </VisuallyHidden>
 
-              {children}
+                {children}
 
-              <VisuallyHidden>
-                <button onPointerUp={rootContext.handleClose}>close</button>
-              </VisuallyHidden>
-            </StylesProvider>
-          </ul>
-        </Popper.Floating>
-      </Collection.Parent>
-    </MenuProvider>
-  );
-});
+                <VisuallyHidden>
+                  <button onPointerUp={rootContext.handleClose}>close</button>
+                </VisuallyHidden>
+              </StylesProvider>
+            </ul>
+          </Popper.Floating>
+        </Collection.Parent>
+      </MenuProvider>
+    );
+  },
+);
 
 Menu.displayName = 'webbo-ui.' + Menu_Name;
 
@@ -428,60 +428,60 @@ export interface ItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
   icon?: React.ReactNode;
 }
 
-const ItemImp = forwardRef<HTMLLIElement, ItemProps & { className?: string }>(
-  (props, ref) => {
-    const { onPointerDown, onPointerUp, disabled, onPress, ...restProps } =
-      props;
+const ItemImp = React.forwardRef<
+  HTMLLIElement,
+  ItemProps & { className?: string }
+>((props, ref) => {
+  const { onPointerDown, onPointerUp, disabled, onPress, ...restProps } = props;
 
-    const id = useId();
+  const id = React.useId();
 
-    const menuContext = useMenuContext(Item_Name);
+  const menuContext = useMenuContext(Item_Name);
 
-    const isFocused = menuContext.focused === id;
+  const isFocused = menuContext.focused === id;
 
-    const pointerEvents = usePointerEvents({
-      onPress: () => onPress?.(),
-      onPointerDown,
-      onPointerUp,
-    });
+  const pointerEvents = usePointerEvents({
+    onPress: () => onPress?.(),
+    onPointerDown,
+    onPointerUp,
+  });
 
-    return (
-      <Collection.Item disabled={!!disabled} isFocused={isFocused} id={id}>
-        <li
-          {...restProps}
-          ref={ref}
-          data-disabled={!!disabled}
-          aria-disabled={disabled}
-          data-focused={isFocused}
-          tabIndex={isFocused ? 0 : -1}
-          onPointerEnter={(e) => {
-            restProps.onPointerEnter?.(e);
-            if (disabled) return;
-            menuContext.setFocused(id);
-          }}
-          onPointerLeave={(e) => {
-            restProps.onPointerLeave?.(e);
-            menuContext.setFocused('');
-          }}
-          {...pointerEvents}
-          onKeyDown={(e) => {
-            restProps.onKeyDown?.(e);
+  return (
+    <Collection.Item disabled={!!disabled} isFocused={isFocused} id={id}>
+      <li
+        {...restProps}
+        ref={ref}
+        data-disabled={!!disabled}
+        aria-disabled={disabled}
+        data-focused={isFocused}
+        tabIndex={isFocused ? 0 : -1}
+        onPointerEnter={(e) => {
+          restProps.onPointerEnter?.(e);
+          if (disabled) return;
+          menuContext.setFocused(id);
+        }}
+        onPointerLeave={(e) => {
+          restProps.onPointerLeave?.(e);
+          menuContext.setFocused('');
+        }}
+        {...pointerEvents}
+        onKeyDown={(e) => {
+          restProps.onKeyDown?.(e);
 
-            const key = e.key;
+          const key = e.key;
 
-            if (![' ', 'Tab'].includes(key)) return;
-            e.preventDefault();
-            onPress?.();
-          }}
-        />
-      </Collection.Item>
-    );
-  },
-);
+          if (![' ', 'Tab'].includes(key)) return;
+          e.preventDefault();
+          onPress?.();
+        }}
+      />
+    </Collection.Item>
+  );
+});
 
 ItemImp.displayName = 'webbo-ui.' + Item_Name;
 
-export const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
+export const Item = React.forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
   const {
     children,
     onPress,
@@ -545,31 +545,33 @@ export interface GroupProps extends React.HTMLAttributes<HTMLUListElement> {
   };
 }
 
-export const Group = forwardRef<HTMLUListElement, GroupProps>((props, ref) => {
-  const { className, classNames, label, ...restProps } = props;
+export const Group = React.forwardRef<HTMLUListElement, GroupProps>(
+  (props, ref) => {
+    const { className, classNames, label, ...restProps } = props;
 
-  const stylesContext = useStylesContext(Group_Name);
+    const stylesContext = useStylesContext(Group_Name);
 
-  return (
-    <li role="none">
-      <div
-        role="presentation"
-        className={stylesContext.label({ className: classNames?.label })}
-      >
-        {label}
-      </div>
+    return (
+      <li role="none">
+        <div
+          role="presentation"
+          className={stylesContext.label({ className: classNames?.label })}
+        >
+          {label}
+        </div>
 
-      <ul
-        {...restProps}
-        ref={ref}
-        role="group"
-        className={stylesContext.group({
-          className: classNames?.group ?? className,
-        })}
-      />
-    </li>
-  );
-});
+        <ul
+          {...restProps}
+          ref={ref}
+          role="group"
+          className={stylesContext.group({
+            className: classNames?.group ?? className,
+          })}
+        />
+      </li>
+    );
+  },
+);
 
 Group.displayName = 'webbo-ui.' + Group_Name;
 
@@ -580,7 +582,7 @@ const Separator_Name = 'Menu.Separator';
 export interface SeparatorProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {}
 
-export const Separator = forwardRef<HTMLDivElement, SeparatorProps>(
+export const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
 
@@ -631,7 +633,7 @@ const checkbox_icon = (
   </Icon>
 );
 
-export const CheckboxItem = forwardRef<HTMLLIElement, CheckboxItemProps>(
+export const CheckboxItem = React.forwardRef<HTMLLIElement, CheckboxItemProps>(
   (props, ref) => {
     const {
       children,
@@ -750,7 +752,7 @@ const radio_icon = (
   </Icon>
 );
 
-export const RadioItem = forwardRef<HTMLLIElement, RadioItemProps>(
+export const RadioItem = React.forwardRef<HTMLLIElement, RadioItemProps>(
   (props, ref) => {
     const {
       children,

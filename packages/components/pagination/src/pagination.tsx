@@ -3,7 +3,7 @@ import {
   PaginationVariantProps,
   pagination,
 } from '@webbo-ui/theme';
-import { forwardRef } from 'react';
+import React from 'react';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { Button, ButtonProps } from '@webbo-ui/button';
 import { Icon } from '@webbo-ui/icon';
@@ -105,7 +105,7 @@ export interface PaginationProps
 const range = (start: number, end: number) =>
   Array.from({ length: end - start + 1 }, (_, i) => start + i);
 
-const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
+const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
   (props, ref) => {
     const {
       classNames,

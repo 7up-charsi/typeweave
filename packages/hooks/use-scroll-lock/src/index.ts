@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from 'react';
+import React from 'react';
 
 type Direction = 'horizontal' | 'vertical' | 'both';
 
@@ -7,7 +7,7 @@ export interface UseScrollLockProps<E> {
    * Ref of element on which scroll will be locked
    * @default document?.body
    */
-  ref?: RefObject<E | null>;
+  ref?: React.RefObject<E | null>;
   disabled?: boolean;
   /**
    * Which scroll dirction to lock
@@ -21,7 +21,7 @@ const useScrollLock = <E extends HTMLElement>(
 ) => {
   const { ref, disabled, direction = 'both' } = props;
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (disabled) return;
 
     const isBody = !(ref && ref.current);

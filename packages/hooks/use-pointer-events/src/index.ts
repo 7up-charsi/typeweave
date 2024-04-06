@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import React from 'react';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 
 export interface UsePointerEventsProps<E> {
@@ -16,7 +16,7 @@ const usePointerEvents = <E extends HTMLElement = HTMLElement>(
     onPress,
   } = props;
 
-  const pointerRef = useRef(false);
+  const pointerRef = React.useRef(false);
 
   const onPointerDown = useCallbackRef((e: React.PointerEvent<E>) => {
     onPointerDownProp?.(e);

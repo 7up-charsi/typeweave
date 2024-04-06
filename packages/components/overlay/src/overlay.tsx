@@ -1,11 +1,11 @@
 import { OverlayVariantProps, overlay } from '@webbo-ui/theme';
-import { forwardRef } from 'react';
+import React from 'react';
 
 export interface OverlayProps
   extends OverlayVariantProps,
     React.HTMLAttributes<HTMLDivElement> {}
 
-const Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
+const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
   const { className, variant = 'opaque', ...restProps } = props;
 
   const styles = overlay({ variant, className });

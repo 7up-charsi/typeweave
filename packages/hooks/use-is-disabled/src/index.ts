@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 
 const useIsDisabled = <E extends HTMLElement>() => {
-  const [element, setElement] = useState<E | null>(null);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [element, setElement] = React.useState<E | null>(null);
+  const [isDisabled, setIsDisabled] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!element) return;
 
     if (element.hasAttribute('disabled')) setIsDisabled(true);
