@@ -61,17 +61,11 @@ const InputImpl = (
     errorMessage,
     startContent,
     endContent,
-    value,
-    defaultValue,
     classNames,
     className,
     required,
-    onChange,
-    onFocus,
-    onBlur,
     error,
     hideLabel,
-    placeholder,
     baseRef,
     inputRef,
     baseProps = {},
@@ -110,10 +104,6 @@ const InputImpl = (
   });
 
   const sharedProps = {
-    onFocus,
-    onBlur,
-    value,
-    defaultValue,
     'aria-label': hideLabel ? label : undefined,
     'aria-describedby': helperText ? helperTextId : undefined,
     'aria-errormessage': error && errorMessage ? errorMessageId : undefined,
@@ -121,8 +111,6 @@ const InputImpl = (
     'aria-invalid': error,
     id: inputId,
     disabled,
-    placeholder,
-    onChange,
     autoComplete: 'off',
   };
 
