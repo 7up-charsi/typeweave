@@ -11,6 +11,7 @@ export type {
   CloseProps,
   DescriptionProps,
   TitleProps,
+  RootMethods,
 } from './dialog';
 
 // export component

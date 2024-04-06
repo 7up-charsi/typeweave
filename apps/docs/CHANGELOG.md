@@ -1,5 +1,12 @@
 # @webbo-ui/docs
 
+## 0.1.16
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/dialog@1.0.11
+
 ## 0.1.15
 
 ### Patch Changes

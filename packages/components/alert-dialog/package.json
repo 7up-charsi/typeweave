@@ -1,6 +1,6 @@
 {
   "name": "@webbo-ui/alert-dialog",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "keywords": [
     "alert-dialog"
   ],
@@ -47,6 +47,7 @@
     "@webbo-ui/theme": "workspace:*"
   },
   "devDependencies": {
+    "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/button": "workspace:*",
     "clean-package": "^2.2.0"
   },

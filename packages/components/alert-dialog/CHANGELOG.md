@@ -1,5 +1,11 @@
 # @webbo-ui/alert-dialog
 
+## 1.0.12
+
+### Patch Changes
+
+- feat: expose close handler
+
 ## 1.0.11
 
 ### Patch Changes

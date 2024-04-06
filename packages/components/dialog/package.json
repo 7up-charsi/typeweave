@@ -1,6 +1,6 @@
 {
   "name": "@webbo-ui/dialog",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "keywords": [
     "dialog"
   ],
@@ -50,6 +50,7 @@
     "@webbo-ui/theme": "workspace:*"
   },
   "devDependencies": {
+    "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/button": "workspace:*",
     "clean-package": "^2.2.0"
   },
