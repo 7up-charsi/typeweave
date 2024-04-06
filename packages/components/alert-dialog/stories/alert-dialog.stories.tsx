@@ -46,3 +46,49 @@ const Template = () => (
 export const Default = {
   render: Template,
 };
+
+const VirtualElementTemplate = () => {
+  const [virtualElement, setVirtualElement] =
+    React.useState<HTMLElement | null>(null);
+
+  return (
+    <>
+      <Button color="danger" ref={setVirtualElement}>
+        delete account
+      </Button>
+
+      <AlertDialog.Root defaultOpen>
+        <AlertDialog.Trigger virtualElement={virtualElement} />
+
+        <AlertDialog.Portal>
+          <AlertDialog.Overlay />
+
+          <AlertDialog.Content>
+            <AlertDialog.Title>Are your sure...?</AlertDialog.Title>
+            <AlertDialog.Description>
+              this action can not be undone. it will delete account and all of
+              your saved content.
+            </AlertDialog.Description>
+            <AlertDialog.Actions>
+              <AlertDialog.Close>
+                <Button variant="text" color="danger">
+                  Cancel
+                </Button>
+              </AlertDialog.Close>
+
+              <AlertDialog.Close>
+                <Button variant="text" color="success">
+                  Ok
+                </Button>
+              </AlertDialog.Close>
+            </AlertDialog.Actions>
+          </AlertDialog.Content>
+        </AlertDialog.Portal>
+      </AlertDialog.Root>
+    </>
+  );
+};
+
+export const VirtualElement = {
+  render: VirtualElementTemplate,
+};
