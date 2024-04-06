@@ -1,5 +1,17 @@
 # @webbo-ui/select
 
+## 1.0.9
+
+### Patch Changes
+
+- refractor: use default React export
+- Updated dependencies
+  - @webbo-ui/use-controllable-state@1.0.2
+  - @webbo-ui/use-pointer-events@1.0.2
+  - @webbo-ui/button@1.0.9
+  - @webbo-ui/popper@1.0.2
+  - @webbo-ui/icon@1.0.2
+
 ## 1.0.8
 
 ### Patch Changes

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Button } from '@webbo-ui/button';
 
 import * as Popover from '../src';
@@ -36,9 +36,9 @@ const meta = {
 export default meta;
 
 const Template = (args) => {
-  const ref = useRef<HTMLButtonElement>(null);
+  const ref = React.useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     ref.current?.scrollIntoView({
       behavior: 'instant',
       block: 'center',

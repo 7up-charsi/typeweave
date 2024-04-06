@@ -1,7 +1,7 @@
 import * as Popper from '@webbo-ui/popper';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { CustomError } from '@webbo-ui/error';
-import { forwardRef, useId, useMemo, useRef, useState } from 'react';
+import React from 'react';
 import { Option, OptionProps } from './option';
 import lodashGroupBy from 'lodash.groupby';
 import { SelectClassNames, SelectVariantProps, select } from '@webbo-ui/theme';
@@ -105,7 +105,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
             ) => React.ReactNode;
           });
 
-const SelectImp = forwardRef<
+const SelectImp = React.forwardRef<
   HTMLUListElement,
   SelectProps<object, false, false>
 >((props, ref) => {
@@ -168,7 +168,7 @@ const SelectImp = forwardRef<
     },
   });
 
-  const groupedOptions = useMemo(() => {
+  const groupedOptions = React.useMemo(() => {
     if (!groupBy) return null;
 
     const grouped = lodashGroupBy(options, (opt) => {
@@ -194,12 +194,12 @@ const SelectImp = forwardRef<
       );
   }, [groupBy, options]);
 
-  const inputRef = useRef<HTMLInputElement>(null);
-  const popperReferenceRef = useRef<HTMLElement>(null);
-  const [focused, setFocused] = useState<object | null>(null);
-  const lisboxId = useId();
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const popperReferenceRef = React.useRef<HTMLElement>(null);
+  const [focused, setFocused] = React.useState<object | null>(null);
+  const lisboxId = React.useId();
 
-  const searchState = useRef<{
+  const searchState = React.useRef<{
     timer?: ReturnType<typeof setTimeout>;
     chars: string;
   }>({ chars: '' }).current;

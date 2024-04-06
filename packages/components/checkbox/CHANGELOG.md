@@ -1,5 +1,12 @@
 # @webbo-ui/checkbox
 
+## 1.0.8
+
+### Patch Changes
+
+- refractor: use default React export
+  - @webbo-ui/icon@1.0.2
+
 ## 1.0.7
 
 ### Patch Changes

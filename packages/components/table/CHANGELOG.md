@@ -1,5 +1,16 @@
 # @webbo-ui/table
 
+## 1.0.12
+
+### Patch Changes
+
+- refractor: use default React export
+- Updated dependencies
+  - @webbo-ui/use-controllable-state@1.0.2
+  - @webbo-ui/menu@1.0.12
+  - @webbo-ui/slot@1.0.2
+  - @webbo-ui/context@1.0.2
+
 ## 1.0.11
 
 ### Patch Changes

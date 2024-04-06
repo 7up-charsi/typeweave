@@ -1,6 +1,6 @@
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
-import { forwardRef, useEffect, useRef } from 'react';
+import React from 'react';
 
 export interface OptionProps<V> extends React.HTMLAttributes<HTMLLIElement> {
   option: V;
@@ -15,7 +15,7 @@ export interface OptionProps<V> extends React.HTMLAttributes<HTMLLIElement> {
   key: string;
 }
 
-export const Option = forwardRef<
+export const Option = React.forwardRef<
   HTMLLIElement,
   OptionProps<object> & { children?: React.ReactNode }
 >((props, ref) => {
@@ -32,8 +32,8 @@ export const Option = forwardRef<
     ...restProps
   } = props;
 
-  const innerRef = useRef<HTMLLIElement>(null);
-  const isHovered = useRef(false);
+  const innerRef = React.useRef<HTMLLIElement>(null);
+  const isHovered = React.useRef(false);
 
   const pointerEvents = usePointerEvents({
     onPointerDown: (e) => {
@@ -47,7 +47,7 @@ export const Option = forwardRef<
     },
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (selected)
       innerRef.current?.scrollIntoView({
         behavior: 'instant',
@@ -55,7 +55,7 @@ export const Option = forwardRef<
       });
   }, [selected]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (focused && !isHovered.current)
       innerRef.current?.scrollIntoView({
         behavior: 'instant',

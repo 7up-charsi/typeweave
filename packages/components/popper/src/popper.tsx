@@ -1,7 +1,7 @@
 import { createContextScope } from '@webbo-ui/context';
 import { Slot } from '@webbo-ui/slot';
 import { useSize } from '@webbo-ui/use-size';
-import { forwardRef, useEffect, useState } from 'react';
+import React from 'react';
 import {
   Boundary,
   DetectOverflowOptions,
@@ -37,7 +37,7 @@ export interface PopperProps {
 export const Root = (props: PopperProps) => {
   const { children } = props;
 
-  const [reference, setReference] = useState<HTMLElement | null>(null);
+  const [reference, setReference] = React.useState<HTMLElement | null>(null);
 
   return (
     <Provider reference={reference} setReference={setReference}>
@@ -71,7 +71,7 @@ export const Reference = (props: ReferenceProps) => {
 
   const context = useContext(Reference_Name);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (virturalElement) context.setReference(virturalElement);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -164,110 +164,112 @@ export interface FloatingProps {
   clippingBoundary?: Boundary;
 }
 
-export const Floating = forwardRef<HTMLElement, FloatingProps>((props, ref) => {
-  const {
-    children,
-    placement: placementProp,
-    updatePositionStrategy = 'optimized',
-    mainOffset = 0,
-    alignOffset = 0,
-    arrow: arrowProp = true,
-    arrowPadding = 0,
-    sticky = 'partial',
-    hideWhenDetached = true,
-    fallbackPlacements,
-    allowCrossAxisFlip = true,
-    allowMainAxisFlip = true,
-    boundaryPadding = 0,
-    clippingBoundary = 'clippingAncestors',
-  } = props;
+export const Floating = React.forwardRef<HTMLElement, FloatingProps>(
+  (props, ref) => {
+    const {
+      children,
+      placement: placementProp,
+      updatePositionStrategy = 'optimized',
+      mainOffset = 0,
+      alignOffset = 0,
+      arrow: arrowProp = true,
+      arrowPadding = 0,
+      sticky = 'partial',
+      hideWhenDetached = true,
+      fallbackPlacements,
+      allowCrossAxisFlip = true,
+      allowMainAxisFlip = true,
+      boundaryPadding = 0,
+      clippingBoundary = 'clippingAncestors',
+    } = props;
 
-  const context = useContext(Floating_Name);
-  const [arrow, setArrow] = useState<HTMLSpanElement | null>(null);
-  const arrowSize = useSize(arrow);
-  const referenceSize = useSize(context.reference);
+    const context = useContext(Floating_Name);
+    const [arrow, setArrow] = React.useState<HTMLSpanElement | null>(null);
+    const arrowSize = useSize(arrow);
+    const referenceSize = useSize(context.reference);
 
-  const detectOverflow: DetectOverflowOptions = {
-    padding:
-      typeof boundaryPadding === 'number'
-        ? boundaryPadding
-        : { top: 0, left: 0, right: 0, bottom: 0, ...boundaryPadding },
-    boundary: clippingBoundary,
-  };
+    const detectOverflow: DetectOverflowOptions = {
+      padding:
+        typeof boundaryPadding === 'number'
+          ? boundaryPadding
+          : { top: 0, left: 0, right: 0, bottom: 0, ...boundaryPadding },
+      boundary: clippingBoundary,
+    };
 
-  const { middlewareData, placement, floatingStyles, refs } = useFloating({
-    strategy: 'fixed',
-    placement: placementProp,
-    elements: { reference: context.reference },
-    whileElementsMounted: (...args) =>
-      autoUpdate(...args, {
-        animationFrame: updatePositionStrategy === 'always',
-      }),
-    middleware: [
-      offset({
-        mainAxis: mainOffset + (arrowSize?.height ?? 0),
-        alignmentAxis: alignOffset,
-      }),
-      !allowMainAxisFlip && !allowCrossAxisFlip
-        ? false
-        : flip({
-            fallbackPlacements,
-            mainAxis: allowMainAxisFlip,
-            crossAxis: sticky === 'partial' ? false : allowCrossAxisFlip,
-            ...detectOverflow,
-          }),
-      sticky === 'partial' &&
-        shift({
-          ...detectOverflow,
-          limiter: limitShift({
-            offset: ({ placement, elements }) =>
-              placement.includes('top') || placement.includes('bottom')
-                ? elements.reference.offsetWidth / 2
-                : elements.reference.offsetHeight / 2,
-          }),
+    const { middlewareData, placement, floatingStyles, refs } = useFloating({
+      strategy: 'fixed',
+      placement: placementProp,
+      elements: { reference: context.reference },
+      whileElementsMounted: (...args) =>
+        autoUpdate(...args, {
+          animationFrame: updatePositionStrategy === 'always',
         }),
-      arrowProp && arrowMiddleware({ padding: arrowPadding, element: arrow }),
-      hideWhenDetached &&
-        hide({ strategy: 'referenceHidden', ...detectOverflow }),
-    ],
-  });
+      middleware: [
+        offset({
+          mainAxis: mainOffset + (arrowSize?.height ?? 0),
+          alignmentAxis: alignOffset,
+        }),
+        !allowMainAxisFlip && !allowCrossAxisFlip
+          ? false
+          : flip({
+              fallbackPlacements,
+              mainAxis: allowMainAxisFlip,
+              crossAxis: sticky === 'partial' ? false : allowCrossAxisFlip,
+              ...detectOverflow,
+            }),
+        sticky === 'partial' &&
+          shift({
+            ...detectOverflow,
+            limiter: limitShift({
+              offset: ({ placement, elements }) =>
+                placement.includes('top') || placement.includes('bottom')
+                  ? elements.reference.offsetWidth / 2
+                  : elements.reference.offsetHeight / 2,
+            }),
+          }),
+        arrowProp && arrowMiddleware({ padding: arrowPadding, element: arrow }),
+        hideWhenDetached &&
+          hide({ strategy: 'referenceHidden', ...detectOverflow }),
+      ],
+    });
 
-  const arrowData = middlewareData.arrow;
-  const hideData = middlewareData.hide;
+    const arrowData = middlewareData.arrow;
+    const hideData = middlewareData.hide;
 
-  const childrenProps = {
-    floatingRef: refs.setFloating,
-    style: {
-      ...floatingStyles,
-      visibility: (hideData?.referenceHidden
-        ? 'hidden'
-        : 'visible') as React.CSSProperties['visibility'],
-      '--reference-width': `${referenceSize?.width}px`,
-      '--reference-height': `${referenceSize?.height}px`,
-    },
-  };
+    const childrenProps = {
+      floatingRef: refs.setFloating,
+      style: {
+        ...floatingStyles,
+        visibility: (hideData?.referenceHidden
+          ? 'hidden'
+          : 'visible') as React.CSSProperties['visibility'],
+        '--reference-width': `${referenceSize?.width}px`,
+        '--reference-height': `${referenceSize?.height}px`,
+      },
+    };
 
-  return (
-    <ArrowProvider
-      arrowX={arrowData?.x}
-      arrowY={arrowData?.y}
-      side={placement.split('-')[0] as Side}
-      setArrow={setArrow}
-      shouldHideArrow={!!hideData?.referenceHidden}
-    >
-      {typeof children === 'function' ? (
-        children(childrenProps)
-      ) : (
-        <Slot<HTMLElement, React.HTMLAttributes<HTMLElement>>
-          ref={mergeRefs(refs.setFloating, ref)}
-          style={childrenProps.style}
-        >
-          {children}
-        </Slot>
-      )}
-    </ArrowProvider>
-  );
-});
+    return (
+      <ArrowProvider
+        arrowX={arrowData?.x}
+        arrowY={arrowData?.y}
+        side={placement.split('-')[0] as Side}
+        setArrow={setArrow}
+        shouldHideArrow={!!hideData?.referenceHidden}
+      >
+        {typeof children === 'function' ? (
+          children(childrenProps)
+        ) : (
+          <Slot<HTMLElement, React.HTMLAttributes<HTMLElement>>
+            ref={mergeRefs(refs.setFloating, ref)}
+            style={childrenProps.style}
+          >
+            {children}
+          </Slot>
+        )}
+      </ArrowProvider>
+    );
+  },
+);
 
 Floating.displayName = 'webbo-ui.' + Floating_Name;
 
@@ -280,7 +282,7 @@ const OPPOSITE_SIDE: Record<Side, Side> = {
   left: 'right',
 };
 
-export const Arrow = forwardRef<
+export const Arrow = React.forwardRef<
   SVGSVGElement,
   React.SVGAttributes<SVGSVGElement>
 >((props, ref) => {

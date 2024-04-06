@@ -1,5 +1,13 @@
 # @webbo-ui/focus-trap
 
+## 1.0.3
+
+### Patch Changes
+
+- refractor: use default React export
+- Updated dependencies
+  - @webbo-ui/slot@1.0.2
+
 ## 1.0.2
 
 ### Patch Changes

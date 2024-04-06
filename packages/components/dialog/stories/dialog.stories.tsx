@@ -291,3 +291,47 @@ export const Nested = {
     keepMounted: false,
   },
 };
+
+const VirtualElementTemplate = () => {
+  const [virturalElement, setVirturalElement] =
+    React.useState<HTMLButtonElement | null>(null);
+
+  return (
+    <>
+      <button ref={setVirturalElement}>open dialog</button>
+
+      <Dialog.Root defaultOpen>
+        <Dialog.Trigger virtualElement={virturalElement} />
+
+        <Dialog.Portal>
+          <Dialog.Overlay />
+
+          <Dialog.Content>
+            <Dialog.Title>SVG Vector</Dialog.Title>
+
+            <Dialog.Description>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
+              ducimus atque aut amet odio ex at rem alias nemo recusandae
+            </Dialog.Description>
+
+            <div className="pt-1 flex gap-2">
+              <div className="grow" />
+
+              <Dialog.Close>
+                <Button variant="text" color="danger">
+                  Close
+                </Button>
+              </Dialog.Close>
+
+              <Button color="success">GREAT</Button>
+            </div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </>
+  );
+};
+
+export const VirtualElement = {
+  render: VirtualElementTemplate,
+};

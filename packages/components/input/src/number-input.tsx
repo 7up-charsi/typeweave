@@ -1,4 +1,4 @@
-import { ChangeEvent, forwardRef, useRef } from 'react';
+import React from 'react';
 import Input, { InputProps } from './input';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { numberInput } from '@webbo-ui/theme';
@@ -22,7 +22,7 @@ export interface NumberInputProps extends Omit<InputProps<false>, 'type'> {
   threshold?: number;
 }
 
-const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
+const NumberInput = React.forwardRef<HTMLDivElement, NumberInputProps>(
   (props, ref) => {
     const {
       classNames,
@@ -40,18 +40,22 @@ const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       ...rest
     } = props;
 
-    const innerRef = useRef<HTMLInputElement>(null);
+    const innerRef = React.useRef<HTMLInputElement>(null);
 
     const [value, setValue] = useControllableState({
       defaultValue: defaultValue ?? '',
       value: valueProp,
       onChange: (value) => {
-        onChange?.({ target: { value } } as ChangeEvent<HTMLInputElement>);
+        onChange?.({
+          target: { value },
+        } as React.ChangeEvent<HTMLInputElement>);
       },
     });
 
-    const keyDownInterval = useRef<NodeJS.Timeout | undefined>(undefined);
-    const longPressTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
+    const keyDownInterval = React.useRef<NodeJS.Timeout | undefined>(undefined);
+    const longPressTimeout = React.useRef<NodeJS.Timeout | undefined>(
+      undefined,
+    );
 
     const increase = (toAdd: number) => {
       setValue((prev) => {

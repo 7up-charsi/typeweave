@@ -1,12 +1,13 @@
 import { createContextScope } from '@webbo-ui/context';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
-import { forwardRef, useEffect, useId, useMemo, useRef } from 'react';
 import { Slot } from '@webbo-ui/slot';
 import { FocusScope, FocusTrap } from '@webbo-ui/focus-trap';
 import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { createPortal } from 'react-dom';
 import { AlertDialogVariantProps, alertDialog } from '@webbo-ui/theme';
+import React from 'react';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 // *-*-*-*-* Root *-*-*-*-*
 
@@ -37,11 +38,11 @@ export interface RootProps {
 export const Root = (props: RootProps) => {
   const { children, isOpen: isOpenProp, defaultOpen, onOpenChange } = props;
 
-  const contentId = useId();
-  const titleId = useId();
-  const descriptionId = useId();
+  const contentId = React.useId();
+  const titleId = React.useId();
+  const descriptionId = React.useId();
 
-  const focusScope = useRef<FocusScope>({
+  const focusScope = React.useRef<FocusScope>({
     paused: false,
     pause() {
       this.paused = true;
@@ -66,7 +67,7 @@ export const Root = (props: RootProps) => {
     setOpen(false);
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isOpen) return;
 
     const handleKeydown = (e: KeyboardEvent) => {
@@ -106,11 +107,13 @@ const Trigger_Name = 'AlertDialog.Trigger';
 export interface TriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
+export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
     const { ...restProps } = props;
 
     const rootContext = useRootContext(Trigger_Name);
+
+    const pointerEvents = usePointerEvents({ onPress: rootContext.handleOpen });
 
     return (
       <Slot
@@ -118,7 +121,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
         ref={ref}
         aria-expanded={rootContext.isOpen}
         aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
-        onPress={rootContext.handleOpen}
+        {...pointerEvents}
       />
     );
   },
@@ -133,13 +136,15 @@ const Close_Name = 'AlertDialog.Close';
 export interface CloseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Close = forwardRef<HTMLButtonElement, CloseProps>((props, ref) => {
-  const { ...restProps } = props;
+export const Close = React.forwardRef<HTMLButtonElement, CloseProps>(
+  (props, ref) => {
+    const { ...restProps } = props;
 
-  const rootContext = useRootContext(Close_Name);
+    const rootContext = useRootContext(Close_Name);
 
-  return <Slot {...restProps} onPress={rootContext.handleClose} ref={ref} />;
-});
+    return <Slot {...restProps} onPress={rootContext.handleClose} ref={ref} />;
+  },
+);
 
 Close.displayName = 'webbo-ui.' + Close_Name;
 
@@ -176,7 +181,7 @@ export interface ContentProps
   noA11yDescription?: boolean;
 }
 
-export const Content = forwardRef<HTMLDivElement, ContentProps>(
+export const Content = React.forwardRef<HTMLDivElement, ContentProps>(
   (props, ref) => {
     const {
       className,
@@ -190,7 +195,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     useScrollLock();
 
-    const styles = useMemo(() => alertDialog({ shadow }), [shadow]);
+    const styles = React.useMemo(() => alertDialog({ shadow }), [shadow]);
 
     return (
       <StylesProvider {...styles}>
@@ -227,21 +232,23 @@ const Title_Name = 'AlertDialog.Title';
 
 export interface TitleProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Title = forwardRef<HTMLDivElement, TitleProps>((props, ref) => {
-  const { className, ...restProps } = props;
+export const Title = React.forwardRef<HTMLDivElement, TitleProps>(
+  (props, ref) => {
+    const { className, ...restProps } = props;
 
-  const rootContext = useRootContext(Title_Name);
-  const stylesContext = useStylesContext(Title_Name);
+    const rootContext = useRootContext(Title_Name);
+    const stylesContext = useStylesContext(Title_Name);
 
-  return (
-    <div
-      {...restProps}
-      ref={ref}
-      id={rootContext.titleId}
-      className={stylesContext.title({ className })}
-    />
-  );
-});
+    return (
+      <div
+        {...restProps}
+        ref={ref}
+        id={rootContext.titleId}
+        className={stylesContext.title({ className })}
+      />
+    );
+  },
+);
 
 Title.displayName = 'webbo-ui.' + Title_Name;
 
@@ -252,7 +259,7 @@ const Description_Name = 'AlertDialog.Description';
 export interface DescriptionProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Description = forwardRef<HTMLDivElement, DescriptionProps>(
+export const Description = React.forwardRef<HTMLDivElement, DescriptionProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
 
@@ -278,7 +285,7 @@ const Actions_Name = 'AlertDialog.Actions';
 
 export interface OverlayProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Actions = forwardRef<HTMLDivElement, OverlayProps>(
+export const Actions = React.forwardRef<HTMLDivElement, OverlayProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
 

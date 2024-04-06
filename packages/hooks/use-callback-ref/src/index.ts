@@ -1,18 +1,18 @@
-import { DependencyList, useCallback, useEffect, useRef } from 'react';
+import React from 'react';
 
 type Callback = (...args: never[]) => unknown;
 
 const useCallbackRef = <T extends Callback>(
   callback: T | undefined,
-  deps: DependencyList = [],
+  deps: React.DependencyList = [],
 ) => {
-  const callbackRef = useRef(callback);
+  const callbackRef = React.useRef(callback);
 
-  useEffect(() => {
+  React.useEffect(() => {
     callbackRef.current = callback;
   });
 
-  return useCallback(
+  return React.useCallback(
     (...args: Parameters<T>) =>
       callbackRef.current?.(...(args as never[])) as ReturnType<T>,
     // eslint-disable-next-line react-hooks/exhaustive-deps

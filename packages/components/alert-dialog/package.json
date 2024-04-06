@@ -1,6 +1,6 @@
 {
   "name": "@webbo-ui/alert-dialog",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "keywords": [
     "alert-dialog"
   ],
@@ -39,23 +39,18 @@
     "@webbo-ui/use-controllable-state": "workspace:*",
     "@webbo-ui/use-callback-ref": "workspace:*",
     "@webbo-ui/use-scroll-lock": "workspace:*",
+    "@webbo-ui/use-pointer-events": "workspace:*",
     "@webbo-ui/focus-trap": "workspace:*",
     "@webbo-ui/overlay": "workspace:*",
     "@webbo-ui/slot": "workspace:*",
     "@webbo-ui/context": "workspace:*",
     "@webbo-ui/theme": "workspace:*"
   },
+  "devDependencies": {
+    "@webbo-ui/button": "workspace:*",
+    "clean-package": "^2.2.0"
+  },
   "clean-package": {
     "extends": "../../../../../../clean-package.config.json"
-  },
-  "types": "./dist/index.d.ts",
-  "module": "./dist/index.mjs",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    },
-    "./package.json": "./package.json"
   }
 }

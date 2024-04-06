@@ -1,7 +1,6 @@
 import * as Popper from '@webbo-ui/popper';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { CustomError } from '@webbo-ui/error';
-import { forwardRef, useId, useMemo, useRef, useState } from 'react';
 import { Option, OptionProps } from './option';
 import lodashGroupBy from 'lodash.groupby';
 import {
@@ -10,6 +9,7 @@ import {
   autocomplete,
 } from '@webbo-ui/theme';
 import { mergeRefs } from '@webbo-ui/react-utils';
+import React from 'react';
 
 export type Reason = 'select' | 'clear' | 'remove';
 
@@ -113,7 +113,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
             ) => React.ReactNode;
           });
 
-const AutocompleteImp = forwardRef<
+const AutocompleteImp = React.forwardRef<
   HTMLUListElement,
   AutocompleteProps<object, false, false>
 >((props, ref) => {
@@ -182,7 +182,7 @@ const AutocompleteImp = forwardRef<
   const inputDefaultValue =
     !Array.isArray(value) && value ? getOptionLabel(value) : '';
 
-  const prevSelectedValue = useRef(inputDefaultValue);
+  const prevSelectedValue = React.useRef(inputDefaultValue);
 
   const [inputValue, setInputValue] = useControllableState({
     defaultValue: inputDefaultValue,
@@ -190,9 +190,9 @@ const AutocompleteImp = forwardRef<
     onChange: onInputChangeProp,
   });
 
-  const [options, setOptions] = useState(optionsProp);
+  const [options, setOptions] = React.useState(optionsProp);
 
-  const groupedOptions = useMemo(() => {
+  const groupedOptions = React.useMemo(() => {
     if (!groupBy) return null;
 
     const grouped = lodashGroupBy(options, (opt) => {
@@ -218,10 +218,10 @@ const AutocompleteImp = forwardRef<
       );
   }, [groupBy, options]);
 
-  const inputRef = useRef<HTMLInputElement>(null);
-  const popperReferenceRef = useRef<HTMLElement>(null);
-  const [focused, setFocused] = useState<object | null>(null);
-  const lisboxId = useId();
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const popperReferenceRef = React.useRef<HTMLElement>(null);
+  const [focused, setFocused] = React.useState<object | null>(null);
+  const lisboxId = React.useId();
 
   const [isOpen, setIsOpen] = useControllableState({
     defaultValue: defaultOpen ?? false,

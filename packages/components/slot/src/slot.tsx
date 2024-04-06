@@ -1,4 +1,4 @@
-import { Children, cloneElement, forwardRef, isValidElement } from 'react';
+import React from 'react';
 import { CustomError } from '@webbo-ui/error';
 import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
 
@@ -12,13 +12,13 @@ const _Slot = <E extends HTMLElement>(
 ) => {
   const { children, ...slotProps } = props;
 
-  const count = Children.count(children);
+  const count = React.Children.count(children);
   if (!count) return;
   if (count > 1) throw new CustomError('Slot', 'must have only one child');
-  if (!isValidElement(children))
+  if (!React.isValidElement(children))
     throw new CustomError('Slot', 'child must be valid element');
 
-  return cloneElement(children, {
+  return React.cloneElement(children, {
     ...mergeProps(slotProps, children.props),
     ref: ref
       ? mergeRefs(
@@ -31,6 +31,6 @@ const _Slot = <E extends HTMLElement>(
 
 _Slot.displayName = 'webbo-ui.Slot';
 
-export const Slot = forwardRef(_Slot) as <T, P>(
+export const Slot = React.forwardRef(_Slot) as <T, P>(
   props: SlotProps & P & { ref?: React.ForwardedRef<T> },
 ) => ReturnType<typeof _Slot>;

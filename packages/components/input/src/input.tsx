@@ -1,6 +1,6 @@
 import { input, InputClassNames, InputVariantProps } from '@webbo-ui/theme';
 import { mergeRefs } from '@webbo-ui/react-utils';
-import { forwardRef, useEffect, useId, useRef } from 'react';
+import React from 'react';
 
 type InputBaseProps = React.InputHTMLAttributes<HTMLInputElement> & {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -80,15 +80,15 @@ const InputImpl = (
     ...restProps
   } = props;
 
-  const labelId = useId();
-  const helperTextId = useId();
-  const errorMessageId = useId();
+  const labelId = React.useId();
+  const helperTextId = React.useId();
+  const errorMessageId = React.useId();
   const inputId = id || labelId;
 
-  const innerInputRef = useRef<HTMLInputElement | null>(null);
-  const innerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const innerInputRef = React.useRef<HTMLInputElement | null>(null);
+  const innerTextareaRef = React.useRef<HTMLTextAreaElement | null>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (process.env.NODE_ENV !== 'production' && !label) {
       console.warn(
         '`Input` "label" prop is optional but recommended. if you want to hide label then pass "hideLabel" prop as well',
@@ -219,7 +219,7 @@ const InputImpl = (
 
 InputImpl.displayName = 'webbo-ui.Input';
 
-export default forwardRef(InputImpl) as unknown as <
+export default React.forwardRef(InputImpl) as unknown as <
   Multiline extends boolean = false,
 >(
   props: InputProps<Multiline> & React.RefAttributes<HTMLDivElement>,

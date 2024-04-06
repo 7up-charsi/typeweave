@@ -1,4 +1,4 @@
-import { forwardRef, useId } from 'react';
+import React from 'react';
 import {
   SwitchClassNames,
   SwitchVariantProps,
@@ -43,7 +43,7 @@ export interface SwitchProps
   checkedIcon?: React.ReactNode;
 }
 
-const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
+const Switch = React.forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
   const {
     classNames,
     className,
@@ -57,7 +57,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const autoId = useId();
+  const autoId = React.useId();
   const id = idProp ?? autoId;
 
   const styles = switchStyles({ size, labelPlacement, color });

@@ -1,12 +1,12 @@
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
-import { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 export interface UseControllableStateProps<T, P> {
   /**
    * If value is defined then this hook will behave as controlled
    */
   value?: T;
-  defaultValue?: T;
+  defaultValue?: T | (() => T);
   onChange?: (value: T, payload?: P) => void;
 }
 
@@ -15,15 +15,15 @@ const useControllableState = <T, P = unknown>(
 ) => {
   const { value: valueProp, defaultValue, onChange: onChangeProp } = props;
 
-  const [state, setState] = useState(defaultValue);
+  const [state, setState] = React.useState(defaultValue);
   const onChange = useCallbackRef(onChangeProp);
 
   const controlled = valueProp !== undefined;
   const value = controlled ? valueProp : state;
 
-  const previouslyControlled = useRef(controlled);
+  const previouslyControlled = React.useRef(controlled);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (previouslyControlled.current === controlled) return;
 
     previouslyControlled.current = controlled;

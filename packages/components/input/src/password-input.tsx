@@ -1,4 +1,4 @@
-import { ReactNode, forwardRef, useState } from 'react';
+import React from 'react';
 import Input, { InputProps } from './input';
 import { Button } from '@webbo-ui/button';
 import { Icon } from '@webbo-ui/icon';
@@ -13,11 +13,11 @@ export interface PasswordInputProps extends Omit<InputProps<false>, 'type'> {
    * This prop value is used in `aria-label` of ToggleButton when it is in pressed state
    */
   hideAriaLabel?: string;
-  showIcon?: ReactNode;
-  hideIcon?: ReactNode;
+  showIcon?: React.ReactNode;
+  hideIcon?: React.ReactNode;
 }
 
-const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProps>(
+const PasswordInput = React.forwardRef<HTMLDivElement, PasswordInputProps>(
   (props, ref) => {
     const {
       showIcon,
@@ -29,7 +29,7 @@ const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProps>(
       ...rest
     } = props;
 
-    const [isPassword, setIsPassword] = useState(true);
+    const [isPassword, setIsPassword] = React.useState(true);
 
     const styles = passwordInput();
 

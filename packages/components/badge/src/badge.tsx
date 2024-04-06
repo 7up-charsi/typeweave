@@ -1,5 +1,5 @@
 import { BadgeClassNames, BadgeVariantProps, badge } from '@webbo-ui/theme';
-import { forwardRef } from 'react';
+import React from 'react';
 
 export interface BadgeProps
   extends BadgeVariantProps,
@@ -10,7 +10,7 @@ export interface BadgeProps
   showZero?: boolean;
 }
 
-const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
+const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
   const {
     children,
     content,

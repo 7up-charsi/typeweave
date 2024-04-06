@@ -6,10 +6,11 @@ import { useCallbackRef } from '@webbo-ui/use-callback-ref';
 import * as Popper from '@webbo-ui/popper';
 import { createPortal } from 'react-dom';
 import { createContextScope } from '@webbo-ui/context';
-import { forwardRef, useEffect, useId, useMemo, useRef } from 'react';
+import React from 'react';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { PopoverVariantProps, popover } from '@webbo-ui/theme';
+import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 
 interface PopoverContext {
   isOpen: boolean;
@@ -71,10 +72,10 @@ export const Root = (props: RootProps) => {
     value: openProp,
   });
 
-  const contentId = useId();
-  const titleId = useId();
-  const descriptionId = useId();
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const contentId = React.useId();
+  const titleId = React.useId();
+  const descriptionId = React.useId();
+  const triggerRef = React.useRef<HTMLButtonElement>(null);
 
   const handleOpen = useCallbackRef(() => {
     setOpen(true);
@@ -84,7 +85,7 @@ export const Root = (props: RootProps) => {
     setOpen(false);
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isOpen) return;
 
     const handler = (e: KeyboardEvent) => {
@@ -125,11 +126,13 @@ const Trigger_Name = 'Popover.Trigger';
 export interface TriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
+export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
     const { ...restProps } = props;
 
     const rootContext = useRootContext(Trigger_Name);
+
+    const pointerEvents = usePointerEvents({ onPress: rootContext.handleOpen });
 
     return (
       <Popper.Reference>
@@ -138,8 +141,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           ref={mergeRefs(ref, rootContext.triggerRef)}
           aria-expanded={rootContext.isOpen}
           aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
-          // @ts-expect-error onPress does not exist
-          onPress={rootContext.handleOpen}
+          {...pointerEvents}
         />
       </Popper.Reference>
     );
@@ -155,13 +157,19 @@ const Close_Name = 'Popover.Close';
 export interface CloseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Close = forwardRef<HTMLButtonElement, CloseProps>((props, ref) => {
-  const { ...restProps } = props;
+export const Close = React.forwardRef<HTMLButtonElement, CloseProps>(
+  (props, ref) => {
+    const { ...restProps } = props;
 
-  const rootContext = useRootContext(Close_Name);
+    const rootContext = useRootContext(Close_Name);
 
-  return <Slot {...restProps} ref={ref} onPress={rootContext.handleClose} />;
-});
+    const pointerEvents = usePointerEvents({
+      onPress: rootContext.handleClose,
+    });
+
+    return <Slot {...restProps} ref={ref} {...pointerEvents} />;
+  },
+);
 
 Close.displayName = 'webbo-ui.' + Close_Name;
 
@@ -191,21 +199,23 @@ const Title_Name = 'Dialog.Title';
 
 export interface TitleProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Title = forwardRef<HTMLDivElement, TitleProps>((props, ref) => {
-  const { className, ...restProps } = props;
+export const Title = React.forwardRef<HTMLDivElement, TitleProps>(
+  (props, ref) => {
+    const { className, ...restProps } = props;
 
-  const rootContext = useRootContext(Title_Name);
-  const styles = useStylesContext(Title_Name);
+    const rootContext = useRootContext(Title_Name);
+    const styles = useStylesContext(Title_Name);
 
-  return (
-    <div
-      {...restProps}
-      ref={ref}
-      id={rootContext.titleId}
-      className={styles.title({ className })}
-    />
-  );
-});
+    return (
+      <div
+        {...restProps}
+        ref={ref}
+        id={rootContext.titleId}
+        className={styles.title({ className })}
+      />
+    );
+  },
+);
 
 Title.displayName = 'webbo-ui.' + Title_Name;
 
@@ -216,7 +226,7 @@ const Description_Name = 'Dialog.Description';
 export interface DescriptionProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Description = forwardRef<HTMLDivElement, DescriptionProps>(
+export const Description = React.forwardRef<HTMLDivElement, DescriptionProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
 
@@ -250,7 +260,7 @@ export interface ContentProps
   trapped?: boolean;
 }
 
-export const Content = forwardRef<HTMLDivElement, ContentProps>(
+export const Content = React.forwardRef<HTMLDivElement, ContentProps>(
   (props, ref) => {
     const {
       children,
@@ -287,7 +297,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       },
     });
 
-    const styles = useMemo(() => popover({ shadow }), [shadow]);
+    const styles = React.useMemo(() => popover({ shadow }), [shadow]);
 
     return (
       <StylesProvider {...styles}>

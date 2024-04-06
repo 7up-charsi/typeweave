@@ -1,5 +1,14 @@
 # @webbo-ui/input
 
+## 1.0.10
+
+### Patch Changes
+
+- refractor: use default React export
+- Updated dependencies
+  - @webbo-ui/use-controllable-state@1.0.2
+  - @webbo-ui/button@1.0.9
+
 ## 1.0.9
 
 ### Patch Changes
