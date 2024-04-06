@@ -375,6 +375,9 @@ importers:
       '@webbo-ui/button':
         specifier: workspace:*
         version: link:../button
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       clean-package:
         specifier: ^2.2.0
         version: 2.2.0
@@ -582,6 +585,9 @@ importers:
       '@webbo-ui/button':
         specifier: workspace:*
         version: link:../button
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../icon
       clean-package:
         specifier: ^2.2.0
         version: 2.2.0
@@ -1082,9 +1088,6 @@ importers:
       '@webbo-ui/button':
         specifier: workspace:*
         version: link:../button
-      '@webbo-ui/icon':
-        specifier: workspace:*
-        version: link:../icon
       '@webbo-ui/menu':
         specifier: workspace:*
         version: link:../menu

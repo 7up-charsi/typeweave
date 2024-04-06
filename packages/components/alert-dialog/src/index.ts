@@ -11,6 +11,7 @@ export type {
   RootProps,
   TitleProps,
   TriggerProps,
+  RootMethods,
 } from './alert-dialog';
 
 // export component

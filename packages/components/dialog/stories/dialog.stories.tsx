@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@webbo-ui/button';
+import { Icon } from '@webbo-ui/icon';
 import * as Dialog from '../src';
 
 const meta = {
@@ -310,8 +311,18 @@ const VirtualElementTemplate = () => {
             <Dialog.Title>SVG Vector</Dialog.Title>
 
             <Dialog.Description>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-              ducimus atque aut amet odio ex at rem alias nemo recusandae
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
+              aperiam tenetur numquam sunt, tempore, enim assumenda rem facere
+              nesciunt sit, voluptate optio voluptatum vero impedit. Doloremque,
+              velit? Enim error voluptas ullam voluptates esse excepturi
+              molestias dicta beatae, sed delectus nemo sequi in, minus
+              laboriosam expedita, magni asperiores vel. Culpa quia earum iste
+              cum ducimus. Minima deserunt debitis dolore ab quo tempore omnis?
+              Sapiente quos eos maiores veritatis mollitia officia nobis
+              eligendi harum, ipsum vitae. Odit soluta vel delectus magnam ea
+              sit quidem vero libero necessitatibus dolores, consequuntur
+              voluptate. Quibusdam, magni voluptatibus necessitatibus debitis
+              quo natus delectus ut explicabo. Quis, illum.
             </Dialog.Description>
 
             <div className="pt-1 flex gap-2">
@@ -334,4 +345,87 @@ const VirtualElementTemplate = () => {
 
 export const VirtualElement = {
   render: VirtualElementTemplate,
+};
+
+const ProgrammaticallyTemplate = () => {
+  const [virturalElement, setVirturalElement] =
+    React.useState<HTMLButtonElement | null>(null);
+
+  const ref = React.useRef<Dialog.RootMethods>(null);
+
+  return (
+    <>
+      <Button ref={setVirturalElement}>open dialog</Button>
+
+      <Dialog.Root ref={ref} defaultOpen>
+        <Dialog.Trigger virtualElement={virturalElement} />
+
+        <Dialog.Portal>
+          <Dialog.Overlay />
+
+          <Dialog.Content>
+            <Button
+              isIconOnly
+              aria-label="close"
+              size="sm"
+              color="danger"
+              variant="text"
+              className="w-5 h-5 absolute right-2 top-2"
+              classNames={{ content: 'text-xs' }}
+              onPress={() => ref.current?.onClose('pointer')}
+            >
+              <Icon>
+                <svg fill="none" viewBox="0 0 24 24">
+                  <g>
+                    <g>
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M21 21l-9-9m0 0L3 3m9 9l9-9m-9 9l-9 9"
+                      ></path>
+                    </g>
+                  </g>
+                </svg>
+              </Icon>
+            </Button>
+
+            <Dialog.Title>SVG Vector</Dialog.Title>
+
+            <Dialog.Description>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Repudiandae quam voluptas, aliquam repellat sed vel odio,
+              similique eos nemo nobis deserunt totam facere placeat eligendi
+              inventore, nesciunt impedit vero suscipit doloribus debitis beatae
+              molestias. Ad voluptate vel pariatur error quia. Reiciendis,
+              nesciunt at? Vel corporis neque asperiores quos impedit expedita,
+              minima explicabo vero facilis numquam reprehenderit sit laudantium
+              quis qui excepturi autem laborum, facere non, aspernatur in
+              voluptatem quam nesciunt eos. Quo nisi officiis consectetur saepe
+              harum nam voluptatibus et tenetur, deserunt illo cumque placeat
+              quas quis fugit? Magnam ea praesentium a assumenda dicta earum
+              eius tempora laborum. Illum, in.
+            </Dialog.Description>
+
+            <div className="pt-1 flex gap-2">
+              <div className="grow" />
+
+              <Dialog.Close>
+                <Button variant="text" color="danger">
+                  Close
+                </Button>
+              </Dialog.Close>
+
+              <Button color="success">GREAT</Button>
+            </div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </>
+  );
+};
+
+export const Programmatically = {
+  render: ProgrammaticallyTemplate,
 };

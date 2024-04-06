@@ -69,7 +69,11 @@ export interface RootProps {
   keepMounted?: boolean;
 }
 
-export const Root = (props: RootProps) => {
+export interface RootMethods {
+  onClose: RootContext['handleClose'];
+}
+
+export const Root = React.forwardRef<RootMethods, RootProps>((props, ref) => {
   const {
     children,
     isOpen: isOpenProp,
@@ -118,6 +122,14 @@ export const Root = (props: RootProps) => {
     if (!eventObj.defaultPrevented) setOpen(false);
   });
 
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      onClose: handleClose,
+    }),
+    [handleClose],
+  );
+
   React.useEffect(() => {
     if (!isOpen) return;
 
@@ -149,7 +161,7 @@ export const Root = (props: RootProps) => {
       {children}
     </RootProvider>
   );
-};
+});
 
 Root.displayName = 'webbo-ui.' + Root_Name;
 
