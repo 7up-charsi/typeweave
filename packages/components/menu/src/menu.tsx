@@ -136,6 +136,7 @@ export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
           ref={mergeRefs(ref, rootContext.triggerRef)}
           role="button"
           aria-haspopup="menu"
+          data-open={rootContext.isOpen}
           aria-expanded={rootContext.isOpen}
           aria-controls={rootContext.isOpen ? rootContext.id : undefined}
           {...pointerEvents}

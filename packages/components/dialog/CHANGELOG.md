@@ -1,5 +1,11 @@
 # @webbo-ui/dialog
 
+## 1.0.12
+
+### Patch Changes
+
+- feat: add dataset open
+
 ## 1.0.11
 
 ### Patch Changes

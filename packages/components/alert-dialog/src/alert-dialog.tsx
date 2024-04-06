@@ -128,12 +128,14 @@ export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
     const ariaHaspopup = 'dialog';
     const ariaExpanded = rootContext.isOpen;
     const ariaControls = rootContext.isOpen ? rootContext.contentId : undefined;
+    const isOpen = rootContext.isOpen + '';
 
     React.useEffect(() => {
       if (!virtualElement) return;
 
       virtualElement.ariaExpanded = ariaExpanded + '';
       virtualElement.ariaHasPopup = ariaHaspopup;
+      virtualElement.dataset.open = isOpen;
 
       // @ts-expect-error ----
       virtualElement.onpointerdown = pointerEvents.onPointerDown;
@@ -142,6 +144,7 @@ export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
       virtualElement.onpointerup = pointerEvents.onPointerUp;
     }, [
       ariaExpanded,
+      isOpen,
       pointerEvents.onPointerDown,
       pointerEvents.onPointerUp,
       virtualElement,
@@ -155,6 +158,7 @@ export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
         {...pointerEvents}
         ref={ref}
         role="button"
+        data-open={isOpen}
         aria-haspopup={ariaHaspopup}
         aria-expanded={ariaExpanded}
         aria-controls={ariaControls}
