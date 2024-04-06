@@ -1,5 +1,11 @@
 # @webbo-ui/focus-trap
 
+## 1.0.2
+
+### Patch Changes
+
+- fix(focus-trap): autoFocus does not work for decendents
+
 ## 1.0.1
 
 ### Patch Changes

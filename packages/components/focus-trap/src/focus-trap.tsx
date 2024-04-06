@@ -116,23 +116,26 @@ const FocusTrap = forwardRef<HTMLDivElement, FocusTrapProps>((props, ref) => {
     if (!container) return;
     if (disabled) return;
 
-    const previouslyActiveElement =
-      document.activeElement as HTMLElement | null;
+    const prevFocusedElement = document.activeElement as HTMLElement | null;
 
     focusScopesStack?.add(focusScope);
 
-    if (!('focus' in container))
-      throw new CustomError(
-        'FocusTrap',
-        'container must be focusable, hint =  set tabIndex to -1',
-      );
+    if (container.contains(prevFocusedElement)) {
+      lastFocusedElement.current = prevFocusedElement;
+    } else {
+      if (!('focus' in container))
+        throw new CustomError(
+          'FocusTrap',
+          'container must be focusable, hint = set tabIndex to -1',
+        );
 
-    container.focus?.();
+      container.focus();
+    }
 
     return () => {
       focusScopesStack?.remove(focusScope);
 
-      if (previouslyActiveElement) previouslyActiveElement.focus?.();
+      if (prevFocusedElement) prevFocusedElement.focus?.();
       else document.body.focus();
     };
   }, [container, focusScope, disabled]);

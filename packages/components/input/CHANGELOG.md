@@ -1,5 +1,11 @@
 # @webbo-ui/input
 
+## 1.0.9
+
+### Patch Changes
+
+- fix(focus-trap): autoFocus does not work for decendents
+
 ## 1.0.8
 
 ### Patch Changes
