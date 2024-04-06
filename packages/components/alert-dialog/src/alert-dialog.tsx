@@ -105,23 +105,51 @@ Root.displayName = 'webbo-ui.' + Root_Name;
 const Trigger_Name = 'AlertDialog.Trigger';
 
 export interface TriggerProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  virtualElement?: HTMLElement | null;
+}
 
 export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { ...restProps } = props;
+    const { virtualElement, ...restProps } = props;
 
     const rootContext = useRootContext(Trigger_Name);
 
     const pointerEvents = usePointerEvents({ onPress: rootContext.handleOpen });
 
+    const ariaHaspopup = 'dialog';
+    const ariaExpanded = rootContext.isOpen;
+    const ariaControls = rootContext.isOpen ? rootContext.contentId : undefined;
+
+    React.useEffect(() => {
+      if (!virtualElement) return;
+
+      virtualElement.ariaExpanded = ariaExpanded + '';
+      virtualElement.ariaHasPopup = ariaHaspopup;
+
+      // @ts-expect-error ----
+      virtualElement.onpointerdown = pointerEvents.onPointerDown;
+
+      // @ts-expect-error ----
+      virtualElement.onpointerup = pointerEvents.onPointerUp;
+    }, [
+      ariaExpanded,
+      pointerEvents.onPointerDown,
+      pointerEvents.onPointerUp,
+      virtualElement,
+    ]);
+
+    if (virtualElement) return null;
+
     return (
-      <Slot
+      <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
         {...restProps}
-        ref={ref}
-        aria-expanded={rootContext.isOpen}
-        aria-controls={rootContext.isOpen ? rootContext.contentId : undefined}
         {...pointerEvents}
+        ref={ref}
+        role="button"
+        aria-haspopup={ariaHaspopup}
+        aria-expanded={ariaExpanded}
+        aria-controls={ariaControls}
       />
     );
   },
