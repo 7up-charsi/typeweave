@@ -1317,6 +1317,9 @@ importers:
       '@webbo-ui/use-size':
         specifier: workspace:*
         version: link:../../hooks/use-size
+      '@webbo-ui/use-test':
+        specifier: workspace:*
+        version: link:../../hooks/use-test
       '@webbo-ui/visually-hidden':
         specifier: workspace:*
         version: link:../../components/visually-hidden
@@ -1492,6 +1495,19 @@ importers:
         version: 2.2.0
 
   packages/hooks/use-size:
+    dependencies:
+      react:
+        specifier: '>=18'
+        version: 18.2.0
+      react-dom:
+        specifier: '>=18'
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      clean-package:
+        specifier: ^2.2.0
+        version: 2.2.0
+
+  packages/hooks/use-test:
     dependencies:
       react:
         specifier: '>=18'

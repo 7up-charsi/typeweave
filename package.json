@@ -19,7 +19,8 @@
     "create:cmp": "plop component",
     "create:pkg": "plop package",
     "create:hook": "plop hook",
-    "create:cmp-docs": "plop component-docs"
+    "create:cmp-docs": "plop component-docs",
+    "prepare-release": "pnpm --filter @webbo-ui/react only-prepare"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",

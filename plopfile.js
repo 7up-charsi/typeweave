@@ -59,7 +59,6 @@ module.exports = function main(
           type: 'list',
           name: 'outDir',
           message: `where should this ${gen} live? :`,
-          default: defaultOutDirs[gen],
           choices: ['core', 'utilities'],
           validate: (value) => {
             if (!value) {
@@ -110,7 +109,7 @@ module.exports = function main(
         }
 
         const data = {
-          outDir: gen === 'package' ? outDir : undefined,
+          outDir: gen === 'package' ? outDir : defaultOutDirs[gen],
         };
 
         actions.push({
