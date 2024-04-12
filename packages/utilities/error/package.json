@@ -29,7 +29,8 @@
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
-    "postpack": "clean-package restore"
+    "postpack": "clean-package restore",
+    "prepublish": "pnpm build"
   },
   "devDependencies": {
     "clean-package": "^2.2.0"

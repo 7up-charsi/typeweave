@@ -29,7 +29,8 @@
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
-    "postpack": "clean-package restore"
+    "postpack": "clean-package restore",
+    "prepublish": "pnpm build"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -40,7 +41,6 @@
     "@webbo-ui/react-utils": "workspace:*"
   },
   "devDependencies": {
-    
     "clean-package": "^2.2.0"
   },
   "clean-package": {
