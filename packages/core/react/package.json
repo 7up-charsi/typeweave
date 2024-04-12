@@ -1,0 +1,87 @@
+{
+  "name": "@webbo-ui/react",
+  "version": "1.0.0",
+  "keywords": [
+    "react"
+  ],
+  "author": {
+    "name": "Muhammad Zeeshan",
+    "email": "7up.charsi@gmail.com"
+  },
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/7up-charsi/webbo-ui.git",
+    "directory": "packages/core/react"
+  },
+  "bugs": {
+    "url": "https://github.com/7up-charsi/webbo-ui/issues"
+  },
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "tsx ./scripts/prepare.ts && pnpm install && tsup",
+    "clean": "rimraf dist .turbo",
+    "typecheck": "tsc --noEmit",
+    "prepack": "clean-package",
+    "postpack": "clean-package restore",
+    "prepublish": "pnpm build"
+  },
+  "dependencies": {
+    "@webbo-ui/accordion": "workspace:*",
+    "@webbo-ui/alert": "workspace:*",
+    "@webbo-ui/alert-dialog": "workspace:*",
+    "@webbo-ui/autocomplete": "workspace:*",
+    "@webbo-ui/badge": "workspace:*",
+    "@webbo-ui/button": "workspace:*",
+    "@webbo-ui/checkbox": "workspace:*",
+    "@webbo-ui/chip": "workspace:*",
+    "@webbo-ui/dialog": "workspace:*",
+    "@webbo-ui/disclosure": "workspace:*",
+    "@webbo-ui/focus-trap": "workspace:*",
+    "@webbo-ui/icon": "workspace:*",
+    "@webbo-ui/input": "workspace:*",
+    "@webbo-ui/menu": "workspace:*",
+    "@webbo-ui/overlay": "workspace:*",
+    "@webbo-ui/pagination": "workspace:*",
+    "@webbo-ui/popover": "workspace:*",
+    "@webbo-ui/popper": "workspace:*",
+    "@webbo-ui/radio": "workspace:*",
+    "@webbo-ui/select": "workspace:*",
+    "@webbo-ui/skeleton": "workspace:*",
+    "@webbo-ui/slot": "workspace:*",
+    "@webbo-ui/switch": "workspace:*",
+    "@webbo-ui/table": "workspace:*",
+    "@webbo-ui/tabs": "workspace:*",
+    "@webbo-ui/themes": "workspace:*",
+    "@webbo-ui/toggle-button": "workspace:*",
+    "@webbo-ui/tooltip": "workspace:*",
+    "@webbo-ui/visually-hidden": "workspace:*",
+    "@webbo-ui/context": "workspace:*",
+    "@webbo-ui/theme": "workspace:*",
+    "@webbo-ui/use-callback-ref": "workspace:*",
+    "@webbo-ui/use-click-outside": "workspace:*",
+    "@webbo-ui/use-collection": "workspace:*",
+    "@webbo-ui/use-controllable-state": "workspace:*",
+    "@webbo-ui/use-is-disabled": "workspace:*",
+    "@webbo-ui/use-media-query": "workspace:*",
+    "@webbo-ui/use-pointer-events": "workspace:*",
+    "@webbo-ui/use-ripple": "workspace:*",
+    "@webbo-ui/use-scroll-lock": "workspace:*",
+    "@webbo-ui/use-size": "workspace:*",
+    "@webbo-ui/error": "workspace:*",
+    "@webbo-ui/react-utils": "workspace:*",
+    "@webbo-ui/shared-utils": "workspace:*"
+  },
+  "devDependencies": {
+    "clean-package": "^2.2.0"
+  },
+  "clean-package": {
+    "extends": "../../../../../../clean-package.config.json"
+  }
+}

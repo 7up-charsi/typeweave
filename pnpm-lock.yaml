@@ -1186,6 +1186,145 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
 
+  packages/core/react:
+    dependencies:
+      '@webbo-ui/accordion':
+        specifier: workspace:*
+        version: link:../../components/accordion
+      '@webbo-ui/alert':
+        specifier: workspace:*
+        version: link:../../components/alert
+      '@webbo-ui/alert-dialog':
+        specifier: workspace:*
+        version: link:../../components/alert-dialog
+      '@webbo-ui/autocomplete':
+        specifier: workspace:*
+        version: link:../../components/autocomplete
+      '@webbo-ui/badge':
+        specifier: workspace:*
+        version: link:../../components/badge
+      '@webbo-ui/button':
+        specifier: workspace:*
+        version: link:../../components/button
+      '@webbo-ui/checkbox':
+        specifier: workspace:*
+        version: link:../../components/checkbox
+      '@webbo-ui/chip':
+        specifier: workspace:*
+        version: link:../../components/chip
+      '@webbo-ui/context':
+        specifier: workspace:*
+        version: link:../context
+      '@webbo-ui/dialog':
+        specifier: workspace:*
+        version: link:../../components/dialog
+      '@webbo-ui/disclosure':
+        specifier: workspace:*
+        version: link:../../components/disclosure
+      '@webbo-ui/error':
+        specifier: workspace:*
+        version: link:../../utilities/error
+      '@webbo-ui/focus-trap':
+        specifier: workspace:*
+        version: link:../../components/focus-trap
+      '@webbo-ui/icon':
+        specifier: workspace:*
+        version: link:../../components/icon
+      '@webbo-ui/input':
+        specifier: workspace:*
+        version: link:../../components/input
+      '@webbo-ui/menu':
+        specifier: workspace:*
+        version: link:../../components/menu
+      '@webbo-ui/overlay':
+        specifier: workspace:*
+        version: link:../../components/overlay
+      '@webbo-ui/pagination':
+        specifier: workspace:*
+        version: link:../../components/pagination
+      '@webbo-ui/popover':
+        specifier: workspace:*
+        version: link:../../components/popover
+      '@webbo-ui/popper':
+        specifier: workspace:*
+        version: link:../../components/popper
+      '@webbo-ui/radio':
+        specifier: workspace:*
+        version: link:../../components/radio
+      '@webbo-ui/react-utils':
+        specifier: workspace:*
+        version: link:../../utilities/react-utils
+      '@webbo-ui/select':
+        specifier: workspace:*
+        version: link:../../components/select
+      '@webbo-ui/shared-utils':
+        specifier: workspace:*
+        version: link:../../utilities/shared-utils
+      '@webbo-ui/skeleton':
+        specifier: workspace:*
+        version: link:../../components/skeleton
+      '@webbo-ui/slot':
+        specifier: workspace:*
+        version: link:../../components/slot
+      '@webbo-ui/switch':
+        specifier: workspace:*
+        version: link:../../components/switch
+      '@webbo-ui/table':
+        specifier: workspace:*
+        version: link:../../components/table
+      '@webbo-ui/tabs':
+        specifier: workspace:*
+        version: link:../../components/tabs
+      '@webbo-ui/theme':
+        specifier: workspace:*
+        version: link:../theme
+      '@webbo-ui/themes':
+        specifier: workspace:*
+        version: link:../../components/themes
+      '@webbo-ui/toggle-button':
+        specifier: workspace:*
+        version: link:../../components/toggle-button
+      '@webbo-ui/tooltip':
+        specifier: workspace:*
+        version: link:../../components/tooltip
+      '@webbo-ui/use-callback-ref':
+        specifier: workspace:*
+        version: link:../../hooks/use-callback-ref
+      '@webbo-ui/use-click-outside':
+        specifier: workspace:*
+        version: link:../../hooks/use-click-outside
+      '@webbo-ui/use-collection':
+        specifier: workspace:*
+        version: link:../../hooks/use-collection
+      '@webbo-ui/use-controllable-state':
+        specifier: workspace:*
+        version: link:../../hooks/use-controllable-state
+      '@webbo-ui/use-is-disabled':
+        specifier: workspace:*
+        version: link:../../hooks/use-is-disabled
+      '@webbo-ui/use-media-query':
+        specifier: workspace:*
+        version: link:../../hooks/use-media-query
+      '@webbo-ui/use-pointer-events':
+        specifier: workspace:*
+        version: link:../../hooks/use-pointer-events
+      '@webbo-ui/use-ripple':
+        specifier: workspace:*
+        version: link:../../hooks/use-ripple
+      '@webbo-ui/use-scroll-lock':
+        specifier: workspace:*
+        version: link:../../hooks/use-scroll-lock
+      '@webbo-ui/use-size':
+        specifier: workspace:*
+        version: link:../../hooks/use-size
+      '@webbo-ui/visually-hidden':
+        specifier: workspace:*
+        version: link:../../components/visually-hidden
+    devDependencies:
+      clean-package:
+        specifier: ^2.2.0
+        version: 2.2.0
+
   packages/core/theme:
     dependencies:
       '@radix-ui/colors':
