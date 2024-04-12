@@ -25,7 +25,8 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-    "build": "tsx ./scripts/prepare.ts && pnpm install && tsup",
+    "build": "tsup",
+    "only-prepare": "tsx ./scripts/prepare.ts && pnpm install",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
