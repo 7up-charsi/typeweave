@@ -4,18 +4,18 @@ import { focusWithIn } from '../classes';
 
 export const input = tv({
   slots: {
-    base: 'flex flex-col w-64 group',
+    base: 'flex flex-col w-64 group space-y-1',
     label:
       'first-letter:uppercase cursor-pointer self-start px-1 text-sm font-semibold text-muted-11',
     inputWrapper: [
-      'w-full relative flex items-center gap-x-2 rounded px-3 cursor-text bg-transparent border border-muted-7 hover:border-muted-8 focus-within:hover:border-transparent focus-within:border-transparent overflow-hidden mt-1',
+      'w-full relative flex items-center gap-x-2 rounded px-3 cursor-text bg-transparent border border-muted-7 hover:border-muted-8 focus-within:hover:border-transparent focus-within:border-transparent overflow-hidden',
       focusWithIn,
     ],
     input:
       'appearance-none bg-transparent outline-none grow w-0 text-muted-11 placeholder:text-muted-11/90 h-[30px] text-sm',
-    helperText: 'first-letter:uppercase px-1 text-xs text-muted-11/90 mt-1',
+    helperText: 'first-letter:uppercase px-1 text-xs text-muted-11/90',
     errorMessage:
-      'first-letter:uppercase px-1 text-xs font-semibold text-danger-11 mt-1',
+      'first-letter:uppercase px-1 text-xs font-semibold text-danger-11',
     startContent: 'flex gap-1 items-center text-base',
     endContent: 'flex gap-1 items-center text-base',
     textarea:

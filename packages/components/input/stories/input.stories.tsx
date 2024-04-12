@@ -75,3 +75,30 @@ const MultilineTemplate = () => (
 export const Multiline = {
   render: MultilineTemplate,
 };
+
+const HideLabelTemplate = () => (
+  <div className="flex flex-col gap-5">
+    <InputComp
+      required
+      label="multiline input"
+      hideLabel
+      placeholder="Placeholder"
+      helperText="this input is optional"
+      startContent={<p className="text-sm">kg</p>}
+      endContent={<p className="text-sm">$$$</p>}
+    />
+
+    <InputComp
+      required
+      label="multiline input"
+      multiline
+      hideLabel
+      placeholder="Placeholder"
+      helperText="this input is optional"
+    />
+  </div>
+);
+
+export const HideLabel = {
+  render: HideLabelTemplate,
+};

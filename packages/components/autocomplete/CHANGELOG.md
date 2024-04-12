@@ -1,5 +1,14 @@
 # @webbo-ui/autocomplete
 
+## 1.0.10
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/theme@1.0.8
+  - @webbo-ui/button@1.0.10
+  - @webbo-ui/chip@1.0.9
+
 ## 1.0.9
 
 ### Patch Changes

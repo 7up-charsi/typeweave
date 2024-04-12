@@ -1,5 +1,14 @@
 # @webbo-ui/input
 
+## 1.0.11
+
+### Patch Changes
+
+- fix(Input): unnecessary top margin
+- Updated dependencies
+  - @webbo-ui/theme@1.0.8
+  - @webbo-ui/button@1.0.10
+
 ## 1.0.10
 
 ### Patch Changes
