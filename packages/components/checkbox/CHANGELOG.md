@@ -1,5 +1,12 @@
 # @webbo-ui/checkbox
 
+## 1.0.9
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/theme@1.0.8
+
 ## 1.0.8
 
 ### Patch Changes

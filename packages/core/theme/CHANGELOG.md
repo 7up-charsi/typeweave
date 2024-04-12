@@ -1,5 +1,11 @@
 # @webbo-ui/theme
 
+## 1.0.8
+
+### Patch Changes
+
+- fix(Input): unnecessary top margin
+
 ## 1.0.7
 
 ### Patch Changes
