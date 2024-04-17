@@ -114,12 +114,13 @@ const Trigger_Name = 'AlertDialog.Trigger';
 
 export interface TriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  virtual?: boolean;
   virtualElement?: HTMLElement | null;
 }
 
 export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
   (props, ref) => {
-    const { virtualElement, ...restProps } = props;
+    const { virtualElement, virtual, ...restProps } = props;
 
     const rootContext = useRootContext(Trigger_Name);
 
@@ -131,7 +132,7 @@ export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
     const isOpen = rootContext.isOpen + '';
 
     React.useEffect(() => {
-      if (!virtualElement) return;
+      if (!virtual || !virtualElement) return;
 
       virtualElement.ariaExpanded = ariaExpanded + '';
       virtualElement.ariaHasPopup = ariaHaspopup;
@@ -147,10 +148,11 @@ export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
       isOpen,
       pointerEvents.onPointerDown,
       pointerEvents.onPointerUp,
+      virtual,
       virtualElement,
     ]);
 
-    if (virtualElement) return null;
+    if (virtual) return null;
 
     return (
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>

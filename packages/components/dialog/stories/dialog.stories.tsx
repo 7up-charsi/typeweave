@@ -358,7 +358,7 @@ const ProgrammaticallyTemplate = () => {
       <Button ref={setVirturalElement}>open dialog</Button>
 
       <Dialog.Root ref={ref} defaultOpen>
-        <Dialog.Trigger virtualElement={virturalElement} />
+        <Dialog.Trigger virtual virtualElement={virturalElement} />
 
         <Dialog.Portal>
           <Dialog.Overlay />
