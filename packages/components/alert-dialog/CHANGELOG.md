@@ -1,5 +1,11 @@
 # @webbo-ui/alert-dialog
 
+## 1.0.15
+
+### Patch Changes
+
+- fix: virtualElement
+
 ## 1.0.14
 
 ### Patch Changes

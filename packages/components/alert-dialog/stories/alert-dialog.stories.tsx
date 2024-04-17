@@ -107,7 +107,7 @@ const ProgrammaticallyTemplate = () => {
       </Button>
 
       <AlertDialog.Root defaultOpen ref={ref}>
-        <AlertDialog.Trigger virtualElement={virtualElement} />
+        <AlertDialog.Trigger virtual virtualElement={virtualElement} />
 
         <AlertDialog.Portal>
           <AlertDialog.Overlay />
