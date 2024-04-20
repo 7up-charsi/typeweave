@@ -4,7 +4,7 @@ import { ClassNames } from '../types';
 export const autocomplete = tv({
   slots: {
     listbox:
-      'w-[--reference-width] bg-muted-2 border border-muted-6 overflow-y-auto rounded max-h-[300px]',
+      'w-[--reference-width] bg-muted-2 border border-muted-6 overflow-y-auto rounded max-h-[300px] z-50',
     option:
       'h-10 flex items-center px-2 select-none truncate cursor-pointer data-[disabled=true]:opacity-50 text-muted-11 data-[selected=true]:bg-muted-5 data-[focused=true]:data-[selected=false]:bg-muted-4 data-[focused=true]:data-[selected=true]:bg-muted-5',
     noOptions: 'h-10 flex items-center justify-center capitalize text-muted-11',

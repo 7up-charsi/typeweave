@@ -10,6 +10,7 @@ import {
 } from '@webbo-ui/theme';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import React from 'react';
+import { createPortal } from 'react-dom';
 
 export type Reason = 'select' | 'clear' | 'remove';
 
@@ -476,98 +477,104 @@ const AutocompleteImp = React.forwardRef<
         }
       </Popper.Reference>
 
-      {isOpen && (
-        <Popper.Floating sticky="always" mainOffset={offset || 5}>
-          <ul
-            {...restProps}
-            ref={ref}
-            id={lisboxId}
-            className={styles.listbox({
-              className: classNames?.listbox ?? className,
-            })}
-            role="listbox"
-            aria-multiselectable={multiple}
-            aria-roledescription={
-              multiple ? 'multiple select list' : 'single select list'
-            }
-          >
-            {children && options.length && !groupBy
-              ? children({
-                  options: options.map(getOptionProps),
-                  groupedOptions: null,
-                })
-              : null}
+      {isOpen &&
+        createPortal(
+          <Popper.Floating sticky="always" mainOffset={offset || 5}>
+            <ul
+              {...restProps}
+              ref={ref}
+              id={lisboxId}
+              className={styles.listbox({
+                className: classNames?.listbox ?? className,
+              })}
+              role="listbox"
+              aria-multiselectable={multiple}
+              aria-roledescription={
+                multiple ? 'multiple select list' : 'single select list'
+              }
+            >
+              {children && options.length && !groupBy
+                ? children({
+                    options: options.map(getOptionProps),
+                    groupedOptions: null,
+                  })
+                : null}
 
-            {children && options.length && groupBy && groupedOptions
-              ? children({
-                  options: null,
-                  groupedOptions: Object.entries(groupedOptions).reduce<
-                    Record<string, OptionProps<object>[]>
-                  >(
-                    (acc, [key, val]) => (
-                      (acc[key] = val.map(getOptionProps)), acc
+              {children && options.length && groupBy && groupedOptions
+                ? children({
+                    options: null,
+                    groupedOptions: Object.entries(groupedOptions).reduce<
+                      Record<string, OptionProps<object>[]>
+                    >(
+                      (acc, [key, val]) => (
+                        (acc[key] = val.map(getOptionProps)), acc
+                      ),
+                      {},
                     ),
-                    {},
-                  ),
-                })
-              : null}
+                  })
+                : null}
 
-            {!children && options.length && !groupBy
-              ? options.map((ele, i) => {
-                  const props = getOptionProps(ele, i);
-                  return <Option {...props} key={props.key} />;
-                })
-              : null}
+              {!children && options.length && !groupBy
+                ? options.map((ele, i) => {
+                    const props = getOptionProps(ele, i);
+                    return <Option {...props} key={props.key} />;
+                  })
+                : null}
 
-            {!children && options.length && groupBy && groupedOptions
-              ? Object.entries(groupedOptions).map(([groupHeader, grouped]) => (
-                  <li
-                    key={groupHeader.replaceAll(' ', '-')}
-                    className={styles.group({ className: classNames?.group })}
-                  >
-                    <div
-                      className={styles.groupHeader({
-                        className: classNames?.groupHeader,
-                      })}
-                    >
-                      {groupHeader}
-                    </div>
-                    <ul
-                      className={styles.groupItems({
-                        className: classNames?.groupItems,
-                      })}
-                    >
-                      {grouped.map((ele, i) => {
-                        const props = getOptionProps(ele, i);
-                        return <Option {...props} key={props.key} />;
-                      })}
-                    </ul>
-                  </li>
-                ))
-              : null}
+              {!children && options.length && groupBy && groupedOptions
+                ? Object.entries(groupedOptions).map(
+                    ([groupHeader, grouped]) => (
+                      <li
+                        key={groupHeader.replaceAll(' ', '-')}
+                        className={styles.group({
+                          className: classNames?.group,
+                        })}
+                      >
+                        <div
+                          className={styles.groupHeader({
+                            className: classNames?.groupHeader,
+                          })}
+                        >
+                          {groupHeader}
+                        </div>
+                        <ul
+                          className={styles.groupItems({
+                            className: classNames?.groupItems,
+                          })}
+                        >
+                          {grouped.map((ele, i) => {
+                            const props = getOptionProps(ele, i);
+                            return <Option {...props} key={props.key} />;
+                          })}
+                        </ul>
+                      </li>
+                    ),
+                  )
+                : null}
 
-            {!loading && !options?.length ? (
-              <div
-                className={styles.noOptions({
-                  className: classNames?.noOptions,
-                })}
-              >
-                {noOptionsText}
-              </div>
-            ) : null}
+              {!loading && !options?.length ? (
+                <div
+                  className={styles.noOptions({
+                    className: classNames?.noOptions,
+                  })}
+                >
+                  {noOptionsText}
+                </div>
+              ) : null}
 
-            {loading && !options?.length ? (
-              <div
-                className={styles.loading({
-                  className: classNames?.noOptions,
-                })}
-              >
-                {loadingText}
-              </div>
-            ) : null}
-          </ul>
-        </Popper.Floating>
-      )}
+              {loading && !options?.length ? (
+                <div
+                  className={styles.loading({
+                    className: classNames?.noOptions,
+                  })}
+                >
+                  {loadingText}
+                </div>
+              ) : null}
+            </ul>
+          </Popper.Floating>,
+          document.body,
+        )}
     </Popper.Root>
   );
 });
