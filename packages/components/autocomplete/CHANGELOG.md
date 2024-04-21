@@ -1,5 +1,30 @@
 # @webbo-ui/autocomplete
 
+## 1.0.14
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/error@1.0.2
+  - @webbo-ui/button@1.0.12
+  - @webbo-ui/chip@1.0.12
+  - @webbo-ui/context@1.0.3
+  - @webbo-ui/icon@1.0.3
+  - @webbo-ui/popper@1.0.3
+
+## 1.0.13
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/chip@1.0.11
+
+## 1.0.12
+
+### Patch Changes
+
+- fix: option class gets merged
+
 ## 1.0.11
 
 ### Patch Changes

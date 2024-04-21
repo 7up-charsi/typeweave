@@ -1,5 +1,13 @@
 # @webbo-ui/themes
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/error@1.0.2
+  - @webbo-ui/context@1.0.3
+
 ## 1.0.2
 
 ### Patch Changes

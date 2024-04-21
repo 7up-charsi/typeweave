@@ -1,5 +1,13 @@
 # @webbo-ui/alert-dialog
 
+## 1.0.17
+
+### Patch Changes
+
+- @webbo-ui/focus-trap@1.0.4
+- @webbo-ui/slot@1.0.3
+- @webbo-ui/context@1.0.3
+
 ## 1.0.16
 
 ### Patch Changes

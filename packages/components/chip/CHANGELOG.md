@@ -1,5 +1,19 @@
 # @webbo-ui/chip
 
+## 1.0.12
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/error@1.0.2
+  - @webbo-ui/icon@1.0.3
+
+## 1.0.11
+
+### Patch Changes
+
+- fix: accessibility and its warings
+
 ## 1.0.10
 
 ### Patch Changes

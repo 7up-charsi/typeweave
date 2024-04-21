@@ -1,5 +1,13 @@
 # @webbo-ui/tooltip
 
+## 1.0.11
+
+### Patch Changes
+
+- @webbo-ui/slot@1.0.3
+- @webbo-ui/context@1.0.3
+- @webbo-ui/popper@1.0.3
+
 ## 1.0.10
 
 ### Patch Changes
