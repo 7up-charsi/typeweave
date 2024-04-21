@@ -1,46 +1,46 @@
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import React from 'react';
+import { useStylesContext } from './autocomplete';
 
-export interface OptionProps<V> extends React.HTMLAttributes<HTMLLIElement> {
-  option: V;
+const Option_Name = 'Option';
+
+export interface OptionProps {
   label: string;
-  state: { selected: boolean; disabled: boolean; focused: boolean };
+  selected: boolean;
+  disabled: boolean;
+  focused: boolean;
   onSelect: () => void;
   onHover: () => void;
-  'data-disabled': boolean;
-  'data-selected': boolean;
-  'data-focused': boolean;
-  // this is custom key
-  key: string;
+  id: string;
+  className?: string;
 }
 
 export const Option = React.forwardRef<
   HTMLLIElement,
-  OptionProps<object> & { children?: React.ReactNode }
+  OptionProps & { children?: React.ReactNode }
 >((props, ref) => {
   const {
     label,
     onSelect,
     onHover,
-    state: { disabled, focused, selected },
+    disabled,
+    focused,
+    selected,
     children,
-    onPointerDown,
-    onPointerUp,
-    onPointerEnter,
-    onPointerLeave,
-    ...restProps
+    id,
+    className,
   } = props;
+
+  const styles = useStylesContext(Option_Name);
 
   const innerRef = React.useRef<HTMLLIElement>(null);
   const isHovered = React.useRef(false);
 
   const pointerEvents = usePointerEvents({
     onPointerDown: (e) => {
-      onPointerDown?.(e);
       e.preventDefault();
     },
-    onPointerUp,
     onPress: () => {
       if (disabled) return;
       onSelect();
@@ -66,21 +66,25 @@ export const Option = React.forwardRef<
   return (
     <li
       ref={mergeRefs(ref, innerRef)}
-      onPointerEnter={(e) => {
-        onPointerEnter?.(e);
+      onPointerEnter={() => {
         isHovered.current = true;
         onHover();
       }}
-      onPointerLeave={(e) => {
-        onPointerLeave?.(e);
+      onPointerLeave={() => {
         isHovered.current = false;
       }}
+      className={styles.option({ className })}
+      id={id}
+      role="option"
+      aria-selected={disabled ? undefined : selected}
+      data-disabled={disabled}
+      data-selected={selected}
+      data-focused={focused}
       {...pointerEvents}
-      {...restProps}
     >
       {children ?? label}
     </li>
   );
 });
 
-Option.displayName = 'webbo-ui.Option';
+Option.displayName = 'webbo-ui.' + Option_Name;

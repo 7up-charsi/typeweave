@@ -1,6 +1,6 @@
 {
   "name": "@webbo-ui/select",
-  "version": "1.0.11",
+  "version": "1.0.13",
   "keywords": [
     "select"
   ],
@@ -43,6 +43,7 @@
     "@webbo-ui/icon": "workspace:*",
     "@webbo-ui/react-utils": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
+    "@webbo-ui/context": "workspace:*",
     "@webbo-ui/use-pointer-events": "workspace:*",
     "@webbo-ui/use-controllable-state": "workspace:*",
     "lodash.groupby": "^4.6.0"

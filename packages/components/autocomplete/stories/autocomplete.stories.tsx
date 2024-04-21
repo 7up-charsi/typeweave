@@ -216,20 +216,27 @@ const CustomTemplate = () => (
     renderInput={(props) => (
       <Input label="top 100 movies" {...mapInputProps(props)} />
     )}
-    classNames={{ listbox: 'z-50' }}
   >
     {({ options }) =>
-      options?.map((ele) => (
-        <Option {...ele} key={ele.key}>
-          <Checkbox
-            checked={ele.state.selected}
-            readOnly
-            classNames={{ base: 'mr-2' }}
-            size="sm"
-          />
-          <span className="truncate">{ele.label}</span>
-        </Option>
-      ))
+      options?.map((ele) => {
+        const { key, label, option, selected } = ele;
+
+        return (
+          <Option {...ele} key={key}>
+            <Checkbox
+              checked={selected}
+              readOnly
+              classNames={{ base: 'mr-2' }}
+              size="sm"
+            />
+
+            <span className="truncate">
+              <span className="text-sm mr-1 font-semibold">{option.year}</span>
+              {label}
+            </span>
+          </Option>
+        );
+      })
     }
   </Autocomplete>
 );
