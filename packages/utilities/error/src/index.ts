@@ -11,8 +11,8 @@ export class CustomError extends Error {
 
 export const accessibilityWarning = (component: string, message: string) => {
   console.warn(
-    `%cAccessibility :: webbo-ui.${component}%c${message}`,
-    'font-weight:bold; margin: 5px; background:#ffdf00; color:black; padding:3px 5px; border-radius:4px',
+    `%cwebbo-ui.${component}%c${message}`,
+    'font-weight:bold; margin: 5px; color: #ffdf00;',
     'font-weight:normal; margin-right:0px;',
   );
 };
