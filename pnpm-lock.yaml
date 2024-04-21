@@ -935,6 +935,9 @@ importers:
       '@webbo-ui/checkbox':
         specifier: workspace:*
         version: link:../checkbox
+      '@webbo-ui/dialog':
+        specifier: workspace:*
+        version: link:../dialog
       '@webbo-ui/input':
         specifier: workspace:*
         version: link:../input

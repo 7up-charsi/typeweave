@@ -72,6 +72,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
       inputValue?: string;
       onInputChange?: (val: string) => void;
       filterOptions?: (options: Value[], inputValue: string) => Value[];
+      portal?: boolean;
     }) &
     (Multiple extends true
       ? {
@@ -146,6 +147,7 @@ const AutocompleteImp = React.forwardRef<
     onInputChange: onInputChangeProp,
     filterOptions,
     renderInput,
+    portal = true,
     ...restProps
   } = props;
 
@@ -421,6 +423,101 @@ const AutocompleteImp = React.forwardRef<
 
   const styles = autocomplete({ shadow });
 
+  const listBox = (
+    <Popper.Floating sticky="always" mainOffset={offset || 5}>
+      <ul
+        {...restProps}
+        ref={ref}
+        id={lisboxId}
+        className={styles.listbox({
+          className: classNames?.listbox ?? className,
+        })}
+        role="listbox"
+        aria-multiselectable={multiple}
+        aria-roledescription={
+          multiple ? 'multiple select list' : 'single select list'
+        }
+      >
+        {children && options.length && !groupBy
+          ? children({
+              options: options.map(getOptionProps),
+              groupedOptions: null,
+            })
+          : null}
+
+        {children && options.length && groupBy && groupedOptions
+          ? children({
+              options: null,
+              groupedOptions: Object.entries(groupedOptions).reduce<
+                Record<string, OptionProps<object>[]>
+              >(
+                (acc, [key, val]) => (
+                  (acc[key] = val.map(getOptionProps)), acc
+                ),
+                {},
+              ),
+            })
+          : null}
+
+        {!children && options.length && !groupBy
+          ? options.map((ele, i) => {
+              const props = getOptionProps(ele, i);
+              return <Option {...props} key={props.key} />;
+            })
+          : null}
+
+        {!children && options.length && groupBy && groupedOptions
+          ? Object.entries(groupedOptions).map(([groupHeader, grouped]) => (
+              <li
+                key={groupHeader.replaceAll(' ', '-')}
+                className={styles.group({
+                  className: classNames?.group,
+                })}
+              >
+                <div
+                  className={styles.groupHeader({
+                    className: classNames?.groupHeader,
+                  })}
+                >
+                  {groupHeader}
+                </div>
+                <ul
+                  className={styles.groupItems({
+                    className: classNames?.groupItems,
+                  })}
+                >
+                  {grouped.map((ele, i) => {
+                    const props = getOptionProps(ele, i);
+                    return <Option {...props} key={props.key} />;
+                  })}
+                </ul>
+              </li>
+            ))
+          : null}
+
+        {!loading && !options?.length ? (
+          <div
+            className={styles.noOptions({
+              className: classNames?.noOptions,
+            })}
+          >
+            {noOptionsText}
+          </div>
+        ) : null}
+
+        {loading && !options?.length ? (
+          <div
+            className={styles.loading({
+              className: classNames?.noOptions,
+            })}
+          >
+            {loadingText}
+          </div>
+        ) : null}
+      </ul>
+    </Popper.Floating>
+  );
+
   return (
     <Popper.Root>
       <Popper.Reference>
@@ -477,104 +574,11 @@ const AutocompleteImp = React.forwardRef<
         }
       </Popper.Reference>
 
-      {isOpen &&
-        createPortal(
-          <Popper.Floating sticky="always" mainOffset={offset || 5}>
-            <ul
-              {...restProps}
-              ref={ref}
-              id={lisboxId}
-              className={styles.listbox({
-                className: classNames?.listbox ?? className,
-              })}
-              role="listbox"
-              aria-multiselectable={multiple}
-              aria-roledescription={
-                multiple ? 'multiple select list' : 'single select list'
-              }
-            >
-              {children && options.length && !groupBy
-                ? children({
-                    options: options.map(getOptionProps),
-                    groupedOptions: null,
-                  })
-                : null}
-
-              {children && options.length && groupBy && groupedOptions
-                ? children({
-                    options: null,
-                    groupedOptions: Object.entries(groupedOptions).reduce<
-                      Record<string, OptionProps<object>[]>
-                    >(
-                      (acc, [key, val]) => (
-                        (acc[key] = val.map(getOptionProps)), acc
-                      ),
-                      {},
-                    ),
-                  })
-                : null}
-
-              {!children && options.length && !groupBy
-                ? options.map((ele, i) => {
-                    const props = getOptionProps(ele, i);
-                    return <Option {...props} key={props.key} />;
-                  })
-                : null}
-
-              {!children && options.length && groupBy && groupedOptions
-                ? Object.entries(groupedOptions).map(
-                    ([groupHeader, grouped]) => (
-                      <li
-                        key={groupHeader.replaceAll(' ', '-')}
-                        className={styles.group({
-                          className: classNames?.group,
-                        })}
-                      >
-                        <div
-                          className={styles.groupHeader({
-                            className: classNames?.groupHeader,
-                          })}
-                        >
-                          {groupHeader}
-                        </div>
-                        <ul
-                          className={styles.groupItems({
-                            className: classNames?.groupItems,
-                          })}
-                        >
-                          {grouped.map((ele, i) => {
-                            const props = getOptionProps(ele, i);
-                            return <Option {...props} key={props.key} />;
-                          })}
-                        </ul>
-                      </li>
-                    ),
-                  )
-                : null}
-
-              {!loading && !options?.length ? (
-                <div
-                  className={styles.noOptions({
-                    className: classNames?.noOptions,
-                  })}
-                >
-                  {noOptionsText}
-                </div>
-              ) : null}
-
-              {loading && !options?.length ? (
-                <div
-                  className={styles.loading({
-                    className: classNames?.noOptions,
-                  })}
-                >
-                  {loadingText}
-                </div>
-              ) : null}
-            </ul>
-          </Popper.Floating>,
-          document.body,
-        )}
+      {isOpen
+        ? portal
+          ? createPortal(listBox, document.body)
+          : listBox
+        : null}
     </Popper.Root>
   );
 });
