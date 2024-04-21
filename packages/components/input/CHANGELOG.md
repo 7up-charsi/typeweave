@@ -1,5 +1,13 @@
 # @webbo-ui/input
 
+## 1.0.13
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/error@1.0.2
+  - @webbo-ui/button@1.0.12
+
 ## 1.0.12
 
 ### Patch Changes

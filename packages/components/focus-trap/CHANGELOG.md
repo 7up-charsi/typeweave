@@ -1,5 +1,13 @@
 # @webbo-ui/focus-trap
 
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/error@1.0.2
+  - @webbo-ui/slot@1.0.3
+
 ## 1.0.3
 
 ### Patch Changes

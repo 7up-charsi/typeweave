@@ -1,5 +1,12 @@
 # @webbo-ui/alert
 
+## 1.0.12
+
+### Patch Changes
+
+- @webbo-ui/button@1.0.12
+- @webbo-ui/icon@1.0.3
+
 ## 1.0.11
 
 ### Patch Changes

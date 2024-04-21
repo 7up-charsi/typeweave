@@ -1,5 +1,15 @@
 # @webbo-ui/table
 
+## 1.0.16
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/error@1.0.2
+  - @webbo-ui/slot@1.0.3
+  - @webbo-ui/context@1.0.3
+  - @webbo-ui/menu@1.0.16
+
 ## 1.0.15
 
 ### Patch Changes

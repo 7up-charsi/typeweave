@@ -1,5 +1,16 @@
 # @webbo-ui/menu
 
+## 1.0.16
+
+### Patch Changes
+
+- @webbo-ui/slot@1.0.3
+- @webbo-ui/context@1.0.3
+- @webbo-ui/icon@1.0.3
+- @webbo-ui/popper@1.0.3
+- @webbo-ui/visually-hidden@1.0.3
+- @webbo-ui/use-collection@1.0.3
+
 ## 1.0.15
 
 ### Patch Changes
