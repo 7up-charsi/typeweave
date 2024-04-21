@@ -70,15 +70,23 @@ const Chip = React.forwardRef<HTMLDivElement, ChipProps>((props, ref) => {
   const ariaLabel = props['aria-label'];
   const ariaLabelledby = props['aria-labelledby'];
 
+  const onDeleteProvided = !!onDelete;
+
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     React.useEffect(() => {
+      if (onDeleteProvided && !deleteIconA11yLabel)
+        accessibilityWarning(
+          'Chip',
+          'You must provide `deleteIconA11yLabel` when `onDelete` is provided',
+        );
+
       if (!ariaLabel && !ariaLabelledby)
         accessibilityWarning(
           'Chip',
-          'You must provide `aria-label` or `aria-labelledby` when `onDelete` is provided',
+          'You must provide `aria-label` or `aria-labelledby`',
         );
-    }, [ariaLabel, ariaLabelledby]);
+    }, [ariaLabel, ariaLabelledby, deleteIconA11yLabel, onDeleteProvided]);
   }
 
   return (
