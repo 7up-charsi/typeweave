@@ -1,5 +1,11 @@
 # @webbo-ui/theme
 
+## 1.0.9
+
+### Patch Changes
+
+- fix: dialog closes on option select
+
 ## 1.0.8
 
 ### Patch Changes

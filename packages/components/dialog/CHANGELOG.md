@@ -1,5 +1,15 @@
 # @webbo-ui/dialog
 
+## 1.0.15
+
+### Patch Changes
+
+- fix: dialog closes on option select
+- Updated dependencies
+  - @webbo-ui/theme@1.0.9
+  - @webbo-ui/overlay@1.0.10
+  - @webbo-ui/focus-trap@1.0.3
+
 ## 1.0.14
 
 ### Patch Changes
