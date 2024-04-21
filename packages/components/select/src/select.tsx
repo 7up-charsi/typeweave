@@ -56,7 +56,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
   (SelectVariantProps &
     Omit<
       React.HTMLAttributes<HTMLUListElement>,
-      'defaultValue' | 'children'
+      'defaultValue' | 'children' | 'onChange'
     > & {
       disabled?: boolean;
       classNames?: Omit<SelectClassNames, 'option'>;
