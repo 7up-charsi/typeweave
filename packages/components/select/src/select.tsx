@@ -2,11 +2,12 @@ import * as Popper from '@webbo-ui/popper';
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { CustomError } from '@webbo-ui/error';
 import React from 'react';
-import { Option, OptionProps } from './option';
+import { Option } from './option';
 import lodashGroupBy from 'lodash.groupby';
 import { SelectClassNames, SelectVariantProps, select } from '@webbo-ui/theme';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { createPortal } from 'react-dom';
+import { createContextScope } from '@webbo-ui/context';
 
 export type Reason = 'select' | 'clear';
 
@@ -39,6 +40,18 @@ export interface RenderInputProps<Value> {
   };
 }
 
+type ChildrenOption<V> = {
+  option: V;
+  key: string;
+  label: string;
+  selected: boolean;
+  disabled: boolean;
+  focused: boolean;
+  onSelect: () => void;
+  onHover: () => void;
+  id: string;
+};
+
 export type SelectProps<Value, Multiple, DisableClearable> =
   (SelectVariantProps &
     Omit<
@@ -46,7 +59,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
       'defaultValue' | 'children'
     > & {
       disabled?: boolean;
-      classNames?: SelectClassNames;
+      classNames?: Omit<SelectClassNames, 'option'>;
       offset?: Popper.FloatingProps['mainOffset'];
       options: Value[];
       isOpen?: boolean;
@@ -61,8 +74,8 @@ export type SelectProps<Value, Multiple, DisableClearable> =
       loadingText?: string;
       groupBy?: (option: Value) => string;
       children?: (props: {
-        groupedOptions: Record<string, OptionProps<Value>[]> | null;
-        options: OptionProps<Value>[] | null;
+        groupedOptions: Record<string, ChildrenOption<Value>[]> | null;
+        options: ChildrenOption<Value>[] | null;
       }) => React.ReactNode;
       portal?: boolean;
     }) &
@@ -106,6 +119,15 @@ export type SelectProps<Value, Multiple, DisableClearable> =
               props: RenderInputProps<Value | null>,
             ) => React.ReactNode;
           });
+
+const Select_Name = 'Select';
+
+const [StylesProvider, stylesHook] =
+  createContextScope<ReturnType<typeof select>>(Select_Name);
+
+export const useStylesContext: (
+  consumerName: string,
+) => ReturnType<typeof select> = stylesHook;
 
 const SelectImp = React.forwardRef<
   HTMLUListElement,
@@ -380,33 +402,22 @@ const SelectImp = React.forwardRef<
     return '';
   };
 
-  const getOptionProps = (ele: object, i: number): OptionProps<object> => {
-    const isFocused = ele === focused;
-    const optionDisabled = getOptionDisabled?.(ele) ?? false;
-    const selected = Array.isArray(value)
-      ? !!value.find((val) => val === ele)
-      : ele === value;
+  const getOptionId = (ele: object) =>
+    getOptionKey?.(ele) ?? getOptionLabel(ele).replaceAll(' ', '-');
 
-    return {
-      option: ele,
-      label: getOptionLabel(ele),
-      key: getOptionKey?.(ele) ?? getOptionLabel(ele).replaceAll(' ', '-'),
-      onHover: () => onHover(ele),
-      onSelect: () => onSelect(ele),
-      state: {
-        focused: isFocused,
-        selected: selected,
-        disabled: optionDisabled,
-      },
-      className: styles.option({ className: classNames?.option }),
-      id: `option-${i}`,
-      role: 'option',
-      'aria-selected': optionDisabled ? undefined : selected,
-      'data-disabled': optionDisabled,
-      'data-selected': selected,
-      'data-focused': isFocused,
-    };
-  };
+  const getOptionProps = (ele: object): ChildrenOption<object> => ({
+    key: getOptionId(ele),
+    option: ele,
+    label: getOptionLabel(ele),
+    onHover: () => onHover(ele),
+    onSelect: () => onSelect(ele),
+    id: getOptionId(ele),
+    focused: ele === focused,
+    selected: Array.isArray(value)
+      ? !!value.find((val) => val === ele)
+      : ele === value,
+    disabled: getOptionDisabled?.(ele) ?? false,
+  });
 
   if (multiple && !Array.isArray(value))
     throw new CustomError(
@@ -423,7 +434,7 @@ const SelectImp = React.forwardRef<
   if (!renderInput)
     throw new CustomError('Autocomplete', '`renderInput` prop is required');
 
-  const styles = select({ shadow });
+  const styles = React.useMemo(() => select({ shadow }), [shadow]);
 
   const listBox = (
     <Popper.Floating sticky="always" mainOffset={offset || 5}>
@@ -451,7 +462,7 @@ const SelectImp = React.forwardRef<
           ? children({
               options: null,
               groupedOptions: Object.entries(groupedOptions).reduce<
-                Record<string, OptionProps<object>[]>
+                Record<string, ChildrenOption<object>[]>
               >(
                 (acc, [key, val]) => (
                   (acc[key] = val.map(getOptionProps)), acc
@@ -462,8 +473,8 @@ const SelectImp = React.forwardRef<
           : null}
 
         {!children && options.length && !groupBy
-          ? options.map((ele, i) => {
-              const props = getOptionProps(ele, i);
+          ? options.map((ele) => {
+              const props = getOptionProps(ele);
               return <Option {...props} key={props.key} />;
             })
           : null}
@@ -486,8 +497,8 @@ const SelectImp = React.forwardRef<
                     className: classNames?.groupItems,
                   })}
                 >
-                  {grouped.map((ele, i) => {
-                    const props = getOptionProps(ele, i);
+                  {grouped.map((ele) => {
+                    const props = getOptionProps(ele);
                     return <Option {...props} key={props.key} />;
                   })}
                 </ul>
@@ -555,24 +566,24 @@ const SelectImp = React.forwardRef<
               'aria-haspopup': 'listbox',
               'aria-autocomplete': 'list',
               'aria-activedescendant':
-                isOpen && focused
-                  ? `option-${options.indexOf(focused)}`
-                  : undefined,
+                isOpen && focused ? getOptionId(focused) : undefined,
             },
           })
         }
       </Popper.Reference>
 
-      {isOpen
-        ? portal
-          ? createPortal(listBox, document.body)
-          : listBox
-        : null}
+      <StylesProvider {...styles}>
+        {isOpen
+          ? portal
+            ? createPortal(listBox, document.body)
+            : listBox
+          : null}{' '}
+      </StylesProvider>
     </Popper.Root>
   );
 });
 
-SelectImp.displayName = 'webbo-ui.Select';
+SelectImp.displayName = 'webbo-ui.' + Select_Name;
 
 export const Select = SelectImp as unknown as <
   Value extends object,

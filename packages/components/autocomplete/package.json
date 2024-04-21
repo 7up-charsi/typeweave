@@ -1,6 +1,6 @@
 {
   "name": "@webbo-ui/autocomplete",
-  "version": "1.0.11",
+  "version": "1.0.14",
   "keywords": [
     "autocomplete"
   ],
@@ -45,6 +45,7 @@
     "@webbo-ui/use-pointer-events": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
     "@webbo-ui/chip": "workspace:*",
+    "@webbo-ui/context": "workspace:*",
     "@webbo-ui/use-controllable-state": "workspace:*",
     "lodash.groupby": "^4.6.0"
   },

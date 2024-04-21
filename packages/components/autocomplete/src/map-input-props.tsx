@@ -67,7 +67,6 @@ export const mapInputProps = ({
       startContent: styles.startContent(),
       endContent: styles.endContent(),
     },
-
     startContent: selected?.map((opt, i) => (
       <Chip
         key={i}
@@ -75,6 +74,7 @@ export const mapInputProps = ({
         variant="border"
         label={opt.label}
         onDelete={opt.onDelete}
+        aria-label={`selected ${opt.label}`}
         deleteIconA11yLabel={`remove ${opt.label}`}
         excludeFromTabOrder
       />
