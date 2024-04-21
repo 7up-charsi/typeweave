@@ -1,5 +1,11 @@
 # @webbo-ui/autocomplete
 
+## 1.0.15
+
+### Patch Changes
+
+- fix: onChange type
+
 ## 1.0.14
 
 ### Patch Changes
