@@ -61,7 +61,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
   (AutocompleteVariantProps &
     Omit<
       React.HTMLAttributes<HTMLUListElement>,
-      'defaultValue' | 'children'
+      'defaultValue' | 'children' | 'onChange'
     > & {
       disabled?: boolean;
       classNames?: Omit<AutocompleteClassNames, 'option'>;
