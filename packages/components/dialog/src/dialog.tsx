@@ -1,6 +1,5 @@
 import { useControllableState } from '@webbo-ui/use-controllable-state';
 import { Slot } from '@webbo-ui/slot';
-import { useClickOutside } from '@webbo-ui/use-click-outside';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { useScrollLock } from '@webbo-ui/use-scroll-lock';
 import { useCallbackRef } from '@webbo-ui/use-callback-ref';
@@ -8,6 +7,10 @@ import { createPortal } from 'react-dom';
 import { FocusTrap, FocusScope } from '@webbo-ui/focus-trap';
 import { createContextScope } from '@webbo-ui/context';
 import { VisuallyHidden } from '@webbo-ui/visually-hidden';
+import {
+  Overlay as BaseOverlay,
+  OverlayProps as BaseOverlayProps,
+} from '@webbo-ui/overlay';
 import { DialogVariantProps, dialog } from '@webbo-ui/theme';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
 import React from 'react';
@@ -366,16 +369,6 @@ export const Content = React.forwardRef<HTMLDivElement, ContentProps>(
 
     useScrollLock();
 
-    const setOutsideEle = useClickOutside({
-      callback: (e) => {
-        if (rootContext.triggerRef.current?.contains(e.target as Node)) return;
-
-        if ((e.target as HTMLElement).closest('[role=dialog]')) return;
-
-        rootContext.handleClose('outside');
-      },
-    });
-
     const styles = React.useMemo(() => dialog({ shadow }), [shadow]);
 
     return (
@@ -389,7 +382,7 @@ export const Content = React.forwardRef<HTMLDivElement, ContentProps>(
         >
           <div
             {...restProps}
-            ref={mergeRefs(ref, setOutsideEle)}
+            ref={ref}
             role="dialog"
             aria-labelledby={noA11yTitle ? undefined : rootContext.titleId}
             aria-describedby={
@@ -420,3 +413,27 @@ export const Content = React.forwardRef<HTMLDivElement, ContentProps>(
 );
 
 Content.displayName = 'webbo-ui.' + Content_Name;
+
+// *-*-*-*-* Overlay *-*-*-*-*
+
+const Overlay_Name = 'Dialog.Overlay';
+
+export interface OverlayProps extends BaseOverlayProps {}
+
+export const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
+  (props, ref) => {
+    const { ...restProps } = props;
+
+    const rootContext = useRootContext(Overlay_Name);
+
+    const pointerEvents = usePointerEvents({
+      onPress: () => {
+        rootContext.handleClose('outside');
+      },
+    });
+
+    return <BaseOverlay {...restProps} ref={ref} {...pointerEvents} />;
+  },
+);
+
+Overlay.displayName = 'webbo-ui.' + Overlay_Name;

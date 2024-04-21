@@ -50,6 +50,7 @@
   "devDependencies": {
     "@types/lodash.groupby": "^4.6.9",
     "@webbo-ui/input": "workspace:*",
+    "@webbo-ui/dialog": "workspace:*",
     "@webbo-ui/checkbox": "workspace:*",
     "clean-package": "^2.2.0"
   },

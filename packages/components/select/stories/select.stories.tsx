@@ -2,8 +2,10 @@ import React from 'react';
 import { select } from '@webbo-ui/theme';
 import { Input } from '@webbo-ui/input';
 import { Checkbox } from '@webbo-ui/checkbox';
+import * as Dialog from '@webbo-ui/dialog';
 
 import { Option, Select, mapInputProps } from '../src';
+import { Button } from '@webbo-ui/button';
 
 const meta = {
   title: 'Components/Select',
@@ -223,4 +225,43 @@ const GroupTemplate = () => (
 
 export const Group = {
   render: GroupTemplate,
+};
+
+const InDialogTemplate = () => (
+  <Dialog.Root defaultOpen>
+    <Dialog.Trigger>
+      <Button>open dialog</Button>
+    </Dialog.Trigger>
+
+    <Dialog.Portal>
+      <Dialog.Overlay />
+
+      <Dialog.Content className="max-w-xs overflow-auto">
+        <Select
+          options={options}
+          defaultValue={options[21]}
+          getOptionLabel={(option) => option.title}
+          renderInput={(props) => (
+            <Input
+              label="top 100 movies"
+              className="w-full"
+              {...mapInputProps(props)}
+            />
+          )}
+        />
+
+        <div className="flex gap-2 justify-end mt-5">
+          <Dialog.Close>
+            <Button color="danger">Close</Button>
+          </Dialog.Close>
+
+          <Button>Agree</Button>
+        </div>
+      </Dialog.Content>
+    </Dialog.Portal>
+  </Dialog.Root>
+);
+
+export const InDialog = {
+  render: InDialogTemplate,
 };
