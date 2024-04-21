@@ -1,5 +1,12 @@
 # @webbo-ui/tabs
 
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/theme@1.0.9
+
 ## 1.0.10
 
 ### Patch Changes
