@@ -1,5 +1,11 @@
 # @webbo-ui/theme
 
+## 1.0.11
+
+### Patch Changes
+
+- fix(Theme): button hidden prop does not work
+
 ## 1.0.10
 
 ### Patch Changes
