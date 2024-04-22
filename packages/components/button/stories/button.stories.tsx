@@ -1,7 +1,6 @@
 import React from 'react';
 import { button } from '@webbo-ui/theme';
 import { Button, ButtonGroup, ButtonProps } from '../src';
-import { Bars, Circles } from 'react-loader-spinner';
 import { Icon } from '@webbo-ui/icon';
 
 const meta = {
@@ -10,8 +9,6 @@ const meta = {
 };
 
 export default meta;
-
-const Template = (args: ButtonProps) => <Button {...args} />;
 
 const reactIcon = (
   <Icon>
@@ -147,38 +144,41 @@ export const IconOnly = {
   render: IconOnlyTemplate,
 };
 
-export const Spinner = {
-  render: Template,
-  args: {
-    startContent: <Bars wrapperClass="[&>svg]:fill-current" width={20} />,
-    endContent: <Circles wrapperClass="[&>svg]:fill-current" width={20} />,
-    children: 'with spinners',
-  },
-};
+const chevron_down_svg = (
+  <svg fill="none" viewBox="0 0 24 24">
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M6 9l6 6 6-6"
+    ></path>
+  </svg>
+);
 
 const GroupTemplate = (args) => (
   <div className="flex flex-col items-start gap-4">
-    <ButtonGroup {...args} variant="flat">
+    <ButtonGroup {...args} variant="flat" size="lg">
       <Button>Select</Button>
       <Button color="danger">Delete</Button>
       <Button color="info" isIconOnly aria-label="spinner">
-        <Circles wrapperClass="[&>svg]:fill-current" width={20} />
+        <Icon>{chevron_down_svg}</Icon>
       </Button>
     </ButtonGroup>
 
-    <ButtonGroup {...args} variant="border">
+    <ButtonGroup {...args} variant="flat" size="md">
       <Button>Select</Button>
       <Button color="danger">Delete</Button>
       <Button color="info" isIconOnly aria-label="spinner">
-        <Circles wrapperClass="[&>svg]:fill-current" width={20} />
+        <Icon>{chevron_down_svg}</Icon>
       </Button>
     </ButtonGroup>
 
-    <ButtonGroup {...args} variant="text">
+    <ButtonGroup {...args} variant="flat" size="sm">
       <Button>Select</Button>
       <Button color="danger">Delete</Button>
       <Button color="info" isIconOnly aria-label="spinner">
-        <Circles wrapperClass="[&>svg]:fill-current" width={20} />
+        <Icon>{chevron_down_svg}</Icon>
       </Button>
     </ButtonGroup>
   </div>

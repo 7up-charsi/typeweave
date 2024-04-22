@@ -45,10 +45,10 @@
   },
   "devDependencies": {
     "@webbo-ui/icon": "workspace:*",
-    "react-loader-spinner": "^6.1.6",
     "clean-package": "^2.2.0"
   },
   "clean-package": {
     "extends": "../../../../../../clean-package.config.json"
   }
 }
+

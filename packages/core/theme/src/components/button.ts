@@ -41,9 +41,9 @@ export const button = tv({
       danger: { base: '' },
     },
     size: {
-      sm: { startContent: 'text-lg', endContent: 'text-lg' },
-      md: { startContent: 'text-xl', endContent: 'text-xl' },
-      lg: { startContent: 'text-2xl', endContent: 'text-2xl' },
+      sm: { startContent: 'text-base', endContent: 'text-base' },
+      md: { startContent: 'text-lg', endContent: 'text-lg' },
+      lg: { startContent: 'text-xl', endContent: 'text-xl' },
     },
     fullWidth: {
       true: { base: 'w-full' },
@@ -60,7 +60,7 @@ export const button = tv({
       isIconOnly: false,
       size: 'sm',
       className: {
-        base: 'px-3 h-8 min-w-[64px] gap-2',
+        base: 'px-3 h-7 gap-2',
         content: 'text-sm',
       },
     },
@@ -68,7 +68,7 @@ export const button = tv({
       isIconOnly: false,
       size: 'md',
       className: {
-        base: 'px-4 h-10 min-w-[80px] gap-2',
+        base: 'px-4 h-9 gap-2',
         content: 'text-base',
       },
     },
@@ -76,7 +76,7 @@ export const button = tv({
       isIconOnly: false,
       size: 'lg',
       className: {
-        base: 'px-6 h-12 min-w-[96px] gap-3',
+        base: 'px-6 h-11 gap-3',
         content: 'text-lg',
       },
     },
@@ -86,19 +86,19 @@ export const button = tv({
       isIconOnly: true,
       isInGroup: false,
       size: 'sm',
-      className: { base: 'w-8 h-8', content: 'text-lg' },
+      className: { base: 'w-7 h-7', content: 'text-base' },
     },
     {
       isIconOnly: true,
       isInGroup: false,
       size: 'md',
-      className: { base: 'w-10 h-10', content: 'text-xl' },
+      className: { base: 'w-9 h-9', content: 'text-lg' },
     },
     {
       isIconOnly: true,
       isInGroup: false,
       size: 'lg',
-      className: { base: 'w-12 h-12', content: 'text-2xl' },
+      className: { base: 'w-11 h-11', content: 'text-xl' },
     },
 
     // isIconOnly in group
@@ -106,19 +106,19 @@ export const button = tv({
       isIconOnly: true,
       isInGroup: true,
       size: 'sm',
-      className: { base: 'min-w-8 w-full h-8' },
+      className: { base: 'min-w-7 h-7', content: 'text-base' },
     },
     {
       isIconOnly: true,
       isInGroup: true,
       size: 'md',
-      className: { base: 'min-w-10 w-full h-10' },
+      className: { base: 'min-w-9 h-9', content: 'text-lg' },
     },
     {
       isIconOnly: true,
       isInGroup: true,
       size: 'lg',
-      className: { base: 'min-w-12 w-full h-12' },
+      className: { base: 'min-w-11 h-11', content: 'text-xl' },
     },
 
     // color / solid
