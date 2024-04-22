@@ -1,5 +1,11 @@
 # @webbo-ui/theme
 
+## 1.0.10
+
+### Patch Changes
+
+- fix: button size
+
 ## 1.0.9
 
 ### Patch Changes
