@@ -2,7 +2,11 @@ import { Button } from '@webbo-ui/button';
 import { Chip } from '@webbo-ui/chip';
 import { RenderInputProps } from './autocomplete';
 import { type InputProps } from '@webbo-ui/input';
-import { autocompleteInput } from '@webbo-ui/theme';
+import {
+  AutocompleteInputClassNames,
+  InputClassNames,
+  autocompleteInput,
+} from '@webbo-ui/theme';
 import { Icon } from '@webbo-ui/icon';
 
 const clearIcon_svg = (
@@ -42,30 +46,50 @@ const openIndicator_svg = (
   </Icon>
 );
 
-export const mapInputProps = ({
-  ariaProps,
-  onOpen,
-  clearButtonProps: { onClear, ...clearButtonProps },
-  inputRef,
-  disabled,
-  onBlur,
-  onChange,
-  onKeyDown,
-  popperReferenceRef,
-  showClearButton,
-  selected,
-  isOpen,
-  multiple,
-  inputValue,
-}: RenderInputProps<unknown>): InputProps<false> => {
+export const mapInputProps = (
+  inputProps: RenderInputProps<unknown>,
+  props?: {
+    classNames?: AutocompleteInputClassNames & InputClassNames;
+    disableIndicator?: boolean;
+  },
+): InputProps<false> => {
+  const {
+    ariaProps,
+    onOpen,
+    clearButtonProps: { onClear, ...clearButtonProps },
+    inputRef,
+    disabled,
+    onBlur,
+    onChange,
+    onKeyDown,
+    popperReferenceRef,
+    showClearButton,
+    selected,
+    isOpen,
+    multiple,
+    inputValue,
+  } = inputProps;
+
   const styles = autocompleteInput({ multiple });
+
+  const { classNames, disableIndicator } = props ?? {};
 
   return {
     classNames: {
-      inputWrapper: styles.inputWrapper(),
-      input: styles.input(),
-      startContent: styles.startContent(),
-      endContent: styles.endContent(),
+      inputWrapper: styles.inputWrapper({
+        className: classNames?.inputWrapper,
+      }),
+      input: styles.input({ className: classNames?.input }),
+      startContent: styles.startContent({
+        className: classNames?.startContent,
+      }),
+      endContent: styles.endContent({
+        className: classNames?.endContent,
+      }),
+      base: classNames?.base,
+      errorMessage: classNames?.errorMessage,
+      helperText: classNames?.helperText,
+      label: classNames?.label,
     },
     startContent: selected?.map((opt, i) => (
       <Chip
@@ -88,18 +112,26 @@ export const mapInputProps = ({
             variant="text"
             onPress={onClear}
             size="sm"
-            classNames={{ base: styles.clearButton() }}
+            classNames={{
+              base: styles.clearButton({
+                className: classNames?.clearButton,
+              }),
+            }}
           >
             {clearIcon_svg}
           </Button>
         )}
 
-        <span
-          style={{ rotate: isOpen ? '180deg' : '0deg' }}
-          className={styles.openIndecator()}
-        >
-          {openIndicator_svg}
-        </span>
+        {disableIndicator ? null : (
+          <span
+            style={{ rotate: isOpen ? '180deg' : '0deg' }}
+            className={styles.openIndecator({
+              className: classNames?.openIndecator,
+            })}
+          >
+            {openIndicator_svg}
+          </span>
+        )}
       </>
     ),
     inputWrapperProps: {

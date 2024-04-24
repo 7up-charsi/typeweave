@@ -55,6 +55,7 @@ type ChildrenOption<V> = {
   onSelect: () => void;
   onHover: () => void;
   id: string;
+  className: string;
 };
 
 export type AutocompleteProps<Value, Multiple, DisableClearable> =
@@ -64,7 +65,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
       'defaultValue' | 'children' | 'onChange'
     > & {
       disabled?: boolean;
-      classNames?: Omit<AutocompleteClassNames, 'option'>;
+      classNames?: AutocompleteClassNames;
       offset?: Popper.FloatingProps['mainOffset'];
       options: Value[];
       isOpen?: boolean;
@@ -85,7 +86,8 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
       inputValue?: string;
       onInputChange?: (val: string) => void;
       filterOptions?: (options: Value[], inputValue: string) => Value[];
-      portal?: boolean;
+      disablePortal?: boolean;
+      disablePopper?: boolean;
     }) &
     (Multiple extends true
       ? {
@@ -169,7 +171,8 @@ const AutocompleteImp = React.forwardRef<
     onInputChange: onInputChangeProp,
     filterOptions,
     renderInput,
-    portal = true,
+    disablePortal,
+    disablePopper,
     ...restProps
   } = props;
 
@@ -403,6 +406,8 @@ const AutocompleteImp = React.forwardRef<
   const getOptionId = (ele: object) =>
     getOptionKey?.(ele) ?? getOptionLabel(ele).replaceAll(' ', '-');
 
+  const styles = React.useMemo(() => autocomplete({ shadow }), [shadow]);
+
   const getOptionProps = (ele: object): ChildrenOption<object> => ({
     key: getOptionId(ele),
     option: ele,
@@ -415,6 +420,7 @@ const AutocompleteImp = React.forwardRef<
       ? !!value.find((val) => val === ele)
       : ele === value,
     disabled: getOptionDisabled?.(ele) ?? false,
+    className: styles.option({ className: classNames?.option }),
   });
 
   if (multiple && !Array.isArray(value))
@@ -432,100 +438,103 @@ const AutocompleteImp = React.forwardRef<
   if (!renderInput)
     throw new CustomError('Autocomplete', '`renderInput` prop is required');
 
-  const styles = React.useMemo(() => autocomplete({ shadow }), [shadow]);
-
   const listBox = (
-    <Popper.Floating sticky="always" mainOffset={offset || 5}>
-      <ul
-        {...restProps}
-        ref={ref}
-        id={lisboxId}
-        className={styles.listbox({
-          className: classNames?.listbox ?? className,
-        })}
-        role="listbox"
-        aria-multiselectable={multiple}
-        aria-roledescription={
-          multiple ? 'multiple select list' : 'single select list'
-        }
-      >
-        {children && options.length && !groupBy
-          ? children({
-              options: options.map(getOptionProps),
-              groupedOptions: null,
-            })
-          : null}
+    <ul
+      {...restProps}
+      ref={ref}
+      id={lisboxId}
+      className={styles.listbox({
+        className: classNames?.listbox ?? className,
+      })}
+      role="listbox"
+      aria-multiselectable={multiple}
+      aria-roledescription={
+        multiple ? 'multiple select list' : 'single select list'
+      }
+      onPointerDown={(e) => e.preventDefault()}
+    >
+      {children && options.length && !groupBy
+        ? children({
+            options: options.map(getOptionProps),
+            groupedOptions: null,
+          })
+        : null}
 
-        {children && options.length && groupBy && groupedOptions
-          ? children({
-              options: null,
-              groupedOptions: Object.entries(groupedOptions).reduce<
-                Record<string, ChildrenOption<object>[]>
-              >(
-                (acc, [key, val]) => (
-                  (acc[key] = val.map(getOptionProps)), acc
-                ),
-                {},
-              ),
-            })
-          : null}
+      {children && options.length && groupBy && groupedOptions
+        ? children({
+            options: null,
+            groupedOptions: Object.entries(groupedOptions).reduce<
+              Record<string, ChildrenOption<object>[]>
+            >(
+              (acc, [key, val]) => ((acc[key] = val.map(getOptionProps)), acc),
+              {},
+            ),
+          })
+        : null}
 
-        {!children && options.length && !groupBy
-          ? options.map((ele) => {
-              const props = getOptionProps(ele);
-              return <Option {...props} key={props.key} />;
-            })
-          : null}
+      {!children && options.length && !groupBy
+        ? options.map((ele) => {
+            const props = getOptionProps(ele);
+            return <Option {...props} key={props.key} />;
+          })
+        : null}
 
-        {!children && options.length && groupBy && groupedOptions
-          ? Object.entries(groupedOptions).map(([groupHeader, grouped]) => (
-              <li
-                key={groupHeader.replaceAll(' ', '-')}
-                className={styles.group({
-                  className: classNames?.group,
+      {!children && options.length && groupBy && groupedOptions
+        ? Object.entries(groupedOptions).map(([groupHeader, grouped]) => (
+            <li
+              key={groupHeader.replaceAll(' ', '-')}
+              className={styles.group({
+                className: classNames?.group,
+              })}
+            >
+              <div
+                className={styles.groupHeader({
+                  className: classNames?.groupHeader,
                 })}
               >
-                <div
-                  className={styles.groupHeader({
-                    className: classNames?.groupHeader,
-                  })}
-                >
-                  {groupHeader}
-                </div>
-                <ul
-                  className={styles.groupItems({
-                    className: classNames?.groupItems,
-                  })}
-                >
-                  {grouped.map((ele) => {
-                    const props = getOptionProps(ele);
-                    return <Option {...props} key={props.key} />;
-                  })}
-                </ul>
-              </li>
-            ))
-          : null}
+                {groupHeader}
+              </div>
+              <ul
+                className={styles.groupItems({
+                  className: classNames?.groupItems,
+                })}
+              >
+                {grouped.map((ele) => {
+                  const props = getOptionProps(ele);
+                  return <Option {...props} key={props.key} />;
+                })}
+              </ul>
+            </li>
+          ))
+        : null}
 
-        {!loading && !options?.length ? (
-          <div
-            className={styles.noOptions({
-              className: classNames?.noOptions,
-            })}
-          >
-            {noOptionsText}
-          </div>
-        ) : null}
+      {!loading && !options?.length ? (
+        <div
+          className={styles.noOptions({
+            className: classNames?.noOptions,
+          })}
+        >
+          {noOptionsText}
+        </div>
+      ) : null}
 
-        {loading && !options?.length ? (
-          <div
-            className={styles.loading({
-              className: classNames?.noOptions,
-            })}
-          >
-            {loadingText}
-          </div>
-        ) : null}
-      </ul>
+      {loading && !options?.length ? (
+        <div
+          className={styles.loading({
+            className: classNames?.noOptions,
+          })}
+        >
+          {loadingText}
+        </div>
+      ) : null}
+    </ul>
+  );
+
+  const withPopper = disablePopper ? (
+    listBox
+  ) : (
+    <Popper.Floating sticky="always" mainOffset={offset || 5}>
+      {listBox}
     </Popper.Floating>
   );
 
@@ -585,9 +594,9 @@ const AutocompleteImp = React.forwardRef<
 
       <StylesProvider {...styles}>
         {isOpen
-          ? portal
-            ? createPortal(listBox, document.body)
-            : listBox
+          ? disablePortal
+            ? withPopper
+            : createPortal(withPopper, document.body)
           : null}
       </StylesProvider>
     </Popper.Root>
