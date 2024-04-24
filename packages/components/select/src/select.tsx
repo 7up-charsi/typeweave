@@ -38,6 +38,7 @@ export interface RenderInputProps<Value> {
     'aria-activedescendant': string | undefined;
     role: 'combobox';
   };
+  loading: boolean;
 }
 
 type ChildrenOption<V> = {
@@ -166,6 +167,8 @@ const SelectImp = React.forwardRef<
   } = props;
 
   const getOptionLabel = (option: object) => {
+    if (loading) return '';
+
     if (getOptionLabelProp) {
       return getOptionLabelProp(option);
     }
@@ -395,12 +398,14 @@ const SelectImp = React.forwardRef<
   };
 
   const getInputValue = (value: object | null | object[]) => {
+    if (loading) return '';
+
     if (!value) return '';
 
     if (Array.isArray(value))
-      return value.map((ele) => getOptionLabel?.(ele)).join(', ');
+      return value.map((ele) => getOptionLabel(ele)).join(', ');
 
-    if (!Array.isArray(value)) return getOptionLabel?.(value);
+    if (!Array.isArray(value)) return getOptionLabel(value);
 
     return '';
   };
@@ -455,14 +460,14 @@ const SelectImp = React.forwardRef<
       }
       onPointerDown={(e) => e.preventDefault()}
     >
-      {children && options.length && !groupBy
+      {!loading && children && options.length && !groupBy
         ? children({
             options: options.map(getOptionProps),
             groupedOptions: null,
           })
         : null}
 
-      {children && options.length && groupBy && groupedOptions
+      {!loading && children && options.length && groupBy && groupedOptions
         ? children({
             options: null,
             groupedOptions: Object.entries(groupedOptions).reduce<
@@ -474,14 +479,14 @@ const SelectImp = React.forwardRef<
           })
         : null}
 
-      {!children && options.length && !groupBy
+      {!loading && !children && options.length && !groupBy
         ? options.map((ele) => {
             const props = getOptionProps(ele);
             return <Option {...props} key={props.key} />;
           })
         : null}
 
-      {!children && options.length && groupBy && groupedOptions
+      {!loading && !children && options.length && groupBy && groupedOptions
         ? Object.entries(groupedOptions).map(([groupHeader, grouped]) => (
             <li
               key={groupHeader.replaceAll(' ', '-')}
@@ -518,7 +523,7 @@ const SelectImp = React.forwardRef<
         </div>
       ) : null}
 
-      {loading && !options?.length ? (
+      {loading ? (
         <div
           className={styles.loading({
             className: classNames?.noOptions,
@@ -568,6 +573,7 @@ const SelectImp = React.forwardRef<
               handleCharSearch(e);
             },
             readOnly: true,
+            loading: !!loading,
             ariaProps: {
               role: 'combobox',
               'aria-expanded': isOpen,

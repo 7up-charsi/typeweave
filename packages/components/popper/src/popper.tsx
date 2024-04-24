@@ -8,6 +8,7 @@ import {
   FlipOptions,
   Padding,
   Side,
+  Strategy,
   UseFloatingOptions,
   UseFloatingReturn,
   arrow as arrowMiddleware,
@@ -106,6 +107,11 @@ export interface FloatingProps {
         floatingRef: UseFloatingReturn['refs']['setFloating'];
         style: React.CSSProperties;
       }) => React.ReactNode);
+  /**
+   * The strategy to use when positioning the floating element.
+   * @default fixed
+   */
+  strategy?: Strategy;
   placement?: UseFloatingOptions['placement'];
   updatePositionStrategy?: 'optimized' | 'always';
   /**
@@ -168,6 +174,7 @@ export const Floating = React.forwardRef<HTMLElement, FloatingProps>(
   (props, ref) => {
     const {
       children,
+      strategy = 'fixed',
       placement: placementProp,
       updatePositionStrategy = 'optimized',
       mainOffset = 0,
@@ -197,7 +204,7 @@ export const Floating = React.forwardRef<HTMLElement, FloatingProps>(
     };
 
     const { middlewareData, placement, floatingStyles, refs } = useFloating({
-      strategy: 'fixed',
+      strategy,
       placement: placementProp,
       elements: { reference: context.reference },
       whileElementsMounted: (...args) =>

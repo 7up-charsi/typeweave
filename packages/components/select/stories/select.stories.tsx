@@ -235,6 +235,20 @@ export const Group = {
   render: GroupTemplate,
 };
 
+const LoadingTemplate = () => (
+  <Select
+    options={options}
+    loading
+    renderInput={(props) => (
+      <Input label="top 100 movies" {...mapInputProps(props)} />
+    )}
+  />
+);
+
+export const Loading = {
+  render: LoadingTemplate,
+};
+
 const InDialogTemplate = () => (
   <Dialog.Root defaultOpen>
     <Dialog.Trigger>
