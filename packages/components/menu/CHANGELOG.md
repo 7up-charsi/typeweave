@@ -1,5 +1,13 @@
 # @webbo-ui/menu
 
+## 1.0.19
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/popper@1.0.4
+  - @webbo-ui/theme@1.0.12
+
 ## 1.0.18
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @webbo-ui/theme
 
+## 1.0.12
+
+### Patch Changes
+
+- feat: select/autocomplete customizable
+
 ## 1.0.11
 
 ### Patch Changes

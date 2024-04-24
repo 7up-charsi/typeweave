@@ -1,5 +1,11 @@
 # @webbo-ui/popper
 
+## 1.0.4
+
+### Patch Changes
+
+- feat: select/autocomplete customizable
+
 ## 1.0.3
 
 ### Patch Changes
