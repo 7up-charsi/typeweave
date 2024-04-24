@@ -1,5 +1,12 @@
 # @webbo-ui/disclosure
 
+## 1.0.15
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/theme@1.0.12
+
 ## 1.0.14
 
 ### Patch Changes

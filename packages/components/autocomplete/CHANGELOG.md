@@ -1,5 +1,16 @@
 # @webbo-ui/autocomplete
 
+## 1.0.18
+
+### Patch Changes
+
+- feat: select/autocomplete customizable
+- Updated dependencies
+  - @webbo-ui/popper@1.0.4
+  - @webbo-ui/theme@1.0.12
+  - @webbo-ui/button@1.0.15
+  - @webbo-ui/chip@1.0.15
+
 ## 1.0.17
 
 ### Patch Changes

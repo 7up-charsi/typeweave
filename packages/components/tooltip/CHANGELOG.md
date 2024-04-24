@@ -1,5 +1,13 @@
 # @webbo-ui/tooltip
 
+## 1.0.14
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/popper@1.0.4
+  - @webbo-ui/theme@1.0.12
+
 ## 1.0.13
 
 ### Patch Changes
