@@ -43,6 +43,7 @@ export interface RenderInputProps<Value> {
     'aria-activedescendant': string | undefined;
     role: 'combobox';
   };
+  loading: boolean;
 }
 
 type ChildrenOption<V> = {
@@ -177,6 +178,8 @@ const AutocompleteImp = React.forwardRef<
   } = props;
 
   const getOptionLabel = (option: object) => {
+    if (loading) return '';
+
     if (getOptionLabelProp) {
       return getOptionLabelProp(option);
     }
@@ -380,6 +383,8 @@ const AutocompleteImp = React.forwardRef<
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (loading) return;
+
     const val = e.target.value;
 
     setInputValue(val);
@@ -453,14 +458,14 @@ const AutocompleteImp = React.forwardRef<
       }
       onPointerDown={(e) => e.preventDefault()}
     >
-      {children && options.length && !groupBy
+      {!loading && children && options.length && !groupBy
         ? children({
             options: options.map(getOptionProps),
             groupedOptions: null,
           })
         : null}
 
-      {children && options.length && groupBy && groupedOptions
+      {!loading && children && options.length && groupBy && groupedOptions
         ? children({
             options: null,
             groupedOptions: Object.entries(groupedOptions).reduce<
@@ -472,14 +477,14 @@ const AutocompleteImp = React.forwardRef<
           })
         : null}
 
-      {!children && options.length && !groupBy
+      {!loading && !children && options.length && !groupBy
         ? options.map((ele) => {
             const props = getOptionProps(ele);
             return <Option {...props} key={props.key} />;
           })
         : null}
 
-      {!children && options.length && groupBy && groupedOptions
+      {!loading && !children && options.length && groupBy && groupedOptions
         ? Object.entries(groupedOptions).map(([groupHeader, grouped]) => (
             <li
               key={groupHeader.replaceAll(' ', '-')}
@@ -518,7 +523,7 @@ const AutocompleteImp = React.forwardRef<
         </div>
       ) : null}
 
-      {loading && !options?.length ? (
+      {loading ? (
         <div
           className={styles.loading({
             className: classNames?.noOptions,
@@ -579,6 +584,7 @@ const AutocompleteImp = React.forwardRef<
             onChange: handleInputChange,
             disabled: !!disabled,
             onKeyDown: handleKeyDown,
+            loading: !!loading,
             ariaProps: {
               role: 'combobox',
               'aria-expanded': isOpen,

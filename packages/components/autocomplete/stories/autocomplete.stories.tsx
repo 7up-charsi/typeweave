@@ -195,7 +195,7 @@ export const NoOptions = {
 
 const LoadingTemplate = () => (
   <Autocomplete
-    options={[]}
+    options={options}
     loading
     renderInput={(props) => (
       <Input label="top 100 movies" {...mapInputProps(props)} />
