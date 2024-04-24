@@ -181,7 +181,7 @@ export const Multiple = {
   render: MultipleTemplate,
 };
 
-const CustomTemplate = () => (
+const CustomOptionTemplate = () => (
   <Select
     multiple
     options={options}
@@ -216,7 +216,7 @@ const CustomTemplate = () => (
 );
 
 export const CustomOption = {
-  render: CustomTemplate,
+  render: CustomOptionTemplate,
 };
 
 const GroupTemplate = () => (
@@ -272,4 +272,47 @@ const InDialogTemplate = () => (
 
 export const InDialog = {
   render: InDialogTemplate,
+};
+
+const CustomTemplate = () => (
+  <Dialog.Root defaultOpen>
+    <Dialog.Trigger>
+      <div className="border border-muted-6 rounded bg-white inline-flex items-center px-3 h-10 w-64">
+        Select one movie
+      </div>
+    </Dialog.Trigger>
+
+    <Dialog.Portal>
+      <Dialog.Overlay />
+
+      <Dialog.Content className="w-[calc(100%-16px)] max-w-xs p-0">
+        <Select
+          isOpen
+          options={options}
+          disablePopper
+          disablePortal
+          getOptionLabel={(option) => option.title}
+          shadow="none"
+          classNames={{ listbox: 'border-0' }}
+          renderInput={(props) => (
+            <Input
+              {...mapInputProps(props, { disableIndicator: true })}
+              label="select one movie"
+              hideLabel
+              placeholder="select one movie"
+              classNames={{
+                base: 'w-full border-b border-b-muted-6',
+                inputWrapper: 'focus-within:ring-0 border-0 hover:border-0',
+                input: 'h-12',
+              }}
+            />
+          )}
+        />
+      </Dialog.Content>
+    </Dialog.Portal>
+  </Dialog.Root>
+);
+
+export const Custom = {
+  render: CustomTemplate,
 };

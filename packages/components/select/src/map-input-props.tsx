@@ -1,6 +1,6 @@
 import { Button } from '@webbo-ui/button';
 import { RenderInputProps } from './select';
-import { selectInput } from '@webbo-ui/theme';
+import { SelectInputClassNames, selectInput } from '@webbo-ui/theme';
 import { type InputProps } from '@webbo-ui/input';
 import { Icon } from '@webbo-ui/icon';
 
@@ -41,20 +41,30 @@ const openIndicator_svg = (
   </Icon>
 );
 
-export const mapInputProps = ({
-  ariaProps,
-  clearButtonProps: { onClear, ...clearButtonProps },
-  onOpen,
-  inputRef,
-  disabled,
-  onBlur,
-  onKeyDown,
-  popperReferenceRef,
-  showClearButton,
-  isOpen,
-  inputValue,
-  readOnly,
-}: RenderInputProps<unknown>): InputProps<false> => {
+export const mapInputProps = (
+  inputProps: RenderInputProps<unknown>,
+  props?: {
+    classNames?: SelectInputClassNames;
+    disableIndicator?: boolean;
+  },
+): InputProps<false> => {
+  const {
+    ariaProps,
+    clearButtonProps: { onClear, ...clearButtonProps },
+    onOpen,
+    inputRef,
+    disabled,
+    onBlur,
+    onKeyDown,
+    popperReferenceRef,
+    showClearButton,
+    isOpen,
+    inputValue,
+    readOnly,
+  } = inputProps;
+
+  const { classNames, disableIndicator } = props || {};
+
   const styles = selectInput();
 
   return {
@@ -67,18 +77,24 @@ export const mapInputProps = ({
             variant="text"
             onPress={onClear}
             size="sm"
-            classNames={{ base: styles.clearButton() }}
+            classNames={{
+              base: styles.clearButton({ className: classNames?.clearButton }),
+            }}
           >
             {clearIcon_svg}
           </Button>
         )}
 
-        <span
-          style={{ rotate: isOpen ? '180deg' : '0deg' }}
-          className={styles.openIndecator()}
-        >
-          {openIndicator_svg}
-        </span>
+        {disableIndicator ? null : (
+          <span
+            style={{ rotate: isOpen ? '180deg' : '0deg' }}
+            className={styles.openIndecator({
+              className: classNames?.openIndecator,
+            })}
+          >
+            {openIndicator_svg}
+          </span>
+        )}
       </>
     ),
     inputWrapperProps: {

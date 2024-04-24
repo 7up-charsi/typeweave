@@ -13,7 +13,7 @@ export interface OptionProps {
   onSelect: () => void;
   onHover: () => void;
   id: string;
-  className?: string;
+  className: string;
 }
 
 export const Option = React.forwardRef<
@@ -38,9 +38,6 @@ export const Option = React.forwardRef<
   const isHovered = React.useRef(false);
 
   const pointerEvents = usePointerEvents({
-    onPointerDown: (e) => {
-      e.preventDefault();
-    },
     onPress: () => {
       if (disabled) return;
       onSelect();
