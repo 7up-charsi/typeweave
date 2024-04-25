@@ -60,45 +60,58 @@ export const button = tv({
       isIconOnly: false,
       size: 'sm',
       className: {
-        base: 'px-3 h-7 gap-2',
-        content: 'text-sm',
+        base: 'px-3 h-7 gap-2 text-sm',
       },
     },
     {
       isIconOnly: false,
       size: 'md',
       className: {
-        base: 'px-4 h-9 gap-2',
-        content: 'text-base',
+        base: 'px-4 h-9 gap-2 text-base',
       },
     },
     {
       isIconOnly: false,
       size: 'lg',
       className: {
-        base: 'px-6 h-11 gap-3',
-        content: 'text-lg',
+        base: 'px-6 h-11 gap-3 text-lg',
       },
     },
 
     // isIconOnly
     {
       isIconOnly: true,
+      size: 'sm',
+      className: { base: 'text-base' },
+    },
+    {
+      isIconOnly: true,
+      size: 'md',
+      className: { base: 'text-lg' },
+    },
+    {
+      isIconOnly: true,
+      size: 'lg',
+      className: { base: 'text-xl' },
+    },
+
+    {
+      isIconOnly: true,
       isInGroup: false,
       size: 'sm',
-      className: { base: 'w-7 h-7', content: 'text-base' },
+      className: { base: 'w-7 h-7' },
     },
     {
       isIconOnly: true,
       isInGroup: false,
       size: 'md',
-      className: { base: 'w-9 h-9', content: 'text-lg' },
+      className: { base: 'w-9 h-9' },
     },
     {
       isIconOnly: true,
       isInGroup: false,
       size: 'lg',
-      className: { base: 'w-11 h-11', content: 'text-xl' },
+      className: { base: 'w-11 h-11' },
     },
 
     // isIconOnly in group
@@ -106,19 +119,19 @@ export const button = tv({
       isIconOnly: true,
       isInGroup: true,
       size: 'sm',
-      className: { base: 'min-w-7 h-7', content: 'text-base' },
+      className: { base: 'min-w-7 h-7' },
     },
     {
       isIconOnly: true,
       isInGroup: true,
       size: 'md',
-      className: { base: 'min-w-9 h-9', content: 'text-lg' },
+      className: { base: 'min-w-9 h-9' },
     },
     {
       isIconOnly: true,
       isInGroup: true,
       size: 'lg',
-      className: { base: 'min-w-11 h-11', content: 'text-xl' },
+      className: { base: 'min-w-11 h-11' },
     },
 
     // color / solid

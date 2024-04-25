@@ -11,13 +11,12 @@ import { createContextScope } from '@webbo-ui/context';
 
 export type Reason = 'select' | 'clear';
 
-export interface RenderInputProps<Value> {
+export interface RenderInputProps {
   inputRef: React.RefObject<HTMLInputElement>;
   popperReferenceRef: (instance: HTMLDivElement | null) => void;
   disabled: boolean;
   isOpen: boolean;
   multiple: boolean;
-  value: Value;
   inputValue: string;
   readOnly: true;
   showClearButton: boolean;
@@ -41,17 +40,10 @@ export interface RenderInputProps<Value> {
   loading: boolean;
 }
 
-type ChildrenOption<V> = {
-  option: V;
-  key: string;
+type RenderOptionProps<Value> = {
+  option: Value;
   label: string;
-  selected: boolean;
-  disabled: boolean;
-  focused: boolean;
-  onSelect: () => void;
-  onHover: () => void;
-  id: string;
-  className: string;
+  state: { disabled: boolean; selected: boolean; focused: boolean };
 };
 
 export type SelectProps<Value, Multiple, DisableClearable> =
@@ -75,12 +67,10 @@ export type SelectProps<Value, Multiple, DisableClearable> =
       loading?: boolean;
       loadingText?: string;
       groupBy?: (option: Value) => string;
-      children?: (props: {
-        groupedOptions: Record<string, ChildrenOption<Value>[]> | null;
-        options: ChildrenOption<Value>[] | null;
-      }) => React.ReactNode;
       disablePortal?: boolean;
       disablePopper?: boolean;
+      renderInput: (props: RenderInputProps) => React.ReactNode;
+      renderOption?: (props: RenderOptionProps<Value>) => React.ReactNode;
     }) &
     (Multiple extends true
       ? {
@@ -93,7 +83,6 @@ export type SelectProps<Value, Multiple, DisableClearable> =
             value: Value[],
           ) => void;
           disableClearable?: DisableClearable;
-          renderInput: (props: RenderInputProps<Value[]>) => React.ReactNode;
         }
       : DisableClearable extends true
         ? {
@@ -106,7 +95,6 @@ export type SelectProps<Value, Multiple, DisableClearable> =
               value: Value,
             ) => void;
             disableClearable: DisableClearable;
-            renderInput: (props: RenderInputProps<Value>) => React.ReactNode;
           }
         : {
             multiple?: Multiple;
@@ -118,9 +106,6 @@ export type SelectProps<Value, Multiple, DisableClearable> =
               value: Value | null,
             ) => void;
             disableClearable?: DisableClearable;
-            renderInput: (
-              props: RenderInputProps<Value | null>,
-            ) => React.ReactNode;
           });
 
 const Select_Name = 'Select';
@@ -152,7 +137,6 @@ const SelectImp = React.forwardRef<
     multiple,
     disableClearable,
     disableCloseOnSelect,
-    children,
     getOptionDisabled,
     noOptionsText = 'no options',
     loading,
@@ -163,6 +147,7 @@ const SelectImp = React.forwardRef<
     renderInput,
     disablePortal,
     disablePopper,
+    renderOption,
     ...restProps
   } = props;
 
@@ -415,19 +400,20 @@ const SelectImp = React.forwardRef<
 
   const styles = React.useMemo(() => select({ shadow }), [shadow]);
 
-  const getOptionProps = (ele: object): ChildrenOption<object> => ({
+  const getOptionProps = (ele: object) => ({
     key: getOptionId(ele),
     option: ele,
-    label: getOptionLabel(ele),
     onHover: () => onHover(ele),
     onSelect: () => onSelect(ele),
     id: getOptionId(ele),
-    focused: ele === focused,
-    selected: Array.isArray(value)
-      ? !!value.find((val) => val === ele)
-      : ele === value,
-    disabled: getOptionDisabled?.(ele) ?? false,
     className: styles.option({ className: classNames?.option }),
+    state: {
+      focused: ele === focused,
+      selected: Array.isArray(value)
+        ? !!value.find((val) => val === ele)
+        : ele === value,
+      disabled: getOptionDisabled?.(ele) ?? false,
+    },
   });
 
   if (multiple && !Array.isArray(value))
@@ -460,33 +446,24 @@ const SelectImp = React.forwardRef<
       }
       onPointerDown={(e) => e.preventDefault()}
     >
-      {!loading && children && options.length && !groupBy
-        ? children({
-            options: options.map(getOptionProps),
-            groupedOptions: null,
+      {!loading && options.length && !groupBy
+        ? options.map((option) => {
+            const label = getOptionLabel(option);
+            const props = getOptionProps(option);
+
+            return (
+              <Option {...props} key={props.key}>
+                {renderOption?.({
+                  option,
+                  label,
+                  state: props.state,
+                }) ?? label}
+              </Option>
+            );
           })
         : null}
 
-      {!loading && children && options.length && groupBy && groupedOptions
-        ? children({
-            options: null,
-            groupedOptions: Object.entries(groupedOptions).reduce<
-              Record<string, ChildrenOption<object>[]>
-            >(
-              (acc, [key, val]) => ((acc[key] = val.map(getOptionProps)), acc),
-              {},
-            ),
-          })
-        : null}
-
-      {!loading && !children && options.length && !groupBy
-        ? options.map((ele) => {
-            const props = getOptionProps(ele);
-            return <Option {...props} key={props.key} />;
-          })
-        : null}
-
-      {!loading && !children && options.length && groupBy && groupedOptions
+      {!loading && options.length && groupBy && groupedOptions
         ? Object.entries(groupedOptions).map(([groupHeader, grouped]) => (
             <li
               key={groupHeader.replaceAll(' ', '-')}
@@ -504,9 +481,19 @@ const SelectImp = React.forwardRef<
                   className: classNames?.groupItems,
                 })}
               >
-                {grouped.map((ele) => {
-                  const props = getOptionProps(ele);
-                  return <Option {...props} key={props.key} />;
+                {grouped.map((option) => {
+                  const label = getOptionLabel(option);
+                  const props = getOptionProps(option);
+
+                  return (
+                    <Option {...props} key={props.key}>
+                      {renderOption?.({
+                        option,
+                        label,
+                        state: props.state,
+                      }) ?? label}
+                    </Option>
+                  );
                 })}
               </ul>
             </li>
@@ -565,7 +552,6 @@ const SelectImp = React.forwardRef<
                 : !!value,
             popperReferenceRef: mergeRefs(referenceRef, popperReferenceRef),
             inputRef,
-            value,
             inputValue: getInputValue(value),
             disabled: !!disabled,
             onKeyDown: (e) => {

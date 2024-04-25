@@ -43,12 +43,12 @@ const openIndicator_svg = (
 );
 
 export const mapInputProps = (
-  inputProps: RenderInputProps<unknown>,
+  inputProps: RenderInputProps,
   props?: {
     classNames?: AutocompleteInputClassNames & InputClassNames;
-    disableIndicator?: boolean;
+    disableOpenIndicator?: boolean;
     clearIcon?: React.ReactNode;
-    openIndicator?: React.ReactNode;
+    openIndicatorIcon?: React.ReactNode;
     loader?: React.ReactNode;
   },
 ): InputProps<false> => {
@@ -74,10 +74,10 @@ export const mapInputProps = (
 
   const {
     classNames,
-    disableIndicator,
+    disableOpenIndicator,
     loader,
     clearIcon = <Icon>{clear_svg}</Icon>,
-    openIndicator = <Icon>{openIndicator_svg}</Icon>,
+    openIndicatorIcon = <Icon>{openIndicator_svg}</Icon>,
   } = props ?? {};
 
   return {
@@ -137,14 +137,14 @@ export const mapInputProps = (
             ></div>
           ))}
 
-        {disableIndicator ? null : (
+        {disableOpenIndicator ? null : (
           <span
             style={{ rotate: isOpen ? '180deg' : '0deg' }}
             className={styles.openIndecator({
               className: classNames?.openIndecator,
             })}
           >
-            {openIndicator}
+            {openIndicatorIcon}
           </span>
         )}
       </>
@@ -153,13 +153,14 @@ export const mapInputProps = (
       // @ts-expect-error ----
       'data-chips': !!selected?.length,
       onPointerDown: (e: React.PointerEvent) => {
-        e.preventDefault();
         if (
           (e.target as HTMLElement).closest('button') ||
           e.button !== 0 ||
           disabled
-        )
+        ) {
+          e.preventDefault();
           return;
+        }
 
         inputRef.current?.focus();
         onOpen();
