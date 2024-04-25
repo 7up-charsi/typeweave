@@ -1,5 +1,12 @@
 # @webbo-ui/radio
 
+## 1.0.16
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/theme@1.1.1
+
 ## 1.0.15
 
 ### Patch Changes
