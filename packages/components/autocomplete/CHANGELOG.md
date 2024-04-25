@@ -1,5 +1,18 @@
 # @webbo-ui/autocomplete
 
+## 1.1.0
+
+### Minor Changes
+
+- feat: select/autocomplete renderOption
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/button@1.1.0
+  - @webbo-ui/theme@1.1.0
+  - @webbo-ui/chip@1.0.16
+
 ## 1.0.18
 
 ### Patch Changes

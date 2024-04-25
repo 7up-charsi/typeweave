@@ -1,5 +1,16 @@
 # @webbo-ui/button
 
+## 1.1.0
+
+### Minor Changes
+
+- feat: select/autocomplete renderOption
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/theme@1.1.0
+
 ## 1.0.15
 
 ### Patch Changes
