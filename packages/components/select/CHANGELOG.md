@@ -1,5 +1,14 @@
 # @webbo-ui/select
 
+## 1.1.2
+
+### Patch Changes
+
+- fix: select/autocomplete disable close on select
+- Updated dependencies
+  - @webbo-ui/theme@1.1.1
+  - @webbo-ui/button@1.1.1
+
 ## 1.1.1
 
 ### Patch Changes

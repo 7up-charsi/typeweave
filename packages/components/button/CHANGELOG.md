@@ -1,5 +1,12 @@
 # @webbo-ui/button
 
+## 1.1.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/theme@1.1.1
+
 ## 1.1.0
 
 ### Minor Changes
