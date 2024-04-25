@@ -136,15 +136,17 @@ const InputImpl = (
         onPointerDown={(e) => {
           inputWrapperProps?.onPointerDown?.(e);
 
-          if (disabled) return;
-          if (e.button !== 0) return;
+          if (e.button !== 0 || disabled) return;
+          if (e.target instanceof HTMLInputElement) return;
 
-          if (e.target === e.currentTarget) {
+          if ((e.target as HTMLElement).closest('button')) {
             e.preventDefault();
-            innerInputRef.current?.focus();
-            innerTextareaRef.current?.focus();
             return;
           }
+
+          e.preventDefault();
+          innerInputRef.current?.focus();
+          innerTextareaRef.current?.focus();
         }}
         ref={ref}
         className={styles.inputWrapper({ className: classNames?.inputWrapper })}

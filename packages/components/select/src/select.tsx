@@ -374,6 +374,7 @@ const SelectImp = React.forwardRef<
     e.preventDefault();
     inputRef.current?.focus();
     setFocused(null);
+    setIsOpen(true);
 
     if (multiple) {
       setValue([], 'clear');

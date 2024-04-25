@@ -115,17 +115,14 @@ export const mapInputProps = (
       </>
     ),
     inputWrapperProps: {
-      onPointerDown: (e: React.PointerEvent) => {
-        if (
-          (e.target as HTMLElement).closest('button') ||
-          e.button !== 0 ||
-          disabled
-        ) {
+      onPointerDown: (e) => {
+        if (e.button !== 0 || disabled) return;
+
+        if ((e.target as HTMLElement).closest('button')) {
           e.preventDefault();
           return;
         }
 
-        inputRef.current?.focus();
         onOpen();
       },
     },
