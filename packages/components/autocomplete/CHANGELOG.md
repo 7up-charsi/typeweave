@@ -1,5 +1,15 @@
 # @webbo-ui/autocomplete
 
+## 1.1.3
+
+### Patch Changes
+
+- fix: select/autocomplete scrollIntoView
+- Updated dependencies
+  - @webbo-ui/theme@1.1.2
+  - @webbo-ui/button@1.1.2
+  - @webbo-ui/chip@1.0.18
+
 ## 1.1.2
 
 ### Patch Changes

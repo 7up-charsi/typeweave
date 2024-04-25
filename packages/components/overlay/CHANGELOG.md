@@ -1,5 +1,12 @@
 # @webbo-ui/overlay
 
+## 1.0.16
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/theme@1.1.2
+
 ## 1.0.15
 
 ### Patch Changes
