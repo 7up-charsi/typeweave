@@ -1,5 +1,11 @@
 # @webbo-ui/input
 
+## 1.0.18
+
+### Patch Changes
+
+- fix: select/autocomplete does not open
+
 ## 1.0.17
 
 ### Patch Changes
