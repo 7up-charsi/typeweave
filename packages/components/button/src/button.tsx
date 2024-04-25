@@ -177,13 +177,17 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             children: (
               <>
                 {__startContent}
-                <span
-                  className={styles.content({
-                    className: classNames?.content,
-                  })}
-                >
-                  {children.props.children}
-                </span>
+                {isIconOnly ? (
+                  children.props.children
+                ) : (
+                  <span
+                    className={styles.content({
+                      className: classNames?.content,
+                    })}
+                  >
+                    {children.props.children}
+                  </span>
+                )}
                 {__endContent}
               </>
             ),
@@ -191,15 +195,17 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ) : (
           <button>
             {__startContent}
-
-            <span
-              className={styles.content({
-                className: classNames?.content,
-              })}
-            >
-              {children}
-            </span>
-
+            {isIconOnly ? (
+              children
+            ) : (
+              <span
+                className={styles.content({
+                  className: classNames?.content,
+                })}
+              >
+                {children}
+              </span>
+            )}
             {__endContent}
           </button>
         )}
