@@ -4,9 +4,9 @@ import { ClassNames } from '../types';
 export const autocomplete = tv({
   slots: {
     listbox:
-      'w-[--reference-width] bg-muted-2 border border-muted-6 overflow-y-auto rounded max-h-[300px] z-50',
+      'w-[--reference-width] bg-background border border-muted-6 overflow-y-auto rounded max-h-[300px] z-50',
     option:
-      'flex items-center px-2 py-2 select-none truncate cursor-pointer data-[disabled=true]:opacity-50 text-muted-11 data-[selected=true]:bg-muted-5 data-[focused=true]:data-[selected=false]:bg-muted-4 data-[focused=true]:data-[selected=true]:bg-muted-5 text-wrap',
+      'flex items-center px-2 py-2 select-none truncate cursor-pointer data-[disabled=true]:opacity-50 text-muted-11 data-[selected=true]:bg-info-4 data-[focused=true]:data-[selected=false]:bg-info-3 data-[focused=true]:data-[selected=true]:bg-info-5 text-wrap',
     noOptions: 'h-10 flex items-center justify-center capitalize text-muted-11',
     loading: 'h-10 flex items-center justify-center capitalize text-muted-11',
     group: 'relative isolate',

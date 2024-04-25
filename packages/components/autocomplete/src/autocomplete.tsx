@@ -144,7 +144,7 @@ const AutocompleteImp = React.forwardRef<
     disabled,
     multiple,
     disableClearable,
-    disableCloseOnSelect,
+    disableCloseOnSelect = true,
     getOptionDisabled,
     noOptionsText = 'no options',
     loading,
@@ -252,7 +252,7 @@ const AutocompleteImp = React.forwardRef<
 
     if (Array.isArray(value)) setInputValue('');
 
-    if (prevSelectedValue.current !== inputValue)
+    if (!Array.isArray(value) && prevSelectedValue.current !== inputValue)
       setInputValue(prevSelectedValue.current);
   };
 
@@ -272,6 +272,8 @@ const AutocompleteImp = React.forwardRef<
   };
 
   const onSelect = (option: object) => {
+    setOptions(optionsProp);
+
     if (Array.isArray(value)) {
       const val = value.find((ele) => ele === option)
         ? value.filter((ele) => ele !== option)
@@ -280,6 +282,8 @@ const AutocompleteImp = React.forwardRef<
       setValue(val, 'select');
       setFocused(option);
       setInputValue('');
+      if (!disableCloseOnSelect) handleClose();
+      return;
     }
 
     if (!Array.isArray(value)) {
@@ -289,10 +293,9 @@ const AutocompleteImp = React.forwardRef<
       const val = getOptionLabel(option);
       setInputValue(val);
       prevSelectedValue.current = val;
-    }
 
-    if (!disableCloseOnSelect) handleClose();
-    setOptions(optionsProp);
+      handleClose();
+    }
   };
 
   const onHover = (option: object) => {
