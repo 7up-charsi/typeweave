@@ -136,7 +136,7 @@ const SelectImp = React.forwardRef<
     disabled,
     multiple,
     disableClearable,
-    disableCloseOnSelect,
+    disableCloseOnSelect = true,
     getOptionDisabled,
     noOptionsText = 'no options',
     loading,
@@ -254,14 +254,15 @@ const SelectImp = React.forwardRef<
 
       setValue(val, 'select');
       setFocused(option);
+      if (!disableCloseOnSelect) handleClose();
+      return;
     }
 
     if (!Array.isArray(value)) {
       setValue(option, 'select');
       setFocused(option);
+      handleClose();
     }
-
-    if (!disableCloseOnSelect) handleClose();
   };
 
   const onHover = (option: object) => {
