@@ -1,0 +1,82 @@
+import { DialogVariantProps, dialog } from '@webbo-ui/theme';
+import React from 'react';
+import { useDialogCtx } from './dialog-root';
+import { useScrollLock } from '../use-scroll-lock';
+import { createContextScope } from '../context';
+import { FocusTrap } from '../focus-trap';
+import { VisuallyHidden } from '../visually-hidden';
+
+export interface DialogContentProps
+  extends DialogVariantProps,
+    React.HTMLAttributes<HTMLDivElement> {
+  noA11yTitle?: boolean;
+  noA11yDescription?: boolean;
+}
+
+const Comp_Name = 'DialogContent';
+
+const [DialogStyles, useDialogStyles] =
+  createContextScope<ReturnType<typeof dialog>>(Comp_Name);
+
+export { useDialogStyles };
+
+export const DialogContent = React.forwardRef<
+  HTMLDivElement,
+  DialogContentProps
+>((props, ref) => {
+  const {
+    children,
+    className,
+    noA11yDescription,
+    noA11yTitle,
+    shadow,
+    ...restProps
+  } = props;
+
+  const dialogCtx = useDialogCtx(Comp_Name);
+
+  useScrollLock();
+
+  const styles = React.useMemo(() => dialog({ shadow }), [shadow]);
+
+  return (
+    <DialogStyles {...styles}>
+      <FocusTrap
+        loop
+        trapped
+        focusScope={dialogCtx.focusScope}
+        disabled={!dialogCtx.isOpen}
+        asChild
+      >
+        <div
+          {...restProps}
+          ref={ref}
+          role="dialog"
+          aria-labelledby={noA11yTitle ? undefined : dialogCtx.titleId}
+          aria-describedby={
+            noA11yDescription ? undefined : dialogCtx.descriptionId
+          }
+          aria-modal={true}
+          id={dialogCtx.contentId}
+          className={styles.content({ className })}
+        >
+          <VisuallyHidden>
+            <button onPointerUp={() => dialogCtx.handleClose('virtual')}>
+              close
+            </button>
+          </VisuallyHidden>
+
+          {children}
+
+          <VisuallyHidden>
+            <button onPointerUp={() => dialogCtx.handleClose('virtual')}>
+              close
+            </button>
+          </VisuallyHidden>
+        </div>
+      </FocusTrap>
+    </DialogStyles>
+  );
+});
+
+DialogContent.displayName = 'DialogContent';
