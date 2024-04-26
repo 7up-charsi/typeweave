@@ -1,5 +1,12 @@
 import React from 'react';
-import * as Accordion from '../src';
+import {
+  AccordionArrow,
+  AccordionContent,
+  AccordionHeader,
+  AccordionItem,
+  AccordionRoot,
+  AccordionTrigger,
+} from '../src';
 
 const meta = {
   title: 'Components/Accordion',
@@ -8,34 +15,34 @@ const meta = {
 export default meta;
 
 const Template = (args) => (
-  <Accordion.Root {...args}>
+  <AccordionRoot {...args}>
     {Array.from({ length: 10 }).map((_, i) => (
-      <Accordion.Item
+      <AccordionItem
         key={i}
         value={`accordion-item-${i + 1}`}
         disabled={i === 7}
       >
-        <Accordion.Header>
-          <Accordion.Trigger className="group">
+        <AccordionHeader>
+          <AccordionTrigger className="group">
             {i === 7 ? (
               <span>DISABLED Accordion with dummy content</span>
             ) : (
               <span>Accordion no. {i + 1} with dummy content</span>
             )}
 
-            <Accordion.Arrow className="ml-auto" />
-          </Accordion.Trigger>
-        </Accordion.Header>
+            <AccordionArrow className="ml-auto" />
+          </AccordionTrigger>
+        </AccordionHeader>
 
-        <Accordion.Content>
+        <AccordionContent>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
           pariatur vitae consectetur ullam repellendus illo suscipit
           perspiciatis at maxime neque exercitationem qui doloribus architecto
           reiciendis modi debitis aliquid, ex id!
-        </Accordion.Content>
-      </Accordion.Item>
+        </AccordionContent>
+      </AccordionItem>
     ))}
-  </Accordion.Root>
+  </AccordionRoot>
 );
 
 const MultipleTemplate = () => <Template defaultValue={['accordion-item-1']} />;
