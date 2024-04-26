@@ -1,6 +1,6 @@
 import { Button } from '../button';
 import { Chip } from '../chip';
-import { RenderInputProps } from './autocomplete';
+import { AutocompleteRenderInputProps } from './autocomplete';
 import { type InputProps } from '../input';
 import {
   AutocompleteInputClassNames,
@@ -43,7 +43,7 @@ const openIndicator_svg = (
 );
 
 export const mapInputProps = (
-  inputProps: RenderInputProps,
+  inputProps: AutocompleteRenderInputProps,
   props?: {
     classNames?: AutocompleteInputClassNames & InputClassNames;
     disableOpenIndicator?: boolean;
