@@ -1,6 +1,3 @@
 packages:
   - 'apps/*'
-  - 'packages/components/*'
-  - 'packages/core/*'
-  - 'packages/hooks/*'
-  - 'packages/utilities/*'
+  - 'packages/*'
