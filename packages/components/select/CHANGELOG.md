@@ -1,5 +1,13 @@
 # @webbo-ui/select
 
+## 1.1.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/theme@1.1.3
+  - @webbo-ui/button@1.1.3
+
 ## 1.1.3
 
 ### Patch Changes

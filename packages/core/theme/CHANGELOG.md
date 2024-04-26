@@ -1,5 +1,11 @@
 # @webbo-ui/theme
 
+## 1.1.3
+
+### Patch Changes
+
+- fix: multiline text selection
+
 ## 1.1.2
 
 ### Patch Changes

@@ -1,5 +1,22 @@
 # @webbo-ui/docs
 
+## 0.1.29
+
+### Patch Changes
+
+- Updated dependencies
+  - @webbo-ui/input@1.0.21
+  - @webbo-ui/theme@1.1.3
+  - @webbo-ui/accordion@1.0.19
+  - @webbo-ui/alert@1.0.19
+  - @webbo-ui/button@1.1.3
+  - @webbo-ui/dialog@1.0.23
+  - @webbo-ui/disclosure@1.0.19
+  - @webbo-ui/menu@1.0.23
+  - @webbo-ui/tabs@1.0.19
+  - @webbo-ui/tooltip@1.0.18
+  - @webbo-ui/themes@1.0.3
+
 ## 0.1.28
 
 ### Patch Changes
