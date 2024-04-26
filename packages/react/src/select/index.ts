@@ -1,9 +1,7 @@
-import * as select from './select';
+export type {
+  SelectProps,
+  SelectReason,
+  SelectRenderInputProps,
+} from './select';
 
-// export types
-export type { SelectProps, Reason } from './select';
-
-// export component
-export const Select = select.Select;
-
-export { mapInputProps } from './map-input-props';
+export { Select } from './select';

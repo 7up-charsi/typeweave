@@ -7,11 +7,11 @@ import lodashGroupBy from 'lodash.groupby';
 import { SelectClassNames, SelectVariantProps, select } from '@webbo-ui/theme';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { createPortal } from 'react-dom';
-import { createContextScope } from '../context';
+import { getNext, getPrevious } from './utils';
 
-export type Reason = 'select' | 'clear';
+export type SelectReason = 'select' | 'clear';
 
-export interface RenderInputProps {
+export interface SelectRenderInputProps {
   inputRef: React.RefObject<HTMLInputElement>;
   popperReferenceRef: (instance: HTMLDivElement | null) => void;
   disabled: boolean;
@@ -69,7 +69,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
       groupBy?: (option: Value) => string;
       disablePortal?: boolean;
       disablePopper?: boolean;
-      renderInput: (props: RenderInputProps) => React.ReactNode;
+      renderInput: (props: SelectRenderInputProps) => React.ReactNode;
       renderOption?: (props: RenderOptionProps<Value>) => React.ReactNode;
     }) &
     (Multiple extends true
@@ -79,7 +79,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
           value?: Value[];
           onChange?: (
             event: { target: { value: Value[] } },
-            reason: Reason,
+            reason: SelectReason,
             value: Value[],
           ) => void;
           disableClearable?: DisableClearable;
@@ -91,7 +91,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
             value?: Value;
             onChange?: (
               event: { target: { value: Value } },
-              reason: Reason,
+              reason: SelectReason,
               value: Value,
             ) => void;
             disableClearable: DisableClearable;
@@ -102,22 +102,13 @@ export type SelectProps<Value, Multiple, DisableClearable> =
             value?: Value | null;
             onChange?: (
               event: { target: { value: Value | null } },
-              reason: Reason,
+              reason: SelectReason,
               value: Value | null,
             ) => void;
             disableClearable?: DisableClearable;
           });
 
-const Select_Name = 'Select';
-
-const [StylesProvider, stylesHook] =
-  createContextScope<ReturnType<typeof select>>(Select_Name);
-
-export const useStylesContext: (
-  consumerName: string,
-) => ReturnType<typeof select> = stylesHook;
-
-const SelectImp = React.forwardRef<
+const SelectImpl = React.forwardRef<
   HTMLUListElement,
   SelectProps<object, false, false>
 >((props, ref) => {
@@ -169,7 +160,7 @@ const SelectImp = React.forwardRef<
 
   const [value, setValue] = useControllableState<
     object | object[] | null,
-    Reason
+    SelectReason
   >({
     defaultValue,
     value: valueProp,
@@ -575,20 +566,18 @@ const SelectImp = React.forwardRef<
         }
       </Popper.Reference>
 
-      <StylesProvider {...styles}>
-        {isOpen
-          ? disablePortal
-            ? withPopper
-            : createPortal(withPopper, document.body)
-          : null}
-      </StylesProvider>
+      {isOpen
+        ? disablePortal
+          ? withPopper
+          : createPortal(withPopper, document.body)
+        : null}
     </Popper.Root>
   );
 });
 
-SelectImp.displayName = 'webbo-ui.' + Select_Name;
+SelectImpl.displayName = 'Select';
 
-export const Select = SelectImp as unknown as <
+export const Select = SelectImpl as unknown as <
   Value extends object,
   Multiple extends boolean = false,
   DisableClearable extends boolean = false,
@@ -596,35 +585,3 @@ export const Select = SelectImp as unknown as <
   props: SelectProps<Value, Multiple, DisableClearable> &
     React.RefAttributes<HTMLUListElement>,
 ) => React.ReactNode;
-
-// *-*-*-*-* Utils *-*-*-*-*
-
-const getNext = (
-  current: object,
-  items: object[],
-  isOptionDisabled?: (opt: object) => boolean,
-) => {
-  if (!isOptionDisabled) return current;
-
-  for (let i = items.indexOf(current); i <= items.length; i++) {
-    const option = items[i];
-    if (!isOptionDisabled(option)) return option;
-  }
-
-  return current;
-};
-
-const getPrevious = (
-  current: object,
-  items: object[],
-  isOptionDisabled?: (opt: object) => boolean,
-) => {
-  if (!isOptionDisabled) return current;
-
-  for (let i = items.indexOf(current) - 1; i > 0; i--) {
-    const option = items[i];
-    if (!isOptionDisabled(option)) return option;
-  }
-
-  return current;
-};

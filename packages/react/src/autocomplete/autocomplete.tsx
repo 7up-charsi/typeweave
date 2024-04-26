@@ -13,9 +13,9 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { getNext, getPrevious } from './utils';
 
-export type Reason = 'select' | 'clear' | 'remove';
+export type AutocompleteReason = 'select' | 'clear' | 'remove';
 
-export interface RenderInputProps {
+export interface AutocompleteRenderInputProps {
   selected: { label: string; onDelete: () => void }[] | null;
   inputRef: React.RefObject<HTMLInputElement>;
   popperReferenceRef: (instance: HTMLDivElement | null) => void;
@@ -77,7 +77,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
       filterOptions?: (options: Value[], inputValue: string) => Value[];
       disablePortal?: boolean;
       disablePopper?: boolean;
-      renderInput: (props: RenderInputProps) => React.ReactNode;
+      renderInput: (props: AutocompleteRenderInputProps) => React.ReactNode;
       renderOption?: (props: RenderOptionProps<Value>) => React.ReactNode;
     }) &
     (Multiple extends true
@@ -87,7 +87,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
           value?: Value[];
           onChange?: (
             event: { target: { value: Value[] } },
-            reason: Reason,
+            reason: AutocompleteReason,
             value: Value[],
           ) => void;
           disableClearable?: DisableClearable;
@@ -99,7 +99,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
             value?: Value;
             onChange?: (
               event: { target: { value: Value } },
-              reason: Reason,
+              reason: AutocompleteReason,
               value: Value,
             ) => void;
             disableClearable: DisableClearable;
@@ -110,7 +110,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
             value?: Value | null;
             onChange?: (
               event: { target: { value: Value | null } },
-              reason: Reason,
+              reason: AutocompleteReason,
               value: Value | null,
             ) => void;
             disableClearable?: DisableClearable;
@@ -171,7 +171,7 @@ const AutocompleteImpl = React.forwardRef<
 
   const [value, setValue] = useControllableState<
     object | object[] | null,
-    Reason
+    AutocompleteReason
   >({
     defaultValue,
     value: valueProp,
