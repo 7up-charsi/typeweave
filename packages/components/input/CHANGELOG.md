@@ -1,5 +1,14 @@
 # @webbo-ui/input
 
+## 1.0.21
+
+### Patch Changes
+
+- fix: multiline text selection
+- Updated dependencies
+  - @webbo-ui/theme@1.1.3
+  - @webbo-ui/button@1.1.3
+
 ## 1.0.20
 
 ### Patch Changes
