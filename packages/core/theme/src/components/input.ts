@@ -46,8 +46,7 @@ export type InputClassNames = ClassNames<typeof input.slots>;
 
 export const numberInput = tv({
   slots: {
-    base: 'h-7 w-6 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity',
-    buttonBase: 'px-0 w-full grow cursor-pointer',
+    button: 'h-6 w-6',
   },
 });
 
@@ -56,7 +55,7 @@ export type NumberInputClassNames = ClassNames<typeof numberInput.slots>;
 
 export const passwordInput = tv({
   slots: {
-    button: 'h-[28px] w-[28px]',
+    button: 'h-6 w-6',
   },
 });
 
