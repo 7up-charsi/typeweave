@@ -268,68 +268,61 @@ const NumberInput = React.forwardRef<HTMLDivElement, NumberInputProps>(
         step={step}
         endContent={
           <>
-            <div
-              ref={ref}
-              className={styles.base({
-                className: classNames?.buttonsBase,
-              })}
+            {/* decrease */}
+            <Button
+              aria-label="decrease value"
+              aria-description="long press to decrease speedly"
+              tabIndex={-1}
+              isIconOnly
+              size="sm"
+              variant="text"
+              classNames={{
+                base: styles.button({
+                  className: classNames?.decreaseButton,
+                }),
+              }}
+              onPointerDown={onLongPress('decrease')}
             >
-              {/* increase */}
-              <Button
-                aria-label="increase value"
-                aria-description="long press to increase speedly"
-                tabIndex={-1}
-                isIconOnly
-                size="sm"
-                variant="text"
-                classNames={{
-                  base: styles.buttonBase({
-                    className: classNames?.increaseButton,
-                  }),
-                }}
-                onPointerDown={onLongPress('increase')}
-              >
-                <Icon>
-                  <svg fill="none" viewBox="0 0 24 24">
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 15l6-6 6 6"
-                    ></path>
-                  </svg>
-                </Icon>
-              </Button>
+              <Icon>
+                <svg fill="none" viewBox="0 0 24 24">
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 12h12"
+                  ></path>
+                </svg>
+              </Icon>
+            </Button>
 
-              {/* decrease */}
-              <Button
-                aria-label="decrease value"
-                aria-description="long press to decrease speedly"
-                tabIndex={-1}
-                isIconOnly
-                size="sm"
-                variant="text"
-                classNames={{
-                  base: styles.buttonBase({
-                    className: classNames?.decreaseButton,
-                  }),
-                }}
-                onPointerDown={onLongPress('decrease')}
-              >
-                <Icon>
-                  <svg fill="none" viewBox="0 0 24 24">
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 9l6 6 6-6"
-                    ></path>
-                  </svg>
-                </Icon>
-              </Button>
-            </div>
+            {/* increase */}
+            <Button
+              aria-label="increase value"
+              aria-description="long press to increase speedly"
+              tabIndex={-1}
+              isIconOnly
+              size="sm"
+              variant="text"
+              classNames={{
+                base: styles.button({
+                  className: classNames?.increaseButton,
+                }),
+              }}
+              onPointerDown={onLongPress('increase')}
+            >
+              <Icon>
+                <svg fill="none" viewBox="0 0 24 24">
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 12h12m-6-6v12"
+                  ></path>
+                </svg>
+              </Icon>
+            </Button>
 
             {endContent}
           </>

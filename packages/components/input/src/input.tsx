@@ -137,7 +137,8 @@ const InputImpl = (
           inputWrapperProps?.onPointerDown?.(e);
 
           if (e.button !== 0 || disabled) return;
-          if (e.target instanceof HTMLInputElement) return;
+          if (!multiline && e.target instanceof HTMLInputElement) return;
+          if (multiline && e.target instanceof HTMLTextAreaElement) return;
 
           if ((e.target as HTMLElement).closest('button')) {
             e.preventDefault();

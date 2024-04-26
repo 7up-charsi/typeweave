@@ -27,7 +27,7 @@ export const select = tv({
 export const selectInput = tv({
   slots: {
     openIndecator: 'text-muted-9 text-lg',
-    clearButton: 'text-muted-9 w-5 h-5',
+    clearButton: 'text-muted-9 w-6 h-6',
     loader:
       'animate-spin inline-block size-4 border-2 border-muted-9 border-t-transparent rounded-full',
   },
