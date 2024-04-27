@@ -2,7 +2,6 @@ import { mergeRefs } from '@webbo-ui/react-utils';
 import { button, ButtonClassNames, ButtonVariantProps } from '@webbo-ui/theme';
 import { Slot } from '../slot';
 import { usePointerEvents } from '../use-pointer-events';
-import { accessibilityWarning } from '../custom-error';
 import React from 'react';
 import { GroupCtx } from './button-group';
 
@@ -62,9 +61,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // eslint-disable-next-line react-hooks/rules-of-hooks
       React.useEffect(() => {
         if (isIconOnly && !ariaLabel && !ariaLabelledby)
-          accessibilityWarning(
-            'Button',
-            'You must provide `aria-label` or `aria-labelledby` when `isIconOnly` is true',
+          console.warn(
+            'For accessible icon-only buttons, provide an `aria-label` prop for screen readers to describe its purpose.',
           );
       }, [ariaLabel, ariaLabelledby, isIconOnly]);
     }

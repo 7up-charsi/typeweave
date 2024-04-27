@@ -1,6 +1,5 @@
 import { ChipClassNames, ChipVariantProps, chip } from '@webbo-ui/theme';
 import { usePointerEvents } from '../use-pointer-events';
-import { accessibilityWarning } from '../custom-error';
 import React from 'react';
 import { XIcon } from 'lucide-react';
 
@@ -11,7 +10,7 @@ export interface ChipProps
   avatar?: React.ReactNode;
   deleteIcon?: React.ReactNode;
   onDelete?: () => void;
-  deleteIconA11yLabel?: string;
+  deleteA11yLabel?: string;
   classNames?: ChipClassNames;
   excludeFromTabOrder?: boolean;
 }
@@ -33,7 +32,7 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
       className,
       excludeFromTabOrder,
       deleteIcon,
-      deleteIconA11yLabel = 'delete',
+      deleteA11yLabel = 'delete',
       ...restProps
     } = props;
 
@@ -66,18 +65,18 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       React.useEffect(() => {
-        if (onDeleteProvided && !deleteIconA11yLabel)
-          accessibilityWarning(
-            'Chip',
-            'You must provide `deleteIconA11yLabel` when `onDelete` is provided',
+        if (onDeleteProvided && !deleteA11yLabel)
+          console.warn(
+            "For accessible deletable Chip, provide `deleteA11yLabel` prop for screen readers to describe delete button's purpose.",
           );
 
         if (!ariaLabel && !ariaLabelledby)
-          accessibilityWarning(
-            'Chip',
-            'You must provide `aria-label` or `aria-labelledby`',
+          console.warn(
+            'For accessible Chip, provide an `aria-label` prop for screen readers to describe its purpose.',
           );
-      }, [ariaLabel, ariaLabelledby, deleteIconA11yLabel, onDeleteProvided]);
+
+        //
+      }, [ariaLabel, ariaLabelledby, deleteA11yLabel, onDeleteProvided]);
     }
 
     return (
@@ -98,7 +97,7 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
             tabIndex={excludeFromTabOrder ? -1 : 0}
             role="button"
             className={styles.deleteIcon({ className: classNames?.deleteIcon })}
-            aria-label={deleteIconA11yLabel}
+            aria-label={deleteA11yLabel}
           >
             {deleteIcon ?? <XIcon />}
           </span>

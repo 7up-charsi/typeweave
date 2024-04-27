@@ -93,7 +93,7 @@ const InputImpl = (
   React.useEffect(() => {
     if (process.env.NODE_ENV !== 'production' && !label) {
       console.warn(
-        '`Input` "label" prop is optional but recommended. if you want to hide label then pass "hideLabel" prop as well',
+        'For accessible Input, provide `label` prop for screen readers to describe its purpose. If you want to hide the label visually, use the `hideLabel` prop',
       );
     }
   }, [label]);
