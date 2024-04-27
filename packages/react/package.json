@@ -33,6 +33,10 @@
     "postpack": "clean-package restore",
     "prepublish": "pnpm auto-imports && pnpm typecheck"
   },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
   "dependencies": {
     "@floating-ui/react-dom": "^2.0.8",
     "@webbo-ui/react-utils": "workspace:*",
@@ -41,6 +45,7 @@
     "lucide-react": "^0.376.0"
   },
   "devDependencies": {
+    "tsconfig": "workspace:*",
     "@types/lodash.groupby": "^4.6.9",
     "clean-package": "^2.2.0"
   },
