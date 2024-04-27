@@ -6,14 +6,14 @@ export interface TableSelectAllRowsProps {
   children?: React.ReactNode;
 }
 
-const Comp_Name = 'TableSelectAllRows';
+const displayName = 'TableSelectAllRows';
 
 export const TableSelectAllRows = (props: TableSelectAllRowsProps) => {
   const { children } = props;
 
   const ref = React.useRef<HTMLInputElement>(null);
 
-  const { selected, setSelected, rows } = useSelectRowCtx(Comp_Name);
+  const { selected, setSelected, rows } = useSelectRowCtx(displayName);
 
   return (
     <Slot<
@@ -34,4 +34,4 @@ export const TableSelectAllRows = (props: TableSelectAllRowsProps) => {
   );
 };
 
-TableSelectAllRows.displayName = 'TableSelectAllRows';
+TableSelectAllRows.displayName = displayName;

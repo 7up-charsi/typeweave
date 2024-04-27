@@ -4,7 +4,7 @@ import { useMenuStyles } from './menu-content';
 export interface MenuSeparatorProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {}
 
-const Comp_Name = 'MenuSeparator';
+const displayName = 'MenuSeparator';
 
 export const MenuSeparator = React.forwardRef<
   HTMLDivElement,
@@ -12,7 +12,7 @@ export const MenuSeparator = React.forwardRef<
 >((props, ref) => {
   const { className, ...restProps } = props;
 
-  const styles = useMenuStyles(Comp_Name);
+  const styles = useMenuStyles(displayName);
 
   return (
     <div
@@ -24,4 +24,4 @@ export const MenuSeparator = React.forwardRef<
   );
 });
 
-MenuSeparator.displayName = 'MenuSeparator';
+MenuSeparator.displayName = displayName;

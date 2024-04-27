@@ -33,9 +33,9 @@ export interface DialogRootMethods {
   onClose: DialogCtxProps['handleClose'];
 }
 
-const Comp_Name = 'DialogRoot';
+const displayName = 'DialogRoot';
 
-const [DialogCtx, useDialogCtx] = createContextScope<DialogCtxProps>(Comp_Name);
+const [DialogCtx, useDialogCtx] = createContextScope<DialogCtxProps>(displayName);
 
 export { useDialogCtx };
 
@@ -131,4 +131,4 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
   },
 );
 
-DialogRoot.displayName = 'DialogRoot';
+DialogRoot.displayName = displayName;

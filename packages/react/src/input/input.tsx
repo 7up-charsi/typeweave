@@ -50,6 +50,8 @@ export type InputProps<Multiline> = BaseProps &
 type InputImplProps = BaseProps & { multiline?: boolean } & InputBaseProps &
   TextareaBaseProps;
 
+const displayName = 'Input';
+
 const InputImpl = (
   props: InputImplProps,
   ref: React.ForwardedRef<HTMLDivElement>,
@@ -220,7 +222,7 @@ const InputImpl = (
   );
 };
 
-InputImpl.displayName = 'Input';
+InputImpl.displayName = displayName;
 
 export const Input = React.forwardRef(InputImpl) as unknown as <
   Multiline extends boolean = false,

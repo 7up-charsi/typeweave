@@ -6,14 +6,14 @@ export interface AlertDialogPortalProps {
   container?: HTMLElement;
 }
 
-const Comp_Name = 'AlertDialogPortal';
+const displayName = 'AlertDialogPortal';
 
 export const AlertDialogPortal = (props: AlertDialogPortalProps) => {
   const { children, container = globalThis?.document?.body } = props;
 
-  const alertDialogCtx = useAlertDialogCtx(Comp_Name);
+  const alertDialogCtx = useAlertDialogCtx(displayName);
 
   return alertDialogCtx.isOpen ? createPortal(children, container) : null;
 };
 
-AlertDialogPortal.displayName = Comp_Name;
+AlertDialogPortal.displayName = displayName;

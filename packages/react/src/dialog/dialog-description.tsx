@@ -5,7 +5,7 @@ import { useDialogStyles } from './dialog-content';
 export interface DialogDescriptionProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const Comp_Name = 'DialogDescription';
+const displayName = 'DialogDescription';
 
 export const DialogDescription = React.forwardRef<
   HTMLDivElement,
@@ -13,8 +13,8 @@ export const DialogDescription = React.forwardRef<
 >((props, ref) => {
   const { className, ...restProps } = props;
 
-  const dialogCtx = useDialogCtx(Comp_Name);
-  const styles = useDialogStyles(Comp_Name);
+  const dialogCtx = useDialogCtx(displayName);
+  const styles = useDialogStyles(displayName);
 
   return (
     <div
@@ -26,4 +26,4 @@ export const DialogDescription = React.forwardRef<
   );
 });
 
-DialogDescription.displayName = 'DialogDescription';
+DialogDescription.displayName = displayName;

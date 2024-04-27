@@ -14,7 +14,7 @@ export interface AccordionTriggerProps
   asChild?: boolean;
 }
 
-const Comp_Name = 'AccordionTrigger';
+const displayName = 'AccordionTrigger';
 
 export const AccordionTrigger = React.forwardRef<
   HTMLButtonElement,
@@ -22,9 +22,9 @@ export const AccordionTrigger = React.forwardRef<
 >((props, ref) => {
   const { asChild, className, children, disabled, ...restProps } = props;
 
-  const accordionCtx = useAccordionCtx(Comp_Name);
-  const itemCtx = useAccordionItemCtx(Comp_Name);
-  const styles = useAccordionStyles(Comp_Name);
+  const accordionCtx = useAccordionCtx(displayName);
+  const itemCtx = useAccordionItemCtx(displayName);
+  const styles = useAccordionStyles(displayName);
   const getItems = useAccordionCollection();
 
   const isExpended = itemCtx.isExpended;
@@ -91,4 +91,4 @@ export const AccordionTrigger = React.forwardRef<
   );
 });
 
-AccordionTrigger.displayName = Comp_Name;
+AccordionTrigger.displayName = displayName;

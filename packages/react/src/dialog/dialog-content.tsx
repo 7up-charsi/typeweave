@@ -13,10 +13,10 @@ export interface DialogContentProps
   noA11yDescription?: boolean;
 }
 
-const Comp_Name = 'DialogContent';
+const displayName = 'DialogContent';
 
 const [DialogStyles, useDialogStyles] =
-  createContextScope<ReturnType<typeof dialog>>(Comp_Name);
+  createContextScope<ReturnType<typeof dialog>>(displayName);
 
 export { useDialogStyles };
 
@@ -33,7 +33,7 @@ export const DialogContent = React.forwardRef<
     ...restProps
   } = props;
 
-  const dialogCtx = useDialogCtx(Comp_Name);
+  const dialogCtx = useDialogCtx(displayName);
 
   useScrollLock();
 
@@ -79,4 +79,4 @@ export const DialogContent = React.forwardRef<
   );
 });
 
-DialogContent.displayName = 'DialogContent';
+DialogContent.displayName = displayName;

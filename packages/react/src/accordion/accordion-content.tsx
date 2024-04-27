@@ -5,7 +5,7 @@ import { useAccordionItemCtx } from './accordion-item';
 export interface AccordionContentProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const Comp_Name = 'AccordionContent';
+const displayName = 'AccordionContent';
 
 export const AccordionContent = React.forwardRef<
   HTMLDivElement,
@@ -13,8 +13,8 @@ export const AccordionContent = React.forwardRef<
 >((props, ref) => {
   const { className, ...restProps } = props;
 
-  const itemCtx = useAccordionItemCtx(Comp_Name);
-  const styles = useAccordionStyles(Comp_Name);
+  const itemCtx = useAccordionItemCtx(displayName);
+  const styles = useAccordionStyles(displayName);
 
   return !itemCtx.isExpended ? null : (
     <div
@@ -26,4 +26,4 @@ export const AccordionContent = React.forwardRef<
   );
 });
 
-AccordionContent.displayName = Comp_Name;
+AccordionContent.displayName = displayName;

@@ -5,14 +5,14 @@ export interface TabsContentProps extends React.HTMLAttributes<HTMLDivElement> {
   value: string;
 }
 
-const Comp_Name = 'TabsContent';
+const displayName = 'TabsContent';
 
 export const TabsContent = React.forwardRef<HTMLDivElement, TabsContentProps>(
   (props, ref) => {
     const { value, className, ...contentProps } = props;
 
-    const tabsCtx = useTabsCtx(Comp_Name);
-    const styles = useTabsStyles(Comp_Name);
+    const tabsCtx = useTabsCtx(displayName);
+    const styles = useTabsStyles(displayName);
 
     const isSelected = value === tabsCtx.value;
     const triggerId = 'trigger-' + value;
@@ -33,4 +33,4 @@ export const TabsContent = React.forwardRef<HTMLDivElement, TabsContentProps>(
   },
 );
 
-TabsContent.displayName = 'TabsContent';
+TabsContent.displayName = displayName;

@@ -27,10 +27,10 @@ interface TooltipCtxProps {
   isOpen: boolean;
 }
 
-const Comp_Name = 'TooltipRoot';
+const displayName = 'TooltipRoot';
 
 const [TooltipCtx, useTooltipCtx] =
-  createContextScope<TooltipCtxProps>(Comp_Name);
+  createContextScope<TooltipCtxProps>(displayName);
 
 export { useTooltipCtx };
 
@@ -141,4 +141,4 @@ export const TooltipRoot = (props: TooltipRootProps) => {
   );
 };
 
-TooltipRoot.displayName = 'TooltipRoot';
+TooltipRoot.displayName = displayName;

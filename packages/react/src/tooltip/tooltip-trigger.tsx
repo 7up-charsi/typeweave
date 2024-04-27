@@ -6,7 +6,7 @@ import { Slot } from '../slot';
 export interface TooltipTriggerProps
   extends React.HTMLAttributes<HTMLElement> {}
 
-const Comp_Name = 'TooltipTrigger';
+const displayName = 'TooltipTrigger';
 
 export const TooltipTrigger = React.forwardRef<
   HTMLElement,
@@ -14,7 +14,7 @@ export const TooltipTrigger = React.forwardRef<
 >((props, ref) => {
   const { ...restProps } = props;
 
-  const context = useTooltipCtx(Comp_Name);
+  const context = useTooltipCtx(displayName);
 
   const isMouseRef = React.useRef(false);
 
@@ -73,4 +73,4 @@ export const TooltipTrigger = React.forwardRef<
   );
 });
 
-TooltipTrigger.displayName = 'TooltipTrigger';
+TooltipTrigger.displayName = displayName;

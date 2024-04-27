@@ -5,7 +5,7 @@ import { useDisclosureStyles } from './disclosure-root';
 export interface DisclosureContentProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const Comp_Name = 'DisclosureContent';
+const displayName = 'DisclosureContent';
 
 export const DisclosureContent = React.forwardRef<
   HTMLDivElement,
@@ -13,8 +13,8 @@ export const DisclosureContent = React.forwardRef<
 >((props, ref) => {
   const { className, ...restProps } = props;
 
-  const disclosureItemCtx = useDisclosureItemCtx(Comp_Name);
-  const styles = useDisclosureStyles(Comp_Name);
+  const disclosureItemCtx = useDisclosureItemCtx(displayName);
+  const styles = useDisclosureStyles(displayName);
 
   return !disclosureItemCtx.isExpended ? null : (
     <div
@@ -27,4 +27,4 @@ export const DisclosureContent = React.forwardRef<
   );
 });
 
-DisclosureContent.displayName = 'DisclosureContent';
+DisclosureContent.displayName = displayName;

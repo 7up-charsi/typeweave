@@ -18,6 +18,8 @@ export interface ButtonProps
   excludeFromTabOrder?: boolean;
 }
 
+const displayName = 'Button';
+
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     const {
@@ -158,4 +160,4 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   },
 );
 
-Button.displayName = 'Button';
+Button.displayName = displayName;

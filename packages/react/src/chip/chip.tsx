@@ -16,6 +16,8 @@ export interface ChipProps
   excludeFromTabOrder?: boolean;
 }
 
+const displayName = 'Chip';
+
 export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
   (props, ref) => {
     const {
@@ -116,4 +118,4 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
   },
 );
 
-Chip.displayName = 'Chip';
+Chip.displayName = displayName;

@@ -6,6 +6,8 @@ export interface SlotProps {
   children?: React.ReactNode;
 }
 
+const displayName = 'Slot';
+
 const _Slot = <E extends HTMLElement>(
   props: SlotProps,
   ref: React.ForwardedRef<E>,
@@ -29,7 +31,7 @@ const _Slot = <E extends HTMLElement>(
   } as Partial<unknown>);
 };
 
-_Slot.displayName = 'Slot';
+_Slot.displayName = displayName;
 
 export const Slot = React.forwardRef(_Slot) as <T, P>(
   props: SlotProps & P & { ref?: React.ForwardedRef<T> },

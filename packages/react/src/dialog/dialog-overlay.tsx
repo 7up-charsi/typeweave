@@ -5,7 +5,7 @@ import { Overlay, OverlayProps } from '../overlay';
 
 export interface DialogOverlayProps extends OverlayProps {}
 
-const Comp_Name = 'DialogOverlay';
+const displayName = 'DialogOverlay';
 
 export const DialogOverlay = React.forwardRef<
   HTMLDivElement,
@@ -13,7 +13,7 @@ export const DialogOverlay = React.forwardRef<
 >((props, ref) => {
   const { ...restProps } = props;
 
-  const dialogCtx = useDialogCtx(Comp_Name);
+  const dialogCtx = useDialogCtx(displayName);
 
   const pointerEvents = usePointerEvents({
     onPress: () => {
@@ -24,4 +24,4 @@ export const DialogOverlay = React.forwardRef<
   return <Overlay {...restProps} ref={ref} {...pointerEvents} />;
 });
 
-DialogOverlay.displayName = Comp_Name;
+DialogOverlay.displayName = displayName;

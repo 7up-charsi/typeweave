@@ -8,7 +8,7 @@ export interface AccordionHeaderProps
   asChild?: boolean;
 }
 
-const Comp_Name = 'AccordionHeader';
+const displayName = 'AccordionHeader';
 
 export const AccordionHeader = React.forwardRef<
   HTMLHeadingElement,
@@ -16,8 +16,8 @@ export const AccordionHeader = React.forwardRef<
 >((props, ref) => {
   const { asChild, className, ...restProps } = props;
 
-  const itemCtx = useAccordionItemCtx(Comp_Name);
-  const styles = useAccordionStyles(Comp_Name);
+  const itemCtx = useAccordionItemCtx(displayName);
+  const styles = useAccordionStyles(displayName);
 
   const Comp = asChild ? Slot : 'h3';
 
@@ -31,4 +31,4 @@ export const AccordionHeader = React.forwardRef<
   );
 });
 
-AccordionHeader.displayName = Comp_Name;
+AccordionHeader.displayName = displayName;

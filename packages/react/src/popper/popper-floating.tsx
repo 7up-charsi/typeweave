@@ -93,7 +93,7 @@ export interface PopperFloatingProps {
   clippingBoundary?: Boundary;
 }
 
-const Comp_Name = 'PopperFloating';
+const displayName = 'PopperFloating';
 
 interface ArrowCtxProps {
   side: Side;
@@ -103,7 +103,7 @@ interface ArrowCtxProps {
   shouldHideArrow: boolean;
 }
 
-const [ArrowCtx, useArrowCtx] = createContextScope<ArrowCtxProps>(Comp_Name);
+const [ArrowCtx, useArrowCtx] = createContextScope<ArrowCtxProps>(displayName);
 
 export { useArrowCtx };
 
@@ -129,7 +129,7 @@ export const PopperFloating = React.forwardRef<
     clippingBoundary = 'clippingAncestors',
   } = props;
 
-  const popperCtx = usePopperCtx(Comp_Name);
+  const popperCtx = usePopperCtx(displayName);
   const [arrow, setArrow] = React.useState<HTMLSpanElement | null>(null);
   const arrowSize = useSize(arrow);
   const referenceSize = useSize(popperCtx.reference);
@@ -216,4 +216,4 @@ export const PopperFloating = React.forwardRef<
   );
 });
 
-PopperFloating.displayName = 'PopperFloating';
+PopperFloating.displayName = displayName;

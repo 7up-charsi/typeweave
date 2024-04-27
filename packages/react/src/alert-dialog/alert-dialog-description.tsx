@@ -5,7 +5,7 @@ import { useAlertDialogStyles } from './alert-dialog-content';
 export interface AlertDialogDescriptionProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const Comp_Name = 'AlertDialogDescription';
+const displayName = 'AlertDialogDescription';
 
 export const AlertDialogDescription = React.forwardRef<
   HTMLDivElement,
@@ -13,8 +13,8 @@ export const AlertDialogDescription = React.forwardRef<
 >((props, ref) => {
   const { className, ...restProps } = props;
 
-  const alertDialogCtx = useAlertDialogCtx(Comp_Name);
-  const styles = useAlertDialogStyles(Comp_Name);
+  const alertDialogCtx = useAlertDialogCtx(displayName);
+  const styles = useAlertDialogStyles(displayName);
 
   return (
     <div
@@ -26,4 +26,4 @@ export const AlertDialogDescription = React.forwardRef<
   );
 });
 
-AlertDialogDescription.displayName = 'AlertDialogDescription';
+AlertDialogDescription.displayName = displayName;

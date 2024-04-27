@@ -19,6 +19,8 @@ export interface CheckboxProps
   checkedIcon?: React.ReactNode;
 }
 
+const displayName = 'Checkbox';
+
 export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
   (props, ref) => {
     const {
@@ -96,4 +98,4 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
   },
 );
 
-Checkbox.displayName = 'Checkbox';
+Checkbox.displayName = displayName;

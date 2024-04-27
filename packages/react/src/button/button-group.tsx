@@ -18,6 +18,8 @@ interface GroupContextProps extends ButtonVariantProps {
 
 export const GroupCtx = React.createContext<GroupContextProps | null>(null);
 
+const displayName = 'ButtonGroup';
+
 export const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
   (props, ref) => {
     const {
@@ -50,4 +52,4 @@ export const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
   },
 );
 
-ButtonGroup.displayName = 'ButtonGroup';
+ButtonGroup.displayName = displayName;

@@ -8,14 +8,14 @@ import {
 
 export interface TabsListProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-const Comp_Name = 'TabsList';
+const displayName = 'TabsList';
 
 export const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
 
-    const tabsCtx = useTabsCtx(Comp_Name);
-    const styles = useTabsStyles(Comp_Name);
+    const tabsCtx = useTabsCtx(displayName);
+    const styles = useTabsStyles(displayName);
     const getItems = useTabsCollection();
 
     const isClickFocusRef = React.useRef(false);
@@ -52,4 +52,4 @@ export const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(
   },
 );
 
-TabsList.displayName = 'TabsList';
+TabsList.displayName = displayName;

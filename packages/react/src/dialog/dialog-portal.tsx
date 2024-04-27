@@ -6,12 +6,12 @@ export interface DialogPortalProps {
   container?: HTMLElement;
 }
 
-const Comp_Name = 'DialogPortal';
+const displayName = 'DialogPortal';
 
 export const DialogPortal = (props: DialogPortalProps) => {
   const { children, container = globalThis?.document?.body } = props;
 
-  const dialogCtx = useDialogCtx(Comp_Name);
+  const dialogCtx = useDialogCtx(displayName);
 
   if (dialogCtx.keepMounted) {
     return createPortal(
@@ -25,4 +25,4 @@ export const DialogPortal = (props: DialogPortalProps) => {
   return dialogCtx.isOpen ? createPortal(children, container) : null;
 };
 
-DialogPortal.displayName = Comp_Name;
+DialogPortal.displayName = displayName;

@@ -6,6 +6,8 @@ export interface IconProps
   children?: React.ReactNode;
 }
 
+const displayName = 'Icon';
+
 export const Icon = React.forwardRef<SVGSVGElement, IconProps>((props, ref) => {
   const { ...restProps } = props;
 
@@ -22,4 +24,4 @@ export const Icon = React.forwardRef<SVGSVGElement, IconProps>((props, ref) => {
   );
 });
 
-Icon.displayName = 'Icon';
+Icon.displayName = displayName;

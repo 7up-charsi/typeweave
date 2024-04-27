@@ -6,7 +6,7 @@ import { Slot } from '../slot';
 export interface PopoverCloseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-const Comp_Name = 'PopoverClose';
+const displayName = 'PopoverClose';
 
 export const PopoverClose = React.forwardRef<
   HTMLButtonElement,
@@ -14,7 +14,7 @@ export const PopoverClose = React.forwardRef<
 >((props, ref) => {
   const { ...restProps } = props;
 
-  const popoverCtx = usePopoverCtx(Comp_Name);
+  const popoverCtx = usePopoverCtx(displayName);
 
   const pointerEvents = usePointerEvents({
     onPress: popoverCtx.handleClose,
@@ -23,4 +23,4 @@ export const PopoverClose = React.forwardRef<
   return <Slot {...restProps} ref={ref} {...pointerEvents} />;
 });
 
-PopoverClose.displayName = 'PopoverClose';
+PopoverClose.displayName = displayName;

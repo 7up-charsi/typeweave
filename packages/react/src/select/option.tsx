@@ -15,6 +15,8 @@ export interface OptionProps {
   };
 }
 
+const displayName = 'Option';
+
 export const Option = React.forwardRef<HTMLLIElement, OptionProps>(
   (props, ref) => {
     const {
@@ -77,4 +79,4 @@ export const Option = React.forwardRef<HTMLLIElement, OptionProps>(
   },
 );
 
-Option.displayName = 'Option';
+Option.displayName = displayName;

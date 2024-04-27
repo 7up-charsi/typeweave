@@ -5,7 +5,7 @@ import { usePopoverStyles } from './popover-content';
 export interface PopoverDescriptionProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const Comp_Name = 'PopoverDescription';
+const displayName = 'PopoverDescription';
 
 export const PopoverDescription = React.forwardRef<
   HTMLDivElement,
@@ -13,8 +13,8 @@ export const PopoverDescription = React.forwardRef<
 >((props, ref) => {
   const { className, ...restProps } = props;
 
-  const popoverCtx = usePopoverCtx(Comp_Name);
-  const styles = usePopoverStyles(Comp_Name);
+  const popoverCtx = usePopoverCtx(displayName);
+  const styles = usePopoverStyles(displayName);
 
   return (
     <div
@@ -26,4 +26,4 @@ export const PopoverDescription = React.forwardRef<
   );
 });
 
-PopoverDescription.displayName = 'PopoverDescription';
+PopoverDescription.displayName = displayName;

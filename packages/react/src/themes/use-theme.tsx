@@ -1,9 +1,9 @@
 import { useThemesCtx } from './themes-root';
 
-const Comp_Name = 'useTheme';
+const displayName = 'useTheme';
 
 export const useTheme = () => {
-  const rootContext = useThemesCtx(Comp_Name);
+  const rootContext = useThemesCtx(displayName);
 
   return {
     onThemeChange: rootContext.onThemeChange,

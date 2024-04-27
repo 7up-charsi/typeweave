@@ -4,7 +4,7 @@ import { useAlertDialogStyles } from './alert-dialog-content';
 export interface AlertDialogActionsProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const Comp_Name = 'AlertDialogActions';
+const displayName = 'AlertDialogActions';
 
 export const AlertDialogActions = React.forwardRef<
   HTMLDivElement,
@@ -12,11 +12,11 @@ export const AlertDialogActions = React.forwardRef<
 >((props, ref) => {
   const { className, ...restProps } = props;
 
-  const styles = useAlertDialogStyles(Comp_Name);
+  const styles = useAlertDialogStyles(displayName);
 
   return (
     <div {...restProps} ref={ref} className={styles.actions({ className })} />
   );
 });
 
-AlertDialogActions.displayName = 'AlertDialogActions';
+AlertDialogActions.displayName = displayName;

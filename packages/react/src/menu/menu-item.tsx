@@ -7,7 +7,7 @@ export interface MenuItemProps extends MenuItemImplProps {
   disableCloseOnPress?: boolean;
 }
 
-const Comp_Name = 'MenuItem';
+const displayName = 'MenuItem';
 
 export const MenuItem = React.forwardRef<HTMLLIElement, MenuItemProps>(
   (props, ref) => {
@@ -22,8 +22,8 @@ export const MenuItem = React.forwardRef<HTMLLIElement, MenuItemProps>(
       ...restProps
     } = props;
 
-    const menuCtx = useMenuCtx(Comp_Name);
-    const styles = useMenuStyles(Comp_Name);
+    const menuCtx = useMenuCtx(displayName);
+    const styles = useMenuStyles(displayName);
 
     return (
       <MenuItemImpl
@@ -61,4 +61,4 @@ export const MenuItem = React.forwardRef<HTMLLIElement, MenuItemProps>(
   },
 );
 
-MenuItem.displayName = 'MenuItem';
+MenuItem.displayName = displayName;

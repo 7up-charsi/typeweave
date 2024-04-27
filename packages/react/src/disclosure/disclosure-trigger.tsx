@@ -7,7 +7,7 @@ import { usePointerEvents } from '../use-pointer-events';
 export interface DisclosureTriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-const Comp_Name = 'DisclosureTrigger';
+const displayName = 'DisclosureTrigger';
 
 export const DisclosureTrigger = React.forwardRef<
   HTMLButtonElement,
@@ -15,9 +15,9 @@ export const DisclosureTrigger = React.forwardRef<
 >((props, ref) => {
   const { className, disabled, ...restProps } = props;
 
-  const disclosureCtx = useDisclosureCtx(Comp_Name);
-  const disclosureItemCtx = useDisclosureItemCtx(Comp_Name);
-  const styles = useDisclosureStyles(Comp_Name);
+  const disclosureCtx = useDisclosureCtx(displayName);
+  const disclosureItemCtx = useDisclosureItemCtx(displayName);
+  const styles = useDisclosureStyles(displayName);
 
   const isExpended = disclosureItemCtx.isExpended;
 
@@ -58,4 +58,4 @@ export const DisclosureTrigger = React.forwardRef<
   );
 });
 
-DisclosureTrigger.displayName = 'DisclosureTrigger';
+DisclosureTrigger.displayName = displayName;

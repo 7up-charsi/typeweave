@@ -1,5 +1,5 @@
 import { Button } from '../button';
-import { RenderInputProps } from './select';
+import { SelectRenderInputProps } from './select';
 import { SelectInputClassNames, selectInput } from '@webbo-ui/theme';
 import { type InputProps } from '../input';
 import { Icon } from '../icon';
@@ -38,7 +38,7 @@ const openIndicator_svg = (
 );
 
 export const mapInputProps = (
-  inputProps: RenderInputProps,
+  inputProps: SelectRenderInputProps,
   props?: {
     classNames?: SelectInputClassNames;
     disableOpenIndicator?: boolean;

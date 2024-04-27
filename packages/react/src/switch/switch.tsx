@@ -16,6 +16,8 @@ export interface SwitchProps
   checkedIcon?: React.ReactNode;
 }
 
+const displayName = 'Switch';
+
 export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
   (props, ref) => {
     const {
@@ -70,4 +72,4 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
   },
 );
 
-Switch.displayName = 'Switch';
+Switch.displayName = displayName;

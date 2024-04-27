@@ -5,6 +5,8 @@ export interface OverlayProps
   extends OverlayVariantProps,
     React.HTMLAttributes<HTMLDivElement> {}
 
+const displayName = 'Overlay';
+
 export const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
   (props, ref) => {
     const { className, variant = 'opaque', ...restProps } = props;
@@ -15,4 +17,4 @@ export const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
   },
 );
 
-Overlay.displayName = 'Overlay';
+Overlay.displayName = displayName;

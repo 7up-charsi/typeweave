@@ -9,7 +9,7 @@ export interface AlertDialogTriggerProps
   virtualElement?: HTMLElement | null;
 }
 
-const Comp_Name = 'AlertDialogTrigger';
+const displayName = 'AlertDialogTrigger';
 
 export const AlertDialogTrigger = React.forwardRef<
   HTMLButtonElement,
@@ -17,7 +17,7 @@ export const AlertDialogTrigger = React.forwardRef<
 >((props, ref) => {
   const { virtualElement, virtual, ...restProps } = props;
 
-  const alertDialogCtx = useAlertDialogCtx(Comp_Name);
+  const alertDialogCtx = useAlertDialogCtx(displayName);
 
   const pointerEvents = usePointerEvents({
     onPress: alertDialogCtx.handleOpen,
@@ -67,4 +67,4 @@ export const AlertDialogTrigger = React.forwardRef<
   );
 });
 
-AlertDialogTrigger.displayName = 'AlertDialogTrigger';
+AlertDialogTrigger.displayName = displayName;

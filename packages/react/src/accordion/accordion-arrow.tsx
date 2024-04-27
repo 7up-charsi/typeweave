@@ -5,7 +5,7 @@ import { useAccordionStyles } from './accordion-root';
 export interface AccordionArrowProps
   extends Omit<React.SVGProps<SVGSVGElement>, 'children'> {}
 
-const Comp_Name = 'AccordionArrow';
+const displayName = 'AccordionArrow';
 
 export const AccordionArrow = React.forwardRef<
   SVGSVGElement,
@@ -13,7 +13,7 @@ export const AccordionArrow = React.forwardRef<
 >((props, ref) => {
   const { className, ...restProps } = props;
 
-  const styles = useAccordionStyles(Comp_Name);
+  const styles = useAccordionStyles(displayName);
 
   return (
     <Icon {...restProps} ref={ref} className={styles.arrow({ className })}>
@@ -30,4 +30,4 @@ export const AccordionArrow = React.forwardRef<
   );
 });
 
-AccordionArrow.displayName = Comp_Name;
+AccordionArrow.displayName = displayName;

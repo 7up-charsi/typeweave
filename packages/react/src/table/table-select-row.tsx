@@ -6,11 +6,11 @@ export interface TableSelectRowProps {
   children?: React.ReactNode;
 }
 
-const Comp_Name = 'TableSelectRow';
+const displayName = 'TableSelectRow';
 
 export const TableSelectRow = (props: TableSelectRowProps) => {
   const { children } = props;
-  const { selected, setSelected, rows } = useSelectRowCtx(Comp_Name);
+  const { selected, setSelected, rows } = useSelectRowCtx(displayName);
 
   const identifier = React.useId();
 
@@ -38,4 +38,4 @@ export const TableSelectRow = (props: TableSelectRowProps) => {
   );
 };
 
-TableSelectRow.displayName = 'TableSelectRow';
+TableSelectRow.displayName = displayName;

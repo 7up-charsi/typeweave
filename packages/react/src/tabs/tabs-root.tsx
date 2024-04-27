@@ -29,12 +29,12 @@ interface TabsCtxProps {
   setIsTabbingBackOut: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Comp_Name = 'TabsRoot';
+const displayName = 'TabsRoot';
 
-const [TabsCtx, useTabsCtx] = createContextScope<TabsCtxProps>(Comp_Name);
+const [TabsCtx, useTabsCtx] = createContextScope<TabsCtxProps>(displayName);
 
 const [TabsStyles, useTabsStyles] =
-  createContextScope<ReturnType<typeof tabs>>(Comp_Name);
+  createContextScope<ReturnType<typeof tabs>>(displayName);
 
 export { useTabsCtx, useTabsStyles };
 
@@ -45,7 +45,7 @@ interface ItemData {
 export const [TabsCollection, useTabsCollection] = createCollection<
   HTMLButtonElement,
   ItemData
->(Comp_Name);
+>(displayName);
 
 export const TabsRoot = React.forwardRef<HTMLDivElement, TabsRootProps>(
   (props, ref) => {
@@ -100,4 +100,4 @@ export const TabsRoot = React.forwardRef<HTMLDivElement, TabsRootProps>(
   },
 );
 
-TabsRoot.displayName = 'TabsRoot';
+TabsRoot.displayName = displayName;

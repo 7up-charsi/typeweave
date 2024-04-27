@@ -6,15 +6,15 @@ export interface PopoverPortalProps {
   container?: Element;
 }
 
-const Comp_Name = 'PopoverPortal';
+const displayName = 'PopoverPortal';
 
 export const PopoverPortal = ({
   children,
   container = globalThis?.document?.body,
 }: PopoverPortalProps) => {
-  const popoverCtx = usePopoverCtx(Comp_Name);
+  const popoverCtx = usePopoverCtx(displayName);
 
   return <>{popoverCtx.isOpen && createPortal(children, container)}</>;
 };
 
-PopoverPortal.displayName = 'PopoverPortal';
+PopoverPortal.displayName = displayName;

@@ -9,7 +9,7 @@ export interface ToggleButtonProps extends ButtonProps {
   value: string;
 }
 
-const Comp_Name = 'ToggleButton';
+const displayName = 'ToggleButton';
 
 export const ToggleButton = React.forwardRef<
   HTMLButtonElement,
@@ -17,8 +17,8 @@ export const ToggleButton = React.forwardRef<
 >((props, ref) => {
   const { value: valueProp, onPress, classNames, ...restProps } = props;
 
-  const { setValue, value, exclusive } = useToggleButtonCtx(Comp_Name);
-  const styles = useToggleButtonStyles(Comp_Name);
+  const { setValue, value, exclusive } = useToggleButtonCtx(displayName);
+  const styles = useToggleButtonStyles(displayName);
 
   let selected: boolean | undefined = undefined;
 
@@ -67,4 +67,4 @@ export const ToggleButton = React.forwardRef<
   );
 });
 
-ToggleButton.displayName = 'ToggleButton';
+ToggleButton.displayName = displayName;

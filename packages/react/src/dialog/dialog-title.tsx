@@ -5,14 +5,14 @@ import { useDialogStyles } from './dialog-content';
 export interface DialogTitleProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const Comp_Name = 'DialogTitle';
+const displayName = 'DialogTitle';
 
 export const DialogTitle = React.forwardRef<HTMLDivElement, DialogTitleProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
 
-    const dialogCtx = useDialogCtx(Comp_Name);
-    const styles = useDialogStyles(Comp_Name);
+    const dialogCtx = useDialogCtx(displayName);
+    const styles = useDialogStyles(displayName);
 
     return (
       <div
@@ -25,4 +25,4 @@ export const DialogTitle = React.forwardRef<HTMLDivElement, DialogTitleProps>(
   },
 );
 
-DialogTitle.displayName = Comp_Name;
+DialogTitle.displayName = displayName;
