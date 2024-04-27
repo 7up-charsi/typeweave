@@ -8,7 +8,7 @@ import React from 'react';
 export interface MenuTriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-const Comp_Name = 'MenuTrigger';
+const displayName = 'MenuTrigger';
 
 export const MenuTrigger = React.forwardRef<
   HTMLButtonElement,
@@ -16,7 +16,7 @@ export const MenuTrigger = React.forwardRef<
 >((props, ref) => {
   const { ...restProps } = props;
 
-  const menuCtx = useMenuCtx(Comp_Name);
+  const menuCtx = useMenuCtx(displayName);
 
   const pointerEvents = usePointerEvents({ onPress: menuCtx.handleOpen });
 
@@ -44,4 +44,4 @@ export const MenuTrigger = React.forwardRef<
   );
 });
 
-MenuTrigger.displayName = 'MenuTrigger';
+MenuTrigger.displayName = displayName;

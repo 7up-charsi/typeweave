@@ -113,6 +113,8 @@ export type SelectProps<Value, Multiple, DisableClearable> =
             disableClearable?: DisableClearable;
           });
 
+const displayName = 'Select';
+
 const SelectImpl = React.forwardRef<
   HTMLUListElement,
   SelectProps<object, false, false>
@@ -580,7 +582,7 @@ const SelectImpl = React.forwardRef<
   );
 });
 
-SelectImpl.displayName = 'Select';
+SelectImpl.displayName = displayName;
 
 export const Select = SelectImpl as unknown as <
   Value extends object,

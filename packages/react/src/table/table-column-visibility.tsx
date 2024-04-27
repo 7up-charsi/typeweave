@@ -22,7 +22,7 @@ export interface TableColumnVisibilityProps
   };
 }
 
-const Comp_Name = 'TableColumnVisibility';
+const displayName = 'TableColumnVisibility';
 
 export const TableColumnVisibility = (props: TableColumnVisibilityProps) => {
   const {
@@ -35,7 +35,7 @@ export const TableColumnVisibility = (props: TableColumnVisibilityProps) => {
   } = props;
 
   const { columns, data, setVisibilityState, visibilityState } =
-    useTableCtx(Comp_Name);
+    useTableCtx(displayName);
 
   React.useEffect(() => {
     if (tableIdentifier) {
@@ -112,4 +112,4 @@ export const TableColumnVisibility = (props: TableColumnVisibilityProps) => {
   );
 };
 
-TableColumnVisibility.displayName = 'TableColumnVisibility';
+TableColumnVisibility.displayName = displayName;

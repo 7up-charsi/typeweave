@@ -15,12 +15,12 @@ export interface PopperReferenceProps {
   virtualElement?: HTMLElement | null;
 }
 
-const Comp_Name = 'PopperReference';
+const displayName = 'PopperReference';
 
 export const PopperReference = (props: PopperReferenceProps) => {
   const { children, virtual, virtualElement } = props;
 
-  const popperCtx = usePopperCtx(Comp_Name);
+  const popperCtx = usePopperCtx(displayName);
 
   const setReference = popperCtx.setReference;
 
@@ -39,4 +39,4 @@ export const PopperReference = (props: PopperReferenceProps) => {
   );
 };
 
-PopperReference.displayName = 'PopperReference';
+PopperReference.displayName = displayName;

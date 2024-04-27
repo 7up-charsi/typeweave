@@ -5,7 +5,7 @@ import { Side } from '@floating-ui/react-dom';
 export interface PopperArrowProps
   extends Omit<React.SVGAttributes<SVGSVGElement>, 'children'> {}
 
-const Comp_Name = 'PopperArrow';
+const displayName = 'PopperArrow';
 
 const OPPOSITE_SIDE: Record<Side, Side> = {
   top: 'bottom',
@@ -16,7 +16,7 @@ const OPPOSITE_SIDE: Record<Side, Side> = {
 
 export const PopperArrow = React.forwardRef<SVGSVGElement, PopperArrowProps>(
   (props, ref) => {
-    const arrowCtx = useArrowCtx(Comp_Name);
+    const arrowCtx = useArrowCtx(displayName);
     const baseSide = OPPOSITE_SIDE[arrowCtx.side];
 
     return (
@@ -58,4 +58,4 @@ export const PopperArrow = React.forwardRef<SVGSVGElement, PopperArrowProps>(
   },
 );
 
-PopperArrow.displayName = 'PopperArrow';
+PopperArrow.displayName = displayName;

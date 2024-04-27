@@ -8,7 +8,7 @@ import { mergeRefs } from '@webbo-ui/react-utils';
 export interface PopoverTriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-const Comp_Name = 'PopoverTrigger';
+const displayName = 'PopoverTrigger';
 
 export const PopoverTrigger = React.forwardRef<
   HTMLButtonElement,
@@ -16,7 +16,7 @@ export const PopoverTrigger = React.forwardRef<
 >((props, ref) => {
   const { ...restProps } = props;
 
-  const popoverCtx = usePopoverCtx(Comp_Name);
+  const popoverCtx = usePopoverCtx(displayName);
 
   const pointerEvents = usePointerEvents({ onPress: popoverCtx.handleOpen });
 
@@ -33,4 +33,4 @@ export const PopoverTrigger = React.forwardRef<
   );
 });
 
-PopoverTrigger.displayName = 'PopoverTrigger';
+PopoverTrigger.displayName = displayName;

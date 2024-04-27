@@ -6,15 +6,15 @@ export interface TooltipPortalProps {
   container?: Element;
 }
 
-const Comp_Name = 'TooltipPortal';
+const displayName = 'TooltipPortal';
 
 export const TooltipPortal = ({
   children,
   container = globalThis?.document?.body,
 }: TooltipPortalProps) => {
-  const context = useTooltipCtx(Comp_Name);
+  const context = useTooltipCtx(displayName);
 
   return <>{context.isOpen && createPortal(children, container)}</>;
 };
 
-TooltipPortal.displayName = 'TooltipPortal';
+TooltipPortal.displayName = displayName;

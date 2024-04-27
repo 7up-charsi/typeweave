@@ -13,7 +13,7 @@ export interface TabsTriggerProps
   value: string;
 }
 
-const Comp_Name = 'TabsTrigger';
+const displayName = 'TabsTrigger';
 
 export const TabsTrigger = React.forwardRef<
   HTMLButtonElement,
@@ -21,8 +21,8 @@ export const TabsTrigger = React.forwardRef<
 >((props, ref) => {
   const { value, className, ...restProps } = props;
 
-  const tabsCtx = useTabsCtx(Comp_Name);
-  const styles = useTabsStyles(Comp_Name);
+  const tabsCtx = useTabsCtx(displayName);
+  const styles = useTabsStyles(displayName);
   const getItems = useTabsCollection();
 
   const isSelected = value === tabsCtx.value;
@@ -141,4 +141,4 @@ export const TabsTrigger = React.forwardRef<
   );
 });
 
-TabsTrigger.displayName = 'TabsTrigger';
+TabsTrigger.displayName = displayName;

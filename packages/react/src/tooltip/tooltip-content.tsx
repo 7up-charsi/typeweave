@@ -10,7 +10,7 @@ export interface TooltipContentProps
   disableInteractive?: boolean;
 }
 
-const Comp_Name = 'TooltipContent';
+const displayName = 'TooltipContent';
 
 export const TooltipContent = React.forwardRef<
   HTMLDivElement,
@@ -35,7 +35,7 @@ export const TooltipContent = React.forwardRef<
     ...restProps
   } = props;
 
-  const context = useTooltipCtx(Comp_Name);
+  const context = useTooltipCtx(displayName);
 
   const styles = tooltip({ className });
 
@@ -73,4 +73,4 @@ export const TooltipContent = React.forwardRef<
   );
 });
 
-TooltipContent.displayName = 'TooltipContent';
+TooltipContent.displayName = displayName;

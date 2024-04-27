@@ -18,9 +18,9 @@ interface RootContext {
   onThemeChange: (theme: string) => void;
 }
 
-const Comp_name = 'ThemesRoot';
+const displayName = 'ThemesRoot';
 
-const [ThemesCtx, useThemesCtx] = createContextScope<RootContext>(Comp_name);
+const [ThemesCtx, useThemesCtx] = createContextScope<RootContext>(displayName);
 
 export { useThemesCtx };
 
@@ -43,7 +43,7 @@ export const ThemesRoot = (props: ThemesRootProps) => {
 
   const onThemeChange = React.useCallback(
     (theme: string) => {
-      if (!theme) throw new CustomError(Comp_name, '`theme` is required');
+      if (!theme) throw new CustomError(displayName, '`theme` is required');
 
       if (prevTheme.current) themeContainer.classList.remove(prevTheme.current);
       if (prevTheme.current && dataAttribute)
@@ -79,4 +79,4 @@ export const ThemesRoot = (props: ThemesRootProps) => {
   );
 };
 
-ThemesRoot.displayName = 'ThemesRoot';
+ThemesRoot.displayName = displayName;

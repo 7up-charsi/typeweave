@@ -23,9 +23,9 @@ interface MenuCtxProps {
   loop?: boolean;
 }
 
-const Comp_Name = 'MenuRoot';
+const displayName = 'MenuRoot';
 
-const [MenuCtx, useMenuCtx] = createContextScope<MenuCtxProps>(Comp_Name);
+const [MenuCtx, useMenuCtx] = createContextScope<MenuCtxProps>(displayName);
 
 interface CollectionItemProps {
   disabled: boolean;
@@ -38,7 +38,7 @@ export { useMenuCtx };
 export const [MenuCollection, useMenuCollection] = createCollection<
   HTMLLIElement,
   CollectionItemProps
->(Comp_Name);
+>(displayName);
 
 export const MenuRoot = (props: MenuRootProps) => {
   const {
@@ -102,4 +102,4 @@ export const MenuRoot = (props: MenuRootProps) => {
   );
 };
 
-MenuRoot.displayName = 'MenuRoot';
+MenuRoot.displayName = displayName;

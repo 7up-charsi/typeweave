@@ -17,6 +17,8 @@ export interface PasswordInputProps extends Omit<InputProps<false>, 'type'> {
   hideIcon?: React.ReactNode;
 }
 
+const displayName = 'PasswordInput';
+
 export const PasswordInput = React.forwardRef<
   HTMLDivElement,
   PasswordInputProps
@@ -94,4 +96,4 @@ export const PasswordInput = React.forwardRef<
   );
 });
 
-PasswordInput.displayName = 'PasswordInput';
+PasswordInput.displayName = displayName;

@@ -31,6 +31,8 @@ export interface FocusTrapProps extends React.HTMLAttributes<HTMLDivElement> {
   asChild?: boolean;
 }
 
+const displayName = 'FocusTrap';
+
 export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
   (props, ref) => {
     const {
@@ -190,7 +192,7 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
   },
 );
 
-FocusTrap.displayName = 'FocusTrap';
+FocusTrap.displayName = displayName;
 
 const focusScopesStack = createFocusScopesStack();
 

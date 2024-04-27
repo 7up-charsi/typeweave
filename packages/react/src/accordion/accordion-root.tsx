@@ -40,20 +40,20 @@ interface AccordionCtxProps {
   type: 'multiple' | 'single';
 }
 
-const Comp_Name = 'AccordionRoot';
+const displayName = 'AccordionRoot';
 
 const [AccordionCtx, useAccordionCtx] =
-  createContextScope<AccordionCtxProps>(Comp_Name);
+  createContextScope<AccordionCtxProps>(displayName);
 
 const [AccordionStyles, useAccordionStyles] =
-  createContextScope<ReturnType<typeof accordion>>(Comp_Name);
+  createContextScope<ReturnType<typeof accordion>>(displayName);
 
 export { useAccordionCtx, useAccordionStyles };
 
 export const [AccordionCollection, useAccordionCollection] = createCollection<
   HTMLButtonElement,
   object
->(Comp_Name);
+>(displayName);
 
 export const AccordionRootImpl = React.forwardRef<
   HTMLDivElement,
@@ -115,7 +115,7 @@ export const AccordionRootImpl = React.forwardRef<
     Array.isArray(value)
   )
     throw new CustomError(
-      Comp_Name,
+      displayName,
       '`value` must be `string` when type is single and isSingleCollapsible is false',
     );
 
@@ -126,13 +126,13 @@ export const AccordionRootImpl = React.forwardRef<
     Array.isArray(value)
   )
     throw new CustomError(
-      Comp_Name,
+      displayName,
       '`value` must be `string | null` when type is single and isSingleCollapsible is true',
     );
 
   if (valueProp && type === 'multiple' && !Array.isArray(value))
     throw new CustomError(
-      Comp_Name,
+      displayName,
       '`value` must be `array` when type is multiple',
     );
 
@@ -159,7 +159,7 @@ export const AccordionRootImpl = React.forwardRef<
   );
 });
 
-AccordionRootImpl.displayName = Comp_Name;
+AccordionRootImpl.displayName = displayName;
 
 export const AccordionRoot = AccordionRootImpl as unknown as <
   Type extends 'single' | 'multiple' = 'multiple',

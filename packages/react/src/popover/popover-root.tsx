@@ -23,10 +23,10 @@ interface PopoverCtxProps {
   triggerRef: React.RefObject<HTMLButtonElement>;
 }
 
-const Comp_Name = 'PopoverRoot';
+const displayName = 'PopoverRoot';
 
 const [PopoverCtx, usePopoverCtx] =
-  createContextScope<PopoverCtxProps>(Comp_Name);
+  createContextScope<PopoverCtxProps>(displayName);
 
 export { usePopoverCtx };
 
@@ -90,4 +90,4 @@ export const PopoverRoot = (props: PopoverRootProps) => {
   );
 };
 
-PopoverRoot.displayName = 'PopoverRoot';
+PopoverRoot.displayName = displayName;

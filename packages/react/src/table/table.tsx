@@ -7,12 +7,12 @@ export interface TableProps
   classNames?: TableClassNames;
 }
 
-const Comp_Name = 'Table';
+const displayName = 'Table';
 
 export const Table = (props: TableProps) => {
   const { classNames, className, variant = 'grid', ...restProps } = props;
 
-  const { data, columns, getRowKey, visibilityState } = useTableCtx(Comp_Name);
+  const { data, columns, getRowKey, visibilityState } = useTableCtx(displayName);
 
   const styles = table({ variant });
 
@@ -73,4 +73,4 @@ export const Table = (props: TableProps) => {
   );
 };
 
-Table.displayName = 'Table';
+Table.displayName = displayName;

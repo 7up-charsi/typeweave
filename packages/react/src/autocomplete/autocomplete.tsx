@@ -56,6 +56,8 @@ type RenderOptionProps<Value> = {
   state: { disabled: boolean; selected: boolean; focused: boolean };
 };
 
+const displayName = 'Autocomplete';
+
 export type AutocompleteProps<Value, Multiple, DisableClearable> =
   (AutocompleteVariantProps &
     Omit<
@@ -592,7 +594,7 @@ const AutocompleteImpl = React.forwardRef<
   );
 });
 
-AutocompleteImpl.displayName = 'Autocomplete';
+AutocompleteImpl.displayName = displayName;
 
 export const Autocomplete = AutocompleteImpl as unknown as <
   Value extends object,

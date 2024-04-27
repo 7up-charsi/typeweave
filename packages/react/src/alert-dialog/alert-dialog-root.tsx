@@ -21,10 +21,10 @@ interface AlertDialogCtxProps {
   descriptionId: string;
 }
 
-const Comp_Name = 'AlertDialogRoot';
+const displayName = 'AlertDialogRoot';
 
 const [AlertDialogCtx, useAlertDialogCtx] =
-  createContextScope<AlertDialogCtxProps>(Comp_Name);
+  createContextScope<AlertDialogCtxProps>(displayName);
 
 export { useAlertDialogCtx };
 
@@ -102,4 +102,4 @@ export const AlertDialogRoot = React.forwardRef<
   );
 });
 
-AlertDialogRoot.displayName = 'AlertDialogRoot';
+AlertDialogRoot.displayName = displayName;

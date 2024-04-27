@@ -11,7 +11,7 @@ export const createCollection = <E extends HTMLElement, ItemData = object>(
 ) => {
   // *-*-*-*-* Provider *-*-*-*-*
 
-  const Provider_Name = `${name}.Collection.Provider`;
+  const ProviderDisplayName = `${name}.Collection.Provider`;
 
   interface CollectionContext {
     parentRef: React.RefObject<HTMLElement>;
@@ -19,7 +19,7 @@ export const createCollection = <E extends HTMLElement, ItemData = object>(
   }
 
   const [CollectionProvider, useCollectionContext] =
-    createContextScope<CollectionContext>(Provider_Name, {
+    createContextScope<CollectionContext>(ProviderDisplayName, {
       parentRef: { current: null },
       map: new Map(),
     });
@@ -38,24 +38,24 @@ export const createCollection = <E extends HTMLElement, ItemData = object>(
     );
   };
 
-  Provider.displayName = 'webbo-ui.' + Provider_Name;
+  Provider.displayName = ProviderDisplayName;
 
   // *-*-*-*-* Parent *-*-*-*-*
 
-  const Parent_Name = `${name}.Collection.Parent`;
+  const ParentDisplayName = `${name}.Collection.Parent`;
 
   const Parent = (props: ParentProps) => {
     const { children } = props;
-    const context = useCollectionContext(Parent_Name);
+    const context = useCollectionContext(ParentDisplayName);
 
     return <Slot ref={context.parentRef}>{children}</Slot>;
   };
 
-  Parent.displayName = Parent_Name;
+  Parent.displayName = ParentDisplayName;
 
   // *-*-*-*-* Item *-*-*-*-*
 
-  const Item_Name = `${name}.Collection.Item`;
+  const ItemDisplayName = `${name}.Collection.Item`;
 
   const DATA_ATTR = 'data-collection-item';
 
@@ -66,7 +66,7 @@ export const createCollection = <E extends HTMLElement, ItemData = object>(
   const Item = (props: ItemProps) => {
     const { children, ...itemData } = props;
 
-    const context = useCollectionContext(Item_Name);
+    const context = useCollectionContext(ItemDisplayName);
 
     const ref = React.useRef<E>(null);
 
@@ -85,7 +85,7 @@ export const createCollection = <E extends HTMLElement, ItemData = object>(
     );
   };
 
-  Item.displayName = 'webbo-ui.' + Item_Name;
+  Item.displayName = ItemDisplayName;
 
   // *-*-*-*-* useCollection *-*-*-*-*
 

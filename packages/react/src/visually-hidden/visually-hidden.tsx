@@ -4,6 +4,8 @@ export interface VisuallyHiddenProps {
   children?: React.ReactNode;
 }
 
+const displayName = 'VisuallyHidden';
+
 export const VisuallyHidden = (props: VisuallyHiddenProps) => {
   const { children } = props;
 
@@ -26,4 +28,4 @@ export const VisuallyHidden = (props: VisuallyHiddenProps) => {
   );
 };
 
-VisuallyHidden.displayName = 'VisuallyHidden';
+VisuallyHidden.displayName = displayName;

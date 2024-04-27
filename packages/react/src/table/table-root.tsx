@@ -44,9 +44,9 @@ interface RootContext {
   >[1];
 }
 
-const Comp_Name = 'TableRoot';
+const displayName = 'TableRoot';
 
-const [TableCtx, useTableCtx] = createContextScope<RootContext>(Comp_Name);
+const [TableCtx, useTableCtx] = createContextScope<RootContext>(displayName);
 
 export { useTableCtx };
 
@@ -101,7 +101,7 @@ const TableRootImpl = (props: TableRootProps) => {
   );
 };
 
-TableRootImpl.displayName = 'TableRoot';
+TableRootImpl.displayName = displayName;
 
 export const TableRoot = TableRootImpl as <R>(
   props: TableRootProps<R>,

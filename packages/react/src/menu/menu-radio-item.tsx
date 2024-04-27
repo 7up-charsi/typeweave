@@ -19,7 +19,7 @@ export interface MenuRadioItemProps
   disableCloseOnChange?: boolean;
 }
 
-const Comp_Name = 'MenuRadioItem';
+const displayName = 'MenuRadioItem';
 
 export const MenuRadioItem = React.forwardRef<
   HTMLLIElement,
@@ -36,9 +36,9 @@ export const MenuRadioItem = React.forwardRef<
     ...restProps
   } = props;
 
-  const styles = useMenuStyles(Comp_Name);
-  const menuCtx = useMenuCtx(Comp_Name);
-  const menuRadioGroupCtx = useMenuRadioGroupCtx(Comp_Name);
+  const styles = useMenuStyles(displayName);
+  const menuCtx = useMenuCtx(displayName);
+  const menuRadioGroupCtx = useMenuRadioGroupCtx(displayName);
 
   const checked = value === menuRadioGroupCtx.value;
 
@@ -97,4 +97,4 @@ export const MenuRadioItem = React.forwardRef<
   );
 });
 
-MenuRadioItem.displayName = 'MenuRadioItem';
+MenuRadioItem.displayName = displayName;

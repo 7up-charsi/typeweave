@@ -22,13 +22,13 @@ interface DisclosureCtxProps {
   value: string[];
 }
 
-const Comp_Name = 'DisclosureRoot';
+const displayName = 'DisclosureRoot';
 
 const [DisclosureCtx, useDisclosureCtx] =
-  createContextScope<DisclosureCtxProps>(Comp_Name);
+  createContextScope<DisclosureCtxProps>(displayName);
 
 const [DisclosureStyles, useDisclosureStyles] =
-  createContextScope<ReturnType<typeof disclosure>>(Comp_Name);
+  createContextScope<ReturnType<typeof disclosure>>(displayName);
 
 export { useDisclosureCtx, useDisclosureStyles };
 
@@ -84,4 +84,4 @@ export const DisclosureRoot = React.forwardRef<
   );
 });
 
-DisclosureRoot.displayName = Comp_Name;
+DisclosureRoot.displayName = displayName;

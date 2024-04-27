@@ -28,6 +28,8 @@ export interface AlertProps
   onClose?: () => void;
 }
 
+const displayName = 'Alert';
+
 export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   (props, ref) => {
     const {
@@ -72,4 +74,4 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   },
 );
 
-Alert.displayName = 'Alert';
+Alert.displayName = displayName;

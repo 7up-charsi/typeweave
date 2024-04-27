@@ -36,13 +36,13 @@ interface GroupCtxProps {
   exclusive: boolean;
 }
 
-const Comp_Name = 'ToggleButtonGroup';
+const displayName = 'ToggleButtonGroup';
 
 const [ToggleButtonCtx, useToggleButtonCtx] =
-  createContextScope<GroupCtxProps>(Comp_Name);
+  createContextScope<GroupCtxProps>(displayName);
 
 const [ToggleButtonStyles, useToggleButtonStyles] =
-  createContextScope<ReturnType<typeof toggleButton>>(Comp_Name);
+  createContextScope<ReturnType<typeof toggleButton>>(displayName);
 
 export { useToggleButtonCtx, useToggleButtonStyles };
 
@@ -66,13 +66,13 @@ export const ToggleButtonGroupImpl = (props: ToggleButtonGroupProps<false>) => {
 
   if (exclusive && Array.isArray(value))
     throw new CustomError(
-      Comp_Name,
+      displayName,
       '`value` must be `string`, when `exclusive` is true',
     );
 
   if (!exclusive && !Array.isArray(value))
     throw new CustomError(
-      Comp_Name,
+      displayName,
       '`value` must be `string[]`, when `exclusive` is false',
     );
 
@@ -87,7 +87,7 @@ export const ToggleButtonGroupImpl = (props: ToggleButtonGroupProps<false>) => {
   );
 };
 
-ToggleButtonGroupImpl.displayName = 'ToggleButtonGroup';
+ToggleButtonGroupImpl.displayName = displayName;
 
 export const ToggleButtonGroup = ToggleButtonGroupImpl as <
   Exclusive extends boolean = false,

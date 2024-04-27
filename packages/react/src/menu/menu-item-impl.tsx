@@ -15,7 +15,7 @@ export interface MenuItemImplProps
   icon?: React.ReactNode;
 }
 
-const Comp_Name = 'MenuItemImpl';
+const displayName = 'MenuItemImpl';
 
 export const MenuItemImpl = React.forwardRef<
   HTMLLIElement,
@@ -25,7 +25,7 @@ export const MenuItemImpl = React.forwardRef<
 
   const id = React.useId();
 
-  const menuContentCtx = useMenuContentCtx(Comp_Name);
+  const menuContentCtx = useMenuContentCtx(displayName);
 
   const isFocused = menuContentCtx.focused === id;
 
@@ -68,4 +68,4 @@ export const MenuItemImpl = React.forwardRef<
   );
 });
 
-MenuItemImpl.displayName = 'MenuItemImpl';
+MenuItemImpl.displayName = displayName;

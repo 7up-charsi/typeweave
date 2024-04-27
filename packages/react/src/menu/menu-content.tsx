@@ -18,13 +18,13 @@ interface MenuContentCtx {
   setFocused: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Comp_Name = 'MenuContent';
+const displayName = 'MenuContent';
 
 const [MenuContentCtx, useMenuContentCtx] =
-  createContextScope<MenuContentCtx>(Comp_Name);
+  createContextScope<MenuContentCtx>(displayName);
 
 const [MenuStyles, useMenuStyles] =
-  createContextScope<ReturnType<typeof menu>>(Comp_Name);
+  createContextScope<ReturnType<typeof menu>>(displayName);
 
 export { useMenuContentCtx, useMenuStyles };
 
@@ -52,7 +52,7 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
 
     const innerRef = React.useRef<HTMLUListElement>(null);
 
-    const menuCtx = useMenuCtx(Comp_Name);
+    const menuCtx = useMenuCtx(displayName);
 
     const [focused, setFocused] = React.useState('');
 
@@ -243,4 +243,4 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
   },
 );
 
-MenuContent.displayName = 'MenuContent';
+MenuContent.displayName = displayName;

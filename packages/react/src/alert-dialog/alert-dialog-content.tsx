@@ -12,10 +12,10 @@ export interface AlertDialogContentProps
   noA11yDescription?: boolean;
 }
 
-const Comp_Name = 'AlertDialogContent';
+const displayName = 'AlertDialogContent';
 
 const [AlertDialogStyles, useAlertDialogStyles] =
-  createContextScope<ReturnType<typeof alertDialog>>(Comp_Name);
+  createContextScope<ReturnType<typeof alertDialog>>(displayName);
 
 export { useAlertDialogStyles };
 
@@ -31,7 +31,7 @@ export const AlertDialogContent = React.forwardRef<
     ...restProps
   } = props;
 
-  const alertDialogCtx = useAlertDialogCtx(Comp_Name);
+  const alertDialogCtx = useAlertDialogCtx(displayName);
 
   useScrollLock();
 
@@ -63,4 +63,4 @@ export const AlertDialogContent = React.forwardRef<
   );
 });
 
-AlertDialogContent.displayName = 'AlertDialogContent';
+AlertDialogContent.displayName = displayName;

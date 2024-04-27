@@ -10,9 +10,9 @@ export interface PopperCtxProps {
   setReference: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
 }
 
-const Comp_Name = 'PopperRoot';
+const displayName = 'PopperRoot';
 
-const [PopperCtx, usePopperCtx] = createContextScope<PopperCtxProps>(Comp_Name);
+const [PopperCtx, usePopperCtx] = createContextScope<PopperCtxProps>(displayName);
 
 export { usePopperCtx };
 
@@ -28,4 +28,4 @@ export const PopperRoot = (props: PopperRootProps) => {
   );
 };
 
-PopperRoot.displayName = 'PopperRoot';
+PopperRoot.displayName = displayName;

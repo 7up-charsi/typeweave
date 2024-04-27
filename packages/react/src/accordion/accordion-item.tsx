@@ -16,10 +16,10 @@ interface AccordionItemCtxProps {
   disabled?: boolean;
 }
 
-const Comp_Name = 'AccordionItem';
+const displayName = 'AccordionItem';
 
 const [AccordionItemCtx, useAccordionItemCtx] =
-  createContextScope<AccordionItemCtxProps>(Comp_Name);
+  createContextScope<AccordionItemCtxProps>(displayName);
 
 export { useAccordionItemCtx };
 
@@ -29,8 +29,8 @@ export const AccordionItem = React.forwardRef<
 >((props, ref) => {
   const { value, className, disabled, ...restProps } = props;
 
-  const accordionCtx = useAccordionCtx(Comp_Name);
-  const styles = useAccordionStyles(Comp_Name);
+  const accordionCtx = useAccordionCtx(displayName);
+  const styles = useAccordionStyles(displayName);
 
   const triggerId = React.useId();
   const contentId = React.useId();
@@ -59,4 +59,4 @@ export const AccordionItem = React.forwardRef<
   );
 });
 
-AccordionItem.displayName = Comp_Name;
+AccordionItem.displayName = displayName;

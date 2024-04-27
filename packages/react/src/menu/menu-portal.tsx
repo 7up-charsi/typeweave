@@ -6,15 +6,15 @@ export interface MenuPortalProps {
   container?: Element;
 }
 
-const Comp_Name = 'MenuPortal';
+const displayName = 'MenuPortal';
 
 export const MenuPortal = ({
   children,
   container = globalThis?.document?.body,
 }: MenuPortalProps) => {
-  const menuCtx = useMenuCtx(Comp_Name);
+  const menuCtx = useMenuCtx(displayName);
 
   return <>{menuCtx.isOpen && createPortal(children, container)}</>;
 };
 
-MenuPortal.displayName = 'MenuPortal';
+MenuPortal.displayName = displayName;

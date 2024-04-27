@@ -16,10 +16,10 @@ interface DisclosureItemCtxProps {
   disabled?: boolean;
 }
 
-const Comp_Name = 'DisclosureItem';
+const displayName = 'DisclosureItem';
 
 const [DisclosureItemCtx, useDisclosureItemCtx] =
-  createContextScope<DisclosureItemCtxProps>(Comp_Name);
+  createContextScope<DisclosureItemCtxProps>(displayName);
 
 export { useDisclosureItemCtx };
 
@@ -29,8 +29,8 @@ export const DisclosureItem = React.forwardRef<
 >((props, ref) => {
   const { value, className, disabled, ...restProps } = props;
 
-  const disclosureCtx = useDisclosureCtx(Comp_Name);
-  const styles = useDisclosureStyles(Comp_Name);
+  const disclosureCtx = useDisclosureCtx(displayName);
+  const styles = useDisclosureStyles(displayName);
 
   const triggerId = React.useId();
   const contentId = React.useId();
@@ -55,4 +55,4 @@ export const DisclosureItem = React.forwardRef<
   );
 });
 
-DisclosureItem.displayName = Comp_Name;
+DisclosureItem.displayName = displayName;

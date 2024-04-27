@@ -10,6 +10,8 @@ export interface BadgeProps
   showZero?: boolean;
 }
 
+const displayName = 'Badge';
+
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   (props, ref) => {
     const {
@@ -54,4 +56,4 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   },
 );
 
-Badge.displayName = 'Badge';
+Badge.displayName = displayName;

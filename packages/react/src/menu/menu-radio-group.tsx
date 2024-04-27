@@ -12,10 +12,10 @@ interface MenuRadioGroupCtxProps {
   value?: string;
 }
 
-const Comp_Name = 'MenuRadioGroup';
+const displayName = 'MenuRadioGroup';
 
 const [MenuRadioGroupCtx, useMenuRadioGroupCtx] =
-  createContextScope<MenuRadioGroupCtxProps>(Comp_Name);
+  createContextScope<MenuRadioGroupCtxProps>(displayName);
 
 export { useMenuRadioGroupCtx };
 
@@ -31,4 +31,4 @@ export const MenuRadioGroup = (props: MenuRadioGroupProps) => {
   );
 };
 
-MenuRadioGroup.displayName = 'MenuRadioGroup';
+MenuRadioGroup.displayName = displayName;

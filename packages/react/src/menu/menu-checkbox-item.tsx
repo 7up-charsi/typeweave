@@ -18,7 +18,7 @@ export interface MenuCheckboxItemProps
   icon?: React.ReactNode;
 }
 
-const Comp_Name = 'MenuCheckboxItem';
+const displayName = 'MenuCheckboxItem';
 
 export const MenuCheckboxItem = React.forwardRef<
   HTMLLIElement,
@@ -36,8 +36,8 @@ export const MenuCheckboxItem = React.forwardRef<
     ...restProps
   } = props;
 
-  const menuCtx = useMenuCtx(Comp_Name);
-  const styles = useMenuStyles(Comp_Name);
+  const menuCtx = useMenuCtx(displayName);
+  const styles = useMenuStyles(displayName);
 
   return (
     <MenuItemImpl
@@ -88,4 +88,4 @@ export const MenuCheckboxItem = React.forwardRef<
   );
 });
 
-MenuCheckboxItem.displayName = 'MenuCheckboxItem';
+MenuCheckboxItem.displayName = displayName;

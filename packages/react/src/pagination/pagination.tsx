@@ -46,6 +46,8 @@ export interface PaginationProps
 const range = (start: number, end: number) =>
   Array.from({ length: end - start + 1 }, (_, i) => start + i);
 
+const displayName = 'Pagination';
+
 export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
   (props, ref) => {
     const {
@@ -251,4 +253,4 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
   },
 );
 
-Pagination.displayName = 'Pagination';
+Pagination.displayName = displayName;

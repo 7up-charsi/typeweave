@@ -22,6 +22,8 @@ export interface NumberInputProps extends Omit<InputProps<false>, 'type'> {
   threshold?: number;
 }
 
+const displayName = 'NumberInput';
+
 export const NumberInput = React.forwardRef<HTMLDivElement, NumberInputProps>(
   (props, ref) => {
     const {
@@ -332,4 +334,4 @@ export const NumberInput = React.forwardRef<HTMLDivElement, NumberInputProps>(
   },
 );
 
-NumberInput.displayName = 'NumberInput';
+NumberInput.displayName = displayName;

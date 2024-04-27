@@ -10,7 +10,7 @@ export interface DialogTriggerProps
   virtualElement?: HTMLElement | null;
 }
 
-const Comp_Name = 'DialogTrigger';
+const displayName = 'DialogTrigger';
 
 export const DialogTrigger = React.forwardRef<
   HTMLButtonElement,
@@ -18,7 +18,7 @@ export const DialogTrigger = React.forwardRef<
 >((props, ref) => {
   const { virtualElement, virtual, ...restProps } = props;
 
-  const dialogCtx = useDialogCtx(Comp_Name);
+  const dialogCtx = useDialogCtx(displayName);
 
   const pointerEvents = usePointerEvents({ onPress: dialogCtx.handleOpen });
 
@@ -70,4 +70,4 @@ export const DialogTrigger = React.forwardRef<
   );
 });
 
-DialogTrigger.displayName = Comp_Name;
+DialogTrigger.displayName = displayName;

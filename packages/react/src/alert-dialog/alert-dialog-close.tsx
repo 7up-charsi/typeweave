@@ -5,7 +5,7 @@ import { useAlertDialogCtx } from './alert-dialog-root';
 export interface AlertDialogCloseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-const Comp_Name = 'AlertDialogClose';
+const displayName = 'AlertDialogClose';
 
 export const AlertDialogClose = React.forwardRef<
   HTMLButtonElement,
@@ -13,9 +13,9 @@ export const AlertDialogClose = React.forwardRef<
 >((props, ref) => {
   const { ...restProps } = props;
 
-  const alertDialogCtx = useAlertDialogCtx(Comp_Name);
+  const alertDialogCtx = useAlertDialogCtx(displayName);
 
   return <Slot {...restProps} onPress={alertDialogCtx.handleClose} ref={ref} />;
 });
 
-AlertDialogClose.displayName = 'AlertDialogClose';
+AlertDialogClose.displayName = displayName;

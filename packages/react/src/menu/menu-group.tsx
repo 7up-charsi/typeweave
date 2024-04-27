@@ -9,13 +9,13 @@ export interface MenuGroupProps extends React.HTMLAttributes<HTMLUListElement> {
   };
 }
 
-const Comp_Name = 'MenuGroup';
+const displayName = 'MenuGroup';
 
 export const MenuGroup = React.forwardRef<HTMLUListElement, MenuGroupProps>(
   (props, ref) => {
     const { className, classNames, label, ...restProps } = props;
 
-    const styles = useMenuStyles(Comp_Name);
+    const styles = useMenuStyles(displayName);
 
     return (
       <li role="none">
@@ -39,4 +39,4 @@ export const MenuGroup = React.forwardRef<HTMLUListElement, MenuGroupProps>(
   },
 );
 
-MenuGroup.displayName = 'MenuGroup';
+MenuGroup.displayName = displayName;

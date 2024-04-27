@@ -11,10 +11,10 @@ interface SelectRowCtxProps {
   rows: React.MutableRefObject<string[]>;
 }
 
-const Comp_Name = 'TableSelectRowRoot';
+const displayName = 'TableSelectRowRoot';
 
 const [SelectRowCtx, useSelectRowCtx] =
-  createContextScope<SelectRowCtxProps>(Comp_Name);
+  createContextScope<SelectRowCtxProps>(displayName);
 
 export { useSelectRowCtx };
 
@@ -31,4 +31,4 @@ export const TableSelectRowRoot = (props: TableSelectRowRootProps) => {
   );
 };
 
-TableSelectRowRoot.displayName = 'TableSelectRowRoot';
+TableSelectRowRoot.displayName = displayName;

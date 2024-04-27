@@ -12,6 +12,8 @@ export interface RadioProps
   checkedIcon?: React.ReactNode;
 }
 
+const displayName = 'Radio';
+
 export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
   (props, ref) => {
     const {
@@ -72,4 +74,4 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
   },
 );
 
-Radio.displayName = 'Radio';
+Radio.displayName = displayName;

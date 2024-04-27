@@ -18,10 +18,10 @@ export interface PopoverContentProps
   trapped?: boolean;
 }
 
-const Comp_Name = 'PopoverContent';
+const displayName = 'PopoverContent';
 
 const [PopoverStyles, usePopoverStyles] =
-  createContextScope<ReturnType<typeof popover>>(Comp_Name);
+  createContextScope<ReturnType<typeof popover>>(displayName);
 
 export { usePopoverStyles };
 
@@ -53,7 +53,7 @@ export const PopoverContent = React.forwardRef<
     ...restProps
   } = props;
 
-  const popoverCtx = usePopoverCtx(Comp_Name);
+  const popoverCtx = usePopoverCtx(displayName);
 
   const setOutsideEle = useClickOutside({
     callback: (e) => {
@@ -111,4 +111,4 @@ export const PopoverContent = React.forwardRef<
   );
 });
 
-PopoverContent.displayName = 'PopoverContent';
+PopoverContent.displayName = displayName;

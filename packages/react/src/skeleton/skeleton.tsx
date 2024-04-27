@@ -7,6 +7,8 @@ export interface SkeletonProps
   extends SkeletonVariantProps,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {}
 
+const displayName = 'Skeleton';
+
 export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
   (props, ref) => {
     const {
@@ -22,4 +24,4 @@ export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
   },
 );
 
-Skeleton.displayName = 'Skeleton';
+Skeleton.displayName = displayName;
