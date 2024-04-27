@@ -4,8 +4,6 @@ import {
   SwitchVariantProps,
   switch as switchStyles,
 } from '@webbo-ui/theme';
-import { Icon } from '../icon';
-import { checked_icon, cross_icon } from './icons';
 
 export interface SwitchProps
   extends SwitchVariantProps,
@@ -25,8 +23,8 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
       className,
       label,
       id: idProp,
-      icon = <Icon>{cross_icon}</Icon>,
-      checkedIcon = <Icon>{checked_icon}</Icon>,
+      icon,
+      checkedIcon,
       size = 'md',
       color = 'primary',
       labelPlacement = 'right',

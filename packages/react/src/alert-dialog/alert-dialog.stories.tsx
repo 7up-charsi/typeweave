@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from '../button';
-import { Icon } from '../icon';
 import {
   AlertDialogActions,
   AlertDialogClose,
@@ -13,6 +12,7 @@ import {
   AlertDialogPortal,
   AlertDialogOverlay,
 } from './';
+import { XIcon } from 'lucide-react';
 
 const meta = {
   title: 'Components/AlertDialog',
@@ -132,21 +132,7 @@ const ProgrammaticallyTemplate = () => {
               classNames={{ content: 'text-xs' }}
               onPress={ref.current?.onClose}
             >
-              <Icon>
-                <svg fill="none" viewBox="0 0 24 24">
-                  <g>
-                    <g>
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M21 21l-9-9m0 0L3 3m9 9l9-9m-9 9l-9 9"
-                      ></path>
-                    </g>
-                  </g>
-                </svg>
-              </Icon>
+              <XIcon />
             </Button>
 
             <AlertDialogTitle>Are your sure...?</AlertDialogTitle>

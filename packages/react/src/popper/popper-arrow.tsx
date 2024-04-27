@@ -1,9 +1,12 @@
 import React from 'react';
 import { useArrowCtx } from './popper-floating';
 import { Side } from '@floating-ui/react-dom';
+import { Slot } from '../slot';
 
 export interface PopperArrowProps
-  extends Omit<React.SVGAttributes<SVGSVGElement>, 'children'> {}
+  extends Omit<React.SVGAttributes<SVGSVGElement>, 'children'> {
+  icon?: React.ReactNode;
+}
 
 const displayName = 'PopperArrow';
 
@@ -16,6 +19,8 @@ const OPPOSITE_SIDE: Record<Side, Side> = {
 
 export const PopperArrow = React.forwardRef<SVGSVGElement, PopperArrowProps>(
   (props, ref) => {
+    const { icon, ...restProps } = props;
+
     const arrowCtx = useArrowCtx(displayName);
     const baseSide = OPPOSITE_SIDE[arrowCtx.side];
 
@@ -42,17 +47,22 @@ export const PopperArrow = React.forwardRef<SVGSVGElement, PopperArrowProps>(
           visibility: arrowCtx.shouldHideArrow ? 'hidden' : 'visible',
         }}
       >
-        <svg
-          {...props}
-          width={props.width || 9}
-          height={props.height || 5}
+        <Slot
           ref={ref}
-          viewBox="0 0 30 10"
-          preserveAspectRatio="none"
+          {...restProps}
           style={{ ...props.style, fill: 'var(--arrowFill)' }}
         >
-          <polygon points="0,0 30,0 15,10" />
-        </svg>
+          {icon ?? (
+            <svg
+              width={11}
+              height={7}
+              viewBox="0 0 30 10"
+              preserveAspectRatio="none"
+            >
+              <polygon points="0,0 30,0 15,10" />
+            </svg>
+          )}
+        </Slot>
       </span>
     );
   },

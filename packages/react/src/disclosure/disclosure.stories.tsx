@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button } from '../button';
-import { Icon } from '../icon';
 import {
   DisclosureContent,
   DisclosureItem,
   DisclosureRoot,
   DisclosureTrigger,
 } from './';
+import { ChevronDownIcon } from 'lucide-react';
 
 const meta = {
   title: 'Components/Disclosure',
@@ -28,25 +28,7 @@ const Template = (args) => (
 
             <DisclosureTrigger className="group ml-auto" disabled={i === 7}>
               <Button isIconOnly aria-label="expand" size="sm">
-                <Icon>
-                  <svg
-                    className="transition-transform rotate-0 group-data-[expanded=true]:-rotate-180"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="1.5em"
-                    height="1.5em"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m8 10 4 4 4-4"
-                    />
-                  </svg>
-                </Icon>
+                <ChevronDownIcon className="transition-transform rotate-0 group-data-[expanded=true]:-rotate-180" />
               </Button>
             </DisclosureTrigger>
           </div>

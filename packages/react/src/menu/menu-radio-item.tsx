@@ -3,7 +3,6 @@ import { useMenuStyles } from './menu-content';
 import { useMenuCtx } from './menu-root';
 import { useMenuRadioGroupCtx } from './menu-radio-group';
 import { MenuItemImpl } from './menu-item-impl';
-import { Icon } from '../icon';
 
 export interface MenuRadioItemProps
   extends React.LiHTMLAttributes<HTMLLIElement> {
@@ -18,6 +17,23 @@ export interface MenuRadioItemProps
   icon?: React.ReactNode;
   disableCloseOnChange?: boolean;
 }
+
+const dotIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="lucide lucide-dot"
+  >
+    <circle cx="12.1" cy="12.1" r="4" fill="currentColor" />
+  </svg>
+);
 
 const displayName = 'MenuRadioItem';
 
@@ -63,27 +79,7 @@ export const MenuRadioItem = React.forwardRef<
           className: classNames?.itemIcon,
         })}
       >
-        {!checked
-          ? null
-          : icon ?? (
-              <Icon>
-                <svg fill="none" viewBox="0 0 48 48">
-                  <g>
-                    <path
-                      fill="#fff"
-                      fillOpacity="0.01"
-                      d="M0 0H48V48H0z"
-                    ></path>
-                    <path
-                      fill="currentColor"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      d="M24 33a9 9 0 100-18 9 9 0 000 18z"
-                    ></path>
-                  </g>
-                </svg>
-              </Icon>
-            )}
+        {!checked ? null : icon ?? dotIcon}
       </span>
 
       <span

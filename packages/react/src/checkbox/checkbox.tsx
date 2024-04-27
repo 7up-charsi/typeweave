@@ -4,9 +4,8 @@ import {
   checkbox,
 } from '@webbo-ui/theme';
 import { mergeRefs } from '@webbo-ui/react-utils';
-import { Icon } from '../icon';
 import React from 'react';
-import { checked_icon, indeterminate_icon } from './icons';
+import { Check, Minus } from 'lucide-react';
 
 export interface CheckboxProps
   extends CheckboxVariantProps,
@@ -31,8 +30,8 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
       checked,
       indeterminate,
       icon,
-      checkedIcon = <Icon>{checked_icon}</Icon>,
-      indeterminateIcon = <Icon>{indeterminate_icon}</Icon>,
+      checkedIcon = <Check />,
+      indeterminateIcon = <Minus />,
       size = 'md',
       color = 'primary',
       labelPlacement = 'right',

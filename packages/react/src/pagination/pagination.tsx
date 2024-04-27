@@ -6,14 +6,13 @@ import {
 import React from 'react';
 import { useControllableState } from '../use-controllable-state';
 import { Button, ButtonProps } from '../button';
-import { Icon } from '../icon';
 import {
-  ellipsis_icon,
-  first_icon,
-  last_icon,
-  next_icon,
-  prev_icon,
-} from './icons';
+  Ellipsis,
+  ChevronFirst,
+  ChevronLast,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 
 export interface PaginationProps
   extends PaginationVariantProps,
@@ -62,10 +61,10 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
       showLastButton = true,
       showPreviousButton = true,
       showNextButton = true,
-      firstButtonIcon = <Icon>{first_icon}</Icon>,
-      lastButtonIcon = <Icon>{last_icon}</Icon>,
-      previousButtonIcon = <Icon>{prev_icon}</Icon>,
-      nextButtonIcon = <Icon>{next_icon}</Icon>,
+      firstButtonIcon = <ChevronFirst />,
+      lastButtonIcon = <ChevronLast />,
+      previousButtonIcon = <ChevronLeft />,
+      nextButtonIcon = <ChevronRight />,
       firstPageA11yLabel = 'first page',
       lastPageA11yLabel = 'last page',
       nextPageA11yLabel = 'next page',
@@ -186,7 +185,7 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
                     asChild
                   >
                     <div>
-                      <Icon>{ellipsis_icon}</Icon>
+                      <Ellipsis />
                     </div>
                   </Button>
                 </li>

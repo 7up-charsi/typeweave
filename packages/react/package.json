@@ -36,7 +36,8 @@
     "@floating-ui/react-dom": "^2.0.8",
     "@webbo-ui/react-utils": "workspace:*",
     "@webbo-ui/theme": "workspace:*",
-    "lodash.groupby": "^4.6.0"
+    "lodash.groupby": "^4.6.0",
+    "lucide-react": "^0.376.0"
   },
   "devDependencies": {
     "@types/lodash.groupby": "^4.6.9",
@@ -46,4 +47,3 @@
     "extends": "../../../../../../clean-package.config.json"
   }
 }
-
