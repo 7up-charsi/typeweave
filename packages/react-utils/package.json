@@ -30,7 +30,7 @@
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
-    "prepublish": "pnpm build"
+    "prepublish": "pnpm typecheck"
   },
   "peerDependencies": {
     "react": ">=18",

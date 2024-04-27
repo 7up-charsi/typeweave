@@ -30,7 +30,7 @@
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
-    "prepublish": "pnpm build"
+    "prepublish": "pnpm typecheck"
   },
   "peerDependencies": {
     "tailwindcss": "^3.3.3"
@@ -52,3 +52,4 @@
     "extends": "../../../../../../clean-package.config.json"
   }
 }
+
