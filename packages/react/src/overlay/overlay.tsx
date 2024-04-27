@@ -11,7 +11,10 @@ export const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
   (props, ref) => {
     const { className, variant = 'opaque', ...restProps } = props;
 
-    const styles = overlay({ variant, className });
+    const styles = React.useMemo(
+      () => overlay({ variant, className }),
+      [className, variant],
+    );
 
     return <div {...restProps} ref={ref} className={styles} />;
   },

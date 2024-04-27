@@ -33,7 +33,10 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
     const autoId = React.useId();
     const id = idProp ?? autoId;
 
-    const styles = radio({ labelPlacement, color, size });
+    const styles = React.useMemo(
+      () => radio({ labelPlacement, color, size }),
+      [color, labelPlacement, size],
+    );
 
     return (
       <div

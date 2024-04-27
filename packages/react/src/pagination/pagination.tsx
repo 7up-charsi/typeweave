@@ -106,7 +106,7 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
       endPages.length > 0 ? endPages[0] - 2 : count - 1,
     );
 
-    const styles = pagination({});
+    const styles = React.useMemo(() => pagination({}), []);
 
     const buttonProps = {
       size,

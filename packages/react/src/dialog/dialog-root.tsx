@@ -35,7 +35,8 @@ export interface DialogRootMethods {
 
 const displayName = 'DialogRoot';
 
-const [DialogCtx, useDialogCtx] = createContextScope<DialogCtxProps>(displayName);
+const [DialogCtx, useDialogCtx] =
+  createContextScope<DialogCtxProps>(displayName);
 
 export { useDialogCtx };
 

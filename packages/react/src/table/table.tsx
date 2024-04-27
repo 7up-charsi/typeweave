@@ -1,5 +1,6 @@
 import { TableClassNames, TableVariantProps, table } from '@webbo-ui/theme';
 import { useTableCtx } from './table-root';
+import React from 'react';
 
 export interface TableProps
   extends TableVariantProps,
@@ -12,9 +13,10 @@ const displayName = 'Table';
 export const Table = (props: TableProps) => {
   const { classNames, className, variant = 'grid', ...restProps } = props;
 
-  const { data, columns, getRowKey, visibilityState } = useTableCtx(displayName);
+  const { data, columns, getRowKey, visibilityState } =
+    useTableCtx(displayName);
 
-  const styles = table({ variant });
+  const styles = React.useMemo(() => table({ variant }), [variant]);
 
   return (
     data &&

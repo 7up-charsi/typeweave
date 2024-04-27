@@ -12,7 +12,8 @@ export interface PopperCtxProps {
 
 const displayName = 'PopperRoot';
 
-const [PopperCtx, usePopperCtx] = createContextScope<PopperCtxProps>(displayName);
+const [PopperCtx, usePopperCtx] =
+  createContextScope<PopperCtxProps>(displayName);
 
 export { usePopperCtx };
 

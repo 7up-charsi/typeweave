@@ -53,7 +53,10 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
       }
     };
 
-    const styles = chip({ color, size, variant });
+    const styles = React.useMemo(
+      () => chip({ color, size, variant }),
+      [color, size, variant],
+    );
 
     const ariaLabel = props['aria-label'];
     const ariaLabelledby = props['aria-labelledby'];

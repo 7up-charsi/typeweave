@@ -69,14 +69,18 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       }, [ariaLabel, ariaLabelledby, isIconOnly]);
     }
 
-    const styles = button({
-      isIconOnly,
-      size: size ?? groupContext?.size ?? 'md',
-      variant: variant ?? groupContext?.variant ?? 'flat',
-      color: color ?? groupContext?.color ?? 'default',
-      fullWidth: fullWidth ?? false,
-      isInGroup: !!groupContext,
-    });
+    const styles = React.useMemo(
+      () =>
+        button({
+          isIconOnly,
+          size: size ?? groupContext?.size ?? 'md',
+          variant: variant ?? groupContext?.variant ?? 'flat',
+          color: color ?? groupContext?.color ?? 'default',
+          fullWidth: fullWidth ?? false,
+          isInGroup: !!groupContext,
+        }),
+      [color, fullWidth, groupContext, isIconOnly, size, variant],
+    );
 
     const __startContent = !isIconOnly && !!startContent && (
       <span

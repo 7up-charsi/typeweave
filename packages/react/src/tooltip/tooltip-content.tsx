@@ -37,7 +37,7 @@ export const TooltipContent = React.forwardRef<
 
   const context = useTooltipCtx(displayName);
 
-  const styles = tooltip({ className });
+  const styles = React.useMemo(() => tooltip({ className }), [className]);
 
   return (
     <PopperFloating

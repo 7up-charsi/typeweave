@@ -7,6 +7,8 @@ import {
   TableSelectAllRows,
   TableSelectRow,
   TableColumnVisibility,
+  TableSelectRowRoot,
+  Table,
 } from './';
 
 const meta = {
@@ -90,9 +92,9 @@ const Template = () => {
           </TableColumnVisibility>
         </div>
 
-        <TableSelectRowProvider>
-          <TableTable variant="strip" />
-        </TableSelectRowProvider>
+        <TableSelectRowRoot>
+          <Table variant="strip" />
+        </TableSelectRowRoot>
       </div>
     </TableRoot>
   );

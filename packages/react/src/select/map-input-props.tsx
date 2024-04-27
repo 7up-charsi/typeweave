@@ -3,6 +3,7 @@ import { SelectRenderInputProps } from './select';
 import { SelectInputClassNames, selectInput } from '@webbo-ui/theme';
 import { type InputProps } from '../input';
 import { Icon } from '../icon';
+import React from 'react';
 
 const clear_svg = (
   <svg

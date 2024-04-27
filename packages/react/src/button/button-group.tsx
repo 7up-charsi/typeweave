@@ -33,7 +33,10 @@ export const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
       ...rest
     } = props;
 
-    const styles = buttonGroup({ direction, className });
+    const styles = React.useMemo(
+      () => buttonGroup({ direction, className }),
+      [className, direction],
+    );
 
     return (
       <GroupCtx.Provider
