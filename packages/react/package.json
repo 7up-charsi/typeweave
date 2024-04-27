@@ -28,9 +28,10 @@
     "build": "tsup",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
+    "auto-imports": "tsx ./scripts/auto-imports.ts",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
-    "prepublish": "pnpm build"
+    "prepublish": "pnpm auto-imports && pnpm typecheck"
   },
   "dependencies": {
     "@floating-ui/react-dom": "^2.0.8",
@@ -47,3 +48,4 @@
     "extends": "../../../../../../clean-package.config.json"
   }
 }
+
