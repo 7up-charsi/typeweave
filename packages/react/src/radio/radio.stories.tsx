@@ -1,11 +1,9 @@
 import React from 'react';
-import { radio } from '@webbo-ui/theme';
 import { Radio, RadioProps } from './';
 
 const meta = {
   title: 'Components/Radio',
   component: Radio,
-  args: radio.defaultVariants,
 };
 
 export default meta;

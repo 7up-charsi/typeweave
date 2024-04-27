@@ -1,0 +1,96 @@
+import { ToggleButtonVariantProps, toggleButton } from '@webbo-ui/theme';
+import { createContextScope } from '../context';
+import { ButtonGroup, ButtonGroupProps } from '../button';
+import React from 'react';
+import { useControllableState } from '../use-controllable-state';
+import { CustomError } from '../custom-error';
+
+export type ToggleButtonGroupProps<Exclusive> = ToggleButtonVariantProps &
+  Omit<ButtonGroupProps, 'variant'> &
+  (Exclusive extends true
+    ? {
+        exclusive: Exclusive;
+        value?: string | null;
+        defaultValue?: string;
+        onChange?: (
+          event: { target: { value: string | null } },
+          value: string | null,
+        ) => void;
+      }
+    : {
+        exclusive?: Exclusive;
+        value?: string[];
+        defaultValue?: string[];
+        onChange?: (
+          event: { target: { value: string[] } },
+          value: string[],
+        ) => void;
+      });
+
+interface GroupCtxProps {
+  value: string | null | string[];
+  setValue: (
+    next: React.SetStateAction<string | null | string[]>,
+    payload?: unknown,
+  ) => void;
+  exclusive: boolean;
+}
+
+const Comp_Name = 'ToggleButtonGroup';
+
+const [ToggleButtonCtx, useToggleButtonCtx] =
+  createContextScope<GroupCtxProps>(Comp_Name);
+
+const [ToggleButtonStyles, useToggleButtonStyles] =
+  createContextScope<ReturnType<typeof toggleButton>>(Comp_Name);
+
+export { useToggleButtonCtx, useToggleButtonStyles };
+
+export const ToggleButtonGroupImpl = (props: ToggleButtonGroupProps<false>) => {
+  const {
+    exclusive,
+    value: valueProp,
+    onChange,
+    color = 'default',
+    defaultValue,
+    ...restProps
+  } = props;
+
+  const [value, setValue] = useControllableState<string | null | string[]>({
+    defaultValue: exclusive ? defaultValue ?? null : defaultValue ?? [],
+    value: valueProp,
+    onChange: (value) => {
+      onChange?.({ target: { value } } as never, value as never);
+    },
+  });
+
+  if (exclusive && Array.isArray(value))
+    throw new CustomError(
+      Comp_Name,
+      '`value` must be `string`, when `exclusive` is true',
+    );
+
+  if (!exclusive && !Array.isArray(value))
+    throw new CustomError(
+      Comp_Name,
+      '`value` must be `string[]`, when `exclusive` is false',
+    );
+
+  const styles = React.useMemo(() => toggleButton({ color }), [color]);
+
+  return (
+    <ToggleButtonCtx value={value} setValue={setValue} exclusive={!!exclusive}>
+      <ToggleButtonStyles {...styles}>
+        <ButtonGroup {...restProps} color={color} variant="border" />
+      </ToggleButtonStyles>
+    </ToggleButtonCtx>
+  );
+};
+
+ToggleButtonGroupImpl.displayName = 'ToggleButtonGroup';
+
+export const ToggleButtonGroup = ToggleButtonGroupImpl as <
+  Exclusive extends boolean = false,
+>(
+  props: ToggleButtonGroupProps<Exclusive>,
+) => React.ReactNode;

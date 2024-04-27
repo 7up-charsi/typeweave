@@ -1,23 +1,25 @@
 import React from 'react';
-import { table } from '@webbo-ui/theme';
 import { Button } from '../button';
 import { Checkbox } from '../checkbox';
 import { Icon } from '../icon';
-
-import * as Table from './';
+import {
+  TableRoot,
+  TableSelectAllRows,
+  TableSelectRow,
+  TableColumnVisibility,
+} from './';
 
 const meta = {
   title: 'Components/Table',
-  args: table.defaultVariants,
 };
 
 export default meta;
 
 const Template = () => {
-  const selectedRows = React.useRef({});
+  const selectedRows = React.useRef<Record<string, string>>({});
 
   return (
-    <Table.Root
+    <TableRoot
       getRowKey={(row) => row.id}
       data={Array.from({ length: 25 }).map((_, i) => ({ id: i + '' }))}
       columns={[
@@ -25,7 +27,7 @@ const Template = () => {
           accessor: (row) => row.id,
           header: (data) => (
             <div className="flex items-center justify-center">
-              <Table.SelectAllRows>
+              <TableSelectAllRows>
                 <Checkbox
                   onChange={(e) => {
                     const checked = e.target.checked;
@@ -38,20 +40,20 @@ const Template = () => {
                     else selectedRows.current = {};
                   }}
                 />
-              </Table.SelectAllRows>
+              </TableSelectAllRows>
             </div>
           ),
           identifier: 'select-row',
           cell: (val) => (
             <div className="flex items-center justify-center">
-              <Table.SelectRow>
+              <TableSelectRow>
                 <Checkbox
                   onChange={(e) => {
                     const checked = e.target.checked;
                     selectedRows.current[val] = checked;
                   }}
                 />
-              </Table.SelectRow>
+              </TableSelectRow>
             </div>
           ),
           visibilityTitle: 'select',
@@ -68,7 +70,7 @@ const Template = () => {
           <span className="text-muted-11 font-medium">Data table</span>
           <span className="grow"></span>
 
-          <Table.ColumnVisibility tableIdentifier="demo_table">
+          <TableColumnVisibility tableIdentifier="demo_table">
             <Button isIconOnly aria-label="column visibility">
               <Icon>
                 <svg
@@ -85,14 +87,14 @@ const Template = () => {
                 </svg>
               </Icon>
             </Button>
-          </Table.ColumnVisibility>
+          </TableColumnVisibility>
         </div>
 
-        <Table.SelectRowProvider>
-          <Table.Table variant="strip" />
-        </Table.SelectRowProvider>
+        <TableSelectRowProvider>
+          <TableTable variant="strip" />
+        </TableSelectRowProvider>
       </div>
-    </Table.Root>
+    </TableRoot>
   );
 };
 

@@ -5,34 +5,7 @@ import {
   switch as switchStyles,
 } from '@webbo-ui/theme';
 import { Icon } from '../icon';
-
-const icon_svg = (
-  <Icon>
-    <svg fill="none" viewBox="0 0 24 24">
-      <path
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M6 18 18 6m0 12L6 6"
-      />
-    </svg>
-  </Icon>
-);
-
-const checked_svg = (
-  <Icon>
-    <svg fill="none" viewBox="0 0 24 24">
-      <path
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="m5 12 4.7 4.5 9.3-9"
-      />
-    </svg>
-  </Icon>
-);
+import { checked_icon, cross_icon } from './icons';
 
 export interface SwitchProps
   extends SwitchVariantProps,
@@ -43,54 +16,58 @@ export interface SwitchProps
   checkedIcon?: React.ReactNode;
 }
 
-const Switch = React.forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
-  const {
-    classNames,
-    className,
-    label,
-    id: idProp,
-    icon = icon_svg,
-    checkedIcon = checked_svg,
-    size = 'md',
-    color = 'primary',
-    labelPlacement = 'right',
-    ...restProps
-  } = props;
+export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
+  (props, ref) => {
+    const {
+      classNames,
+      className,
+      label,
+      id: idProp,
+      icon = <Icon>{cross_icon}</Icon>,
+      checkedIcon = <Icon>{checked_icon}</Icon>,
+      size = 'md',
+      color = 'primary',
+      labelPlacement = 'right',
+      ...restProps
+    } = props;
 
-  const autoId = React.useId();
-  const id = idProp ?? autoId;
+    const autoId = React.useId();
+    const id = idProp ?? autoId;
 
-  const styles = switchStyles({ size, labelPlacement, color });
+    const styles = switchStyles({ size, labelPlacement, color });
 
-  return (
-    <div className={styles.base({ className: classNames?.base ?? className })}>
-      <div className={styles.switch({ className: classNames?.switch })}>
-        <input
-          {...restProps}
-          id={id}
-          ref={ref}
-          type="checkbox"
-          className={styles.input({ className: classNames?.input })}
-        />
+    return (
+      <div
+        className={styles.base({ className: classNames?.base ?? className })}
+      >
+        <div className={styles.switch({ className: classNames?.switch })}>
+          <input
+            {...restProps}
+            id={id}
+            ref={ref}
+            type="checkbox"
+            className={styles.input({ className: classNames?.input })}
+          />
 
-        <div className={styles.indicator({ className: classNames?.indicator })}>
-          {icon}
-          {checkedIcon}
+          <div
+            className={styles.indicator({ className: classNames?.indicator })}
+          >
+            {icon}
+            {checkedIcon}
+          </div>
         </div>
+
+        {label && (
+          <label
+            htmlFor={id}
+            className={styles.label({ className: classNames?.label })}
+          >
+            {label}
+          </label>
+        )}
       </div>
+    );
+  },
+);
 
-      {label && (
-        <label
-          htmlFor={id}
-          className={styles.label({ className: classNames?.label })}
-        >
-          {label}
-        </label>
-      )}
-    </div>
-  );
-});
-
-Switch.displayName = 'webbo-ui.Switch';
-
-export default Switch;
+Switch.displayName = 'Switch';

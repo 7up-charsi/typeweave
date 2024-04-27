@@ -1,7 +1,15 @@
 import React from 'react';
 import { Button } from '../button';
-
-import * as Popover from './';
+import {
+  PopoverArrow,
+  PopoverClose,
+  PopoverContent,
+  PopoverDescription,
+  PopoverPortal,
+  PopoverRoot,
+  PopoverTitle,
+  PopoverTrigger,
+} from './';
 
 const meta = {
   title: 'Components/Popover',
@@ -48,13 +56,13 @@ const Template = (args) => {
 
   return (
     <div className="w-[300vw] h-[300vh] flex items-center justify-center">
-      <Popover.Root defaultOpen={args.defaultOpen}>
-        <Popover.Trigger>
+      <PopoverRoot defaultOpen={args.defaultOpen}>
+        <PopoverTrigger>
           <Button ref={ref}>open popver</Button>
-        </Popover.Trigger>
+        </PopoverTrigger>
 
-        <Popover.Portal>
-          <Popover.Content
+        <PopoverPortal>
+          <PopoverContent
             alignOffset={args.alignOffset}
             arrow={args.arrow}
             mainOffset={args.mainOffset}
@@ -65,29 +73,29 @@ const Template = (args) => {
             allowMainAxisFlip={args.allowMainAxisFlip}
             allowCrossAxisFlip={args.allowCrossAxisFlip}
           >
-            {args.arrow && <Popover.Arrow />}
+            {args.arrow && <PopoverArrow />}
 
-            <Popover.Title>Lorem ipsum dolor</Popover.Title>
+            <PopoverTitle>Lorem ipsum dolor</PopoverTitle>
 
-            <Popover.Description>
+            <PopoverDescription>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
               aperiam facere, molestias eius suscipit in, est distinctio
               deserunt culpa odit, sunt nostrum. Ad culpa excepturi assumenda
               perferendis similique dolore qui.
-            </Popover.Description>
+            </PopoverDescription>
 
             <div className="pt-3 flex gap-2 justify-end">
-              <Popover.Close>
+              <PopoverClose>
                 <Button variant="text" color="danger">
                   Close
                 </Button>
-              </Popover.Close>
+              </PopoverClose>
 
               <Button color="success">Agree</Button>
             </div>
-          </Popover.Content>
-        </Popover.Portal>
-      </Popover.Root>
+          </PopoverContent>
+        </PopoverPortal>
+      </PopoverRoot>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import * as Popper from '../popper';
 import { useControllableState } from '../use-controllable-state';
 import { CustomError } from '../custom-error';
 import { Option } from './option';
@@ -12,6 +11,12 @@ import { mergeRefs } from '@webbo-ui/react-utils';
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { getNext, getPrevious } from './utils';
+import {
+  PopperFloating,
+  PopperFloatingProps,
+  PopperReference,
+  PopperRoot,
+} from '../popper';
 
 export type AutocompleteReason = 'select' | 'clear' | 'remove';
 
@@ -59,7 +64,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
     > & {
       disabled?: boolean;
       classNames?: AutocompleteClassNames;
-      offset?: Popper.FloatingProps['mainOffset'];
+      offset?: PopperFloatingProps['mainOffset'];
       options: Value[];
       isOpen?: boolean;
       onOpenChange?: (open: boolean) => void;
@@ -519,14 +524,14 @@ const AutocompleteImpl = React.forwardRef<
   const withPopper = disablePopper ? (
     listBox
   ) : (
-    <Popper.Floating sticky="always" mainOffset={offset || 5}>
+    <PopperFloating sticky="always" mainOffset={offset || 5}>
       {listBox}
-    </Popper.Floating>
+    </PopperFloating>
   );
 
   return (
-    <Popper.Root>
-      <Popper.Reference>
+    <PopperRoot>
+      <PopperReference>
         {({ referenceRef }) =>
           renderInput({
             selected: Array.isArray(value)
@@ -576,14 +581,14 @@ const AutocompleteImpl = React.forwardRef<
             },
           })
         }
-      </Popper.Reference>
+      </PopperReference>
 
       {isOpen
         ? disablePortal
           ? withPopper
           : createPortal(withPopper, globalThis?.document.body)
         : null}
-    </Popper.Root>
+    </PopperRoot>
   );
 });
 

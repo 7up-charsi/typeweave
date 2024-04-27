@@ -12,7 +12,6 @@ import {
   DialogTrigger,
   DialogPortal,
 } from './';
-import { Overlay } from '../overlay';
 
 const meta = {
   title: 'Components/Dialog',
@@ -207,9 +206,7 @@ const Template = (args) => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogOverlay>
-          <Overlay />
-        </DialogOverlay>
+        <DialogOverlay />
 
         <DialogContent className={args.className}>
           <DialogTitle>SVG Vector</DialogTitle>
@@ -318,9 +315,7 @@ const VirtualElementTemplate = () => {
         <DialogTrigger virtualElement={virtualElement} />
 
         <DialogPortal>
-          <DialogOverlay>
-            <Overlay />
-          </DialogOverlay>
+          <DialogOverlay />
 
           <DialogContent>
             <DialogTitle>SVG Vector</DialogTitle>
@@ -376,9 +371,7 @@ const ProgrammaticallyTemplate = () => {
         <DialogTrigger virtual virtualElement={virtualElement} />
 
         <DialogPortal>
-          <DialogOverlay>
-            <Overlay />
-          </DialogOverlay>
+          <DialogOverlay />
 
           <DialogContent>
             <Button

@@ -1,11 +1,9 @@
-import { useMediaQuery } from '../use-media-query';
-import { createContextScope } from '../context';
-import { CustomError } from '../custom-error';
 import React from 'react';
+import { createContextScope } from '../context';
+import { useMediaQuery } from '../use-media-query';
+import { CustomError } from '../custom-error';
 
-const ThemeProvider_Name = 'Themes.ThemeProvider';
-
-export interface ThemeProviderProps {
+export interface ThemesRootProps {
   defaultTheme?: string;
   dataAttribute?: false | string;
   children?: React.ReactNode;
@@ -20,10 +18,13 @@ interface RootContext {
   onThemeChange: (theme: string) => void;
 }
 
-const [RootProvider, useRootContext] =
-  createContextScope<RootContext>(ThemeProvider_Name);
+const Comp_name = 'ThemesRoot';
 
-export const ThemeProvider = (props: ThemeProviderProps) => {
+const [ThemesCtx, useThemesCtx] = createContextScope<RootContext>(Comp_name);
+
+export { useThemesCtx };
+
+export const ThemesRoot = (props: ThemesRootProps) => {
   const {
     children,
     defaultTheme = 'system',
@@ -42,8 +43,7 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
 
   const onThemeChange = React.useCallback(
     (theme: string) => {
-      if (!theme)
-        throw new CustomError(ThemeProvider_Name, '`theme` is required');
+      if (!theme) throw new CustomError(Comp_name, '`theme` is required');
 
       if (prevTheme.current) themeContainer.classList.remove(prevTheme.current);
       if (prevTheme.current && dataAttribute)
@@ -73,25 +73,10 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
   }, [defaultTheme, localStorageKey, onThemeChange]);
 
   return (
-    <RootProvider theme={value} onThemeChange={onThemeChange}>
+    <ThemesCtx theme={value} onThemeChange={onThemeChange}>
       {children}
-    </RootProvider>
+    </ThemesCtx>
   );
 };
 
-ThemeProvider.displayName = 'webbo-ui.' + ThemeProvider_Name;
-
-// *-*-*-*-* useTheme *-*-*-*-*
-
-const useTheme_Name = 'Themes.useTheme';
-
-export const useTheme = () => {
-  const rootContext = useRootContext(useTheme_Name);
-
-  return {
-    onThemeChange: rootContext.onThemeChange,
-    theme: rootContext.theme,
-  };
-};
-
-useTheme.displayName = 'webbo-ui.' + useTheme_Name;
+ThemesRoot.displayName = 'ThemesRoot';

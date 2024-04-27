@@ -5,3 +5,5 @@ export type {
 } from './autocomplete';
 
 export { Autocomplete } from './autocomplete';
+
+export const test = '';

@@ -4,7 +4,7 @@ export interface VisuallyHiddenProps {
   children?: React.ReactNode;
 }
 
-const VisuallyHidden = (props: VisuallyHiddenProps) => {
+export const VisuallyHidden = (props: VisuallyHiddenProps) => {
   const { children } = props;
 
   return (
@@ -26,6 +26,4 @@ const VisuallyHidden = (props: VisuallyHiddenProps) => {
   );
 };
 
-VisuallyHidden.displayName = 'webbo-ui.VisuallyHidden';
-
-export default VisuallyHidden;
+VisuallyHidden.displayName = 'VisuallyHidden';

@@ -1,4 +1,3 @@
-import * as Popper from '../popper';
 import { useControllableState } from '../use-controllable-state';
 import { CustomError } from '../custom-error';
 import React from 'react';
@@ -8,6 +7,12 @@ import { SelectClassNames, SelectVariantProps, select } from '@webbo-ui/theme';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { createPortal } from 'react-dom';
 import { getNext, getPrevious } from './utils';
+import {
+  PopperFloating,
+  PopperFloatingProps,
+  PopperReference,
+  PopperRoot,
+} from '../popper';
 
 export type SelectReason = 'select' | 'clear';
 
@@ -54,7 +59,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
     > & {
       disabled?: boolean;
       classNames?: SelectClassNames;
-      offset?: Popper.FloatingProps['mainOffset'];
+      offset?: PopperFloatingProps['mainOffset'];
       options: Value[];
       isOpen?: boolean;
       onOpenChange?: (open: boolean) => void;
@@ -518,14 +523,14 @@ const SelectImpl = React.forwardRef<
   const withPopper = disablePopper ? (
     listBox
   ) : (
-    <Popper.Floating sticky="always" mainOffset={offset || 5}>
+    <PopperFloating sticky="always" mainOffset={offset || 5}>
       {listBox}
-    </Popper.Floating>
+    </PopperFloating>
   );
 
   return (
-    <Popper.Root>
-      <Popper.Reference>
+    <PopperRoot>
+      <PopperReference>
         {({ referenceRef }) =>
           renderInput({
             onBlur: handleClose,
@@ -564,14 +569,14 @@ const SelectImpl = React.forwardRef<
             },
           })
         }
-      </Popper.Reference>
+      </PopperReference>
 
       {isOpen
         ? disablePortal
           ? withPopper
           : createPortal(withPopper, document.body)
         : null}
-    </Popper.Root>
+    </PopperRoot>
   );
 });
 

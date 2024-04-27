@@ -5,6 +5,7 @@ export type { AlertDialogDescriptionProps } from './alert-dialog-description';
 export type { AlertDialogTitleProps } from './alert-dialog-title';
 export type { AlertDialogTriggerProps } from './alert-dialog-trigger';
 export type { AlertDialogPortalProps } from './alert-dialog-portal';
+export type { OverlayProps as AlertDialogOverlayProps } from '../overlay';
 export type {
   AlertDialogRootProps,
   AlertDialogRootMethods,
@@ -17,4 +18,5 @@ export { AlertDialogDescription } from './alert-dialog-description';
 export { AlertDialogTitle } from './alert-dialog-title';
 export { AlertDialogTrigger } from './alert-dialog-trigger';
 export { AlertDialogPortal } from './alert-dialog-portal';
+export { Overlay as AlertDialogOverlay } from '../overlay';
 export { AlertDialogRoot } from './alert-dialog-root';

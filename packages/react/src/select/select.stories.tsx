@@ -2,10 +2,17 @@ import React from 'react';
 import { select } from '@webbo-ui/theme';
 import { Input } from '../input';
 import { Checkbox } from '../checkbox';
-import * as Dialog from '../dialog';
 import { Select, mapInputProps } from './';
 import { Button } from '../button';
 import options from './options.json';
+import {
+  DialogClose,
+  DialogContent,
+  DialogOverlay,
+  DialogPortal,
+  DialogRoot,
+  DialogTrigger,
+} from '../dialog';
 
 const meta = {
   title: 'Components/Select',
@@ -115,15 +122,15 @@ export const Loading = {
 };
 
 const InDialogTemplate = () => (
-  <Dialog.Root defaultOpen>
-    <Dialog.Trigger>
+  <DialogRoot defaultOpen>
+    <DialogTrigger>
       <Button>open dialog</Button>
-    </Dialog.Trigger>
+    </DialogTrigger>
 
-    <Dialog.Portal>
-      <Dialog.Overlay />
+    <DialogPortal>
+      <DialogOverlay />
 
-      <Dialog.Content className="max-w-xs">
+      <DialogContent className="max-w-xs">
         <Select
           options={options}
           defaultValue={options[21]}
@@ -138,15 +145,15 @@ const InDialogTemplate = () => (
         />
 
         <div className="flex gap-2 justify-end mt-5">
-          <Dialog.Close>
+          <DialogClose>
             <Button color="danger">Close</Button>
-          </Dialog.Close>
+          </DialogClose>
 
           <Button>Agree</Button>
         </div>
-      </Dialog.Content>
-    </Dialog.Portal>
-  </Dialog.Root>
+      </DialogContent>
+    </DialogPortal>
+  </DialogRoot>
 );
 
 export const InDialog = {
@@ -154,17 +161,17 @@ export const InDialog = {
 };
 
 const CustomTemplate = () => (
-  <Dialog.Root defaultOpen>
-    <Dialog.Trigger>
+  <DialogRoot defaultOpen>
+    <DialogTrigger>
       <div className="border border-muted-6 rounded bg-white inline-flex items-center px-3 h-10 w-64">
         Select one movie
       </div>
-    </Dialog.Trigger>
+    </DialogTrigger>
 
-    <Dialog.Portal>
-      <Dialog.Overlay />
+    <DialogPortal>
+      <DialogOverlay />
 
-      <Dialog.Content className="w-[calc(100%-16px)] max-w-xs p-0">
+      <DialogContent className="w-[calc(100%-16px)] max-w-xs p-0">
         <Select
           isOpen
           options={options}
@@ -187,9 +194,9 @@ const CustomTemplate = () => (
             />
           )}
         />
-      </Dialog.Content>
-    </Dialog.Portal>
-  </Dialog.Root>
+      </DialogContent>
+    </DialogPortal>
+  </DialogRoot>
 );
 
 export const Custom = {

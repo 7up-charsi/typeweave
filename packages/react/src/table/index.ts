@@ -1,19 +1,13 @@
-import * as table from './table';
+export type { TableSelectAllRowsProps } from './table-select-all-rows';
+export type { TableSelectRowRootProps } from './table-select-row-root';
+export type { TableSelectRowProps } from './table-select-row';
+export type { TableColumnVisibilityProps } from './table-column-visibility';
+export type { TableRootProps } from './table-root';
+export type { TableProps } from './table';
 
-// export types
-export type {
-  TableProps,
-  RootProps,
-  ColumnVisibilityProps,
-  SelectAllRowsProps,
-  SelectRowProps,
-  SelectRowProviderProps,
-} from './table';
-
-// export component
-export const Root = table.Root;
-export const Table = table.Table;
-export const ColumnVisibility = table.ColumnVisibility;
-export const SelectAllRows = table.SelectAllRows;
-export const SelectRow = table.SelectRow;
-export const SelectRowProvider = table.SelectRowProvider;
+export { TableSelectAllRows } from './table-select-all-rows';
+export { TableSelectRowRoot } from './table-select-row-root';
+export { TableSelectRow } from './table-select-row';
+export { TableColumnVisibility } from './table-column-visibility';
+export { TableRoot } from './table-root';
+export { Table } from './table';

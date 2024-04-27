@@ -1,10 +1,9 @@
-import * as tabs from './tabs';
+export type { TabsContentProps } from './tabs-content';
+export type { TabsListProps } from './tabs-list';
+export type { TabsRootProps } from './tabs-root';
+export type { TabsTriggerProps } from './tabs-trigger';
 
-// export types
-export type { ContentProps, ListProps, RootProps, TriggerProps } from './tabs';
-
-// export component
-export const Content = tabs.Content;
-export const List = tabs.List;
-export const Root = tabs.Root;
-export const Trigger = tabs.Trigger;
+export { TabsContent } from './tabs-content';
+export { TabsList } from './tabs-list';
+export { TabsRoot } from './tabs-root';
+export { TabsTrigger } from './tabs-trigger';

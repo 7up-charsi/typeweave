@@ -1,17 +1,11 @@
-import * as tooltip from './tooltip';
+export type { TooltipContentProps } from './tooltip-content';
+export type { TooltipPortalProps } from './tooltip-portal';
+export type { TooltipRootProps } from './tooltip-root';
+export type { TooltipTriggerProps } from './tooltip-trigger';
+export type { PopperArrowProps as TooltipArrowProps } from '../popper';
 
-export { Arrow } from '../popper';
-
-// export types
-export type {
-  ContentProps,
-  RootProps,
-  PortalProps,
-  TriggerProps,
-} from './tooltip';
-
-// export component
-export const Root = tooltip.Root;
-export const Trigger = tooltip.Trigger;
-export const Portal = tooltip.Portal;
-export const Content = tooltip.Content;
+export { TooltipContent } from './tooltip-content';
+export { TooltipPortal } from './tooltip-portal';
+export { TooltipRoot } from './tooltip-root';
+export { TooltipTrigger } from './tooltip-trigger';
+export { PopperArrow as TooltipArrow } from '../popper';

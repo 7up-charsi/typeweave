@@ -5,3 +5,5 @@ export type {
 } from './select';
 
 export { Select } from './select';
+
+export const test = '';
