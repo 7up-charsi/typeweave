@@ -72,7 +72,7 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
 
         if (!ariaLabel && !ariaLabelledby)
           console.warn(
-            'For accessible Chip, provide an `aria-label` prop for screen readers to describe its purpose.',
+            'For accessible Chip, provide `aria-label` prop for screen readers to describe its purpose.',
           );
 
         //
