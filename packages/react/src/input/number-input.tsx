@@ -4,8 +4,8 @@ import { mergeRefs } from '@webbo-ui/react-utils';
 import { numberInput } from '@webbo-ui/theme';
 import { Button } from '../button';
 import { CustomError } from '../custom-error';
-import { Icon } from '../icon';
 import { useControllableState } from '../use-controllable-state';
+import { MinusIcon, PlusIcon } from 'lucide-react';
 
 export interface NumberInputProps extends Omit<InputProps<false>, 'type'> {
   classNames?: InputProps<false>['classNames'] & {
@@ -285,17 +285,7 @@ export const NumberInput = React.forwardRef<HTMLDivElement, NumberInputProps>(
               }}
               onPointerDown={onLongPress('decrease')}
             >
-              <Icon>
-                <svg fill="none" viewBox="0 0 24 24">
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 12h12"
-                  ></path>
-                </svg>
-              </Icon>
+              <MinusIcon />
             </Button>
 
             {/* increase */}
@@ -313,17 +303,7 @@ export const NumberInput = React.forwardRef<HTMLDivElement, NumberInputProps>(
               }}
               onPointerDown={onLongPress('increase')}
             >
-              <Icon>
-                <svg fill="none" viewBox="0 0 24 24">
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 12h12m-6-6v12"
-                  ></path>
-                </svg>
-              </Icon>
+              <PlusIcon />
             </Button>
 
             {endContent}

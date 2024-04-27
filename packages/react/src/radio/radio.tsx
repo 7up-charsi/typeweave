@@ -1,7 +1,6 @@
 import React from 'react';
 import { RadioClassNames, RadioVariantProps, radio } from '@webbo-ui/theme';
-import { Icon } from '../icon';
-import { checked_icon, circle_icon } from './icons';
+import { Circle } from 'lucide-react';
 
 export interface RadioProps
   extends RadioVariantProps,
@@ -14,6 +13,24 @@ export interface RadioProps
 
 const displayName = 'Radio';
 
+const circleDot = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="lucide lucide-circle-dot"
+  >
+    <circle cx="12" cy="12" r="10" />
+    <circle cx="12" cy="12" fill="currentColor" r="4" />
+  </svg>
+);
+
 export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
   (props, ref) => {
     const {
@@ -22,8 +39,8 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
       label,
       id: idProp,
       checked,
-      icon = <Icon>{circle_icon}</Icon>,
-      checkedIcon = <Icon>{checked_icon}</Icon>,
+      icon = <Circle />,
+      checkedIcon = circleDot,
       size = 'md',
       color = 'primary',
       labelPlacement = 'right',

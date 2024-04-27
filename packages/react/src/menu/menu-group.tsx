@@ -1,8 +1,10 @@
 import React from 'react';
 import { useMenuStyles } from './menu-content';
+import { accessibilityWarning } from '../custom-error';
 
 export interface MenuGroupProps extends React.HTMLAttributes<HTMLUListElement> {
-  label: React.ReactNode;
+  label: string;
+  hideLabel?: boolean;
   classNames?: {
     label?: string;
     group?: string;
@@ -13,21 +15,37 @@ const displayName = 'MenuGroup';
 
 export const MenuGroup = React.forwardRef<HTMLUListElement, MenuGroupProps>(
   (props, ref) => {
-    const { className, classNames, label, ...restProps } = props;
+    const { className, classNames, label, hideLabel, ...restProps } = props;
 
     const styles = useMenuStyles(displayName);
 
+    if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      React.useEffect(() => {
+        if (!label)
+          accessibilityWarning(
+            displayName,
+            'This component requires a label for accessibility. If you want to hide the label visually, use the `hideLabel` prop. Otherwise, provide a default value for `aria-label`.',
+          );
+      }, [label]);
+    }
+
     return (
       <li role="none">
-        <div
-          role="presentation"
-          className={styles.label({ className: classNames?.label })}
-        >
-          {label}
-        </div>
+        {hideLabel
+          ? null
+          : !!label && (
+              <div
+                role="presentation"
+                className={styles.label({ className: classNames?.label })}
+              >
+                {label}
+              </div>
+            )}
 
         <ul
           {...restProps}
+          aria-label={label ?? 'List group'}
           ref={ref}
           role="group"
           className={styles.group({

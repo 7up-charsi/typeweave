@@ -2,7 +2,7 @@ import React from 'react';
 import { useMenuStyles } from './menu-content';
 import { MenuItemImpl } from './menu-item-impl';
 import { useMenuCtx } from './menu-root';
-import { Icon } from '../icon';
+import { CheckIcon } from 'lucide-react';
 
 export interface MenuCheckboxItemProps
   extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'onChange'> {
@@ -60,21 +60,7 @@ export const MenuCheckboxItem = React.forwardRef<
           className: classNames?.itemIcon,
         })}
       >
-        {!checked
-          ? null
-          : icon ?? (
-              <Icon>
-                <svg fill="none" viewBox="0 0 24 24">
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 11.917 9.724 16.5 19 7.5"
-                  />
-                </svg>
-              </Icon>
-            )}
+        {!checked ? null : icon ?? <CheckIcon />}
       </span>
 
       <span

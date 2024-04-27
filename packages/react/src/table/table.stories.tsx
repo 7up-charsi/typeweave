@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from '../button';
 import { Checkbox } from '../checkbox';
-import { Icon } from '../icon';
 import {
   TableRoot,
   TableSelectAllRows,
@@ -10,6 +9,7 @@ import {
   TableSelectRowRoot,
   Table,
 } from './';
+import { Columns3Icon } from 'lucide-react';
 
 const meta = {
   title: 'Components/Table',
@@ -74,20 +74,7 @@ const Template = () => {
 
           <TableColumnVisibility tableIdentifier="demo_table">
             <Button isIconOnly aria-label="column visibility">
-              <Icon>
-                <svg
-                  fill="none"
-                  stroke="#000"
-                  strokeLinecap="round"
-                  viewBox="0 0 24 24"
-                >
-                  <g>
-                    <rect width="18" height="18" x="3" y="3" rx="0"></rect>
-                    <path d="M9 3L9 21"></path>
-                    <path d="M15 3L15 21"></path>
-                  </g>
-                </svg>
-              </Icon>
+              <Columns3Icon />
             </Button>
           </TableColumnVisibility>
         </div>

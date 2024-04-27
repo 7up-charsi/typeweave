@@ -154,6 +154,13 @@ export const WebboUi = (config: PluginConfig = {}) => {
     ({ addUtilities, addBase, addVariant }) => {
       addBase([
         {
+          '.lucide': {
+            width: '1em',
+            height: '1em',
+            'vector-effect': 'non-scaling-stroke',
+          },
+        },
+        {
           'input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button':
             {
               '-webkit-appearance': 'none',

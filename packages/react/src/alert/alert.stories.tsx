@@ -1,6 +1,6 @@
 import { alert } from '@webbo-ui/theme';
 import { Alert } from './';
-import { faceMindBlowing_icon, heart_icon } from './icons';
+import { Heart, Angry } from 'lucide-react';
 
 const meta = {
   title: 'Components/Alert',
@@ -70,11 +70,11 @@ export const Action = {
 
 const CustomIconTemplate = () => (
   <div className="flex flex-col gap-5">
-    <Alert icon={heart_icon} color="success">
+    <Alert icon={<Heart />} color="success">
       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic totam
       dolorem quisquam eaque
     </Alert>
-    <Alert icon={faceMindBlowing_icon} color="danger">
+    <Alert icon={<Angry />} color="danger">
       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic totam
       dolorem quisquam eaque
     </Alert>

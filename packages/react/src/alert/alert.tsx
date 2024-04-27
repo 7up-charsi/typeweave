@@ -2,21 +2,20 @@
 
 import { AlertVariantProps, alert as alertStyles } from '@webbo-ui/theme';
 import { Button } from '../button';
-import { Icon } from '../icon';
 import React from 'react';
 import {
-  alert_success_icon,
-  alert_close_icon,
-  alert_danger_icon,
-  alert_info_icon,
-  alert_warning_icon,
-} from './icons';
+  X as XIcon,
+  Check,
+  Info,
+  CircleAlert,
+  TriangleAlert,
+} from 'lucide-react';
 
 const icons = {
-  success: alert_success_icon,
-  info: alert_info_icon,
-  warning: alert_warning_icon,
-  danger: alert_danger_icon,
+  success: <Check />,
+  info: <Info />,
+  warning: <TriangleAlert />,
+  danger: <CircleAlert />,
 };
 
 export interface AlertProps
@@ -40,7 +39,7 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
       onClose,
       action,
       fullWidth = true,
-      icon = <Icon>{icons[color || 'danger']}</Icon>,
+      icon = icons[color || 'danger'],
       ...restProps
     } = props;
 
@@ -67,7 +66,7 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
                 color={color}
                 aria-label="remove alert"
               >
-                {alert_close_icon}
+                <XIcon />
               </Button>
             )}
           </div>
