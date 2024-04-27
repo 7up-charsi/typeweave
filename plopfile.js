@@ -6,12 +6,10 @@ const camelCase = (str) => {
   return str.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
 };
 
-const generators = ['component', 'hook', 'package', 'component-docs'];
+const generators = ['package', 'component-docs'];
 
 const defaultOutDirs = {
-  component: 'components',
-  hook: 'hooks',
-  package: 'utilities',
+  package: './',
 };
 
 module.exports = function main(
@@ -35,10 +33,6 @@ module.exports = function main(
           validate: (value) => {
             if (!value) return `${gen} name is required`;
 
-            // check is has a valid hook name "use-something"
-            if (gen === 'hook' && !value.startsWith('use-'))
-              return "Hook name must start with 'use-'";
-
             // check is case is correct
             if (value !== value.toLowerCase())
               return `${gen} name must be in lowercase`;
@@ -54,27 +48,11 @@ module.exports = function main(
           name: 'description',
           message: `The description of this ${gen} :`,
         },
-        {
-          when: gen === 'package',
-          type: 'list',
-          name: 'outDir',
-          message: `where should this ${gen} live? :`,
-          choices: ['core', 'utilities'],
-          validate: (value) => {
-            if (!value) {
-              return `outDir is required`;
-            }
-
-            return true;
-          },
-        },
       ],
       actions(answers) {
         const actions = [];
 
         if (!answers) return actions;
-
-        const { outDir } = answers;
 
         if (gen === 'component-docs') {
           actions.push(
@@ -109,7 +87,7 @@ module.exports = function main(
         }
 
         const data = {
-          outDir: gen === 'package' ? outDir : defaultOutDirs[gen],
+          outDir: defaultOutDirs[gen],
         };
 
         actions.push({

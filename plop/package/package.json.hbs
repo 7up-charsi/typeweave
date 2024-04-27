@@ -31,8 +31,13 @@
     "prepack": "clean-package",
     "postpack": "clean-package restore",
     "prepublish": "pnpm typecheck"
+  }, 
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
   },
   "devDependencies": {
+    "tsconfig": "workspace:*",
     "clean-package": "^2.2.0"
   },
   "clean-package": {
