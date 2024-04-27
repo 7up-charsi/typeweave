@@ -9,8 +9,6 @@
   "license": "MIT",
   "main": "./packages.json",
   "exports": {
-    ".": "./packages.json",
-    "./packages.json": "./packages.json",
     "./packages": "./packages.json"
   }
 }
