@@ -1,9 +1,9 @@
 import React from 'react';
-import Input, { InputProps } from './input';
+import { InputProps, Input } from './input';
 import { mergeRefs } from '@webbo-ui/react-utils';
 import { numberInput } from '@webbo-ui/theme';
 import { Button } from '../button';
-import { CustomError } from '../error';
+import { CustomError } from '../custom-error';
 import { Icon } from '../icon';
 import { useControllableState } from '../use-controllable-state';
 
@@ -22,7 +22,7 @@ export interface NumberInputProps extends Omit<InputProps<false>, 'type'> {
   threshold?: number;
 }
 
-const NumberInput = React.forwardRef<HTMLDivElement, NumberInputProps>(
+export const NumberInput = React.forwardRef<HTMLDivElement, NumberInputProps>(
   (props, ref) => {
     const {
       classNames,
@@ -332,6 +332,4 @@ const NumberInput = React.forwardRef<HTMLDivElement, NumberInputProps>(
   },
 );
 
-NumberInput.displayName = 'webbo-ui.NumberInput';
-
-export default NumberInput;
+NumberInput.displayName = 'NumberInput';

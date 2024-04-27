@@ -1,15 +1,9 @@
-import * as disclosure from './disclosure';
+export type { DisclosureContentProps } from './disclosure-content';
+export type { DisclosureItemProps } from './disclosure-item';
+export type { DisclosureRootProps } from './disclosure-root';
+export type { DisclosureTriggerProps } from './disclosure-trigger';
 
-// export types
-export type {
-  RootProps,
-  ItemProps,
-  TriggerProps,
-  ContentProps,
-} from './disclosure';
-
-// export component
-export const Root = disclosure.Root;
-export const Item = disclosure.Item;
-export const Trigger = disclosure.Trigger;
-export const Content = disclosure.Content;
+export { DisclosureContent } from './disclosure-content';
+export { DisclosureItem } from './disclosure-item';
+export { DisclosureRoot } from './disclosure-root';
+export { DisclosureTrigger } from './disclosure-trigger';

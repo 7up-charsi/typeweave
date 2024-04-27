@@ -1,6 +1,6 @@
 import { useMediaQuery } from '../use-media-query';
 import { createContextScope } from '../context';
-import { CustomError } from '../error';
+import { CustomError } from '../custom-error';
 import React from 'react';
 
 const ThemeProvider_Name = 'Themes.ThemeProvider';

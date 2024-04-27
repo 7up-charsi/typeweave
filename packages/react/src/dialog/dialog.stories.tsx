@@ -12,6 +12,7 @@ import {
   DialogTrigger,
   DialogPortal,
 } from './';
+import { Overlay } from '../overlay';
 
 const meta = {
   title: 'Components/Dialog',
@@ -206,7 +207,9 @@ const Template = (args) => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogOverlay />
+        <DialogOverlay>
+          <Overlay />
+        </DialogOverlay>
 
         <DialogContent className={args.className}>
           <DialogTitle>SVG Vector</DialogTitle>
@@ -304,18 +307,20 @@ export const Nested = {
 };
 
 const VirtualElementTemplate = () => {
-  const [virturalElement, setVirturalElement] =
+  const [virtualElement, setVirtualElement] =
     React.useState<HTMLButtonElement | null>(null);
 
   return (
     <>
-      <Button ref={setVirturalElement}>open dialog</Button>
+      <Button ref={setVirtualElement}>open dialog</Button>
 
       <DialogRoot defaultOpen>
-        <DialogTrigger virtualElement={virturalElement} />
+        <DialogTrigger virtualElement={virtualElement} />
 
         <DialogPortal>
-          <DialogOverlay />
+          <DialogOverlay>
+            <Overlay />
+          </DialogOverlay>
 
           <DialogContent>
             <DialogTitle>SVG Vector</DialogTitle>
@@ -358,20 +363,22 @@ export const VirtualElement = {
 };
 
 const ProgrammaticallyTemplate = () => {
-  const [virturalElement, setVirturalElement] =
+  const [virtualElement, setVirtualElement] =
     React.useState<HTMLButtonElement | null>(null);
 
   const ref = React.useRef<DialogRootMethods>(null);
 
   return (
     <>
-      <Button ref={setVirturalElement}>open dialog</Button>
+      <Button ref={setVirtualElement}>open dialog</Button>
 
       <DialogRoot ref={ref} defaultOpen>
-        <DialogTrigger virtual virtualElement={virturalElement} />
+        <DialogTrigger virtual virtualElement={virtualElement} />
 
         <DialogPortal>
-          <DialogOverlay />
+          <DialogOverlay>
+            <Overlay />
+          </DialogOverlay>
 
           <DialogContent>
             <Button

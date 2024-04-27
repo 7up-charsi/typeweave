@@ -2,7 +2,7 @@ import { createContextScope } from '../context';
 import { useControllableState } from '../use-controllable-state';
 import React from 'react';
 import { createCollection } from '../use-collection';
-import { CustomError } from '../error';
+import { CustomError } from '../custom-error';
 import { accordion } from '@webbo-ui/theme';
 
 export type AccordionRootProps<Type, IsSingleCollapsible> = {
@@ -50,7 +50,7 @@ const [AccordionStyles, useAccordionStyles] =
 
 export { useAccordionCtx, useAccordionStyles };
 
-export const [Collection, useCollection] = createCollection<
+export const [AccordionCollection, useAccordionCollection] = createCollection<
   HTMLButtonElement,
   object
 >(Comp_Name);
@@ -145,15 +145,15 @@ export const AccordionRootImpl = React.forwardRef<
       value={value}
     >
       <AccordionStyles {...styles}>
-        <Collection.Provider>
-          <Collection.Parent>
+        <AccordionCollection.Provider>
+          <AccordionCollection.Parent>
             <div
               {...restProps}
               ref={ref}
               className={styles.base({ className })}
             />
-          </Collection.Parent>
-        </Collection.Provider>
+          </AccordionCollection.Parent>
+        </AccordionCollection.Provider>
       </AccordionStyles>
     </AccordionCtx>
   );

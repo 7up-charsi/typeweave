@@ -1,6 +1,6 @@
 import { Button, ButtonGroup, ButtonGroupProps, ButtonProps } from '../button';
 import { createContextScope } from '../context';
-import { CustomError } from '../error';
+import { CustomError } from '../custom-error';
 import { ToggleButtonVariantProps, toggleButton } from '@webbo-ui/theme';
 import { useControllableState } from '../use-controllable-state';
 import React from 'react';

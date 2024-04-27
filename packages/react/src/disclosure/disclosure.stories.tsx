@@ -1,7 +1,12 @@
-import React, { Fragment } from 'react';
-import * as Disclosure from './';
+import React from 'react';
 import { Button } from '../button';
 import { Icon } from '../icon';
+import {
+  DisclosureContent,
+  DisclosureItem,
+  DisclosureRoot,
+  DisclosureTrigger,
+} from './';
 
 const meta = {
   title: 'Components/Disclosure',
@@ -10,10 +15,10 @@ const meta = {
 export default meta;
 
 const Template = (args) => (
-  <Disclosure.Root {...args} className="rounded border border-muted-6">
+  <DisclosureRoot {...args} className="rounded border border-muted-6">
     {Array.from({ length: 10 }).map((_, i, arr) => (
-      <Fragment key={i}>
-        <Disclosure.Item value={'' + (i + 1)} className="first:mt-2 last:!mb-2">
+      <React.Fragment key={i}>
+        <DisclosureItem value={'' + (i + 1)} className="first:mt-2 last:!mb-2">
           <div className="flex items-center px-4 py-1 has-[button:disabled]:disabled">
             {i === 7 ? (
               <span>DISABLED Disclosure with dummy content</span>
@@ -21,7 +26,7 @@ const Template = (args) => (
               <span>Disclosure no. {i + 1} with dummy content</span>
             )}
 
-            <Disclosure.Trigger className="group ml-auto" disabled={i === 7}>
+            <DisclosureTrigger className="group ml-auto" disabled={i === 7}>
               <Button isIconOnly aria-label="expand" size="sm">
                 <Icon>
                   <svg
@@ -43,21 +48,21 @@ const Template = (args) => (
                   </svg>
                 </Icon>
               </Button>
-            </Disclosure.Trigger>
+            </DisclosureTrigger>
           </div>
 
-          <Disclosure.Content>
+          <DisclosureContent>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
             pariatur vitae consectetur ullam repellendus illo suscipit
             perspiciatis at maxime neque exercitationem qui doloribus architecto
             reiciendis modi debitis aliquid, ex id!
-          </Disclosure.Content>
-        </Disclosure.Item>
+          </DisclosureContent>
+        </DisclosureItem>
 
         {i !== arr.length - 1 ? <hr className="border-muted-6" /> : null}
-      </Fragment>
+      </React.Fragment>
     ))}
-  </Disclosure.Root>
+  </DisclosureRoot>
 );
 
 const DefaultTemplate = () => <Template />;

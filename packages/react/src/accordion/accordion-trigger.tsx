@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  Collection,
+  AccordionCollection,
+  useAccordionCollection,
   useAccordionCtx,
   useAccordionStyles,
-  useCollection,
 } from './accordion-root';
 import { usePointerEvents } from '../use-pointer-events';
 import { Slot } from '../slot';
@@ -25,7 +25,7 @@ export const AccordionTrigger = React.forwardRef<
   const accordionCtx = useAccordionCtx(Comp_Name);
   const itemCtx = useAccordionItemCtx(Comp_Name);
   const styles = useAccordionStyles(Comp_Name);
-  const getItems = useCollection();
+  const getItems = useAccordionCollection();
 
   const isExpended = itemCtx.isExpended;
 
@@ -72,7 +72,7 @@ export const AccordionTrigger = React.forwardRef<
   const Comp = asChild ? Slot : 'button';
 
   return (
-    <Collection.Item>
+    <AccordionCollection.Item>
       <Comp
         {...restProps}
         ref={ref}
@@ -87,7 +87,7 @@ export const AccordionTrigger = React.forwardRef<
       >
         {children}
       </Comp>
-    </Collection.Item>
+    </AccordionCollection.Item>
   );
 });
 

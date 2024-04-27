@@ -1,5 +1,5 @@
 import React from 'react';
-import { CustomError } from '../error';
+import { CustomError } from '../custom-error';
 import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
 
 export interface SlotProps {

@@ -1,28 +1,23 @@
-import * as menu from './menu';
-export { Arrow } from '../popper';
+export type { MenuCheckboxItemProps } from './menu-checkbox-item';
+export type { MenuContentProps } from './menu-content';
+export type { MenuGroupProps } from './menu-group';
+export type { MenuItemProps } from './menu-item';
+export type { MenuPortalProps } from './menu-portal';
+export type { MenuRadioGroupProps } from './menu-radio-group';
+export type { MenuRadioItemProps } from './menu-radio-item';
+export type { MenuRootProps } from './menu-root';
+export type { MenuSeparatorProps } from './menu-separator';
+export type { MenuTriggerProps } from './menu-trigger';
+export type { PopperArrowProps as MenuArrowProps } from '../popper';
 
-// export types
-export type {
-  CheckboxItemProps,
-  GroupProps,
-  ItemProps,
-  MenuProps,
-  PortalProps,
-  RadioGroupProps,
-  TriggerProps,
-  SeparatorProps,
-  RootProps,
-  RadioItemProps,
-} from './menu';
-
-// export component
-export const Root = menu.Root;
-export const Trigger = menu.Trigger;
-export const Portal = menu.Portal;
-export const Menu = menu.Menu;
-export const Item = menu.Item;
-export const Group = menu.Group;
-export const CheckboxItem = menu.CheckboxItem;
-export const RadioGroup = menu.RadioGroup;
-export const RadioItem = menu.RadioItem;
-export const Separator = menu.Separator;
+export { MenuCheckboxItem } from './menu-checkbox-item';
+export { MenuContent } from './menu-content';
+export { MenuGroup } from './menu-group';
+export { MenuItem } from './menu-item';
+export { MenuPortal } from './menu-portal';
+export { MenuRadioGroup } from './menu-radio-group';
+export { MenuRadioItem } from './menu-radio-item';
+export { MenuRoot } from './menu-root';
+export { MenuSeparator } from './menu-separator';
+export { MenuTrigger } from './menu-trigger';
+export { PopperArrow as MenuArrow } from '../popper';
