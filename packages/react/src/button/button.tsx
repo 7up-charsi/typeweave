@@ -62,7 +62,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       React.useEffect(() => {
         if (isIconOnly && !ariaLabel && !ariaLabelledby)
           console.warn(
-            'For accessible icon-only buttons, provide an `aria-label` prop for screen readers to describe its purpose.',
+            'For accessible icon-only buttons, provide `aria-label` prop for screen readers to describe its purpose.',
           );
       }, [ariaLabel, ariaLabelledby, isIconOnly]);
     }
