@@ -1,7 +1,5 @@
 # @webbo-ui/react
 
-
-
 ## Installation
 
 ```bash

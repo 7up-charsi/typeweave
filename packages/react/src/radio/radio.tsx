@@ -1,34 +1,7 @@
 import React from 'react';
 import { RadioClassNames, RadioVariantProps, radio } from '@webbo-ui/theme';
 import { Icon } from '../icon';
-
-const icon_svg = (
-  <Icon>
-    <svg fill="none" viewBox="0 0 24 24">
-      <path
-        fill="currentColor"
-        fillRule="evenodd"
-        d="M12 19.5a7.5 7.5 0 100-15 7.5 7.5 0 000 15zm0 1.5a9 9 0 100-18 9 9 0 000 18z"
-        clipRule="evenodd"
-      ></path>
-    </svg>
-  </Icon>
-);
-
-const checked_svg = (
-  <Icon>
-    <svg fill="none" viewBox="0 0 24 24">
-      <g fill="currentColor">
-        <path
-          fillRule="evenodd"
-          d="M12 19.5a7.5 7.5 0 100-15 7.5 7.5 0 000 15zm0 1.5a9 9 0 100-18 9 9 0 000 18z"
-          clipRule="evenodd"
-        ></path>
-        <circle cx="12" cy="12" r="5.25"></circle>
-      </g>
-    </svg>
-  </Icon>
-);
+import { checked_icon, circle_icon } from './icons';
 
 export interface RadioProps
   extends RadioVariantProps,
@@ -39,60 +12,64 @@ export interface RadioProps
   checkedIcon?: React.ReactNode;
 }
 
-const Radio = React.forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
-  const {
-    classNames,
-    className,
-    label,
-    id: idProp,
-    checked,
-    icon = icon_svg,
-    checkedIcon = checked_svg,
-    size = 'md',
-    color = 'primary',
-    labelPlacement = 'right',
-    ...inpuProps
-  } = props;
+export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
+  (props, ref) => {
+    const {
+      classNames,
+      className,
+      label,
+      id: idProp,
+      checked,
+      icon = <Icon>{circle_icon}</Icon>,
+      checkedIcon = <Icon>{checked_icon}</Icon>,
+      size = 'md',
+      color = 'primary',
+      labelPlacement = 'right',
+      ...inpuProps
+    } = props;
 
-  const autoId = React.useId();
-  const id = idProp ?? autoId;
+    const autoId = React.useId();
+    const id = idProp ?? autoId;
 
-  const styles = radio({ labelPlacement, color, size });
+    const styles = radio({ labelPlacement, color, size });
 
-  return (
-    <div className={styles.base({ className: classNames?.base ?? className })}>
-      <div className={styles.radio({ className: classNames?.radio })}>
-        <input
-          {...inpuProps}
-          checked={checked}
-          id={id}
-          ref={ref}
-          type="radio"
-          className={styles.input({ className: classNames?.input })}
-        />
+    return (
+      <div
+        className={styles.base({ className: classNames?.base ?? className })}
+      >
+        <div className={styles.radio({ className: classNames?.radio })}>
+          <input
+            {...inpuProps}
+            checked={checked}
+            id={id}
+            ref={ref}
+            type="radio"
+            className={styles.input({ className: classNames?.input })}
+          />
 
-        <div className={styles.icon({ className: classNames?.icon })}>
-          {icon}
+          <div className={styles.icon({ className: classNames?.icon })}>
+            {icon}
+          </div>
+          <div
+            className={styles.checkedIcon({
+              className: classNames?.checkedIcon,
+            })}
+          >
+            {checkedIcon}
+          </div>
         </div>
-        <div
-          className={styles.checkedIcon({ className: classNames?.checkedIcon })}
-        >
-          {checkedIcon}
-        </div>
+
+        {label && (
+          <label
+            htmlFor={id}
+            className={styles.label({ className: classNames?.label })}
+          >
+            {label}
+          </label>
+        )}
       </div>
+    );
+  },
+);
 
-      {label && (
-        <label
-          htmlFor={id}
-          className={styles.label({ className: classNames?.label })}
-        >
-          {label}
-        </label>
-      )}
-    </div>
-  );
-});
-
-Radio.displayName = 'webbo-ui.Radio';
-
-export default Radio;
+Radio.displayName = 'Radio';

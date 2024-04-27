@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDialogCtx } from './dialog-root';
 import { usePointerEvents } from '../use-pointer-events';
-import { Slot } from '../slot';
+import { Overlay, OverlayProps } from '../overlay';
 
-export interface DialogOverlayProps {}
+export interface DialogOverlayProps extends OverlayProps {}
 
 const Comp_Name = 'DialogOverlay';
 
@@ -21,7 +21,7 @@ export const DialogOverlay = React.forwardRef<
     },
   });
 
-  return <Slot {...restProps} ref={ref} {...pointerEvents} />;
+  return <Overlay {...restProps} ref={ref} {...pointerEvents} />;
 });
 
 DialogOverlay.displayName = Comp_Name;

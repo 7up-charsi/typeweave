@@ -1,8 +1,15 @@
 import React from 'react';
-
 import { ThemeProvider, useTheme } from './';
-import * as Menu from '../menu';
 import { Button, ButtonGroup } from '../button';
+import {
+  MenuArrow,
+  MenuContent,
+  MenuPortal,
+  MenuRadioGroup,
+  MenuRadioItem,
+  MenuRoot,
+  MenuTrigger,
+} from '../menu';
 
 const meta = {
   title: 'Components/Themes',
@@ -47,47 +54,48 @@ const MenuThemeComp = () => {
   const { onThemeChange, theme } = useTheme();
 
   return (
-    <Menu.Root>
-      <Menu.Trigger>
+    <MenuRoot>
+      <MenuTrigger>
         <Button>theme</Button>
-      </Menu.Trigger>
+      </MenuTrigger>
 
-      <Menu.Portal>
-        <Menu.Menu>
-          <Menu.Arrow />
-          <Menu.RadioGroup
+      <MenuPortal>
+        <MenuContent>
+          <MenuArrow />
+
+          <MenuRadioGroup
             label="theme switcher"
             onChange={onThemeChange}
             value={theme ?? undefined}
           >
-            <Menu.RadioItem
+            <MenuRadioItem
               value="light"
               classNames={{
                 itemContent: 'flex items-center justify-between pr-3',
               }}
             >
               <span>Light</span> {light_svg}
-            </Menu.RadioItem>
-            <Menu.RadioItem
+            </MenuRadioItem>
+            <MenuRadioItem
               value="dark"
               classNames={{
                 itemContent: 'flex items-center justify-between pr-3',
               }}
             >
               <span>Dark</span> {dark_svg}
-            </Menu.RadioItem>
-            <Menu.RadioItem
+            </MenuRadioItem>
+            <MenuRadioItem
               value="system"
               classNames={{
                 itemContent: 'flex items-center justify-between pr-3',
               }}
             >
               <span>System</span> {system_svg}
-            </Menu.RadioItem>
-          </Menu.RadioGroup>
-        </Menu.Menu>
-      </Menu.Portal>
-    </Menu.Root>
+            </MenuRadioItem>
+          </MenuRadioGroup>
+        </MenuContent>
+      </MenuPortal>
+    </MenuRoot>
   );
 };
 

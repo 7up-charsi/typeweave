@@ -7,7 +7,7 @@ export interface SkeletonProps
   extends SkeletonVariantProps,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {}
 
-const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
+export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
   (props, ref) => {
     const {
       className,
@@ -22,6 +22,4 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
   },
 );
 
-Skeleton.displayName = 'webbo-ui.Skeleton';
-
-export default Skeleton;
+Skeleton.displayName = 'Skeleton';

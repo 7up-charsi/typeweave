@@ -11,8 +11,8 @@ import {
   AlertDialogRoot,
   AlertDialogRootMethods,
   AlertDialogPortal,
+  AlertDialogOverlay,
 } from './';
-import { Overlay } from '../overlay';
 
 const meta = {
   title: 'Components/AlertDialog',
@@ -27,7 +27,7 @@ const Template = () => (
     </AlertDialogTrigger>
 
     <AlertDialogPortal>
-      <Overlay />
+      <AlertDialogOverlay />
 
       <AlertDialogContent>
         <AlertDialogTitle>Are your sure...?</AlertDialogTitle>
@@ -71,7 +71,7 @@ const VirtualElementTemplate = () => {
         <AlertDialogTrigger virtualElement={virtualElement} />
 
         <AlertDialogPortal>
-          <Overlay />
+          <AlertDialogOverlay />
 
           <AlertDialogContent>
             <AlertDialogTitle>Are your sure...?</AlertDialogTitle>
@@ -119,7 +119,7 @@ const ProgrammaticallyTemplate = () => {
         <AlertDialogTrigger virtual virtualElement={virtualElement} />
 
         <AlertDialogPortal>
-          <Overlay />
+          <AlertDialogOverlay />
 
           <AlertDialogContent>
             <Button

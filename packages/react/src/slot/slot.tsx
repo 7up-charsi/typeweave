@@ -29,7 +29,7 @@ const _Slot = <E extends HTMLElement>(
   } as Partial<unknown>);
 };
 
-_Slot.displayName = 'webbo-ui.Slot';
+_Slot.displayName = 'Slot';
 
 export const Slot = React.forwardRef(_Slot) as <T, P>(
   props: SlotProps & P & { ref?: React.ForwardedRef<T> },

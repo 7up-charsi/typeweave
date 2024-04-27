@@ -1,11 +1,5 @@
-import * as toggleButton from './toggle-button';
+export type { ToggleButtonProps } from './toggle-button';
+export type { ToggleButtonGroupProps } from './toggle-button-group';
 
-// export types
-export type {
-  ToggleButtonGroupProps,
-  ToggleButtonProps,
-} from './toggle-button';
-
-// export component
-export const ToggleButtonGroup = toggleButton.ToggleButtonGroup;
-export const ToggleButton = toggleButton.ToggleButton;
+export { ToggleButton } from './toggle-button';
+export { ToggleButtonGroup } from './toggle-button-group';
