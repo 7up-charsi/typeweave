@@ -1,6 +1,6 @@
 import { focus, getTabbableEdges } from './utils';
 import { Slot } from '../slot';
-import { CustomError } from '../error';
+import { CustomError } from '../custom-error';
 import React from 'react';
 import { mergeRefs } from '@webbo-ui/react-utils';
 
@@ -31,7 +31,7 @@ export interface FocusTrapProps extends React.HTMLAttributes<HTMLDivElement> {
   asChild?: boolean;
 }
 
-const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
+export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
   (props, ref) => {
     const {
       asChild,
@@ -190,9 +190,7 @@ const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
   },
 );
 
-FocusTrap.displayName = 'webbo-ui.FocusTrap';
-
-export default FocusTrap;
+FocusTrap.displayName = 'FocusTrap';
 
 const focusScopesStack = createFocusScopesStack();
 

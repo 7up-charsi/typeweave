@@ -6,7 +6,7 @@ export interface IconProps
   children?: React.ReactNode;
 }
 
-const Icon = React.forwardRef<SVGSVGElement, IconProps>((props, ref) => {
+export const Icon = React.forwardRef<SVGSVGElement, IconProps>((props, ref) => {
   const { ...restProps } = props;
 
   return (
@@ -22,6 +22,4 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>((props, ref) => {
   );
 });
 
-Icon.displayName = 'webbo-ui.Icon';
-
-export default Icon;
+Icon.displayName = 'Icon';

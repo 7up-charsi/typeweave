@@ -1,11 +1,21 @@
 import React from 'react';
-import { menu } from '@webbo-ui/theme';
 import { Button } from '../button';
-import * as Menu from './';
+import {
+  MenuArrow,
+  MenuCheckboxItem,
+  MenuContent,
+  MenuGroup,
+  MenuItem,
+  MenuPortal,
+  MenuRadioGroup,
+  MenuRadioItem,
+  MenuRoot,
+  MenuSeparator,
+  MenuTrigger,
+} from './';
 
 const meta = {
   title: 'Components/Menu',
-  args: menu.defaultVariants,
 };
 
 export default meta;
@@ -26,48 +36,51 @@ const Template = (args) => {
 
   return (
     <div className="h-[300vh] w-[300vw] flex pt-24 justify-center">
-      <Menu.Root defaultOpen {...args}>
-        <Menu.Trigger>
+      <MenuRoot defaultOpen {...args}>
+        <MenuTrigger>
           <Button ref={ref}>open menu</Button>
-        </Menu.Trigger>
+        </MenuTrigger>
 
-        <Menu.Portal>
-          <Menu.Menu aria-roledescription="control menu" className="w-[170px]">
-            <Menu.Arrow />
+        <MenuPortal>
+          <MenuContent
+            aria-roledescription="control menu"
+            className="w-[170px]"
+          >
+            <MenuArrow />
 
-            <Menu.Group label="actions">
-              <Menu.Item>add</Menu.Item>
-              <Menu.Item>edit</Menu.Item>
-              <Menu.Item disabled>delete</Menu.Item>
-            </Menu.Group>
+            <MenuGroup label="actions">
+              <MenuItem>add</MenuItem>
+              <MenuItem>edit</MenuItem>
+              <MenuItem disabled>delete</MenuItem>
+            </MenuGroup>
 
-            <Menu.Separator />
+            <MenuSeparator />
 
-            <Menu.Group label="status">
-              <Menu.CheckboxItem checked={favrouite} onChange={setFavrouite}>
+            <MenuGroup label="status">
+              <MenuCheckboxItem checked={favrouite} onChange={setFavrouite}>
                 active
-              </Menu.CheckboxItem>
-              <Menu.CheckboxItem disabled checked>
+              </MenuCheckboxItem>
+              <MenuCheckboxItem disabled checked>
                 notifications
-              </Menu.CheckboxItem>
-            </Menu.Group>
+              </MenuCheckboxItem>
+            </MenuGroup>
 
-            <Menu.Separator />
+            <MenuSeparator />
 
-            <Menu.RadioGroup
+            <MenuRadioGroup
               label="current bill"
               onChange={setRadioValue}
               value={radioValue}
             >
-              <Menu.RadioItem value="radio item 1">paid</Menu.RadioItem>
-              <Menu.RadioItem value="radio item 2">unpaid</Menu.RadioItem>
-              <Menu.RadioItem value="radio item 3" disabled>
+              <MenuRadioItem value="radio item 1">paid</MenuRadioItem>
+              <MenuRadioItem value="radio item 2">unpaid</MenuRadioItem>
+              <MenuRadioItem value="radio item 3" disabled>
                 always paid
-              </Menu.RadioItem>
-            </Menu.RadioGroup>
-          </Menu.Menu>
-        </Menu.Portal>
-      </Menu.Root>
+              </MenuRadioItem>
+            </MenuRadioGroup>
+          </MenuContent>
+        </MenuPortal>
+      </MenuRoot>
     </div>
   );
 };

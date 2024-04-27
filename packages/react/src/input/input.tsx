@@ -220,9 +220,9 @@ const InputImpl = (
   );
 };
 
-InputImpl.displayName = 'webbo-ui.Input';
+InputImpl.displayName = 'Input';
 
-export default React.forwardRef(InputImpl) as unknown as <
+export const Input = React.forwardRef(InputImpl) as unknown as <
   Multiline extends boolean = false,
 >(
   props: InputProps<Multiline> & React.RefAttributes<HTMLDivElement>,

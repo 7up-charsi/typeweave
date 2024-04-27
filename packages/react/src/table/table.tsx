@@ -2,7 +2,7 @@ import { createContextScope } from '../context';
 import { TableClassNames, TableVariantProps, table } from '@webbo-ui/theme';
 import * as Menu from '../menu';
 import React from 'react';
-import { CustomError } from '../error';
+import { CustomError } from '../custom-error';
 import { Slot } from '../slot';
 import {
   UseControllableStateReturn,

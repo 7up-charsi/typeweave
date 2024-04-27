@@ -1,5 +1,5 @@
 import React from 'react';
-import { CustomError } from '../error';
+import { CustomError } from '../custom-error';
 
 export const createContextScope = <ContextValue extends object>(
   rootName: string,

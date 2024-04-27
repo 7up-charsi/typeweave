@@ -1,10 +1,9 @@
-import * as popper from './popper';
+export type { PopperArrowProps } from './popper-arrow';
+export type { PopperFloatingProps } from './popper-floating';
+export type { PopperReferenceProps } from './popper-reference';
+export type { PopperRootProps } from './popper-root';
 
-// export types
-export type { PopperProps, FloatingProps, ReferenceProps } from './popper';
-
-// export component
-export const Root = popper.Root;
-export const Reference = popper.Reference;
-export const Floating = popper.Floating;
-export const Arrow = popper.Arrow;
+export { PopperArrow } from './popper-arrow';
+export { PopperFloating } from './popper-floating';
+export { PopperReference } from './popper-reference';
+export { PopperRoot } from './popper-root';

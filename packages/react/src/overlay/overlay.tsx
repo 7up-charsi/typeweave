@@ -5,14 +5,14 @@ export interface OverlayProps
   extends OverlayVariantProps,
     React.HTMLAttributes<HTMLDivElement> {}
 
-const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
-  const { className, variant = 'opaque', ...restProps } = props;
+export const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
+  (props, ref) => {
+    const { className, variant = 'opaque', ...restProps } = props;
 
-  const styles = overlay({ variant, className });
+    const styles = overlay({ variant, className });
 
-  return <div {...restProps} ref={ref} className={styles} />;
-});
+    return <div {...restProps} ref={ref} className={styles} />;
+  },
+);
 
-Overlay.displayName = 'webbo-ui.Overlay';
-
-export default Overlay;
+Overlay.displayName = 'Overlay';

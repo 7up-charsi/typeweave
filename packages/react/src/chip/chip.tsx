@@ -1,6 +1,6 @@
 import { ChipClassNames, ChipVariantProps, chip } from '@webbo-ui/theme';
 import { usePointerEvents } from '../use-pointer-events';
-import { accessibilityWarning } from '../error';
+import { accessibilityWarning } from '../custom-error';
 import { Icon } from '../icon';
 import React from 'react';
 

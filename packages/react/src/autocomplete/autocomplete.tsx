@@ -1,6 +1,6 @@
 import * as Popper from '../popper';
 import { useControllableState } from '../use-controllable-state';
-import { CustomError } from '../error';
+import { CustomError } from '../custom-error';
 import { Option } from './option';
 import lodashGroupBy from 'lodash.groupby';
 import {

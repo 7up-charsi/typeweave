@@ -7,72 +7,13 @@ import React from 'react';
 import { useControllableState } from '../use-controllable-state';
 import { Button, ButtonProps } from '../button';
 import { Icon } from '../icon';
-
-const ellipsis_svg = (
-  <Icon>
-    <svg fill="none" viewBox="0 0 24 24">
-      <g fill="currentColor">
-        <path d="M12 13.75a1.75 1.75 0 100-3.5 1.75 1.75 0 000 3.5zM19 13.75a1.75 1.75 0 100-3.5 1.75 1.75 0 000 3.5zM5 13.75a1.75 1.75 0 100-3.5 1.75 1.75 0 000 3.5z"></path>
-      </g>
-    </svg>
-  </Icon>
-);
-
-const first_svg = (
-  <Icon>
-    <svg fill="none" viewBox="0 0 24 24">
-      <path
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M4 4v16m4-8h12M8 12l4-4m-4 4l4 4"
-      ></path>
-    </svg>
-  </Icon>
-);
-
-const last_svg = (
-  <Icon>
-    <svg fill="none" viewBox="0 0 24 24">
-      <path
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M20 4v16M4 12h12m0 0l-4-4m4 4l-4 4"
-      ></path>
-    </svg>
-  </Icon>
-);
-
-const next_svg = (
-  <Icon>
-    <svg fill="none" viewBox="0 0 24 24">
-      <path
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M6 12h12m0 0l-5-5m5 5l-5 5"
-      ></path>
-    </svg>
-  </Icon>
-);
-
-const prev_svg = (
-  <Icon>
-    <svg fill="none" viewBox="0 0 24 24">
-      <path
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M6 12h12M6 12l5-5m-5 5l5 5"
-      ></path>
-    </svg>
-  </Icon>
-);
+import {
+  ellipsis_icon,
+  first_icon,
+  last_icon,
+  next_icon,
+  prev_icon,
+} from './icons';
 
 export interface PaginationProps
   extends PaginationVariantProps,
@@ -105,7 +46,7 @@ export interface PaginationProps
 const range = (start: number, end: number) =>
   Array.from({ length: end - start + 1 }, (_, i) => start + i);
 
-const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
+export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
   (props, ref) => {
     const {
       classNames,
@@ -119,10 +60,10 @@ const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
       showLastButton = true,
       showPreviousButton = true,
       showNextButton = true,
-      firstButtonIcon = first_svg,
-      lastButtonIcon = last_svg,
-      previousButtonIcon = prev_svg,
-      nextButtonIcon = next_svg,
+      firstButtonIcon = <Icon>{first_icon}</Icon>,
+      lastButtonIcon = <Icon>{last_icon}</Icon>,
+      previousButtonIcon = <Icon>{prev_icon}</Icon>,
+      nextButtonIcon = <Icon>{next_icon}</Icon>,
       firstPageA11yLabel = 'first page',
       lastPageA11yLabel = 'last page',
       nextPageA11yLabel = 'next page',
@@ -242,7 +183,9 @@ const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
                     }}
                     asChild
                   >
-                    <div>{ellipsis_svg}</div>
+                    <div>
+                      <Icon>{ellipsis_icon}</Icon>
+                    </div>
                   </Button>
                 </li>
               );
@@ -308,6 +251,4 @@ const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
   },
 );
 
-Pagination.displayName = 'webbo-ui.Pagination';
-
-export default Pagination;
+Pagination.displayName = 'Pagination';

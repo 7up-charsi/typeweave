@@ -2,7 +2,7 @@ import { mergeRefs } from '@webbo-ui/react-utils';
 import { button, ButtonClassNames, ButtonVariantProps } from '@webbo-ui/theme';
 import { Slot } from '../slot';
 import { usePointerEvents } from '../use-pointer-events';
-import { accessibilityWarning } from '../error';
+import { accessibilityWarning } from '../custom-error';
 import React from 'react';
 import { GroupCtx } from './button-group';
 
