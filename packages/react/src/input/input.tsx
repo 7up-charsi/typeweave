@@ -98,12 +98,16 @@ const InputImpl = (
     }
   }, [label]);
 
-  const styles = input({
-    disabled,
-    fullWidth,
-    required: !!required,
-    multiline,
-  });
+  const styles = React.useMemo(
+    () =>
+      input({
+        disabled,
+        fullWidth,
+        required: !!required,
+        multiline,
+      }),
+    [disabled, fullWidth, multiline, required],
+  );
 
   const sharedProps = {
     'aria-label': hideLabel ? label : undefined,

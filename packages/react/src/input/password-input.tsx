@@ -35,7 +35,7 @@ export const PasswordInput = React.forwardRef<
 
   const [isPassword, setIsPassword] = React.useState(true);
 
-  const styles = passwordInput();
+  const styles = React.useMemo(() => passwordInput(), []);
 
   const toggleButton = (
     <Button

@@ -44,7 +44,10 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
       ...restProps
     } = props;
 
-    const styles = alertStyles({ color, fullWidth, variant });
+    const styles = React.useMemo(
+      () => alertStyles({ color, fullWidth, variant }),
+      [color, fullWidth, variant],
+    );
 
     return (
       <div {...restProps} ref={ref} role="alert" className={styles.base()}>

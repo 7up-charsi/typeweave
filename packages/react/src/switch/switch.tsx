@@ -36,7 +36,10 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
     const autoId = React.useId();
     const id = idProp ?? autoId;
 
-    const styles = switchStyles({ size, labelPlacement, color });
+    const styles = React.useMemo(
+      () => switchStyles({ size, labelPlacement, color }),
+      [color, labelPlacement, size],
+    );
 
     return (
       <div

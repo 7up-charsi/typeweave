@@ -243,7 +243,7 @@ export const NumberInput = React.forwardRef<HTMLDivElement, NumberInputProps>(
       }, threshold);
     };
 
-    const styles = numberInput();
+    const styles = React.useMemo(() => numberInput(), []);
 
     if (process.env.NODE_ENV !== 'production' && min && max && min > max)
       throw new CustomError('NumberInput', '"min" must be lower than "max"');

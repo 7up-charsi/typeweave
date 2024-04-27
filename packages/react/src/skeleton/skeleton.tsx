@@ -18,7 +18,10 @@ export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
       ...restProps
     } = props;
 
-    const styles = skeleton({ variant, className, animation });
+    const styles = React.useMemo(
+      () => skeleton({ variant, className, animation }),
+      [animation, className, variant],
+    );
 
     return <div {...restProps} ref={ref} className={styles} />;
   },

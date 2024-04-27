@@ -44,7 +44,10 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     const autoId = React.useId();
     const id = idProp ?? autoId;
 
-    const styles = checkbox({ size, labelPlacement, color });
+    const styles = React.useMemo(
+      () => checkbox({ size, labelPlacement, color }),
+      [color, labelPlacement, size],
+    );
 
     React.useEffect(() => {
       if (!innerRef.current) return;

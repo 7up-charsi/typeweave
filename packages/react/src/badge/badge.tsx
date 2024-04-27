@@ -29,7 +29,10 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       ...restProps
     } = props;
 
-    const styles = badge({ color, variant, placement, shadow, invisible });
+    const styles = React.useMemo(
+      () => badge({ color, variant, placement, shadow, invisible }),
+      [color, invisible, placement, shadow, variant],
+    );
 
     return (
       <span
