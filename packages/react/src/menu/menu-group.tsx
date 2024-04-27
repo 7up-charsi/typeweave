@@ -1,6 +1,5 @@
 import React from 'react';
 import { useMenuStyles } from './menu-content';
-import { accessibilityWarning } from '../custom-error';
 
 export interface MenuGroupProps extends React.HTMLAttributes<HTMLUListElement> {
   label: string;
@@ -23,9 +22,8 @@ export const MenuGroup = React.forwardRef<HTMLUListElement, MenuGroupProps>(
       // eslint-disable-next-line react-hooks/rules-of-hooks
       React.useEffect(() => {
         if (!label)
-          accessibilityWarning(
-            displayName,
-            'This component requires a label for accessibility. If you want to hide the label visually, use the `hideLabel` prop. Otherwise, provide a default value for `aria-label`.',
+          console.warn(
+            'For accessible MenuGroup, provide a `label` prop for screen readers to describe its purpose. If you want to hide the label visually, use the `hideLabel` prop',
           );
       }, [label]);
     }
