@@ -1,5 +1,5 @@
-import { mergeRefs } from '@webbo-ui/react-utils';
-import { button, ButtonClassNames, ButtonVariantProps } from '@webbo-ui/theme';
+import { mergeRefs } from '@ux-weaver/react-utils';
+import { button, ButtonClassNames, ButtonVariantProps } from '@ux-weaver/theme';
 import { Slot } from '../slot';
 import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';

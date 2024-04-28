@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from '../button';
 import {
+  Button,
   MenuArrow,
   MenuCheckboxItem,
   MenuContent,
@@ -12,7 +12,7 @@ import {
   MenuRoot,
   MenuSeparator,
   MenuTrigger,
-} from './';
+} from '../src';
 
 const meta = {
   title: 'Components/Menu',

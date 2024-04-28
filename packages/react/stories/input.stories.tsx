@@ -1,5 +1,5 @@
 import React from 'react';
-import { NumberInput, PasswordInput, Input as InputComp } from './';
+import { NumberInput, PasswordInput, Input as InputComp } from '../src';
 
 const meta = {
   title: 'Components/Input',

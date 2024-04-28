@@ -1,6 +1,6 @@
 import React from 'react';
-import { toggleButton } from '@webbo-ui/theme';
-import { ToggleButton, ToggleButtonGroup } from './';
+import { toggleButton } from '@ux-weaver/theme';
+import { ToggleButton, ToggleButtonGroup } from '../src';
 
 const meta = {
   title: 'Components/ToggleButton',

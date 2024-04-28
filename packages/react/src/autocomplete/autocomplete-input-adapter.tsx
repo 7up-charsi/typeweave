@@ -6,7 +6,7 @@ import {
   AutocompleteInputClassNames,
   InputClassNames,
   autocompleteInput,
-} from '@webbo-ui/theme';
+} from '@ux-weaver/theme';
 import { ChevronDownIcon, XIcon } from 'lucide-react';
 
 export const autocompleteInputAdapter = (

@@ -4,7 +4,7 @@ import {
   InputClassNames,
   SelectInputClassNames,
   selectInput,
-} from '@webbo-ui/theme';
+} from '@ux-weaver/theme';
 import { type InputProps } from '../input';
 import React from 'react';
 import { ChevronDownIcon, XIcon } from 'lucide-react';

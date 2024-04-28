@@ -1,16 +1,13 @@
 import { VariantProps, tv } from 'tailwind-variants';
 import { ClassNames } from '../types';
-import { focusWithIn } from '../classes';
 
 export const input = tv({
   slots: {
     base: 'flex flex-col w-64 group space-y-1',
     label:
       'first-letter:uppercase cursor-pointer self-start px-1 text-sm font-semibold text-muted-11',
-    inputWrapper: [
-      'w-full relative flex items-center gap-x-2 rounded px-3 cursor-text bg-transparent border border-muted-7 hover:border-muted-8 focus-within:hover:border-transparent focus-within:border-transparent overflow-hidden',
-      focusWithIn,
-    ],
+    inputWrapper:
+      'w-full relative flex items-center gap-x-2 rounded px-3 cursor-text bg-transparent border border-muted-7 hover:border-muted-8 focus-within:hover:border-transparent focus-within:border-transparent overflow-hidden focus-within:outline-2 focus-within:outline-focus',
     input:
       'appearance-none bg-transparent outline-none grow w-0 text-muted-11 placeholder:text-muted-11/90 h-[30px] text-sm',
     helperText: 'first-letter:uppercase px-1 text-xs text-muted-11/90',

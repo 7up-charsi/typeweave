@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button } from '../button';
 import {
+  Button,
   DisclosureContent,
   DisclosureItem,
   DisclosureRoot,
   DisclosureTrigger,
-} from './';
+} from '../src';
 import { ChevronDownIcon } from 'lucide-react';
 
 const meta = {

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from '../button';
-import { FocusTrap, FocusTrapProps } from './';
+import { FocusTrap, FocusTrapProps, Button } from '../src';
 
 const meta = {
   title: 'Components/FocusTrap',

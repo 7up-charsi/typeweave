@@ -1,6 +1,6 @@
 import React from 'react';
-import { skeleton } from '@webbo-ui/theme';
-import { Skeleton } from './';
+import { skeleton } from '@ux-weaver/theme';
+import { Skeleton } from '../src';
 
 const meta = {
   title: 'Components/Skeleton',

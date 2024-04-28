@@ -1,5 +1,5 @@
 {
-  "name": "@webbo-ui/react-utils",
+  "name": "@ux-weaver/react-utils",
   "version": "1.0.1",
   "keywords": [
     "react-utils"
@@ -17,11 +17,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/7up-charsi/webbo-ui.git",
+    "url": "git+https://github.com/7up-charsi/ux-weaver.git",
     "directory": "packages/utilities/react-utils"
   },
   "bugs": {
-    "url": "https://github.com/7up-charsi/webbo-ui/issues"
+    "url": "https://github.com/7up-charsi/ux-weaver/issues"
   },
   "main": "./src/index.ts",
   "scripts": {

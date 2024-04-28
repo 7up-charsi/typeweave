@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pagination, PaginationProps } from './';
+import { Pagination, PaginationProps } from '../src';
 
 const meta = {
   title: 'Components/Pagination',

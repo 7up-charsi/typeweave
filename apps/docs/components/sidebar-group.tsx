@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { usePointerEvents } from '@webbo-ui/use-pointer-events';
-import { focusVisible } from '@webbo-ui/theme';
+import { focusVisible } from '@ux-weaver/theme';
 
 // *-*-*-*-* SidebarGroup *-*-*-*-*
 

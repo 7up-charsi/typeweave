@@ -1,4 +1,4 @@
-import { DialogVariantProps, dialog } from '@webbo-ui/theme';
+import { DialogVariantProps, dialog } from '@ux-weaver/theme';
 import React from 'react';
 import { useDialogCtx } from './dialog-root';
 import { useScrollLock } from '../use-scroll-lock';

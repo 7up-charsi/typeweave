@@ -1,4 +1,4 @@
-import { disclosure } from '@webbo-ui/theme';
+import { disclosure } from '@ux-weaver/theme';
 import { createContextScope } from '../context';
 import React from 'react';
 import { Slot } from '../slot';

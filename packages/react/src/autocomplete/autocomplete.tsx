@@ -1,13 +1,12 @@
 import { useControllableState } from '../use-controllable-state';
-import { CustomError } from '../custom-error';
 import { Option } from './option';
 import lodashGroupBy from 'lodash.groupby';
 import {
   AutocompleteClassNames,
   AutocompleteVariantProps,
   autocomplete,
-} from '@webbo-ui/theme';
-import { mergeRefs } from '@webbo-ui/react-utils';
+} from '@ux-weaver/theme';
+import { mergeRefs } from '@ux-weaver/react-utils';
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { getNext, getPrevious } from './utils';
@@ -168,9 +167,8 @@ const AutocompleteImpl = React.forwardRef<
     }
 
     if (!('label' in option))
-      throw new CustomError(
-        'Select',
-        'consider to add `label` property in all options or use `getOptionLabel` prop to get option label',
+      throw new Error(
+        `${displayName}, consider to add \`label\` property in all options or use \`getOptionLabel\` prop to get option label`,
       );
 
     return option.label as string;
@@ -184,9 +182,8 @@ const AutocompleteImpl = React.forwardRef<
     value: valueProp,
     onChange: (value, reason) => {
       if (!reason)
-        throw new CustomError(
-          'Autocomplete',
-          'internal Error, reason is not defined',
+        throw new Error(
+          `${displayName}, \`internal Error\` reason is not defined`,
         );
 
       onChange?.({ target: { value } } as never, reason, value);
@@ -416,19 +413,17 @@ const AutocompleteImpl = React.forwardRef<
   });
 
   if (multiple && !Array.isArray(value))
-    throw new CustomError(
-      'Autocomplete',
-      'value must be an Array when multiple is true',
+    throw new Error(
+      `${displayName}, value must be an Array when multiple is true`,
     );
 
   if (!multiple && Array.isArray(value))
-    throw new CustomError(
-      'Autocomplete',
-      'value must not be an Array when multiple is false',
+    throw new Error(
+      `${displayName}, value must not be an Array when multiple is false`,
     );
 
   if (!renderInput)
-    throw new CustomError('Autocomplete', '`renderInput` prop is required');
+    throw new Error(`${displayName}, \`renderInput\` prop is required`);
 
   const listBox = (
     <ul

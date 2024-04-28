@@ -1,4 +1,4 @@
-import { OverlayVariantProps, overlay } from '@webbo-ui/theme';
+import { OverlayVariantProps, overlay } from '@ux-weaver/theme';
 import React from 'react';
 
 export interface OverlayProps

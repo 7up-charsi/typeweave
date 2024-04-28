@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../button';
+import { Button } from '../src';
 import {
   AlertDialogActions,
   AlertDialogClose,
@@ -11,7 +11,7 @@ import {
   AlertDialogRootMethods,
   AlertDialogPortal,
   AlertDialogOverlay,
-} from './';
+} from '../src';
 import { XIcon } from 'lucide-react';
 
 const meta = {

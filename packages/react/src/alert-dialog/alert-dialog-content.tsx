@@ -1,4 +1,4 @@
-import { AlertDialogVariantProps, alertDialog } from '@webbo-ui/theme';
+import { AlertDialogVariantProps, alertDialog } from '@ux-weaver/theme';
 import React from 'react';
 import { useScrollLock } from '../use-scroll-lock';
 import { useAlertDialogCtx } from './alert-dialog-root';

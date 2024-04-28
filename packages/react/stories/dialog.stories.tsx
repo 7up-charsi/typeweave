@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from '../button';
 import {
+  Button,
   DialogClose,
   DialogContent,
   DialogDescription,
@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogPortal,
-} from './';
+} from '../src';
 import { XIcon } from 'lucide-react';
 
 const meta = {

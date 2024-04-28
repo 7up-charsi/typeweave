@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from '../button';
 import {
+  Button,
   PopoverArrow,
   PopoverClose,
   PopoverContent,
@@ -9,7 +9,7 @@ import {
   PopoverRoot,
   PopoverTitle,
   PopoverTrigger,
-} from './';
+} from '../src';
 
 const meta = {
   title: 'Components/Popover',

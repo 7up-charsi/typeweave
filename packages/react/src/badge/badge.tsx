@@ -1,4 +1,4 @@
-import { BadgeClassNames, BadgeVariantProps, badge } from '@webbo-ui/theme';
+import { BadgeClassNames, BadgeVariantProps, badge } from '@ux-weaver/theme';
 import React from 'react';
 
 export interface BadgeProps

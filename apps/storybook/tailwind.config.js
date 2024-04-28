@@ -1,9 +1,9 @@
-import { WebboUi } from '@webbo-ui/theme';
+import { WebboUi } from '@ux-weaver/theme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    '../../packages/react/src/**/*.stories.tsx',
+    '../../packages/react/stories/**/*.stories.tsx',
     '../../packages/theme/src/**/*.ts',
     './.storybook/**/*.{ts,tsx}',
   ],

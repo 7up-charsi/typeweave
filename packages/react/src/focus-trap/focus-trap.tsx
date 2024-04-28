@@ -1,8 +1,7 @@
 import { focus, getTabbableEdges } from './utils';
 import { Slot } from '../slot';
-import { CustomError } from '../custom-error';
 import React from 'react';
-import { mergeRefs } from '@webbo-ui/react-utils';
+import { mergeRefs } from '@ux-weaver/react-utils';
 
 export type FocusScope = { paused: boolean; pause(): void; resume(): void };
 
@@ -127,9 +126,8 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
         lastFocusedElement.current = prevFocusedElement;
       } else {
         if (!('focus' in container))
-          throw new CustomError(
-            'FocusTrap',
-            'container must be focusable, hint = set tabIndex to -1',
+          throw new Error(
+            `${displayName}, container must be focusable, hint = set tabIndex to -1`,
           );
 
         container.focus();

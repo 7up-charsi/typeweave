@@ -1,6 +1,6 @@
 'use client';
 
-import { AlertVariantProps, alert as alertStyles } from '@webbo-ui/theme';
+import { AlertVariantProps, alert as alertStyles } from '@ux-weaver/theme';
 import { Button } from '../button';
 import React from 'react';
 import {

@@ -1,14 +1,14 @@
 import React from 'react';
-import { Button } from '../button';
-import { Checkbox } from '../checkbox';
 import {
+  Checkbox,
+  Button,
   TableRoot,
   TableSelectAllRows,
   TableSelectRow,
   TableColumnVisibility,
   TableSelectRowRoot,
   Table,
-} from './';
+} from '../src';
 import { Columns3Icon } from 'lucide-react';
 
 const meta = {

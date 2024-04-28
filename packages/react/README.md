@@ -1,13 +1,13 @@
-# @webbo-ui/react
+# @ux-weaver/react
 
 ## Installation
 
 ```bash
-pnpm add @webbo-ui/react
+pnpm add @ux-weaver/react
 # or
-yarn add @webbo-ui/react
+yarn add @ux-weaver/react
 # or
-npm i @webbo-ui/react
+npm i @ux-weaver/react
 ```
 
 ## Licence
