@@ -1,13 +1,18 @@
 import { Button } from '../button';
-import { SelectRenderInputProps } from './select';
-import { SelectInputClassNames, selectInput } from '@webbo-ui/theme';
+import { Chip } from '../chip';
+import { AutocompleteRenderInputProps } from './autocomplete';
 import { type InputProps } from '../input';
-import React from 'react';
+import {
+  AutocompleteInputClassNames,
+  InputClassNames,
+  autocompleteInput,
+} from '@webbo-ui/theme';
+import { ChevronDownIcon, XIcon } from 'lucide-react';
 
-export const mapInputProps = (
-  inputProps: SelectRenderInputProps,
+export const autocompleteInputAdapter = (
+  inputProps: AutocompleteRenderInputProps,
   props?: {
-    classNames?: SelectInputClassNames;
+    classNames?: AutocompleteInputClassNames & InputClassNames;
     disableOpenIndicator?: boolean;
     clearIcon?: React.ReactNode;
     openIndicatorIcon?: React.ReactNode;
@@ -16,31 +21,61 @@ export const mapInputProps = (
 ): InputProps<false> => {
   const {
     ariaProps,
-    clearButtonProps: { onClear, ...clearButtonProps },
     onOpen,
+    clearButtonProps: { onClear, ...clearButtonProps },
     inputRef,
     disabled,
     onBlur,
+    onChange,
     onKeyDown,
     popperReferenceRef,
     showClearButton,
+    selected,
     isOpen,
+    multiple,
     inputValue,
-    readOnly,
     loading,
   } = inputProps;
+
+  const styles = autocompleteInput({ multiple });
 
   const {
     classNames,
     disableOpenIndicator,
     loader,
-    clearIcon,
-    openIndicatorIcon,
+    clearIcon = <XIcon />,
+    openIndicatorIcon = <ChevronDownIcon />,
   } = props ?? {};
 
-  const styles = selectInput();
-
   return {
+    classNames: {
+      inputWrapper: styles.inputWrapper({
+        className: classNames?.inputWrapper,
+      }),
+      input: styles.input({ className: classNames?.input }),
+      startContent: styles.startContent({
+        className: classNames?.startContent,
+      }),
+      endContent: styles.endContent({
+        className: classNames?.endContent,
+      }),
+      base: classNames?.base,
+      errorMessage: classNames?.errorMessage,
+      helperText: classNames?.helperText,
+      label: classNames?.label,
+    },
+    startContent: selected?.map((opt, i) => (
+      <Chip
+        key={i}
+        color="default"
+        variant="border"
+        label={opt.label}
+        onDelete={opt.onDelete}
+        aria-label={`selected ${opt.label}`}
+        deleteA11yLabel={`remove ${opt.label}`}
+        excludeFromTabOrder
+      />
+    )),
     endContent: (
       <>
         {!loading && showClearButton && (
@@ -82,6 +117,8 @@ export const mapInputProps = (
       </>
     ),
     inputWrapperProps: {
+      // @ts-expect-error ----
+      'data-chips': !!selected?.length,
       onPointerDown: (e) => {
         if (e.button !== 0 || disabled) return;
 
@@ -93,14 +130,13 @@ export const mapInputProps = (
         onOpen();
       },
     },
-    // @ts-expect-error ----
     ref: popperReferenceRef,
     inputRef,
     onBlur,
     value: inputValue,
-    disabled: !!disabled,
+    onChange,
+    disabled,
     onKeyDown,
     ...ariaProps,
-    readOnly,
   };
 };

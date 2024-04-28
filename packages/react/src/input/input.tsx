@@ -79,7 +79,7 @@ const InputImpl = (
     disabled = false,
     multiline,
     textareaRef,
-    ...restProps
+    ...inputProps
   } = props;
 
   const labelId = React.useId();
@@ -171,7 +171,7 @@ const InputImpl = (
         {!multiline ? null : (
           <textarea
             rows={5}
-            {...restProps}
+            {...inputProps}
             className={styles.textarea({
               className: classNames?.textarea,
             })}
@@ -182,7 +182,7 @@ const InputImpl = (
 
         {multiline ? null : (
           <input
-            {...restProps}
+            {...inputProps}
             className={styles.input({ className: classNames?.input })}
             ref={mergeRefs(innerInputRef, inputRef)}
             {...sharedProps}
