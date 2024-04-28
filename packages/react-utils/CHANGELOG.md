@@ -1,5 +1,11 @@
 # @ux-weaver/react-utils
 
+## 1.0.2
+
+### Patch Changes
+
+- fix: alot
+
 ## 1.0.1
 
 ### Patch Changes
