@@ -18,7 +18,7 @@ type ThemeColors = {
   info?: ColorScale;
   muted?: ColorScale;
   overlay?: ColorScale;
-  focus?: ColorScale;
+  focus?: string;
 };
 
 type ThemeLayout = {
@@ -56,8 +56,8 @@ const defaultLightTheme: Theme = {
     danger: createColorScale(colors.red),
     info: createColorScale(colors.blue),
     muted: createColorScale(colors.gray),
-    focus: createColorScale(colors.blue),
     overlay: createColorScale(colors.blackA),
+    focus: colors.blue.blue8,
   },
   layout: { borderRadius: '4px' },
 };
@@ -74,8 +74,8 @@ const defaultDarkTheme: Theme = {
     danger: createColorScale(colors.redDark),
     info: createColorScale(colors.blueDark),
     muted: createColorScale(colors.grayDark),
-    focus: createColorScale(colors.blueDark),
     overlay: createColorScale(colors.whiteA),
+    focus: colors.blueDark.blue8,
   },
   layout: { borderRadius: '4px' },
 };
@@ -151,28 +151,7 @@ export const WebboUi = (config: PluginConfig = {}) => {
   });
 
   return plugin(
-    ({ addUtilities, addBase, addVariant }) => {
-      addBase([
-        {
-          '.lucide': {
-            width: '1em',
-            height: '1em',
-            'vector-effect': 'non-scaling-stroke',
-          },
-        },
-        {
-          'input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button':
-            {
-              '-webkit-appearance': 'none',
-              appearance: 'none',
-              margin: '0px',
-            },
-          'input[type="number"]': {
-            '-moz-appearance': 'textfield',
-          },
-        },
-      ]);
-
+    ({ addUtilities, addVariant }) => {
       addUtilities(utilities);
 
       variants.forEach((variant) =>
@@ -181,6 +160,11 @@ export const WebboUi = (config: PluginConfig = {}) => {
 
       addUtilities([
         {
+          '.lucide': {
+            width: '1em',
+            height: '1em',
+            'vector-effect': 'non-scaling-stroke',
+          },
           '.disabled': {
             opacity: '0.5',
             pointerEvents: 'none',

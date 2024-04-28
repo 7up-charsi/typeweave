@@ -1,15 +1,12 @@
 import { tv, VariantProps } from 'tailwind-variants';
-import { focusVisible } from '../classes';
 import { ClassNames } from '../types';
 
 export const radio = tv({
   slots: {
     base: 'inline-flex gap-2',
     radio: 'relative w-5 h-5',
-    input: [
-      'peer/input rounded-full appearance-none cursor-pointer transition-colors disabled:disabled absolute inset-0',
-      focusVisible,
-    ],
+    input:
+      'peer/input rounded-full appearance-none cursor-pointer transition-colors disabled:disabled absolute inset-0 outline-none focus-visible:outline-2 focus-visible:outline-focus',
     icon: 'pointer-events-none absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-muted-11 block peer-checked/input:hidden',
     checkedIcon:
       'pointer-events-none absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden peer-checked/input:block',

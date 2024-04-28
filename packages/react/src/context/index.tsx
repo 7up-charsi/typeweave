@@ -1,5 +1,6 @@
 import React from 'react';
-import { CustomError } from '../custom-error';
+
+const displayName = 'createContextScope';
 
 export const createContextScope = <ContextValue extends object>(
   rootName: string,
@@ -23,9 +24,8 @@ export const createContextScope = <ContextValue extends object>(
     const context = React.useContext(Context);
 
     if (!context)
-      throw new CustomError(
-        'createContextScope',
-        `\`${consumerName}\` must be used within \`${rootName}\``,
+      throw new Error(
+        `${displayName}, \`${consumerName}\` must be used within \`${rootName}\``,
       );
 
     return context;

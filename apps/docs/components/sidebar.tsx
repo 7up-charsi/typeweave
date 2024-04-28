@@ -6,7 +6,7 @@ import { componentsLinks } from '@/config/components-links';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { SidebarGroup } from './sidebar-group';
-import { focusVisible } from '@webbo-ui/theme';
+import { focusVisible } from '@ux-weaver/theme';
 
 const linkStyles = (href: string, pathname: string) =>
   `flex h-8 items-center rounded px-3 ${pathname === href ? 'bg-primary-4 text-primary-11' : 'text-muted-11 hover:bg-muted-3'} ${focusVisible}`;

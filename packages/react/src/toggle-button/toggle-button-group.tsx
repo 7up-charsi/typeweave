@@ -1,9 +1,8 @@
-import { ToggleButtonVariantProps, toggleButton } from '@webbo-ui/theme';
+import { ToggleButtonVariantProps, toggleButton } from '@ux-weaver/theme';
 import { createContextScope } from '../context';
 import { ButtonGroup, ButtonGroupProps } from '../button';
 import React from 'react';
 import { useControllableState } from '../use-controllable-state';
-import { CustomError } from '../custom-error';
 
 export type ToggleButtonGroupProps<Exclusive> = ToggleButtonVariantProps &
   Omit<ButtonGroupProps, 'variant'> &
@@ -65,15 +64,13 @@ export const ToggleButtonGroupImpl = (props: ToggleButtonGroupProps<false>) => {
   });
 
   if (exclusive && Array.isArray(value))
-    throw new CustomError(
-      displayName,
-      '`value` must be `string`, when `exclusive` is true',
+    throw new Error(
+      `${displayName}, \`value\` must be \`string\`, when \`exclusive\` is true`,
     );
 
   if (!exclusive && !Array.isArray(value))
-    throw new CustomError(
-      displayName,
-      '`value` must be `string[]`, when `exclusive` is false',
+    throw new Error(
+      `${displayName}, \`value\` must be \`string[]\`, when \`exclusive\` is false`,
     );
 
   const styles = React.useMemo(() => toggleButton({ color }), [color]);

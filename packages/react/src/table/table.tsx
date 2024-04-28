@@ -1,4 +1,4 @@
-import { TableClassNames, TableVariantProps, table } from '@webbo-ui/theme';
+import { TableClassNames, TableVariantProps, table } from '@ux-weaver/theme';
 import { useTableCtx } from './table-root';
 import React from 'react';
 

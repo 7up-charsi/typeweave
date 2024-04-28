@@ -2,7 +2,7 @@ import {
   PaginationClassNames,
   PaginationVariantProps,
   pagination,
-} from '@webbo-ui/theme';
+} from '@ux-weaver/theme';
 import React from 'react';
 import { useControllableState } from '../use-controllable-state';
 import { Button, ButtonProps } from '../button';

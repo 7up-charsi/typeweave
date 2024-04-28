@@ -6,4 +6,5 @@ export default defineConfig({
   clean: true,
   target: 'es2022',
   format: ['cjs', 'esm'],
+  banner: { js: '"use client";' },
 });

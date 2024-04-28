@@ -1,12 +1,12 @@
 import type { Config } from 'tailwindcss';
-import { WebboUi } from '@webbo-ui/theme';
+import { WebboUi } from '@ux-weaver/theme';
 
 const config: Config = {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './mdx-components/**/*.{js,ts,jsx,tsx,mdx}',
-    './node_modules/@webbo-ui/theme/src/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/@ux-weaver/theme/src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   plugins: [WebboUi()],
   theme: {

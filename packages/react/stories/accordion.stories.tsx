@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   AccordionArrow,
   AccordionContent,
@@ -5,7 +6,7 @@ import {
   AccordionItem,
   AccordionRoot,
   AccordionTrigger,
-} from './';
+} from '../src';
 
 const meta = {
   title: 'Components/Accordion',

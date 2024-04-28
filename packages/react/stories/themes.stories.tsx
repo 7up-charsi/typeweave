@@ -1,7 +1,9 @@
 import React from 'react';
-import { ThemesRoot, useTheme } from './';
-import { Button, ButtonGroup } from '../button';
 import {
+  ThemesRoot,
+  useTheme,
+  Button,
+  ButtonGroup,
   MenuArrow,
   MenuContent,
   MenuPortal,
@@ -9,7 +11,7 @@ import {
   MenuRadioItem,
   MenuRoot,
   MenuTrigger,
-} from '../menu';
+} from '../src';
 import { Monitor, Moon, Sun } from 'lucide-react';
 
 const meta = {

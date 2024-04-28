@@ -1,7 +1,7 @@
 import React from 'react';
 import { InputProps, Input } from './input';
 import { Button } from '../button';
-import { passwordInput } from '@webbo-ui/theme';
+import { passwordInput } from '@ux-weaver/theme';
 import { EyeIcon, EyeOff } from 'lucide-react';
 
 export interface PasswordInputProps extends Omit<InputProps<false>, 'type'> {

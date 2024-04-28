@@ -1,15 +1,15 @@
-# @webbo-ui/react-utils
+# @ux-weaver/react-utils
 
 This package contains utilities for react
 
 ## Installation
 
 ```bash
-pnpm add @webbo-ui/react-utils
+pnpm add @ux-weaver/react-utils
 # or
-yarn add @webbo-ui/react-utils
+yarn add @ux-weaver/react-utils
 # or
-npm i @webbo-ui/react-utils
+npm i @ux-weaver/react-utils
 ```
 
 ## API Reference

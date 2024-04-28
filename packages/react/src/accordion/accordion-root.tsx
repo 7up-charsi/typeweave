@@ -2,8 +2,7 @@ import { createContextScope } from '../context';
 import { useControllableState } from '../use-controllable-state';
 import React from 'react';
 import { createCollection } from '../use-collection';
-import { CustomError } from '../custom-error';
-import { accordion } from '@webbo-ui/theme';
+import { accordion } from '@ux-weaver/theme';
 
 export type AccordionRootProps<Type, IsSingleCollapsible> = {
   disabled?: boolean;
@@ -114,9 +113,8 @@ export const AccordionRootImpl = React.forwardRef<
     !isSingleCollapsible &&
     Array.isArray(value)
   )
-    throw new CustomError(
-      displayName,
-      '`value` must be `string` when type is single and isSingleCollapsible is false',
+    throw new Error(
+      `${displayName}, \`value\` must be \`string\` when type is single and isSingleCollapsible is false`,
     );
 
   if (
@@ -125,15 +123,13 @@ export const AccordionRootImpl = React.forwardRef<
     isSingleCollapsible &&
     Array.isArray(value)
   )
-    throw new CustomError(
-      displayName,
-      '`value` must be `string | null` when type is single and isSingleCollapsible is true',
+    throw new Error(
+      `${displayName}, \`value\` must be \`string | null\` when type is single and isSingleCollapsible is true`,
     );
 
   if (valueProp && type === 'multiple' && !Array.isArray(value))
-    throw new CustomError(
-      displayName,
-      '`value` must be `array` when type is multiple',
+    throw new Error(
+      `${displayName}, \`value\` must be \`array\` when type is multiple`,
     );
 
   return (

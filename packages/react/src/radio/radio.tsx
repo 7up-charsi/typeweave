@@ -1,5 +1,5 @@
 import React from 'react';
-import { RadioClassNames, RadioVariantProps, radio } from '@webbo-ui/theme';
+import { RadioClassNames, RadioVariantProps, radio } from '@ux-weaver/theme';
 import { Circle } from 'lucide-react';
 
 export interface RadioProps

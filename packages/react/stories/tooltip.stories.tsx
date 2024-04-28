@@ -7,7 +7,7 @@ import {
   TooltipRoot,
   TooltipRootProps,
   TooltipTrigger,
-} from './';
+} from '../src';
 
 const meta = {
   title: 'Components/Tooltip',

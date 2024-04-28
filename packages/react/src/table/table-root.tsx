@@ -1,6 +1,5 @@
 import React from 'react';
 import { createContextScope } from '../context';
-import { CustomError } from '../custom-error';
 import {
   UseControllableStateReturn,
   useControllableState,
@@ -68,9 +67,8 @@ const TableRootImpl = (props: TableRootProps) => {
     value: visibilityStateProp,
     onChange: (value, changed) => {
       if (!changed && changed !== null)
-        throw new CustomError(
-          'Autocomplete',
-          'internal Error, reason is not defined',
+        throw new Error(
+          `${displayName}, \`internal Error\` reason is not defined`,
         );
 
       if (changed) onChange?.(value, changed);

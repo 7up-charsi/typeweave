@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from '../button';
-import { Badge, BadgeProps } from './';
+import { Badge, BadgeProps, Button } from '../src';
 import { MailIcon } from 'lucide-react';
 
 const meta = {

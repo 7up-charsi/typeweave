@@ -1,6 +1,6 @@
 import React from 'react';
-import { chip } from '@webbo-ui/theme';
-import { Chip } from './';
+import { chip } from '@ux-weaver/theme';
+import { Chip } from '../src';
 
 const meta = {
   title: 'Components/Chip',

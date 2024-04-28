@@ -1,5 +1,5 @@
 import React from 'react';
-import { Overlay, OverlayProps } from './';
+import { Overlay, OverlayProps } from '../src';
 
 const meta = {
   title: 'Components/Overlay',

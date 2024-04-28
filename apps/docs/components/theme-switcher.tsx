@@ -2,7 +2,7 @@
 
 import * as Menu from '@webbo-ui/menu';
 import { Button } from '@webbo-ui/button';
-import { ThemeProvider, useTheme } from '@webbo-ui/themes';
+import { ThemeProvider, useTheme } from '@ux-weaver/themes';
 
 const light_svg = (
   <svg

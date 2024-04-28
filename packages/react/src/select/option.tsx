@@ -1,4 +1,4 @@
-import { mergeRefs } from '@webbo-ui/react-utils';
+import { mergeRefs } from '@ux-weaver/react-utils';
 import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';
 

@@ -3,7 +3,7 @@ import { readdir, writeFile } from 'fs/promises';
 import path from 'path';
 import prettier from 'prettier';
 
-const excludes = ['custom-error'];
+const excludes: string[] = [];
 
 (async () => {
   console.log('*** auto imports started');

@@ -3,7 +3,7 @@ import {
   SwitchClassNames,
   SwitchVariantProps,
   switch as switchStyles,
-} from '@webbo-ui/theme';
+} from '@ux-weaver/theme';
 
 export interface SwitchProps
   extends SwitchVariantProps,

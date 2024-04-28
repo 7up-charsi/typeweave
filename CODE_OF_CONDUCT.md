@@ -1,4 +1,4 @@
-# Code of Conduct - webbo-ui
+# Code of Conduct - ux-weaver
 
 ## Our Pledge
 

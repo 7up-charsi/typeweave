@@ -1,13 +1,13 @@
-# @webbo-ui/react-utils
+# @ux-weaver/react-utils
 
 ## 1.0.1
 
 ### Patch Changes
 
-- make works with nextjs app router
+- fix: deps
 
 ## 1.0.0
 
 ### Major Changes
 
-- first major version
+- initial release

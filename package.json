@@ -1,11 +1,11 @@
 {
-  "name": "webbo-ui",
+  "name": "ux-weaver",
   "private": true,
   "scripts": {
-    "build:pkg": "turbo build --filter=!@webbo-ui/docs --filter=!@webbo-ui/storybook",
-    "dev:sb": "pnpm --filter @webbo-ui/storybook dev",
-    "dev:docs": "pnpm --filter @webbo-ui/docs dev",
-    "typecheck": "turbo typecheck --filter=!@webbo-ui/docs --filter=!@webbo-ui/storybook",
+    "build:pkg": "turbo build --filter=!@ux-weaver/docs --filter=!@ux-weaver/storybook",
+    "dev:sb": "pnpm --filter @ux-weaver/storybook dev",
+    "dev:docs": "pnpm --filter @ux-weaver/docs dev",
+    "typecheck": "turbo typecheck --filter=!@ux-weaver/docs --filter=!@ux-weaver/storybook",
     "clean": "pnpm turbo:clean && pnpm clean:node-modules && pnpm clean:lock",
     "turbo:clean": "turbo clean && rimraf ./node_modules/.cache/turbo",
     "clean:node-modules": "rimraf ./apps/**/node_modules ./packages/**/**/node_modules -g && rm -rf ./node_modules",
@@ -28,6 +28,7 @@
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
+    "cross-env": "^7.0.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
@@ -49,3 +50,4 @@
     "typescript": "^5.4.5"
   }
 }
+

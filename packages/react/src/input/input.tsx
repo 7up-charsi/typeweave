@@ -1,5 +1,5 @@
-import { input, InputClassNames, InputVariantProps } from '@webbo-ui/theme';
-import { mergeRefs } from '@webbo-ui/react-utils';
+import { input, InputClassNames, InputVariantProps } from '@ux-weaver/theme';
+import { mergeRefs } from '@ux-weaver/react-utils';
 import React from 'react';
 
 type InputBaseProps = React.InputHTMLAttributes<HTMLInputElement> & {

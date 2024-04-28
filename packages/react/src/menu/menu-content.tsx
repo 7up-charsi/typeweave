@@ -1,9 +1,9 @@
-import { MenuVariantProps, menu } from '@webbo-ui/theme';
+import { MenuVariantProps, menu } from '@ux-weaver/theme';
 import { createContextScope } from '../context';
 import { PopperFloating, PopperFloatingProps } from '../popper';
 import React from 'react';
 import { MenuCollection, useMenuCollection, useMenuCtx } from './menu-root';
-import { mergeRefs } from '@webbo-ui/react-utils';
+import { mergeRefs } from '@ux-weaver/react-utils';
 import { VisuallyHidden } from '../visually-hidden';
 import { useClickOutside } from '../use-click-outside';
 import { useScrollLock } from '../use-scroll-lock';

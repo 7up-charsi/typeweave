@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from '../button';
-import { TabsRoot, TabsTrigger, TabsList, TabsContent } from './';
+import { Button, TabsRoot, TabsTrigger, TabsList, TabsContent } from '../src';
 
 const meta = {
   title: 'Components/Tabs',

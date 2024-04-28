@@ -1,6 +1,6 @@
 {
-  "name": "@webbo-ui/docs",
-  "version": "0.1.29",
+  "name": "@ux-weaver/docs",
+  "version": "0.1.30",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@webbo-ui/react": "workspace:*",
+    "@ux-weaver/react": "workspace:*",
     "@mdx-js/mdx": "^3.0.1",
     "algoliasearch": "^4.22.1",
     "clsx": "^2.0.0",

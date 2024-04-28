@@ -2,7 +2,7 @@ import {
   ButtonGroupVariantProps,
   ButtonVariantProps,
   buttonGroup,
-} from '@webbo-ui/theme';
+} from '@ux-weaver/theme';
 import React from 'react';
 
 export interface ButtonGroupProps

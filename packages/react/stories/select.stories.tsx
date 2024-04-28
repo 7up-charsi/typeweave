@@ -1,18 +1,19 @@
 import React from 'react';
-import { select } from '@webbo-ui/theme';
-import { Input } from '../input';
-import { Checkbox } from '../checkbox';
-import { Select, selectInputAdapter } from './';
-import { Button } from '../button';
-import options from './options.json';
+import { select } from '@ux-weaver/theme';
 import {
+  Input,
+  Checkbox,
+  Button,
+  Select,
+  selectInputAdapter,
   DialogClose,
   DialogContent,
   DialogOverlay,
   DialogPortal,
   DialogRoot,
   DialogTrigger,
-} from '../dialog';
+} from '../src';
+import options from './options.json';
 
 const meta = {
   title: 'Components/Select',

@@ -1,6 +1,6 @@
 import React from 'react';
-import { button } from '@webbo-ui/theme';
-import { Button, ButtonGroup, ButtonProps } from './';
+import { button } from '@ux-weaver/theme';
+import { Button, ButtonGroup, ButtonProps } from '../src';
 import { ChevronDown, SmileIcon } from 'lucide-react';
 
 const meta = {

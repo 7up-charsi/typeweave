@@ -1,6 +1,6 @@
 {
-  "name": "@webbo-ui/react",
-  "version": "0.0.0",
+  "name": "@ux-weaver/react",
+  "version": "1.0.1",
   "keywords": [
     "react"
   ],
@@ -17,21 +17,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/7up-charsi/webbo-ui.git",
+    "url": "git+https://github.com/7up-charsi/ux-weaver.git",
     "directory": "packages/core/react"
   },
   "bugs": {
-    "url": "https://github.com/7up-charsi/webbo-ui/issues"
+    "url": "https://github.com/7up-charsi/ux-weaver/issues"
   },
   "main": "./src/index.ts",
   "scripts": {
-    "build": "tsup",
+    "build": "pnpm auto-imports && cross-env NODE_OPTIONS='--max-old-space-size=16384' tsup",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "auto-imports": "tsx ./scripts/auto-imports.ts",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
-    "prepublish": "pnpm auto-imports && pnpm typecheck"
+    "prepublish": "pnpm typecheck"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -39,8 +39,8 @@
   },
   "dependencies": {
     "@floating-ui/react-dom": "^2.0.8",
-    "@webbo-ui/react-utils": "workspace:*",
-    "@webbo-ui/theme": "workspace:*",
+    "@ux-weaver/react-utils": "workspace:*",
+    "@ux-weaver/theme": "workspace:*",
     "lodash.groupby": "^4.6.0",
     "lucide-react": "^0.376.0"
   },
@@ -53,4 +53,3 @@
     "extends": "../../../../../../clean-package.config.json"
   }
 }
-

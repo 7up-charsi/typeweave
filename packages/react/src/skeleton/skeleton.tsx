@@ -1,7 +1,7 @@
 'use server';
 
 import React from 'react';
-import { SkeletonVariantProps, skeleton } from '@webbo-ui/theme';
+import { SkeletonVariantProps, skeleton } from '@ux-weaver/theme';
 
 export interface SkeletonProps
   extends SkeletonVariantProps,

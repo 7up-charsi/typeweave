@@ -1,6 +1,5 @@
 import React from 'react';
-import { CustomError } from '../custom-error';
-import { mergeProps, mergeRefs } from '@webbo-ui/react-utils';
+import { mergeProps, mergeRefs } from '@ux-weaver/react-utils';
 
 export interface SlotProps {
   children?: React.ReactNode;
@@ -16,9 +15,9 @@ const _Slot = <E extends HTMLElement>(
 
   const count = React.Children.count(children);
   if (!count) return;
-  if (count > 1) throw new CustomError('Slot', 'must have only one child');
+  if (count > 1) throw new Error(`${displayName}, must have only one child`);
   if (!React.isValidElement(children))
-    throw new CustomError('Slot', 'child must be valid element');
+    throw new Error(`${displayName}, child must be valid element`);
 
   return React.cloneElement(children, {
     ...mergeProps(slotProps, children.props),

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radio, RadioProps } from './';
+import { Radio, RadioProps } from '../src';
 
 const meta = {
   title: 'Components/Radio',

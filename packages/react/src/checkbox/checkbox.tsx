@@ -2,8 +2,8 @@ import {
   CheckboxClassNames,
   CheckboxVariantProps,
   checkbox,
-} from '@webbo-ui/theme';
-import { mergeRefs } from '@webbo-ui/react-utils';
+} from '@ux-weaver/theme';
+import { mergeRefs } from '@ux-weaver/react-utils';
 import React from 'react';
 import { Check, Minus } from 'lucide-react';
 

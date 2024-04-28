@@ -1,18 +1,19 @@
 import React from 'react';
-import { Autocomplete, autocompleteInputAdapter } from './';
-import { select } from '@webbo-ui/theme';
-import { Input } from '../input';
-import { Checkbox } from '../checkbox';
-import { Button } from '../button';
-import options from './options.json';
 import {
+  Autocomplete,
+  autocompleteInputAdapter,
+  Input,
+  Checkbox,
+  Button,
   DialogClose,
   DialogContent,
   DialogOverlay,
   DialogPortal,
   DialogRoot,
   DialogTrigger,
-} from '../dialog';
+} from '../src';
+import { select } from '@ux-weaver/theme';
+import options from './options.json';
 
 const meta = {
   title: 'Components/Autocomplete',

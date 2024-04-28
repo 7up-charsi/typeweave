@@ -1,12 +1,12 @@
 import { VariantProps, tv } from 'tailwind-variants';
-import { focusVisible } from '../classes';
 import { ClassNames } from '../types';
 
 export const chip = tv({
   slots: {
     base: 'relative inline-flex items-center gap-2 px-2 rounded select-none whitespace-nowrap max-w-full',
     content: 'truncate',
-    deleteIcon: ['cursor-pointer transition-colors', focusVisible],
+    deleteIcon:
+      'cursor-pointer transition-colors outline-none focus-visible:outline-2 focus-visible:outline-focus',
   },
   variants: {
     variant: {

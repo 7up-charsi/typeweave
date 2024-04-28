@@ -1,7 +1,6 @@
 import React from 'react';
 import { createContextScope } from '../context';
 import { useMediaQuery } from '../use-media-query';
-import { CustomError } from '../custom-error';
 
 export interface ThemesRootProps {
   defaultTheme?: string;
@@ -43,7 +42,7 @@ export const ThemesRoot = (props: ThemesRootProps) => {
 
   const onThemeChange = React.useCallback(
     (theme: string) => {
-      if (!theme) throw new CustomError(displayName, '`theme` is required');
+      if (!theme) throw new Error(`${displayName}, \`theme\` is required`);
 
       if (prevTheme.current) themeContainer.classList.remove(prevTheme.current);
       if (prevTheme.current && dataAttribute)

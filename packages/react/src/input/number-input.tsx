@@ -1,9 +1,8 @@
 import React from 'react';
 import { InputProps, Input } from './input';
-import { mergeRefs } from '@webbo-ui/react-utils';
-import { numberInput } from '@webbo-ui/theme';
+import { mergeRefs } from '@ux-weaver/react-utils';
+import { numberInput } from '@ux-weaver/theme';
 import { Button } from '../button';
-import { CustomError } from '../custom-error';
 import { useControllableState } from '../use-controllable-state';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 
@@ -246,12 +245,11 @@ export const NumberInput = React.forwardRef<HTMLDivElement, NumberInputProps>(
     const styles = React.useMemo(() => numberInput(), []);
 
     if (process.env.NODE_ENV !== 'production' && min && max && min > max)
-      throw new CustomError('NumberInput', '"min" must be lower than "max"');
+      throw new Error(`${displayName}, \`min\` must be lower than \`max\``);
 
     if (process.env.NODE_ENV !== 'production' && step > largeStep)
-      throw new CustomError(
-        'NumberInput',
-        '"step" must be lower than "largeStep"',
+      throw new Error(
+        `${displayName}, \`step\` must be lower than \`largeStep\``,
       );
 
     return (

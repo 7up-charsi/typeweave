@@ -1,5 +1,6 @@
-import { alert } from '@webbo-ui/theme';
-import { Alert } from './';
+import React from 'react';
+import { alert } from '@ux-weaver/theme';
+import { Alert } from '../src';
 import { Heart, Angry } from 'lucide-react';
 
 const meta = {

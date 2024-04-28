@@ -3,7 +3,7 @@ import { usePointerEvents } from '../use-pointer-events';
 import { usePopoverCtx } from './popover-root';
 import { PopperReference } from '../popper';
 import { Slot } from '../slot';
-import { mergeRefs } from '@webbo-ui/react-utils';
+import { mergeRefs } from '@ux-weaver/react-utils';
 
 export interface PopoverTriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}

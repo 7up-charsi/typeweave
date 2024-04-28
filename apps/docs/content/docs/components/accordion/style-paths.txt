@@ -1,2 +1,2 @@
-"./node_modules/@webbo-ui/theme/dist/components/accordion.ts",
-"./node_modules/@webbo-ui/theme/dist/components/accordion.ts",
+"./node_modules/@ux-weaver/theme/dist/components/accordion.ts",
+"./node_modules/@ux-weaver/theme/dist/components/accordion.ts",
