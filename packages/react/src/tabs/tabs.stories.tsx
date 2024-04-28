@@ -1,28 +1,25 @@
 import React from 'react';
-import { tabs } from '@webbo-ui/theme';
 import { Button } from '../button';
-
-import * as Tabs from './';
+import { TabsRoot, TabsTrigger, TabsList, TabsContent } from './';
 
 const meta = {
   title: 'Components/Tabs',
-  args: tabs.defaultVariants,
 };
 
 export default meta;
 
 const Template = (args) => (
-  <Tabs.Root {...args} defaultValue="tab-1">
-    <Tabs.List className="gap-3">
+  <TabsRoot {...args} defaultValue="tab-1">
+    <TabsList className="gap-3">
       {Array.from({ length: 3 }).map((_, i) => (
-        <Tabs.Trigger key={i} value={`tab-${i + 1}`}>
+        <TabsTrigger key={i} value={`tab-${i + 1}`}>
           <Button size="sm">tab {i + 1}</Button>
-        </Tabs.Trigger>
+        </TabsTrigger>
       ))}
-    </Tabs.List>
+    </TabsList>
 
     {Array.from({ length: 3 }).map((_, i) => (
-      <Tabs.Content
+      <TabsContent
         key={i}
         value={`tab-${i + 1}`}
         className="border border-muted-6 rounded p-3"
@@ -35,9 +32,9 @@ const Template = (args) => (
           Vero recusandae delectus fugit error ratione ipsam repudiandae dolorum
           accusamus possimus!
         </p>
-      </Tabs.Content>
+      </TabsContent>
     ))}
-  </Tabs.Root>
+  </TabsRoot>
 );
 
 export const Horizontal = {
