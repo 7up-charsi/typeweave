@@ -33,7 +33,7 @@
     "prepublish": "pnpm typecheck"
   },
   "peerDependencies": {
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.4.3"
   },
   "dependencies": {
     "@radix-ui/colors": "^3.0.0",
