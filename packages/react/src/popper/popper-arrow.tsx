@@ -54,8 +54,8 @@ export const PopperArrow = React.forwardRef<SVGSVGElement, PopperArrowProps>(
         >
           {icon ?? (
             <svg
-              width={11}
-              height={7}
+              width={9}
+              height={5}
               viewBox="0 0 30 10"
               preserveAspectRatio="none"
             >
