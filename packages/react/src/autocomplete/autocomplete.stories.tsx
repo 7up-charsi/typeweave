@@ -1,8 +1,8 @@
 import React from 'react';
+import { Autocomplete, autocompleteInputAdapter } from './';
 import { select } from '@webbo-ui/theme';
 import { Input } from '../input';
 import { Checkbox } from '../checkbox';
-import { Select, mapInputProps } from './';
 import { Button } from '../button';
 import options from './options.json';
 import {
@@ -15,7 +15,7 @@ import {
 } from '../dialog';
 
 const meta = {
-  title: 'Components/Select',
+  title: 'Components/Autocomplete',
   args: {
     ...select.defaultVariants,
   },
@@ -30,12 +30,12 @@ const meta = {
 export default meta;
 
 const SingleTemplate = () => (
-  <Select
+  <Autocomplete
     options={options}
     defaultValue={options[21]}
     getOptionLabel={(option) => option.title}
     renderInput={(props) => (
-      <Input label="top 100 movies" {...mapInputProps(props)} />
+      <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
     )}
   />
 );
@@ -45,13 +45,13 @@ export const Single = {
 };
 
 const MultipleTemplate = () => (
-  <Select
+  <Autocomplete
     multiple
     options={options}
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
     renderInput={(props) => (
-      <Input label="top 100 movies" {...mapInputProps(props)} />
+      <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
     )}
   />
 );
@@ -60,14 +60,41 @@ export const Multiple = {
   render: MultipleTemplate,
 };
 
+const NoOptionTemplate = () => (
+  <Autocomplete
+    options={[]}
+    renderInput={(props) => (
+      <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
+    )}
+  />
+);
+
+export const NoOptions = {
+  render: NoOptionTemplate,
+};
+
+const LoadingTemplate = () => (
+  <Autocomplete
+    options={options}
+    loading
+    renderInput={(props) => (
+      <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
+    )}
+  />
+);
+
+export const Loading = {
+  render: LoadingTemplate,
+};
+
 const CustomOptionTemplate = () => (
-  <Select
+  <Autocomplete
     multiple
     options={options}
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
     renderInput={(props) => (
-      <Input label="top 100 movies" {...mapInputProps(props)} />
+      <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
     )}
     renderOption={({ label, option, state }) => (
       <>
@@ -92,12 +119,12 @@ export const CustomOption = {
 };
 
 const GroupTemplate = () => (
-  <Select
+  <Autocomplete
     options={options}
     defaultValue={options[21]}
     getOptionLabel={(option) => option.title}
     renderInput={(props) => (
-      <Input label="top 100 movies" {...mapInputProps(props)} />
+      <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
     )}
     groupBy={(option) => option.title[0]}
   />
@@ -107,22 +134,8 @@ export const Group = {
   render: GroupTemplate,
 };
 
-const LoadingTemplate = () => (
-  <Select
-    options={options}
-    loading
-    renderInput={(props) => (
-      <Input label="top 100 movies" {...mapInputProps(props)} />
-    )}
-  />
-);
-
-export const Loading = {
-  render: LoadingTemplate,
-};
-
 const InDialogTemplate = () => (
-  <DialogRoot defaultOpen>
+  <DialogRoot>
     <DialogTrigger>
       <Button>open dialog</Button>
     </DialogTrigger>
@@ -130,8 +143,8 @@ const InDialogTemplate = () => (
     <DialogPortal>
       <DialogOverlay />
 
-      <DialogContent className="max-w-xs">
-        <Select
+      <DialogContent className="max-w-xs overflow-auto">
+        <Autocomplete
           options={options}
           defaultValue={options[21]}
           getOptionLabel={(option) => option.title}
@@ -139,7 +152,7 @@ const InDialogTemplate = () => (
             <Input
               label="top 100 movies"
               className="w-full"
-              {...mapInputProps(props)}
+              {...autocompleteInputAdapter(props)}
             />
           )}
         />
@@ -171,26 +184,23 @@ const CustomTemplate = () => (
     <DialogPortal>
       <DialogOverlay />
 
-      <DialogContent className="w-[calc(100%-16px)] max-w-xs p-0">
-        <Select
+      <DialogContent className="w-[calc(100%-16px)] max-w-xs p-4">
+        <Autocomplete
           isOpen
           options={options}
           disablePopper
           disablePortal
           getOptionLabel={(option) => option.title}
           shadow="none"
-          classNames={{ listbox: 'border-0' }}
           renderInput={(props) => (
             <Input
-              {...mapInputProps(props, { disableOpenIndicator: true })}
-              label="select one movie"
+              {...autocompleteInputAdapter(props, {
+                disableOpenIndicator: true,
+              })}
+              className="w-full mb-4"
+              label="search"
               hideLabel
-              placeholder="select one movie"
-              classNames={{
-                base: 'w-full border-b border-b-muted-6',
-                inputWrapper: 'focus-within:ring-0 border-0 hover:border-0',
-                input: 'h-12',
-              }}
+              placeholder="Search..."
             />
           )}
         />

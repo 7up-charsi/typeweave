@@ -1,6 +1,7 @@
 import { statSync } from 'fs';
 import { readdir, writeFile } from 'fs/promises';
 import path from 'path';
+import prettier from 'prettier';
 
 const excludes = ['custom-error'];
 
@@ -23,7 +24,18 @@ const excludes = ['custom-error'];
     .map((name) => `export * from './${name}'`)
     .join(';');
 
-  await writeFile(path.resolve('./src/index.ts'), data, 'utf-8');
+  const prettierConfig = await prettier.resolveConfig(
+    path.resolve('../../.prettierrc.json '),
+  );
+
+  if (!prettierConfig) throw new Error('prettier config not found');
+
+  const formatedData = await prettier.format(data, {
+    ...prettierConfig,
+    parser: 'typescript',
+  });
+
+  await writeFile(path.resolve('./src/index.ts'), formatedData, 'utf-8');
 
   console.log('*** auto imports completed');
 })();

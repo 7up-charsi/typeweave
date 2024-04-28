@@ -27,11 +27,11 @@ export const autocomplete = tv({
 export const autocompleteInput = tv({
   slots: {
     openIndecator: 'text-muted-9 text-lg',
-    clearButton: 'text-muted-9 w-6 h-6',
+    clearButton: 'text-muted-9 w-6 h-6 text-lg',
     endContent: '',
     startContent: '',
     inputWrapper: '',
-    input: '',
+    input: 'truncate',
     loader:
       'animate-spin inline-block size-4 border-2 border-muted-9 border-t-transparent rounded-full',
   },

@@ -5,5 +5,4 @@ export type {
 } from './autocomplete';
 
 export { Autocomplete } from './autocomplete';
-
-export const test = '';
+export { autocompleteInputAdapter } from './autocomplete-input-adapter';
