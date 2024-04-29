@@ -43,7 +43,7 @@ export type InputClassNames = ClassNames<typeof input.slots>;
 
 export const numberInput = tv({
   slots: {
-    button: 'h-6 w-6',
+    button: 'h-6 w-6 text-base',
   },
 });
 
@@ -52,7 +52,7 @@ export type NumberInputClassNames = ClassNames<typeof numberInput.slots>;
 
 export const passwordInput = tv({
   slots: {
-    button: 'h-6 w-6',
+    button: 'h-6 w-6 text-base',
   },
 });
 

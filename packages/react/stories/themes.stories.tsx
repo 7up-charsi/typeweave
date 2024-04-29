@@ -45,7 +45,7 @@ const MenuThemeComp = () => {
                 itemContent: 'flex items-center justify-between pr-3',
               }}
             >
-              <span>Light</span> <Sun />
+              <span>Light</span> <Sun size={18} />
             </MenuRadioItem>
             <MenuRadioItem
               value="dark"
@@ -54,7 +54,7 @@ const MenuThemeComp = () => {
               }}
             >
               <span>Dark</span>
-              <Moon />
+              <Moon size={18} />
             </MenuRadioItem>
             <MenuRadioItem
               value="system"
@@ -63,7 +63,7 @@ const MenuThemeComp = () => {
               }}
             >
               <span>System</span>
-              <Monitor />
+              <Monitor size={18} />
             </MenuRadioItem>
           </MenuRadioGroup>
         </MenuContent>

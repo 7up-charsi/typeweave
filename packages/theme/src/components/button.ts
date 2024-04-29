@@ -17,8 +17,8 @@ export const button = tv({
   slots: {
     base: 'z-0 group relative inline-flex items-center justify-center box-border rounded appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transition-colors [&>span]:first-letter:uppercase disabled:disabled [&[hidden]]:hidden shrink-0 outline-none focus-visible:outline-2 focus-visible:outline-focus',
     content: 'first-letter:uppercase',
-    startContent: 'flex gap-1 items-center',
-    endContent: 'flex gap-1 items-center',
+    startContent: 'flex gap-1 items-center dynamic-icon',
+    endContent: 'flex gap-1 items-center dynamic-icon',
   },
   variants: {
     variant: {
@@ -75,6 +75,10 @@ export const button = tv({
     },
 
     // isIconOnly
+    {
+      isIconOnly: true,
+      className: { base: 'dynamic-icon' },
+    },
     {
       isIconOnly: true,
       size: 'sm',

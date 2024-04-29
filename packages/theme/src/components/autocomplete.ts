@@ -26,7 +26,7 @@ export const autocomplete = tv({
 
 export const autocompleteInput = tv({
   slots: {
-    openIndecator: 'text-muted-9 text-lg',
+    openIndecator: 'text-muted-9 text-lg dynamic-icon',
     clearButton: 'text-muted-9 w-6 h-6 text-lg',
     endContent: '',
     startContent: '',

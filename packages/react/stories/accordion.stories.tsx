@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  AccordionArrow,
   AccordionContent,
   AccordionHeader,
   AccordionItem,
   AccordionRoot,
   AccordionTrigger,
 } from '../src';
+import { ChevronDown } from 'lucide-react';
 
 const meta = {
   title: 'Components/Accordion',
@@ -30,7 +30,10 @@ const MultipleTemplate = () => (
               <span>Accordion no. {i + 1} with dummy content</span>
             )}
 
-            <AccordionArrow className="ml-auto" />
+            <ChevronDown
+              size={20}
+              className="ml-auto transition-transform rotate-0 group-data-[expanded=true]:-rotate-180"
+            />
           </AccordionTrigger>
         </AccordionHeader>
 
@@ -69,7 +72,10 @@ const SingleTemplate = () => (
               <span>Accordion no. {i + 1} with dummy content</span>
             )}
 
-            <AccordionArrow className="ml-auto" />
+            <ChevronDown
+              size={20}
+              className="ml-auto transition-transform rotate-0 group-data-[expanded=true]:-rotate-180"
+            />
           </AccordionTrigger>
         </AccordionHeader>
 
@@ -104,7 +110,10 @@ const SingleCollapsibleTemplate = () => (
               <span>Accordion no. {i + 1} with dummy content</span>
             )}
 
-            <AccordionArrow className="ml-auto" />
+            <ChevronDown
+              size={20}
+              className="ml-auto transition-transform rotate-0 group-data-[expanded=true]:-rotate-180"
+            />
           </AccordionTrigger>
         </AccordionHeader>
 
