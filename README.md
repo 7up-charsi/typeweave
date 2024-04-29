@@ -16,9 +16,13 @@ To install **_@typeweave/react_** in your project, simply run:
 
 ```bash
 pnpm add @typeweave/react
-----------------------------------------
+```
+
+```bash
 npm install @typeweave/react
-----------------------------------------
+```
+
+```bash
 yarn add @typeweave/react
 ```
 
