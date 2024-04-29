@@ -31,8 +31,7 @@
     "auto-imports": "tsx ./scripts/auto-imports.ts",
     "gen-tsup-config": "tsx ./scripts/gen-tsup-config.ts",
     "prepack": "clean-package",
-    "postpack": "clean-package restore",
-    "prepublish": "pnpm typecheck"
+    "postpack": "clean-package restore"
   },
   "peerDependencies": {
     "react": ">=18",

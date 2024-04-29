@@ -30,8 +30,7 @@
     "typecheck": "tsc --noEmit",
     "gen-type": "tsx ./scripts/gen-type.ts",
     "prepack": "clean-package",
-    "postpack": "clean-package restore",
-    "prepublish": "pnpm typecheck"
+    "postpack": "clean-package restore"
   },
   "peerDependencies": {
     "tailwindcss": "^3.4.3"

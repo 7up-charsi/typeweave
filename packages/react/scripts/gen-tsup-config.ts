@@ -1,4 +1,3 @@
-import { statSync } from 'fs';
 import { readdir, writeFile } from 'fs/promises';
 import path from 'path';
 import prettier from 'prettier';
@@ -8,18 +7,10 @@ import prettier from 'prettier';
 
   const dirContent = await readdir(path.resolve('./src'));
 
-  const names = dirContent.filter((name) => {
-    const stats = statSync(path.resolve(`./src/${name}`));
-
-    if (stats.isFile()) return;
-
-    return true;
-  });
-
   const entries: string[][] = [];
 
   let index = 0;
-  names.forEach((name, i) => {
+  dirContent.forEach((name, i) => {
     if (i > 0 && i % 5 === 0) index++;
 
     if (!entries[index]) entries[index] = [];
@@ -31,7 +22,6 @@ import { defineConfig, Options } from 'tsup';
 
 const options: Options = {
   dts: true,
-  clean: true,
   target: 'es2022',
   format: ['cjs', 'esm'],
   banner: { js: '"use client";' },
@@ -39,9 +29,10 @@ const options: Options = {
 
 export default [${entries
     .map(
-      (entry) => `
+      (entry, i) => `
     defineConfig({
       ...options,
+      ${i === 0 ? `clean: true,` : ''}
       entry: ${JSON.stringify(entry)}
     })
   `,

@@ -29,8 +29,7 @@
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
-    "postpack": "clean-package restore",
-    "prepublish": "pnpm typecheck"
+    "postpack": "clean-package restore"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -47,3 +46,4 @@
     "extends": "../../../../../../clean-package.config.json"
   }
 }
+
