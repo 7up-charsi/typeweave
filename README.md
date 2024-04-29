@@ -1,28 +1,55 @@
-# typeweave
+# Typeweave
 
-## what is typeweave
+`@typeweave/react` is a versatile React TypeScript UI library designed to streamline the development of elegant and robust user interfaces. With **_@typeweave/react_**, you can easily weave together sophisticated UI components while leveraging the strong typing capabilities of TypeScript.
 
-typeweave is an **open-source**, **simple**, **customizable** and **accissible** **React Typescript** ui library built from ground up on top of utility-first **tailwindcss** framework.
+## Features
 
-## I have a question
+- **TypeScript Integration**: Harness the power of TypeScript's static typing to catch errors early and enhance code maintainability.
+- **Rich Component Library**: Access a comprehensive collection of UI components, ranging from basic elements to complex layouts, all meticulously crafted for seamless integration.
+- **Customization Options**: Tailor the appearance and behavior of components to suit your project's unique requirements with customizable props and styling options.
+- **Developer-Friendly**: Enjoy a smooth development experience with clear documentation, helpful examples, and intuitive APIs.
 
-Before you ask a question, it is best to search for existing [Issues](https://github.com/7up-charsi/typeweave/issues) that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.
+## Installation
 
-If you then still feel the need to ask a question and need clarification, we recommend the following:
+To install **_@typeweave/react_** in your project, simply run:
 
-- Open an [Issue](https://github.com/7up-charsi/typeweave/issues/new).
-- Provide as much context as you can about what you're running into.
-- Provide project and platform versions (nodejs, npm, etc), depending on what seems relevant.
+```bash
+pnpm add @typeweave/react
+----------------------------------------
+npm install @typeweave/react
+----------------------------------------
+yarn add @typeweave/react
+```
 
-We will then take care of the issue as soon as possible.
+## Usage
 
-## I want to contribute
+Import individual components from **_@typeweave/react_** and integrate them into your React application:
 
-First off, thanks for taking the time to contribute! ❤️. All types of contributions are encouraged and valued. For more info read this [contribution guide](https://github.com/7up-charsi/typeweave/blob/main/CONTRIBUTING.md#i-want-to-contribute)
+```jsx
+import React from 'react';
+import { Button } from '@typeweave/react';
 
-And if you like the project, but just don't have time to contribute, that's fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:
+const App = () => {
+  return (
+    <div>
+      <Button onClick={() => alert('Hello, TypeWeave!')}>Click me</Button>
+    </div>
+  );
+};
 
-- Star the project
-- Tweet about it
-- Refer this project in your project's readme
-- Mention the project at local meetups and tell your friends/colleagues
+export default App;
+```
+
+For detailed usage instructions and component documentation, please refer to the TypeWeave Documentation, **which is coming soon!**
+
+## License
+
+**_@typeweave/react_** is licensed under the `MIT License`.
+
+## contact
+
+For questions, feedback, or support, please contact us at 7up.charsi@gmail.com
+
+---
+
+**Note: This project is under active development. Your feedback is highly valued as I continue to refine and enhance _@typeweave/react_. Developed with the aim to demonstrate my expertise and contribute to the developer community.**
