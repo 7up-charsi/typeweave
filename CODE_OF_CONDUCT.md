@@ -1,4 +1,4 @@
-# Code of Conduct - ux-weaver
+# Code of Conduct - typeweave
 
 ## Our Pledge
 

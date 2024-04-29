@@ -1,4 +1,4 @@
-import { AlertDialogVariantProps, alertDialog } from '@ux-weaver/theme';
+import { AlertDialogVariantProps, alertDialog } from '@typeweave/theme';
 import React from 'react';
 import { useScrollLock } from '../use-scroll-lock';
 import { useAlertDialogCtx } from './alert-dialog-root';

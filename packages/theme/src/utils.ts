@@ -5,7 +5,7 @@ export const registerStyles = (components: Components[]) => {
   const unique = new Set(components);
 
   return Array.from(unique).map(
-    (comp) => `./node_modules/@ux-weaver/theme/dist/components/${comp}`,
+    (comp) => `./node_modules/@typeweave/theme/dist/components/${comp}`,
   );
 };
 

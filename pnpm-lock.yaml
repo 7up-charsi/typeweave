@@ -98,7 +98,7 @@ importers:
       '@mdx-js/mdx':
         specifier: ^3.0.1
         version: 3.0.1
-      '@ux-weaver/react':
+      '@typeweave/react':
         specifier: workspace:*
         version: link:../../packages/react
       algoliasearch:
@@ -213,7 +213,7 @@ importers:
       '@storybook/react-vite':
         specifier: ^8.0.9
         version: 8.0.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.17.0)(typescript@5.4.5)(vite@4.5.3(@types/node@20.12.7)(terser@5.30.4))
-      '@ux-weaver/theme':
+      '@typeweave/theme':
         specifier: workspace:*
         version: link:../../packages/theme
       '@vitejs/plugin-react':
@@ -249,10 +249,10 @@ importers:
       '@floating-ui/react-dom':
         specifier: ^2.0.8
         version: 2.0.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@ux-weaver/react-utils':
+      '@typeweave/react-utils':
         specifier: workspace:*
         version: link:../react-utils
-      '@ux-weaver/theme':
+      '@typeweave/theme':
         specifier: workspace:*
         version: link:../theme
       lodash.groupby:

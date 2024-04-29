@@ -1,4 +1,4 @@
-import { mergeRefs } from '@ux-weaver/react-utils';
+import { mergeRefs } from '@typeweave/react-utils';
 import { PopperReference } from '../popper';
 import { Slot } from '../slot';
 import { usePointerEvents } from '../use-pointer-events';

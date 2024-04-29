@@ -2,7 +2,7 @@ import {
   PaginationClassNames,
   PaginationVariantProps,
   pagination,
-} from '@ux-weaver/theme';
+} from '@typeweave/theme';
 import React from 'react';
 import { useControllableState } from '../use-controllable-state';
 import { Button, ButtonProps } from '../button';

@@ -4,7 +4,7 @@ import {
   InputClassNames,
   SelectInputClassNames,
   selectInput,
-} from '@ux-weaver/theme';
+} from '@typeweave/theme';
 import { type InputProps } from '../input';
 import React from 'react';
 import { ChevronDownIcon, XIcon } from 'lucide-react';

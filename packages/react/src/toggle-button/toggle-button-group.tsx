@@ -1,4 +1,4 @@
-import { ToggleButtonVariantProps, toggleButton } from '@ux-weaver/theme';
+import { ToggleButtonVariantProps, toggleButton } from '@typeweave/theme';
 import { createContextScope } from '../context';
 import { ButtonGroup, ButtonGroupProps } from '../button';
 import React from 'react';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { button } from '@ux-weaver/theme';
+import { button } from '@typeweave/theme';
 import { Button, ButtonGroup, ButtonProps } from '../src';
 import { ChevronDown, SmileIcon } from 'lucide-react';
 

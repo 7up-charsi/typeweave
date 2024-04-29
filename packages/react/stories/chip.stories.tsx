@@ -1,5 +1,5 @@
 import React from 'react';
-import { chip } from '@ux-weaver/theme';
+import { chip } from '@typeweave/theme';
 import { Chip } from '../src';
 
 const meta = {

@@ -1,4 +1,4 @@
-import { OverlayVariantProps, overlay } from '@ux-weaver/theme';
+import { OverlayVariantProps, overlay } from '@typeweave/theme';
 import React from 'react';
 
 export interface OverlayProps

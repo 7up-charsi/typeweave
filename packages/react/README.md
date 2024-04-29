@@ -1,13 +1,13 @@
-# @ux-weaver/react
+# @typeweave/react
 
 ## Installation
 
 ```bash
-pnpm add @ux-weaver/react
+pnpm add @typeweave/react
 # or
-yarn add @ux-weaver/react
+yarn add @typeweave/react
 # or
-npm i @ux-weaver/react
+npm i @typeweave/react
 ```
 
 ## Licence

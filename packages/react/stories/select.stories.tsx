@@ -1,5 +1,5 @@
 import React from 'react';
-import { select } from '@ux-weaver/theme';
+import { select } from '@typeweave/theme';
 import {
   Input,
   Checkbox,

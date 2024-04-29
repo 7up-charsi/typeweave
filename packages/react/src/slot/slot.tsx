@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeProps, mergeRefs } from '@ux-weaver/react-utils';
+import { mergeProps, mergeRefs } from '@typeweave/react-utils';
 
 export interface SlotProps {
   children?: React.ReactNode;

@@ -3,7 +3,7 @@ import {
   SwitchClassNames,
   SwitchVariantProps,
   switch as switchStyles,
-} from '@ux-weaver/theme';
+} from '@typeweave/theme';
 
 export interface SwitchProps
   extends SwitchVariantProps,

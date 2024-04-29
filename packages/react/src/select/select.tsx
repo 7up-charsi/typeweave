@@ -2,8 +2,8 @@ import { useControllableState } from '../use-controllable-state';
 import React from 'react';
 import { Option } from './option';
 import lodashGroupBy from 'lodash.groupby';
-import { SelectClassNames, SelectVariantProps, select } from '@ux-weaver/theme';
-import { mergeRefs } from '@ux-weaver/react-utils';
+import { SelectClassNames, SelectVariantProps, select } from '@typeweave/theme';
+import { mergeRefs } from '@typeweave/react-utils';
 import { createPortal } from 'react-dom';
 import { getNext, getPrevious } from './utils';
 import {
