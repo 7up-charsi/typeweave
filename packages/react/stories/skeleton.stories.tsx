@@ -1,5 +1,5 @@
 import React from 'react';
-import { skeleton } from '@ux-weaver/theme';
+import { skeleton } from '@typeweave/theme';
 import { Skeleton } from '../src';
 
 const meta = {

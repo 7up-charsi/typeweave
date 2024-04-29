@@ -1,4 +1,4 @@
-import { TooltipVariantProps, tooltip } from '@ux-weaver/theme';
+import { TooltipVariantProps, tooltip } from '@typeweave/theme';
 import { PopperFloating, PopperFloatingProps } from '../popper';
 import React from 'react';
 import { useTooltipCtx } from './tooltip-root';

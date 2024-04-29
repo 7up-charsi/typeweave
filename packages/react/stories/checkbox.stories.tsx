@@ -1,5 +1,5 @@
 import React from 'react';
-import { checkbox } from '@ux-weaver/theme';
+import { checkbox } from '@typeweave/theme';
 import { Checkbox, CheckboxProps } from '../src';
 
 const meta = {

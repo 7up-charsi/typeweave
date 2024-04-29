@@ -2,7 +2,7 @@ import {
   ButtonGroupVariantProps,
   ButtonVariantProps,
   buttonGroup,
-} from '@ux-weaver/theme';
+} from '@typeweave/theme';
 import React from 'react';
 
 export interface ButtonGroupProps

@@ -2,7 +2,7 @@ import { createContextScope } from '../context';
 import { useControllableState } from '../use-controllable-state';
 import React from 'react';
 import { createCollection } from '../use-collection';
-import { accordion } from '@ux-weaver/theme';
+import { accordion } from '@typeweave/theme';
 
 export type AccordionRootProps<Type, IsSingleCollapsible> = {
   disabled?: boolean;

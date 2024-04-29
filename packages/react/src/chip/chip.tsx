@@ -1,4 +1,4 @@
-import { ChipClassNames, ChipVariantProps, chip } from '@ux-weaver/theme';
+import { ChipClassNames, ChipVariantProps, chip } from '@typeweave/theme';
 import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';
 import { XIcon } from 'lucide-react';

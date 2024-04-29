@@ -1,5 +1,5 @@
-import { mergeRefs } from '@ux-weaver/react-utils';
-import { button, ButtonClassNames, ButtonVariantProps } from '@ux-weaver/theme';
+import { mergeRefs } from '@typeweave/react-utils';
+import { button, ButtonClassNames, ButtonVariantProps } from '@typeweave/theme';
 import { Slot } from '../slot';
 import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';

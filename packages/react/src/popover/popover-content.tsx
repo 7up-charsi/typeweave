@@ -1,4 +1,4 @@
-import { PopoverVariantProps, popover } from '@ux-weaver/theme';
+import { PopoverVariantProps, popover } from '@typeweave/theme';
 import { PopperFloating, PopperFloatingProps } from '../popper';
 import { VisuallyHidden } from '../visually-hidden';
 import React from 'react';
@@ -6,7 +6,7 @@ import { usePopoverCtx } from './popover-root';
 import { useClickOutside } from '../use-click-outside';
 import { createContextScope } from '../context';
 import { FocusTrap } from '../focus-trap';
-import { mergeRefs } from '@ux-weaver/react-utils';
+import { mergeRefs } from '@typeweave/react-utils';
 
 export interface PopoverContentProps
   extends Omit<PopperFloatingProps, 'children'>,

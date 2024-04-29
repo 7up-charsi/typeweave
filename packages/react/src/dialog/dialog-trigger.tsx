@@ -1,4 +1,4 @@
-import { mergeRefs } from '@ux-weaver/react-utils';
+import { mergeRefs } from '@typeweave/react-utils';
 import { Slot } from '../slot';
 import React from 'react';
 import { useDialogCtx } from './dialog-root';

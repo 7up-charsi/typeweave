@@ -17,7 +17,7 @@ import {
   arrow as arrowMiddleware,
 } from '@floating-ui/react-dom';
 import { Slot } from '../slot';
-import { mergeRefs } from '@ux-weaver/react-utils';
+import { mergeRefs } from '@typeweave/react-utils';
 import React from 'react';
 import { usePopperCtx } from './popper-root';
 import { useSize } from '../use-size';

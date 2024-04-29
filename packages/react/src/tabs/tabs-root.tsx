@@ -1,4 +1,4 @@
-import { TabsVariantProps, tabs } from '@ux-weaver/theme';
+import { TabsVariantProps, tabs } from '@typeweave/theme';
 import { createContextScope } from '../context';
 import { createCollection } from '../use-collection';
 import { useControllableState } from '../use-controllable-state';

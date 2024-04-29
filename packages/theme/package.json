@@ -1,6 +1,6 @@
 {
-  "name": "@ux-weaver/theme",
-  "version": "1.0.2",
+  "name": "@typeweave/theme",
+  "version": "0.0.0",
   "keywords": [
     "theme"
   ],
@@ -17,11 +17,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/7up-charsi/ux-weaver.git",
+    "url": "git+https://github.com/7up-charsi/typeweave.git",
     "directory": "packages/core/theme"
   },
   "bugs": {
-    "url": "https://github.com/7up-charsi/ux-weaver/issues"
+    "url": "https://github.com/7up-charsi/typeweave/issues"
   },
   "main": "./src/index.ts",
   "scripts": {

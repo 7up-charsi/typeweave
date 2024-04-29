@@ -1,15 +1,15 @@
-# @ux-weaver/react-utils
+# @typeweave/react-utils
 
 This package contains utilities for react
 
 ## Installation
 
 ```bash
-pnpm add @ux-weaver/react-utils
+pnpm add @typeweave/react-utils
 # or
-yarn add @ux-weaver/react-utils
+yarn add @typeweave/react-utils
 # or
-npm i @ux-weaver/react-utils
+npm i @typeweave/react-utils
 ```
 
 ## API Reference

@@ -1,7 +1,7 @@
 import { focus, getTabbableEdges } from './utils';
 import { Slot } from '../slot';
 import React from 'react';
-import { mergeRefs } from '@ux-weaver/react-utils';
+import { mergeRefs } from '@typeweave/react-utils';
 
 export type FocusScope = { paused: boolean; pause(): void; resume(): void };
 

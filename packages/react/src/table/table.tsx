@@ -1,4 +1,4 @@
-import { TableClassNames, TableVariantProps, table } from '@ux-weaver/theme';
+import { TableClassNames, TableVariantProps, table } from '@typeweave/theme';
 import { useTableCtx } from './table-root';
 import React from 'react';
 

@@ -12,7 +12,7 @@ import {
   DialogRoot,
   DialogTrigger,
 } from '../src';
-import { select } from '@ux-weaver/theme';
+import { select } from '@typeweave/theme';
 import options from './options.json';
 
 const meta = {

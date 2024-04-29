@@ -1,11 +1,11 @@
 {
-  "name": "ux-weaver",
+  "name": "typeweave",
   "private": true,
   "scripts": {
-    "build:pkg": "turbo build --filter=!@ux-weaver/docs --filter=!@ux-weaver/storybook",
-    "dev:sb": "pnpm --filter @ux-weaver/storybook dev",
-    "dev:docs": "pnpm --filter @ux-weaver/docs dev",
-    "typecheck": "turbo typecheck --filter=!@ux-weaver/docs --filter=!@ux-weaver/storybook",
+    "build:pkg": "turbo build --filter=!@typeweave/docs --filter=!@typeweave/storybook",
+    "dev:sb": "pnpm --filter @typeweave/storybook dev",
+    "dev:docs": "pnpm --filter @typeweave/docs dev",
+    "typecheck": "turbo typecheck --filter=!@typeweave/docs --filter=!@typeweave/storybook",
     "clean": "pnpm turbo:clean && pnpm clean:node-modules && pnpm clean:lock",
     "turbo:clean": "turbo clean && rimraf ./node_modules/.cache/turbo",
     "clean:node-modules": "rimraf ./apps/**/node_modules ./packages/**/**/node_modules -g && rm -rf ./node_modules",

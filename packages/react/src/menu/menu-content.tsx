@@ -1,9 +1,9 @@
-import { MenuVariantProps, menu } from '@ux-weaver/theme';
+import { MenuVariantProps, menu } from '@typeweave/theme';
 import { createContextScope } from '../context';
 import { PopperFloating, PopperFloatingProps } from '../popper';
 import React from 'react';
 import { MenuCollection, useMenuCollection, useMenuCtx } from './menu-root';
-import { mergeRefs } from '@ux-weaver/react-utils';
+import { mergeRefs } from '@typeweave/react-utils';
 import { VisuallyHidden } from '../visually-hidden';
 import { useClickOutside } from '../use-click-outside';
 import { useScrollLock } from '../use-scroll-lock';

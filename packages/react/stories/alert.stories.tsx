@@ -1,5 +1,5 @@
 import React from 'react';
-import { alert } from '@ux-weaver/theme';
+import { alert } from '@typeweave/theme';
 import { Alert } from '../src';
 import { Heart, Angry } from 'lucide-react';
 

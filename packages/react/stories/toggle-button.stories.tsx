@@ -1,5 +1,5 @@
 import React from 'react';
-import { toggleButton } from '@ux-weaver/theme';
+import { toggleButton } from '@typeweave/theme';
 import { ToggleButton, ToggleButtonGroup } from '../src';
 
 const meta = {

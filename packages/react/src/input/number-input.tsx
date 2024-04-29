@@ -1,7 +1,7 @@
 import React from 'react';
 import { InputProps, Input } from './input';
-import { mergeRefs } from '@ux-weaver/react-utils';
-import { numberInput } from '@ux-weaver/theme';
+import { mergeRefs } from '@typeweave/react-utils';
+import { numberInput } from '@typeweave/theme';
 import { Button } from '../button';
 import { useControllableState } from '../use-controllable-state';
 import { MinusIcon, PlusIcon } from 'lucide-react';

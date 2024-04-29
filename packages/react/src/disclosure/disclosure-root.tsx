@@ -1,4 +1,4 @@
-import { disclosure } from '@ux-weaver/theme';
+import { disclosure } from '@typeweave/theme';
 import { createContextScope } from '../context';
 import React from 'react';
 import { Slot } from '../slot';

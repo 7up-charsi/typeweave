@@ -1,7 +1,7 @@
 'use server';
 
 import React from 'react';
-import { SkeletonVariantProps, skeleton } from '@ux-weaver/theme';
+import { SkeletonVariantProps, skeleton } from '@typeweave/theme';
 
 export interface SkeletonProps
   extends SkeletonVariantProps,

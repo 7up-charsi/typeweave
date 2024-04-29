@@ -1,4 +1,4 @@
-import { createTheme } from '@ux-weaver/theme';
+import { createTheme } from '@typeweave/theme';
 
 /** @type {import('tailwindcss').Config} */
 export default {

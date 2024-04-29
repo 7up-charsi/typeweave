@@ -2,8 +2,8 @@ import {
   CheckboxClassNames,
   CheckboxVariantProps,
   checkbox,
-} from '@ux-weaver/theme';
-import { mergeRefs } from '@ux-weaver/react-utils';
+} from '@typeweave/theme';
+import { mergeRefs } from '@typeweave/react-utils';
 import React from 'react';
 import { Check, Minus } from 'lucide-react';
 
