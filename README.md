@@ -1,13 +1,14 @@
 # Typeweave
 
-`@typeweave/react` is a versatile React TypeScript UI library designed to streamline the development of elegant and robust user interfaces. With **_@typeweave/react_**, you can easily weave together sophisticated UI components while leveraging the strong typing capabilities of TypeScript.
+`@typeweave/react` is a versatile **React UI** library built with **TypeScript and Tailwind CSS**. It's designed to streamline the development of elegant and robust user interfaces. With **_@typeweave/react_**, you can easily weave together sophisticated UI components while leveraging the strong typing capabilities of TypeScript and the rapid styling capabilities of Tailwind CSS.
 
 ## Features
 
-- **TypeScript Integration**: Harness the power of TypeScript's static typing to catch errors early and enhance code maintainability.
-- **Rich Component Library**: Access a comprehensive collection of UI components, ranging from basic elements to complex layouts, all meticulously crafted for seamless integration.
-- **Customization Options**: Tailor the appearance and behavior of components to suit your project's unique requirements with customizable props and styling options.
-- **Developer-Friendly**: Enjoy a smooth development experience with clear documentation, helpful examples, and intuitive APIs.
+- **TypeScript Integration:** Harness the power of TypeScript's static typing to catch errors early and enhance code maintainability.
+- **Rich Component Library:** Access a comprehensive collection of UI components, ranging from basic elements to complex layouts, all meticulously crafted for seamless integration.
+- **Customization Options:** Tailor the appearance and behavior of components to suit your project's unique requirements with customizable props and styling options.
+- **Developer-Friendly:** Enjoy a smooth development experience with clear documentation, helpful examples, and intuitive APIs.
+- **Tailwind CSS Integration:** Built with Tailwind CSS, allowing for rapid prototyping and easy customization of component styles.
 
 ## Installation
 
