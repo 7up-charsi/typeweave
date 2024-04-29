@@ -8,5 +8,4 @@ build
 pnpm-lock.yaml
 !.storybook
 !.lintstagedrc.cjs
-!tsup.config.ts
 *.hbs
