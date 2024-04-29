@@ -5,8 +5,8 @@ export const alert = tv({
     base: 'inline-flex gap-4 p-4 rounded',
     content: 'grow first-letter:uppercase',
     title: 'text-lg first-letter:uppercase font-medium mb-1 leading-normal',
-    icon: 'flex text-2xl',
-    action: 'h-full flex items-center',
+    icon: 'flex text-2xl dynamic-icon',
+    action: 'h-full flex items-center dynamic-icon',
   },
   variants: {
     variant: {

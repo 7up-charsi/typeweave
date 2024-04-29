@@ -123,10 +123,9 @@ export const createTheme = (config: PluginConfig = {}) => {
 
       addUtilities([
         {
-          '.lucide': {
+          '.dynamic-icon > svg': {
             width: '1em',
             height: '1em',
-            'vector-effect': 'non-scaling-stroke',
           },
           '.disabled': {
             opacity: '0.5',
@@ -162,6 +161,7 @@ export const createTheme = (config: PluginConfig = {}) => {
       future: {
         hoverOnlyWhenSupported: true,
       },
+      safelist: ['lucide'],
     },
   );
 };

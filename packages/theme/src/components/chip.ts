@@ -6,7 +6,7 @@ export const chip = tv({
     base: 'relative inline-flex items-center gap-2 px-2 rounded select-none whitespace-nowrap max-w-full',
     content: 'truncate',
     deleteIcon:
-      'cursor-pointer transition-colors outline-none focus-visible:outline-2 focus-visible:outline-focus',
+      'cursor-pointer transition-colors outline-none focus-visible:outline-2 focus-visible:outline-focus dynamic-icon',
   },
   variants: {
     variant: {
