@@ -16,7 +16,7 @@ By harnessing the power of both **_@typeweave/react_** and **_@typeweave/theme_*
 
 - **TypeScript Integration**: Harness the power of TypeScript's static typing to catch errors early and enhance code maintainability.
 
-- **Rich Component Library**: Access a comprehensive collection of UI components, ranging from basic elements to complex layouts, all meticulously crafted for seamless integration.
+- **Rich Component Library**: Access a comprehensive collection of UI components, ranging from basic to complex elements, all meticulously crafted for seamless integration.
 
 - **Customization Options**: Tailor the appearance and behavior of components to suit your project's unique requirements with customizable props and styling options.
 
@@ -26,7 +26,7 @@ By harnessing the power of both **_@typeweave/react_** and **_@typeweave/theme_*
 
 ## Installation
 
-To install **_@typeweave/react_** in your project, simply run:
+To install **_@typeweave/react_** in your project, simply run one of these:
 
 ```bash
 pnpm add @typeweave/react @typeweave/theme
@@ -68,7 +68,7 @@ import { Button } from '@typeweave/react';
 const App = () => {
   return (
     <div>
-      <Button onClick={() => alert('Hello, TypeWeave!')}>Click me</Button>
+      <Button onPress={() => alert('Hello, TypeWeave!')}>Press me</Button>
     </div>
   );
 };
@@ -91,7 +91,7 @@ I welcome contributions to **Typeweave**. Please see Contributing Guide for info
 
 ## Contact
 
-For questions, feedback, or support, please contact us at 7up.charsi@gmail.com.
+For questions, feedback, or support, please contact me at 7up.charsi@gmail.com.
 
 ## Note
 
