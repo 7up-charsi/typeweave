@@ -6,9 +6,9 @@
 
 ## Main Packages
 
-- **@typeweave/react**: A versatile **React UI** library built with **TypeScript and Tailwind CSS**. This package provides a comprehensive set of UI components and tools for building robust and maintainable applications.
+- **@typeweave/react**: A versatile **TypeScript React UI** components package that provides a comprehensive set of UI components for building robust and maintainable applications.
 
-- **@typeweave/theme**: A theme package that provides a set of pre-designed styles for use with **_@typeweave/react_**. This package allows you to quickly customize the appearance of your application and create a consistent visual identity.
+- **@typeweave/theme**: A **Tailwind CSS** theme package that provides a set of pre-designed styles for use with **_@typeweave/react_**. This package allows you to quickly customize the appearance of your application and create a consistent visual identity.
 
 By harnessing the power of both **_@typeweave/react_** and **_@typeweave/theme_** packages, you can seamlessly integrate sophisticated UI components, leveraging the robust typing capabilities of TypeScript and the rapid styling features of Tailwind CSS to streamline your development process and create exceptional user experiences.
 
