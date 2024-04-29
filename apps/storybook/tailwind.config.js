@@ -1,4 +1,4 @@
-import { WebboUi } from '@ux-weaver/theme';
+import { createTheme } from '@ux-weaver/theme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -7,5 +7,5 @@ export default {
     '../../packages/theme/src/**/*.ts',
     './.storybook/**/*.{ts,tsx}',
   ],
-  plugins: [WebboUi()],
+  plugins: [createTheme()],
 };

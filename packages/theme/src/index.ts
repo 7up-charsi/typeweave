@@ -1,4 +1,5 @@
-export * from './components';
-
-export * from './plugin';
 export * from './types';
+
+export * from './components';
+export { createTheme } from './plugin';
+export { registerStyles, createColorScale } from './utils';

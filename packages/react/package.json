@@ -25,10 +25,11 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-    "build": "pnpm auto-imports && cross-env NODE_OPTIONS='--max-old-space-size=16384' tsup",
+    "build": "pnpm auto-imports && pnpm gen-tsup-config && tsup",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "auto-imports": "tsx ./scripts/auto-imports.ts",
+    "gen-tsup-config": "tsx ./scripts/gen-tsup-config.ts",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
     "prepublish": "pnpm typecheck"
@@ -53,3 +54,4 @@
     "extends": "../../../../../../clean-package.config.json"
   }
 }
+

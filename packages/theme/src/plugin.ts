@@ -4,45 +4,8 @@ import * as colors from '@radix-ui/colors';
 import { flatten } from 'flat';
 import Color from 'color';
 import kebabcase from 'lodash.kebabcase';
-
-type ColorScale = Record<string, string>;
-
-type ThemeColors = {
-  background?: string;
-  foreground?: string;
-  primary?: ColorScale;
-  secondary?: ColorScale;
-  success?: ColorScale;
-  warning?: ColorScale;
-  danger?: ColorScale;
-  info?: ColorScale;
-  muted?: ColorScale;
-  overlay?: ColorScale;
-  focus?: string;
-};
-
-type ThemeLayout = {
-  borderRadius?: string;
-};
-
-type Theme = {
-  base?: 'light' | 'dark';
-  colors?: ThemeColors;
-  layout?: ThemeLayout;
-};
-
-type Themes = Record<string, Theme>;
-
-type PluginConfig = {
-  defaultTheme?: string;
-  themes?: Themes;
-};
-
-export const createColorScale = (color: ColorScale) =>
-  Object.entries(color).reduce<ColorScale>(
-    (acc, [key, value]) => ((acc[key.replace(/[a-zA-Z]+/, '')] = value), acc),
-    {},
-  );
+import { PluginConfig, Theme, ThemeColors, Themes } from './types';
+import { createColorScale } from './utils';
 
 const defaultLightTheme: Theme = {
   base: 'light',
@@ -85,7 +48,7 @@ const baseThemes = {
   dark: defaultDarkTheme,
 };
 
-export const WebboUi = (config: PluginConfig = {}) => {
+export const createTheme = (config: PluginConfig = {}) => {
   const { themes: userThemes = {}, defaultTheme = 'light' } = config;
 
   const themes: Themes = {
