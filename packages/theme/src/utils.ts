@@ -1,17 +1,27 @@
 import { Components } from './components-names-type';
+import { importsMap } from './imports-map';
 import { ColorScale } from './types';
 
+const stylesBasePath = './node_modules/@typeweave/theme/dist/components';
+
 export const registerStyles = (components: Components[]) => {
-  const unique = new Set(components);
+  const uniqueNames = new Set(components);
 
-  return Array.from(unique).map(
-    (comp) => `./node_modules/@typeweave/theme/dist/components/${comp}`,
-  );
+  const arr: string[] = [];
+
+  uniqueNames.forEach((name) => {
+    if (importsMap[name])
+      arr.push(
+        ...importsMap[name].map((ele) => `${stylesBasePath}/${ele}.{js,mjs}`),
+      );
+
+    arr.push(`${stylesBasePath}/${name}.{js,mjs}`);
+  });
+
+  return arr;
 };
 
-export const registerAllStyles = () => {
-  return `./node_modules/@typeweave/theme/dist/components/**/*.{js,mjs}`;
-};
+export const registerAllStyles = () => `${stylesBasePath}/**/*.{js,mjs}`;
 
 export const createColorScale = (color: ColorScale) =>
   Object.entries(color).reduce<ColorScale>(

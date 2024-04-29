@@ -68,7 +68,7 @@ const VirtualElementTemplate = () => {
       </Button>
 
       <AlertDialogRoot defaultOpen>
-        <AlertDialogTrigger virtualElement={virtualElement} />
+        <AlertDialogTrigger virtual virtualElement={virtualElement} />
 
         <AlertDialogPortal>
           <AlertDialogOverlay />
@@ -128,8 +128,7 @@ const ProgrammaticallyTemplate = () => {
               size="sm"
               color="danger"
               variant="text"
-              className="w-5 h-5 absolute right-2 top-2"
-              classNames={{ content: 'text-xs' }}
+              className="absolute right-2 top-2"
               onPress={ref.current?.onClose}
             >
               <XIcon />

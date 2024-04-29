@@ -74,7 +74,7 @@ export const button = tv({
       },
     },
 
-    // isIconOnly
+    // icon button content (svg) sizes
     {
       isIconOnly: true,
       className: { base: 'dynamic-icon' },
@@ -95,6 +95,7 @@ export const button = tv({
       className: { base: 'text-xl' },
     },
 
+    // icon button sizes when it is not in button group
     {
       isIconOnly: true,
       isInGroup: false,
@@ -114,7 +115,7 @@ export const button = tv({
       className: { base: 'w-11 h-11' },
     },
 
-    // isIconOnly in group
+    // icon button sizes when it is in button group
     {
       isIconOnly: true,
       isInGroup: true,

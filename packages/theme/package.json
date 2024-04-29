@@ -25,10 +25,11 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-    "build": "pnpm gen-type && tsup",
+    "build": "pnpm gen-type && pnpm gen-imports-map && tsup",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "gen-type": "tsx ./scripts/gen-type.ts",
+    "gen-imports-map": "tsx ./scripts/gen-imports-map.ts",
     "prepack": "clean-package",
     "postpack": "clean-package restore"
   },
@@ -53,3 +54,4 @@
     "extends": "../../../../../../clean-package.config.json"
   }
 }
+
