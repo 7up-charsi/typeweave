@@ -1,8 +1,8 @@
-# Webbo-ui
+# ux-weaver
 
-## what is Webbo-ui
+## what is ux-weaver
 
-Webbo-ui is an **open-source**, **simple**, **customizable** and **accissible** **React Typescript** ui library built from ground up on top of utility-first **tailwindcss** framework.
+ux-weaver is an **open-source**, **simple**, **customizable** and **accissible** **React Typescript** ui library built from ground up on top of utility-first **tailwindcss** framework.
 
 ## I have a question
 
