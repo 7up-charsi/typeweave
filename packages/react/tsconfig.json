@@ -1,5 +1,4 @@
 {
   "extends": "tsconfig/packages",
-  "exclude": ["./src/**/*.stories.tsx"],
   "include": ["./src/**/*"]
 }
