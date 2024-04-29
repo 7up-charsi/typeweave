@@ -1,5 +1,13 @@
 # @typeweave/react
 
+## 1.0.1
+
+### Patch Changes
+
+- fix(Theme): register styles
+- Updated dependencies
+  - @typeweave/theme@1.1.0
+
 ## 1.0.0
 
 ### Major Changes
