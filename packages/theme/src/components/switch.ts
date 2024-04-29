@@ -6,9 +6,9 @@ const _switch = tv({
     base: 'inline-flex gap-2',
     switch: 'relative flex items-center',
     input:
-      'peer rounded-full appearance-none cursor-pointer transition-colors bg-muted-9 disabled:disabled absolute inset-0 outline-none',
+      'peer rounded-full appearance-none cursor-pointer transition-colors bg-muted-9 disabled:disabled absolute inset-0 outline-none focus-visible:ring-2 focus-visible:ring-focus',
     indicator:
-      'pointer-events-none bg-white text-muted-11 absolute z-10 rounded-full left-[2px] translate-x-0 peer-checked:left-[calc(100%-2px)] peer-checked:-translate-x-full transition-[left,transform] [&_svg:first-of-type]:inline-block peer-checked:[&_svg:first-of-type]:hidden [&_svg:last-of-type]:hidden peer-checked:[&_svg:last-of-type]:inline-block flex items-center justify-center peer-focus-visible:outline-2 peer-focus-visible:outline-focus dynamic-icon',
+      'pointer-events-none bg-white text-muted-11 absolute z-10 rounded-full left-[2px] translate-x-0 peer-checked:left-[calc(100%-2px)] peer-checked:-translate-x-full transition-[left,transform] [&_svg:first-of-type]:inline-block peer-checked:[&_svg:first-of-type]:hidden [&_svg:last-of-type]:hidden peer-checked:[&_svg:last-of-type]:inline-block flex items-center justify-center dynamic-icon',
     label: 'cursor-pointer select-none text-muted-11 first-letter:uppercase',
   },
   variants: {
