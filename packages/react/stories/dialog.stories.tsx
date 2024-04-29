@@ -137,7 +137,7 @@ const VirtualElementTemplate = () => {
       <Button ref={setVirtualElement}>open dialog</Button>
 
       <DialogRoot defaultOpen>
-        <DialogTrigger virtualElement={virtualElement} />
+        <DialogTrigger virtual virtualElement={virtualElement} />
 
         <DialogPortal>
           <DialogOverlay />
