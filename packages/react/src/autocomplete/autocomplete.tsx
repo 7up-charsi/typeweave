@@ -6,7 +6,6 @@ import {
   AutocompleteVariantProps,
   autocomplete,
 } from '@typeweave/theme';
-import { mergeRefs } from '@typeweave/react-utils';
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { getNext, getPrevious } from './utils';
@@ -22,6 +21,7 @@ export type AutocompleteReason = 'select' | 'clear' | 'remove';
 export interface AutocompleteRenderInputProps {
   selected: { label: string; onDelete: () => void }[] | null;
   inputRef: React.RefObject<HTMLInputElement>;
+  inputWrapperRef: React.RefObject<HTMLDivElement>;
   popperReferenceRef: (instance: HTMLDivElement | null) => void;
   disabled: boolean;
   isOpen: boolean;
@@ -229,8 +229,8 @@ const AutocompleteImpl = React.forwardRef<
       );
   }, [groupBy, options]);
 
+  const inputWrapperRef = React.useRef<HTMLDivElement>(null);
   const inputRef = React.useRef<HTMLInputElement>(null);
-  const popperReferenceRef = React.useRef<HTMLElement>(null);
   const [focused, setFocused] = React.useState<object | null>(null);
   const lisboxId = React.useId();
 
@@ -560,7 +560,8 @@ const AutocompleteImpl = React.forwardRef<
               : Array.isArray(value)
                 ? !!value.length
                 : !!value,
-            popperReferenceRef: mergeRefs(referenceRef, popperReferenceRef),
+            popperReferenceRef: referenceRef,
+            inputWrapperRef,
             inputRef,
             inputValue,
             onChange: handleInputChange,

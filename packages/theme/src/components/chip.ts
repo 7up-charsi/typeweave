@@ -7,7 +7,7 @@ export const chip = tv({
     content: 'truncate',
     avatar: '',
     icon: 'dynamic-icon',
-    deleteIcon: 'cursor-pointer text-lg transition-colors dynamic-icon',
+    deleteIcon: 'cursor-pointer transition-colors dynamic-icon',
   },
   variants: {
     variant: {
@@ -29,6 +29,10 @@ export const chip = tv({
       sm: { base: 'text-xs h-6', deleteIcon: 'text-sm' },
       md: { base: 'text-sm h-7', deleteIcon: 'text-base' },
       lg: { base: 'text-base h-8', deleteIcon: 'text-lg' },
+    },
+    pressable: {
+      true: { base: 'cursor-pointer' },
+      false: { base: 'cursor-auto' },
     },
   },
   compoundVariants: [

@@ -8,6 +8,7 @@ import {
   autocompleteInput,
 } from '@typeweave/theme';
 import { ChevronDownIcon, XIcon } from 'lucide-react';
+import { mergeRefs } from '@typeweave/react-utils';
 
 export const autocompleteInputAdapter = (
   inputProps: AutocompleteRenderInputProps,
@@ -30,6 +31,7 @@ export const autocompleteInputAdapter = (
     onKeyDown,
     popperReferenceRef,
     showClearButton,
+    inputWrapperRef,
     selected,
     isOpen,
     multiple,
@@ -68,7 +70,6 @@ export const autocompleteInputAdapter = (
       <Chip
         key={i}
         color="default"
-        variant="border"
         label={opt.label}
         onDelete={opt.onDelete}
         tabIndex={-1}
@@ -120,7 +121,10 @@ export const autocompleteInputAdapter = (
       onPointerDown: (e) => {
         if (e.button !== 0 || disabled) return;
 
-        if ((e.target as HTMLElement).closest('button')) {
+        if (
+          (e.target as HTMLElement).closest('button') ||
+          (e.target as HTMLElement).closest('[role=button]')
+        ) {
           e.preventDefault();
           return;
         }
@@ -128,7 +132,7 @@ export const autocompleteInputAdapter = (
         onOpen();
       },
     },
-    ref: popperReferenceRef,
+    ref: mergeRefs(popperReferenceRef, inputWrapperRef),
     inputRef,
     onBlur,
     value: inputValue,

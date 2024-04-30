@@ -3,7 +3,6 @@ import React from 'react';
 import { Option } from './option';
 import lodashGroupBy from 'lodash.groupby';
 import { SelectClassNames, SelectVariantProps, select } from '@typeweave/theme';
-import { mergeRefs } from '@typeweave/react-utils';
 import { createPortal } from 'react-dom';
 import { getNext, getPrevious } from './utils';
 import {
@@ -206,7 +205,6 @@ const SelectImpl = React.forwardRef<
   }, [groupBy, options]);
 
   const inputRef = React.useRef<HTMLInputElement>(null);
-  const popperReferenceRef = React.useRef<HTMLElement>(null);
   const [focused, setFocused] = React.useState<object | null>(null);
   const lisboxId = React.useId();
 
@@ -545,7 +543,7 @@ const SelectImpl = React.forwardRef<
               : Array.isArray(value)
                 ? !!value.length
                 : !!value,
-            popperReferenceRef: mergeRefs(referenceRef, popperReferenceRef),
+            popperReferenceRef: referenceRef,
             inputRef,
             inputValue: getInputValue(value),
             disabled: !!disabled,
