@@ -1,18 +1,18 @@
 import { ChipClassNames, ChipVariantProps, chip } from '@typeweave/theme';
 import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';
-import { XIcon } from 'lucide-react';
+import { XCircleIcon } from 'lucide-react';
 
 export interface ChipProps
   extends ChipVariantProps,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'color'> {
   label?: string;
   avatar?: React.ReactNode;
+  icon?: React.ReactNode;
   deleteIcon?: React.ReactNode;
   onDelete?: () => void;
-  deleteA11yLabel?: string;
+  onPress?: (e: React.PointerEvent<HTMLDivElement>) => void;
   classNames?: ChipClassNames;
-  excludeFromTabOrder?: boolean;
 }
 
 const displayName = 'Chip';
@@ -30,26 +30,29 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
       color = 'primary',
       classNames,
       className,
-      excludeFromTabOrder,
+      icon,
       deleteIcon,
-      deleteA11yLabel = 'delete',
+      tabIndex,
+      role,
+      onPress,
+      onKeyUp,
       ...restProps
     } = props;
 
-    const pointerEvents = usePointerEvents({
-      onPress: onDelete,
+    const pressPointerEvents = usePointerEvents({
+      onPress,
       onPointerDown,
       onPointerUp,
     });
 
-    const handleKeyUp = (e: React.KeyboardEvent) => {
-      const Backspace = e.key === 'Backspace';
-      const Delete = e.key === 'Delete';
+    const deletePointerEvents = usePointerEvents({
+      onPress: onDelete,
+    });
 
-      if (Backspace || Delete) {
-        onDelete?.();
-        return;
-      }
+    const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
+      onKeyUp?.(e);
+
+      if (['Backspace', 'Delete'].includes(e.key)) onDelete?.();
     };
 
     const styles = React.useMemo(
@@ -57,49 +60,38 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
       [color, size, variant],
     );
 
-    const ariaLabel = props['aria-label'];
-    const ariaLabelledby = props['aria-labelledby'];
-
-    const onDeleteProvided = !!onDelete;
-
-    if (process.env.NODE_ENV !== 'production') {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      React.useEffect(() => {
-        if (onDeleteProvided && !deleteA11yLabel)
-          console.warn(
-            "For accessible deletable Chip, provide `deleteA11yLabel` prop for screen readers to describe delete button's purpose.",
-          );
-
-        if (!ariaLabel && !ariaLabelledby)
-          console.warn(
-            'For accessible Chip, provide `aria-label` prop for screen readers to describe its purpose.',
-          );
-
-        //
-      }, [ariaLabel, ariaLabelledby, deleteA11yLabel, onDeleteProvided]);
-    }
-
     return (
       <div
         {...restProps}
         ref={ref}
         className={styles.base({ className: classNames?.base ?? className })}
+        tabIndex={tabIndex ?? (onPress || onDelete ? 0 : undefined)}
+        role={role ?? (onPress || onDelete ? 'button' : undefined)}
+        onKeyUp={handleKeyUp}
+        {...pressPointerEvents}
       >
-        {avatar}
+        {avatar && (
+          <span className={styles.avatar({ className: classNames?.avatar })}>
+            {avatar}
+          </span>
+        )}
+
+        {!avatar && icon && (
+          <span className={styles.icon({ className: classNames?.icon })}>
+            {icon}
+          </span>
+        )}
+
         <span className={styles.content({ className: classNames?.content })}>
           {label}
         </span>
 
         {onDelete ? (
           <span
-            onKeyUp={handleKeyUp}
-            {...pointerEvents}
-            tabIndex={excludeFromTabOrder ? -1 : 0}
-            role="button"
+            {...deletePointerEvents}
             className={styles.deleteIcon({ className: classNames?.deleteIcon })}
-            aria-label={deleteA11yLabel}
           >
-            {deleteIcon ?? <XIcon />}
+            {deleteIcon ?? <XCircleIcon />}
           </span>
         ) : null}
       </div>

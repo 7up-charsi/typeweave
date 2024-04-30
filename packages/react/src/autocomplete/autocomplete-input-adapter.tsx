@@ -71,9 +71,7 @@ export const autocompleteInputAdapter = (
         variant="border"
         label={opt.label}
         onDelete={opt.onDelete}
-        aria-label={`selected ${opt.label}`}
-        deleteA11yLabel={`remove ${opt.label}`}
-        excludeFromTabOrder
+        tabIndex={-1}
       />
     )),
     endContent: (

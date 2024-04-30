@@ -3,10 +3,11 @@ import { ClassNames } from '../types';
 
 export const chip = tv({
   slots: {
-    base: 'relative inline-flex items-center gap-2 px-2 rounded select-none whitespace-nowrap max-w-full',
+    base: 'relative inline-flex items-center gap-2 px-2 rounded select-none whitespace-nowrap max-w-full outline-none focus-visible:ring-2 focus-visible:ring-focus',
     content: 'truncate',
-    deleteIcon:
-      'cursor-pointer transition-colors outline-none focus-visible:ring-2 focus-visible:ring-focus dynamic-icon',
+    avatar: '',
+    icon: 'dynamic-icon',
+    deleteIcon: 'cursor-pointer text-lg transition-colors dynamic-icon',
   },
   variants: {
     variant: {
@@ -25,9 +26,9 @@ export const chip = tv({
       danger: { base: '' },
     },
     size: {
-      sm: { base: 'text-xs h-6', deleteIcon: 'text-xs' },
-      md: { base: 'text-sm h-7', deleteIcon: 'text-sm' },
-      lg: { base: 'text-base h-8', deleteIcon: 'text-base' },
+      sm: { base: 'text-xs h-6', deleteIcon: 'text-sm' },
+      md: { base: 'text-sm h-7', deleteIcon: 'text-base' },
+      lg: { base: 'text-base h-8', deleteIcon: 'text-lg' },
     },
   },
   compoundVariants: [
