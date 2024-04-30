@@ -45,7 +45,12 @@ const Template = (args) => (
               color={color}
               variant={variant}
               label="Chip Comp"
-              onDelete={() => {}}
+              onDelete={() => {
+                console.log('onDelete');
+              }}
+              onPress={() => {
+                console.log('onPress');
+              }}
               size={args.size}
             />
           ))}
