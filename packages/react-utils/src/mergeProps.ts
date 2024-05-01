@@ -23,7 +23,7 @@ export const mergeProps = (...props: object[]) => {
       }
       //   Merge classnames
       else if (
-        (key === 'className' || key === 'UNSAFE_className') &&
+        key === 'className' &&
         typeof presentValue === 'string' &&
         typeof newValue === 'string'
       ) {
