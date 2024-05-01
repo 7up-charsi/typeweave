@@ -4,9 +4,9 @@ import { ClassNames } from '../types';
 export const autocomplete = tv({
   slots: {
     listbox:
-      'w-[--reference-width] bg-paper border border-muted-6 overflow-y-auto rounded max-h-[300px] z-50',
+      'w-[var(--reference-width)] bg-paper border border-muted-6 overflow-y-auto rounded max-h-[300px] z-50',
     option:
-      'flex items-center px-2 h-10 select-none truncate cursor-pointer data-[disabled=true]:disabled text-muted-11 data-[selected=true]:bg-info-3 data-[focused=true]:data-[selected=true]:bg-info-4 data-[focused=true]:data-[selected=false]:bg-muted-3 dark:data-[selected=true]:bg-info-6 dark:data-[focused=true]:data-[selected=true]:bg-info-7 dark:data-[focused=true]:data-[selected=false]:bg-muted-6',
+      'px-2 py-2 select-none cursor-pointer data-[disabled=true]:disabled text-muted-11 data-[selected=true]:bg-info-3 data-[focused=true]:data-[selected=true]:bg-info-4 data-[focused=true]:data-[selected=false]:bg-muted-3 dark:data-[selected=true]:bg-info-6 dark:data-[focused=true]:data-[selected=true]:bg-info-7 dark:data-[focused=true]:data-[selected=false]:bg-muted-6',
     noOptions: 'h-10 flex items-center justify-center capitalize text-muted-11',
     loading: 'h-10 flex items-center justify-center capitalize text-muted-11',
     group: 'relative isolate',

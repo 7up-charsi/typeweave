@@ -183,7 +183,7 @@ export const PopperFloating = React.forwardRef<
   const hideData = middlewareData.hide;
 
   const childrenProps = {
-    floatingRef: refs.setFloating,
+    floatingRef: mergeRefs(refs.setFloating, ref),
     style: {
       ...floatingStyles,
       visibility: (hideData?.referenceHidden
