@@ -1,7 +1,7 @@
 import { tv, VariantProps } from 'tailwind-variants';
 
 export const skeleton = tv({
-  base: 'bg-muted-3 overflow-hidden',
+  base: 'bg-muted-5 overflow-hidden',
   variants: {
     variant: {
       text: 'h-auto w-full before:content-["_"] before:whitespace-pre',

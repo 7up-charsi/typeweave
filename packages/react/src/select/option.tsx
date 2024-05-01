@@ -39,14 +39,6 @@ export const Option = React.forwardRef<HTMLLIElement, OptionProps>(
     });
 
     React.useEffect(() => {
-      if (selected)
-        innerRef.current?.scrollIntoView({
-          behavior: 'instant',
-          block: 'center',
-        });
-    }, [selected]);
-
-    React.useEffect(() => {
       if (focused && !isHovered.current)
         innerRef.current?.scrollIntoView({
           behavior: 'instant',

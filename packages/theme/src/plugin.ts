@@ -1,46 +1,22 @@
 import plugin from 'tailwindcss/plugin';
 import deepmerge from 'deepmerge';
-import * as colors from '@radix-ui/colors';
 import { flatten } from 'flat';
 import Color from 'color';
 import kebabcase from 'lodash.kebabcase';
 import { PluginConfig, Theme, ThemeColors, Themes } from './types';
-import { createColorScale } from './utils';
+import { darkThemeColors, lightThemeColors } from './semantics';
+import { darkThemeLayout, lightThemeLayout } from './layouts';
 
 const defaultLightTheme: Theme = {
   base: 'light',
-  colors: {
-    background: '#ffffff',
-    foreground: colors.gray.gray11,
-    primary: createColorScale(colors.violet),
-    secondary: createColorScale(colors.plum),
-    success: createColorScale(colors.green),
-    warning: createColorScale(colors.orange),
-    danger: createColorScale(colors.red),
-    info: createColorScale(colors.blue),
-    muted: createColorScale(colors.gray),
-    overlay: createColorScale(colors.blackA),
-    focus: colors.blue.blue8,
-  },
-  layout: { borderRadius: '4px' },
+  colors: lightThemeColors,
+  layout: lightThemeLayout,
 };
 
 const defaultDarkTheme: Theme = {
   base: 'dark',
-  colors: {
-    background: colors.grayDark.gray1,
-    foreground: colors.grayDark.gray11,
-    primary: createColorScale(colors.violetDark),
-    secondary: createColorScale(colors.plumDark),
-    success: createColorScale(colors.greenDark),
-    warning: createColorScale(colors.orangeDark),
-    danger: createColorScale(colors.redDark),
-    info: createColorScale(colors.blueDark),
-    muted: createColorScale(colors.grayDark),
-    overlay: createColorScale(colors.whiteA),
-    focus: colors.blueDark.blue8,
-  },
-  layout: { borderRadius: '4px' },
+  colors: darkThemeColors,
+  layout: darkThemeLayout,
 };
 
 const baseThemes = {
@@ -145,6 +121,10 @@ export const createTheme = (config: PluginConfig = {}) => {
           colors: pluginColors,
           borderRadius: {
             DEFAULT: 'var(--border-radius)',
+          },
+          boxShadow: {
+            modal:
+              'rgba(0, 0, 0, 0.2) 0px 15px 30px, rgba(0, 0, 0, 0.1) 0px 5px 15px, rgba(0, 0, 0, 0.05) 0px 2px 8px',
           },
           keyframes: {
             skeletonWave: {

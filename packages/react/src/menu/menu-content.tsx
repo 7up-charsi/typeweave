@@ -44,7 +44,6 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
       allowMainAxisFlip,
       allowCrossAxisFlip,
       clippingBoundary,
-      shadow = 'md',
       arrowPadding = 10,
       boundaryPadding = 10,
       ...restProps
@@ -192,7 +191,7 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
       }
     };
 
-    const styles = React.useMemo(() => menu({ shadow }), [shadow]);
+    const styles = React.useMemo(() => menu(), []);
 
     return (
       <MenuContentCtx setFocused={setFocused} focused={focused}>

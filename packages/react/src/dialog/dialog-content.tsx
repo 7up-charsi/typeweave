@@ -24,20 +24,14 @@ export const DialogContent = React.forwardRef<
   HTMLDivElement,
   DialogContentProps
 >((props, ref) => {
-  const {
-    children,
-    className,
-    noA11yDescription,
-    noA11yTitle,
-    shadow,
-    ...restProps
-  } = props;
+  const { children, className, noA11yDescription, noA11yTitle, ...restProps } =
+    props;
 
   const dialogCtx = useDialogCtx(displayName);
 
   useScrollLock();
 
-  const styles = React.useMemo(() => dialog({ shadow }), [shadow]);
+  const styles = React.useMemo(() => dialog(), []);
 
   return (
     <DialogStyles {...styles}>

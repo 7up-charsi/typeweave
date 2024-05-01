@@ -45,7 +45,6 @@ export const PopoverContent = React.forwardRef<
     allowMainAxisFlip,
     allowCrossAxisFlip,
     clippingBoundary,
-    shadow = 'md',
     loop = true,
     trapped = true,
     arrowPadding = 10,
@@ -64,7 +63,7 @@ export const PopoverContent = React.forwardRef<
     },
   });
 
-  const styles = React.useMemo(() => popover({ shadow }), [shadow]);
+  const styles = React.useMemo(() => popover(), []);
 
   return (
     <PopoverStyles {...styles}>

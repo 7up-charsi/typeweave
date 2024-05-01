@@ -23,19 +23,13 @@ export const AlertDialogContent = React.forwardRef<
   HTMLDivElement,
   AlertDialogContentProps
 >((props, ref) => {
-  const {
-    className,
-    noA11yDescription,
-    noA11yTitle,
-    shadow = 'md',
-    ...restProps
-  } = props;
+  const { className, noA11yDescription, noA11yTitle, ...restProps } = props;
 
   const alertDialogCtx = useAlertDialogCtx(displayName);
 
   useScrollLock();
 
-  const styles = React.useMemo(() => alertDialog({ shadow }), [shadow]);
+  const styles = React.useMemo(() => alertDialog(), []);
 
   return (
     <AlertDialogStyles {...styles}>

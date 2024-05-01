@@ -5,8 +5,8 @@ export const overlay = tv({
   variants: {
     variant: {
       transparent: 'bg-transparent',
-      blur: 'bg-overlay-3 backdrop-blur-sm',
-      opaque: 'bg-overlay-3',
+      blur: 'bg-overlay backdrop-blur-sm',
+      opaque: 'bg-overlay',
     },
   },
 });
