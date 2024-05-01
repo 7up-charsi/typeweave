@@ -19,8 +19,9 @@ export type ThemeColors = {
   danger?: ColorScale;
   info?: ColorScale;
   muted?: ColorScale;
-  overlay?: ColorScale;
+  overlay?: string;
   focus?: string;
+  paper?: string;
 };
 
 export type ThemeLayout = {
