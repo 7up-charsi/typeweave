@@ -1,7 +1,7 @@
 export const mergeRefs = <T>(
   ...refs: (
     | React.ForwardedRef<T>
-    | React.MutableRefObject<T>
+    | React.RefObject<T>
     | React.Dispatch<React.SetStateAction<T>>
     | undefined
     | null
@@ -16,7 +16,7 @@ export const mergeRefs = <T>(
       if (typeof ref === 'function') {
         ref(node);
       } else if (ref !== null) {
-        ref.current = node;
+        (ref as React.MutableRefObject<T>).current = node;
       }
     });
   };

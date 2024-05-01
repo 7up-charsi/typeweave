@@ -1,14 +1,10 @@
-# @typeweave/react
+# Typeweave
 
-## Installation
+## @typeweave/react
 
-```bash
-pnpm add @typeweave/react
-# or
-yarn add @typeweave/react
-# or
-npm i @typeweave/react
-```
+### Important Notice:
+
+For the most comprehensive information and instructions, please refer to the [Main README](https://github.com/7up-charsi/typeweave?tab=readme-ov-file) of this project.
 
 ## Licence
 
