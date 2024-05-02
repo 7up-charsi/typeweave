@@ -1,3 +1,22 @@
+# Typeweave
+
+## Introduction
+
+**TypeWeave** is an organization on npm that provides a collection of packages for building robust and elegant user interfaces. My goal is to streamline the development process and make it easier for developers to create high-quality applications.
+
+For the most comprehensive information and instructions, please refer to the [Main README](https://github.com/7up-charsi/typeweave?tab=readme-ov-file) of this project.
+
+## Main Packages
+
+- **@typeweave/react**: refer to the [Main README](https://github.com/7up-charsi/typeweave?tab=readme-ov-file)
+- **@typeweave/theme**: refer to the [Main README](https://github.com/7up-charsi/typeweave?tab=readme-ov-file)
+
+- **@typeweave/react-utils**: The @typeweave/react-utils package contains utility functions for **_@typeweave/react_**.
+
+This package includes a collection of utility functions used by **_@typeweave/react_**. These utilities are designed to be lightweight and flexible, making it easier to integrate and work with React applications.
+
+---
+
 ## mergeProps
 
 ### Description
