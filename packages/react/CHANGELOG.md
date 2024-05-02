@@ -1,5 +1,14 @@
 # @typeweave/react
 
+## 1.1.1
+
+### Patch Changes
+
+- fix: some internals
+- Updated dependencies
+  - @typeweave/react-utils@1.0.1
+  - @typeweave/theme@1.2.1
+
 ## 1.1.0
 
 ### Minor Changes

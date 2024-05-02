@@ -1,5 +1,11 @@
 # @typeweave/theme
 
+## 1.2.1
+
+### Patch Changes
+
+- fix: some internals
+
 ## 1.2.0
 
 ### Minor Changes
