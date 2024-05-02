@@ -11,9 +11,9 @@ For the most comprehensive information and instructions, please refer to the [Ma
 - **@typeweave/react**: refer to the [Main README](https://github.com/7up-charsi/typeweave?tab=readme-ov-file)
 - **@typeweave/theme**: refer to the [Main README](https://github.com/7up-charsi/typeweave?tab=readme-ov-file)
 
-- **@typeweave/react-utils**: The @typeweave/react-utils package contains utility functions for **_@typeweave/react_**.
+## @typeweave/react-utils
 
-This package includes a collection of utility functions used by **_@typeweave/react_**. These utilities are designed to be lightweight and flexible, making it easier to integrate and work with React applications.
+The **_@typeweave/react-utils_** package contains utility functions for **_@typeweave/react_**. This package includes a collection of utility functions used by **_@typeweave/react_**. These utilities are designed to be lightweight and flexible, making it easier to integrate and work with React applications.
 
 ---
 
