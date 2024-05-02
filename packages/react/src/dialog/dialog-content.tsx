@@ -35,13 +35,7 @@ export const DialogContent = React.forwardRef<
 
   return (
     <DialogStyles {...styles}>
-      <FocusTrap
-        loop
-        trapped
-        focusScope={dialogCtx.focusScope}
-        disabled={!dialogCtx.isOpen}
-        asChild
-      >
+      <FocusTrap loop trapped focusScope={dialogCtx.focusScope} asChild>
         <div
           {...restProps}
           ref={ref}

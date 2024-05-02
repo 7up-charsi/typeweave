@@ -1,7 +1,14 @@
-import { focus, getTabbableEdges } from './utils';
+import {
+  focus,
+  focusFirst,
+  getTabbableEdges,
+  getTabbables,
+  removeLinks,
+} from './utils';
 import { Slot } from '../slot';
 import React from 'react';
 import { mergeRefs } from '@typeweave/react-utils';
+import { useCallbackRef } from '../use-callback-ref';
 
 export type FocusScope = { paused: boolean; pause(): void; resume(): void };
 
@@ -19,31 +26,38 @@ export interface FocusTrapProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   trapped?: boolean;
   children?: React.ReactNode;
-  disabled?: boolean;
   /**
-   * **This prop is for internal use.**
-   *
    * This prop is used to pass custom scope and is usefull when more than one FocusTrap components are visible
    * @default undefined
    */
   focusScope?: FocusScope;
   asChild?: boolean;
+  onMountAutoFocus?: (event: Event) => void;
+  onUnmountAutoFocus?: (event: Event) => void;
 }
 
 const displayName = 'FocusTrap';
+
+const AUTOFOCUS_ON_MOUNT = 'focusTrap.autoFocusOnMount';
+const AUTOFOCUS_ON_UNMOUNT = 'focusTrap.autoFocusOnUnmount';
+const EVENT_OPTIONS = { bubbles: false, cancelable: true };
 
 export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
   (props, ref) => {
     const {
       asChild,
-      disabled,
       focusScope: focusScopeProp,
       loop = true,
       trapped = true,
+      onMountAutoFocus: onMountAutoFocusProp,
+      onUnmountAutoFocus: onUnmountAutoFocusProp,
       ...restProps
     } = props;
 
     const [container, setContainer] = React.useState<HTMLElement | null>(null);
+
+    const onMountAutoFocus = useCallbackRef(onMountAutoFocusProp);
+    const onUnmountAutoFocus = useCallbackRef(onUnmountAutoFocusProp);
 
     const lastFocusedElement = React.useRef<HTMLElement | null>(null);
 
@@ -60,118 +74,146 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
     const focusScope = focusScopeProp || _scope;
 
     React.useEffect(() => {
-      if (disabled) return;
-      if (!trapped) return;
+      if (trapped) {
+        const handleFocusIn = (event: FocusEvent) => {
+          if (focusScope.paused || !container) return;
 
-      const handleFocusIn = (e: FocusEvent) => {
-        if (focusScope.paused || !container) return;
-        const target = e.target as HTMLElement | null;
+          const target = event.target as HTMLElement | null;
 
-        if (container.contains(target)) {
-          lastFocusedElement.current = target;
-        }
-      };
+          if (container.contains(target)) {
+            lastFocusedElement.current = target;
+          } else {
+            focus(lastFocusedElement.current, { select: true });
+          }
+        };
 
-      const handleFocusOut = (e: FocusEvent) => {
-        if (focusScope.paused || !container) return;
-        const relatedTarget = e.relatedTarget as HTMLElement | null;
+        const handleFocusOut = (event: FocusEvent) => {
+          if (focusScope.paused || !container) return;
 
-        // if relatedTarget is null
-        // its mean either browser loosed focus or user clicked at non-focusable element
-        // in both cases we dont need to do any action
-        if (relatedTarget === null) return;
+          const relatedTarget = event.relatedTarget as HTMLElement | null;
 
-        // if relatedTarget is not null its mean another element got focus and we need to check
-        // if container does not contain it then return focus back to lastFocusedELement in container
-        if (!container.contains(relatedTarget)) {
-          focus(lastFocusedElement.current, { select: true });
-        }
-      };
+          if (relatedTarget === null) return;
 
-      // When the focused element gets removed from the DOM, browsers move focus
-      // back to the document?.body. In this case, we move focus to the container
-      // to keep focus trapped correctly.
-      const handleMutations = (mutations: MutationRecord[]) => {
-        const focusedElement = document.activeElement as HTMLElement | null;
-        if (focusedElement !== document.body) return;
+          if (!container.contains(relatedTarget)) {
+            focus(lastFocusedElement.current, { select: true });
+          }
+        };
 
-        for (const mutation of mutations) {
-          if (mutation.removedNodes.length > 0) focus(container);
-        }
-      };
+        const handleMutations = (mutations: MutationRecord[]) => {
+          const focusedElement = document.activeElement as HTMLElement | null;
 
-      document.addEventListener('focusin', handleFocusIn);
-      document.addEventListener('focusout', handleFocusOut);
+          if (focusedElement !== document.body) return;
 
-      const mutationObserver = new MutationObserver(handleMutations);
-      if (container)
-        mutationObserver.observe(container, { childList: true, subtree: true });
+          for (const mutation of mutations) {
+            if (mutation.removedNodes.length > 0) focus(container);
+          }
+        };
 
-      return () => {
-        document.removeEventListener('focusin', handleFocusIn);
-        document.removeEventListener('focusout', handleFocusOut);
-        mutationObserver.disconnect();
-      };
-    }, [container, disabled, focusScope.paused, trapped]);
+        document.addEventListener('focusin', handleFocusIn);
+        document.addEventListener('focusout', handleFocusOut);
+
+        const mutationObserver = new MutationObserver(handleMutations);
+
+        if (container)
+          mutationObserver.observe(container, {
+            childList: true,
+            subtree: true,
+          });
+
+        return () => {
+          document.removeEventListener('focusin', handleFocusIn);
+          document.removeEventListener('focusout', handleFocusOut);
+          mutationObserver.disconnect();
+        };
+      }
+    }, [trapped, container, focusScope.paused]);
 
     React.useEffect(() => {
-      if (!container) return;
-      if (disabled) return;
+      if (container) {
+        focusScopesStack.add(focusScope);
 
-      const prevFocusedElement = document.activeElement as HTMLElement | null;
+        const previouslyFocusedElement =
+          document.activeElement as HTMLElement | null;
 
-      focusScopesStack?.add(focusScope);
+        const hasFocusedCandidate = container.contains(
+          previouslyFocusedElement,
+        );
 
-      if (container.contains(prevFocusedElement)) {
-        lastFocusedElement.current = prevFocusedElement;
-      } else {
-        if (!('focus' in container))
-          throw new Error(
-            `${displayName}, container must be focusable, hint = set tabIndex to -1`,
-          );
+        if (!hasFocusedCandidate) {
+          const mountEvent = new CustomEvent(AUTOFOCUS_ON_MOUNT, EVENT_OPTIONS);
 
-        container.focus();
-      }
+          container.addEventListener(AUTOFOCUS_ON_MOUNT, onMountAutoFocus);
 
-      return () => {
-        focusScopesStack?.remove(focusScope);
-
-        if (prevFocusedElement) prevFocusedElement.focus?.();
-        else document.body.focus();
-      };
-    }, [container, focusScope, disabled]);
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-      if (!loop) return;
-      if (focusScope.paused) return;
-      if (disabled) return;
-
-      const isTab = e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey;
-      const focusedElement = document.activeElement as HTMLElement | null;
-
-      if (isTab && focusedElement) {
-        const container = e.currentTarget as HTMLElement;
-        const [first, last] = getTabbableEdges(container);
-
-        if (!(first && last)) {
-          if (focusedElement === container) e.preventDefault();
-        } else {
-          if (e.shiftKey && focusedElement === first) {
-            if (loop) {
-              e.preventDefault();
-
-              focus(last, { select: true });
-            }
-          }
-          if (!e.shiftKey && focusedElement === last) {
-            if (loop) {
-              e.preventDefault();
-              focus(first, { select: true });
+          container.dispatchEvent(mountEvent);
+          if (!mountEvent.defaultPrevented) {
+            focusFirst(removeLinks(getTabbables(container)), {
+              select: true,
+            });
+            if (document.activeElement === previouslyFocusedElement) {
+              focus(container);
             }
           }
         }
+
+        return () => {
+          container.removeEventListener(AUTOFOCUS_ON_MOUNT, onMountAutoFocus);
+
+          const unmountEvent = new CustomEvent(
+            AUTOFOCUS_ON_UNMOUNT,
+            EVENT_OPTIONS,
+          );
+          container.addEventListener(AUTOFOCUS_ON_UNMOUNT, onUnmountAutoFocus);
+
+          container.dispatchEvent(unmountEvent);
+          if (!unmountEvent.defaultPrevented) {
+            focus(previouslyFocusedElement ?? document.body, {
+              select: true,
+            });
+          }
+
+          container.removeEventListener(
+            AUTOFOCUS_ON_UNMOUNT,
+            onUnmountAutoFocus,
+          );
+
+          focusScopesStack.remove(focusScope);
+        };
       }
-    };
+    }, [container, onMountAutoFocus, onUnmountAutoFocus, focusScope]);
+
+    const handleKeyDown = React.useCallback(
+      (event: React.KeyboardEvent) => {
+        if (!loop && !trapped) return;
+        if (focusScope.paused) return;
+
+        const isTabKey =
+          event.key === 'Tab' &&
+          !event.altKey &&
+          !event.ctrlKey &&
+          !event.metaKey;
+        const focusedElement = document.activeElement as HTMLElement | null;
+
+        if (isTabKey && focusedElement) {
+          const container = event.currentTarget as HTMLElement;
+          const [first, last] = getTabbableEdges(container);
+          const hasTabbableElementsInside = first && last;
+
+          // we can only wrap focus if we have tabbable edges
+          if (!hasTabbableElementsInside) {
+            if (focusedElement === container) event.preventDefault();
+          } else {
+            if (!event.shiftKey && focusedElement === last) {
+              event.preventDefault();
+              if (loop) focus(first, { select: true });
+            } else if (event.shiftKey && focusedElement === first) {
+              event.preventDefault();
+              if (loop) focus(last, { select: true });
+            }
+          }
+        }
+      },
+      [loop, trapped, focusScope.paused],
+    );
 
     const Comp = asChild ? Slot : 'div';
 
