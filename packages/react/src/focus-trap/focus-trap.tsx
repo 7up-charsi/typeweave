@@ -209,27 +209,28 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
 
         const focusedElement = document.activeElement as HTMLElement | null;
 
-        if (isTabKey && focusedElement) {
-          const container = event.currentTarget as HTMLElement;
-          const [first, last] = getTabbableEdges(container);
+        // if focusedElement is true and it is in container then proceed. i never checked container.contains(focusedElement) because onKeyDown is applied to container so when browser/user place focus in/on contianer and this handler runs and focusedElement exists its mean focusedElement is in contianer
+        if (!isTabKey || !focusedElement) return;
 
-          const hasFocusableElementsInside = first && last;
+        const container = event.currentTarget as HTMLElement;
+        const [first, last] = getTabbableEdges(container);
 
-          if (!hasFocusableElementsInside) {
-            event.preventDefault();
-            return;
-          }
+        const hasFocusableElementsInside = first && last;
 
-          if (!event.shiftKey && focusedElement === last) {
-            event.preventDefault();
-            focus(first, { select: true });
-            return;
-          }
+        if (!hasFocusableElementsInside) {
+          event.preventDefault();
+          return;
+        }
 
-          if (event.shiftKey && focusedElement === first) {
-            event.preventDefault();
-            focus(last, { select: true });
-          }
+        if (!event.shiftKey && focusedElement === last) {
+          event.preventDefault();
+          focus(first, { select: true });
+          return;
+        }
+
+        if (event.shiftKey && focusedElement === first) {
+          event.preventDefault();
+          focus(last, { select: true });
         }
       },
       [loop, focusScope.paused],
