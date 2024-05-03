@@ -74,58 +74,75 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
     const focusScope = focusScopeProp || _scope;
 
     React.useEffect(() => {
-      if (trapped) {
-        const handleFocusIn = (event: FocusEvent) => {
-          if (focusScope.paused || !container) return;
+      if (!trapped || !container) return;
 
-          const target = event.target as HTMLElement | null;
+      const handleFocusIn = (event: FocusEvent) => {
+        if (focusScope.paused) return;
 
-          if (container.contains(target)) {
-            lastFocusedElement.current = target;
-          } else {
-            focus(lastFocusedElement.current, { select: true });
+        const target = event.target as HTMLElement | null;
+
+        if (container.contains(target)) {
+          lastFocusedElement.current = target;
+          return;
+        }
+
+        if (lastFocusedElement.current) {
+          focus(lastFocusedElement.current, { select: true });
+          return;
+        }
+
+        focus(container);
+      };
+
+      const handleFocusOut = (event: FocusEvent) => {
+        const relatedTarget = event.relatedTarget as HTMLElement | null;
+
+        // It checks if the related target is null. If it is, it means that focus is moving outside the browser window or to an element that is not part of the DOM (such as a native operating system window or an element in another window or frame). In this case, the function returns early as there's no need to handle focus changes.
+        if (relatedTarget === null) return;
+
+        // it will focus back to lastFocusedElement if user wants to place focus on element ousite container and it will ensure that the element on which user wants to place focus will never get focus becauze it will return foucs to lastFocusedElement before blur event happens on lastFocusedElement
+        if (!container.contains(relatedTarget) && lastFocusedElement.current) {
+          focus(lastFocusedElement.current);
+        }
+
+        // otherwise dont do any action. let focusin handle other cases
+      };
+
+      const handleMutations = (mutations: MutationRecord[]) => {
+        const focusedElement = document.activeElement as HTMLElement | null;
+
+        if (focusedElement !== document.body) return;
+
+        mutations.forEach((mutation) => {
+          if (mutation.removedNodes.length > 0 && lastFocusedElement.current) {
+            const removedNodesArray = Array.from(mutation.removedNodes);
+
+            // as i only want to focus container if lastFocusedElement gets removed from dom. if any element that did't get focus and removed from DOM i damn care.
+            if (removedNodesArray.includes(lastFocusedElement.current)) {
+              focus(container);
+              return;
+            }
+
+            focus(lastFocusedElement.current);
           }
-        };
+        });
+      };
 
-        const handleFocusOut = (event: FocusEvent) => {
-          if (focusScope.paused || !container) return;
+      document.addEventListener('focusin', handleFocusIn);
+      document.addEventListener('focusout', handleFocusOut);
 
-          const relatedTarget = event.relatedTarget as HTMLElement | null;
+      const mutationObserver = new MutationObserver(handleMutations);
 
-          if (relatedTarget === null) return;
+      mutationObserver.observe(container, {
+        childList: true,
+        subtree: true,
+      });
 
-          if (!container.contains(relatedTarget)) {
-            focus(lastFocusedElement.current, { select: true });
-          }
-        };
-
-        const handleMutations = (mutations: MutationRecord[]) => {
-          const focusedElement = document.activeElement as HTMLElement | null;
-
-          if (focusedElement !== document.body) return;
-
-          for (const mutation of mutations) {
-            if (mutation.removedNodes.length > 0) focus(container);
-          }
-        };
-
-        document.addEventListener('focusin', handleFocusIn);
-        document.addEventListener('focusout', handleFocusOut);
-
-        const mutationObserver = new MutationObserver(handleMutations);
-
-        if (container)
-          mutationObserver.observe(container, {
-            childList: true,
-            subtree: true,
-          });
-
-        return () => {
-          document.removeEventListener('focusin', handleFocusIn);
-          document.removeEventListener('focusout', handleFocusOut);
-          mutationObserver.disconnect();
-        };
-      }
+      return () => {
+        document.removeEventListener('focusin', handleFocusIn);
+        document.removeEventListener('focusout', handleFocusOut);
+        mutationObserver.disconnect();
+      };
     }, [trapped, container, focusScope.paused]);
 
     React.useEffect(() => {
@@ -135,20 +152,17 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
         const previouslyFocusedElement =
           document.activeElement as HTMLElement | null;
 
-        const hasFocusedCandidate = container.contains(
-          previouslyFocusedElement,
-        );
-
-        if (!hasFocusedCandidate) {
+        if (!container.contains(previouslyFocusedElement)) {
           const mountEvent = new CustomEvent(AUTOFOCUS_ON_MOUNT, EVENT_OPTIONS);
 
           container.addEventListener(AUTOFOCUS_ON_MOUNT, onMountAutoFocus);
-
           container.dispatchEvent(mountEvent);
+
           if (!mountEvent.defaultPrevented) {
             focusFirst(removeLinks(getTabbables(container)), {
               select: true,
             });
+
             if (document.activeElement === previouslyFocusedElement) {
               focus(container);
             }
@@ -162,9 +176,10 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
             AUTOFOCUS_ON_UNMOUNT,
             EVENT_OPTIONS,
           );
-          container.addEventListener(AUTOFOCUS_ON_UNMOUNT, onUnmountAutoFocus);
 
+          container.addEventListener(AUTOFOCUS_ON_UNMOUNT, onUnmountAutoFocus);
           container.dispatchEvent(unmountEvent);
+
           if (!unmountEvent.defaultPrevented) {
             focus(previouslyFocusedElement ?? document.body, {
               select: true,
@@ -183,36 +198,41 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
 
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent) => {
-        if (!loop && !trapped) return;
+        if (!loop) return;
         if (focusScope.paused) return;
 
         const isTabKey =
           event.key === 'Tab' &&
-          !event.altKey &&
           !event.ctrlKey &&
+          !event.altKey &&
           !event.metaKey;
+
         const focusedElement = document.activeElement as HTMLElement | null;
 
         if (isTabKey && focusedElement) {
           const container = event.currentTarget as HTMLElement;
           const [first, last] = getTabbableEdges(container);
-          const hasTabbableElementsInside = first && last;
 
-          // we can only wrap focus if we have tabbable edges
-          if (!hasTabbableElementsInside) {
-            if (focusedElement === container) event.preventDefault();
-          } else {
-            if (!event.shiftKey && focusedElement === last) {
-              event.preventDefault();
-              if (loop) focus(first, { select: true });
-            } else if (event.shiftKey && focusedElement === first) {
-              event.preventDefault();
-              if (loop) focus(last, { select: true });
-            }
+          const hasFocusableElementsInside = first && last;
+
+          if (!hasFocusableElementsInside) {
+            event.preventDefault();
+            return;
+          }
+
+          if (!event.shiftKey && focusedElement === last) {
+            event.preventDefault();
+            focus(first, { select: true });
+            return;
+          }
+
+          if (event.shiftKey && focusedElement === first) {
+            event.preventDefault();
+            focus(last, { select: true });
           }
         }
       },
-      [loop, trapped, focusScope.paused],
+      [loop, focusScope.paused],
     );
 
     const Comp = asChild ? Slot : 'div';

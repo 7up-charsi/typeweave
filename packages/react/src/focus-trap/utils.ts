@@ -5,6 +5,7 @@ export const focusFirst = (
   { select = false } = {},
 ) => {
   const previouslyFocusedElement = document?.activeElement;
+
   for (const ele of elements) {
     focus(ele, { select });
 
