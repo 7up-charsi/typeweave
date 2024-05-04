@@ -3,7 +3,7 @@ import { readdir, writeFile } from 'fs/promises';
 import path from 'path';
 import prettier from 'prettier';
 
-const excludes: string[] = ['index.ts'];
+const excludeComponents: string[] = [];
 
 (async () => {
   console.log('*** generate type started');
@@ -13,7 +13,8 @@ const excludes: string[] = ['index.ts'];
   });
 
   const names = dirContent.filter((name) => {
-    if (excludes.includes(name)) return;
+    if (name === 'index.ts') return;
+    if (excludeComponents.includes(name)) return;
 
     const stats = statSync(path.resolve(`./src/components/${name}`));
 

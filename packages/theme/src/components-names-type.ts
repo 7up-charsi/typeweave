@@ -9,6 +9,7 @@ export type Components =
   | 'chip'
   | 'dialog'
   | 'disclosure'
+  | 'drawer'
   | 'input'
   | 'menu'
   | 'overlay'

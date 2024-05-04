@@ -1,5 +1,21 @@
 # @typeweave/react
 
+## 1.1.3
+
+### Patch Changes
+
+- fix: bundle
+- Updated dependencies
+  - @typeweave/theme@1.2.3
+
+## 1.1.2
+
+### Patch Changes
+
+- feat: Drawer and stack manager
+- Updated dependencies
+  - @typeweave/theme@1.2.2
+
 ## 1.1.1
 
 ### Patch Changes

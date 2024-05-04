@@ -1,6 +1,6 @@
 {
   "name": "@typeweave/theme",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "keywords": [
     "theme"
   ],
@@ -25,10 +25,10 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-    "build": "pnpm gen-type && pnpm gen-imports-map && tsup",
+    "build": "pnpm gen-component-names && pnpm gen-imports-map && tsup",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
-    "gen-type": "tsx ./scripts/gen-type.ts",
+    "gen-component-names": "tsx ./scripts/gen-component-names.ts",
     "gen-imports-map": "tsx ./scripts/gen-imports-map.ts",
     "prepack": "clean-package",
     "postpack": "clean-package restore"
