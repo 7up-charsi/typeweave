@@ -3,7 +3,7 @@ import { readdir, writeFile } from 'fs/promises';
 import path from 'path';
 import prettier from 'prettier';
 
-const excludes: string[] = [];
+const excludes: string[] = ['stack-manager'];
 
 (async () => {
   console.log('*** auto imports started');

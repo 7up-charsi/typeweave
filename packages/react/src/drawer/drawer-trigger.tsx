@@ -11,7 +11,10 @@ export interface DrawerTriggerProps
 
 const displayName = 'DrawerTrigger';
 
-export const DrawerTrigger = (props: DrawerTriggerProps) => {
+export const DrawerTrigger = React.forwardRef<
+  HTMLButtonElement,
+  DrawerTriggerProps
+>((props, ref) => {
   const { children, virtual, virtualElement, ...restProps } = props;
 
   const drawerCtx = useDrawerCtx(displayName);
@@ -52,6 +55,7 @@ export const DrawerTrigger = (props: DrawerTriggerProps) => {
   return (
     <Slot
       {...restProps}
+      ref={ref}
       data-open={open}
       aria-expanded={ariaExpanded}
       aria-controls={ariaControls}
@@ -60,6 +64,6 @@ export const DrawerTrigger = (props: DrawerTriggerProps) => {
       {children}
     </Slot>
   );
-};
+});
 
 DrawerTrigger.displayName = displayName;

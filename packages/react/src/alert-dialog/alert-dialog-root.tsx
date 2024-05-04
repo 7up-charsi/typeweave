@@ -1,21 +1,25 @@
 import React from 'react';
 import { createContextScope } from '../context';
-import { FocusScope } from '../focus-trap';
 import { useControllableState } from '../use-controllable-state';
 import { useCallbackRef } from '../use-callback-ref';
+import { StackItem, createStackManager } from '../stack-manager';
+
+type Reason = 'pointer' | 'escape';
+
+type CloseEvent = { preventDefault(): void };
 
 export interface AlertDialogRootProps {
   children?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  onClose?: (event: CloseEvent, reason: Reason) => void;
   defaultOpen?: boolean;
 }
 
 interface AlertDialogCtxProps {
   handleOpen: () => void;
-  handleClose: () => void;
+  handleClose: (reason: Reason) => void;
   open: boolean;
-  focusScope: FocusScope;
   contentId: string;
   titleId: string;
   descriptionId: string;
@@ -32,17 +36,25 @@ export interface AlertDialogRootMethods {
   onClose: AlertDialogCtxProps['handleClose'];
 }
 
+const alertDialogStack = createStackManager();
+
 export const AlertDialogRoot = React.forwardRef<
   AlertDialogRootMethods,
   AlertDialogRootProps
 >((props, ref) => {
-  const { children, open: openProp, defaultOpen, onOpenChange } = props;
+  const {
+    children,
+    open: openProp,
+    defaultOpen,
+    onOpenChange,
+    onClose,
+  } = props;
 
   const contentId = React.useId();
   const titleId = React.useId();
   const descriptionId = React.useId();
 
-  const focusScope = React.useRef<FocusScope>({
+  const stackItem = React.useRef<StackItem>({
     paused: false,
     pause() {
       this.paused = true;
@@ -60,11 +72,24 @@ export const AlertDialogRoot = React.forwardRef<
 
   const handleOpen = useCallbackRef(() => {
     setOpen(true);
+    alertDialogStack.add(stackItem);
   });
 
-  const handleClose = useCallbackRef(() => {
-    if (focusScope.paused) return;
-    setOpen(false);
+  const handleClose = useCallbackRef((reason: Reason) => {
+    if (stackItem.paused) return;
+
+    const eventObj = { defaultPrevented: false };
+
+    const preventDefault = () => {
+      eventObj.defaultPrevented = true;
+    };
+
+    onClose?.({ preventDefault }, reason);
+
+    if (!eventObj.defaultPrevented) {
+      alertDialogStack.remove(stackItem);
+      setOpen(false);
+    }
   });
 
   React.useImperativeHandle(ref, () => ({ onClose: handleClose }), [
@@ -76,7 +101,7 @@ export const AlertDialogRoot = React.forwardRef<
 
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        handleClose();
+        handleClose('escape');
       }
     };
 
@@ -92,7 +117,6 @@ export const AlertDialogRoot = React.forwardRef<
       handleClose={handleClose}
       handleOpen={handleOpen}
       open={open}
-      focusScope={focusScope}
       contentId={contentId}
       titleId={titleId}
       descriptionId={descriptionId}

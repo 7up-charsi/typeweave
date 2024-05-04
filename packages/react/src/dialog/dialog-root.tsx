@@ -4,6 +4,10 @@ import { useCallbackRef } from '../use-callback-ref';
 import { useControllableState } from '../use-controllable-state';
 import { StackItem, createStackManager } from '../stack-manager';
 
+type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
+
+type CloseEvent = { preventDefault(): void };
+
 export interface DialogRootProps {
   children?: React.ReactNode;
   open?: boolean;
@@ -12,10 +16,6 @@ export interface DialogRootProps {
   onClose?: (event: CloseEvent, reason: Reason) => void;
   keepMounted?: boolean;
 }
-
-type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
-
-type CloseEvent = { preventDefault(): void };
 
 interface DialogCtxProps {
   handleOpen: () => void;
