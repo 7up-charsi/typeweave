@@ -3,7 +3,7 @@ import { readdir, writeFile } from 'fs/promises';
 import path from 'path';
 import prettier from 'prettier';
 
-const excludes: string[] = ['stack-manager'];
+const excludePackages: string[] = ['stack-manager'];
 
 (async () => {
   console.log('*** auto imports started');
@@ -11,7 +11,7 @@ const excludes: string[] = ['stack-manager'];
   const dirContent = await readdir(path.resolve('./src'));
 
   const names = dirContent.filter((name) => {
-    if (excludes.includes(name)) return;
+    if (excludePackages.includes(name)) return;
 
     const stats = statSync(path.resolve(`./src/${name}`));
 

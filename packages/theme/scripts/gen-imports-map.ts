@@ -2,6 +2,15 @@ import { readFile, readdir, stat, writeFile } from 'fs/promises';
 import * as path from 'path';
 import prettier from 'prettier';
 
+const excludeImportsFrom: string[] = [
+  '../context',
+  '../popper',
+  '../slot',
+  '../focus-trap',
+  '../visually-hidden',
+  '../stack-manager',
+];
+
 const srcDir = path.resolve('../react/src');
 
 async function extractImports(dir: string): Promise<Record<string, string[]>> {
@@ -46,16 +55,7 @@ async function extractImports(dir: string): Promise<Record<string, string[]>> {
           if (!module || !components) return;
           if (module.includes('../use-')) return;
 
-          if (
-            [
-              '../context',
-              '../popper',
-              '../slot',
-              '../focus-trap',
-              '../visually-hidden',
-            ].includes(module)
-          )
-            return;
+          if (excludeImportsFrom.includes(module)) return;
 
           const importedComponents = components
             .trim()

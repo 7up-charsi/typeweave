@@ -1,5 +1,17 @@
 # @typeweave/theme
 
+## 1.2.3
+
+### Patch Changes
+
+- fix: bundle
+
+## 1.2.2
+
+### Patch Changes
+
+- feat: Drawer and stack manager
+
 ## 1.2.1
 
 ### Patch Changes
