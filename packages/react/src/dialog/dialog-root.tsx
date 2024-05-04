@@ -6,8 +6,8 @@ import { StackItem, createStackManager } from '../stack-manager';
 
 export interface DialogRootProps {
   children?: React.ReactNode;
-  isOpen?: boolean;
-  onOpenChange?: (isOpen: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   defaultOpen?: boolean;
   onClose?: (event: CloseEvent, reason: Reason) => void;
   keepMounted?: boolean;
@@ -20,7 +20,7 @@ type CloseEvent = { preventDefault(): void };
 interface DialogCtxProps {
   handleOpen: () => void;
   handleClose: (reason: Reason) => void;
-  isOpen: boolean;
+  open: boolean;
   contentId: string;
   titleId: string;
   descriptionId: string;
@@ -45,7 +45,7 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
   (props, ref) => {
     const {
       children,
-      isOpen: isOpenProp,
+      open: openProp,
       defaultOpen,
       onOpenChange,
       onClose,
@@ -67,9 +67,9 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
       },
     }).current;
 
-    const [isOpen, setOpen] = useControllableState({
+    const [open, setOpen] = useControllableState({
       defaultValue: defaultOpen ?? false,
-      value: isOpenProp,
+      value: openProp,
       onChange: onOpenChange,
     });
 
@@ -103,7 +103,7 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
     );
 
     React.useEffect(() => {
-      if (!isOpen) return;
+      if (!open) return;
 
       const handleKeydown = (e: KeyboardEvent) => {
         if (e.key === 'Escape') {
@@ -116,13 +116,13 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
       return () => {
         document.removeEventListener('keydown', handleKeydown);
       };
-    }, [handleClose, isOpen]);
+    }, [handleClose, open]);
 
     return (
       <DialogCtx
         handleClose={handleClose}
         handleOpen={handleOpen}
-        isOpen={isOpen}
+        open={open}
         contentId={contentId}
         titleId={titleId}
         descriptionId={descriptionId}

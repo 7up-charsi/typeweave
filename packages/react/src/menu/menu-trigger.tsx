@@ -27,9 +27,9 @@ export const MenuTrigger = React.forwardRef<
         ref={mergeRefs(ref, menuCtx.triggerRef)}
         role="button"
         aria-haspopup="menu"
-        data-open={menuCtx.isOpen}
-        aria-expanded={menuCtx.isOpen}
-        aria-controls={menuCtx.isOpen ? menuCtx.id : undefined}
+        data-open={menuCtx.open}
+        aria-expanded={menuCtx.open}
+        aria-controls={menuCtx.open ? menuCtx.id : undefined}
         {...pointerEvents}
         onKeyDown={(e: React.KeyboardEvent) => {
           const key = e.key;

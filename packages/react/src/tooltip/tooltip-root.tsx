@@ -16,15 +16,15 @@ export interface TooltipRootProps {
    */
   trigger?: Trigger;
   defaultOpen?: boolean;
-  isOpen?: boolean;
-  onOpenChange?: (isOpen: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 interface TooltipCtxProps {
   showTooltip: (immediate?: boolean) => void;
   hideTooltip: (immediate?: boolean) => void;
   trigger?: Trigger;
-  isOpen: boolean;
+  open: boolean;
 }
 
 const displayName = 'TooltipRoot';
@@ -42,14 +42,14 @@ export const TooltipRoot = (props: TooltipRootProps) => {
     showDelay = 100,
     hideDelay = 300,
     trigger,
-    isOpen: isOpenProp,
+    open: openProp,
     onOpenChange,
     defaultOpen,
   } = props;
 
-  const [isOpen, setOpen] = useControllableState({
+  const [open, setOpen] = useControllableState({
     defaultValue: defaultOpen ?? false,
-    value: isOpenProp,
+    value: openProp,
     onChange: onOpenChange,
   });
 
@@ -78,7 +78,7 @@ export const TooltipRoot = (props: TooltipRootProps) => {
     closeOpenTooltips();
     addOpenTooltip();
 
-    if (isOpen) return;
+    if (open) return;
 
     if (!immediate && showDelay > 0) {
       showTimeout.current = setTimeout(() => {
@@ -106,7 +106,7 @@ export const TooltipRoot = (props: TooltipRootProps) => {
   });
 
   React.useEffect(() => {
-    if (!isOpen) return;
+    if (!open) return;
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -119,7 +119,7 @@ export const TooltipRoot = (props: TooltipRootProps) => {
     return () => {
       document.removeEventListener('keydown', onKeyDown);
     };
-  }, [hideTooltip, isOpen]);
+  }, [hideTooltip, open]);
 
   React.useEffect(() => {
     return () => {
@@ -134,7 +134,7 @@ export const TooltipRoot = (props: TooltipRootProps) => {
       showTooltip={showTooltip}
       hideTooltip={hideTooltip}
       trigger={trigger}
-      isOpen={isOpen}
+      open={open}
     >
       <PopperRoot>{children}</PopperRoot>
     </TooltipCtx>

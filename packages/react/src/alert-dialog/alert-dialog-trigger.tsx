@@ -24,18 +24,18 @@ export const AlertDialogTrigger = React.forwardRef<
   });
 
   const ariaHaspopup = 'dialog';
-  const ariaExpanded = alertDialogCtx.isOpen;
-  const ariaControls = alertDialogCtx.isOpen
+  const ariaExpanded = alertDialogCtx.open;
+  const ariaControls = alertDialogCtx.open
     ? alertDialogCtx.contentId
     : undefined;
-  const isOpen = alertDialogCtx.isOpen + '';
+  const open = alertDialogCtx.open + '';
 
   React.useEffect(() => {
     if (!virtual || !virtualElement) return;
 
     virtualElement.ariaExpanded = ariaExpanded + '';
     virtualElement.ariaHasPopup = ariaHaspopup;
-    virtualElement.dataset.open = isOpen;
+    virtualElement.dataset.open = open;
 
     // @ts-expect-error ----
     virtualElement.onpointerdown = pointerEvents.onPointerDown;
@@ -44,7 +44,7 @@ export const AlertDialogTrigger = React.forwardRef<
     virtualElement.onpointerup = pointerEvents.onPointerUp;
   }, [
     ariaExpanded,
-    isOpen,
+    open,
     pointerEvents.onPointerDown,
     pointerEvents.onPointerUp,
     virtual,
@@ -59,7 +59,7 @@ export const AlertDialogTrigger = React.forwardRef<
       {...pointerEvents}
       ref={ref}
       role="button"
-      data-open={isOpen}
+      data-open={open}
       aria-haspopup={ariaHaspopup}
       aria-expanded={ariaExpanded}
       aria-controls={ariaControls}

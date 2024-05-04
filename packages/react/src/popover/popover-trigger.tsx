@@ -25,8 +25,8 @@ export const PopoverTrigger = React.forwardRef<
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
         {...restProps}
         ref={mergeRefs(ref, popoverCtx.triggerRef)}
-        aria-expanded={popoverCtx.isOpen}
-        aria-controls={popoverCtx.isOpen ? popoverCtx.contentId : undefined}
+        aria-expanded={popoverCtx.open}
+        aria-controls={popoverCtx.open ? popoverCtx.contentId : undefined}
         {...pointerEvents}
       />
     </PopperReference>

@@ -15,14 +15,14 @@ export const DialogPortal = (props: DialogPortalProps) => {
 
   if (dialogCtx.keepMounted) {
     return createPortal(
-      <div style={{ visibility: dialogCtx.isOpen ? 'visible' : 'hidden' }}>
+      <div style={{ visibility: dialogCtx.open ? 'visible' : 'hidden' }}>
         {children}
       </div>,
       container,
     );
   }
 
-  return dialogCtx.isOpen ? createPortal(children, container) : null;
+  return dialogCtx.open ? createPortal(children, container) : null;
 };
 
 DialogPortal.displayName = displayName;

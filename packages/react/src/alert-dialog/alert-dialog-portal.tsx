@@ -13,7 +13,7 @@ export const AlertDialogPortal = (props: AlertDialogPortalProps) => {
 
   const alertDialogCtx = useAlertDialogCtx(displayName);
 
-  return alertDialogCtx.isOpen ? createPortal(children, container) : null;
+  return alertDialogCtx.open ? createPortal(children, container) : null;
 };
 
 AlertDialogPortal.displayName = displayName;

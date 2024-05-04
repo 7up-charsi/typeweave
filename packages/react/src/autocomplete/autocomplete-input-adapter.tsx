@@ -33,7 +33,7 @@ export const autocompleteInputAdapter = (
     showClearButton,
     inputWrapperRef,
     selected,
-    isOpen,
+    open,
     multiple,
     inputValue,
     loading,
@@ -105,7 +105,7 @@ export const autocompleteInputAdapter = (
 
         {disableOpenIndicator ? null : (
           <span
-            style={{ rotate: isOpen ? '180deg' : '0deg' }}
+            style={{ rotate: open ? '180deg' : '0deg' }}
             className={styles.openIndecator({
               className: classNames?.openIndecator,
             })}

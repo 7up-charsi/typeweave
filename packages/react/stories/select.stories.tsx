@@ -172,26 +172,21 @@ const CustomTemplate = () => (
     <DialogPortal>
       <DialogOverlay />
 
-      <DialogContent className="w-[calc(100%-16px)] max-w-xs p-0">
+      <DialogContent className="w-[calc(100%-16px)] max-w-xs p-4">
         <Select
-          isOpen
+          open
           options={options}
           disablePopper
           disablePortal
           getOptionLabel={(option) => option.title}
           shadow="none"
-          classNames={{ listbox: 'border-0' }}
           renderInput={(props) => (
             <Input
               {...selectInputAdapter(props, { disableOpenIndicator: true })}
-              label="select one movie"
+              className="w-full mb-4"
+              label="search"
               hideLabel
-              placeholder="select one movie"
-              classNames={{
-                base: 'w-full border-b border-b-muted-6',
-                inputWrapper: 'focus-within:ring-0 border-0 hover:border-0',
-                input: 'h-12',
-              }}
+              placeholder="Search..."
             />
           )}
         />
