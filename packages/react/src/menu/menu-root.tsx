@@ -8,14 +8,14 @@ import { PopperRoot } from '../popper';
 export interface MenuRootProps {
   children?: React.ReactNode;
   defaultOpen?: boolean;
-  isOpen?: boolean;
-  onOpenChange?: (isOpen: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   loop?: boolean;
   disableCloseOnEscape?: boolean;
 }
 
 interface MenuCtxProps {
-  isOpen: boolean;
+  open: boolean;
   handleOpen: () => void;
   handleClose: () => void;
   id: string;
@@ -44,15 +44,15 @@ export const MenuRoot = (props: MenuRootProps) => {
   const {
     children,
     defaultOpen,
-    isOpen: isOpenProp,
+    open: openProp,
     onOpenChange,
     loop,
     disableCloseOnEscape,
   } = props;
 
-  const [isOpen, setIsOpen] = useControllableState({
+  const [open, setOpen] = useControllableState({
     defaultValue: defaultOpen ?? false,
-    value: isOpenProp,
+    value: openProp,
     onChange: onOpenChange,
   });
 
@@ -60,13 +60,13 @@ export const MenuRoot = (props: MenuRootProps) => {
   const triggerRef = React.useRef<HTMLButtonElement>(null);
 
   const handleOpen = useCallbackRef(() => {
-    setIsOpen(true);
+    setOpen(true);
   });
 
   const handleClose = useCallbackRef(() => {
-    if (!isOpen) return;
+    if (!open) return;
 
-    setIsOpen(false);
+    setOpen(false);
     triggerRef.current?.focus();
   });
 
@@ -90,7 +90,7 @@ export const MenuRoot = (props: MenuRootProps) => {
     <MenuCtx
       handleOpen={handleOpen}
       handleClose={handleClose}
-      isOpen={isOpen}
+      open={open}
       id={id}
       triggerRef={triggerRef}
       loop={loop}

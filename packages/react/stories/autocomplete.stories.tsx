@@ -187,7 +187,7 @@ const CustomTemplate = () => (
 
       <DialogContent className="w-[calc(100%-16px)] max-w-xs p-4">
         <Autocomplete
-          isOpen
+          open
           options={options}
           disablePopper
           disablePortal

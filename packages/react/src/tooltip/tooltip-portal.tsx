@@ -14,7 +14,7 @@ export const TooltipPortal = ({
 }: TooltipPortalProps) => {
   const context = useTooltipCtx(displayName);
 
-  return <>{context.isOpen && createPortal(children, container)}</>;
+  return <>{context.open && createPortal(children, container)}</>;
 };
 
 TooltipPortal.displayName = displayName;

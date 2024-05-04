@@ -14,7 +14,7 @@ export const MenuPortal = ({
 }: MenuPortalProps) => {
   const menuCtx = useMenuCtx(displayName);
 
-  return <>{menuCtx.isOpen && createPortal(children, container)}</>;
+  return <>{menuCtx.open && createPortal(children, container)}</>;
 };
 
 MenuPortal.displayName = displayName;

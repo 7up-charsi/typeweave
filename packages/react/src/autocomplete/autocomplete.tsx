@@ -24,7 +24,7 @@ export interface AutocompleteRenderInputProps {
   inputWrapperRef: React.RefObject<HTMLDivElement>;
   popperReferenceRef: (instance: HTMLDivElement | null) => void;
   disabled: boolean;
-  isOpen: boolean;
+  open: boolean;
   multiple: boolean;
   inputValue: string;
   showClearButton: boolean;
@@ -67,7 +67,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
       classNames?: AutocompleteClassNames;
       offset?: PopperFloatingProps['mainOffset'];
       options: Value[];
-      isOpen?: boolean;
+      open?: boolean;
       onOpenChange?: (open: boolean) => void;
       defaultOpen?: boolean;
       getOptionDisabled?: (option: Value) => boolean;
@@ -130,7 +130,7 @@ const AutocompleteImpl = React.forwardRef<
     classNames,
     className,
     offset,
-    isOpen: openProp,
+    open: openProp,
     onOpenChange,
     defaultOpen = false,
     defaultValue,
@@ -234,14 +234,14 @@ const AutocompleteImpl = React.forwardRef<
   const [focused, setFocused] = React.useState<object | null>(null);
   const lisboxId = React.useId();
 
-  const [isOpen, setIsOpen] = useControllableState({
+  const [open, setOpen] = useControllableState({
     defaultValue: defaultOpen ?? false,
     value: openProp,
     onChange: onOpenChange,
   });
 
   const handleClose = () => {
-    setIsOpen(false);
+    setOpen(false);
     setFocused(null);
     setOptions(optionsProp);
 
@@ -252,9 +252,9 @@ const AutocompleteImpl = React.forwardRef<
   };
 
   const onOpen = () => {
-    if (isOpen) return;
+    if (open) return;
 
-    setIsOpen(true);
+    setOpen(true);
 
     if (!options.length) return;
 
@@ -307,12 +307,12 @@ const AutocompleteImpl = React.forwardRef<
 
     if (ArrowDown || ArrowUp) e.preventDefault();
 
-    if (ArrowDown && !isOpen) {
+    if (ArrowDown && !open) {
       onOpen();
       return;
     }
 
-    if (!options.length || !isOpen) return;
+    if (!options.length || !open) return;
 
     if (Escape) {
       handleClose();
@@ -371,7 +371,7 @@ const AutocompleteImpl = React.forwardRef<
     const val = e.target.value;
 
     setInputValue(val);
-    setIsOpen(true);
+    setOpen(true);
 
     if (!val) {
       setOptions(optionsProp);
@@ -546,7 +546,7 @@ const AutocompleteImpl = React.forwardRef<
                 }))
               : null,
             onBlur: handleClose,
-            isOpen,
+            open,
             multiple: !!multiple,
             onOpen,
             clearButtonProps: {
@@ -570,18 +570,18 @@ const AutocompleteImpl = React.forwardRef<
             loading: !!loading,
             ariaProps: {
               role: 'combobox',
-              'aria-expanded': isOpen,
+              'aria-expanded': open,
               'aria-controls': lisboxId,
               'aria-haspopup': 'listbox',
               'aria-autocomplete': 'list',
               'aria-activedescendant':
-                isOpen && focused ? getOptionId(focused) : undefined,
+                open && focused ? getOptionId(focused) : undefined,
             },
           })
         }
       </PopperReference>
 
-      {isOpen
+      {open
         ? disablePortal
           ? withPopper
           : createPortal(withPopper, globalThis?.document.body)

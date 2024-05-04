@@ -23,16 +23,16 @@ export const DialogTrigger = React.forwardRef<
   const pointerEvents = usePointerEvents({ onPress: dialogCtx.handleOpen });
 
   const ariaHaspopup = 'dialog';
-  const ariaExpanded = dialogCtx.isOpen;
-  const ariaControls = dialogCtx.isOpen ? dialogCtx.contentId : undefined;
-  const isOpen = dialogCtx.isOpen + '';
+  const ariaExpanded = dialogCtx.open;
+  const ariaControls = dialogCtx.open ? dialogCtx.contentId : undefined;
+  const open = dialogCtx.open + '';
 
   React.useEffect(() => {
     if (!virtual || !virtualElement) return;
 
     virtualElement.ariaExpanded = ariaExpanded + '';
     virtualElement.ariaHasPopup = ariaHaspopup;
-    virtualElement.dataset.open = isOpen;
+    virtualElement.dataset.open = open;
 
     dialogCtx.triggerRef.current = virtualElement;
 
@@ -43,7 +43,7 @@ export const DialogTrigger = React.forwardRef<
     virtualElement.onpointerup = pointerEvents.onPointerUp;
   }, [
     ariaExpanded,
-    isOpen,
+    open,
     pointerEvents.onPointerDown,
     pointerEvents.onPointerUp,
     dialogCtx.triggerRef,
@@ -62,7 +62,7 @@ export const DialogTrigger = React.forwardRef<
         dialogCtx.triggerRef as React.MutableRefObject<HTMLButtonElement | null>,
       )}
       role="button"
-      data-open={isOpen}
+      data-open={open}
       aria-haspopup={ariaHaspopup}
       aria-expanded={ariaExpanded}
       aria-controls={ariaControls}

@@ -14,7 +14,7 @@ export const PopoverPortal = ({
 }: PopoverPortalProps) => {
   const popoverCtx = usePopoverCtx(displayName);
 
-  return <>{popoverCtx.isOpen && createPortal(children, container)}</>;
+  return <>{popoverCtx.open && createPortal(children, container)}</>;
 };
 
 PopoverPortal.displayName = displayName;

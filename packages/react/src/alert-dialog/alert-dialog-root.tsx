@@ -6,15 +6,15 @@ import { useCallbackRef } from '../use-callback-ref';
 
 export interface AlertDialogRootProps {
   children?: React.ReactNode;
-  isOpen?: boolean;
-  onOpenChange?: (isOpen: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   defaultOpen?: boolean;
 }
 
 interface AlertDialogCtxProps {
   handleOpen: () => void;
   handleClose: () => void;
-  isOpen: boolean;
+  open: boolean;
   focusScope: FocusScope;
   contentId: string;
   titleId: string;
@@ -36,7 +36,7 @@ export const AlertDialogRoot = React.forwardRef<
   AlertDialogRootMethods,
   AlertDialogRootProps
 >((props, ref) => {
-  const { children, isOpen: isOpenProp, defaultOpen, onOpenChange } = props;
+  const { children, open: openProp, defaultOpen, onOpenChange } = props;
 
   const contentId = React.useId();
   const titleId = React.useId();
@@ -52,9 +52,9 @@ export const AlertDialogRoot = React.forwardRef<
     },
   }).current;
 
-  const [isOpen, setOpen] = useControllableState({
+  const [open, setOpen] = useControllableState({
     defaultValue: defaultOpen ?? false,
-    value: isOpenProp,
+    value: openProp,
     onChange: onOpenChange,
   });
 
@@ -72,7 +72,7 @@ export const AlertDialogRoot = React.forwardRef<
   ]);
 
   React.useEffect(() => {
-    if (!isOpen) return;
+    if (!open) return;
 
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -85,13 +85,13 @@ export const AlertDialogRoot = React.forwardRef<
     return () => {
       document.removeEventListener('keydown', handleKeydown);
     };
-  }, [handleClose, isOpen]);
+  }, [handleClose, open]);
 
   return (
     <AlertDialogCtx
       handleClose={handleClose}
       handleOpen={handleOpen}
-      isOpen={isOpen}
+      open={open}
       focusScope={focusScope}
       contentId={contentId}
       titleId={titleId}

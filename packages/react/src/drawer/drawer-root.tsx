@@ -46,7 +46,7 @@ export const DrawerRoot = React.forwardRef<DrawerRootMethods, DrawerRootProps>(
     const {
       children,
       defaultOpen,
-      open: isOpenProp,
+      open: openProp,
       onOpenChange,
       keepMounted,
       onClose,
@@ -69,7 +69,7 @@ export const DrawerRoot = React.forwardRef<DrawerRootMethods, DrawerRootProps>(
 
     const [open, setOpen] = useControllableState({
       defaultValue: defaultOpen,
-      value: isOpenProp,
+      value: openProp,
       onChange: onOpenChange,
     });
 

@@ -18,7 +18,7 @@ export interface SelectRenderInputProps {
   inputRef: React.RefObject<HTMLInputElement>;
   popperReferenceRef: (instance: HTMLDivElement | null) => void;
   disabled: boolean;
-  isOpen: boolean;
+  open: boolean;
   multiple: boolean;
   inputValue: string;
   readOnly: true;
@@ -59,7 +59,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
       classNames?: SelectClassNames;
       offset?: PopperFloatingProps['mainOffset'];
       options: Value[];
-      isOpen?: boolean;
+      open?: boolean;
       onOpenChange?: (open: boolean) => void;
       defaultOpen?: boolean;
       getOptionDisabled?: (option: Value) => boolean;
@@ -121,7 +121,7 @@ const SelectImpl = React.forwardRef<
     classNames,
     className,
     offset,
-    isOpen: openProp,
+    open: openProp,
     onOpenChange,
     defaultOpen = false,
     defaultValue,
@@ -213,21 +213,21 @@ const SelectImpl = React.forwardRef<
     chars: string;
   }>({ chars: '' }).current;
 
-  const [isOpen, setIsOpen] = useControllableState({
+  const [open, setOpen] = useControllableState({
     defaultValue: defaultOpen ?? false,
     value: openProp,
     onChange: onOpenChange,
   });
 
   const handleClose = () => {
-    setIsOpen(false);
+    setOpen(false);
     setFocused(null);
   };
 
   const onOpen = () => {
-    if (isOpen) return;
+    if (open) return;
 
-    setIsOpen(true);
+    setOpen(true);
 
     if (!options.length) return;
 
@@ -270,12 +270,12 @@ const SelectImpl = React.forwardRef<
     const Home = e.key === 'Home';
     const End = e.key === 'End';
 
-    if (ArrowDown && !isOpen) {
+    if (ArrowDown && !open) {
       onOpen();
       return;
     }
 
-    if (!options.length || !isOpen) return;
+    if (!options.length || !open) return;
 
     if (Escape) {
       handleClose();
@@ -319,7 +319,7 @@ const SelectImpl = React.forwardRef<
 
     if (char.length !== 1 || e.repeat || !options.length) return;
 
-    setIsOpen(true);
+    setOpen(true);
 
     clearTimeout(searchState.timer);
 
@@ -368,7 +368,7 @@ const SelectImpl = React.forwardRef<
     e.preventDefault();
     inputRef.current?.focus();
     setFocused(null);
-    setIsOpen(true);
+    setOpen(true);
 
     if (multiple) {
       setValue([], 'clear');
@@ -529,7 +529,7 @@ const SelectImpl = React.forwardRef<
         {({ referenceRef }) =>
           renderInput({
             onBlur: handleClose,
-            isOpen,
+            open,
             multiple: !!multiple,
             onOpen,
             clearButtonProps: {
@@ -555,18 +555,18 @@ const SelectImpl = React.forwardRef<
             loading: !!loading,
             ariaProps: {
               role: 'combobox',
-              'aria-expanded': isOpen,
+              'aria-expanded': open,
               'aria-controls': lisboxId,
               'aria-haspopup': 'listbox',
               'aria-autocomplete': 'list',
               'aria-activedescendant':
-                isOpen && focused ? getOptionId(focused) : undefined,
+                open && focused ? getOptionId(focused) : undefined,
             },
           })
         }
       </PopperReference>
 
-      {isOpen
+      {open
         ? disablePortal
           ? withPopper
           : createPortal(withPopper, document.body)

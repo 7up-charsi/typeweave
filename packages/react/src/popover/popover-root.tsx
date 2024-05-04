@@ -6,14 +6,14 @@ import { useControllableState } from '../use-controllable-state';
 
 export interface PopoverRootProps {
   children?: React.ReactNode;
-  isOpen?: boolean;
-  onOpenChange?: (isOpen: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   defaultOpen?: boolean;
   keepMounted?: boolean;
 }
 
 interface PopoverCtxProps {
-  isOpen: boolean;
+  open: boolean;
   handleOpen(): void;
   handleClose(): void;
   keepMounted: boolean;
@@ -34,12 +34,12 @@ export const PopoverRoot = (props: PopoverRootProps) => {
   const {
     children,
     defaultOpen,
-    isOpen: openProp,
+    open: openProp,
     onOpenChange,
     keepMounted = false,
   } = props;
 
-  const [isOpen, setOpen] = useControllableState({
+  const [open, setOpen] = useControllableState({
     defaultValue: defaultOpen ?? false,
     onChange: onOpenChange,
     value: openProp,
@@ -59,7 +59,7 @@ export const PopoverRoot = (props: PopoverRootProps) => {
   });
 
   React.useEffect(() => {
-    if (!isOpen) return;
+    if (!open) return;
 
     const handler = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
@@ -72,13 +72,13 @@ export const PopoverRoot = (props: PopoverRootProps) => {
     return () => {
       document.removeEventListener('keydown', handler);
     };
-  }, [handleClose, isOpen]);
+  }, [handleClose, open]);
 
   return (
     <PopoverCtx
       handleOpen={handleOpen}
       handleClose={handleClose}
-      isOpen={isOpen}
+      open={open}
       keepMounted={keepMounted}
       contentId={contentId}
       titleId={titleId}

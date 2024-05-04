@@ -29,7 +29,7 @@ export const selectInputAdapter = (
     onKeyDown,
     popperReferenceRef,
     showClearButton,
-    isOpen,
+    open,
     inputValue,
     readOnly,
     loading,
@@ -86,7 +86,7 @@ export const selectInputAdapter = (
 
         {disableOpenIndicator ? null : (
           <span
-            style={{ rotate: isOpen ? '180deg' : '0deg' }}
+            style={{ rotate: open ? '180deg' : '0deg' }}
             className={styles.openIndecator({
               className: classNames?.openIndecator,
             })}
