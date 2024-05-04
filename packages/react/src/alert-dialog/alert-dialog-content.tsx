@@ -33,7 +33,7 @@ export const AlertDialogContent = React.forwardRef<
 
   return (
     <AlertDialogStyles {...styles}>
-      <FocusTrap loop trapped focusScope={alertDialogCtx.focusScope} asChild>
+      <FocusTrap loop trapped asChild>
         <div
           {...restProps}
           ref={ref}

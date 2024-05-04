@@ -1,6 +1,7 @@
 import React from 'react';
 import { Slot } from '../slot';
 import { useAlertDialogCtx } from './alert-dialog-root';
+import { usePointerEvents } from '../use-pointer-events';
 
 export interface AlertDialogCloseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
@@ -13,9 +14,15 @@ export const AlertDialogClose = React.forwardRef<
 >((props, ref) => {
   const { ...restProps } = props;
 
-  const alertDialogCtx = useAlertDialogCtx(displayName);
+  const { handleClose } = useAlertDialogCtx(displayName);
 
-  return <Slot {...restProps} onPress={alertDialogCtx.handleClose} ref={ref} />;
+  const pointerEvents = usePointerEvents({
+    onPress: () => {
+      handleClose('pointer');
+    },
+  });
+
+  return <Slot {...restProps} ref={ref} {...pointerEvents} />;
 });
 
 AlertDialogClose.displayName = displayName;
