@@ -33,36 +33,49 @@ export const DialogContent = React.forwardRef<
 
   const styles = React.useMemo(() => dialog(), []);
 
+  const content = (
+    <div
+      {...restProps}
+      ref={ref}
+      role="dialog"
+      aria-labelledby={noA11yTitle ? undefined : dialogCtx.titleId}
+      aria-describedby={noA11yDescription ? undefined : dialogCtx.descriptionId}
+      aria-modal={dialogCtx.modal}
+      id={dialogCtx.contentId}
+      className={styles.content({ className })}
+    >
+      <VisuallyHidden>
+        <button onPointerUp={() => dialogCtx.handleClose('virtual')}>
+          close
+        </button>
+      </VisuallyHidden>
+
+      {children}
+
+      <VisuallyHidden>
+        <button onPointerUp={() => dialogCtx.handleClose('virtual')}>
+          close
+        </button>
+      </VisuallyHidden>
+    </div>
+  );
+
   return (
     <DialogStyles {...styles}>
-      <FocusTrap loop trapped focusScope={dialogCtx.focusScope} asChild>
-        <div
-          {...restProps}
-          ref={ref}
-          role="dialog"
-          aria-labelledby={noA11yTitle ? undefined : dialogCtx.titleId}
-          aria-describedby={
-            noA11yDescription ? undefined : dialogCtx.descriptionId
-          }
-          aria-modal={true}
-          id={dialogCtx.contentId}
-          className={styles.content({ className })}
+      {dialogCtx.modal ? (
+        <FocusTrap
+          asChild
+          trapped
+          loop={dialogCtx.loop}
+          onMountAutoFocus={dialogCtx.onMountAutoFocus}
+          onUnmountAutoFocus={dialogCtx.onUnmountAutoFocus}
+          focusScope={dialogCtx.focusScope}
         >
-          <VisuallyHidden>
-            <button onPointerUp={() => dialogCtx.handleClose('virtual')}>
-              close
-            </button>
-          </VisuallyHidden>
-
-          {children}
-
-          <VisuallyHidden>
-            <button onPointerUp={() => dialogCtx.handleClose('virtual')}>
-              close
-            </button>
-          </VisuallyHidden>
-        </div>
-      </FocusTrap>
+          {content}
+        </FocusTrap>
+      ) : (
+        content
+      )}
     </DialogStyles>
   );
 });

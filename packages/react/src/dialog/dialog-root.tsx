@@ -1,23 +1,30 @@
-import { FocusScope } from '../focus-trap';
+import { FocusScope, FocusTrapProps } from '../focus-trap';
 import { createContextScope } from '../context';
 import React from 'react';
 import { useCallbackRef } from '../use-callback-ref';
 import { useControllableState } from '../use-controllable-state';
 
-export interface DialogRootProps {
+type _FocusTrapProps = Pick<
+  FocusTrapProps,
+  'onUnmountAutoFocus' | 'onMountAutoFocus'
+>;
+
+export interface DialogRootProps extends _FocusTrapProps {
   children?: React.ReactNode;
   isOpen?: boolean;
   onOpenChange?: (isOpen: boolean) => void;
   defaultOpen?: boolean;
   onClose?: (event: CloseEvent, reason: Reason) => void;
   keepMounted?: boolean;
+  modal?: boolean;
+  loop?: boolean;
 }
 
 type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
 
 type CloseEvent = { preventDefault(): void };
 
-interface DialogCtxProps {
+interface DialogCtxProps extends _FocusTrapProps {
   handleOpen: () => void;
   handleClose: (reason: Reason) => void;
   isOpen: boolean;
@@ -27,6 +34,8 @@ interface DialogCtxProps {
   titleId: string;
   descriptionId: string;
   triggerRef: React.MutableRefObject<HTMLElement | null>;
+  modal: boolean;
+  loop: boolean;
 }
 
 export interface DialogRootMethods {
@@ -49,6 +58,10 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
       onOpenChange,
       onClose,
       keepMounted = false,
+      modal = true,
+      loop = true,
+      onMountAutoFocus,
+      onUnmountAutoFocus,
     } = props;
 
     const contentId = React.useId();
@@ -125,6 +138,10 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
         titleId={titleId}
         descriptionId={descriptionId}
         triggerRef={triggerRef}
+        modal={modal}
+        loop={loop}
+        onMountAutoFocus={onMountAutoFocus}
+        onUnmountAutoFocus={onUnmountAutoFocus}
       >
         {children}
       </DialogCtx>
