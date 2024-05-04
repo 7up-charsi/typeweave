@@ -17,7 +17,7 @@ export const DrawerOverlay = React.forwardRef<
 
   const pointerEvents = usePointerEvents({
     onPress: () => {
-      drawerCtx.handleClose();
+      drawerCtx.handleClose('outside');
     },
   });
 

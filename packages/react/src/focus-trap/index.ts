@@ -1,3 +1,3 @@
-export type { FocusTrapProps, FocusScope } from './focus-trap';
+export type { FocusTrapProps } from './focus-trap';
 
 export { FocusTrap } from './focus-trap';

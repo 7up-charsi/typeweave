@@ -80,7 +80,6 @@ export const DialogContent = React.forwardRef<
           loop={loop}
           onMountAutoFocus={onMountAutoFocus}
           onUnmountAutoFocus={onUnmountAutoFocus}
-          focusScope={dialogCtx.focusScope}
         >
           {content}
         </FocusTrap>

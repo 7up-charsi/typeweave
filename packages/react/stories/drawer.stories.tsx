@@ -27,6 +27,24 @@ const Template = ({ children, placement }) => {
             {Array.from({ length: 5 }).map((_, i) => (
               <Button key={i}>button {i}</Button>
             ))}
+
+            <DrawerRoot>
+              <DrawerTrigger>
+                <Button>open nested</Button>
+              </DrawerTrigger>
+
+              <DrawerPortal>
+                <DrawerOverlay />
+
+                <DrawerContent>
+                  <ul className="flex flex-col gap-3 items-start p-4">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Button key={i}>nested {i}</Button>
+                    ))}
+                  </ul>
+                </DrawerContent>
+              </DrawerPortal>
+            </DrawerRoot>
           </ul>
         </DrawerContent>
       </DrawerPortal>

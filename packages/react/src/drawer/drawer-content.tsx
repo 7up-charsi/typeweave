@@ -52,13 +52,17 @@ export const DrawerContent = React.forwardRef<
         className={styles.content({ className })}
       >
         <VisuallyHidden>
-          <button onPointerUp={() => drawerCtx.handleClose()}>close</button>
+          <button onPointerUp={() => drawerCtx.handleClose('virtual')}>
+            close
+          </button>
         </VisuallyHidden>
 
         {children}
 
         <VisuallyHidden>
-          <button onPointerUp={() => drawerCtx.handleClose()}>close</button>
+          <button onPointerUp={() => drawerCtx.handleClose('virtual')}>
+            close
+          </button>
         </VisuallyHidden>
       </div>
     </DrawerStyles>

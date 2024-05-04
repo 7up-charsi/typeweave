@@ -18,7 +18,7 @@ export const DrawerClose = React.forwardRef<
 
   const pointerEvents = usePointerEvents({
     onPress: () => {
-      handleClose();
+      handleClose('pointer');
     },
   });
 
