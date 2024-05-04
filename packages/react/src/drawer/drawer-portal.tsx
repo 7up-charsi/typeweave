@@ -15,14 +15,14 @@ export const DrawerPortal = (props: DrawerPortalProps) => {
 
   if (DrawerCtx.keepMounted) {
     return createPortal(
-      <div style={{ visibility: DrawerCtx.isOpen ? 'visible' : 'hidden' }}>
+      <div style={{ visibility: DrawerCtx.open ? 'visible' : 'hidden' }}>
         {children}
       </div>,
       container,
     );
   }
 
-  return DrawerCtx.isOpen ? createPortal(children, container) : null;
+  return DrawerCtx.open ? createPortal(children, container) : null;
 };
 
 DrawerPortal.displayName = displayName;

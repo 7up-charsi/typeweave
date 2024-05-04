@@ -57,12 +57,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       onPress,
     });
 
-    const onKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-      buttonProps.onKeyDown?.(e);
-
-      if (e.key === ' ') onPress?.(e as never);
-    };
-
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       React.useEffect(() => {
@@ -114,7 +108,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={mergeRefs(ref, innerRef)}
         className={styles.base({ className: classNames?.base ?? className })}
         tabIndex={excludeFromTabOrder ? -1 : tabIndex ?? 0}
-        onKeyDown={onKeyDown}
       >
         {asChild ? (
           React.isValidElement(children) &&

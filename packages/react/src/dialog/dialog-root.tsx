@@ -1,8 +1,8 @@
-import { FocusScope } from '../focus-trap';
 import { createContextScope } from '../context';
 import React from 'react';
 import { useCallbackRef } from '../use-callback-ref';
 import { useControllableState } from '../use-controllable-state';
+import { StackItem, createStackManager } from '../stack-manager';
 
 export interface DialogRootProps {
   children?: React.ReactNode;
@@ -21,7 +21,6 @@ interface DialogCtxProps {
   handleOpen: () => void;
   handleClose: (reason: Reason) => void;
   isOpen: boolean;
-  focusScope: FocusScope;
   contentId: string;
   titleId: string;
   descriptionId: string;
@@ -40,6 +39,8 @@ const [DialogCtx, useDialogCtx] =
 
 export { useDialogCtx };
 
+const dialogStack = createStackManager();
+
 export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
   (props, ref) => {
     const {
@@ -56,7 +57,7 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
     const descriptionId = React.useId();
     const triggerRef = React.useRef<HTMLElement | null>(null);
 
-    const focusScope = React.useRef<FocusScope>({
+    const stackItem = React.useRef<StackItem>({
       paused: false,
       pause() {
         this.paused = true;
@@ -74,10 +75,13 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
 
     const handleOpen = useCallbackRef(() => {
       setOpen(true);
+      dialogStack.add(stackItem);
     });
 
     const handleClose = useCallbackRef((reason: Reason) => {
-      if (focusScope.paused) return;
+      if (stackItem.paused) return;
+
+      dialogStack.remove(stackItem);
 
       const eventObj = { defaultPrevented: false };
 
@@ -119,7 +123,6 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
         handleClose={handleClose}
         handleOpen={handleOpen}
         isOpen={isOpen}
-        focusScope={focusScope}
         contentId={contentId}
         titleId={titleId}
         descriptionId={descriptionId}

@@ -9,8 +9,7 @@ import { Slot } from '../slot';
 import React from 'react';
 import { mergeRefs } from '@typeweave/react-utils';
 import { useCallbackRef } from '../use-callback-ref';
-
-export type FocusScope = { paused: boolean; pause(): void; resume(): void };
+import { StackItem, createStackManager } from '../stack-manager';
 
 export interface FocusTrapProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -26,17 +25,14 @@ export interface FocusTrapProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   trapped?: boolean;
   children?: React.ReactNode;
-  /**
-   * This prop is used to pass custom scope and is usefull when more than one FocusTrap components are visible
-   * @default undefined
-   */
-  focusScope?: FocusScope;
   asChild?: boolean;
   onMountAutoFocus?: (event: Event) => void;
   onUnmountAutoFocus?: (event: Event) => void;
 }
 
 const displayName = 'FocusTrap';
+
+const focusStack = createStackManager();
 
 const AUTOFOCUS_ON_MOUNT = 'focusTrap.autoFocusOnMount';
 const AUTOFOCUS_ON_UNMOUNT = 'focusTrap.autoFocusOnUnmount';
@@ -46,7 +42,6 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
   (props, ref) => {
     const {
       asChild,
-      focusScope: focusScopeProp,
       loop = true,
       trapped = true,
       onMountAutoFocus: onMountAutoFocusProp,
@@ -61,7 +56,7 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
 
     const lastFocusedElement = React.useRef<HTMLElement | null>(null);
 
-    const _scope = React.useRef<FocusScope>({
+    const stackItem = React.useRef<StackItem>({
       paused: false,
       pause() {
         this.paused = true;
@@ -71,13 +66,11 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
       },
     }).current;
 
-    const focusScope = focusScopeProp || _scope;
-
     React.useEffect(() => {
       if (!trapped || !container) return;
 
       const handleFocusIn = (event: FocusEvent) => {
-        if (focusScope.paused) return;
+        if (stackItem.paused) return;
 
         const target = event.target as HTMLElement | null;
 
@@ -86,22 +79,19 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
           return;
         }
 
-        if (lastFocusedElement.current) {
-          focus(lastFocusedElement.current, { select: true });
-          return;
-        }
-
-        focus(container);
+        focus(lastFocusedElement.current, { select: true });
       };
 
       const handleFocusOut = (event: FocusEvent) => {
+        if (stackItem.paused) return;
+
         const relatedTarget = event.relatedTarget as HTMLElement | null;
 
         // It checks if the related target is null. If it is, it means that focus is moving outside the browser window or to an element that is not part of the DOM (such as a native operating system window or an element in another window or frame). In this case, the function returns early as there's no need to handle focus changes.
         if (relatedTarget === null) return;
 
         // it will focus back to lastFocusedElement if user wants to place focus on element ousite container and it will ensure that the element on which user wants to place focus will never get focus becauze it will return foucs to lastFocusedElement before blur event happens on lastFocusedElement
-        if (!container.contains(relatedTarget) && lastFocusedElement.current) {
+        if (!container.contains(relatedTarget)) {
           focus(lastFocusedElement.current);
         }
 
@@ -109,6 +99,8 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
       };
 
       const handleMutations = (mutations: MutationRecord[]) => {
+        if (stackItem.paused) return;
+
         const focusedElement = document.activeElement as HTMLElement | null;
 
         if (focusedElement !== document.body) return;
@@ -143,11 +135,11 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
         document.removeEventListener('focusout', handleFocusOut);
         mutationObserver.disconnect();
       };
-    }, [trapped, container, focusScope.paused]);
+    }, [trapped, container, stackItem.paused]);
 
     React.useEffect(() => {
       if (container) {
-        focusScopesStack.add(focusScope);
+        focusStack.add(stackItem);
 
         const previouslyFocusedElement =
           document.activeElement as HTMLElement | null;
@@ -191,15 +183,15 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
             onUnmountAutoFocus,
           );
 
-          focusScopesStack.remove(focusScope);
+          focusStack.remove(stackItem);
         };
       }
-    }, [container, onMountAutoFocus, onUnmountAutoFocus, focusScope]);
+    }, [container, onMountAutoFocus, onUnmountAutoFocus, stackItem]);
 
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent) => {
         if (!loop) return;
-        if (focusScope.paused) return;
+        if (stackItem.paused) return;
 
         const isTabKey =
           event.key === 'Tab' &&
@@ -233,7 +225,7 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
           focus(last, { select: true });
         }
       },
-      [loop, focusScope.paused],
+      [loop, stackItem.paused],
     );
 
     const Comp = asChild ? Slot : 'div';
@@ -254,29 +246,3 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
 );
 
 FocusTrap.displayName = displayName;
-
-const focusScopesStack = createFocusScopesStack();
-
-function createFocusScopesStack() {
-  /** A stack of focus scopes, with the active one at the top */
-  let stack: FocusScope[] = [];
-
-  return {
-    add(focusScope: FocusScope) {
-      // pause the currently active focus scope (at the top of the stack)
-      const activeFocusScope = stack[0];
-      if (focusScope !== activeFocusScope) {
-        activeFocusScope?.pause();
-      }
-
-      // remove in case it already exists (because we'll re-add it at the top of the stack)
-      stack = stack.filter((ele) => ele !== focusScope);
-      stack.unshift(focusScope);
-    },
-
-    remove(focusScope: FocusScope) {
-      stack = stack.filter((ele) => ele !== focusScope);
-      stack[0]?.resume();
-    },
-  };
-}

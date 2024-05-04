@@ -20,15 +20,15 @@ export const DrawerTrigger = (props: DrawerTriggerProps) => {
     onPress: drawerCtx.handleOpen,
   });
 
-  const ariaExpanded = drawerCtx.isOpen;
-  const ariaControls = drawerCtx.isOpen ? drawerCtx.contentId : undefined;
-  const isOpen = drawerCtx.isOpen + '';
+  const ariaExpanded = drawerCtx.open;
+  const ariaControls = drawerCtx.open ? drawerCtx.contentId : undefined;
+  const open = drawerCtx.open + '';
 
   React.useEffect(() => {
     if (!virtual || !virtualElement) return;
 
     virtualElement.ariaExpanded = ariaExpanded + '';
-    virtualElement.dataset.open = isOpen;
+    virtualElement.dataset.open = open;
 
     drawerCtx.triggerRef.current = virtualElement;
 
@@ -39,7 +39,7 @@ export const DrawerTrigger = (props: DrawerTriggerProps) => {
     virtualElement.onpointerup = pointerEvents.onPointerUp;
   }, [
     ariaExpanded,
-    isOpen,
+    open,
     pointerEvents.onPointerDown,
     pointerEvents.onPointerUp,
     drawerCtx.triggerRef,
@@ -52,7 +52,7 @@ export const DrawerTrigger = (props: DrawerTriggerProps) => {
   return (
     <Slot
       {...restProps}
-      data-open={isOpen}
+      data-open={open}
       aria-expanded={ariaExpanded}
       aria-controls={ariaControls}
       {...pointerEvents}
