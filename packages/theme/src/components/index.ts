@@ -21,3 +21,4 @@ export * from './checkbox';
 export * from './radio';
 export * from './accordion';
 export * from './disclosure';
+export * from './drawer';

@@ -1,41 +1,32 @@
-import { FocusScope, FocusTrapProps } from '../focus-trap';
+import { FocusScope } from '../focus-trap';
 import { createContextScope } from '../context';
 import React from 'react';
 import { useCallbackRef } from '../use-callback-ref';
 import { useControllableState } from '../use-controllable-state';
 
-type _FocusTrapProps = Pick<
-  FocusTrapProps,
-  'onUnmountAutoFocus' | 'onMountAutoFocus'
->;
-
-export interface DialogRootProps extends _FocusTrapProps {
+export interface DialogRootProps {
   children?: React.ReactNode;
   isOpen?: boolean;
   onOpenChange?: (isOpen: boolean) => void;
   defaultOpen?: boolean;
   onClose?: (event: CloseEvent, reason: Reason) => void;
   keepMounted?: boolean;
-  modal?: boolean;
-  loop?: boolean;
 }
 
 type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
 
 type CloseEvent = { preventDefault(): void };
 
-interface DialogCtxProps extends _FocusTrapProps {
+interface DialogCtxProps {
   handleOpen: () => void;
   handleClose: (reason: Reason) => void;
   isOpen: boolean;
   focusScope: FocusScope;
-  keepMounted: boolean;
   contentId: string;
   titleId: string;
   descriptionId: string;
   triggerRef: React.MutableRefObject<HTMLElement | null>;
-  modal: boolean;
-  loop: boolean;
+  keepMounted: boolean;
 }
 
 export interface DialogRootMethods {
@@ -58,16 +49,12 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
       onOpenChange,
       onClose,
       keepMounted = false,
-      modal = true,
-      loop = true,
-      onMountAutoFocus,
-      onUnmountAutoFocus,
     } = props;
 
     const contentId = React.useId();
     const titleId = React.useId();
     const descriptionId = React.useId();
-    const triggerRef = React.useRef<HTMLButtonElement | null>(null);
+    const triggerRef = React.useRef<HTMLElement | null>(null);
 
     const focusScope = React.useRef<FocusScope>({
       paused: false,
@@ -133,15 +120,11 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
         handleOpen={handleOpen}
         isOpen={isOpen}
         focusScope={focusScope}
-        keepMounted={keepMounted}
         contentId={contentId}
         titleId={titleId}
         descriptionId={descriptionId}
         triggerRef={triggerRef}
-        modal={modal}
-        loop={loop}
-        onMountAutoFocus={onMountAutoFocus}
-        onUnmountAutoFocus={onUnmountAutoFocus}
+        keepMounted={keepMounted}
       >
         {children}
       </DialogCtx>

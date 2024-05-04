@@ -37,3 +37,4 @@ export * from './use-ripple';
 export * from './use-scroll-lock';
 export * from './use-size';
 export * from './visually-hidden';
+export * from './drawer';
