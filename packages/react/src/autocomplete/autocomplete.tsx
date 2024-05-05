@@ -137,7 +137,7 @@ const AutocompleteImpl = React.forwardRef<
     defaultValue,
     value: valueProp,
     onChange,
-    shadow = 'md',
+    shadow = true,
     options: optionsProp = [],
     disabled,
     multiple,
@@ -427,96 +427,102 @@ const AutocompleteImpl = React.forwardRef<
     throw new Error(`${displayName}, \`renderInput\` prop is required`);
 
   const listBox = (
-    <ul
-      {...restProps}
-      ref={ref}
-      id={lisboxId}
-      className={styles.listbox({
-        className: classNames?.listbox ?? className,
+    <div
+      className={styles.listboxWrapper({
+        className: classNames?.listboxWrapper ?? className,
       })}
-      role="listbox"
-      aria-multiselectable={multiple}
-      aria-roledescription={
-        multiple ? 'multiple select list' : 'single select list'
-      }
-      onPointerDown={(e) => e.preventDefault()}
     >
-      {!loading && options.length && !groupBy
-        ? options.map((option) => {
-            const label = getOptionLabel(option);
-            const props = getOptionProps(option);
+      <ul
+        {...restProps}
+        ref={ref}
+        id={lisboxId}
+        className={styles.listbox({
+          className: classNames?.listbox ?? className,
+        })}
+        role="listbox"
+        aria-multiselectable={multiple}
+        aria-roledescription={
+          multiple ? 'multiple select list' : 'single select list'
+        }
+        onPointerDown={(e) => e.preventDefault()}
+      >
+        {!loading && options.length && !groupBy
+          ? options.map((option) => {
+              const label = getOptionLabel(option);
+              const props = getOptionProps(option);
 
-            return (
-              <Option {...props} key={props.key}>
-                {renderOption?.({
-                  option,
-                  label,
-                  state: props.state,
-                }) ?? label}
-              </Option>
-            );
-          })
-        : null}
+              return (
+                <Option {...props} key={props.key}>
+                  {renderOption?.({
+                    option,
+                    label,
+                    state: props.state,
+                  }) ?? label}
+                </Option>
+              );
+            })
+          : null}
 
-      {!loading && options.length && groupBy && groupedOptions
-        ? Object.entries(groupedOptions).map(([groupHeader, grouped]) => (
-            <li
-              key={groupHeader.replaceAll(' ', '-')}
-              className={styles.group({
-                className: classNames?.group,
-              })}
-            >
-              <div
-                className={styles.groupHeader({
-                  className: classNames?.groupHeader,
+        {!loading && options.length && groupBy && groupedOptions
+          ? Object.entries(groupedOptions).map(([groupHeader, grouped]) => (
+              <li
+                key={groupHeader.replaceAll(' ', '-')}
+                className={styles.group({
+                  className: classNames?.group,
                 })}
               >
-                {groupHeader}
-              </div>
-              <ul
-                className={styles.groupItems({
-                  className: classNames?.groupItems,
-                })}
-              >
-                {grouped.map((option) => {
-                  const label = getOptionLabel(option);
-                  const props = getOptionProps(option);
+                <div
+                  className={styles.groupHeader({
+                    className: classNames?.groupHeader,
+                  })}
+                >
+                  {groupHeader}
+                </div>
+                <ul
+                  className={styles.groupItems({
+                    className: classNames?.groupItems,
+                  })}
+                >
+                  {grouped.map((option) => {
+                    const label = getOptionLabel(option);
+                    const props = getOptionProps(option);
 
-                  return (
-                    <Option {...props} key={props.key}>
-                      {renderOption?.({
-                        option,
-                        label,
-                        state: props.state,
-                      }) ?? label}
-                    </Option>
-                  );
-                })}
-              </ul>
-            </li>
-          ))
-        : null}
+                    return (
+                      <Option {...props} key={props.key}>
+                        {renderOption?.({
+                          option,
+                          label,
+                          state: props.state,
+                        }) ?? label}
+                      </Option>
+                    );
+                  })}
+                </ul>
+              </li>
+            ))
+          : null}
 
-      {!loading && !options?.length ? (
-        <div
-          className={styles.noOptions({
-            className: classNames?.noOptions,
-          })}
-        >
-          {noOptionsText}
-        </div>
-      ) : null}
+        {!loading && !options?.length ? (
+          <div
+            className={styles.noOptions({
+              className: classNames?.noOptions,
+            })}
+          >
+            {noOptionsText}
+          </div>
+        ) : null}
 
-      {loading ? (
-        <div
-          className={styles.loading({
-            className: classNames?.noOptions,
-          })}
-        >
-          {loadingText}
-        </div>
-      ) : null}
-    </ul>
+        {loading ? (
+          <div
+            className={styles.loading({
+              className: classNames?.noOptions,
+            })}
+          >
+            {loadingText}
+          </div>
+        ) : null}
+      </ul>
+    </div>
   );
 
   const withPopper = disablePopper ? (

@@ -25,7 +25,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       variant = 'standard',
       color = 'info',
       placement = 'top-right',
-      shadow = 'md',
+      shadow = true,
       ...restProps
     } = props;
 

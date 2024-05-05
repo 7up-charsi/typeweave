@@ -11,7 +11,9 @@ import { useScrollLock } from '../use-scroll-lock';
 export interface MenuContentProps
   extends Omit<PopperFloatingProps, 'children'>,
     MenuVariantProps,
-    React.HTMLAttributes<HTMLUListElement> {}
+    React.HTMLAttributes<HTMLUListElement> {
+  disablePoper?: boolean;
+}
 
 interface MenuContentCtx {
   focused: string;
@@ -46,6 +48,8 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
       clippingBoundary,
       arrowPadding = 10,
       boundaryPadding = 10,
+      disablePoper,
+      shadow = true,
       ...restProps
     } = props;
 
@@ -191,51 +195,59 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
       }
     };
 
-    const styles = React.useMemo(() => menu(), []);
+    const styles = React.useMemo(() => menu({ shadow }), [shadow]);
+
+    const content = (
+      <ul
+        {...restProps}
+        id={menuCtx.id}
+        role="menu"
+        ref={mergeRefs(setOutsideEle, ref, innerRef)}
+        className={styles.content({ className })}
+        tabIndex={-1}
+        onKeyDown={(e) => {
+          onkeydown(e);
+          handleCharSearch(e);
+        }}
+      >
+        <MenuStyles {...styles}>
+          <VisuallyHidden>
+            <button onPointerUp={menuCtx.handleClose}>close</button>
+          </VisuallyHidden>
+
+          {children}
+
+          <VisuallyHidden>
+            <button onPointerUp={menuCtx.handleClose}>close</button>
+          </VisuallyHidden>
+        </MenuStyles>
+      </ul>
+    );
 
     return (
       <MenuContentCtx setFocused={setFocused} focused={focused}>
         <MenuCollection.Parent>
-          <PopperFloating
-            arrowPadding={arrowPadding}
-            boundaryPadding={boundaryPadding ?? 10}
-            placement={placement}
-            updatePositionStrategy={updatePositionStrategy}
-            mainOffset={mainOffset}
-            alignOffset={alignOffset}
-            arrow={arrow}
-            sticky={sticky}
-            hideWhenDetached={hideWhenDetached}
-            fallbackPlacements={fallbackPlacements}
-            allowMainAxisFlip={allowMainAxisFlip}
-            allowCrossAxisFlip={allowCrossAxisFlip}
-            clippingBoundary={clippingBoundary}
-          >
-            <ul
-              {...restProps}
-              id={menuCtx.id}
-              role="menu"
-              ref={mergeRefs(setOutsideEle, ref, innerRef)}
-              className={styles.menu({ className })}
-              tabIndex={-1}
-              onKeyDown={(e) => {
-                onkeydown(e);
-                handleCharSearch(e);
-              }}
+          {disablePoper ? (
+            content
+          ) : (
+            <PopperFloating
+              arrowPadding={arrowPadding}
+              boundaryPadding={boundaryPadding ?? 10}
+              placement={placement}
+              updatePositionStrategy={updatePositionStrategy}
+              mainOffset={mainOffset}
+              alignOffset={alignOffset}
+              arrow={arrow}
+              sticky={sticky}
+              hideWhenDetached={hideWhenDetached}
+              fallbackPlacements={fallbackPlacements}
+              allowMainAxisFlip={allowMainAxisFlip}
+              allowCrossAxisFlip={allowCrossAxisFlip}
+              clippingBoundary={clippingBoundary}
             >
-              <MenuStyles {...styles}>
-                <VisuallyHidden>
-                  <button onPointerUp={menuCtx.handleClose}>close</button>
-                </VisuallyHidden>
-
-                {children}
-
-                <VisuallyHidden>
-                  <button onPointerUp={menuCtx.handleClose}>close</button>
-                </VisuallyHidden>
-              </MenuStyles>
-            </ul>
-          </PopperFloating>
+              {content}
+            </PopperFloating>
+          )}
         </MenuCollection.Parent>
       </MenuContentCtx>
     );
