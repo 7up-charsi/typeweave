@@ -12,7 +12,7 @@ export interface DrawerRootProps {
   children?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  onClose?: (event: CloseEvent, reason: Reason) => void;
+  onClose?: (event: CloseEvent, reason: Reason | null) => void;
   defaultOpen?: boolean;
   keepMounted?: boolean;
 }
@@ -31,7 +31,7 @@ interface DrawerCtxProps {
 }
 
 export interface DrawerRootMethods {
-  onClose: DrawerCtxProps['handleClose'];
+  onClose: () => void;
 }
 
 const [DrawerCtx, useDrawerCtx] =
@@ -78,10 +78,8 @@ export const DrawerRoot = React.forwardRef<DrawerRootMethods, DrawerRootProps>(
       drawerStack.add(stackItem);
     });
 
-    const handleClose = useCallbackRef((reason: Reason) => {
+    const handleClose = useCallbackRef((reason: Reason | null) => {
       if (stackItem.paused) return;
-
-      drawerStack.remove(stackItem);
 
       const eventObj = { defaultPrevented: false };
 
@@ -91,13 +89,18 @@ export const DrawerRoot = React.forwardRef<DrawerRootMethods, DrawerRootProps>(
 
       onClose?.({ preventDefault }, reason);
 
-      if (!eventObj.defaultPrevented) setOpen(false);
+      if (!eventObj.defaultPrevented) {
+        drawerStack.remove(stackItem);
+        setOpen(false);
+      }
     });
 
     React.useImperativeHandle(
       ref,
       () => ({
-        onClose: handleClose,
+        onClose: () => {
+          handleClose(null);
+        },
       }),
       [handleClose],
     );

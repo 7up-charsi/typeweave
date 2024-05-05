@@ -5,6 +5,8 @@ import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';
 import { GroupCtx } from './button-group';
 
+type PonterType = 'mouse' | 'pen' | 'touch' | 'keyboard';
+
 export interface ButtonProps
   extends Omit<ButtonVariantProps, 'isInGroup'>,
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'> {
@@ -13,7 +15,7 @@ export interface ButtonProps
   classNames?: ButtonClassNames;
   children?: React.ReactNode;
   asChild?: boolean;
-  onPress?: (e: React.PointerEvent<HTMLButtonElement>) => void;
+  onPress?: (e: { target: HTMLButtonElement; pointerType: PonterType }) => void;
   excludeFromTabOrder?: boolean;
 }
 
@@ -36,6 +38,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       onPointerDown,
       onPointerUp,
       onPress,
+      onKeyDown: onKeyDownProp,
       tabIndex,
       excludeFromTabOrder = false,
       isIconOnly = false,
@@ -54,8 +57,19 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const pointerEvents = usePointerEvents({
       onPointerDown,
       onPointerUp,
-      onPress,
+      onPress: (e) =>
+        onPress?.({ pointerType: e.pointerType, target: e.currentTarget }),
     });
+
+    const onKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+      onKeyDownProp?.(e);
+
+      if (![' ', 'Enter'].includes(e.key)) return;
+
+      e.preventDefault();
+
+      onPress?.({ pointerType: 'mouse', target: e.currentTarget });
+    };
 
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -108,6 +122,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={mergeRefs(ref, innerRef)}
         className={styles.base({ className: classNames?.base ?? className })}
         tabIndex={excludeFromTabOrder ? -1 : tabIndex ?? 0}
+        onKeyDown={onKeyDown}
       >
         {asChild ? (
           React.isValidElement(children) &&

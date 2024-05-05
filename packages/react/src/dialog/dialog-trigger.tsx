@@ -56,7 +56,6 @@ export const DialogTrigger = React.forwardRef<
   return (
     <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
       {...restProps}
-      {...pointerEvents}
       ref={mergeRefs(
         ref,
         dialogCtx.triggerRef as React.MutableRefObject<HTMLButtonElement | null>,
@@ -66,6 +65,8 @@ export const DialogTrigger = React.forwardRef<
       aria-haspopup={ariaHaspopup}
       aria-expanded={ariaExpanded}
       aria-controls={ariaControls}
+      // @ts-expect-error Property 'onPress' does not exist
+      onPress={dialogCtx.handleOpen}
     />
   );
 });

@@ -20,6 +20,9 @@ const usePointerEvents = <E extends HTMLElement = HTMLElement>(
 
   const onPointerDown = useCallbackRef((e: React.PointerEvent<E>) => {
     onPointerDownProp?.(e);
+
+    if (e.target instanceof HTMLButtonElement && e.target.disabled) return;
+
     pointerRef.current = true;
 
     ['pointerup', 'pointercancel', 'keydown'].forEach((event) =>
@@ -36,11 +39,11 @@ const usePointerEvents = <E extends HTMLElement = HTMLElement>(
   const onPointerUp = useCallbackRef((e: React.PointerEvent<E>) => {
     onPointerUpProp?.(e);
 
-    if (pointerRef.current === true && e.button === 0) {
+    if (e.target instanceof HTMLButtonElement && e.target.disabled) return;
+
+    if (pointerRef.current && e.button === 0) {
       onPress?.(e);
     }
-
-    pointerRef.current = false;
   });
 
   return { onPointerDown, onPointerUp };

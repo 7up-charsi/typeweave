@@ -1,7 +1,6 @@
 import React from 'react';
 import { Slot } from '../slot';
 import { useDrawerCtx } from './drawer-root';
-import { usePointerEvents } from '../use-pointer-events';
 
 export interface DrawerCloseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
@@ -16,13 +15,15 @@ export const DrawerClose = React.forwardRef<
 
   const { handleClose } = useDrawerCtx(displayName);
 
-  const pointerEvents = usePointerEvents({
-    onPress: () => {
-      handleClose('pointer');
-    },
-  });
-
-  return <Slot {...restProps} ref={ref} {...pointerEvents} />;
+  return (
+    <Slot
+      {...restProps}
+      ref={ref}
+      onPress={() => {
+        handleClose('pointer');
+      }}
+    />
+  );
 });
 
 DrawerClose.displayName = displayName;

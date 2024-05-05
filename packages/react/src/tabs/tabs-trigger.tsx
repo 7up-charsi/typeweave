@@ -5,7 +5,6 @@ import {
   useTabsCtx,
   useTabsStyles,
 } from './tabs-root';
-import { usePointerEvents } from '../use-pointer-events';
 import { Slot } from '../slot';
 
 export interface TabsTriggerProps
@@ -117,8 +116,6 @@ export const TabsTrigger = React.forwardRef<
     tabsCtx.onTabChange(triggerId);
   };
 
-  const pointerEvents = usePointerEvents({ onPress: handleClick });
-
   return (
     <TabsCollection.Item active={isSelected}>
       <Slot
@@ -135,7 +132,7 @@ export const TabsTrigger = React.forwardRef<
         id={triggerId}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
-        {...pointerEvents}
+        onPress={handleClick}
       />
     </TabsCollection.Item>
   );

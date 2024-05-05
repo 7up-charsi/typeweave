@@ -183,6 +183,8 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
                       base: styles.item({ className: classNames?.item }),
                     }}
                     asChild
+                    excludeFromTabOrder
+                    role="presentation"
                   >
                     <div>
                       <Ellipsis />

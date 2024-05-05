@@ -5,7 +5,6 @@ import {
   useAccordionCtx,
   useAccordionStyles,
 } from './accordion-root';
-import { usePointerEvents } from '../use-pointer-events';
 import { Slot } from '../slot';
 import { useAccordionItemCtx } from './accordion-item';
 
@@ -67,8 +66,6 @@ export const AccordionTrigger = React.forwardRef<
     if (End) elements[elements.length - 1]?.focus();
   };
 
-  const pointerEvents = usePointerEvents({ onPress });
-
   const Comp = asChild ? Slot : 'button';
 
   return (
@@ -83,7 +80,8 @@ export const AccordionTrigger = React.forwardRef<
         aria-expanded={isExpended}
         aria-controls={itemCtx.contentId}
         data-expanded={isExpended}
-        {...pointerEvents}
+        role="button"
+        onPress={onPress}
       >
         {children}
       </Comp>
