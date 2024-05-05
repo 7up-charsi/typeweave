@@ -15,6 +15,7 @@ import {
   PopperReference,
   PopperRoot,
 } from '../popper';
+import { ButtonPressEvent } from '../button';
 
 export type AutocompleteReason = 'select' | 'clear' | 'remove';
 
@@ -31,7 +32,7 @@ export interface AutocompleteRenderInputProps {
   onBlur: () => void;
   onOpen: () => void;
   clearButtonProps: {
-    onClear: (e: React.PointerEvent) => void;
+    onClear: (e: ButtonPressEvent) => void;
     onPointerDown: (e: React.PointerEvent) => void;
     tabIndex: number;
     'aria-label': string;
