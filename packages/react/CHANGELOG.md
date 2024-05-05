@@ -1,5 +1,13 @@
 # @typeweave/react
 
+## 1.1.4
+
+### Patch Changes
+
+- fix(Button): on space/Enter onPress does not executes
+- Updated dependencies
+  - @typeweave/theme@1.2.4
+
 ## 1.1.3
 
 ### Patch Changes

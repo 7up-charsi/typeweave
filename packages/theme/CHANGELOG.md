@@ -1,5 +1,11 @@
 # @typeweave/theme
 
+## 1.2.4
+
+### Patch Changes
+
+- fix(Button): on space/Enter onPress does not executes
+
 ## 1.2.3
 
 ### Patch Changes
