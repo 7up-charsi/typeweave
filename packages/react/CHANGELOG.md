@@ -1,5 +1,13 @@
 # @typeweave/react
 
+## 1.2.4
+
+### Patch Changes
+
+- fix(Menu): disabel popper
+- Updated dependencies
+  - @typeweave/theme@1.3.4
+
 ## 1.2.3
 
 ### Patch Changes
