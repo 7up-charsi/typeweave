@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 1.2.5
+
+### Patch Changes
+
+- fix(Accordion): replace onPress with pointer events
+
 ## 1.2.4
 
 ### Patch Changes
