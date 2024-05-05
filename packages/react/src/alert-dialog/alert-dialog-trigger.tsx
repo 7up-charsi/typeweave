@@ -54,15 +54,15 @@ export const AlertDialogTrigger = React.forwardRef<
   if (virtual) return null;
 
   return (
-    <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
+    <Slot
       {...restProps}
-      {...pointerEvents}
       ref={ref}
       role="button"
       data-open={open}
       aria-haspopup={ariaHaspopup}
       aria-expanded={ariaExpanded}
       aria-controls={ariaControls}
+      onPress={alertDialogCtx.handleOpen}
     />
   );
 });

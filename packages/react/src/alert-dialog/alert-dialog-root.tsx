@@ -12,7 +12,7 @@ export interface AlertDialogRootProps {
   children?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  onClose?: (event: CloseEvent, reason: Reason) => void;
+  onClose?: (event: CloseEvent, reason: Reason | null) => void;
   defaultOpen?: boolean;
 }
 
@@ -33,7 +33,7 @@ const [AlertDialogCtx, useAlertDialogCtx] =
 export { useAlertDialogCtx };
 
 export interface AlertDialogRootMethods {
-  onClose: AlertDialogCtxProps['handleClose'];
+  onClose: () => void;
 }
 
 const alertDialogStack = createStackManager();
@@ -75,7 +75,7 @@ export const AlertDialogRoot = React.forwardRef<
     alertDialogStack.add(stackItem);
   });
 
-  const handleClose = useCallbackRef((reason: Reason) => {
+  const handleClose = useCallbackRef((reason: Reason | null) => {
     if (stackItem.paused) return;
 
     const eventObj = { defaultPrevented: false };
@@ -87,14 +87,20 @@ export const AlertDialogRoot = React.forwardRef<
     onClose?.({ preventDefault }, reason);
 
     if (!eventObj.defaultPrevented) {
-      alertDialogStack.remove(stackItem);
       setOpen(false);
+      alertDialogStack.remove(stackItem);
     }
   });
 
-  React.useImperativeHandle(ref, () => ({ onClose: handleClose }), [
-    handleClose,
-  ]);
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      onClose: () => {
+        handleClose(null);
+      },
+    }),
+    [handleClose],
+  );
 
   React.useEffect(() => {
     if (!open) return;

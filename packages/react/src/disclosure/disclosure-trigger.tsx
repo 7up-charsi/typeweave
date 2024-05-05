@@ -2,7 +2,6 @@ import React from 'react';
 import { Slot } from '../slot';
 import { useDisclosureCtx, useDisclosureStyles } from './disclosure-root';
 import { useDisclosureItemCtx } from './disclosure-item';
-import { usePointerEvents } from '../use-pointer-events';
 
 export interface DisclosureTriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
@@ -38,8 +37,6 @@ export const DisclosureTrigger = React.forwardRef<
     }
   };
 
-  const pointerEvents = usePointerEvents({ onPress });
-
   return (
     <Slot
       {...restProps}
@@ -53,7 +50,7 @@ export const DisclosureTrigger = React.forwardRef<
       aria-expanded={isExpended}
       aria-controls={disclosureItemCtx.contentId}
       data-expanded={isExpended}
-      {...pointerEvents}
+      onPress={onPress}
     />
   );
 });

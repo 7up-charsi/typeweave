@@ -4,7 +4,7 @@ import { useCallbackRef } from '../use-callback-ref';
 import { useControllableState } from '../use-controllable-state';
 import { StackItem, createStackManager } from '../stack-manager';
 
-type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
+type Reason = 'pointer' | 'escape' | 'outside';
 
 type CloseEvent = { preventDefault(): void };
 
@@ -13,7 +13,7 @@ export interface DialogRootProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   defaultOpen?: boolean;
-  onClose?: (event: CloseEvent, reason: Reason) => void;
+  onClose?: (event: CloseEvent, reason: Reason | null) => void;
   keepMounted?: boolean;
 }
 
@@ -29,7 +29,7 @@ interface DialogCtxProps {
 }
 
 export interface DialogRootMethods {
-  onClose: DialogCtxProps['handleClose'];
+  onClose: () => void;
 }
 
 const displayName = 'DialogRoot';
@@ -78,10 +78,8 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
       dialogStack.add(stackItem);
     });
 
-    const handleClose = useCallbackRef((reason: Reason) => {
+    const handleClose = useCallbackRef((reason: Reason | null) => {
       if (stackItem.paused) return;
-
-      dialogStack.remove(stackItem);
 
       const eventObj = { defaultPrevented: false };
 
@@ -91,13 +89,18 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
 
       onClose?.({ preventDefault }, reason);
 
-      if (!eventObj.defaultPrevented) setOpen(false);
+      if (!eventObj.defaultPrevented) {
+        dialogStack.remove(stackItem);
+        setOpen(false);
+      }
     });
 
     React.useImperativeHandle(
       ref,
       () => ({
-        onClose: handleClose,
+        onClose: () => {
+          handleClose(null);
+        },
       }),
       [handleClose],
     );

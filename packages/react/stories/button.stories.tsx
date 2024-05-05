@@ -12,6 +12,8 @@ export default meta;
 
 const ColorsTemplate = () => (
   <div className="p-5 flex flex-col gap-6 items-center">
+    <button onClick={console.log}>button</button>
+
     {(
       Object.keys(button.variants.variant) as [
         keyof typeof button.variants.variant,

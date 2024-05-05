@@ -1,5 +1,4 @@
 import React from 'react';
-import { usePointerEvents } from '../use-pointer-events';
 import { usePopoverCtx } from './popover-root';
 import { PopperReference } from '../popper';
 import { Slot } from '../slot';
@@ -18,8 +17,6 @@ export const PopoverTrigger = React.forwardRef<
 
   const popoverCtx = usePopoverCtx(displayName);
 
-  const pointerEvents = usePointerEvents({ onPress: popoverCtx.handleOpen });
-
   return (
     <PopperReference>
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
@@ -27,7 +24,8 @@ export const PopoverTrigger = React.forwardRef<
         ref={mergeRefs(ref, popoverCtx.triggerRef)}
         aria-expanded={popoverCtx.open}
         aria-controls={popoverCtx.open ? popoverCtx.contentId : undefined}
-        {...pointerEvents}
+        // @ts-expect-error Property 'onPress' does not exist
+        onPress={popoverCtx.handleOpen}
       />
     </PopperReference>
   );

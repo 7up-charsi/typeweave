@@ -59,7 +59,7 @@ export const DrawerTrigger = React.forwardRef<
       data-open={open}
       aria-expanded={ariaExpanded}
       aria-controls={ariaControls}
-      {...pointerEvents}
+      onPress={drawerCtx.handleOpen}
     >
       {children}
     </Slot>

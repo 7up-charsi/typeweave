@@ -1,7 +1,6 @@
 import { mergeRefs } from '@typeweave/react-utils';
 import { PopperReference } from '../popper';
 import { Slot } from '../slot';
-import { usePointerEvents } from '../use-pointer-events';
 import { useMenuCtx } from './menu-root';
 import React from 'react';
 
@@ -18,8 +17,6 @@ export const MenuTrigger = React.forwardRef<
 
   const menuCtx = useMenuCtx(displayName);
 
-  const pointerEvents = usePointerEvents({ onPress: menuCtx.handleOpen });
-
   return (
     <PopperReference>
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
@@ -30,7 +27,8 @@ export const MenuTrigger = React.forwardRef<
         data-open={menuCtx.open}
         aria-expanded={menuCtx.open}
         aria-controls={menuCtx.open ? menuCtx.id : undefined}
-        {...pointerEvents}
+        // @ts-expect-error Property 'onPress' does not exist
+        onPress={menuCtx.handleOpen}
         onKeyDown={(e: React.KeyboardEvent) => {
           const key = e.key;
 

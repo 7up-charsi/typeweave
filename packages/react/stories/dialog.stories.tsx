@@ -207,7 +207,7 @@ const ProgrammaticallyTemplate = () => {
               variant="text"
               className="w-5 h-5 absolute right-2 top-2"
               classNames={{ content: 'text-xs' }}
-              onPress={() => ref.current?.onClose('pointer')}
+              onPress={ref.current?.onClose}
             >
               <XIcon />
             </Button>

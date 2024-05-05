@@ -1,7 +1,6 @@
 import React from 'react';
 import { Slot } from '../slot';
 import { useDialogCtx } from './dialog-root';
-import { usePointerEvents } from '../use-pointer-events';
 
 export interface DialogCloseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
@@ -16,13 +15,15 @@ export const DialogClose = React.forwardRef<
 
   const { handleClose } = useDialogCtx(displayName);
 
-  const pointerEvents = usePointerEvents({
-    onPress: () => {
-      handleClose('pointer');
-    },
-  });
-
-  return <Slot {...restProps} ref={ref} {...pointerEvents} />;
+  return (
+    <Slot
+      {...restProps}
+      ref={ref}
+      onPress={() => {
+        handleClose('pointer');
+      }}
+    />
+  );
 });
 
 DialogClose.displayName = displayName;
