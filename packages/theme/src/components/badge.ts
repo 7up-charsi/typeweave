@@ -40,10 +40,8 @@ export const badge = tv({
       },
     },
     shadow: {
-      none: { content: 'shadow-none' },
-      sm: { content: 'shadow-sm' },
-      md: { content: 'shadow-md' },
-      lg: { content: 'shadow-lg' },
+      true: { content: 'shadow-md' },
+      false: { content: 'shadow-none' },
     },
   },
 });

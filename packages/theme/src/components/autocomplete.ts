@@ -3,8 +3,9 @@ import { ClassNames } from '../types';
 
 export const autocomplete = tv({
   slots: {
-    listbox:
-      'w-[var(--reference-width)] bg-paper border border-muted-6 overflow-y-auto rounded max-h-[300px] z-50',
+    listboxWrapper:
+      'bg-paper border border-muted-6 rounded z-50 overflow-hidden',
+    listbox: 'max-h-[300px] w-[var(--reference-width)] overflow-y-auto',
     option:
       'px-2 py-2 select-none cursor-pointer data-[disabled=true]:disabled text-muted-11 data-[selected=true]:bg-info-3 data-[focused=true]:data-[selected=true]:bg-info-4 data-[focused=true]:data-[selected=false]:bg-muted-3 dark:data-[selected=true]:bg-info-6 dark:data-[focused=true]:data-[selected=true]:bg-info-7 dark:data-[focused=true]:data-[selected=false]:bg-muted-6',
     noOptions: 'h-10 flex items-center justify-center capitalize text-muted-11',
@@ -16,10 +17,8 @@ export const autocomplete = tv({
   },
   variants: {
     shadow: {
-      none: { listbox: 'shadow-none' },
-      sm: { listbox: 'shadow-sm' },
-      md: { listbox: 'shadow-md' },
-      lg: { listbox: 'shadow-lg' },
+      true: { listboxWrapper: 'shadow-md' },
+      false: { listboxWrapper: 'shadow-none' },
     },
   },
 });
