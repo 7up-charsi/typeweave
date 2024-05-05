@@ -2,15 +2,15 @@
   "name": "typeweave",
   "private": true,
   "scripts": {
-    "build:pkg": "turbo build --filter ./packages/**",
     "dev:sb": "pnpm --filter @typeweave/storybook dev",
     "dev:docs": "pnpm --filter @typeweave/docs dev",
+    "build": "turbo build --filter ./packages/**",
     "typecheck": "turbo typecheck --filter ./packages/**",
     "clean": "pnpm turbo:clean && pnpm clean:node-modules && pnpm clean:lock",
     "turbo:clean": "turbo clean && rimraf ./node_modules/.cache/turbo",
-    "clean:node-modules": "rimraf ./apps/**/node_modules ./packages/**/**/node_modules -g && rm -rf ./node_modules",
+    "clean:node-modules": "rimraf ./apps/**/node_modules ./packages/**/node_modules -g && rm -rf ./node_modules",
     "clean:lock": "rm -rf ./pnpm-lock.yaml",
-    "clean:changelogs": "rimraf ./packages/**/**/CHANGELOG.md -g",
+    "clean:changelogs": "rimraf ./apps/**/CHANGELOG.md ./packages/**/CHANGELOG.md -g",
     "format:check": "prettier --check ./packages/**/src/**/*.{ts,tsx} --cache",
     "format:write": "prettier --write ./packages/**/src/**/*.{ts,tsx} --cache",
     "lint": "eslint -c .eslintrc.cjs ./packages/**/src/**/*.{ts,tsx}",
@@ -52,3 +52,4 @@
     "typescript": "^5.4.5"
   }
 }
+

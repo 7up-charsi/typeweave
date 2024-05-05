@@ -11,6 +11,7 @@ import {
   PopperReference,
   PopperRoot,
 } from '../popper';
+import { ButtonPressEvent } from '../button';
 
 export type SelectReason = 'select' | 'clear';
 
@@ -26,7 +27,7 @@ export interface SelectRenderInputProps {
   onBlur: () => void;
   onOpen: () => void;
   clearButtonProps: {
-    onClear: (e: React.PointerEvent) => void;
+    onClear: (e: ButtonPressEvent) => void;
     onPointerDown: (e: React.PointerEvent) => void;
     tabIndex: number;
     'aria-label': string;
@@ -364,8 +365,7 @@ const SelectImpl = React.forwardRef<
     }
   };
 
-  const onClear = (e: React.PointerEvent) => {
-    e.preventDefault();
+  const onClear = () => {
     inputRef.current?.focus();
     setFocused(null);
     setOpen(true);

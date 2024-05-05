@@ -56,7 +56,7 @@ export const DialogContent = React.forwardRef<
       className={styles.content({ className })}
     >
       <VisuallyHidden>
-        <button onPointerUp={() => dialogCtx.handleClose('virtual')}>
+        <button onPointerUp={() => dialogCtx.handleClose('pointer')}>
           close
         </button>
       </VisuallyHidden>
@@ -64,7 +64,7 @@ export const DialogContent = React.forwardRef<
       {children}
 
       <VisuallyHidden>
-        <button onPointerUp={() => dialogCtx.handleClose('virtual')}>
+        <button onPointerUp={() => dialogCtx.handleClose('pointer')}>
           close
         </button>
       </VisuallyHidden>

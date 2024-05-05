@@ -5,7 +5,11 @@ import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';
 import { GroupCtx } from './button-group';
 
-type PonterType = 'mouse' | 'pen' | 'touch' | 'keyboard';
+export type ButtonPressEvent = {
+  target: HTMLButtonElement;
+  pointerType: 'mouse' | 'pen' | 'touch' | 'keyboard';
+  preventDefault: () => void;
+};
 
 export interface ButtonProps
   extends Omit<ButtonVariantProps, 'isInGroup'>,
@@ -15,7 +19,7 @@ export interface ButtonProps
   classNames?: ButtonClassNames;
   children?: React.ReactNode;
   asChild?: boolean;
-  onPress?: (e: { target: HTMLButtonElement; pointerType: PonterType }) => void;
+  onPress?: (e: ButtonPressEvent) => void;
   excludeFromTabOrder?: boolean;
 }
 
@@ -58,7 +62,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       onPointerDown,
       onPointerUp,
       onPress: (e) =>
-        onPress?.({ pointerType: e.pointerType, target: e.currentTarget }),
+        onPress?.({
+          pointerType: e.pointerType,
+          target: e.currentTarget,
+          preventDefault: e.preventDefault,
+        }),
     });
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -68,7 +76,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
       e.preventDefault();
 
-      onPress?.({ pointerType: 'mouse', target: e.currentTarget });
+      onPress?.({
+        pointerType: 'mouse',
+        target: e.currentTarget,
+        preventDefault: e.preventDefault,
+      });
     };
 
     if (process.env.NODE_ENV !== 'production') {
