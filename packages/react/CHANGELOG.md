@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 1.2.6
+
+### Patch Changes
+
+- refactor: handle close
+
 ## 1.2.5
 
 ### Patch Changes
