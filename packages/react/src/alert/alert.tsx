@@ -1,5 +1,3 @@
-'use client';
-
 import { AlertVariantProps, alert as alertStyles } from '@typeweave/theme';
 import { Button } from '../button';
 import React from 'react';

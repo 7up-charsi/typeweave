@@ -1,5 +1,29 @@
 # @typeweave/theme
 
+## 1.3.3
+
+### Patch Changes
+
+- fix: dts
+
+## 1.3.2
+
+### Patch Changes
+
+- fix: .d.ts
+
+## 1.3.1
+
+### Patch Changes
+
+- fix: .d.ts
+
+## 1.3.0
+
+### Minor Changes
+
+- fix: .d.ts files
+
 ## 1.2.4
 
 ### Patch Changes

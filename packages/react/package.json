@@ -1,7 +1,8 @@
 {
   "name": "@typeweave/react",
-  "version": "1.1.4",
+  "version": "1.2.3",
   "keywords": [
+    "typeweave",
     "react"
   ],
   "author": {
@@ -25,7 +26,7 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-    "build": "pnpm auto-imports && tsup",
+    "build": "pnpm auto-imports && cross-env NODE_OPTIONS=--max-old-space-size=16384 tsup",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "auto-imports": "tsx ./scripts/auto-imports.ts",
@@ -37,16 +38,16 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@floating-ui/react-dom": "^2.0.8",
+    "@floating-ui/react-dom": "^2.0.9",
     "@typeweave/react-utils": "workspace:*",
     "@typeweave/theme": "workspace:*",
     "lodash.groupby": "^4.6.0",
     "lucide-react": "^0.376.0"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*",
     "@types/lodash.groupby": "^4.6.9",
-    "clean-package": "^2.2.0"
+    "clean-package": "^2.2.0",
+    "tsconfig": "workspace:*"
   },
   "clean-package": {
     "extends": "../../../../../../clean-package.config.json"
