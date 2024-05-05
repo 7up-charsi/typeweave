@@ -1,5 +1,3 @@
-'use server';
-
 import React from 'react';
 import { SkeletonVariantProps, skeleton } from '@typeweave/theme';
 

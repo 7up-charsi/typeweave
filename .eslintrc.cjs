@@ -22,7 +22,7 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: ['!.storybook', 'apps', 'dist'],
+  ignorePatterns: ['!.storybook', 'apps', 'packages/**/dist'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',

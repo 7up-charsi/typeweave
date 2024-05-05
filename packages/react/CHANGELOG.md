@@ -1,5 +1,44 @@
 # @typeweave/react
 
+## 1.2.3
+
+### Patch Changes
+
+- fix: dts
+- Updated dependencies
+  - @typeweave/react-utils@1.1.3
+  - @typeweave/theme@1.3.3
+
+## 1.2.2
+
+### Patch Changes
+
+- fix: .d.ts
+- Updated dependencies
+  - @typeweave/react-utils@1.1.2
+  - @typeweave/theme@1.3.2
+
+## 1.2.1
+
+### Patch Changes
+
+- fix: .d.ts
+- Updated dependencies
+  - @typeweave/react-utils@1.1.1
+  - @typeweave/theme@1.3.1
+
+## 1.2.0
+
+### Minor Changes
+
+- fix: .d.ts files
+
+### Patch Changes
+
+- Updated dependencies
+  - @typeweave/react-utils@1.1.0
+  - @typeweave/theme@1.3.0
+
 ## 1.1.4
 
 ### Patch Changes

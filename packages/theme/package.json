@@ -1,7 +1,8 @@
 {
   "name": "@typeweave/theme",
-  "version": "1.2.4",
+  "version": "1.3.3",
   "keywords": [
+    "typeweave",
     "theme"
   ],
   "author": {
@@ -42,13 +43,14 @@
     "deepmerge": "^4.3.1",
     "flat": "^6.0.1",
     "lodash.kebabcase": "^4.1.1",
-    "tailwind-variants": "^0.1.14"
+    "tailwind-merge": "^2.3.0",
+    "tailwind-variants": "^0.1.20"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*",
     "@types/color": "^3.0.6",
     "@types/lodash.kebabcase": "^4.1.9",
-    "clean-package": "^2.2.0"
+    "clean-package": "^2.2.0",
+    "tsconfig": "workspace:*"
   },
   "clean-package": {
     "extends": "../../../../../../clean-package.config.json"
