@@ -1,5 +1,11 @@
 # @typeweave/theme
 
+## 1.3.4
+
+### Patch Changes
+
+- fix(Menu): disabel popper
+
 ## 1.3.3
 
 ### Patch Changes
