@@ -5,13 +5,11 @@ import {
   useAccordionCtx,
   useAccordionStyles,
 } from './accordion-root';
-import { Slot } from '../slot';
 import { useAccordionItemCtx } from './accordion-item';
+import { usePointerEvents } from '../use-pointer-events';
 
 export interface AccordionTriggerProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  asChild?: boolean;
-}
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const displayName = 'AccordionTrigger';
 
@@ -19,7 +17,7 @@ export const AccordionTrigger = React.forwardRef<
   HTMLButtonElement,
   AccordionTriggerProps
 >((props, ref) => {
-  const { asChild, className, children, disabled, ...restProps } = props;
+  const { className, children, disabled, ...restProps } = props;
 
   const accordionCtx = useAccordionCtx(displayName);
   const itemCtx = useAccordionItemCtx(displayName);
@@ -32,6 +30,8 @@ export const AccordionTrigger = React.forwardRef<
     if (isExpended) accordionCtx.onCollapse(itemCtx.value);
     else accordionCtx.onExpand(itemCtx.value);
   };
+
+  const pointerEvents = usePointerEvents({ onPress });
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (accordionCtx.disabled) return;
@@ -66,11 +66,9 @@ export const AccordionTrigger = React.forwardRef<
     if (End) elements[elements.length - 1]?.focus();
   };
 
-  const Comp = asChild ? Slot : 'button';
-
   return (
     <AccordionCollection.Item>
-      <Comp
+      <button
         {...restProps}
         ref={ref}
         onKeyDown={onKeyDown}
@@ -81,10 +79,10 @@ export const AccordionTrigger = React.forwardRef<
         aria-controls={itemCtx.contentId}
         data-expanded={isExpended}
         role="button"
-        onPress={onPress}
+        {...pointerEvents}
       >
         {children}
-      </Comp>
+      </button>
     </AccordionCollection.Item>
   );
 });
