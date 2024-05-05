@@ -55,6 +55,7 @@ export const PopoverRoot = (props: PopoverRootProps) => {
   });
 
   const handleClose = useCallbackRef(() => {
+    if (!open) return;
     setOpen(false);
   });
 

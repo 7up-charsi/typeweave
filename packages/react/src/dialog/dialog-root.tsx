@@ -80,6 +80,7 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
 
     const handleClose = useCallbackRef((reason: Reason | null) => {
       if (stackItem.paused) return;
+      if (!open) return;
 
       const eventObj = { defaultPrevented: false };
 
