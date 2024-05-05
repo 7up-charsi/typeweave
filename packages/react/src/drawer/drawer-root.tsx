@@ -80,6 +80,7 @@ export const DrawerRoot = React.forwardRef<DrawerRootMethods, DrawerRootProps>(
 
     const handleClose = useCallbackRef((reason: Reason | null) => {
       if (stackItem.paused) return;
+      if (!open) return;
 
       const eventObj = { defaultPrevented: false };
 

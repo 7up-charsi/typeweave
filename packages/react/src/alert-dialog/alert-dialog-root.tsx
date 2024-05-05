@@ -77,6 +77,7 @@ export const AlertDialogRoot = React.forwardRef<
 
   const handleClose = useCallbackRef((reason: Reason | null) => {
     if (stackItem.paused) return;
+    if (!open) return;
 
     const eventObj = { defaultPrevented: false };
 
