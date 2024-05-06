@@ -2,7 +2,7 @@ export type { DrawerCloseProps } from './drawer-close';
 export type { DrawerContentProps } from './drawer-content';
 export type { DrawerDescriptionProps } from './drawer-description';
 export type { DrawerPortalProps } from './drawer-portal';
-export type { DrawerRootProps } from './drawer-root';
+export type { DrawerRootProps, DrawerRootMethods } from './drawer-root';
 export type { DrawerTitleProps } from './drawer-title';
 export type { DrawerTriggerProps } from './drawer-trigger';
 export type { DrawerOverlayProps } from './drawer-overlay';
