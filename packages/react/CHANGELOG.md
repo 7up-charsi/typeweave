@@ -1,5 +1,13 @@
 # @typeweave/react
 
+## 1.2.7
+
+### Patch Changes
+
+- fix(Drawer): styles and export type
+- Updated dependencies
+  - @typeweave/theme@1.3.5
+
 ## 1.2.6
 
 ### Patch Changes
