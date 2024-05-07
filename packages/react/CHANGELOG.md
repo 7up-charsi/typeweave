@@ -1,5 +1,13 @@
 # @typeweave/react
 
+## 1.2.9
+
+### Patch Changes
+
+- feat: DialogHeader, PopoverHeader and fix foregroud text
+- Updated dependencies
+  - @typeweave/theme@1.3.7
+
 ## 1.2.8
 
 ### Patch Changes
