@@ -15,6 +15,7 @@ export interface MenuRadioItemProps
   };
   asChild?: boolean;
   icon?: React.ReactNode;
+  checkedIcon?: React.ReactNode;
   disableCloseOnChange?: boolean;
 }
 
@@ -48,6 +49,7 @@ export const MenuRadioItem = React.forwardRef<
     className,
     value,
     icon,
+    checkedIcon = dotIcon,
     disableCloseOnChange = true,
     ...restProps
   } = props;
@@ -79,7 +81,7 @@ export const MenuRadioItem = React.forwardRef<
           className: classNames?.itemIcon,
         })}
       >
-        {!checked ? null : icon ?? dotIcon}
+        {!checked ? icon : checkedIcon}
       </span>
 
       <span

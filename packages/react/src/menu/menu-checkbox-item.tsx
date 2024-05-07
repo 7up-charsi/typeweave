@@ -16,6 +16,7 @@ export interface MenuCheckboxItemProps
   };
   disableCloseOnChange?: boolean;
   icon?: React.ReactNode;
+  checkedIcon?: React.ReactNode;
 }
 
 const displayName = 'MenuCheckboxItem';
@@ -32,6 +33,7 @@ export const MenuCheckboxItem = React.forwardRef<
     onChange,
     disabled,
     icon,
+    checkedIcon = <CheckIcon />,
     disableCloseOnChange = true,
     ...restProps
   } = props;
@@ -60,7 +62,7 @@ export const MenuCheckboxItem = React.forwardRef<
           className: classNames?.itemIcon,
         })}
       >
-        {!checked ? null : icon ?? <CheckIcon />}
+        {!checked ? icon : checkedIcon}
       </span>
 
       <span

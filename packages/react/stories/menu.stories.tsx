@@ -13,6 +13,12 @@ import {
   MenuSeparator,
   MenuTrigger,
 } from '../src';
+import {
+  CircleCheckBigIcon,
+  CircleIcon,
+  HeartIcon,
+  HeartOffIcon,
+} from 'lucide-react';
 
 const meta = {
   title: 'Components/Menu',
@@ -57,10 +63,20 @@ const Template = (args) => {
             <MenuSeparator />
 
             <MenuGroup label="status">
-              <MenuCheckboxItem checked={favrouite} onChange={setFavrouite}>
+              <MenuCheckboxItem
+                icon={args.customIcon ? <HeartOffIcon /> : undefined}
+                checkedIcon={args.customIcon ? <HeartIcon /> : undefined}
+                checked={favrouite}
+                onChange={setFavrouite}
+              >
                 active
               </MenuCheckboxItem>
-              <MenuCheckboxItem disabled checked>
+              <MenuCheckboxItem
+                icon={args.customIcon ? <HeartOffIcon /> : undefined}
+                checkedIcon={args.customIcon ? <HeartIcon /> : undefined}
+                disabled
+                checked={!args.customIcon}
+              >
                 notifications
               </MenuCheckboxItem>
             </MenuGroup>
@@ -72,9 +88,32 @@ const Template = (args) => {
               onChange={setRadioValue}
               value={radioValue}
             >
-              <MenuRadioItem value="radio item 1">paid</MenuRadioItem>
-              <MenuRadioItem value="radio item 2">unpaid</MenuRadioItem>
-              <MenuRadioItem value="radio item 3" disabled>
+              <MenuRadioItem
+                icon={args.customIcon ? <CircleIcon /> : undefined}
+                checkedIcon={
+                  args.customIcon ? <CircleCheckBigIcon /> : undefined
+                }
+                value="radio item 1"
+              >
+                paid
+              </MenuRadioItem>
+              <MenuRadioItem
+                icon={args.customIcon ? <CircleIcon /> : undefined}
+                checkedIcon={
+                  args.customIcon ? <CircleCheckBigIcon /> : undefined
+                }
+                value="radio item 2"
+              >
+                unpaid
+              </MenuRadioItem>
+              <MenuRadioItem
+                icon={args.customIcon ? <CircleIcon /> : undefined}
+                checkedIcon={
+                  args.customIcon ? <CircleCheckBigIcon /> : undefined
+                }
+                value="radio item 3"
+                disabled
+              >
                 always paid
               </MenuRadioItem>
             </MenuRadioGroup>
@@ -93,4 +132,10 @@ const LoopTemplate = () => <Template loop />;
 
 export const Loop = {
   render: LoopTemplate,
+};
+
+const CustomIconsTemplate = () => <Template customIcon />;
+
+export const CustomIcons = {
+  render: CustomIconsTemplate,
 };
