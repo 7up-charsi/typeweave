@@ -1,5 +1,11 @@
 # @typeweave/theme
 
+## 1.3.6
+
+### Patch Changes
+
+- feat(Menu): checked icon
+
 ## 1.3.5
 
 ### Patch Changes
