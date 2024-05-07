@@ -1,5 +1,13 @@
 # @typeweave/react
 
+## 1.2.8
+
+### Patch Changes
+
+- feat(Menu): checked icon
+- Updated dependencies
+  - @typeweave/theme@1.3.6
+
 ## 1.2.7
 
 ### Patch Changes
