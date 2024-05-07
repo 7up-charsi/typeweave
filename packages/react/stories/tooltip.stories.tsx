@@ -33,7 +33,7 @@ const Template = (args: TooltipRootProps & TooltipContentProps) => {
           <TooltipRoot key={i} defaultOpen={i === 0 ? true : undefined}>
             <TooltipTrigger>
               <button
-                className="p-10 border disabled:disabled"
+                className="p-10 rounded border disabled:disabled"
                 disabled={i === 2}
               >
                 button

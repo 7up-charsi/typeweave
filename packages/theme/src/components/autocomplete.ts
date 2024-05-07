@@ -7,12 +7,11 @@ export const autocomplete = tv({
       'bg-paper border border-muted-6 rounded z-50 overflow-hidden',
     listbox: 'max-h-[300px] w-[var(--reference-width)] overflow-y-auto',
     option:
-      'px-2 py-2 select-none cursor-pointer data-[disabled=true]:disabled text-muted-11 data-[selected=true]:bg-info-3 data-[focused=true]:data-[selected=true]:bg-info-4 data-[focused=true]:data-[selected=false]:bg-muted-3 dark:data-[selected=true]:bg-info-6 dark:data-[focused=true]:data-[selected=true]:bg-info-7 dark:data-[focused=true]:data-[selected=false]:bg-muted-6',
-    noOptions: 'h-10 flex items-center justify-center capitalize text-muted-11',
-    loading: 'h-10 flex items-center justify-center capitalize text-muted-11',
+      'px-2 py-2 select-none cursor-pointer data-[disabled=true]:disabled data-[selected=true]:bg-info-3 data-[focused=true]:data-[selected=true]:bg-info-4 data-[focused=true]:data-[selected=false]:bg-muted-3 dark:data-[selected=true]:bg-info-6 dark:data-[focused=true]:data-[selected=true]:bg-info-7 dark:data-[focused=true]:data-[selected=false]:bg-muted-6',
+    noOptions: 'h-10 flex items-center justify-center capitalize',
+    loading: 'h-10 flex items-center justify-center capitalize',
     group: 'relative isolate',
-    groupHeader:
-      'sticky top-0 bg-muted-2 px-2 py-2 z-50 text-sm font-semibold text-muted-11',
+    groupHeader: 'sticky top-0 bg-muted-2 px-2 py-2 z-50 text-sm font-semibold',
     groupItems: '',
   },
   variants: {
@@ -25,14 +24,14 @@ export const autocomplete = tv({
 
 export const autocompleteInput = tv({
   slots: {
-    openIndecator: 'text-muted-9 text-lg dynamic-icon',
-    clearButton: 'text-muted-9 w-6 h-6 text-lg',
+    openIndecator: 'text-muted-11 text-lg dynamic-icon',
+    clearButton: 'w-6 h-6 text-lg',
     endContent: '',
     startContent: '',
     inputWrapper: '',
     input: 'truncate',
     loader:
-      'animate-spin inline-block size-4 border-2 border-muted-9 border-t-transparent rounded-full',
+      'animate-spin inline-block size-4 border-2 border-muted-8 border-t-transparent rounded-full',
   },
   variants: {
     multiple: {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { XIcon } from 'lucide-react';
 import {
   Button,
   DialogClose,
@@ -10,8 +11,8 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogPortal,
+  DialogHeader,
 } from '../src';
-import { XIcon } from 'lucide-react';
 
 const meta = {
   title: 'Components/Dialog',
@@ -23,36 +24,43 @@ const Template = (args) => {
   return (
     <DialogRoot defaultOpen={args.defaultOpen} keepMounted={args.keepMounted}>
       <DialogTrigger>
-        <Button>{args.trigger}</Button>
+        <Button>open dialog</Button>
       </DialogTrigger>
 
       <DialogPortal>
         <DialogOverlay />
 
         <DialogContent className={args.className}>
-          <DialogTitle>SVG Vector</DialogTitle>
+          <DialogHeader>
+            <DialogTitle>SVG Vector</DialogTitle>
 
-          <DialogDescription>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-            ducimus atque aut amet odio ex at rem alias nemo recusandae Lorem
-            ipsum dolor sit amet consectetur adipisicing elit. Quidem ducimus
-            atque aut amet odio ex at rem alias nemo recusandae Lorem ipsum
-            dolor sit amet consectetur adipisicing elit. Quidem ducimus atque
-            aut amet odio ex at rem alias nemo recusandae
-          </DialogDescription>
+            <DialogDescription>
+              Lorem ipsum dolor sit amet consectetur adipisicing.
+            </DialogDescription>
+          </DialogHeader>
 
-          <div className="my-4 flex justify-center">{args.svg}</div>
+          <div className="p-4">
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Exercitationem delectus omnis magnam odit iste, expedita laborum
+              enim debitis, officia molestiae labore? Iure nesciunt quos magnam
+              quo distinctio ducimus nihil itaque? Exercitationem delectus omnis
+              magnam odit iste, expedita laborum enim debitis, officia molestiae
+              labore? Iure nesciunt quos magnam quo distinctio ducimus nihil
+              itaque?
+            </p>
 
-          <div className="pt-1 flex gap-2">
-            <div className="grow">{args.children}</div>
+            <div className="mt-5 flex gap-2">
+              <div className="grow">{args.children}</div>
 
-            <DialogClose>
-              <Button variant="text" color="danger">
-                Close
-              </Button>
-            </DialogClose>
+              <DialogClose>
+                <Button variant="text" color="danger">
+                  Close
+                </Button>
+              </DialogClose>
 
-            <Button color="success">GREAT</Button>
+              <Button color="success">GREAT</Button>
+            </div>
           </div>
         </DialogContent>
       </DialogPortal>
@@ -63,7 +71,7 @@ const Template = (args) => {
 const DialogTemplate = (args) => {
   return (
     <>
-      <Template {...args} trigger="Check plane" />
+      <Template {...args} />
 
       {Array.from({ length: 10 }).map((_, i) => (
         <p className="m-3" key={i}>
@@ -96,8 +104,8 @@ export const Default = {
 const NestedTemplate = (args) => {
   return (
     <>
-      <Template {...args} trigger="open dialog">
-        <Template trigger="open nested dialog" className="max-w-sm" />
+      <Template {...args}>
+        <Template className="max-w-xs" />
       </Template>
 
       {Array.from({ length: 10 }).map((_, i) => (
@@ -143,33 +151,34 @@ const VirtualElementTemplate = () => {
           <DialogOverlay />
 
           <DialogContent>
-            <DialogTitle>SVG Vector</DialogTitle>
+            <DialogHeader>
+              <DialogTitle>SVG Vector</DialogTitle>
 
-            <DialogDescription>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
-              aperiam tenetur numquam sunt, tempore, enim assumenda rem facere
-              nesciunt sit, voluptate optio voluptatum vero impedit. Doloremque,
-              velit? Enim error voluptas ullam voluptates esse excepturi
-              molestias dicta beatae, sed delectus nemo sequi in, minus
-              laboriosam expedita, magni asperiores vel. Culpa quia earum iste
-              cum ducimus. Minima deserunt debitis dolore ab quo tempore omnis?
-              Sapiente quos eos maiores veritatis mollitia officia nobis
-              eligendi harum, ipsum vitae. Odit soluta vel delectus magnam ea
-              sit quidem vero libero necessitatibus dolores, consequuntur
-              voluptate. Quibusdam, magni voluptatibus necessitatibus debitis
-              quo natus delectus ut explicabo. Quis, illum.
-            </DialogDescription>
+              <DialogDescription>
+                Lorem ipsum dolor sit amet consectetur adipisicing.
+              </DialogDescription>
+            </DialogHeader>
 
-            <div className="pt-1 flex gap-2">
-              <div className="grow" />
+            <div className="p-4">
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Exercitationem delectus omnis magnam odit iste, expedita laborum
+                enim debitis, officia molestiae labore? Iure nesciunt quos
+                magnam quo distinctio ducimus nihil itaque? Exercitationem
+                delectus omnis magnam odit iste, expedita laborum enim debitis,
+                officia molestiae labore? Iure nesciunt quos magnam quo
+                distinctio ducimus nihil itaque?
+              </p>
 
-              <DialogClose>
-                <Button variant="text" color="danger">
-                  Close
-                </Button>
-              </DialogClose>
+              <div className="mt-5 flex gap-2 justify-end">
+                <DialogClose>
+                  <Button variant="text" color="danger">
+                    Close
+                  </Button>
+                </DialogClose>
 
-              <Button color="success">GREAT</Button>
+                <Button color="success">GREAT</Button>
+              </div>
             </div>
           </DialogContent>
         </DialogPortal>
@@ -199,46 +208,47 @@ const ProgrammaticallyTemplate = () => {
           <DialogOverlay />
 
           <DialogContent>
-            <Button
-              isIconOnly
-              aria-label="close"
-              size="sm"
-              color="danger"
-              variant="text"
-              className="w-5 h-5 absolute right-2 top-2"
-              classNames={{ content: 'text-xs' }}
-              onPress={ref.current?.onClose}
-            >
-              <XIcon />
-            </Button>
-
-            <DialogTitle>SVG Vector</DialogTitle>
-
-            <DialogDescription>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Repudiandae quam voluptas, aliquam repellat sed vel odio,
-              similique eos nemo nobis deserunt totam facere placeat eligendi
-              inventore, nesciunt impedit vero suscipit doloribus debitis beatae
-              molestias. Ad voluptate vel pariatur error quia. Reiciendis,
-              nesciunt at? Vel corporis neque asperiores quos impedit expedita,
-              minima explicabo vero facilis numquam reprehenderit sit laudantium
-              quis qui excepturi autem laborum, facere non, aspernatur in
-              voluptatem quam nesciunt eos. Quo nisi officiis consectetur saepe
-              harum nam voluptatibus et tenetur, deserunt illo cumque placeat
-              quas quis fugit? Magnam ea praesentium a assumenda dicta earum
-              eius tempora laborum. Illum, in.
-            </DialogDescription>
-
-            <div className="pt-1 flex gap-2">
-              <div className="grow" />
-
-              <DialogClose>
-                <Button variant="text" color="danger">
-                  Close
+            <DialogHeader>
+              <div className="flex gap-3 items-center">
+                <DialogTitle>SVG Vector</DialogTitle>
+                <Button
+                  isIconOnly
+                  aria-label="close"
+                  size="sm"
+                  color="danger"
+                  className="w-5 h-5 absolute right-2 top-2"
+                  classNames={{ content: 'text-xs' }}
+                  onPress={ref.current?.onClose}
+                >
+                  <XIcon />
                 </Button>
-              </DialogClose>
+              </div>
 
-              <Button color="success">GREAT</Button>
+              <DialogDescription>
+                Lorem ipsum dolor sit amet consectetur adipisicing.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="p-4">
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Exercitationem delectus omnis magnam odit iste, expedita laborum
+                enim debitis, officia molestiae labore? Iure nesciunt quos
+                magnam quo distinctio ducimus nihil itaque? Exercitationem
+                delectus omnis magnam odit iste, expedita laborum enim debitis,
+                officia molestiae labore? Iure nesciunt quos magnam quo
+                distinctio ducimus nihil itaque?
+              </p>
+
+              <div className="mt-5 flex gap-2 justify-end">
+                <DialogClose>
+                  <Button variant="text" color="danger">
+                    Close
+                  </Button>
+                </DialogClose>
+
+                <Button color="success">GREAT</Button>
+              </div>
             </div>
           </DialogContent>
         </DialogPortal>

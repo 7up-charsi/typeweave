@@ -5,6 +5,7 @@ import {
   PopoverClose,
   PopoverContent,
   PopoverDescription,
+  PopoverHeader,
   PopoverPortal,
   PopoverRoot,
   PopoverTitle,
@@ -75,23 +76,31 @@ const Template = (args) => {
           >
             {args.arrow && <PopoverArrow />}
 
-            <PopoverTitle>Lorem ipsum dolor</PopoverTitle>
+            <PopoverHeader>
+              <PopoverTitle>Lorem ipsum dolor</PopoverTitle>
 
-            <PopoverDescription>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
-              aperiam facere, molestias eius suscipit in, est distinctio
-              deserunt culpa odit, sunt nostrum. Ad culpa excepturi assumenda
-              perferendis similique dolore qui.
-            </PopoverDescription>
+              <PopoverDescription>
+                Lorem ipsum dolor sit amet consectetur.
+              </PopoverDescription>
+            </PopoverHeader>
 
-            <div className="pt-3 flex gap-2 justify-end">
-              <PopoverClose>
-                <Button variant="text" color="danger">
-                  Close
-                </Button>
-              </PopoverClose>
+            <div className="p-4">
+              <p>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Facere, aut corrupti eum nihil cumque dolorum voluptas accusamus
+                et. Libero temporibus animi impedit consequuntur eaque ex
+                consequatur aperiam fugit dolores repudiandae.
+              </p>
 
-              <Button color="success">Agree</Button>
+              <div className="mt-4 flex gap-2 justify-end">
+                <PopoverClose>
+                  <Button variant="text" color="danger">
+                    Close
+                  </Button>
+                </PopoverClose>
+
+                <Button color="success">Agree</Button>
+              </div>
             </div>
           </PopoverContent>
         </PopoverPortal>

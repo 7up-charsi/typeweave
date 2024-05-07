@@ -78,7 +78,6 @@ export const createTheme = (config: PluginConfig = {}) => {
         Object.entries(value).forEach(([nestedKey, nestedValue]) => {
           nestedKey = kebabcase(nestedKey);
 
-          // @ts-expect-error Type 'unknown' is not assignable to type 'string'
           utilities[cssSelector][`--${key}-${nestedKey}`] = nestedValue;
         });
 
@@ -123,8 +122,7 @@ export const createTheme = (config: PluginConfig = {}) => {
             DEFAULT: 'var(--border-radius)',
           },
           boxShadow: {
-            modal:
-              'rgba(0, 0, 0, 0.2) 0px 15px 30px, rgba(0, 0, 0, 0.1) 0px 5px 15px, rgba(0, 0, 0, 0.05) 0px 2px 8px',
+            modal: 'var(--box-shadow-modal)',
           },
           keyframes: {
             skeletonWave: {
