@@ -1,5 +1,11 @@
 # @typeweave/theme
 
+## 1.3.7
+
+### Patch Changes
+
+- feat: DialogHeader, PopoverHeader and fix foregroud text
+
 ## 1.3.6
 
 ### Patch Changes
