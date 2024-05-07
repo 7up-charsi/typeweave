@@ -57,6 +57,16 @@ export default {
 };
 ```
 
+and in your **global css**
+
+```css
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+```
+
 This configuration registers the necessary styles for **_@typeweave/react_** components, ensuring they are available for use in your application.
 
 3. Import individual components from **_@typeweave/react_** and integrate them into your React application:

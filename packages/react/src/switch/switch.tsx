@@ -10,8 +10,6 @@ export interface SwitchProps
     Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color' | 'size'> {
   classNames?: SwitchClassNames;
   label?: string;
-  icon?: React.ReactNode;
-  checkedIcon?: React.ReactNode;
 }
 
 const displayName = 'Switch';
@@ -23,8 +21,6 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
       className,
       label,
       id: idProp,
-      icon,
-      checkedIcon,
       size = 'md',
       color = 'primary',
       labelPlacement = 'right',
@@ -54,10 +50,7 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
 
           <div
             className={styles.indicator({ className: classNames?.indicator })}
-          >
-            {icon}
-            {checkedIcon}
-          </div>
+          />
         </div>
 
         {label && (

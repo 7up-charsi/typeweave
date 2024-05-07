@@ -11,7 +11,7 @@ export const skeleton = tv({
     },
     animation: {
       pulse: 'animate-pulse',
-      wave: 'relative after:absolute after:inset-0 after:-translate-x-full after:content-["_"] after:bg-[linear-gradient(90deg,transparent,rgba(0,0,0,_0.06),transparent)] after:animate-skeletonWave',
+      wave: 'relative after:absolute after:inset-0 after:-translate-x-full after:content-["_"] after:bg-[linear-gradient(90deg,transparent,theme(colors.muted-7),transparent)] after:animate-skeletonWave',
     },
   },
 });

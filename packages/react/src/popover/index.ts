@@ -6,6 +6,7 @@ export type { PopoverRootProps } from './popover-root';
 export type { PopoverTitleProps } from './popover-title';
 export type { PopoverTriggerProps } from './popover-trigger';
 export type { PopperArrowProps as PopoverArrowProps } from '../popper';
+export type { PopoverHeaderProps } from './popover-header';
 
 export { PopoverClose } from './popover-close';
 export { PopoverContent } from './popover-content';
@@ -15,3 +16,4 @@ export { PopoverRoot } from './popover-root';
 export { PopoverTitle } from './popover-title';
 export { PopoverTrigger } from './popover-trigger';
 export { PopperArrow as PopoverArrow } from '../popper';
+export { PopoverHeader } from './popover-header';

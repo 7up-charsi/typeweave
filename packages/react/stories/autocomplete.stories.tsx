@@ -11,6 +11,8 @@ import {
   DialogPortal,
   DialogRoot,
   DialogTrigger,
+  DialogHeader,
+  DialogTitle,
 } from '../src';
 import { select } from '@typeweave/theme';
 import options from './options.json';
@@ -97,6 +99,7 @@ const CustomOptionTemplate = () => (
     renderInput={(props) => (
       <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
     )}
+    classNames={{ option: 'flex' }}
     renderOption={({ label, option, state }) => (
       <>
         <Checkbox
@@ -106,7 +109,7 @@ const CustomOptionTemplate = () => (
           size="sm"
         />
 
-        <span className="truncate">
+        <span className="grow truncate">
           <span className="text-sm mr-1 font-semibold">{option.year}</span>
           {label}
         </span>
@@ -136,7 +139,7 @@ export const Group = {
 };
 
 const InDialogTemplate = () => (
-  <DialogRoot>
+  <DialogRoot defaultOpen>
     <DialogTrigger>
       <Button>open dialog</Button>
     </DialogTrigger>
@@ -144,26 +147,32 @@ const InDialogTemplate = () => (
     <DialogPortal>
       <DialogOverlay />
 
-      <DialogContent className="max-w-xs overflow-auto">
-        <Autocomplete
-          options={options}
-          defaultValue={options[21]}
-          getOptionLabel={(option) => option.title}
-          renderInput={(props) => (
-            <Input
-              label="top 100 movies"
-              className="w-full"
-              {...autocompleteInputAdapter(props)}
-            />
-          )}
-        />
+      <DialogContent className="max-w-xs">
+        <DialogHeader>
+          <DialogTitle>Movies</DialogTitle>
+        </DialogHeader>
 
-        <div className="flex gap-2 justify-end mt-5">
-          <DialogClose>
-            <Button color="danger">Close</Button>
-          </DialogClose>
+        <div className="p-4">
+          <Autocomplete
+            options={options}
+            defaultValue={options[21]}
+            getOptionLabel={(option) => option.title}
+            renderInput={(props) => (
+              <Input
+                label="top 100 movies"
+                className="w-full"
+                {...autocompleteInputAdapter(props)}
+              />
+            )}
+          />
 
-          <Button>Agree</Button>
+          <div className="flex gap-2 justify-end mt-5">
+            <DialogClose>
+              <Button color="danger">Close</Button>
+            </DialogClose>
+
+            <Button>Agree</Button>
+          </div>
         </div>
       </DialogContent>
     </DialogPortal>
@@ -192,7 +201,7 @@ const CustomTemplate = () => (
           disablePopper
           disablePortal
           getOptionLabel={(option) => option.title}
-          shadow="none"
+          shadow={false}
           renderInput={(props) => (
             <Input
               {...autocompleteInputAdapter(props, {

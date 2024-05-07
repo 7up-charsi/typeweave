@@ -12,6 +12,8 @@ import {
   DialogPortal,
   DialogRoot,
   DialogTrigger,
+  DialogHeader,
+  DialogTitle,
 } from '../src';
 import options from './options.json';
 
@@ -70,6 +72,7 @@ const CustomOptionTemplate = () => (
     renderInput={(props) => (
       <Input label="top 100 movies" {...selectInputAdapter(props)} />
     )}
+    classNames={{ option: 'flex' }}
     renderOption={({ label, option, state }) => (
       <>
         <Checkbox
@@ -79,7 +82,7 @@ const CustomOptionTemplate = () => (
           size="sm"
         />
 
-        <span className="truncate">
+        <span className="grow truncate">
           <span className="text-sm mr-1 font-semibold">{option.year}</span>
           {label}
         </span>
@@ -132,25 +135,31 @@ const InDialogTemplate = () => (
       <DialogOverlay />
 
       <DialogContent className="max-w-xs">
-        <Select
-          options={options}
-          defaultValue={options[21]}
-          getOptionLabel={(option) => option.title}
-          renderInput={(props) => (
-            <Input
-              label="top 100 movies"
-              className="w-full"
-              {...selectInputAdapter(props)}
-            />
-          )}
-        />
+        <DialogHeader>
+          <DialogTitle>Movies</DialogTitle>
+        </DialogHeader>
 
-        <div className="flex gap-2 justify-end mt-5">
-          <DialogClose>
-            <Button color="danger">Close</Button>
-          </DialogClose>
+        <div className="p-4">
+          <Select
+            options={options}
+            defaultValue={options[21]}
+            getOptionLabel={(option) => option.title}
+            renderInput={(props) => (
+              <Input
+                label="top 100 movies"
+                className="w-full"
+                {...selectInputAdapter(props)}
+              />
+            )}
+          />
 
-          <Button>Agree</Button>
+          <div className="flex gap-2 justify-end mt-5">
+            <DialogClose>
+              <Button color="danger">Close</Button>
+            </DialogClose>
+
+            <Button>Agree</Button>
+          </div>
         </div>
       </DialogContent>
     </DialogPortal>
@@ -179,7 +188,7 @@ const CustomTemplate = () => (
           disablePopper
           disablePortal
           getOptionLabel={(option) => option.title}
-          shadow="none"
+          shadow={false}
           renderInput={(props) => (
             <Input
               {...selectInputAdapter(props, { disableOpenIndicator: true })}

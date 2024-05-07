@@ -5,8 +5,8 @@ export const alertDialog = tv({
   slots: {
     content:
       'fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-50 flex flex-col w-[calc(100%-16px)] max-w-sm outline-none rounded p-4 bg-paper shadow-modal',
-    title: 'text-lg font-semibold text-muted-11',
-    description: 'mt-2 text-muted-11 text-sm',
+    title: 'font-semibold mb-2 first-letter:uppercase',
+    description: 'text-sm first-letter:uppercase',
     actions: 'flex gap-2 items-center justify-end mt-3',
   },
 });

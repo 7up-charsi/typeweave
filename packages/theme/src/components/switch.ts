@@ -4,48 +4,48 @@ import { ClassNames } from '../types';
 const _switch = tv({
   slots: {
     base: 'inline-flex gap-2',
-    switch: 'relative flex items-center',
+    switch: 'relative flex items-center p-1',
     input:
-      'peer rounded-full appearance-none cursor-pointer transition-colors bg-muted-9 disabled:disabled absolute inset-0 outline-none focus-visible:ring-2 focus-visible:ring-focus',
+      'peer rounded-full appearance-none cursor-pointer transition-colors border border-muted-8 disabled:disabled absolute inset-0 outline-none focus-visible:ring-2 focus-visible:ring-focus',
     indicator:
-      'pointer-events-none bg-white text-muted-11 absolute z-10 rounded-full left-[2px] translate-x-0 peer-checked:left-[calc(100%-2px)] peer-checked:-translate-x-full transition-[left,transform] [&_svg:first-of-type]:inline-block peer-checked:[&_svg:first-of-type]:hidden [&_svg:last-of-type]:hidden peer-checked:[&_svg:last-of-type]:inline-block flex items-center justify-center dynamic-icon',
-    label: 'cursor-pointer select-none text-muted-11 first-letter:uppercase',
+      'pointer-events-none grow h-full relative text-muted-9 before:bg-current before:absolute before:left-0 before:z-10 before:rounded-full before:h-full before:aspect-square before:translate-x-0 peer-checked:before:left-full peer-checked:before:-translate-x-full before:transition-[left,transform]',
+    label: 'cursor-pointer select-none first-letter:uppercase',
   },
   variants: {
     color: {
       primary: {
-        input: 'checked:bg-primary-9',
-        indicator: 'peer-checked:text-primary-11',
+        input: 'checked:bg-primary-9 checked:border-primary-9',
+        indicator: 'peer-checked:text-white',
       },
       secondary: {
-        input: 'checked:bg-secondary-9',
-        indicator: 'peer-checked:text-secondary-11',
+        input: 'checked:bg-secondary-9 checked:border-secondary-9',
+        indicator: 'peer-checked:text-white',
       },
       success: {
-        input: 'checked:bg-success-9',
-        indicator: 'peer-checked:text-success-11',
+        input: 'checked:bg-success-9 checked:border-success-9',
+        indicator: 'peer-checked:text-white',
       },
       info: {
-        input: 'checked:bg-info-9',
-        indicator: 'peer-checked:text-info-11',
+        input: 'checked:bg-info-9 checked:border-info-9',
+        indicator: 'peer-checked:text-white',
       },
       warning: {
-        input: 'checked:bg-warning-9',
-        indicator: 'peer-checked:text-warning-11',
+        input: 'checked:bg-warning-9 checked:border-warning-9',
+        indicator: 'peer-checked:text-white',
       },
       danger: {
-        input: 'checked:bg-danger-9',
-        indicator: 'peer-checked:text-danger-11',
+        input: 'checked:bg-danger-9 checked:border-danger-9',
+        indicator: 'peer-checked:text-white',
       },
     },
     size: {
       sm: {
         switch: 'w-[35px] h-[19px]',
-        indicator: 'size-[15px] text-xs',
+        indicator: 'text-xs',
       },
       md: {
         switch: 'w-[40px] h-[22px]',
-        indicator: 'size-[18px] text-base',
+        indicator: 'text-base',
       },
     },
     labelPlacement: {
