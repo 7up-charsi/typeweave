@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 1.2.11
+
+### Patch Changes
+
+- fix: imperative close/open
+
 ## 1.2.10
 
 ### Patch Changes
