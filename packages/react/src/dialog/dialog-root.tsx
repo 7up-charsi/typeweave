@@ -29,7 +29,8 @@ interface DialogCtxProps {
 }
 
 export interface DialogRootMethods {
-  onClose: () => void;
+  close: () => void;
+  open: () => void;
 }
 
 const displayName = 'DialogRoot';
@@ -96,14 +97,18 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
       }
     });
 
+    const imperativeClose = useCallbackRef(() => {
+      handleClose(null);
+    });
+
+    const imperativeOpen = useCallbackRef(() => {
+      handleOpen();
+    });
+
     React.useImperativeHandle(
       ref,
-      () => ({
-        onClose: () => {
-          handleClose(null);
-        },
-      }),
-      [handleClose],
+      () => ({ close: imperativeClose, open: imperativeOpen }),
+      [imperativeClose, imperativeOpen],
     );
 
     React.useEffect(() => {

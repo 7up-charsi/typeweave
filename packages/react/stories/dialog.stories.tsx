@@ -218,7 +218,7 @@ const ProgrammaticallyTemplate = () => {
                   color="danger"
                   className="w-5 h-5 absolute right-2 top-2"
                   classNames={{ content: 'text-xs' }}
-                  onPress={ref.current?.onClose}
+                  onPress={ref.current?.close}
                 >
                   <XIcon />
                 </Button>
