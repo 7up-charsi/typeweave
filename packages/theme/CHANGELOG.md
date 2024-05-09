@@ -1,5 +1,11 @@
 # @typeweave/theme
 
+## 1.4.0
+
+### Minor Changes
+
+- feat(Theme): add color mode rgb/hsl
+
 ## 1.3.7
 
 ### Patch Changes
