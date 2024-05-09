@@ -31,7 +31,8 @@ interface DrawerCtxProps {
 }
 
 export interface DrawerRootMethods {
-  onClose: () => void;
+  close: () => void;
+  open: () => void;
 }
 
 const [DrawerCtx, useDrawerCtx] =
@@ -96,14 +97,18 @@ export const DrawerRoot = React.forwardRef<DrawerRootMethods, DrawerRootProps>(
       }
     });
 
+    const imperativeClose = useCallbackRef(() => {
+      handleClose(null);
+    });
+
+    const imperativeOpen = useCallbackRef(() => {
+      handleOpen();
+    });
+
     React.useImperativeHandle(
       ref,
-      () => ({
-        onClose: () => {
-          handleClose(null);
-        },
-      }),
-      [handleClose],
+      () => ({ close: imperativeClose, open: imperativeOpen }),
+      [imperativeClose, imperativeOpen],
     );
 
     React.useEffect(() => {
