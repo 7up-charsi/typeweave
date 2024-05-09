@@ -19,13 +19,20 @@ const defaultDarkTheme: Theme = {
   layout: darkThemeLayout,
 };
 
-const baseThemes = {
+const defaultThemes = {
   light: defaultLightTheme,
   dark: defaultDarkTheme,
 };
 
 export const createTheme = (config: PluginConfig = {}) => {
-  const { themes: userThemes = {}, defaultTheme = 'light' } = config;
+  const {
+    themes: userThemes = {},
+    defaultTheme = 'light',
+    colorMode = 'hsl',
+  } = config;
+
+  if (colorMode !== 'hsl' && colorMode !== 'rgb')
+    throw new Error('createTheme, `colorMode` must be either `hsl` or `rgb`');
 
   const themes: Themes = {
     ...userThemes,
@@ -38,10 +45,11 @@ export const createTheme = (config: PluginConfig = {}) => {
 
     const baseTheme = theme.base === 'dark' ? 'dark' : 'light';
 
-    themes[themeName] = deepmerge(baseThemes[baseTheme], theme);
+    themes[themeName] = deepmerge(defaultThemes[baseTheme], theme);
   });
 
   const pluginColors: Record<string, string> = {};
+  const pluginLayout: Record<string, Record<string, string>> = {};
   const utilities: Record<string, Record<string, string>> = {};
   const variants: { name: string; definition: string }[] = [];
 
@@ -55,6 +63,7 @@ export const createTheme = (config: PluginConfig = {}) => {
     }
 
     variants.push({ name: themeName, definition: `:is(.${themeName} &)` });
+
     utilities[cssSelector] = { 'color-scheme': scheme };
 
     const flatColors = flatten<ThemeColors | undefined, Record<string, string>>(
@@ -62,29 +71,44 @@ export const createTheme = (config: PluginConfig = {}) => {
       { delimiter: '-' },
     );
 
-    Object.entries(flatColors).forEach(([colorName, colorValue]) => {
-      const color = Color(colorValue).hsl().round().array();
+    // generate colors css variables
+    Object.entries(flatColors).forEach(([_colorName, colorValue]) => {
+      const colorName = kebabcase(_colorName);
+
+      const rgb = Color(colorValue).rgb().round().array();
+      const hsl = Color(colorValue).hsl().round().array();
+
+      const color = colorMode === 'hsl' ? hsl : rgb;
 
       pluginColors[colorName] =
-        `hsl(var(--${colorName}) / ${color[3] ?? '<alpha-value>'})`;
+        `${colorMode}(var(--${colorName}) / ${color[3] ?? '<alpha-value>'})`;
+
       utilities[cssSelector][`--${colorName}`] =
         `${color[0]} ${color[1]} ${color[2]}`;
     });
 
+    // generate layout css variables
     Object.entries(layout || {}).forEach(([key, value]) => {
-      key = kebabcase(key);
+      const kebabcaseKey = kebabcase(key);
+
+      if (!pluginLayout[key]) pluginLayout[key] = {};
 
       if (typeof value === 'object') {
         Object.entries(value).forEach(([nestedKey, nestedValue]) => {
-          nestedKey = kebabcase(nestedKey);
+          const kebabcaseNestedKey = kebabcase(nestedKey);
 
-          utilities[cssSelector][`--${key}-${nestedKey}`] = nestedValue;
+          const variable = `--${kebabcaseKey}-${kebabcaseNestedKey}`;
+
+          utilities[cssSelector][variable] = nestedValue;
+          pluginLayout[key][kebabcaseNestedKey] = `var(${variable})`;
         });
 
         return;
       }
 
-      utilities[cssSelector][`--${key}`] = value;
+      const variable = `--${kebabcaseKey}`;
+      utilities[cssSelector][variable] = value;
+      pluginLayout[key].DEFAULT = `var(${variable})`;
     });
   });
 
@@ -116,14 +140,9 @@ export const createTheme = (config: PluginConfig = {}) => {
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: { sans: 'Segoe UI' },
           colors: pluginColors,
-          borderRadius: {
-            DEFAULT: 'var(--border-radius)',
-          },
-          boxShadow: {
-            modal: 'var(--box-shadow-modal)',
-          },
+          ...pluginLayout,
+          fontFamily: { sans: 'Segoe UI' },
           keyframes: {
             skeletonWave: {
               '100%': {
