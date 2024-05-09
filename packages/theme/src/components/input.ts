@@ -9,7 +9,7 @@ export const input = tv({
     inputWrapper:
       'w-full relative flex items-center gap-x-2 rounded px-3 cursor-text bg-transparent border border-muted-7 hover:border-muted-8 focus-within:hover:border-transparent focus-within:border-transparent overflow-hidden focus-within:ring-2 focus-within:ring-focus',
     input:
-      'appearance-none bg-transparent outline-none grow w-0 placeholder:text-current placeholder:opacity-75 h-[30px] text-sm',
+      'appearance-none bg-transparent outline-none grow w-0 placeholder:text-current placeholder:opacity-75 h-10 text-sm',
     helperText: 'first-letter:uppercase px-1 text-xs',
     errorMessage:
       'first-letter:uppercase px-1 text-xs font-semibold text-danger-11',

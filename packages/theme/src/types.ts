@@ -40,6 +40,7 @@ export type Theme = Partial<{
 export type Themes = Record<string, Theme>;
 
 export type PluginConfig = Partial<{
+  colorMode: 'rgb' | 'hsl';
   defaultTheme: string;
   themes: Themes;
 }>;

@@ -4,7 +4,7 @@ import { ClassNames } from '../types';
 export const drawer = tv({
   slots: {
     content:
-      'max-h-full overflow-auto fixed z-50 w-[300px] bg-paper outline-none shadow-modal',
+      'max-h-full overflow-auto fixed z-50 w-[300px] bg-paper outline-none shadow-depth-elevation',
     title: 'text-lg font-semibold mb-2',
     description: 'text-normal',
   },

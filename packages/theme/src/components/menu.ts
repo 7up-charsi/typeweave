@@ -15,7 +15,7 @@ export const menu = tv({
   },
   variants: {
     shadow: {
-      true: { content: 'shadow-modal' },
+      true: { content: 'shadow-depth-elevation' },
       false: { content: 'shadow-none' },
     },
   },
