@@ -7,10 +7,7 @@ import { VisuallyHidden } from '../visually-hidden';
 
 export interface DrawerContentProps
   extends DrawerVariantProps,
-    React.HTMLAttributes<HTMLDivElement> {
-  noA11yTitle?: boolean;
-  noA11yDescription?: boolean;
-}
+    React.HTMLAttributes<HTMLDivElement> {}
 
 const displayName = 'DrawerContent';
 
@@ -23,14 +20,7 @@ export const DrawerContent = React.forwardRef<
   HTMLDivElement,
   DrawerContentProps
 >((props, ref) => {
-  const {
-    children,
-    className,
-    noA11yDescription,
-    noA11yTitle,
-    placement = 'left',
-    ...restProps
-  } = props;
+  const { children, className, placement = 'left', ...restProps } = props;
 
   const drawerCtx = useDrawerCtx(displayName);
 
@@ -44,10 +34,6 @@ export const DrawerContent = React.forwardRef<
         {...restProps}
         ref={ref}
         role="presentation"
-        aria-labelledby={noA11yTitle ? undefined : drawerCtx.titleId}
-        aria-describedby={
-          noA11yDescription ? undefined : drawerCtx.descriptionId
-        }
         id={drawerCtx.contentId}
         className={styles.content({ className })}
       >

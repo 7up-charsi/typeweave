@@ -35,6 +35,7 @@ export { useAlertDialogCtx };
 export interface AlertDialogRootMethods {
   close: () => void;
   open: () => void;
+  forceClose: () => void;
 }
 
 const alertDialogStack = createStackManager();
@@ -102,10 +103,23 @@ export const AlertDialogRoot = React.forwardRef<
     handleOpen();
   });
 
+  const imperativeForceClose = useCallbackRef(() => {
+    if (!open) return;
+
+    onClose?.({ preventDefault: () => {} }, null);
+
+    setOpen(false);
+    alertDialogStack.remove(stackItem);
+  });
+
   React.useImperativeHandle(
     ref,
-    () => ({ close: imperativeClose, open: imperativeOpen }),
-    [imperativeClose, imperativeOpen],
+    () => ({
+      close: imperativeClose,
+      open: imperativeOpen,
+      forceClose: imperativeForceClose,
+    }),
+    [imperativeClose, imperativeForceClose, imperativeOpen],
   );
 
   React.useEffect(() => {

@@ -26,13 +26,12 @@ interface DrawerCtxProps {
   handleClose: (reason: Reason) => void;
   triggerRef: React.MutableRefObject<HTMLElement | null>;
   keepMounted?: boolean;
-  titleId: string;
-  descriptionId: string;
 }
 
 export interface DrawerRootMethods {
   close: () => void;
   open: () => void;
+  forceClose: () => void;
 }
 
 const [DrawerCtx, useDrawerCtx] =
@@ -64,8 +63,6 @@ export const DrawerRoot = React.forwardRef<DrawerRootMethods, DrawerRootProps>(
     }).current;
 
     const contentId = React.useId();
-    const titleId = React.useId();
-    const descriptionId = React.useId();
     const triggerRef = React.useRef<HTMLElement | null>(null);
 
     const [open, setOpen] = useControllableState({
@@ -105,10 +102,23 @@ export const DrawerRoot = React.forwardRef<DrawerRootMethods, DrawerRootProps>(
       handleOpen();
     });
 
+    const imperativeForceClose = useCallbackRef(() => {
+      if (!open) return;
+
+      onClose?.({ preventDefault: () => {} }, null);
+
+      setOpen(false);
+      drawerStack.remove(stackItem);
+    });
+
     React.useImperativeHandle(
       ref,
-      () => ({ close: imperativeClose, open: imperativeOpen }),
-      [imperativeClose, imperativeOpen],
+      () => ({
+        close: imperativeClose,
+        open: imperativeOpen,
+        forceClose: imperativeForceClose,
+      }),
+      [imperativeClose, imperativeForceClose, imperativeOpen],
     );
 
     React.useEffect(() => {
@@ -135,8 +145,6 @@ export const DrawerRoot = React.forwardRef<DrawerRootMethods, DrawerRootProps>(
         handleOpen={handleOpen}
         triggerRef={triggerRef}
         keepMounted={keepMounted}
-        titleId={titleId}
-        descriptionId={descriptionId}
       >
         {children}
       </DrawerCtx>
