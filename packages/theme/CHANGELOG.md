@@ -1,5 +1,11 @@
 # @typeweave/theme
 
+## 1.4.1
+
+### Patch Changes
+
+- feat: imperative force close
+
 ## 1.4.0
 
 ### Minor Changes
