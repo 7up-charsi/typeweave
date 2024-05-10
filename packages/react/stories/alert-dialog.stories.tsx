@@ -58,17 +58,21 @@ export const Default = {
 };
 
 const VirtualElementTemplate = () => {
-  const [virtualElement, setVirtualElement] =
-    React.useState<HTMLElement | null>(null);
+  const ref = React.useRef<AlertDialogRootMethods>(null);
 
   return (
     <>
-      <Button color="danger" ref={setVirtualElement}>
+      <Button
+        color="danger"
+        onPress={() => {
+          ref.current?.open();
+        }}
+      >
         delete account
       </Button>
 
-      <AlertDialogRoot defaultOpen>
-        <AlertDialogTrigger virtual virtualElement={virtualElement} />
+      <AlertDialogRoot ref={ref}>
+        <AlertDialogTrigger />
 
         <AlertDialogPortal>
           <AlertDialogOverlay />
@@ -104,19 +108,14 @@ export const VirtualElement = {
 };
 
 const ProgrammaticallyTemplate = () => {
-  const [virtualElement, setVirtualElement] =
-    React.useState<HTMLElement | null>(null);
-
   const ref = React.useRef<AlertDialogRootMethods>(null);
 
   return (
     <>
-      <Button color="danger" ref={setVirtualElement}>
-        delete account
-      </Button>
-
       <AlertDialogRoot defaultOpen ref={ref}>
-        <AlertDialogTrigger virtual virtualElement={virtualElement} />
+        <AlertDialogTrigger>
+          <Button color="danger">delete account</Button>
+        </AlertDialogTrigger>
 
         <AlertDialogPortal>
           <AlertDialogOverlay />
@@ -129,7 +128,7 @@ const ProgrammaticallyTemplate = () => {
               color="danger"
               variant="text"
               className="absolute right-2 top-2"
-              onPress={ref.current?.close}
+              onPress={() => ref.current?.close()}
             >
               <XIcon />
             </Button>
