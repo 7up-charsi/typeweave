@@ -1,5 +1,13 @@
 # @typeweave/react
 
+## 1.2.12
+
+### Patch Changes
+
+- feat: imperative force close
+- Updated dependencies
+  - @typeweave/theme@1.4.1
+
 ## 1.2.11
 
 ### Patch Changes
