@@ -1,5 +1,11 @@
 # @typeweave/theme
 
+## 1.4.3
+
+### Patch Changes
+
+- Menu styles, fix Autocomplete/Select goes on first selected option when multiple
+
 ## 1.4.2
 
 ### Patch Changes

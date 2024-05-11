@@ -1,5 +1,13 @@
 # @typeweave/react
 
+## 1.2.14
+
+### Patch Changes
+
+- Menu styles, fix Autocomplete/Select goes on first selected option when multiple
+- Updated dependencies
+  - @typeweave/theme@1.4.3
+
 ## 1.2.13
 
 ### Patch Changes
