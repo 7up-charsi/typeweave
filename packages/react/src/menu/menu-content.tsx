@@ -86,7 +86,15 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
       const ArrowDown = key === 'ArrowDown';
       const ArrowUp = key === 'ArrowUp';
 
-      const activeItems = getItems().filter((item) => !item.disabled);
+      const activeItems = getItems().filter((item) => {
+        const element = item.ref.current!;
+
+        return (
+          !item.disabled &&
+          !element.hidden &&
+          getComputedStyle(element).display !== 'none'
+        );
+      });
 
       const elements = activeItems.map((item) => item.ref.current!);
 
@@ -139,7 +147,15 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
 
       if (char.length !== 1 || e.repeat) return;
 
-      const activeItems = getItems().filter((item) => !item.disabled);
+      const activeItems = getItems().filter((item) => {
+        const element = item.ref.current!;
+
+        return (
+          !item.disabled &&
+          !element.hidden &&
+          getComputedStyle(element).display !== 'none'
+        );
+      });
 
       const elements = activeItems.map((item) => item.ref.current!);
 
