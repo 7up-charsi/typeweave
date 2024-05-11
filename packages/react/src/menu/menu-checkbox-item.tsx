@@ -34,7 +34,7 @@ export const MenuCheckboxItem = React.forwardRef<
     disabled,
     icon,
     checkedIcon = <CheckIcon />,
-    disableCloseOnChange = true,
+    disableCloseOnChange,
     ...restProps
   } = props;
 
