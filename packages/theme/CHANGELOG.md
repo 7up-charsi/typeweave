@@ -1,5 +1,11 @@
 # @typeweave/theme
 
+## 1.4.2
+
+### Patch Changes
+
+- fix: collection item diplay none and hidden
+
 ## 1.4.1
 
 ### Patch Changes
