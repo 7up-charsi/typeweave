@@ -12,7 +12,7 @@ const useSize = <E extends HTMLElement>(element: E | null) => {
       : undefined,
   );
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (element) {
       setSize({
         width: element.offsetWidth,
