@@ -133,7 +133,7 @@ const SelectImpl = React.forwardRef<
     disabled,
     multiple,
     disableClearable,
-    disableCloseOnSelect = true,
+    disableCloseOnSelect,
     getOptionDisabled,
     noOptionsText = 'no options',
     loading,
@@ -237,7 +237,7 @@ const SelectImpl = React.forwardRef<
       return;
     }
 
-    setFocused(Array.isArray(value) ? value[0] : value);
+    setFocused(Array.isArray(value) ? value.at(-1) : value);
   };
 
   const onSelect = (option: object) => {
