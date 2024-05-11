@@ -1,5 +1,13 @@
 # @typeweave/react
 
+## 1.2.13
+
+### Patch Changes
+
+- fix: collection item diplay none and hidden
+- Updated dependencies
+  - @typeweave/theme@1.4.2
+
 ## 1.2.12
 
 ### Patch Changes
