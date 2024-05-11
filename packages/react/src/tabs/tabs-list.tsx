@@ -35,9 +35,15 @@ export const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(
           onBlur={() => tabsCtx.setIsTabbingBackOut(false)}
           onFocus={(e) => {
             if (e.target === e.currentTarget && !tabsCtx.isTabbingBackOut) {
-              const activeItems = getItems().filter(
-                (item) => !item.ref.current?.disabled,
-              );
+              const activeItems = getItems().filter((item) => {
+                const element = item.ref.current!;
+
+                return (
+                  !element.disabled &&
+                  !element.hidden &&
+                  getComputedStyle(element).display !== 'none'
+                );
+              });
 
               const activeItem = activeItems.find((item) => item.active);
 

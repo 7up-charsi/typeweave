@@ -77,9 +77,15 @@ export const TabsTrigger = React.forwardRef<
         ? key === 'ArrowLeft'
         : key === 'ArrowUp';
 
-    const activeItems = getItems().filter(
-      (item) => !item.ref.current?.disabled,
-    );
+    const activeItems = getItems().filter((item) => {
+      const element = item.ref.current!;
+
+      return (
+        !element.disabled &&
+        !element.hidden &&
+        getComputedStyle(element).display !== 'none'
+      );
+    });
 
     const elements = activeItems.map((item) => item.ref.current!);
 

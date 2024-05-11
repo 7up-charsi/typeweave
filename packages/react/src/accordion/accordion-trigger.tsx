@@ -51,10 +51,19 @@ export const AccordionTrigger = React.forwardRef<
     const Home = key === 'Home';
     const End = key === 'End';
 
-    const activeItems = getItems().filter((ele) => !ele.ref.current?.disabled);
-    const elements = activeItems.map((ele) => ele.ref.current);
+    const activeItems = getItems().filter((item) => {
+      const element = item.ref.current!;
 
-    const currentIndex = elements.findIndex((ele) => ele === e.currentTarget);
+      return (
+        !element.disabled &&
+        !element.hidden &&
+        getComputedStyle(element).display !== 'none'
+      );
+    });
+
+    const elements = activeItems.map((item) => item.ref.current);
+
+    const currentIndex = elements.findIndex((item) => item === e.currentTarget);
 
     const next = elements[Math.min(currentIndex + 1, elements.length - 1)];
 
