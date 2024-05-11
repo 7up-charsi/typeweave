@@ -52,16 +52,22 @@ export const PopoverContent = React.forwardRef<
     ...restProps
   } = props;
 
+  const [mounted, setMounted] = React.useState(false);
+
   const popoverCtx = usePopoverCtx(displayName);
 
   const setOutsideEle = useClickOutside({
+    disabled: !mounted,
     callback: (e) => {
-      if (popoverCtx.triggerRef.current?.contains(e.target as Node)) return;
       if ((e.target as HTMLElement).closest('[role=dialog]')) return;
 
       popoverCtx.handleClose();
     },
   });
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const styles = React.useMemo(() => popover(), []);
 

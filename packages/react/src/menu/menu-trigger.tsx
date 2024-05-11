@@ -29,14 +29,6 @@ export const MenuTrigger = React.forwardRef<
         aria-controls={menuCtx.open ? menuCtx.id : undefined}
         // @ts-expect-error Property 'onPress' does not exist
         onPress={menuCtx.handleOpen}
-        onKeyDown={(e: React.KeyboardEvent) => {
-          const key = e.key;
-
-          if (![' ', 'Enter'].includes(key)) return;
-
-          e.preventDefault();
-          menuCtx.handleOpen();
-        }}
       />
     </PopperReference>
   );
