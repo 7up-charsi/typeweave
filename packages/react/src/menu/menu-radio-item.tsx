@@ -50,7 +50,7 @@ export const MenuRadioItem = React.forwardRef<
     value,
     icon,
     checkedIcon = dotIcon,
-    disableCloseOnChange = true,
+    disableCloseOnChange,
     ...restProps
   } = props;
 
