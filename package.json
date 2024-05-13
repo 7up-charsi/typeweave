@@ -1,6 +1,10 @@
 {
   "name": "typeweave",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev:sb": "pnpm --filter @typeweave/storybook dev",
     "dev:docs": "pnpm --filter @typeweave/docs dev",
