@@ -1,5 +1,16 @@
 # @typeweave/react
 
+## 2.0.0
+
+### Major Changes
+
+- fix(Table): row selection and column visibility
+
+### Patch Changes
+
+- Updated dependencies
+  - @typeweave/theme@1.4.4
+
 ## 1.2.14
 
 ### Patch Changes

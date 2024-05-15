@@ -1,5 +1,11 @@
 # @typeweave/theme
 
+## 1.4.4
+
+### Patch Changes
+
+- fix(Table): row selection and column visibility
+
 ## 1.4.3
 
 ### Patch Changes
