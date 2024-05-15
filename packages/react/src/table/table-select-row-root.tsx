@@ -12,12 +12,7 @@ export interface TableSelectRowRootProps {
 interface SelectRowCtxProps {
   selectedRows: string[];
   setSelectedRows: React.Dispatch<React.SetStateAction<string[]>>;
-  rows: Map<
-    React.RefObject<{
-      identifier: string;
-    }>,
-    string
-  >;
+  rows: Map<React.RefObject<object>, string>;
 }
 
 const displayName = 'TableSelectRowRoot';
@@ -35,9 +30,9 @@ export const TableSelectRowRoot = (props: TableSelectRowRootProps) => {
     selectedRows: selectedRowsProp,
   } = props;
 
-  const rows = React.useRef<
-    Map<React.RefObject<{ identifier: string }>, string>
-  >(new Map()).current;
+  const rows = React.useRef<Map<React.RefObject<object>, string>>(
+    new Map(),
+  ).current;
 
   const [selectedRows, setSelectedRows] = useControllableState({
     defaultValue: defaultSelectedRows ?? [],

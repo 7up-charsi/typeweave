@@ -28,8 +28,8 @@ export type TableColumn<Row = _Row> = {
 type GetRowKey<R = _Row> = (row: R) => string;
 
 export interface TableRootProps<R = _Row> {
-  data?: R[];
-  columns?: TableColumn<R>[];
+  data: R[];
+  columns: TableColumn<R>[];
   getRowKey?: GetRowKey<R>;
   children?: React.ReactNode;
   columnVisibility?: ColumnVisibility;
@@ -80,6 +80,21 @@ const TableRootImpl = (props: TableRootProps) => {
     value: visibilityStateProp,
     onChange: onColumnVisibilityChange,
   });
+
+  if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    React.useEffect(() => {
+      const set = new Set(columns?.map((ele) => ele.identifier));
+
+      if (columns && columns?.length !== set.size)
+        throw new Error(
+          `${displayName}, Duplicate \`column identifier\` found.`,
+        );
+    }, [columns]);
+  }
+
+  if (!columns) return;
+  if (!data) return;
 
   return (
     <TableCtx
