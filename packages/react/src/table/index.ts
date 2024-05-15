@@ -2,7 +2,10 @@ export type { TableProps } from './table';
 export type { TableColumnVisibilityProps } from './table-column-visibility';
 export type { TableSelectAllRowsProps } from './table-select-all-rows';
 export type { TableSelectRowProps } from './table-select-row';
-export type { TableSelectRowRootProps } from './table-select-row-root';
+export type {
+  TableSelectRowRootProps,
+  TableSelectRowRootMethods,
+} from './table-select-row-root';
 export type { TableSelectedRowsProps } from './table-selected-rows';
 export type {
   TableRootProps,

@@ -9,6 +9,10 @@ export interface TableSelectRowRootProps {
   onSelectionChange?: (value: string[]) => void;
 }
 
+export interface TableSelectRowRootMethods {
+  reset: () => void;
+}
+
 interface SelectRowCtxProps {
   selectedRows: string[];
   setSelectedRows: React.Dispatch<React.SetStateAction<string[]>>;
@@ -22,7 +26,10 @@ const [SelectRowCtx, useSelectRowCtx] =
 
 export { useSelectRowCtx };
 
-export const TableSelectRowRoot = (props: TableSelectRowRootProps) => {
+export const TableSelectRowRoot = React.forwardRef<
+  TableSelectRowRootMethods,
+  TableSelectRowRootProps
+>((props, ref) => {
   const {
     children,
     defaultSelectedRows,
@@ -40,6 +47,12 @@ export const TableSelectRowRoot = (props: TableSelectRowRootProps) => {
     onChange: onSelectionChange,
   });
 
+  React.useImperativeHandle(ref, () => ({
+    reset: () => {
+      setSelectedRows([]);
+    },
+  }));
+
   return (
     <SelectRowCtx
       rows={rows}
@@ -49,6 +62,6 @@ export const TableSelectRowRoot = (props: TableSelectRowRootProps) => {
       {children}
     </SelectRowCtx>
   );
-};
+});
 
 TableSelectRowRoot.displayName = displayName;
