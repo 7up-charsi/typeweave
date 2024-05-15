@@ -14,7 +14,7 @@ export const TableSelectRow = (props: TableSelectRowProps) => {
 
   const { rows, selectedRows, setSelectedRows } = useSelectRowCtx(displayName);
 
-  const identifierRef = React.useRef({ identifier });
+  const identifierRef = React.useRef({});
 
   React.useEffect(() => {
     rows.set(identifierRef, identifier);

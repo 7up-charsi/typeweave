@@ -19,8 +19,6 @@ export const TableColumnVisibility = (props: TableColumnVisibilityProps) => {
   const { columns, setColumnVisibility, data, columnVisibility } =
     useTableCtx(displayName);
 
-  if (!columns || !data) return;
-
   return children?.({
     columns: columns
       .filter((col) => col.hideable)

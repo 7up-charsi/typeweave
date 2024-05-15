@@ -24,7 +24,6 @@ export * from './slot';
 export * from './switch';
 export * from './table';
 export * from './tabs';
-export * from './themes';
 export * from './toggle-button';
 export * from './tooltip';
 export * from './use-callback-ref';

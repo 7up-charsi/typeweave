@@ -1,13 +1,13 @@
 import React from 'react';
 import { useSelectRowCtx } from './table-select-row-root';
 
-export interface TableColumnVisibilityProps {
+export interface TableSelectedRowsProps {
   children?: (props: { selectedRows: string[] }) => React.ReactNode;
 }
 
-const displayName = 'TableColumnVisibility';
+const displayName = 'TableSelectedRows';
 
-export const TableColumnVisibility = (props: TableColumnVisibilityProps) => {
+export const TableSelectedRows = (props: TableSelectedRowsProps) => {
   const { children } = props;
 
   const { selectedRows } = useSelectRowCtx(displayName);
@@ -15,4 +15,4 @@ export const TableColumnVisibility = (props: TableColumnVisibilityProps) => {
   return children?.({ selectedRows });
 };
 
-TableColumnVisibility.displayName = displayName;
+TableSelectedRows.displayName = displayName;

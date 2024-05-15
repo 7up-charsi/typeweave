@@ -11,19 +11,13 @@ export type ToggleButtonGroupProps<Exclusive> = ToggleButtonVariantProps &
         exclusive: Exclusive;
         value?: string | null;
         defaultValue?: string;
-        onChange?: (
-          event: { target: { value: string | null } },
-          value: string | null,
-        ) => void;
+        onChange?: (value: string | null) => void;
       }
     : {
         exclusive?: Exclusive;
         value?: string[];
         defaultValue?: string[];
-        onChange?: (
-          event: { target: { value: string[] } },
-          value: string[],
-        ) => void;
+        onChange?: (value: string[]) => void;
       });
 
 interface GroupCtxProps {
@@ -59,7 +53,7 @@ export const ToggleButtonGroupImpl = (props: ToggleButtonGroupProps<false>) => {
     defaultValue: exclusive ? defaultValue ?? null : defaultValue ?? [],
     value: valueProp,
     onChange: (value) => {
-      onChange?.({ target: { value } } as never, value as never);
+      onChange?.(value as never);
     },
   });
 
