@@ -5,11 +5,11 @@ import {
   useControllableState,
 } from '../use-controllable-state';
 
-type VisibilityState = Record<string, boolean>;
+export type ColumnVisibility = Record<string, boolean>;
 
 type _Row = Record<string, unknown>;
 
-type Column<Row = _Row> = {
+export type TableColumn<Row = _Row> = {
   [K in keyof Row]: {
     accessor: (row: Row) => Row[K];
     header: (data: Row[]) => React.ReactNode;
@@ -18,6 +18,10 @@ type Column<Row = _Row> = {
     visibility?: boolean;
     visibilityTitle?: string;
     hideable?: boolean;
+    classNames?: {
+      th?: string;
+      td?: string;
+    };
   };
 }[keyof Row];
 
@@ -25,22 +29,20 @@ type GetRowKey<R = _Row> = (row: R) => string;
 
 export interface TableRootProps<R = _Row> {
   data?: R[];
-  columns?: Column<R>[];
+  columns?: TableColumn<R>[];
   getRowKey?: GetRowKey<R>;
   children?: React.ReactNode;
-  visibilityState?: VisibilityState;
-  onChange?: (value: VisibilityState, changedIdentifier: string) => void;
+  columnVisibility?: ColumnVisibility;
+  onColumnVisibilityChange?: (value: ColumnVisibility) => void;
 }
 
-interface RootContext {
-  data?: TableRootProps['data'];
-  columns?: TableRootProps['columns'];
-  visibilityState?: TableRootProps['visibilityState'];
-  getRowKey?: TableRootProps['getRowKey'];
-  setVisibilityState: UseControllableStateReturn<
-    VisibilityState,
-    string | null
-  >[1];
+interface RootContext
+  extends Omit<
+    TableRootProps,
+    'onColumnVisibilityChange' | 'children' | 'columnVisibility'
+  > {
+  columnVisibility: ColumnVisibility;
+  setColumnVisibility: UseControllableStateReturn<ColumnVisibility>[1];
 }
 
 const displayName = 'TableRoot';
@@ -51,29 +53,13 @@ export { useTableCtx };
 
 const TableRootImpl = (props: TableRootProps) => {
   const {
-    columns: userColumns,
     data,
-    children,
+    columns: userColumns,
     getRowKey,
-    onChange,
-    visibilityState: visibilityStateProp,
+    columnVisibility: visibilityStateProp,
+    onColumnVisibilityChange,
+    children,
   } = props;
-
-  const [visibilityState, setVisibilityState] = useControllableState<
-    Record<string, boolean>,
-    string | null
-  >({
-    defaultValue: {},
-    value: visibilityStateProp,
-    onChange: (value, changed) => {
-      if (!changed && changed !== null)
-        throw new Error(
-          `${displayName}, \`internal Error\` reason is not defined`,
-        );
-
-      if (changed) onChange?.(value, changed);
-    },
-  });
 
   const columns = React.useMemo(
     () =>
@@ -86,13 +72,22 @@ const TableRootImpl = (props: TableRootProps) => {
     [userColumns],
   );
 
+  const [columnVisibility, setColumnVisibility] = useControllableState({
+    defaultValue: columns?.reduce<ColumnVisibility>(
+      (acc, col) => ((acc[col.identifier] = col.visibility), acc),
+      {},
+    ),
+    value: visibilityStateProp,
+    onChange: onColumnVisibilityChange,
+  });
+
   return (
     <TableCtx
       data={data}
       columns={columns}
-      visibilityState={visibilityState}
       getRowKey={getRowKey}
-      setVisibilityState={setVisibilityState}
+      columnVisibility={columnVisibility}
+      setColumnVisibility={setColumnVisibility}
     >
       {children}
     </TableCtx>

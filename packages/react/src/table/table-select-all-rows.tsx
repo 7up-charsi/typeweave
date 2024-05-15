@@ -11,23 +11,18 @@ const displayName = 'TableSelectAllRows';
 export const TableSelectAllRows = (props: TableSelectAllRowsProps) => {
   const { children } = props;
 
-  const ref = React.useRef<HTMLInputElement>(null);
-
-  const { selected, setSelected, rows } = useSelectRowCtx(displayName);
+  const { rows, selectedRows, setSelectedRows } = useSelectRowCtx(displayName);
 
   return (
     <Slot<
       HTMLInputElement,
       React.InputHTMLAttributes<HTMLInputElement> & { indeterminate?: boolean }
     >
-      ref={ref}
-      checked={!!(selected.length && selected.length === rows.current.length)}
-      onChange={(event: { target: { checked: boolean } }) => {
-        setSelected(event.target.checked ? rows.current : []);
+      checked={!!selectedRows.length && selectedRows.length === rows.size}
+      indeterminate={!!selectedRows.length && selectedRows.length !== rows.size}
+      onChange={(event) => {
+        setSelectedRows(event.target.checked ? [...rows.values()] : []);
       }}
-      indeterminate={
-        !!(selected.length && selected.length !== rows.current.length)
-      }
     >
       {children}
     </Slot>

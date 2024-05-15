@@ -136,73 +136,15 @@ export const Nested = {
   },
 };
 
-const VirtualElementTemplate = () => {
-  const [virtualElement, setVirtualElement] =
-    React.useState<HTMLButtonElement | null>(null);
-
-  return (
-    <>
-      <Button ref={setVirtualElement}>open dialog</Button>
-
-      <DialogRoot defaultOpen>
-        <DialogTrigger virtual virtualElement={virtualElement} />
-
-        <DialogPortal>
-          <DialogOverlay />
-
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>SVG Vector</DialogTitle>
-
-              <DialogDescription>
-                Lorem ipsum dolor sit amet consectetur adipisicing.
-              </DialogDescription>
-            </DialogHeader>
-
-            <div className="p-4">
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Exercitationem delectus omnis magnam odit iste, expedita laborum
-                enim debitis, officia molestiae labore? Iure nesciunt quos
-                magnam quo distinctio ducimus nihil itaque? Exercitationem
-                delectus omnis magnam odit iste, expedita laborum enim debitis,
-                officia molestiae labore? Iure nesciunt quos magnam quo
-                distinctio ducimus nihil itaque?
-              </p>
-
-              <div className="mt-5 flex gap-2 justify-end">
-                <DialogClose>
-                  <Button variant="text" color="danger">
-                    Close
-                  </Button>
-                </DialogClose>
-
-                <Button color="success">GREAT</Button>
-              </div>
-            </div>
-          </DialogContent>
-        </DialogPortal>
-      </DialogRoot>
-    </>
-  );
-};
-
-export const VirtualElement = {
-  render: VirtualElementTemplate,
-};
-
 const ProgrammaticallyTemplate = () => {
-  const [virtualElement, setVirtualElement] =
-    React.useState<HTMLButtonElement | null>(null);
-
   const ref = React.useRef<DialogRootMethods>(null);
 
   return (
     <>
-      <Button ref={setVirtualElement}>open dialog</Button>
-
       <DialogRoot ref={ref} defaultOpen>
-        <DialogTrigger virtual virtualElement={virtualElement} />
+        <DialogTrigger>
+          <Button>open dialog</Button>
+        </DialogTrigger>
 
         <DialogPortal>
           <DialogOverlay />

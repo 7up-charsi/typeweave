@@ -1,4 +1,5 @@
 import React from 'react';
+import { Columns3Icon } from 'lucide-react';
 import {
   Checkbox,
   Button,
@@ -8,8 +9,12 @@ import {
   TableColumnVisibility,
   TableSelectRowRoot,
   Table,
+  MenuRoot,
+  MenuTrigger,
+  MenuContent,
+  MenuPortal,
+  MenuCheckboxItem,
 } from '../src';
-import { Columns3Icon } from 'lucide-react';
 
 const meta = {
   title: 'Components/Table',
@@ -18,71 +23,77 @@ const meta = {
 export default meta;
 
 const Template = () => {
-  const selectedRows = React.useRef<Record<string, string>>({});
-
   return (
     <TableRoot
       getRowKey={(row) => row.id}
-      data={Array.from({ length: 25 }).map((_, i) => ({ id: i + '' }))}
+      data={Array.from({ length: 25 }).map((_, i) => ({
+        id: i + '',
+        name: '',
+        age: 0,
+      }))}
       columns={[
         {
+          identifier: 'select-row',
+          visibilityTitle: 'select row',
           accessor: (row) => row.id,
-          header: (data) => (
+          header: () => (
             <div className="flex items-center justify-center">
               <TableSelectAllRows>
-                <Checkbox
-                  onChange={(e) => {
-                    const checked = e.target.checked;
-
-                    if (checked)
-                      selectedRows.current = data.reduce(
-                        (acc, ele) => ((acc[ele.id] = true), acc),
-                        {},
-                      );
-                    else selectedRows.current = {};
-                  }}
-                />
+                <Checkbox />
               </TableSelectAllRows>
             </div>
           ),
-          identifier: 'select-row',
           cell: (val) => (
             <div className="flex items-center justify-center">
-              <TableSelectRow>
-                <Checkbox
-                  onChange={(e) => {
-                    const checked = e.target.checked;
-                    selectedRows.current[val] = checked;
-                  }}
-                />
+              <TableSelectRow identifier={val}>
+                <Checkbox />
               </TableSelectRow>
             </div>
           ),
-          visibilityTitle: 'select',
         },
         ...Array.from({ length: 8 }).map((_, i) => ({
+          identifier: `${i + 1}`,
           accessor: () => `${i + 1}`,
           header: () => `column ${i + 1}`,
-          identifier: `${i + 1}`,
         })),
       ]}
     >
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-2 items-center">
-          <span className="text-muted-11 font-medium">Data table</span>
-          <span className="grow"></span>
+      <TableSelectRowRoot>
+        <div className="flex flex-col gap-2">
+          <div className="flex gap-2 items-center">
+            <span className="text-muted-11 font-medium">Data table</span>
+            <span className="grow"></span>
 
-          <TableColumnVisibility tableIdentifier="demo_table">
-            <Button isIconOnly aria-label="column visibility">
-              <Columns3Icon />
-            </Button>
-          </TableColumnVisibility>
-        </div>
+            <MenuRoot>
+              <MenuTrigger>
+                <Button isIconOnly aria-label="column visibility">
+                  <Columns3Icon />
+                </Button>
+              </MenuTrigger>
 
-        <TableSelectRowRoot>
+              <TableColumnVisibility>
+                {({ columns }) => (
+                  <MenuPortal>
+                    <MenuContent>
+                      {columns.map((col, i) => (
+                        <MenuCheckboxItem
+                          key={i}
+                          checked={col.visibility}
+                          onChange={col.toggleVisibility}
+                        >
+                          {col.title}
+                        </MenuCheckboxItem>
+                      ))}
+                    </MenuContent>
+                  </MenuPortal>
+                )}
+              </TableColumnVisibility>
+            </MenuRoot>
+          </div>
+
           <Table variant="strip" />
-        </TableSelectRowRoot>
-      </div>
+        </div>
+      </TableSelectRowRoot>
     </TableRoot>
   );
 };

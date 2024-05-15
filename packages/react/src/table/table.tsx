@@ -14,7 +14,7 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
   (props, ref) => {
     const { classNames, className, variant = 'grid', ...restProps } = props;
 
-    const { data, columns, getRowKey, visibilityState } =
+    const { data, columns, getRowKey, columnVisibility } =
       useTableCtx(displayName);
 
     const styles = React.useMemo(() => table({ variant }), [variant]);
@@ -31,15 +31,22 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
         >
           <thead className={styles.thead({ className: classNames?.thead })}>
             <tr className={styles.tr({ className: classNames?.tr })}>
-              {columns?.map(({ header, identifier, visibility }) => {
-                const visible = visibilityState?.[identifier] ?? visibility;
+              {columns?.map((col) => {
+                const visible =
+                  columnVisibility[col.identifier] ?? col.visibility;
 
-                return !visible ? undefined : (
+                if (!visible) return;
+
+                return (
                   <th
-                    className={styles.th({ className: classNames?.th })}
-                    key={identifier}
+                    key={col.identifier}
+                    className={styles.th({
+                      className: col.classNames?.th ?? classNames?.th,
+                    })}
                   >
-                    {typeof header === 'function' ? header(data) : header}
+                    {typeof col.header === 'function'
+                      ? col.header(data)
+                      : col.header}
                   </th>
                 );
               })}
@@ -52,18 +59,23 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
                 className={styles.tr({ className: classNames?.tr })}
                 key={getRowKey?.(row) ?? i}
               >
-                {columns.map(({ accessor, cell, identifier, visibility }) => {
-                  const visible = visibilityState?.[identifier] ?? visibility;
+                {columns.map((col) => {
+                  const visible =
+                    columnVisibility[col.identifier] ?? col.visibility;
 
-                  const tdValue = accessor(row);
+                  if (!visible) return;
 
-                  return !visible ? undefined : (
+                  const tdValue = col.accessor(row);
+
+                  return (
                     <td
-                      className={styles.td({ className: classNames?.td })}
-                      key={identifier}
+                      key={col.identifier}
+                      className={styles.td({
+                        className: col.classNames?.td ?? classNames?.td,
+                      })}
                     >
-                      {cell
-                        ? cell(tdValue, row, data)
+                      {col.cell
+                        ? col.cell(tdValue, row, data)
                         : typeof tdValue === 'string' ||
                             typeof tdValue === 'number'
                           ? tdValue

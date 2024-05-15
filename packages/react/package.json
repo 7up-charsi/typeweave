@@ -29,7 +29,7 @@
     "build": "pnpm auto-imports && cross-env NODE_OPTIONS=--max-old-space-size=16384 tsup",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
-    "auto-imports": "tsx ./scripts/auto-imports.ts",
+    "auto-imports": "bun ./scripts/auto-imports.ts",
     "prepack": "clean-package",
     "postpack": "clean-package restore"
   },
