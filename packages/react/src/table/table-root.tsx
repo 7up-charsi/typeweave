@@ -36,11 +36,10 @@ export interface TableRootProps<R = _Row> {
   onColumnVisibilityChange?: (value: ColumnVisibility) => void;
 }
 
-interface RootContext
-  extends Omit<
-    TableRootProps,
-    'onColumnVisibilityChange' | 'children' | 'columnVisibility'
-  > {
+interface RootContext {
+  data: _Row[];
+  columns: TableColumn<_Row>[];
+  getRowKey?: GetRowKey<_Row>;
   columnVisibility: ColumnVisibility;
   setColumnVisibility: UseControllableStateReturn<ColumnVisibility>[1];
 }
