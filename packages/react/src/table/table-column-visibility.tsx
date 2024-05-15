@@ -1,115 +1,48 @@
 import React from 'react';
-import {
-  MenuArrow,
-  MenuCheckboxItem,
-  MenuCheckboxItemProps,
-  MenuContent,
-  MenuContentProps,
-  MenuPortal,
-  MenuRoot,
-  MenuTrigger,
-} from '../menu';
 import { useTableCtx } from './table-root';
 
-export interface TableColumnVisibilityProps
-  extends Omit<MenuContentProps, 'onChange'> {
-  children?: React.ReactNode;
-  tableIdentifier?: string;
-  onChange?: (identifier: string, visibility: boolean) => void;
-  classNames?: {
-    menu?: string;
-    checkboxItem?: MenuCheckboxItemProps['classNames'];
-  };
+export interface TableColumnVisibilityProps {
+  children?: (props: {
+    columns: {
+      title: string | null;
+      visibility: boolean;
+      toggleVisibility: () => void;
+    }[];
+  }) => React.ReactNode;
 }
 
 const displayName = 'TableColumnVisibility';
 
 export const TableColumnVisibility = (props: TableColumnVisibilityProps) => {
-  const {
-    children,
-    classNames,
-    className,
-    onChange,
-    tableIdentifier,
-    ...menuProps
-  } = props;
+  const { children } = props;
 
-  const { columns, data, setVisibilityState, visibilityState } =
+  const { columns, setColumnVisibility, data, columnVisibility } =
     useTableCtx(displayName);
 
-  React.useEffect(() => {
-    if (tableIdentifier) {
-      setVisibilityState(
-        JSON.parse(localStorage.getItem(tableIdentifier) ?? `{}`),
-        null,
-      );
-    }
-  }, [setVisibilityState, tableIdentifier]);
+  if (!columns || !data) return;
 
-  return (
-    <MenuRoot>
-      <MenuTrigger aria-label="open table column visibility">
-        {children}
-      </MenuTrigger>
-      <MenuPortal>
-        <MenuContent
-          aria-roledescription="toggle table column visibility"
-          {...menuProps}
-          className={classNames?.menu ?? className}
-        >
-          <MenuArrow />
+  return children?.({
+    columns: columns
+      .filter((col) => col.hideable)
+      .map((col) => {
+        const header = col.header(data);
 
-          {columns &&
-            data &&
-            columns.map((column, i) => {
-              const {
-                header,
-                visibilityTitle,
-                visibility,
-                hideable,
-                identifier,
-              } = column;
+        return {
+          title:
+            col.visibilityTitle ?? (typeof header === 'string' ? header : null),
 
-              if (!hideable) return;
+          visibility: columnVisibility[col.identifier],
+          toggleVisibility: () => {
+            setColumnVisibility((prev) => {
+              const cols = { ...prev };
+              cols[col.identifier] = !prev[col.identifier];
 
-              const headerValue = header(data);
-
-              const val =
-                typeof headerValue === 'string' ? headerValue : visibilityTitle;
-
-              const checked = visibilityState?.[identifier] ?? visibility;
-
-              return (
-                <MenuCheckboxItem
-                  key={i}
-                  checked={checked}
-                  classNames={classNames?.checkboxItem}
-                  onChange={(checked) => {
-                    if (onChange) onChange(identifier, checked);
-                    if (!onChange && tableIdentifier) {
-                      localStorage.setItem(
-                        tableIdentifier,
-                        JSON.stringify({
-                          ...visibilityState,
-                          [identifier]: checked,
-                        }),
-                      );
-                    }
-
-                    setVisibilityState(
-                      (prev) => ({ ...prev, [identifier]: checked }),
-                      identifier,
-                    );
-                  }}
-                >
-                  {val ? val[0].toUpperCase() + val.slice(1) : ''}
-                </MenuCheckboxItem>
-              );
-            })}
-        </MenuContent>
-      </MenuPortal>
-    </MenuRoot>
-  );
+              return cols;
+            });
+          },
+        };
+      }),
+  });
 };
 
 TableColumnVisibility.displayName = displayName;

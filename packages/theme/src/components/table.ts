@@ -7,7 +7,7 @@ export const table = tv({
     thead: '',
     tbody: '',
     tr: 'h-10',
-    th: 'px-3 font-normal first-letter:uppercase',
+    th: 'px-3 first-letter:uppercase font-semibold',
     td: 'text-center',
   },
   variants: {

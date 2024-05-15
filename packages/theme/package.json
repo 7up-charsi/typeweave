@@ -29,8 +29,8 @@
     "build": "pnpm gen-component-names && pnpm gen-imports-map && tsup",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
-    "gen-component-names": "tsx ./scripts/gen-component-names.ts",
-    "gen-imports-map": "tsx ./scripts/gen-imports-map.ts",
+    "gen-component-names": "bun ./scripts/gen-component-names.ts",
+    "gen-imports-map": "bun ./scripts/gen-imports-map.ts",
     "prepack": "clean-package",
     "postpack": "clean-package restore"
   },

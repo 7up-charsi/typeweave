@@ -1,14 +1,23 @@
 import React from 'react';
 import { createContextScope } from '../context';
+import { useControllableState } from '../use-controllable-state';
 
 export interface TableSelectRowRootProps {
   children?: React.ReactNode;
+  defaultSelectedRows?: string[];
+  selectedRows?: string[];
+  onSelectionChange?: (value: string[]) => void;
 }
 
 interface SelectRowCtxProps {
-  selected: string[];
-  setSelected: React.Dispatch<React.SetStateAction<string[]>>;
-  rows: React.MutableRefObject<string[]>;
+  selectedRows: string[];
+  setSelectedRows: React.Dispatch<React.SetStateAction<string[]>>;
+  rows: Map<
+    React.RefObject<{
+      identifier: string;
+    }>,
+    string
+  >;
 }
 
 const displayName = 'TableSelectRowRoot';
@@ -19,13 +28,29 @@ const [SelectRowCtx, useSelectRowCtx] =
 export { useSelectRowCtx };
 
 export const TableSelectRowRoot = (props: TableSelectRowRootProps) => {
-  const { children } = props;
+  const {
+    children,
+    defaultSelectedRows,
+    onSelectionChange,
+    selectedRows: selectedRowsProp,
+  } = props;
 
-  const rows = React.useRef<string[]>([]);
-  const [selected, setSelected] = React.useState<string[]>([]);
+  const rows = React.useRef<
+    Map<React.RefObject<{ identifier: string }>, string>
+  >(new Map()).current;
+
+  const [selectedRows, setSelectedRows] = useControllableState({
+    defaultValue: defaultSelectedRows ?? [],
+    value: selectedRowsProp,
+    onChange: onSelectionChange,
+  });
 
   return (
-    <SelectRowCtx selected={selected} setSelected={setSelected} rows={rows}>
+    <SelectRowCtx
+      rows={rows}
+      selectedRows={selectedRows}
+      setSelectedRows={setSelectedRows}
+    >
       {children}
     </SelectRowCtx>
   );

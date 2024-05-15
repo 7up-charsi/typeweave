@@ -4,29 +4,31 @@ import { Slot } from '../slot';
 
 export interface TableSelectRowProps {
   children?: React.ReactNode;
+  identifier: string;
 }
 
 const displayName = 'TableSelectRow';
 
 export const TableSelectRow = (props: TableSelectRowProps) => {
-  const { children } = props;
-  const { selected, setSelected, rows } = useSelectRowCtx(displayName);
+  const { children, identifier } = props;
 
-  const identifier = React.useId();
+  const { rows, selectedRows, setSelectedRows } = useSelectRowCtx(displayName);
+
+  const identifierRef = React.useRef({ identifier });
 
   React.useEffect(() => {
-    rows.current.push(identifier);
+    rows.set(identifierRef, identifier);
 
     return () => {
-      rows.current = rows.current.filter((ele) => ele !== identifier);
+      rows.delete(identifierRef);
     };
   }, [identifier, rows]);
 
   return (
     <Slot<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>
-      checked={selected.includes(identifier)}
-      onChange={(event: { target: { checked: boolean } }) => {
-        setSelected((prev) =>
+      checked={selectedRows.includes(identifier)}
+      onChange={(event) => {
+        setSelectedRows((prev) =>
           event.target.checked
             ? [...prev, identifier]
             : prev.filter((ele) => ele !== identifier),
