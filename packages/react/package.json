@@ -1,6 +1,6 @@
 {
   "name": "@typeweave/react",
-  "version": "1.2.14",
+  "version": "2.0.0",
   "keywords": [
     "typeweave",
     "react"
@@ -29,7 +29,7 @@
     "build": "pnpm auto-imports && cross-env NODE_OPTIONS=--max-old-space-size=16384 tsup",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
-    "auto-imports": "bun ./scripts/auto-imports.ts",
+    "auto-imports": "tsx ./scripts/auto-imports.ts",
     "prepack": "clean-package",
     "postpack": "clean-package restore"
   },
