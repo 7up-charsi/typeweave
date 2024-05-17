@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 2.0.4
+
+### Patch Changes
+
+- fix(Table): select all rows
+
 ## 2.0.3
 
 ### Patch Changes
