@@ -34,12 +34,14 @@ export const TableSelectRow = (props: TableSelectRowProps) => {
     <Slot<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>
       checked={selectedRows.includes(identifier)}
       onChange={(event) => {
+        const isSelected = event.target.checked;
+
         setIsSelctedAllRows(
-          !!selectedRows.length && selectedRows.length === rows.size,
+          isSelected ? selectedRows.length + 1 === rows.size : false,
         );
 
         setSelectedRows((prev) =>
-          event.target.checked
+          isSelected
             ? [...prev, identifier]
             : prev.filter((rowIdentifier) => rowIdentifier !== identifier),
         );

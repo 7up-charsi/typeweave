@@ -11,8 +11,13 @@ const displayName = 'TableSelectAllRows';
 export const TableSelectAllRows = (props: TableSelectAllRowsProps) => {
   const { children } = props;
 
-  const { rows, selectedRows, setSelectedRows, isSelctedAllRows } =
-    useTableSelectRowCtx(displayName);
+  const {
+    rows,
+    selectedRows,
+    setSelectedRows,
+    isSelctedAllRows,
+    setIsSelctedAllRows,
+  } = useTableSelectRowCtx(displayName);
 
   return (
     <Slot<
@@ -24,7 +29,12 @@ export const TableSelectAllRows = (props: TableSelectAllRowsProps) => {
       checked={isSelctedAllRows}
       indeterminate={!!selectedRows.length && selectedRows.length !== rows.size}
       onChange={(event) => {
-        setSelectedRows(event.target.checked ? [...rows.values()] : []);
+        if (!rows.size) return;
+
+        const isSelected = event.target.checked;
+
+        setIsSelctedAllRows(isSelected);
+        setSelectedRows(isSelected ? [...rows.values()] : []);
       }}
     >
       {children}
