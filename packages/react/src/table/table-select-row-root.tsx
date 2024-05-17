@@ -13,7 +13,7 @@ export interface TableSelectRowRootMethods {
   reset: () => void;
 }
 
-interface SelectRowCtxProps {
+interface TableSelectRowCtxProps {
   selectedRows: string[];
   setSelectedRows: React.Dispatch<React.SetStateAction<string[]>>;
   rows: Map<React.RefObject<object>, string>;
@@ -21,10 +21,10 @@ interface SelectRowCtxProps {
 
 const displayName = 'TableSelectRowRoot';
 
-const [SelectRowCtx, useSelectRowCtx] =
-  createContextScope<SelectRowCtxProps>(displayName);
+const [TableSelectRowCtx, useTableSelectRowCtx] =
+  createContextScope<TableSelectRowCtxProps>(displayName);
 
-export { useSelectRowCtx };
+export { useTableSelectRowCtx };
 
 export const TableSelectRowRoot = React.forwardRef<
   TableSelectRowRootMethods,
@@ -54,13 +54,13 @@ export const TableSelectRowRoot = React.forwardRef<
   }));
 
   return (
-    <SelectRowCtx
+    <TableSelectRowCtx
       rows={rows}
       selectedRows={selectedRows}
       setSelectedRows={setSelectedRows}
     >
       {children}
-    </SelectRowCtx>
+    </TableSelectRowCtx>
   );
 });
 

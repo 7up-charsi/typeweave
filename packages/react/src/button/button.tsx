@@ -57,6 +57,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const ariaLabel = props['aria-label'];
     const ariaLabelledby = props['aria-labelledby'];
+    const role = props.role;
 
     const pointerEvents = usePointerEvents({
       onPointerDown,
@@ -86,11 +87,17 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       React.useEffect(() => {
-        if (isIconOnly && !ariaLabel && !ariaLabelledby)
+        if (
+          isIconOnly &&
+          !ariaLabel &&
+          !ariaLabelledby &&
+          role !== 'presentation' &&
+          role !== 'none'
+        )
           console.warn(
             'For accessible icon-only buttons, provide `aria-label` prop for screen readers to describe its purpose.',
           );
-      }, [ariaLabel, ariaLabelledby, isIconOnly]);
+      }, [ariaLabel, ariaLabelledby, isIconOnly, role]);
     }
 
     const styles = React.useMemo(
