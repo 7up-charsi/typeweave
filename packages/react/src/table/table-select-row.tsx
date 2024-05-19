@@ -12,13 +12,8 @@ const displayName = 'TableSelectRow';
 export const TableSelectRow = (props: TableSelectRowProps) => {
   const { children, identifier } = props;
 
-  const {
-    rows,
-    removedRows,
-    selectedRows,
-    setSelectedRows,
-    setIsSelctedAllRows,
-  } = useTableSelectRowCtx(displayName);
+  const { rows, selectedRows, setSelectedRows, setIsSelctedAllRows } =
+    useTableSelectRowCtx(displayName);
 
   const identifierRef = React.useRef({});
 
@@ -28,21 +23,13 @@ export const TableSelectRow = (props: TableSelectRowProps) => {
 
     return () => {
       rows.delete(identifierRef);
-      removedRows.set(identifierRef, identifier);
-
       setIsSelctedAllRows(false);
 
-      setSelectedRows((prev) => {
-        const leftRows = prev.filter(
-          (rowIdentifier) => ![...removedRows.values()].includes(rowIdentifier),
-        );
-
-        removedRows.clear();
-
-        return leftRows;
-      });
+      setSelectedRows((prev) =>
+        prev.filter((rowIdentifier) => rowIdentifier !== identifier),
+      );
     };
-  }, [identifier, removedRows, rows, setIsSelctedAllRows, setSelectedRows]);
+  }, [identifier, rows, setIsSelctedAllRows, setSelectedRows]);
 
   return (
     <Slot<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>
