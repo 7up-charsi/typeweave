@@ -9,7 +9,7 @@ export interface CreateAutocompleteFilterConfig<Value> {
   trim?: boolean;
 }
 
-export interface autocompleteFilterState<Value> {
+export interface AutocompleteFilterState<Value> {
   inputValue: string;
   getOptionLabel: (option: Value) => string;
 }
@@ -32,7 +32,7 @@ export const createAutocompleteFilter = <Value,>(
 
   return (
     options: Value[],
-    { inputValue, getOptionLabel }: autocompleteFilterState<Value>,
+    { inputValue, getOptionLabel }: AutocompleteFilterState<Value>,
   ) => {
     let input = trim ? inputValue.trim() : inputValue;
     if (ignoreCase) {
