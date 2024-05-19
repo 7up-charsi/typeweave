@@ -5,7 +5,7 @@ export const autocomplete = tv({
   slots: {
     listboxWrapper:
       'bg-paper border border-muted-6 rounded z-50 overflow-hidden',
-    listbox: 'max-h-[300px] w-[var(--reference-width)] overflow-y-auto',
+    listbox: 'max-h-[300px] w-[var(--reference-width)] overflow-y-auto py-2',
     option:
       'px-2 py-2 select-none cursor-pointer data-[disabled=true]:disabled data-[selected=true]:bg-info-3 data-[focused=true]:data-[selected=true]:bg-info-4 data-[focused=true]:data-[selected=false]:bg-muted-3 dark:data-[selected=true]:bg-info-6 dark:data-[focused=true]:data-[selected=true]:bg-info-7 dark:data-[focused=true]:data-[selected=false]:bg-muted-6',
     noOptions: 'h-10 flex items-center justify-center capitalize',

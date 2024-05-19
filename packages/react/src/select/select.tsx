@@ -241,22 +241,21 @@ const SelectImpl = React.forwardRef<
   };
 
   const onSelect = (option: object) => {
+    setFocused(option);
+
     if (Array.isArray(value)) {
       const val = value.find((ele) => ele === option)
         ? value.filter((ele) => ele !== option)
         : [...value, option];
 
       setValue(val, 'select');
-      setFocused(option);
       if (!disableCloseOnSelect) handleClose();
+
       return;
     }
 
-    if (!Array.isArray(value)) {
-      setValue(option, 'select');
-      setFocused(option);
-      handleClose();
-    }
+    setValue(option, 'select');
+    handleClose();
   };
 
   const onHover = (option: object) => {

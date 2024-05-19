@@ -30,16 +30,18 @@ export interface AutocompleteRenderInputProps {
   multiple: boolean;
   inputValue: string;
   showClearButton: boolean;
-  onBlur: () => void;
+  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
   onOpen: () => void;
+  loading: boolean;
   clearButtonProps: {
     onClear: (e: ButtonPressEvent) => void;
     onPointerDown: (e: React.PointerEvent) => void;
     tabIndex: number;
     'aria-label': string;
   };
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
   ariaProps: {
     'aria-expanded': boolean;
     'aria-controls': string;
@@ -48,16 +50,7 @@ export interface AutocompleteRenderInputProps {
     'aria-activedescendant': string | undefined;
     role: 'combobox';
   };
-  loading: boolean;
 }
-
-type RenderOptionProps<Value> = {
-  option: Value;
-  label: string;
-  state: { disabled: boolean; selected: boolean; focused: boolean };
-};
-
-const displayName = 'Autocomplete';
 
 export type AutocompleteProps<Value, Multiple, DisableClearable> =
   (AutocompleteVariantProps &
@@ -86,7 +79,13 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
       disablePortal?: boolean;
       disablePopper?: boolean;
       renderInput: (props: AutocompleteRenderInputProps) => React.ReactNode;
-      renderOption?: (props: RenderOptionProps<Value>) => React.ReactNode;
+      renderOption?: (
+        option: Value,
+        props: {
+          label: string;
+          state: { disabled: boolean; selected: boolean; focused: boolean };
+        },
+      ) => React.ReactNode;
     }) &
     (Multiple extends true
       ? {
@@ -125,6 +124,8 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
           });
 
 const defaultOptionsFilter = createAutocompleteFilter<object>();
+
+const displayName = 'Autocomplete';
 
 const AutocompleteImpl = React.forwardRef<
   HTMLUListElement,
@@ -391,6 +392,10 @@ const AutocompleteImpl = React.forwardRef<
   const getOptionId = (ele: object) =>
     getOptionKey?.(ele) ?? getOptionLabel(ele).replaceAll(' ', '-');
 
+  const handleInputFocus = () => {
+    inputRef.current?.select();
+  };
+
   const styles = React.useMemo(() => autocomplete({ shadow }), [shadow]);
 
   const getOptionProps = (ele: object) => ({
@@ -449,8 +454,7 @@ const AutocompleteImpl = React.forwardRef<
 
               return (
                 <Option {...props} key={props.key}>
-                  {renderOption?.({
-                    option,
+                  {renderOption?.(option, {
                     label,
                     state: props.state,
                   }) ?? label}
@@ -485,8 +489,7 @@ const AutocompleteImpl = React.forwardRef<
 
                     return (
                       <Option {...props} key={props.key}>
-                        {renderOption?.({
-                          option,
+                        {renderOption?.(option, {
                           label,
                           state: props.state,
                         }) ?? label}
@@ -549,6 +552,7 @@ const AutocompleteImpl = React.forwardRef<
                 }))
               : null,
             onBlur: handleClose,
+            onFocus: handleInputFocus,
             open,
             multiple: !!multiple,
             onOpen,

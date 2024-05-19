@@ -37,6 +37,7 @@ export const autocompleteInputAdapter = (
     multiple,
     inputValue,
     loading,
+    onFocus,
   } = inputProps;
 
   const styles = autocompleteInput({ multiple });
@@ -135,6 +136,7 @@ export const autocompleteInputAdapter = (
     ref: mergeRefs(popperReferenceRef, inputWrapperRef),
     inputRef,
     onBlur,
+    onFocus,
     value: inputValue,
     onChange,
     disabled,

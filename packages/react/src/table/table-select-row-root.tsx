@@ -17,7 +17,6 @@ interface TableSelectRowCtxProps {
   selectedRows: string[];
   setSelectedRows: React.Dispatch<React.SetStateAction<string[]>>;
   rows: Map<React.RefObject<object>, string>;
-  removedRows: Map<React.RefObject<object>, string>;
   isSelctedAllRows: boolean;
   setIsSelctedAllRows: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -44,10 +43,6 @@ export const TableSelectRowRoot = React.forwardRef<
     new Map(),
   ).current;
 
-  const removedRows = React.useRef<Map<React.RefObject<object>, string>>(
-    new Map(),
-  ).current;
-
   const [selectedRows, setSelectedRows] = useControllableState({
     defaultValue: defaultSelectedRows ?? [],
     value: selectedRowsProp,
@@ -65,7 +60,6 @@ export const TableSelectRowRoot = React.forwardRef<
   return (
     <TableSelectRowCtx
       rows={rows}
-      removedRows={removedRows}
       selectedRows={selectedRows}
       setSelectedRows={setSelectedRows}
       isSelctedAllRows={isSelctedAllRows}
