@@ -47,10 +47,9 @@
     "tailwind-variants": "^0.1.20",
     "tslib": "^2.6.2",
     "tsup": "^8.0.2",
-    "turbo": "latest",
     "tsx": "^4.9.1",
+    "turbo": "latest",
     "type-fest": "^4.18.1",
     "typescript": "^5.4.5"
   }
 }
-

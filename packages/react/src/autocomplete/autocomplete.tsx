@@ -16,6 +16,7 @@ import {
   PopperRoot,
 } from '../popper';
 import { ButtonPressEvent } from '../button';
+import { createAutocompleteFilter } from './create-autocomplete-filter';
 
 export type AutocompleteReason = 'select' | 'clear' | 'remove';
 
@@ -81,7 +82,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
       groupBy?: (option: Value) => string;
       inputValue?: string;
       onInputChange?: (val: string) => void;
-      filterOptions?: (options: Value[], inputValue: string) => Value[];
+      filterOptions?: ReturnType<typeof createAutocompleteFilter<Value>>;
       disablePortal?: boolean;
       disablePopper?: boolean;
       renderInput: (props: AutocompleteRenderInputProps) => React.ReactNode;
@@ -122,6 +123,8 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
             ) => void;
             disableClearable?: DisableClearable;
           });
+
+const defaultOptionsFilter = createAutocompleteFilter<object>();
 
 const AutocompleteImpl = React.forwardRef<
   HTMLUListElement,
@@ -380,16 +383,9 @@ const AutocompleteImpl = React.forwardRef<
       return;
     }
 
-    const filter =
-      filterOptions ||
-      ((options, inputValue) =>
-        options.filter((opt) =>
-          getOptionLabel(opt)
-            .toLowerCase()
-            .startsWith(inputValue.toLowerCase()),
-        ));
+    const filter = filterOptions || defaultOptionsFilter;
 
-    setOptions(filter(optionsProp, val));
+    setOptions(filter(optionsProp, { getOptionLabel, inputValue: val }));
   };
 
   const getOptionId = (ele: object) =>
