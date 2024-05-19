@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 2.1.0
+
+### Minor Changes
+
+- feat(Autocomplete): create filter
+
 ## 2.0.4
 
 ### Patch Changes
