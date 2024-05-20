@@ -1,5 +1,16 @@
 # @typeweave/react
 
+## 2.2.0
+
+### Minor Changes
+
+- feat(Autocomplete): creatable
+
+### Patch Changes
+
+- Updated dependencies
+  - @typeweave/theme@1.4.5
+
 ## 2.1.2
 
 ### Patch Changes
