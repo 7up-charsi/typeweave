@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 2.3.0
+
+### Minor Changes
+
+- feat: Autocomplete/Select isOptionEqualToValue
+
 ## 2.2.0
 
 ### Minor Changes
