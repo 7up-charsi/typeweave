@@ -61,6 +61,7 @@ export const selectInputAdapter = (
         {!loading && showClearButton && (
           <Button
             {...clearButtonProps}
+            type="button"
             isIconOnly
             variant="text"
             onPress={onClear}

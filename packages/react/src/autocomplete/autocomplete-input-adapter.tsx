@@ -81,6 +81,7 @@ export const autocompleteInputAdapter = (
         {!loading && showClearButton && (
           <Button
             {...clearButtonProps}
+            type="button"
             isIconOnly
             variant="text"
             onPress={onClear}
