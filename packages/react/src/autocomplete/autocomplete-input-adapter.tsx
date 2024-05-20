@@ -19,7 +19,7 @@ export const autocompleteInputAdapter = (
     openIndicatorIcon?: React.ReactNode;
     loader?: React.ReactNode;
   },
-): InputProps<false> => {
+): InputProps<false> & React.RefAttributes<HTMLInputElement> => {
   const {
     ariaProps,
     onOpen,
@@ -133,8 +133,8 @@ export const autocompleteInputAdapter = (
         onOpen();
       },
     },
-    ref: mergeRefs(popperReferenceRef, inputWrapperRef),
-    inputRef,
+    inputWrapperRef: mergeRefs(popperReferenceRef, inputWrapperRef),
+    ref: inputRef,
     onBlur,
     onFocus,
     value: inputValue,
