@@ -1,6 +1,7 @@
 import { input, InputClassNames, InputVariantProps } from '@typeweave/theme';
 import { mergeRefs } from '@typeweave/react-utils';
 import React from 'react';
+import { Slot } from '../slot';
 
 type InputBaseProps = React.InputHTMLAttributes<HTMLInputElement> & {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -36,6 +37,8 @@ type BaseProps = InputVariantProps & {
   inputWrapperProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   baseRef?: React.ForwardedRef<HTMLDivElement>;
   error?: boolean;
+  asChild?: boolean;
+  children?: React.ReactNode;
 };
 
 export type InputProps<Multiline> = BaseProps &
@@ -79,6 +82,8 @@ const InputImpl = (
     disabled = false,
     multiline,
     textareaRef,
+    asChild,
+    children,
     ...inputProps
   } = props;
 
@@ -169,7 +174,10 @@ const InputImpl = (
         )}
 
         {!multiline ? null : (
-          <textarea
+          <Slot<
+            HTMLTextAreaElement,
+            React.TextareaHTMLAttributes<HTMLTextAreaElement>
+          >
             rows={5}
             {...inputProps}
             className={styles.textarea({
@@ -177,16 +185,20 @@ const InputImpl = (
             })}
             ref={mergeRefs(innerTextareaRef, textareaRef)}
             {...sharedProps}
-          ></textarea>
+          >
+            {asChild ? children : <textarea></textarea>}
+          </Slot>
         )}
 
         {multiline ? null : (
-          <input
+          <Slot<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>
             {...inputProps}
             className={styles.input({ className: classNames?.input })}
             ref={mergeRefs(innerInputRef, inputRef)}
             {...sharedProps}
-          />
+          >
+            {asChild ? children : <input />}
+          </Slot>
         )}
 
         {!!endContent && !multiline && (
