@@ -18,7 +18,7 @@ import {
 import { ButtonPressEvent } from '../button';
 import { createAutocompleteFilter } from './create-autocomplete-filter';
 
-export type AutocompleteReason = 'select' | 'clear' | 'remove';
+export type AutocompleteReason = 'select' | 'clear' | 'remove' | 'create';
 
 export interface AutocompleteRenderInputProps {
   selected: { label: string; onDelete: () => void }[] | null;
@@ -52,6 +52,11 @@ export interface AutocompleteRenderInputProps {
   };
 }
 
+interface Creatable {
+  creatable?: boolean;
+  onCreate?: (value: string) => void;
+}
+
 export type AutocompleteProps<Value, Multiple, DisableClearable> =
   (AutocompleteVariantProps &
     Omit<
@@ -79,13 +84,11 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
       disablePortal?: boolean;
       disablePopper?: boolean;
       renderInput: (props: AutocompleteRenderInputProps) => React.ReactNode;
-      renderOption?: (
-        option: Value,
-        props: {
-          label: string;
-          state: { disabled: boolean; selected: boolean; focused: boolean };
-        },
-      ) => React.ReactNode;
+      renderOption?: (props: {
+        option: Value;
+        label: string;
+        state: { disabled: boolean; selected: boolean; focused: boolean };
+      }) => React.ReactNode;
     }) &
     (Multiple extends true
       ? {
@@ -98,7 +101,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
             value: Value[],
           ) => void;
           disableClearable?: DisableClearable;
-        }
+        } & Creatable
       : DisableClearable extends true
         ? {
             multiple?: Multiple;
@@ -121,7 +124,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
               value: Value | null,
             ) => void;
             disableClearable?: DisableClearable;
-          });
+          } & Creatable);
 
 const defaultOptionsFilter = createAutocompleteFilter<object>();
 
@@ -161,11 +164,20 @@ const AutocompleteImpl = React.forwardRef<
     disablePortal,
     disablePopper,
     renderOption,
+    creatable,
+    onCreate,
     ...restProps
   } = props;
 
   const getOptionLabel = (option: object) => {
     if (loading) return '';
+
+    if (
+      'creatableOption' in option &&
+      'inputValue' in option &&
+      typeof option.inputValue === 'string'
+    )
+      return option.inputValue;
 
     if (getOptionLabelProp) {
       return getOptionLabelProp(option);
@@ -176,7 +188,10 @@ const AutocompleteImpl = React.forwardRef<
         `${displayName}, consider to add \`label\` property in all options or use \`getOptionLabel\` prop to get option label`,
       );
 
-    return option.label as string;
+    if (typeof option.label !== 'string')
+      throw new Error(`${displayName}, \`label\` must be \`string\``);
+
+    return option.label;
   };
 
   const [value, setValue] = useControllableState<
@@ -272,7 +287,24 @@ const AutocompleteImpl = React.forwardRef<
   };
 
   const onSelect = (option: object) => {
-    setOptions(optionsProp);
+    if (disableCloseOnSelect) {
+      setOptions(optionsProp);
+      setFocused(option);
+    } else {
+      handleClose();
+    }
+
+    if ('creatableOption' in option && creatable && !disableClearable) {
+      setInputValue('');
+      if (Array.isArray(value)) setValue([], 'create');
+      if (!Array.isArray(value)) setValue(null, 'create');
+      prevSelectedValue.current = '';
+
+      if ('inputValue' in option && typeof option.inputValue === 'string')
+        onCreate?.(option.inputValue);
+
+      return;
+    }
 
     if (Array.isArray(value)) {
       const val = value.find((ele) => ele === option)
@@ -280,21 +312,17 @@ const AutocompleteImpl = React.forwardRef<
         : [...value, option];
 
       setValue(val, 'select');
-      setFocused(option);
       setInputValue('');
-      if (!disableCloseOnSelect) handleClose();
       return;
     }
 
     if (!Array.isArray(value)) {
       setValue(option, 'select');
-      setFocused(option);
 
       const val = getOptionLabel(option);
+
       setInputValue(val);
       prevSelectedValue.current = val;
-
-      handleClose();
     }
   };
 
@@ -386,7 +414,17 @@ const AutocompleteImpl = React.forwardRef<
 
     const filter = filterOptions || defaultOptionsFilter;
 
-    setOptions(filter(optionsProp, { getOptionLabel, inputValue: val }));
+    const filtered = filter(optionsProp, { getOptionLabel, inputValue: val });
+
+    if (val !== '' && !filtered.length && creatable) {
+      filtered.push({
+        label: `Create "${val}"`,
+        inputValue: val,
+        creatableOption: true,
+      });
+    }
+
+    setOptions(filtered);
   };
 
   const getOptionId = (ele: object) =>
@@ -449,12 +487,19 @@ const AutocompleteImpl = React.forwardRef<
       >
         {!loading && options.length && !groupBy
           ? options.map((option) => {
-              const label = getOptionLabel(option);
               const props = getOptionProps(option);
+
+              const label =
+                'creatableOption' in option &&
+                'label' in option &&
+                typeof option.label === 'string'
+                  ? option.label
+                  : getOptionLabel(option);
 
               return (
                 <Option {...props} key={props.key}>
-                  {renderOption?.(option, {
+                  {renderOption?.({
+                    option,
                     label,
                     state: props.state,
                   }) ?? label}
@@ -484,12 +529,19 @@ const AutocompleteImpl = React.forwardRef<
                   })}
                 >
                   {grouped.map((option) => {
-                    const label = getOptionLabel(option);
                     const props = getOptionProps(option);
+
+                    const label =
+                      'creatableOption' in option &&
+                      'label' in option &&
+                      typeof option.label === 'string'
+                        ? option.label
+                        : getOptionLabel(option);
 
                     return (
                       <Option {...props} key={props.key}>
-                        {renderOption?.(option, {
+                        {renderOption?.({
+                          option,
                           label,
                           state: props.state,
                         }) ?? label}
