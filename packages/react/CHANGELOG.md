@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 2.4.0
+
+### Minor Changes
+
+- feat(Input): slot
+
 ## 2.3.0
 
 ### Minor Changes
