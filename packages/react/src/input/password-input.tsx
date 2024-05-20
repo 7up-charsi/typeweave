@@ -20,7 +20,7 @@ export interface PasswordInputProps extends Omit<InputProps<false>, 'type'> {
 const displayName = 'PasswordInput';
 
 export const PasswordInput = React.forwardRef<
-  HTMLDivElement,
+  HTMLInputElement,
   PasswordInputProps
 >((props, ref) => {
   const {
