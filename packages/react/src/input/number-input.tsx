@@ -23,7 +23,7 @@ export interface NumberInputProps extends Omit<InputProps<false>, 'type'> {
 
 const displayName = 'NumberInput';
 
-export const NumberInput = React.forwardRef<HTMLDivElement, NumberInputProps>(
+export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   (props, ref) => {
     const {
       classNames,
@@ -256,8 +256,7 @@ export const NumberInput = React.forwardRef<HTMLDivElement, NumberInputProps>(
       <Input
         {...rest}
         classNames={classNames}
-        inputRef={mergeRefs(rest.inputRef, innerRef)}
-        ref={ref}
+        ref={mergeRefs(ref, innerRef)}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={onKeyDown}

@@ -7,15 +7,12 @@ type InputBaseProps = React.InputHTMLAttributes<HTMLInputElement> & {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
   onFocus?: React.FocusEventHandler<HTMLInputElement>;
-  inputRef?: React.ForwardedRef<HTMLInputElement>;
-  textareaRef?: undefined;
   classNames?: Omit<InputClassNames, 'textarea'>;
   startContent?: React.ReactNode;
   endContent?: React.ReactNode;
 };
 
 type TextareaBaseProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  textareaRef?: React.ForwardedRef<HTMLTextAreaElement>;
   classNames?: Omit<InputClassNames, 'input'>;
 };
 
@@ -36,6 +33,7 @@ type BaseProps = InputVariantProps & {
   errorMessageProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   inputWrapperProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   baseRef?: React.ForwardedRef<HTMLDivElement>;
+  inputWrapperRef?: React.ForwardedRef<HTMLDivElement>;
   error?: boolean;
   asChild?: boolean;
   children?: React.ReactNode;
@@ -57,7 +55,7 @@ const displayName = 'Input';
 
 const InputImpl = (
   props: InputImplProps,
-  ref: React.ForwardedRef<HTMLDivElement>,
+  ref: React.ForwardedRef<HTMLInputElement | HTMLTextAreaElement>,
 ) => {
   const {
     label,
@@ -72,7 +70,6 @@ const InputImpl = (
     error,
     hideLabel,
     baseRef,
-    inputRef,
     baseProps = {},
     labelProps = {},
     helperTextProps = {},
@@ -80,8 +77,8 @@ const InputImpl = (
     errorMessageProps = {},
     fullWidth = false,
     disabled = false,
+    inputWrapperRef,
     multiline,
-    textareaRef,
     asChild,
     children,
     ...inputProps
@@ -160,7 +157,7 @@ const InputImpl = (
           innerInputRef.current?.focus();
           innerTextareaRef.current?.focus();
         }}
-        ref={ref}
+        ref={inputWrapperRef}
         className={styles.inputWrapper({ className: classNames?.inputWrapper })}
       >
         {!!startContent && !multiline && (
@@ -183,7 +180,7 @@ const InputImpl = (
             className={styles.textarea({
               className: classNames?.textarea,
             })}
-            ref={mergeRefs(innerTextareaRef, textareaRef)}
+            ref={mergeRefs(ref, innerTextareaRef)}
             {...sharedProps}
           >
             {asChild ? children : <textarea></textarea>}
@@ -194,7 +191,7 @@ const InputImpl = (
           <Slot<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>
             {...inputProps}
             className={styles.input({ className: classNames?.input })}
-            ref={mergeRefs(innerInputRef, inputRef)}
+            ref={mergeRefs(ref, innerInputRef)}
             {...sharedProps}
           >
             {asChild ? children : <input />}
@@ -243,5 +240,8 @@ InputImpl.displayName = displayName;
 export const Input = React.forwardRef(InputImpl) as unknown as <
   Multiline extends boolean = false,
 >(
-  props: InputProps<Multiline> & React.RefAttributes<HTMLDivElement>,
+  props: InputProps<Multiline> &
+    React.RefAttributes<
+      Multiline extends true ? HTMLTextAreaElement : HTMLInputElement
+    >,
 ) => React.ReactNode;

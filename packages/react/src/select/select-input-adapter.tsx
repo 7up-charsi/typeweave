@@ -18,7 +18,7 @@ export const selectInputAdapter = (
     openIndicatorIcon?: React.ReactNode;
     loader?: React.ReactNode;
   },
-): InputProps<false> => {
+): InputProps<false> & React.RefAttributes<HTMLInputElement> => {
   const {
     ariaProps,
     clearButtonProps: { onClear, ...clearButtonProps },
@@ -108,9 +108,8 @@ export const selectInputAdapter = (
         onOpen();
       },
     },
-    // @ts-expect-error ----
-    ref: popperReferenceRef,
-    inputRef,
+    inputWrapperRef: popperReferenceRef,
+    ref: inputRef,
     onBlur,
     value: inputValue,
     disabled: !!disabled,
