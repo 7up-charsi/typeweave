@@ -67,6 +67,7 @@ export type SelectProps<Value, Multiple, DisableClearable> =
       disableCloseOnSelect?: boolean;
       getOptionLabel?: (option: Value) => string;
       getOptionKey?: (options: Value) => string;
+      isOptionEqualToValue?: (option: Value, value: Value) => boolean;
       noOptionsText?: string;
       loading?: boolean;
       loadingText?: string;
@@ -139,6 +140,7 @@ const SelectImpl = React.forwardRef<
     loading,
     loadingText = 'loading ...',
     getOptionLabel: getOptionLabelProp,
+    isOptionEqualToValue: isOptionEqualToValueProp,
     getOptionKey,
     groupBy,
     renderInput,
@@ -147,6 +149,13 @@ const SelectImpl = React.forwardRef<
     renderOption,
     ...restProps
   } = props;
+
+  const isOptionEqualToValue = (option: object, value: object) => {
+    if (isOptionEqualToValueProp)
+      return isOptionEqualToValueProp(option, value);
+
+    return option === value;
+  };
 
   const getOptionLabel = (option: object) => {
     if (loading) return '';
@@ -398,19 +407,21 @@ const SelectImpl = React.forwardRef<
 
   const styles = React.useMemo(() => select({ shadow }), [shadow]);
 
-  const getOptionProps = (ele: object) => ({
-    key: getOptionId(ele),
-    option: ele,
-    onHover: () => onHover(ele),
-    onSelect: () => onSelect(ele),
-    id: getOptionId(ele),
+  const getOptionProps = (option: object) => ({
+    key: getOptionId(option),
+    option: option,
+    onHover: () => onHover(option),
+    onSelect: () => onSelect(option),
+    id: getOptionId(option),
     className: styles.option({ className: classNames?.option }),
     state: {
-      focused: ele === focused,
-      selected: Array.isArray(value)
-        ? !!value.find((val) => val === ele)
-        : ele === value,
-      disabled: getOptionDisabled?.(ele) ?? false,
+      focused: option === focused,
+      selected:
+        !!value &&
+        (Array.isArray(value)
+          ? !!value.find((val) => isOptionEqualToValue(option, val))
+          : isOptionEqualToValue(option, value)),
+      disabled: getOptionDisabled?.(option) ?? false,
     },
   });
 
