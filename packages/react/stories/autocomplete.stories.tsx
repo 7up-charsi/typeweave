@@ -63,6 +63,35 @@ export const Multiple = {
   render: MultipleTemplate,
 };
 
+const CreatableTemplate = () => {
+  const [loading, setLoading] = React.useState(false);
+
+  return (
+    <Autocomplete
+      loading={loading}
+      options={options}
+      defaultValue={options[21]}
+      getOptionLabel={(option) => option.title}
+      renderInput={(props) => (
+        <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
+      )}
+      creatable
+      onCreate={(val) => {
+        setLoading(true);
+
+        setTimeout(() => {
+          setLoading(false);
+          alert(`created "${val}"`);
+        }, 2000);
+      }}
+    />
+  );
+};
+
+export const Creatable = {
+  render: CreatableTemplate,
+};
+
 const NoOptionTemplate = () => (
   <Autocomplete
     options={[]}
