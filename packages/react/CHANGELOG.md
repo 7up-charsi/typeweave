@@ -1,5 +1,17 @@
 # @typeweave/react
 
+## 2.4.3
+
+### Patch Changes
+
+- fix: Select/Autocomplete clear button type
+
+## 2.4.2
+
+### Patch Changes
+
+- fix(Input): number input spin button
+
 ## 2.4.1
 
 ### Patch Changes
