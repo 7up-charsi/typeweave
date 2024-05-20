@@ -269,6 +269,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
           <>
             {/* decrease */}
             <Button
+              type="button"
               aria-label="decrease value"
               aria-description="long press to decrease speedly"
               tabIndex={-1}
@@ -287,6 +288,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
             {/* increase */}
             <Button
+              type="button"
               aria-label="increase value"
               aria-description="long press to increase speedly"
               tabIndex={-1}
