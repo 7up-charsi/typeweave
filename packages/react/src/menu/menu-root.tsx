@@ -1,6 +1,6 @@
 import React from 'react';
 import { createContextScope } from '../context';
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 import { useCallbackRef } from '../use-callback-ref';
 import { createCollection } from '../use-collection';
 import { PopperRoot } from '../popper';
@@ -50,9 +50,11 @@ export const MenuRoot = (props: MenuRootProps) => {
     disableCloseOnEscape,
   } = props;
 
-  const [open, setOpen] = useControllableState({
-    defaultValue: defaultOpen ?? false,
-    value: openProp,
+  const [open, setOpen] = useControlled({
+    default: defaultOpen ?? false,
+    controlled: openProp,
+    name: displayName,
+    state: 'open',
     onChange: onOpenChange,
   });
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { createContextScope } from '../context';
 import { PopperRoot } from '../popper';
 import { useCallbackRef } from '../use-callback-ref';
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 
 export interface PopoverRootProps {
   children?: React.ReactNode;
@@ -39,10 +39,12 @@ export const PopoverRoot = (props: PopoverRootProps) => {
     keepMounted = false,
   } = props;
 
-  const [open, setOpen] = useControllableState({
-    defaultValue: defaultOpen ?? false,
+  const [open, setOpen] = useControlled({
+    default: defaultOpen ?? false,
+    controlled: openProp,
+    name: displayName,
+    state: 'open',
     onChange: onOpenChange,
-    value: openProp,
   });
 
   const contentId = React.useId();
@@ -56,6 +58,7 @@ export const PopoverRoot = (props: PopoverRootProps) => {
 
   const handleClose = useCallbackRef(() => {
     if (!open) return;
+
     setOpen(false);
   });
 

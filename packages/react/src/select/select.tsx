@@ -1,4 +1,4 @@
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 import React from 'react';
 import { Option } from './option';
 import lodashGroupBy from 'lodash.groupby';
@@ -172,13 +172,10 @@ const SelectImpl = React.forwardRef<
     return option.label as string;
   };
 
-  const [value, setValue] = useControllableState<
-    object | object[] | null,
-    SelectReason
-  >({
-    defaultValue,
-    value: valueProp,
-    onChange: (value, reason) => {
+  const [value, setValue] = useControlled<object | object[] | null>({
+    default: defaultValue,
+    controlled: valueProp,
+    onChange: (value) => {
       if (!reason)
         throw new Error(
           `${displayName}, \`internal Error\` reason is not defined`,

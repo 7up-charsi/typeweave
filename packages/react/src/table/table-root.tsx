@@ -1,9 +1,6 @@
 import React from 'react';
 import { createContextScope } from '../context';
-import {
-  UseControllableStateReturn,
-  useControllableState,
-} from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 
 export type ColumnVisibility = Record<string, boolean>;
 
@@ -41,7 +38,7 @@ interface RootContext {
   columns: TableColumn<_Row>[];
   getRowKey?: GetRowKey<_Row>;
   columnVisibility: ColumnVisibility;
-  setColumnVisibility: UseControllableStateReturn<ColumnVisibility>[1];
+  setColumnVisibility: ReturnType<typeof useControlled<ColumnVisibility>>[1];
 }
 
 const displayName = 'TableRoot';
@@ -71,12 +68,14 @@ const TableRootImpl = (props: TableRootProps) => {
     [userColumns],
   );
 
-  const [columnVisibility, setColumnVisibility] = useControllableState({
-    defaultValue: columns?.reduce<ColumnVisibility>(
+  const [columnVisibility, setColumnVisibility] = useControlled({
+    default: columns?.reduce<ColumnVisibility>(
       (acc, col) => ((acc[col.identifier] = col.visibility), acc),
       {},
     ),
-    value: visibilityStateProp,
+    controlled: visibilityStateProp,
+    name: displayName,
+    state: 'columnVisibility',
     onChange: onColumnVisibilityChange,
   });
 

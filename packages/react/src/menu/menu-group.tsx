@@ -23,7 +23,7 @@ export const MenuGroup = React.forwardRef<HTMLUListElement, MenuGroupProps>(
       React.useEffect(() => {
         if (!label)
           console.warn(
-            'For accessible MenuGroup, provide `label` prop for screen readers to describe its purpose. If you want to hide the label visually, use the `hideLabel` prop',
+            'Typeweave: For accessible MenuGroup, provide `label` prop for screen readers to describe its purpose. If you want to hide the label visually, use the `hideLabel` prop',
           );
       }, [label]);
     }

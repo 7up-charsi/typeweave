@@ -95,7 +95,7 @@ const InputImpl = (
   React.useEffect(() => {
     if (process.env.NODE_ENV !== 'production' && !label) {
       console.warn(
-        'For accessible Input, provide `label` prop for screen readers to describe its purpose. If you want to hide the label visually, use the `hideLabel` prop',
+        'Typeweave: For accessible Input, provide `label` prop for screen readers to describe its purpose. If you want to hide the label visually, use the `hideLabel` prop',
       );
     }
   }, [label]);

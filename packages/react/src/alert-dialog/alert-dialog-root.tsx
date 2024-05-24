@@ -1,10 +1,10 @@
 import React from 'react';
 import { createContextScope } from '../context';
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 import { useCallbackRef } from '../use-callback-ref';
 import { StackItem, createStackManager } from '../stack-manager';
 
-type Reason = 'pointer' | 'escape';
+type Reason = 'pointer' | 'escape' | 'imperative';
 
 type CloseEvent = { preventDefault(): void };
 
@@ -12,7 +12,7 @@ export interface AlertDialogRootProps {
   children?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  onClose?: (event: CloseEvent, reason: Reason | null) => void;
+  onClose?: (event: CloseEvent, reason: Reason) => void;
   defaultOpen?: boolean;
 }
 
@@ -66,9 +66,11 @@ export const AlertDialogRoot = React.forwardRef<
     },
   }).current;
 
-  const [open, setOpen] = useControllableState({
-    defaultValue: defaultOpen ?? false,
-    value: openProp,
+  const [open, setOpen] = useControlled({
+    default: defaultOpen ?? false,
+    controlled: openProp,
+    name: displayName,
+    state: 'open',
     onChange: onOpenChange,
   });
 
@@ -77,7 +79,7 @@ export const AlertDialogRoot = React.forwardRef<
     alertDialogStack.add(stackItem);
   });
 
-  const handleClose = useCallbackRef((reason: Reason | null) => {
+  const handleClose = useCallbackRef((reason: Reason) => {
     if (stackItem.paused) return;
     if (!open) return;
 
@@ -96,7 +98,7 @@ export const AlertDialogRoot = React.forwardRef<
   });
 
   const imperativeClose = useCallbackRef(() => {
-    handleClose(null);
+    handleClose('imperative');
   });
 
   const imperativeOpen = useCallbackRef(() => {
@@ -106,7 +108,7 @@ export const AlertDialogRoot = React.forwardRef<
   const imperativeForceClose = useCallbackRef(() => {
     if (!open) return;
 
-    onClose?.({ preventDefault: () => {} }, null);
+    onClose?.({ preventDefault: () => {} }, 'imperative');
 
     setOpen(false);
     alertDialogStack.remove(stackItem);

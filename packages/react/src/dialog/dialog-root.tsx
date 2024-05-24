@@ -1,10 +1,10 @@
 import { createContextScope } from '../context';
 import React from 'react';
 import { useCallbackRef } from '../use-callback-ref';
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 import { StackItem, createStackManager } from '../stack-manager';
 
-type Reason = 'pointer' | 'escape' | 'outside';
+type Reason = 'pointer' | 'escape' | 'outside' | 'imperative';
 
 type CloseEvent = { preventDefault(): void };
 
@@ -13,7 +13,7 @@ export interface DialogRootProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   defaultOpen?: boolean;
-  onClose?: (event: CloseEvent, reason: Reason | null) => void;
+  onClose?: (event: CloseEvent, reason: Reason) => void;
   keepMounted?: boolean;
 }
 
@@ -69,9 +69,11 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
       },
     }).current;
 
-    const [open, setOpen] = useControllableState({
-      defaultValue: defaultOpen ?? false,
-      value: openProp,
+    const [open, setOpen] = useControlled({
+      default: defaultOpen ?? false,
+      controlled: openProp,
+      name: displayName,
+      state: 'open',
       onChange: onOpenChange,
     });
 
@@ -80,7 +82,7 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
       dialogStack.add(stackItem);
     });
 
-    const handleClose = useCallbackRef((reason: Reason | null) => {
+    const handleClose = useCallbackRef((reason: Reason) => {
       if (stackItem.paused) return;
       if (!open) return;
 
@@ -99,7 +101,7 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
     });
 
     const imperativeClose = useCallbackRef(() => {
-      handleClose(null);
+      handleClose('imperative');
     });
 
     const imperativeOpen = useCallbackRef(() => {
@@ -109,7 +111,7 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
     const imperativeForceClose = useCallbackRef(() => {
       if (!open) return;
 
-      onClose?.({ preventDefault: () => {} }, null);
+      onClose?.({ preventDefault: () => {} }, 'imperative');
 
       setOpen(false);
       dialogStack.remove(stackItem);

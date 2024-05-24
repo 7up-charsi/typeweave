@@ -1,10 +1,10 @@
 import React from 'react';
 import { createContextScope } from '../context';
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 import { useCallbackRef } from '../use-callback-ref';
 import { StackItem, createStackManager } from '../stack-manager';
 
-type Reason = 'pointer' | 'escape' | 'outside' | 'virtual';
+type Reason = 'pointer' | 'escape' | 'outside' | 'virtual' | 'imperative';
 
 type CloseEvent = { preventDefault(): void };
 
@@ -12,7 +12,7 @@ export interface DrawerRootProps {
   children?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  onClose?: (event: CloseEvent, reason: Reason | null) => void;
+  onClose?: (event: CloseEvent, reason: Reason) => void;
   defaultOpen?: boolean;
   keepMounted?: boolean;
 }
@@ -65,9 +65,11 @@ export const DrawerRoot = React.forwardRef<DrawerRootMethods, DrawerRootProps>(
     const contentId = React.useId();
     const triggerRef = React.useRef<HTMLElement | null>(null);
 
-    const [open, setOpen] = useControllableState({
-      defaultValue: defaultOpen,
-      value: openProp,
+    const [open, setOpen] = useControlled({
+      default: defaultOpen ?? false,
+      controlled: openProp,
+      name: displayName,
+      state: 'open',
       onChange: onOpenChange,
     });
 
@@ -76,7 +78,7 @@ export const DrawerRoot = React.forwardRef<DrawerRootMethods, DrawerRootProps>(
       drawerStack.add(stackItem);
     });
 
-    const handleClose = useCallbackRef((reason: Reason | null) => {
+    const handleClose = useCallbackRef((reason: Reason) => {
       if (stackItem.paused) return;
       if (!open) return;
 
@@ -95,7 +97,7 @@ export const DrawerRoot = React.forwardRef<DrawerRootMethods, DrawerRootProps>(
     });
 
     const imperativeClose = useCallbackRef(() => {
-      handleClose(null);
+      handleClose('imperative');
     });
 
     const imperativeOpen = useCallbackRef(() => {
@@ -105,7 +107,7 @@ export const DrawerRoot = React.forwardRef<DrawerRootMethods, DrawerRootProps>(
     const imperativeForceClose = useCallbackRef(() => {
       if (!open) return;
 
-      onClose?.({ preventDefault: () => {} }, null);
+      onClose?.({ preventDefault: () => {} }, 'imperative');
 
       setOpen(false);
       drawerStack.remove(stackItem);

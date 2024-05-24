@@ -2,7 +2,7 @@ import { disclosure } from '@typeweave/theme';
 import { createContextScope } from '../context';
 import React from 'react';
 import { Slot } from '../slot';
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 
 export interface DisclosureRootProps {
   children?: React.ReactNode;
@@ -46,22 +46,24 @@ export const DisclosureRoot = React.forwardRef<
     className,
   } = props;
 
-  const [value, setValue] = useControllableState({
-    defaultValue: defaultValue ?? [],
-    value: valueProp,
+  const [value, setValue] = useControlled({
+    default: defaultValue ?? [],
+    controlled: valueProp,
+    name: displayName,
+    state: 'value',
     onChange: onValueChange,
   });
 
-  const onExpand = (value: string) => {
+  const onExpand = (expandedItem: string) => {
     if (disabled) return;
 
-    setValue((prev) => [...prev, value]);
+    setValue((prev) => [...prev, expandedItem]);
   };
 
-  const onCollapse = (value: string) => {
+  const onCollapse = (collapsedItem: string) => {
     if (disabled) return;
 
-    setValue((prev) => prev.filter((ele) => ele !== value));
+    setValue((prev) => prev.filter((ele) => ele !== collapsedItem));
   };
 
   const styles = React.useMemo(() => disclosure(), []);

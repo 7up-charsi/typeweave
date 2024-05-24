@@ -2,7 +2,7 @@ import { ToggleButtonVariantProps, toggleButton } from '@typeweave/theme';
 import { createContextScope } from '../context';
 import { ButtonGroup, ButtonGroupProps } from '../button';
 import React from 'react';
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 
 export type ToggleButtonGroupProps<Exclusive> = ToggleButtonVariantProps &
   Omit<ButtonGroupProps, 'variant'> &
@@ -49,9 +49,11 @@ export const ToggleButtonGroupImpl = (props: ToggleButtonGroupProps<false>) => {
     ...restProps
   } = props;
 
-  const [value, setValue] = useControllableState<string | null | string[]>({
-    defaultValue: exclusive ? defaultValue ?? null : defaultValue ?? [],
-    value: valueProp,
+  const [value, setValue] = useControlled<string | null | string[]>({
+    default: exclusive ? defaultValue ?? null : defaultValue ?? [],
+    controlled: valueProp,
+    name: displayName,
+    state: 'value',
     onChange: (value) => {
       onChange?.(value as never);
     },

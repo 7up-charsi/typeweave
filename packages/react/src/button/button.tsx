@@ -95,7 +95,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           role !== 'none'
         )
           console.warn(
-            'For accessible icon-only buttons, provide `aria-label` prop for screen readers to describe its purpose.',
+            'Typeweave: For accessible icon-only buttons, provide `aria-label` prop for screen readers to describe its purpose.',
           );
       }, [ariaLabel, ariaLabelledby, isIconOnly, role]);
     }

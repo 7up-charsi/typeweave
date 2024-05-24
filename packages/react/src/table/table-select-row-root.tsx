@@ -1,6 +1,6 @@
 import React from 'react';
 import { createContextScope } from '../context';
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 
 export interface TableSelectRowRootProps {
   children?: React.ReactNode;
@@ -43,9 +43,11 @@ export const TableSelectRowRoot = React.forwardRef<
     new Map(),
   ).current;
 
-  const [selectedRows, setSelectedRows] = useControllableState({
-    defaultValue: defaultSelectedRows ?? [],
-    value: selectedRowsProp,
+  const [selectedRows, setSelectedRows] = useControlled({
+    default: defaultSelectedRows ?? [],
+    controlled: selectedRowsProp,
+    name: displayName,
+    state: 'selectedRows',
     onChange: onSelectionChange,
   });
 
