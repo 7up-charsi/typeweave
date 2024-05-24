@@ -1,8 +1,4 @@
-export type {
-  AutocompleteProps,
-  AutocompleteReason,
-  AutocompleteRenderInputProps,
-} from './autocomplete';
+export type { AutocompleteProps } from './autocomplete';
 
 export type {
   CreateAutocompleteFilterConfig,
@@ -10,5 +6,4 @@ export type {
 } from './create-autocomplete-filter';
 
 export { Autocomplete } from './autocomplete';
-export { autocompleteInputAdapter } from './autocomplete-input-adapter';
 export { createAutocompleteFilter } from './create-autocomplete-filter';

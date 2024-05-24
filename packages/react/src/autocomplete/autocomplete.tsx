@@ -17,6 +17,10 @@ import { useCallbackRef } from '../use-callback-ref';
 import usePreviousProps from '../use-previous-props';
 import { mergeRefs } from '@typeweave/react-utils';
 import { PointerEvents } from '../pointer-events/pointer-events';
+import { Chip } from '../chip';
+import { Button } from '../button';
+import { ChevronDownIcon, XIcon } from 'lucide-react';
+import { InputProps } from '../input';
 
 export type AutocompleteOnChangeReason =
   | 'selectOption'
@@ -60,12 +64,15 @@ export interface AutocompleteRenderOptionProps {
   'data-option-index': number;
   'aria-disabled': boolean;
   'aria-selected': boolean;
+  'data-selected': boolean;
+  className: string;
 }
 
-// interface Creatable {
-//   creatable?: boolean;
-//   onCreate?: (value: string) => void;
-// }
+export interface AutocompleteRenderTagsProps {}
+
+export interface AutocompleteRenderInputProps extends InputProps<false> {
+  ref: React.RefObject<HTMLInputElement>;
+}
 
 export type AutocompleteProps<Value, Multiple, DisableClearable> =
   (AutocompleteVariantProps &
@@ -89,7 +96,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
       disableCloseOnSelect?: boolean;
       pageSize?: number;
       getOptionLabel?: (option: Value) => string;
-      autoHighlight: boolean;
+      autoHighlight?: boolean;
       getOptionKey?: (options: Value) => string;
       isOptionEqualToValue?: (option: Value, value: Value) => boolean;
       renderGroup?: (params: AutocompleteRenderGroupParams) => React.ReactNode;
@@ -109,11 +116,15 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
       filterOptions?: ReturnType<typeof createAutocompleteFilter<Value>>;
       disablePortal?: boolean;
       disablePopper?: boolean;
-      renderInput: (props: unknown) => React.ReactNode;
+      renderInput: (props: AutocompleteRenderInputProps) => React.ReactNode;
       renderOption?: (
         props: AutocompleteRenderOptionProps,
         option: Value,
         state: AutocompleteRenderOptionState,
+      ) => React.ReactNode;
+      renderTags?: (
+        tags: Value[],
+        props: (index: number) => AutocompleteRenderTagsProps,
       ) => React.ReactNode;
     }) &
     (Multiple extends true
@@ -200,6 +211,7 @@ const AutocompleteImpl = React.forwardRef<
     disablePortal,
     disablePopper,
     renderOption: renderOptionProp,
+    renderTags,
     ...restProps
   } = props;
 
@@ -221,7 +233,7 @@ const AutocompleteImpl = React.forwardRef<
 
     const optionLabel = getOptionLabelProp?.(option);
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (typeof optionLabel !== 'string' && 'production') {
       const erroneousReturn =
         optionLabel === undefined
           ? 'undefined'
@@ -271,8 +283,6 @@ const AutocompleteImpl = React.forwardRef<
 
       let newInputValue;
       if (multiple) {
-        newInputValue = '';
-      } else if (newValue === null) {
         newInputValue = '';
       } else {
         const optionLabel = getOptionLabel(newValue);
@@ -393,17 +403,19 @@ const AutocompleteImpl = React.forwardRef<
     inputValue,
   });
 
-  // React.useEffect(() => {
-  //   const valueChange = value !== previousProps.value;
+  React.useEffect(() => {
+    if (value === undefined) return;
 
-  //   // do not want to change input value if
-  //   // user has focus and value is same
-  //   if (focused && !valueChange) {
-  //     return;
-  //   }
+    const valueChange = value !== previousProps.value;
 
-  //   resetInputValue(value);
-  // }, [value, resetInputValue, focused, previousProps.value]);
+    // do not want to change input value if
+    // user has focus and value is same
+    if (focused && !valueChange) {
+      return;
+    }
+
+    resetInputValue(value);
+  }, [value, resetInputValue, focused, previousProps.value]);
 
   if (process.env.NODE_ENV !== 'production') {
     if (value !== null && options.length > 0) {
@@ -519,7 +531,7 @@ const AutocompleteImpl = React.forwardRef<
 
       if (
         listboxNode.scrollHeight > listboxNode.clientHeight &&
-        reason !== 'keyboard'
+        reason === 'keyboard'
       ) {
         const element = option;
 
@@ -533,6 +545,8 @@ const AutocompleteImpl = React.forwardRef<
         ) {
           listboxNode.scrollTop =
             element.offsetTop - element.offsetHeight * (groupBy ? 1.3 : 0);
+
+          console.log('reached');
         }
       }
     },
@@ -872,23 +886,14 @@ const AutocompleteImpl = React.forwardRef<
   const handlePointerDown = (event: React.PointerEvent) => {
     const target = event.target as HTMLElement;
 
+    if (!inputRef.current) return;
+
     // Prevent focusing the input if click is anywhere outside the Autocomplete
     if (!event.currentTarget.contains(target)) return;
 
-    if (target.getAttribute('id') !== inputId) {
-      event.preventDefault();
-    }
-  };
+    if (target.getAttribute('id') === inputId) return;
 
-  // Focus the input when interacting with the combobox
-  const handlePress = (event: React.PointerEvent) => {
-    // Prevent focusing the input if click is anywhere outside the Autocomplete
-    if (!event.currentTarget.contains(event.target as Node)) {
-      return;
-    }
-
-    if (!inputRef.current) return;
-
+    event.preventDefault();
     inputRef.current.focus();
 
     if (
@@ -932,19 +937,31 @@ const AutocompleteImpl = React.forwardRef<
       'data-option-index': index,
       'aria-disabled': disabled,
       'aria-selected': selected,
+      'data-selected': selected,
     };
+  };
+
+  const handleTagDelete = (index: number) => () => {
+    if (!Array.isArray(value)) return;
+
+    const newValue = value.slice();
+    newValue.splice(index, 1);
+    handleValue(newValue, 'removeOption');
   };
 
   if (disabled && focused) {
     handleBlur();
   }
 
-  const styles = React.useMemo(() => autocomplete({ shadow }), [shadow]);
+  const styles = React.useMemo(
+    () => autocomplete({ shadow, multiple }),
+    [shadow, multiple],
+  );
 
   const defaultRenderGroup = (params: AutocompleteRenderGroupParams) => (
-    <li key={params.key}>
+    <li key={params.key} className={styles.group()}>
       <div className={styles.groupHeader()}>{params.group}</div>
-      <ul className={styles.group()}>{params.children}</ul>
+      <ul className={styles.groupItems()}>{params.children}</ul>
     </li>
   );
 
@@ -957,8 +974,8 @@ const AutocompleteImpl = React.forwardRef<
     const { key, ...otherProps } = props;
 
     return (
-      <PointerEvents {...otherProps}>
-        <li key={key}>{getOptionLabel(option)}</li>
+      <PointerEvents key={key} {...otherProps}>
+        <li>{getOptionLabel(option)}</li>
       </PointerEvents>
     );
   };
@@ -978,6 +995,62 @@ const AutocompleteImpl = React.forwardRef<
       },
     );
   };
+
+  let startContent: React.ReactNode | undefined = undefined;
+
+  if (Array.isArray(value) && value.length > 0) {
+    const getTagProps = (index: number) => ({
+      className: styles.tag(),
+      disabled,
+      key: index,
+      'data-tag-index': index,
+      tabIndex: -1,
+      ...(!readOnly && { onDelete: handleTagDelete(index) }),
+    });
+
+    if (renderTags) {
+      startContent = renderTags(value, getTagProps);
+    } else {
+      startContent = value.map((option, index) => {
+        const { key, ...tagProps } = getTagProps(index);
+
+        return (
+          <Chip
+            key={key}
+            label={getOptionLabel(option)}
+            size="sm"
+            color="default"
+            variant="flat"
+            {...tagProps}
+          />
+        );
+      });
+    }
+  }
+
+  const endContent = (
+    <div className={styles.endContent()}>
+      <Button
+        isIconOnly
+        variant="text"
+        size="sm"
+        aria-label="clear value"
+        className={styles.clearIndicator()}
+      >
+        <XIcon />
+      </Button>
+
+      <Button
+        isIconOnly
+        variant="text"
+        size="sm"
+        aria-label="open indicator"
+        className={styles.openIndicator()}
+      >
+        <ChevronDownIcon />
+      </Button>
+    </div>
+  );
 
   if (multiple && !Array.isArray(value))
     throw new Error(
@@ -1068,12 +1141,17 @@ const AutocompleteImpl = React.forwardRef<
         {({ referenceRef }) =>
           renderInput({
             inputWrapperProps: {
-              'aria-owns': listOpen ? `${inputId}-listbox` : null,
+              'aria-owns': listOpen ? `${inputId}-listbox` : undefined,
               onKeyDown: handleKeyDown,
               onPointerDown: handlePointerDown,
-              onPress: handlePress,
+            },
+            classNames: {
+              inputWrapper: styles.inputWrapper(),
+              input: styles.input(),
             },
             inputWrapperRef: referenceRef,
+            startContent,
+            endContent,
             id: inputId,
             value: inputValue,
             onBlur: handleBlur,
@@ -1082,7 +1160,7 @@ const AutocompleteImpl = React.forwardRef<
             onPointerDown: handleInputPointerDown,
             // if open then this is handled imperatively in setHighlightedIndex so don't let react override
             // only have an opinion about this when closed
-            'aria-activedescendant': listOpen ? '' : null,
+            'aria-activedescendant': listOpen ? '' : undefined,
             'aria-autocomplete': 'list',
             'aria-controls': listboxAvailable
               ? `${inputId}-listbox`
@@ -1095,7 +1173,7 @@ const AutocompleteImpl = React.forwardRef<
             autoCapitalize: 'none',
             spellCheck: 'false',
             role: 'combobox',
-            disabled,
+            disabled: !!disabled,
           })
         }
       </PopperReference>

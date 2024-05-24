@@ -29,7 +29,7 @@ export * from './tooltip';
 export * from './use-callback-ref';
 export * from './use-click-outside';
 export * from './use-collection';
-export * from './use-controllable-state';
+export * from './use-controlled';
 export * from './use-is-disabled';
 export * from './use-media-query';
 export * from './use-pointer-events';
