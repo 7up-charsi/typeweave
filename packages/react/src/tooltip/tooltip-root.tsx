@@ -1,7 +1,7 @@
 import React from 'react';
 import { createContextScope } from '../context';
 import { PopperRoot } from '../popper';
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 import { useCallbackRef } from '../use-callback-ref';
 
 type Trigger = 'hover' | 'focus';
@@ -47,9 +47,11 @@ export const TooltipRoot = (props: TooltipRootProps) => {
     defaultOpen,
   } = props;
 
-  const [open, setOpen] = useControllableState({
-    defaultValue: defaultOpen ?? false,
-    value: openProp,
+  const [open, setOpen] = useControlled({
+    default: defaultOpen ?? false,
+    controlled: openProp,
+    name: displayName,
+    state: 'open',
     onChange: onOpenChange,
   });
 

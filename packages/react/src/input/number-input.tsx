@@ -3,15 +3,17 @@ import { InputProps, Input } from './input';
 import { mergeRefs } from '@typeweave/react-utils';
 import { numberInput } from '@typeweave/theme';
 import { Button } from '../button';
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 
-export interface NumberInputProps extends Omit<InputProps<false>, 'type'> {
+export interface NumberInputProps
+  extends Omit<InputProps<false>, 'type' | 'onChange'> {
   classNames?: InputProps<false>['classNames'] & {
     buttonsBase?: string;
     increaseButton?: string;
     decreaseButton?: string;
   };
+  onChange?: (newValue: string) => void;
   inputMode?: 'decimal' | 'numeric';
   min?: number;
   max?: number;
@@ -43,14 +45,12 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
     const innerRef = React.useRef<HTMLInputElement>(null);
 
-    const [value, setValue] = useControllableState({
-      defaultValue: defaultValue ?? '',
-      value: valueProp,
-      onChange: (value) => {
-        onChange?.({
-          target: { value },
-        } as React.ChangeEvent<HTMLInputElement>);
-      },
+    const [value, setValue] = useControlled({
+      default: defaultValue ?? '',
+      controlled: valueProp,
+      name: displayName,
+      state: 'value',
+      onChange,
     });
 
     const keyDownInterval = React.useRef<NodeJS.Timeout | undefined>(undefined);
@@ -58,27 +58,31 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       undefined,
     );
 
-    const increase = (toAdd: number) => {
+    const increase = (toIncrase: number) => {
       setValue((prev) => {
-        const val = +prev;
+        let newValue = +prev;
 
-        if (val === max) return prev;
-        if (max && val > max) return max + '';
-        if (min && val < min) return min + '';
+        if (newValue === max) return newValue + '';
 
-        return max && val + toAdd > max ? max + '' : `${val + toAdd}`;
+        if (max && newValue > max) newValue = max;
+        else if (min && newValue < min) newValue = min;
+        else newValue = Math.min(newValue + toIncrase, max ? max : Infinity);
+
+        return newValue + '';
       });
     };
 
-    const decrease = (toAdd: number) => {
+    const decrease = (toDecrease: number) => {
       setValue((prev) => {
-        const val = +prev;
+        let newValue = +prev;
 
-        if (val === min) return prev;
-        if (max && val > max) return max + '';
-        if (min && val < min) return min + '';
+        if (newValue === min) return newValue + '';
 
-        return min && +prev - toAdd < min ? min + '' : `${+prev - toAdd}`;
+        if (max && newValue > max) newValue = max;
+        else if (min && newValue < min) newValue = min;
+        else newValue = Math.max(newValue - toDecrease, min ? min : Infinity);
+
+        return newValue + '';
       });
     };
 
@@ -117,6 +121,19 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       }
 
       if (repeatEvent && !keyDownInterval.current) {
+        longPressTimeout.current = undefined;
+
+        ['pointerdown', 'keyup'].forEach((event) =>
+          document.addEventListener(
+            event,
+            () => {
+              clearInterval(keyDownInterval.current);
+              keyDownInterval.current = undefined;
+            },
+            { once: true },
+          ),
+        );
+
         if (ArrowUp) {
           keyDownInterval.current = setInterval(
             () => increase(step),
@@ -151,30 +168,25 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       }
 
       if (Home && min) {
-        setValue(min + '');
+        const newValue = min + '';
+
+        setValue(newValue);
         return;
       }
 
       if (Home && !min) {
-        setValue('0');
+        const newValue = '0';
+
+        setValue(newValue);
         return;
       }
 
       if (End && max) {
-        setValue(max + '');
+        const newValue = max + '';
+
+        setValue(newValue);
         return;
       }
-
-      ['pointerdown', 'keyup'].forEach((event) =>
-        document.addEventListener(
-          event,
-          () => {
-            clearInterval(keyDownInterval.current);
-            keyDownInterval.current = undefined;
-          },
-          { once: true },
-        ),
-      );
     };
 
     const onKeyUp = (e: React.KeyboardEvent) => {
@@ -191,6 +203,8 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
     const onLongPress = (action: string) => (e: React.PointerEvent) => {
       if (e.button !== 0) return;
+
+      keyDownInterval.current = undefined;
 
       e.preventDefault();
       innerRef.current?.focus();

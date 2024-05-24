@@ -1,5 +1,5 @@
 import { createContextScope } from '../context';
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 import React from 'react';
 import { createCollection } from '../use-collection';
 import { accordion } from '@typeweave/theme';
@@ -69,39 +69,48 @@ export const AccordionRootImpl = React.forwardRef<
     ...restProps
   } = props;
 
-  const [value, setValue] = useControllableState({
-    defaultValue: type === 'multiple' ? defaultValue ?? [] : defaultValue,
-    value: valueProp,
-    onChange: (val) => {
-      onValueChange?.(val as never);
-    },
+  const [value, setValue] = useControlled({
+    default:
+      type === 'multiple'
+        ? (defaultValue as string[]) ?? []
+        : (defaultValue as string | null),
+    controlled: valueProp,
+    name: displayName,
+    state: 'value',
+    onChange: (newValue) => onValueChange?.(newValue as never),
   });
 
-  const onExpand = (value: string) => {
+  const onExpand = (expanedItem: string) => {
     if (disabled) return;
 
     if (type === 'single') {
-      setValue(value);
+      setValue(expanedItem);
       return;
     }
 
     if (type === 'multiple') {
-      setValue((prev) => (Array.isArray(prev) ? [...prev, value] : []));
+      setValue((prev) => (Array.isArray(prev) ? [...prev, expanedItem] : prev));
       return;
     }
   };
 
-  const onCollapse = (value: string) => {
+  const onCollapse = (collapsedItem: string) => {
     if (disabled) return;
+
+    if (type === 'single' && !isSingleCollapsible) return;
 
     if (type === 'single' && isSingleCollapsible) {
       setValue(null);
+      return;
     }
 
     if (type === 'multiple') {
       setValue((prev) =>
-        Array.isArray(prev) ? prev.filter((ele) => ele !== value) : [],
+        Array.isArray(prev)
+          ? prev.filter((ele) => ele !== collapsedItem)
+          : prev,
       );
+      return;
     }
   };
 

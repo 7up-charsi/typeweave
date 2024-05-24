@@ -1,7 +1,7 @@
 import { TabsVariantProps, tabs } from '@typeweave/theme';
 import { createContextScope } from '../context';
 import { createCollection } from '../use-collection';
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 import React from 'react';
 
 export interface TabsRootProps
@@ -60,10 +60,12 @@ export const TabsRoot = React.forwardRef<HTMLDivElement, TabsRootProps>(
       ...restProps
     } = props;
 
-    const [value, setValue] = useControllableState({
-      value: valueProp,
+    const [value, setValue] = useControlled({
+      controlled: valueProp,
+      default: defaultValue ?? '',
+      name: displayName,
+      state: 'value',
       onChange: onValueChange,
-      defaultValue,
     });
 
     const [activeTabId, setActiveTabId] = React.useState('');

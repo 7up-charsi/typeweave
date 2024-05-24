@@ -4,7 +4,7 @@ import {
   pagination,
 } from '@typeweave/theme';
 import React from 'react';
-import { useControllableState } from '../use-controllable-state';
+import { useControlled } from '../use-controlled';
 import { Button, ButtonProps } from '../button';
 import {
   Ellipsis,
@@ -77,9 +77,11 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
       ...restProps
     } = props;
 
-    const [page, setPage] = useControllableState({
-      value: pageProp,
-      defaultValue: defaultPage,
+    const [page, setPage] = useControlled({
+      default: defaultPage,
+      controlled: pageProp,
+      name: displayName,
+      state: 'page',
       onChange: onPageChange,
     });
 
@@ -130,7 +132,9 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
                 base: styles.item({ className: classNames?.item }),
               }}
               aria-label={firstPageA11yLabel}
-              onPress={() => setPage(1)}
+              onPress={() => {
+                setPage(1);
+              }}
               disabled={!!disabled || page === 1}
             >
               {firstButtonIcon}
@@ -146,7 +150,10 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
                 base: styles.item({ className: classNames?.item }),
               }}
               aria-label={previousPageA11yLabel}
-              onPress={() => setPage((prev) => prev - 1)}
+              onPress={() => {
+                const newValue = page - 1;
+                setPage(newValue);
+              }}
               disabled={!!disabled || page === 1}
             >
               {previousButtonIcon}
@@ -206,7 +213,9 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
                   base: styles.item({ className: classNames?.item }),
                 }}
                 aria-label={getItemA11yLabel(ele)}
-                onPress={() => setPage(ele)}
+                onPress={() => {
+                  setPage(ele);
+                }}
                 disabled={disabled}
                 data-selected={!!selected}
                 variant={(selected && 'solid') || 'text'}
@@ -226,7 +235,10 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
                 base: styles.item({ className: classNames?.item }),
               }}
               aria-label={nextPageA11yLabel}
-              onPress={() => setPage((prev) => prev + 1)}
+              onPress={() => {
+                const newValue = page + 1;
+                setPage(newValue);
+              }}
               disabled={!!disabled || page === count}
             >
               {nextButtonIcon}
@@ -242,7 +254,9 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
                 base: styles.item({ className: classNames?.item }),
               }}
               aria-label={lastPageA11yLabel}
-              onPress={() => setPage(count)}
+              onPress={() => {
+                setPage(count);
+              }}
               disabled={!!disabled || page === count}
             >
               {lastButtonIcon}
