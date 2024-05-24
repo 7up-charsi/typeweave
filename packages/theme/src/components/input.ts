@@ -7,14 +7,12 @@ export const input = tv({
     label:
       'first-letter:uppercase cursor-pointer self-start px-1 text-sm font-semibold',
     inputWrapper:
-      'w-full relative flex items-center gap-x-2 rounded px-3 cursor-text bg-transparent border border-muted-7 hover:border-muted-8 focus-within:hover:border-transparent focus-within:border-transparent overflow-hidden focus-within:ring-2 focus-within:ring-focus',
+      'h-10 w-full relative flex items-center gap-x-2 gap-y-1 rounded px-3 cursor-text bg-transparent border border-muted-7 hover:border-muted-8 focus-within:hover:border-transparent focus-within:border-transparent overflow-hidden focus-within:ring-2 focus-within:ring-focus dynamic-icon',
     input:
-      'appearance-none bg-transparent outline-none grow w-0 placeholder:text-current placeholder:opacity-75 h-10 text-sm',
+      'h-full appearance-none bg-transparent outline-none grow w-0 placeholder:text-current placeholder:opacity-75 text-sm',
     helperText: 'first-letter:uppercase px-1 text-xs',
     errorMessage:
       'first-letter:uppercase px-1 text-xs font-semibold text-danger-11',
-    startContent: 'flex gap-1 items-center text-base',
-    endContent: 'flex gap-1 items-center text-base',
     textarea:
       'appearance-none bg-transparent outline-none grow w-0 placeholder:text-current placeholder:opacity-75 text-sm resize-none',
   },
@@ -43,7 +41,7 @@ export type InputClassNames = ClassNames<typeof input.slots>;
 
 export const numberInput = tv({
   slots: {
-    button: 'h-6 w-6 text-base',
+    button: '',
   },
 });
 
@@ -52,7 +50,7 @@ export type NumberInputClassNames = ClassNames<typeof numberInput.slots>;
 
 export const passwordInput = tv({
   slots: {
-    button: 'h-6 w-6 text-base',
+    button: '',
   },
 });
 

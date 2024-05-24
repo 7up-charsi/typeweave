@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Autocomplete,
-  autocompleteInputAdapter,
   Input,
   Checkbox,
   Button,
@@ -15,7 +14,14 @@ import {
   DialogTitle,
 } from '../src';
 import { select } from '@typeweave/theme';
-import options from './options.json';
+import optionsJson from './options.json';
+import { PointerEvents } from '../src/pointer-events/pointer-events';
+
+const options = optionsJson.sort((a, b) => {
+  if (a.title[0].toLowerCase() > b.title[0].toLowerCase()) return 1;
+  if (a.title[0].toLowerCase() < b.title[0].toLowerCase()) return -1;
+  return 0;
+});
 
 const meta = {
   title: 'Components/Autocomplete',
@@ -37,9 +43,7 @@ const SingleTemplate = () => (
     options={options}
     defaultValue={options[21]}
     getOptionLabel={(option) => option.title}
-    renderInput={(props) => (
-      <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
-    )}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
   />
 );
 
@@ -53,9 +57,7 @@ const MultipleTemplate = () => (
     options={options}
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
-    renderInput={(props) => (
-      <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
-    )}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
   />
 );
 
@@ -63,41 +65,10 @@ export const Multiple = {
   render: MultipleTemplate,
 };
 
-const CreatableTemplate = () => {
-  const [loading, setLoading] = React.useState(false);
-
-  return (
-    <Autocomplete
-      loading={loading}
-      options={options}
-      defaultValue={options[21]}
-      getOptionLabel={(option) => option.title}
-      renderInput={(props) => (
-        <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
-      )}
-      creatable
-      onCreate={(val) => {
-        setLoading(true);
-
-        setTimeout(() => {
-          setLoading(false);
-          alert(`created "${val}"`);
-        }, 2000);
-      }}
-    />
-  );
-};
-
-export const Creatable = {
-  render: CreatableTemplate,
-};
-
 const NoOptionTemplate = () => (
   <Autocomplete
     options={[]}
-    renderInput={(props) => (
-      <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
-    )}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
   />
 );
 
@@ -109,9 +80,7 @@ const LoadingTemplate = () => (
   <Autocomplete
     options={options}
     loading
-    renderInput={(props) => (
-      <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
-    )}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
   />
 );
 
@@ -125,24 +94,24 @@ const CustomOptionTemplate = () => (
     options={options}
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
-    renderInput={(props) => (
-      <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
-    )}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
     classNames={{ option: 'flex' }}
-    renderOption={({ label, option, state }) => (
-      <>
-        <Checkbox
-          checked={state.selected}
-          readOnly
-          classNames={{ base: 'mr-2' }}
-          size="sm"
-        />
+    renderOption={({ key, onPress, ...props }, option, state) => (
+      <PointerEvents key={key} onPress={onPress}>
+        <li {...props}>
+          <Checkbox
+            checked={state.selected}
+            readOnly
+            classNames={{ base: 'mr-2' }}
+            size="sm"
+          />
 
-        <span className="grow truncate">
-          <span className="text-sm mr-1 font-semibold">{option.year}</span>
-          {label}
-        </span>
-      </>
+          <span className="grow truncate">
+            <span className="text-sm mr-1 font-semibold">{option.year}</span>
+            {option.title}
+          </span>
+        </li>
+      </PointerEvents>
     )}
   />
 );
@@ -151,20 +120,63 @@ export const CustomOption = {
   render: CustomOptionTemplate,
 };
 
-const GroupTemplate = () => (
+const CustomOptionGroupedTemplate = () => (
+  <Autocomplete
+    multiple
+    options={options}
+    defaultValue={[options[21]]}
+    getOptionLabel={(option) => option.title}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
+    classNames={{ option: 'flex' }}
+    groupBy={(option) => {
+      const firstLetter = option.title[0];
+      const isNumber = /[0-9]/.test(firstLetter);
+
+      if (isNumber) return '0-9';
+      return firstLetter;
+    }}
+    renderOption={({ key, onPress, ...props }, option, state) => (
+      <PointerEvents key={key} onPress={onPress}>
+        <li {...props}>
+          <Checkbox
+            checked={state.selected}
+            readOnly
+            classNames={{ base: 'mr-2' }}
+            size="sm"
+          />
+
+          <span className="grow truncate">
+            <span className="text-sm mr-1 font-semibold">{option.year}</span>
+            {option.title}
+          </span>
+        </li>
+      </PointerEvents>
+    )}
+  />
+);
+
+export const CustomOptionGrouped = {
+  render: CustomOptionGroupedTemplate,
+};
+
+const GroupedTemplate = () => (
   <Autocomplete
     options={options}
     defaultValue={options[21]}
     getOptionLabel={(option) => option.title}
-    renderInput={(props) => (
-      <Input label="top 100 movies" {...autocompleteInputAdapter(props)} />
-    )}
-    groupBy={(option) => option.title[0]}
+    renderInput={(props) => <Input label="top 100 movies" {...props} />}
+    groupBy={(option) => {
+      const firstLetter = option.title[0];
+      const isNumber = /[0-9]/.test(firstLetter);
+
+      if (isNumber) return '0-9';
+      return firstLetter;
+    }}
   />
 );
 
-export const Group = {
-  render: GroupTemplate,
+export const Grouped = {
+  render: GroupedTemplate,
 };
 
 const InDialogTemplate = () => (
@@ -187,11 +199,7 @@ const InDialogTemplate = () => (
             defaultValue={options[21]}
             getOptionLabel={(option) => option.title}
             renderInput={(props) => (
-              <Input
-                label="top 100 movies"
-                className="w-full"
-                {...autocompleteInputAdapter(props)}
-              />
+              <Input label="top 100 movies" className="w-full" {...props} />
             )}
           />
 
@@ -210,44 +218,4 @@ const InDialogTemplate = () => (
 
 export const InDialog = {
   render: InDialogTemplate,
-};
-
-const CustomTemplate = () => (
-  <DialogRoot defaultOpen>
-    <DialogTrigger>
-      <div className="border border-muted-6 rounded bg-white inline-flex items-center px-3 h-10 w-64">
-        Select one movie
-      </div>
-    </DialogTrigger>
-
-    <DialogPortal>
-      <DialogOverlay />
-
-      <DialogContent className="w-[calc(100%-16px)] max-w-xs p-4">
-        <Autocomplete
-          open
-          options={options}
-          disablePopper
-          disablePortal
-          getOptionLabel={(option) => option.title}
-          shadow={false}
-          renderInput={(props) => (
-            <Input
-              {...autocompleteInputAdapter(props, {
-                disableOpenIndicator: true,
-              })}
-              className="w-full mb-4"
-              label="search"
-              hideLabel
-              placeholder="Search..."
-            />
-          )}
-        />
-      </DialogContent>
-    </DialogPortal>
-  </DialogRoot>
-);
-
-export const Custom = {
-  render: CustomTemplate,
 };

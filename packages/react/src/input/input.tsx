@@ -148,11 +148,6 @@ const InputImpl = (
           if (!multiline && e.target instanceof HTMLInputElement) return;
           if (multiline && e.target instanceof HTMLTextAreaElement) return;
 
-          if ((e.target as HTMLElement).closest('button')) {
-            e.preventDefault();
-            return;
-          }
-
           e.preventDefault();
           innerInputRef.current?.focus();
           innerTextareaRef.current?.focus();
@@ -160,15 +155,7 @@ const InputImpl = (
         ref={inputWrapperRef}
         className={styles.inputWrapper({ className: classNames?.inputWrapper })}
       >
-        {!!startContent && !multiline && (
-          <span
-            className={styles.startContent({
-              className: classNames?.startContent,
-            })}
-          >
-            {startContent}
-          </span>
-        )}
+        {!!startContent && !multiline && startContent}
 
         {!multiline ? null : (
           <Slot<
@@ -198,15 +185,7 @@ const InputImpl = (
           </Slot>
         )}
 
-        {!!endContent && !multiline && (
-          <span
-            className={styles.endContent({
-              className: classNames?.endContent,
-            })}
-          >
-            {endContent}
-          </span>
-        )}
+        {!!endContent && !multiline && endContent}
       </div>
 
       {!error && helperText && (
