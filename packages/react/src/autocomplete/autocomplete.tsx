@@ -886,7 +886,7 @@ const AutocompleteImpl = React.forwardRef<
     selectNewValue(event, filteredOptions[index], 'selectOption');
   };
 
-  const handlePopupIndicator = () => {
+  const handleOpenIndicator = () => {
     if (open) {
       handleClose('toggleInput');
     } else {
@@ -894,26 +894,36 @@ const AutocompleteImpl = React.forwardRef<
     }
   };
 
-  // TODO: openOnFocus has various bugs
-
   // Prevent input blur when interacting with the combobox
-  // and Focus the input when interacting with the combobox
   const onInputWrapperPoiterDown = (event: React.PointerEvent) => {
     const target = event.target as HTMLElement;
 
-    if (!inputRef.current) return;
+    // Prevent focusing the input if click is anywhere outside the Autocomplete
+    if (!event.currentTarget.contains(target)) {
+      return;
+    }
+
+    if (event.currentTarget === event.target) {
+      handleOpenIndicator();
+    }
+
+    if (target.getAttribute('id') !== inputId) {
+      event.preventDefault();
+    }
+  };
+
+  // Focus the input when interacting with the combobox
+  const onInputWrapperPress = (event: React.PointerEvent) => {
+    const target = event.target as HTMLElement;
 
     // Prevent focusing the input if click is anywhere outside the Autocomplete
-    if (!event.currentTarget.contains(target)) return;
-
-    if (target.getAttribute('id') === inputId) return;
-
-    event.preventDefault();
-    inputRef.current.focus();
-
-    if (event.target === event.currentTarget) {
-      handlePopupIndicator();
+    if (!event.currentTarget.contains(target)) {
+      return;
     }
+
+    if (!inputRef.current) return;
+
+    inputRef.current.focus();
 
     if (
       selectOnFocus &&
@@ -930,7 +940,7 @@ const AutocompleteImpl = React.forwardRef<
 
   const onInputPointerDown = () => {
     if (!disabled && (inputValue === '' || !open)) {
-      handlePopupIndicator();
+      handleOpenIndicator();
     }
   };
 
@@ -1071,7 +1081,7 @@ const AutocompleteImpl = React.forwardRef<
           aria-label={listOpen ? closeText : openText}
           excludeFromTabOrder
           className={styles.openIndicator()}
-          onPress={handlePopupIndicator}
+          onPress={handleOpenIndicator}
           data-open={listOpen}
         >
           <ChevronDownIcon />
@@ -1172,6 +1182,7 @@ const AutocompleteImpl = React.forwardRef<
               'aria-owns': listOpen ? `${inputId}-listbox` : undefined,
               onKeyDown: onInputWrapperKeyDown,
               onPointerDown: onInputWrapperPoiterDown,
+              onPress: onInputWrapperPress,
             },
             classNames: {
               inputWrapper: styles.inputWrapper(),

@@ -28,7 +28,7 @@ export const autocomplete = tv({
     },
     multiple: {
       true: {
-        endContent: 'flex absolute right-0 top-1/2 -translate-y-1/2 pr-3',
+        endContent: 'flex absolute right-0 top-1/2 -translate-y-1/2 mr-3',
         inputWrapper: 'flex-wrap min-h-10 h-auto py-2',
         input: 'min-w-12 grow min-h-auto h-auto',
       },
