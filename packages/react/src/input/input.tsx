@@ -144,6 +144,7 @@ const InputImpl = (
         onPointerDown={(e) => {
           inputWrapperProps?.onPointerDown?.(e);
 
+          if (e.currentTarget !== e.target) return;
           if (e.button !== 0 || disabled) return;
           if (!multiline && e.target instanceof HTMLInputElement) return;
           if (multiline && e.target instanceof HTMLTextAreaElement) return;

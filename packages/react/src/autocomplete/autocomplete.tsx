@@ -94,6 +94,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
       clearOnEscape?: boolean;
       readOnly?: boolean;
       disableCloseOnSelect?: boolean;
+      openOnFocus?: boolean;
       pageSize?: number;
       getOptionLabel?: (option: Value) => string;
       autoHighlight?: boolean;
@@ -101,12 +102,17 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
       isOptionEqualToValue?: (option: Value, value: Value) => boolean;
       renderGroup?: (params: AutocompleteRenderGroupParams) => React.ReactNode;
       noOptionsText?: string;
+      clearText?: string;
+      openText?: string;
+      closeText?: string;
+      loadingText?: string;
       loading?: boolean;
       clearInputOnBlur?: boolean;
       selectOnFocus?: boolean;
       handleHomeEndKeys?: boolean;
-      loadingText?: string;
       filterSelectedOptions?: boolean;
+      hasClearButton?: boolean;
+      hasOpenIndicator?: boolean;
       groupBy?: (option: Value) => string;
       inputValue?: string;
       onInputChange?: (
@@ -180,6 +186,7 @@ const AutocompleteImpl = React.forwardRef<
     defaultValue,
     value: valueProp,
     onChange,
+    openOnFocus,
     handleHomeEndKeys = true,
     shadow = true,
     options = [],
@@ -190,6 +197,8 @@ const AutocompleteImpl = React.forwardRef<
     loopList = true,
     disabled,
     selectOnFocus = true,
+    hasClearButton = true,
+    hasOpenIndicator = true,
     multiple,
     readOnly,
     pageSize = 5,
@@ -198,8 +207,11 @@ const AutocompleteImpl = React.forwardRef<
     disableCloseOnSelect,
     getOptionDisabled,
     noOptionsText = 'no options',
-    loading,
     loadingText = 'loading ...',
+    openText = 'open',
+    closeText = 'close',
+    clearText = 'clear',
+    loading,
     getOptionLabel: getOptionLabelProp,
     isOptionEqualToValue: isOptionEqualToValueProp,
     getOptionKey,
@@ -722,7 +734,7 @@ const AutocompleteImpl = React.forwardRef<
     handleValue(multiple ? [] : null, 'clear');
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
+  const onInputWrapperKeyDown = (event: React.KeyboardEvent) => {
     switch (event.key) {
       case 'Home':
         if (listOpen && handleHomeEndKeys) {
@@ -828,7 +840,7 @@ const AutocompleteImpl = React.forwardRef<
   const handleFocus = () => {
     setFocused(true);
 
-    if (!ignoreListOpen.current) {
+    if (openOnFocus && !ignoreListOpen.current) {
       handleOpen();
     }
   };
@@ -882,8 +894,11 @@ const AutocompleteImpl = React.forwardRef<
     }
   };
 
+  // TODO: openOnFocus has various bugs
+
   // Prevent input blur when interacting with the combobox
-  const handlePointerDown = (event: React.PointerEvent) => {
+  // and Focus the input when interacting with the combobox
+  const onInputWrapperPoiterDown = (event: React.PointerEvent) => {
     const target = event.target as HTMLElement;
 
     if (!inputRef.current) return;
@@ -895,6 +910,10 @@ const AutocompleteImpl = React.forwardRef<
 
     event.preventDefault();
     inputRef.current.focus();
+
+    if (event.target === event.currentTarget) {
+      handlePopupIndicator();
+    }
 
     if (
       selectOnFocus &&
@@ -909,7 +928,7 @@ const AutocompleteImpl = React.forwardRef<
     firstFocus.current = false;
   };
 
-  const handleInputPointerDown = () => {
+  const onInputPointerDown = () => {
     if (!disabled && (inputValue === '' || !open)) {
       handlePopupIndicator();
     }
@@ -954,8 +973,8 @@ const AutocompleteImpl = React.forwardRef<
   }
 
   const styles = React.useMemo(
-    () => autocomplete({ shadow, multiple }),
-    [shadow, multiple],
+    () => autocomplete({ shadow, multiple, hasClearButton, hasOpenIndicator }),
+    [shadow, multiple, hasClearButton, hasOpenIndicator],
   );
 
   const defaultRenderGroup = (params: AutocompleteRenderGroupParams) => (
@@ -1028,27 +1047,36 @@ const AutocompleteImpl = React.forwardRef<
     }
   }
 
-  const endContent = (
+  const endContent = (hasClearButton || hasOpenIndicator) && (
     <div className={styles.endContent()}>
-      <Button
-        isIconOnly
-        variant="text"
-        size="sm"
-        aria-label="clear value"
-        className={styles.clearIndicator()}
-      >
-        <XIcon />
-      </Button>
+      {hasClearButton && (Array.isArray(value) ? !!value.length : !!value) && (
+        <Button
+          isIconOnly
+          variant="text"
+          size="sm"
+          aria-label={clearText}
+          excludeFromTabOrder
+          className={styles.clearIndicator()}
+          onPress={handleClear}
+        >
+          <XIcon />
+        </Button>
+      )}
 
-      <Button
-        isIconOnly
-        variant="text"
-        size="sm"
-        aria-label="open indicator"
-        className={styles.openIndicator()}
-      >
-        <ChevronDownIcon />
-      </Button>
+      {hasOpenIndicator && (
+        <Button
+          isIconOnly
+          variant="text"
+          size="sm"
+          aria-label={listOpen ? closeText : openText}
+          excludeFromTabOrder
+          className={styles.openIndicator()}
+          onPress={handlePopupIndicator}
+          data-open={listOpen}
+        >
+          <ChevronDownIcon />
+        </Button>
+      )}
     </div>
   );
 
@@ -1065,71 +1093,71 @@ const AutocompleteImpl = React.forwardRef<
   if (!renderInput)
     throw new Error(`${displayName}, \`renderInput\` prop is required`);
 
-  const listBox = (
+  const list = (
     <div
       className={styles.listboxWrapper({
         className: classNames?.listboxWrapper ?? className,
       })}
     >
-      <ul
-        {...restProps}
-        ref={mergeRefs(ref, listboxRef)}
-        className={styles.listbox({
-          className: classNames?.listbox ?? className,
-        })}
-        role="listbox"
-        id={`${inputId}-listbox`}
-        aria-labelledby={`${inputId}-label`}
-        onPointerDown={(e) => {
-          e.preventDefault();
-        }}
-      >
-        {groupedOptions.length === 0
-          ? null
-          : groupedOptions.map((option, index) => {
-              if (groupBy) {
-                const groupedOption = option as OptionsGroup;
+      {groupedOptions.length === 0 ? null : (
+        <ul
+          {...restProps}
+          ref={mergeRefs(ref, listboxRef)}
+          className={styles.listbox({
+            className: classNames?.listbox ?? className,
+          })}
+          role="listbox"
+          id={`${inputId}-listbox`}
+          aria-labelledby={`${inputId}-label`}
+          onPointerDown={(e) => {
+            e.preventDefault();
+          }}
+        >
+          {groupedOptions.map((option, index) => {
+            if (groupBy) {
+              const groupedOption = option as OptionsGroup;
 
-                return renderGroup({
-                  key: groupedOption.key,
-                  group: groupedOption.group,
-                  children: groupedOption.options.map((option2, index2) =>
-                    renderListOption(option2, groupedOption.index + index2),
-                  ),
-                });
-              }
+              return renderGroup({
+                key: groupedOption.key,
+                group: groupedOption.group,
+                children: groupedOption.options.map((option2, index2) =>
+                  renderListOption(option2, groupedOption.index + index2),
+                ),
+              });
+            }
 
-              return renderListOption(option, index);
-            })}
+            return renderListOption(option, index);
+          })}
+        </ul>
+      )}
 
-        {!loading && !options?.length ? (
-          <div
-            className={styles.noOptions({
-              className: classNames?.noOptions,
-            })}
-          >
-            {noOptionsText}
-          </div>
-        ) : null}
+      {loading && groupedOptions.length === 0 ? (
+        <div
+          className={styles.loading({
+            className: classNames?.noOptions,
+          })}
+        >
+          {loadingText}
+        </div>
+      ) : null}
 
-        {loading ? (
-          <div
-            className={styles.loading({
-              className: classNames?.noOptions,
-            })}
-          >
-            {loadingText}
-          </div>
-        ) : null}
-      </ul>
+      {groupedOptions.length === 0 && !loading ? (
+        <div
+          className={styles.noOptions({
+            className: classNames?.noOptions,
+          })}
+        >
+          {noOptionsText}
+        </div>
+      ) : null}
     </div>
   );
 
   const withPopper = disablePopper ? (
-    listBox
+    list
   ) : (
     <PopperFloating sticky="always" mainOffset={offset || 5}>
-      {listBox}
+      {list}
     </PopperFloating>
   );
 
@@ -1142,8 +1170,8 @@ const AutocompleteImpl = React.forwardRef<
           renderInput({
             inputWrapperProps: {
               'aria-owns': listOpen ? `${inputId}-listbox` : undefined,
-              onKeyDown: handleKeyDown,
-              onPointerDown: handlePointerDown,
+              onKeyDown: onInputWrapperKeyDown,
+              onPointerDown: onInputWrapperPoiterDown,
             },
             classNames: {
               inputWrapper: styles.inputWrapper(),
@@ -1157,7 +1185,7 @@ const AutocompleteImpl = React.forwardRef<
             onBlur: handleBlur,
             onFocus: handleFocus,
             onChange: handleInputChange,
-            onPointerDown: handleInputPointerDown,
+            onPointerDown: onInputPointerDown,
             // if open then this is handled imperatively in setHighlightedIndex so don't let react override
             // only have an opinion about this when closed
             'aria-activedescendant': listOpen ? '' : undefined,
@@ -1173,7 +1201,8 @@ const AutocompleteImpl = React.forwardRef<
             autoCapitalize: 'none',
             spellCheck: 'false',
             role: 'combobox',
-            disabled: !!disabled,
+            disabled,
+            readOnly,
           })
         }
       </PopperReference>
