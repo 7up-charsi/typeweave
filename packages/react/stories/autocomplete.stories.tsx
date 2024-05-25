@@ -58,7 +58,6 @@ const MultipleTemplate = () => (
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
     renderInput={(props) => <Input label="top 100 movies" {...props} />}
-    openOnFocus
   />
 );
 

@@ -2,19 +2,23 @@ import { input, InputClassNames, InputVariantProps } from '@typeweave/theme';
 import { mergeRefs } from '@typeweave/react-utils';
 import React from 'react';
 import { Slot } from '../slot';
+import { PointerEventsProps } from '../pointer-events/pointer-events';
+import { usePointerEvents } from '../use-pointer-events';
 
-type InputBaseProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  onBlur?: React.FocusEventHandler<HTMLInputElement>;
-  onFocus?: React.FocusEventHandler<HTMLInputElement>;
-  classNames?: Omit<InputClassNames, 'textarea'>;
-  startContent?: React.ReactNode;
-  endContent?: React.ReactNode;
-};
+type InputBaseProps = React.InputHTMLAttributes<HTMLInputElement> &
+  PointerEventsProps<HTMLInputElement> & {
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
+    onBlur?: React.FocusEventHandler<HTMLInputElement>;
+    onFocus?: React.FocusEventHandler<HTMLInputElement>;
+    classNames?: Omit<InputClassNames, 'textarea'>;
+    startContent?: React.ReactNode;
+    endContent?: React.ReactNode;
+  };
 
-type TextareaBaseProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  classNames?: Omit<InputClassNames, 'input'>;
-};
+type TextareaBaseProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
+  PointerEventsProps<HTMLTextAreaElement> & {
+    classNames?: Omit<InputClassNames, 'input'>;
+  };
 
 type BaseProps = InputVariantProps & {
   defaultValue?: string;
@@ -31,7 +35,8 @@ type BaseProps = InputVariantProps & {
   labelProps?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'className'>;
   helperTextProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   errorMessageProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
-  inputWrapperProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
+  inputWrapperProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'> &
+    PointerEventsProps<HTMLDivElement>;
   baseRef?: React.ForwardedRef<HTMLDivElement>;
   inputWrapperRef?: React.ForwardedRef<HTMLDivElement>;
   error?: boolean;
@@ -81,6 +86,9 @@ const InputImpl = (
     multiline,
     asChild,
     children,
+    onPointerDown,
+    onPointerUp,
+    onPress,
     ...inputProps
   } = props;
 
@@ -91,6 +99,31 @@ const InputImpl = (
 
   const innerInputRef = React.useRef<HTMLInputElement | null>(null);
   const innerTextareaRef = React.useRef<HTMLTextAreaElement | null>(null);
+
+  const inputWrapperPointerEvents = usePointerEvents({
+    onPointerUp: inputWrapperProps.onPointerUp,
+    onPress: inputWrapperProps.onPress,
+    onPointerDown: (e) => {
+      inputWrapperProps?.onPointerDown?.(e);
+
+      if (e.currentTarget !== e.target) return;
+      if (e.button !== 0 || disabled) return;
+      if (!multiline && e.target instanceof HTMLInputElement) return;
+      if (multiline && e.target instanceof HTMLTextAreaElement) return;
+
+      e.preventDefault();
+      innerInputRef.current?.focus();
+      innerTextareaRef.current?.focus();
+    },
+  });
+
+  const pointerEvents = usePointerEvents<
+    HTMLInputElement | HTMLTextAreaElement
+  >({
+    onPointerDown,
+    onPointerUp,
+    onPress,
+  });
 
   React.useEffect(() => {
     if (process.env.NODE_ENV !== 'production' && !label) {
@@ -120,6 +153,7 @@ const InputImpl = (
     id: inputId,
     disabled,
     autoComplete: 'off',
+    ...pointerEvents,
   };
 
   return (
@@ -141,18 +175,7 @@ const InputImpl = (
 
       <div
         {...inputWrapperProps}
-        onPointerDown={(e) => {
-          inputWrapperProps?.onPointerDown?.(e);
-
-          if (e.currentTarget !== e.target) return;
-          if (e.button !== 0 || disabled) return;
-          if (!multiline && e.target instanceof HTMLInputElement) return;
-          if (multiline && e.target instanceof HTMLTextAreaElement) return;
-
-          e.preventDefault();
-          innerInputRef.current?.focus();
-          innerTextareaRef.current?.focus();
-        }}
+        {...inputWrapperPointerEvents}
         ref={inputWrapperRef}
         className={styles.inputWrapper({ className: classNames?.inputWrapper })}
       >
