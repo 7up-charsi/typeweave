@@ -58,6 +58,7 @@ const MultipleTemplate = () => (
     defaultValue={[options[21]]}
     getOptionLabel={(option) => option.title}
     renderInput={(props) => <Input label="top 100 movies" {...props} />}
+    openOnFocus
   />
 );
 
@@ -78,7 +79,7 @@ export const NoOptions = {
 
 const LoadingTemplate = () => (
   <Autocomplete
-    options={options}
+    options={[]}
     loading
     renderInput={(props) => <Input label="top 100 movies" {...props} />}
   />
