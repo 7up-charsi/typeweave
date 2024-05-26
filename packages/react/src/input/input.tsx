@@ -78,7 +78,7 @@ const InputImpl = (
     baseProps = {},
     labelProps = {},
     helperTextProps = {},
-    inputWrapperProps = {},
+    inputWrapperProps: inputWrapperPropsProp = {},
     errorMessageProps = {},
     fullWidth = false,
     disabled = false,
@@ -92,6 +92,17 @@ const InputImpl = (
     ...inputProps
   } = props;
 
+  const {
+    onPointerDown: inputWrapperOnPointerDown,
+    onPointerUp: inputWrapperOnPointerUp,
+    onPress: inputWrapperOnPress,
+    ...inputWrapperProps
+  } = inputWrapperPropsProp as Omit<
+    React.HTMLAttributes<HTMLDivElement>,
+    'className'
+  > &
+    PointerEventsProps<HTMLDivElement>;
+
   const labelId = React.useId();
   const helperTextId = React.useId();
   const errorMessageId = React.useId();
@@ -101,10 +112,10 @@ const InputImpl = (
   const innerTextareaRef = React.useRef<HTMLTextAreaElement | null>(null);
 
   const inputWrapperPointerEvents = usePointerEvents({
-    onPointerUp: inputWrapperProps.onPointerUp,
-    onPress: inputWrapperProps.onPress,
+    onPointerUp: inputWrapperOnPointerUp,
+    onPress: inputWrapperOnPress,
     onPointerDown: (e) => {
-      inputWrapperProps?.onPointerDown?.(e);
+      inputWrapperOnPointerDown?.(e);
 
       if (e.currentTarget !== e.target) return;
       if (e.button !== 0 || disabled) return;

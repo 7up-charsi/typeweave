@@ -203,7 +203,7 @@ const AutocompleteImpl = React.forwardRef<
     readOnly,
     pageSize = 5,
     disableClearable,
-    clearInputOnBlur,
+    clearInputOnBlur = true,
     disableCloseOnSelect,
     getOptionDisabled,
     noOptionsText = 'no options',
@@ -245,7 +245,10 @@ const AutocompleteImpl = React.forwardRef<
 
     const optionLabel = getOptionLabelProp?.(option);
 
-    if (typeof optionLabel !== 'string' && 'production') {
+    if (
+      typeof optionLabel !== 'string' &&
+      process.env.NODE_ENV !== 'production'
+    ) {
       const erroneousReturn =
         optionLabel === undefined
           ? 'undefined'
@@ -279,22 +282,12 @@ const AutocompleteImpl = React.forwardRef<
 
   const resetInputValue = React.useCallback(
     (newValue: string | object | null) => {
-      if (clearInputOnBlur) return;
-
-      // retain current `inputValue` if new option isn't selected
-      // When `multiple` is enabled, `newValue` is an array of all selected items including the newly selected item
-
-      if (
-        Array.isArray(value) &&
-        Array.isArray(newValue) &&
-        newValue.length < value.length
-      )
-        return;
-
-      if (newValue === null) return;
+      //
 
       let newInputValue;
-      if (multiple) {
+      if (Array.isArray(newValue)) {
+        newInputValue = '';
+      } else if (newValue === null) {
         newInputValue = '';
       } else {
         const optionLabel = getOptionLabel(newValue);
@@ -309,15 +302,7 @@ const AutocompleteImpl = React.forwardRef<
 
       onInputChange?.(newInputValue, 'reset');
     },
-    [
-      clearInputOnBlur,
-      getOptionLabel,
-      inputValue,
-      multiple,
-      onInputChange,
-      setInputValue,
-      value,
-    ],
+    [getOptionLabel, inputValue, onInputChange, setInputValue],
   );
 
   // this is used to not open listbox when user clear value with clear button
@@ -416,18 +401,8 @@ const AutocompleteImpl = React.forwardRef<
   });
 
   React.useEffect(() => {
-    if (value === undefined) return;
-
-    const valueChange = value !== previousProps.value;
-
-    // do not want to change input value if
-    // user has focus and value is same
-    if (focused && !valueChange) {
-      return;
-    }
-
-    resetInputValue(value);
-  }, [value, resetInputValue, focused, previousProps.value]);
+    if (!focused && value) resetInputValue(value);
+  }, [focused, resetInputValue, value]);
 
   if (process.env.NODE_ENV !== 'production') {
     if (value !== null && options.length > 0) {
@@ -557,8 +532,6 @@ const AutocompleteImpl = React.forwardRef<
         ) {
           listboxNode.scrollTop =
             element.offsetTop - element.offsetHeight * (groupBy ? 1.3 : 0);
-
-          console.log('reached');
         }
       }
     },
@@ -672,8 +645,8 @@ const AutocompleteImpl = React.forwardRef<
   ) => {
     let reason = reasonProp;
 
-    if (Array.isArray(value)) {
-      const newMultipleValue = value.slice();
+    if (multiple) {
+      const newMultipleValue = Array.isArray(value) ? value.slice() : [];
 
       if (process.env.NODE_ENV !== 'production') {
         const matches = newMultipleValue.filter((val) =>
@@ -701,13 +674,10 @@ const AutocompleteImpl = React.forwardRef<
         reason = 'removeOption';
       }
 
-      resetInputValue(newMultipleValue);
-
+      setInputValue('');
       handleValue(newMultipleValue, reason as AutocompleteOnChangeReason);
-    }
-
-    if (!Array.isArray(value)) {
-      resetInputValue(option);
+    } else {
+      setInputValue(getOptionLabel(option));
 
       handleValue(option, reason as AutocompleteOnChangeReason);
     }
@@ -719,7 +689,8 @@ const AutocompleteImpl = React.forwardRef<
 
     if (
       !disableCloseOnSelect &&
-      (!modifiedEvent || (!modifiedEvent.ctrlKey && !modifiedEvent.metaKey))
+      !modifiedEvent.ctrlKey &&
+      !modifiedEvent.metaKey
     ) {
       handleClose(reason as AutocompleteOnCloseReason);
     }
@@ -727,8 +698,8 @@ const AutocompleteImpl = React.forwardRef<
 
   const handleClear = () => {
     ignoreListOpen.current = true;
-    setInputValue('');
 
+    setInputValue('');
     onInputChange?.('', 'clear');
 
     handleValue(multiple ? [] : null, 'clear');
@@ -851,6 +822,22 @@ const AutocompleteImpl = React.forwardRef<
     ignoreListOpen.current = false;
 
     handleClose('blur');
+
+    // if multiple is true, user search option and clearInputOnBlur is
+    // ture then left the inputValue as is otherwise change inputValue
+    if (multiple && clearInputOnBlur) {
+      setInputValue('');
+      return;
+    }
+
+    if (!multiple && value === null && clearInputOnBlur) {
+      setInputValue('');
+      return;
+    }
+
+    if (!multiple && value) {
+      setInputValue(getOptionLabel(value));
+    }
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
