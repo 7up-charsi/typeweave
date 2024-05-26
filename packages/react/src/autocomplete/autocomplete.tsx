@@ -675,9 +675,12 @@ const AutocompleteImpl = React.forwardRef<
       }
 
       setInputValue('');
+      onInputChange?.('', 'reset');
       handleValue(newMultipleValue, reason as AutocompleteOnChangeReason);
     } else {
-      setInputValue(getOptionLabel(option));
+      const inputValue = getOptionLabel(option);
+      setInputValue(inputValue);
+      onInputChange?.(inputValue, 'reset');
 
       handleValue(option, reason as AutocompleteOnChangeReason);
     }
@@ -827,16 +830,20 @@ const AutocompleteImpl = React.forwardRef<
     // ture then left the inputValue as is otherwise change inputValue
     if (multiple && clearInputOnBlur) {
       setInputValue('');
+      onInputChange?.('', 'reset');
       return;
     }
 
     if (!multiple && value === null && clearInputOnBlur) {
       setInputValue('');
+      onInputChange?.('', 'reset');
       return;
     }
 
     if (!multiple && value) {
-      setInputValue(getOptionLabel(value));
+      const inputValue = getOptionLabel(value);
+      setInputValue(inputValue);
+      onInputChange?.(inputValue, 'reset');
     }
   };
 
