@@ -59,8 +59,8 @@ export interface AutocompleteRenderOptionProps {
   tabIndex: number;
   role: string;
   id: string;
-  onPointerEnter: (event: React.PointerEvent<HTMLLIElement>) => void;
-  onPress: (event: React.PointerEvent<HTMLLIElement>) => void;
+  onPointerEnter: (e: React.PointerEvent<HTMLLIElement>) => void;
+  onPress: (e: React.PointerEvent<HTMLLIElement>) => void;
   'data-option-index': number;
   'aria-disabled': boolean;
   'aria-selected': boolean;
@@ -90,7 +90,7 @@ export type AutocompleteProps<Value, Multiple, DisableClearable> =
       defaultOpen?: boolean;
       getOptionDisabled?: (option: Value) => boolean;
       includeInputInList?: boolean;
-      loopList?: boolean;
+      disableListWrap?: boolean;
       clearOnEscape?: boolean;
       readOnly?: boolean;
       disableCloseOnSelect?: boolean;
@@ -193,8 +193,8 @@ const AutocompleteImpl = React.forwardRef<
     renderGroup: renderGroupProp,
     filterSelectedOptions = false,
     includeInputInList,
-    clearOnEscape,
-    loopList = true,
+    clearOnEscape = true,
+    disableListWrap,
     disabled,
     selectOnFocus = true,
     hasClearButton = true,
@@ -280,31 +280,6 @@ const AutocompleteImpl = React.forwardRef<
     default: '',
   });
 
-  const resetInputValue = React.useCallback(
-    (newValue: string | object | null) => {
-      //
-
-      let newInputValue;
-      if (Array.isArray(newValue)) {
-        newInputValue = '';
-      } else if (newValue === null) {
-        newInputValue = '';
-      } else {
-        const optionLabel = getOptionLabel(newValue);
-        newInputValue = typeof optionLabel === 'string' ? optionLabel : '';
-      }
-
-      if (inputValue === newInputValue) {
-        return;
-      }
-
-      setInputValue(newInputValue);
-
-      onInputChange?.(newInputValue, 'reset');
-    },
-    [getOptionLabel, inputValue, onInputChange, setInputValue],
-  );
-
   // this is used to not open listbox when user clear value with clear button
   const ignoreListOpen = React.useRef(false);
 
@@ -329,7 +304,7 @@ const AutocompleteImpl = React.forwardRef<
   const [keepUnfiltered, setKeepUnfiltered] = React.useState(true);
 
   const inputValueIsSelectedValue =
-    !Array.isArray(value) && value && inputValue === getOptionLabel(value);
+    !multiple && value && inputValue === getOptionLabel(value);
 
   const listOpen = open && !readOnly;
 
@@ -359,6 +334,7 @@ const AutocompleteImpl = React.forwardRef<
 
   if (groupBy) {
     // used to keep track of key and indexes in the result array
+    // this will only occur if option are not sorted. Autocomplete expects sorted options
     const indexBy = new Map();
     let warn = false;
 
@@ -400,9 +376,39 @@ const AutocompleteImpl = React.forwardRef<
     inputValue,
   });
 
+  const resetInputValue = React.useCallback(
+    (newValue: string | object | null) => {
+      //
+
+      let newInputValue;
+      if (multiple) {
+        newInputValue = '';
+      } else if (newValue === null) {
+        newInputValue = '';
+      } else {
+        const optionLabel = getOptionLabel(newValue);
+        newInputValue = typeof optionLabel === 'string' ? optionLabel : '';
+      }
+
+      if (inputValue === newInputValue) {
+        return;
+      }
+
+      setInputValue(newInputValue);
+      onInputChange?.(newInputValue, 'reset');
+    },
+    [getOptionLabel, inputValue, multiple, onInputChange, setInputValue],
+  );
+
   React.useEffect(() => {
-    if (!focused && value) resetInputValue(value);
-  }, [focused, resetInputValue, value]);
+    const valueChanged = previousProps.value !== value;
+
+    if (!valueChanged) return;
+    if (focused) return;
+    if (!value) return;
+
+    resetInputValue(value);
+  }, [focused, previousProps.value, resetInputValue, value]);
 
   if (process.env.NODE_ENV !== 'production') {
     if (value !== null && options.length > 0) {
@@ -427,12 +433,66 @@ const AutocompleteImpl = React.forwardRef<
     }
   }
 
-  const validOptionIndex = (index: number, direction: 'next' | 'previous') => {
-    if (!listboxRef.current || index < 0 || index >= filteredOptions.length) {
+  const getValidIndex = (
+    diff: 'start' | 'end' | 'reset' | number,
+    direction: 'next' | 'previous',
+  ) => {
+    const maxIndex = filteredOptions.length - 1;
+
+    if (diff === 'reset') {
+      return defaultHighlighted;
+    }
+
+    if (diff === 'start') {
+      return 0;
+    }
+
+    if (diff === 'end') {
+      return maxIndex;
+    }
+
+    let newIndex = highlightedIndexRef.current + diff;
+
+    if (newIndex < 0) {
+      if (newIndex === -1 && includeInputInList) {
+        newIndex = -1;
+      }
+
+      if (disableListWrap && highlightedIndexRef.current === -1) {
+        newIndex = -1;
+      }
+
+      if (
+        (disableListWrap && highlightedIndexRef.current !== -1) ||
+        Math.abs(diff) > 1
+      ) {
+        newIndex = 0;
+      }
+
+      newIndex = maxIndex;
+    }
+
+    if (newIndex > maxIndex) {
+      if (newIndex === maxIndex + 1 && includeInputInList) {
+        newIndex = -1;
+      }
+
+      if (disableListWrap || Math.abs(diff) > 1) {
+        newIndex = maxIndex;
+      }
+
+      newIndex = 0;
+    }
+
+    if (
+      !listboxRef.current ||
+      newIndex < 0 ||
+      newIndex >= filteredOptions.length
+    ) {
       return -1;
     }
 
-    let nextFocus = index;
+    let nextFocus = newIndex;
 
     // eslint-disable-next-line no-constant-condition
     while (true) {
@@ -440,18 +500,20 @@ const AutocompleteImpl = React.forwardRef<
         `[data-option-index="${nextFocus}"]`,
       );
 
-      // Same logic as MenuList.js
-      const nextFocusDisabled =
-        !option || option.getAttribute('aria-disabled') === 'true';
-
-      if (option && option.hasAttribute('tabindex') && !nextFocusDisabled) {
-        // The next option is available
+      if (
+        option &&
+        option.hasAttribute('tabindex') &&
+        option.getAttribute('aria-disabled') === 'false'
+      ) {
         return nextFocus;
       }
 
       // The next option is disabled, move to the next element.
       // with looped index
       if (direction === 'next') {
+        // The index is zero-based, which means that when nextFocus + 1 equals
+        // filteredOptions.length, all remaining options are disabled. In this case, set
+        // nextFocus to 0 and start checking from the beginning
         nextFocus = (nextFocus + 1) % filteredOptions.length;
       } else {
         nextFocus =
@@ -460,7 +522,7 @@ const AutocompleteImpl = React.forwardRef<
 
       // We end up with initial index, that means we don't have available options.
       // All of them are disabled
-      if (nextFocus === index) {
+      if (nextFocus === newIndex) {
         return -1;
       }
     }
@@ -471,6 +533,7 @@ const AutocompleteImpl = React.forwardRef<
       highlightedIndexRef.current = index;
 
       if (!inputRef.current) return;
+      if (!listboxRef.current) return;
 
       // does the index exist?
       if (index === -1) {
@@ -480,10 +543,6 @@ const AutocompleteImpl = React.forwardRef<
           'aria-activedescendant',
           `${inputId}-option-${index}`,
         );
-      }
-
-      if (!listboxRef.current) {
-        return;
       }
 
       const prev = listboxRef.current.querySelector(
@@ -496,8 +555,6 @@ const AutocompleteImpl = React.forwardRef<
       }
 
       const listboxNode = listboxRef.current;
-
-      if (!listboxNode) return;
 
       if (index === -1) {
         listboxNode.scrollTop = 0;
@@ -534,70 +591,6 @@ const AutocompleteImpl = React.forwardRef<
             element.offsetTop - element.offsetHeight * (groupBy ? 1.3 : 0);
         }
       }
-    },
-  );
-
-  const changeHighlightedIndex = useCallbackRef(
-    ({
-      diff,
-      direction,
-      reason,
-    }: {
-      diff: 'reset' | 'start' | 'end' | number;
-      direction: 'next' | 'previous';
-      reason: 'pointer' | 'keyboard';
-    }) => {
-      if (!listOpen) return;
-
-      const getNextIndex = () => {
-        const maxIndex = filteredOptions.length - 1;
-
-        if (diff === 'reset') {
-          return defaultHighlighted;
-        }
-
-        if (diff === 'start') {
-          return 0;
-        }
-
-        if (diff === 'end') {
-          return maxIndex;
-        }
-
-        const newIndex = highlightedIndexRef.current + diff;
-
-        if (newIndex < 0) {
-          if (newIndex === -1 && includeInputInList) {
-            return -1;
-          }
-
-          if (
-            (loopList && highlightedIndexRef.current !== -1) ||
-            Math.abs(diff) > 1
-          ) {
-            return 0;
-          }
-
-          return maxIndex;
-        }
-
-        if (newIndex > maxIndex) {
-          if (newIndex === maxIndex + 1 && includeInputInList) {
-            return -1;
-          }
-
-          if (loopList || Math.abs(diff) > 1) {
-            return maxIndex;
-          }
-
-          return 0;
-        }
-
-        return newIndex;
-      };
-
-      const nextIndex = validOptionIndex(getNextIndex(), direction);
-      setHighlightedIndex(nextIndex, reason);
     },
   );
 
@@ -639,7 +632,7 @@ const AutocompleteImpl = React.forwardRef<
   };
 
   const selectNewValue = (
-    event: React.SyntheticEvent,
+    e: React.SyntheticEvent,
     option: string | object,
     reasonProp = 'selectOption',
   ) => {
@@ -685,7 +678,7 @@ const AutocompleteImpl = React.forwardRef<
       handleValue(option, reason as AutocompleteOnChangeReason);
     }
 
-    const modifiedEvent = event as unknown as {
+    const modifiedEvent = e as unknown as {
       ctrlKey: boolean;
       metaKey: boolean;
     };
@@ -700,6 +693,8 @@ const AutocompleteImpl = React.forwardRef<
   };
 
   const handleClear = () => {
+    if (disabled) return;
+
     ignoreListOpen.current = true;
 
     setInputValue('');
@@ -708,106 +703,95 @@ const AutocompleteImpl = React.forwardRef<
     handleValue(multiple ? [] : null, 'clear');
   };
 
-  const onInputWrapperKeyDown = (event: React.KeyboardEvent) => {
-    switch (event.key) {
-      case 'Home':
-        if (listOpen && handleHomeEndKeys) {
-          // Prevent scroll of the page
-          event.preventDefault();
-          changeHighlightedIndex({
-            diff: 'start',
-            direction: 'next',
-            reason: 'keyboard',
-          });
-        }
-        break;
-      case 'End':
-        if (listOpen && handleHomeEndKeys) {
-          // Prevent scroll of the page
-          event.preventDefault();
-          changeHighlightedIndex({
-            diff: 'end',
-            direction: 'previous',
-            reason: 'keyboard',
-          });
-        }
-        break;
-      case 'PageUp':
-        // Prevent scroll of the page
-        event.preventDefault();
-        changeHighlightedIndex({
-          diff: -pageSize,
-          direction: 'previous',
-          reason: 'keyboard',
-        });
-        handleOpen();
-        break;
-      case 'PageDown':
-        // Prevent scroll of the page
-        event.preventDefault();
-        changeHighlightedIndex({
-          diff: pageSize,
-          direction: 'next',
-          reason: 'keyboard',
-        });
-        handleOpen();
-        break;
-      case 'ArrowDown':
-        // Prevent cursor move
-        event.preventDefault();
-        changeHighlightedIndex({
-          diff: 1,
-          direction: 'next',
-          reason: 'keyboard',
-        });
-        handleOpen();
-        break;
-      case 'ArrowUp':
-        // Prevent cursor move
-        event.preventDefault();
-        changeHighlightedIndex({
-          diff: -1,
-          direction: 'previous',
-          reason: 'keyboard',
-        });
-        handleOpen();
-        break;
+  const onInputWrapperKeyDown = (e: React.KeyboardEvent) => {
+    if (disabled) return;
 
-      case 'Enter':
-        if (highlightedIndexRef.current !== -1 && listOpen) {
-          const option = filteredOptions[highlightedIndexRef.current];
-          const disabled = getOptionDisabled
-            ? getOptionDisabled(option)
-            : false;
+    if (e.key === 'Escape') {
+      // Avoid Opera to exit fullscreen mode.
+      e.preventDefault();
+      // Avoid the Modal to handle the event.
+      e.stopPropagation();
 
-          // Avoid early form validation, let the end-users continue filling the form.
-          event.preventDefault();
+      if (listOpen) {
+        handleClose('escape');
+      } else if (
+        clearOnEscape &&
+        (inputValue !== '' || (Array.isArray(value) && value.length > 0))
+      ) {
+        handleClear();
+      }
 
-          if (disabled) return;
+      return;
+    }
 
-          selectNewValue(event, option, 'selectOption');
-        }
-        break;
-      case 'Escape':
-        if (listOpen) {
-          // Avoid Opera to exit fullscreen mode.
-          event.preventDefault();
-          // Avoid the Modal to handle the event.
-          event.stopPropagation();
-          handleClose('escape');
-        } else if (
-          clearOnEscape &&
-          (inputValue !== '' || (Array.isArray(value) && value.length > 0))
-        ) {
-          // Avoid Opera to exit fullscreen mode.
-          event.preventDefault();
-          // Avoid the Modal to handle the event.
-          event.stopPropagation();
-          handleClear();
-        }
-        break;
+    if (
+      !listOpen &&
+      ['PageUp', 'PageDown', 'ArrowDown', 'ArrowUp'].includes(e.key)
+    ) {
+      handleOpen();
+      return;
+    }
 
-      default:
+    if (!listOpen) return;
+
+    if (e.key === 'Home' && handleHomeEndKeys) {
+      // Prevent scroll of the page
+      e.preventDefault();
+      setHighlightedIndex(getValidIndex('start', 'next'), 'keyboard');
+      return;
+    }
+
+    if (e.key === 'End' && handleHomeEndKeys) {
+      // Prevent scroll of the page
+      e.preventDefault();
+      setHighlightedIndex(getValidIndex('end', 'next'), 'keyboard');
+      return;
+    }
+
+    if (e.key === 'PageUp') {
+      // Prevent scroll of the page
+      e.preventDefault();
+      setHighlightedIndex(getValidIndex(-pageSize, 'previous'), 'keyboard');
+      return;
+    }
+
+    if (e.key === 'PageDown') {
+      // Prevent scroll of the page
+      e.preventDefault();
+      setHighlightedIndex(getValidIndex(pageSize, 'next'), 'keyboard');
+      return;
+    }
+
+    if (e.key === 'ArrowDown') {
+      // Prevent cursor move
+      e.preventDefault();
+      setHighlightedIndex(getValidIndex(1, 'next'), 'keyboard');
+      return;
+    }
+
+    if (e.key === 'ArrowUp') {
+      // Prevent cursor move
+      e.preventDefault();
+      setHighlightedIndex(getValidIndex(-1, 'next'), 'keyboard');
+      return;
+    }
+
+    if (e.key === 'Enter') {
+      // Avoid early form validation, let the end-users continue filling the form.
+      e.preventDefault();
+
+      if (highlightedIndexRef.current === -1) return;
+
+      const option = filteredOptions[highlightedIndexRef.current];
+      const optionDisabled = getOptionDisabled
+        ? getOptionDisabled(option)
+        : false;
+
+      if (optionDisabled) return;
+
+      selectNewValue(e, option, 'selectOption');
+
+      return;
     }
   };
 
@@ -847,8 +831,8 @@ const AutocompleteImpl = React.forwardRef<
     }
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
 
     if (inputValue !== newValue) {
       setInputValue(newValue);
@@ -868,19 +852,21 @@ const AutocompleteImpl = React.forwardRef<
     }
   };
 
-  const handleOptionPointerEnter = (event: React.PointerEvent) => {
-    const index = Number(event.currentTarget.getAttribute('data-option-index'));
+  const handleOptionPointerEnter = (e: React.PointerEvent) => {
+    const index = Number(e.currentTarget.getAttribute('data-option-index'));
     if (highlightedIndexRef.current !== index) {
       setHighlightedIndex(index, 'pointer');
     }
   };
 
-  const handleOptionPress = (event: React.PointerEvent) => {
-    const index = Number(event.currentTarget.getAttribute('data-option-index'));
-    selectNewValue(event, filteredOptions[index], 'selectOption');
+  const handleOptionPress = (e: React.PointerEvent) => {
+    const index = Number(e.currentTarget.getAttribute('data-option-index'));
+    selectNewValue(e, filteredOptions[index], 'selectOption');
   };
 
   const handleOpenIndicator = () => {
+    if (disabled) return;
+
     if (open) {
       handleClose('toggleInput');
     } else {
@@ -889,29 +875,33 @@ const AutocompleteImpl = React.forwardRef<
   };
 
   // Prevent input blur when interacting with the combobox
-  const onInputWrapperPoiterDown = (event: React.PointerEvent) => {
-    const target = event.target as HTMLElement;
+  const onInputWrapperPoiterDown = (e: React.PointerEvent) => {
+    if (disabled) return;
+
+    const target = e.target as HTMLElement;
 
     // Prevent focusing the input if click is anywhere outside the Autocomplete
-    if (!event.currentTarget.contains(target)) {
+    if (!e.currentTarget.contains(target)) {
       return;
     }
 
-    if (event.currentTarget === event.target) {
+    if (e.currentTarget === e.target) {
       handleOpenIndicator();
     }
 
     if (target.getAttribute('id') !== inputId) {
-      event.preventDefault();
+      e.preventDefault();
     }
   };
 
   // Focus the input when interacting with the combobox
-  const onInputWrapperPress = (event: React.PointerEvent) => {
-    const target = event.target as HTMLElement;
+  const onInputWrapperPress = (e: React.PointerEvent) => {
+    if (disabled) return;
+
+    const target = e.target as HTMLElement;
 
     // Prevent focusing the input if click is anywhere outside the Autocomplete
-    if (!event.currentTarget.contains(target)) {
+    if (!e.currentTarget.contains(target)) {
       return;
     }
 
@@ -933,7 +923,9 @@ const AutocompleteImpl = React.forwardRef<
   };
 
   const onInputPointerDown = () => {
-    if (!disabled && (inputValue === '' || !open)) {
+    if (disabled) return;
+
+    if (inputValue === '' || !open) {
       handleOpenIndicator();
     }
   };
@@ -958,9 +950,10 @@ const AutocompleteImpl = React.forwardRef<
       onPointerEnter: handleOptionPointerEnter,
       onPress: handleOptionPress,
       'data-option-index': index,
-      'aria-disabled': disabled,
+      'aria-disabled': !!disabled,
       'aria-selected': selected,
       'data-selected': selected,
+      'data-disabled': !!disabled,
     };
   };
 
