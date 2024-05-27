@@ -435,7 +435,7 @@ const AutocompleteImpl = React.forwardRef<
 
   const getValidIndex = (
     diff: 'start' | 'end' | 'reset' | number,
-    direction: 'next' | 'previous',
+    direction: 'next' | 'previous' = 'next',
   ) => {
     const maxIndex = filteredOptions.length - 1;
 
@@ -529,7 +529,7 @@ const AutocompleteImpl = React.forwardRef<
   };
 
   const setHighlightedIndex = useCallbackRef(
-    (index: number, reason: 'pointer' | 'keyboard') => {
+    (index: number, reason: 'pointer' | 'keyboard' | 'auto') => {
       highlightedIndexRef.current = index;
 
       if (!inputRef.current) return;
@@ -575,7 +575,7 @@ const AutocompleteImpl = React.forwardRef<
 
       if (
         listboxNode.scrollHeight > listboxNode.clientHeight &&
-        reason === 'keyboard'
+        reason !== 'pointer'
       ) {
         const element = option;
 
@@ -605,7 +605,6 @@ const AutocompleteImpl = React.forwardRef<
 
     setOpen(true);
     setKeepUnfiltered(true);
-
     onOpen?.();
   };
 
@@ -970,6 +969,29 @@ const AutocompleteImpl = React.forwardRef<
     newValue.splice(index, 1);
     handleValue(newValue, 'removeOption');
   };
+
+  // on open highlight selected option
+  React.useEffect(() => {
+    if (!listBoxOpen) return;
+
+    if (multiple) {
+      setHighlightedIndex(getValidIndex('reset'), 'auto');
+      return;
+    }
+
+    if (!multiple && value && filteredOptions.length) {
+      const index = filteredOptions.findIndex((option) =>
+        isOptionEqualToValue(option, value),
+      );
+
+      if (index === -1) {
+        setHighlightedIndex(getValidIndex('reset'), 'auto');
+      } else {
+        setHighlightedIndex(index, 'auto');
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filteredOptions, listBoxOpen, multiple, value]);
 
   if (disabled && focused) {
     handleBlur();
