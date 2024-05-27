@@ -306,9 +306,9 @@ const AutocompleteImpl = React.forwardRef<
   const inputValueIsSelectedValue =
     !multiple && value && inputValue === getOptionLabel(value);
 
-  const listOpen = open && !readOnly;
+  const listBoxOpen = open && !readOnly;
 
-  const filteredOptions = listOpen
+  const filteredOptions = listBoxOpen
     ? filterOptions(
         options.filter((option) => {
           if (
@@ -584,11 +584,17 @@ const AutocompleteImpl = React.forwardRef<
         if (elementBottom > scrollBottom) {
           listboxNode.scrollTop = elementBottom - listboxNode.clientHeight;
         } else if (
-          element.offsetTop - element.offsetHeight * (groupBy ? 1.3 : 0) <
+          /*
+           The height of the group header is 48px. When scrolling upwards, it is
+           necessary to ensure that the options do not get hidden behind the group header. 
+           Therefore, if the groupBy option is enabled, the top of the scroll container 
+           should align with the bottom of the group header. Otherwise, the top of the 
+           scroll container remains unchanged.
+            */
+          element.offsetTop - (groupBy ? 48 : 0) <
           listboxNode.scrollTop
         ) {
-          listboxNode.scrollTop =
-            element.offsetTop - element.offsetHeight * (groupBy ? 1.3 : 0);
+          listboxNode.scrollTop = element.offsetTop - (groupBy ? 48 : 0);
         }
       }
     },
@@ -712,7 +718,7 @@ const AutocompleteImpl = React.forwardRef<
       // Avoid the Modal to handle the event.
       e.stopPropagation();
 
-      if (listOpen) {
+      if (listBoxOpen) {
         handleClose('escape');
       } else if (
         clearOnEscape &&
@@ -725,14 +731,14 @@ const AutocompleteImpl = React.forwardRef<
     }
 
     if (
-      !listOpen &&
+      !listBoxOpen &&
       ['PageUp', 'PageDown', 'ArrowDown', 'ArrowUp'].includes(e.key)
     ) {
       handleOpen();
       return;
     }
 
-    if (!listOpen) return;
+    if (!listBoxOpen) return;
 
     if (e.key === 'Home' && handleHomeEndKeys) {
       // Prevent scroll of the page
@@ -1065,11 +1071,11 @@ const AutocompleteImpl = React.forwardRef<
           isIconOnly
           variant="text"
           size="sm"
-          aria-label={listOpen ? closeText : openText}
+          aria-label={listBoxOpen ? closeText : openText}
           excludeFromTabOrder
           className={styles.openIndicator()}
           onPress={handleOpenIndicator}
-          data-open={listOpen}
+          data-open={listBoxOpen}
         >
           <ChevronDownIcon />
         </Button>
@@ -1166,7 +1172,7 @@ const AutocompleteImpl = React.forwardRef<
         {({ referenceRef }) =>
           renderInput({
             inputWrapperProps: {
-              'aria-owns': listOpen ? `${inputId}-listbox` : undefined,
+              'aria-owns': listBoxOpen ? `${inputId}-listbox` : undefined,
               onKeyDown: onInputWrapperKeyDown,
               onPointerDown: onInputWrapperPoiterDown,
               onPress: onInputWrapperPress,
@@ -1186,7 +1192,7 @@ const AutocompleteImpl = React.forwardRef<
             onPointerDown: onInputPointerDown,
             // if open then this is handled imperatively in setHighlightedIndex so don't let react override
             // only have an opinion about this when closed
-            'aria-activedescendant': listOpen ? '' : undefined,
+            'aria-activedescendant': listBoxOpen ? '' : undefined,
             'aria-autocomplete': 'list',
             'aria-controls': listboxAvailable
               ? `${inputId}-listbox`
