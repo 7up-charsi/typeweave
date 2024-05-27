@@ -21,7 +21,14 @@ const usePointerEvents = <E extends HTMLElement = HTMLElement>(
   const onPointerDown = useCallbackRef((e: React.PointerEvent<E>) => {
     onPointerDownProp?.(e);
 
-    if (e.target instanceof HTMLButtonElement && e.target.disabled) return;
+    if (
+      (e.target instanceof HTMLButtonElement ||
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        e.target instanceof HTMLSelectElement) &&
+      e.target.disabled
+    )
+      return;
 
     pointerRef.current = true;
 
