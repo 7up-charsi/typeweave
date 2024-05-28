@@ -26,30 +26,37 @@ export const combobox = tv({
       true: { listboxWrapper: 'shadow-md' },
       false: { listboxWrapper: 'shadow-none' },
     },
-    multiple: {
-      true: {
-        endContent: 'flex absolute right-0 top-1/2 -translate-y-1/2 mr-3',
-        inputWrapper: 'flex-wrap min-h-10 h-auto py-2',
-        input: 'min-w-12 grow min-h-auto h-auto',
-      },
-    },
+    editable: { true: {} },
+    multiple: { true: {} },
     hasClearButton: { true: {} },
     hasOpenIndicator: { true: {} },
   },
   compoundVariants: [
     {
+      multiple: true,
+      editable: true,
+      className: {
+        endContent: 'flex absolute right-0 top-1/2 -translate-y-1/2 mr-3',
+        inputWrapper: 'flex-wrap min-h-10 h-auto py-2',
+        input: 'min-w-12 grow min-h-auto h-auto',
+      },
+    },
+    {
+      editable: true,
       hasClearButton: true,
       hasOpenIndicator: true,
       multiple: true,
       className: { inputWrapper: 'pr-[64px]' },
     },
     {
+      editable: true,
       hasClearButton: false,
       hasOpenIndicator: true,
       multiple: true,
       className: { inputWrapper: 'pr-[40px]' },
     },
     {
+      editable: true,
       hasClearButton: true,
       hasOpenIndicator: false,
       multiple: true,

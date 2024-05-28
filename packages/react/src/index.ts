@@ -1,7 +1,6 @@
 export * from './accordion';
 export * from './alert';
 export * from './alert-dialog';
-export * from './autocomplete';
 export * from './combobox';
 export * from './badge';
 export * from './button';
