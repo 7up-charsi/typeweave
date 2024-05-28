@@ -1,6 +1,6 @@
 // copied from mui
 
-export interface CreateAutocompleteFilterConfig<Value> {
+export interface CreateComboboxFilterConfig<Value> {
   ignoreAccents?: boolean;
   ignoreCase?: boolean;
   limit?: number;
@@ -9,7 +9,7 @@ export interface CreateAutocompleteFilterConfig<Value> {
   trim?: boolean;
 }
 
-export interface AutocompleteFilterState<Value> {
+export interface ComboboxFilterState<Value> {
   inputValue: string;
   getOptionLabel: (option: Value) => string;
 }
@@ -18,8 +18,8 @@ const stripDiacritics = (string: string) => {
   return string.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 };
 
-export const createAutocompleteFilter = <Value,>(
-  config: CreateAutocompleteFilterConfig<Value> = {},
+export const createComboboxFilter = <Value,>(
+  config: CreateComboboxFilterConfig<Value> = {},
 ) => {
   const {
     ignoreAccents = true,
@@ -32,7 +32,7 @@ export const createAutocompleteFilter = <Value,>(
 
   return (
     options: Value[],
-    { inputValue, getOptionLabel }: AutocompleteFilterState<Value>,
+    { inputValue, getOptionLabel }: ComboboxFilterState<Value>,
   ) => {
     let input = trim ? inputValue.trim() : inputValue;
     if (ignoreCase) {

@@ -1,7 +1,7 @@
 import { tv, VariantProps } from 'tailwind-variants';
 import { ClassNames } from '../types';
 
-export const autocomplete = tv({
+export const combobox = tv({
   slots: {
     listboxWrapper:
       'w-[var(--reference-width)] bg-paper border border-muted-6 rounded z-50 overflow-hidden',
@@ -14,7 +14,7 @@ export const autocomplete = tv({
     groupHeader:
       'sticky -top-2 bg-paper h-12 px-4 z-50 text-sm font-medium content-center',
     groupItems: '[&>li]:pl-6',
-    tag: '',
+    startContent: '',
     endContent: '',
     inputWrapper: '',
     input: 'truncate',
@@ -58,5 +58,5 @@ export const autocomplete = tv({
   ],
 });
 
-export type AutocompleteVariantProps = VariantProps<typeof autocomplete>;
-export type AutocompleteClassNames = ClassNames<typeof autocomplete.slots>;
+export type ComboboxVariantProps = VariantProps<typeof combobox>;
+export type ComboboxClassNames = ClassNames<typeof combobox.slots>;
