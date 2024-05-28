@@ -1,7 +1,7 @@
 import {
-  AutocompleteClassNames,
-  AutocompleteVariantProps,
-  autocomplete,
+  ComboboxClassNames,
+  ComboboxVariantProps,
+  combobox,
 } from '@typeweave/theme';
 import React from 'react';
 import { createPortal } from 'react-dom';
@@ -11,7 +11,7 @@ import {
   PopperReference,
   PopperRoot,
 } from '../popper';
-import { createAutocompleteFilter } from './create-autocomplete-filter';
+import { createComboboxFilter } from './create-combobox-filter';
 import { useControlled } from '../use-controlled';
 import { useCallbackRef } from '../use-callback-ref';
 import usePreviousProps from '../use-previous-props';
@@ -22,26 +22,26 @@ import { Button } from '../button';
 import { ChevronDownIcon, XIcon } from 'lucide-react';
 import { InputProps } from '../input';
 
-export type AutocompleteOnChangeReason =
+export type ComboboxOnChangeReason =
   | 'selectOption'
   | 'removeOption'
   | 'blur'
   | 'clear';
 
-export type AutocompleteOnCloseReason =
+export type ComboboxOnCloseReason =
   | 'toggleInput'
   | 'escape'
   | 'selectOption'
   | 'removeOption'
   | 'blur';
 
-export interface AutocompleteRenderOptionState {
+export interface ComboboxRenderOptionState {
   inputValue: string;
   index: number;
   selected: boolean;
 }
 
-export interface AutocompleteRenderGroupParams {
+export interface ComboboxRenderGroupParams {
   key: string;
   group: string;
   children?: React.ReactNode;
@@ -54,7 +54,7 @@ type OptionsGroup = {
   options: (string | object)[];
 };
 
-export interface AutocompleteRenderOptionProps {
+export interface ComboboxRenderOptionProps {
   key: string;
   tabIndex: number;
   role: string;
@@ -68,111 +68,129 @@ export interface AutocompleteRenderOptionProps {
   className: string;
 }
 
-export interface AutocompleteRenderTagsProps {}
+export interface ComboboxRenderTagsProps {}
 
-export interface AutocompleteRenderInputProps extends InputProps<false> {
+export interface ComboboxRenderInputProps extends InputProps<false> {
   ref: React.RefObject<HTMLInputElement>;
 }
 
-export type AutocompleteProps<Value, Multiple, DisableClearable> =
-  (AutocompleteVariantProps &
-    Omit<
-      React.HTMLAttributes<HTMLUListElement>,
-      'defaultValue' | 'children' | 'onChange'
-    > & {
-      disabled?: boolean;
-      classNames?: AutocompleteClassNames;
-      offset?: PopperFloatingProps['mainOffset'];
-      options: Value[];
-      open?: boolean;
-      onOpen?: () => void;
-      onClose?: (reason: AutocompleteOnCloseReason) => void;
-      defaultOpen?: boolean;
-      getOptionDisabled?: (option: Value) => boolean;
-      includeInputInList?: boolean;
-      disableListWrap?: boolean;
-      clearOnEscape?: boolean;
-      readOnly?: boolean;
-      disableCloseOnSelect?: boolean;
-      openOnFocus?: boolean;
-      pageSize?: number;
-      getOptionLabel?: (option: Value) => string;
-      autoHighlight?: boolean;
-      getOptionKey?: (options: Value) => string;
-      isOptionEqualToValue?: (option: Value, value: Value) => boolean;
-      renderGroup?: (params: AutocompleteRenderGroupParams) => React.ReactNode;
-      noOptionsText?: string;
-      clearText?: string;
-      openText?: string;
-      closeText?: string;
-      loadingText?: string;
-      loading?: boolean;
-      clearInputOnBlur?: boolean;
-      selectOnFocus?: boolean;
-      handleHomeEndKeys?: boolean;
-      filterSelectedOptions?: boolean;
-      hasClearButton?: boolean;
-      hasOpenIndicator?: boolean;
-      groupBy?: (option: Value) => string;
-      inputValue?: string;
-      onInputChange?: (
-        newValue: string,
-        reason: 'reset' | 'clear' | 'input',
-      ) => void;
-      filterOptions?: ReturnType<typeof createAutocompleteFilter<Value>>;
-      disablePortal?: boolean;
-      disablePopper?: boolean;
-      renderInput: (props: AutocompleteRenderInputProps) => React.ReactNode;
-      renderOption?: (
-        props: AutocompleteRenderOptionProps,
-        option: Value,
-        state: AutocompleteRenderOptionState,
-      ) => React.ReactNode;
-      renderTags?: (
-        tags: Value[],
-        props: (index: number) => AutocompleteRenderTagsProps,
-      ) => React.ReactNode;
-    }) &
-    (Multiple extends true
+type BaseProps<Value> = {
+  disabled?: boolean;
+  offset?: PopperFloatingProps['mainOffset'];
+  options: Value[];
+  open?: boolean;
+  onOpen?: () => void;
+  onClose?: (reason: ComboboxOnCloseReason) => void;
+  defaultOpen?: boolean;
+  getOptionDisabled?: (option: Value) => boolean;
+  includeInputInList?: boolean;
+  disableListWrap?: boolean;
+  clearOnEscape?: boolean;
+  readOnly?: boolean;
+  disableCloseOnSelect?: boolean;
+  openOnFocus?: boolean;
+  pageSize?: number;
+  getOptionLabel?: (option: Value) => string;
+  autoHighlight?: boolean;
+  getOptionKey?: (options: Value) => string;
+  isOptionEqualToValue?: (option: Value, value: Value) => boolean;
+  renderGroup?: (params: ComboboxRenderGroupParams) => React.ReactNode;
+  noOptionsText?: string;
+  clearText?: string;
+  openText?: string;
+  closeText?: string;
+  loadingText?: string;
+  loading?: boolean;
+  handleHomeEndKeys?: boolean;
+  filterSelectedOptions?: boolean;
+  hasClearButton?: boolean;
+  hasOpenIndicator?: boolean;
+  groupBy?: (option: Value) => string;
+  disablePortal?: boolean;
+  disablePopper?: boolean;
+  renderInput: (props: ComboboxRenderInputProps) => React.ReactNode;
+  renderOption?: (
+    props: ComboboxRenderOptionProps,
+    option: Value,
+    state: ComboboxRenderOptionState,
+  ) => React.ReactNode;
+};
+
+export type ComboboxProps<Value, Multiple, DisableClearable, Editable> = (Omit<
+  ComboboxVariantProps,
+  'hasClearButton' | 'hasOpenIndicator' | 'multiple'
+> &
+  Omit<
+    React.HTMLAttributes<HTMLUListElement>,
+    'defaultValue' | 'children' | 'onChange'
+  >) &
+  (Editable extends true
+    ? BaseProps<Value> & {
+        editable: Editable;
+        classNames?: ComboboxClassNames;
+        clearInputOnBlur?: boolean;
+        selectOnFocus?: boolean;
+        inputValue?: string;
+        onInputChange?: (
+          newValue: string,
+          reason: 'reset' | 'clear' | 'input',
+        ) => void;
+        filterOptions?: ReturnType<typeof createComboboxFilter<Value>>;
+        renderTags?: (
+          tags: Value[],
+          props: (index: number) => ComboboxRenderTagsProps,
+        ) => React.ReactNode;
+      }
+    : BaseProps<Value> & {
+        editable?: Editable;
+        classNames?: Pick<
+          ComboboxClassNames,
+          | 'listboxWrapper'
+          | 'listbox'
+          | 'option'
+          | 'noOptions'
+          | 'loading'
+          | 'group'
+          | 'groupHeader'
+          | 'groupItems'
+          | 'clearIndicator'
+          | 'openIndicator'
+        >;
+      }) &
+  (Multiple extends true
+    ? {
+        multiple: Multiple;
+        defaultValue?: Value[];
+        value?: Value[];
+        onChange?: (newValue: Value[], reason: ComboboxOnChangeReason) => void;
+        disableClearable?: DisableClearable;
+      }
+    : DisableClearable extends true
       ? {
-          multiple: Multiple;
-          defaultValue?: Value[];
-          value?: Value[];
+          multiple?: Multiple;
+          defaultValue?: Value;
+          value?: Value;
+          onChange?: (newValue: Value, reason: ComboboxOnChangeReason) => void;
+          disableClearable: DisableClearable;
+        }
+      : {
+          multiple?: Multiple;
+          defaultValue?: Value;
+          value?: Value | null;
           onChange?: (
-            newValue: Value[],
-            reason: AutocompleteOnChangeReason,
+            newValue: Value | null,
+            reason: ComboboxOnChangeReason,
           ) => void;
           disableClearable?: DisableClearable;
-        }
-      : DisableClearable extends true
-        ? {
-            multiple?: Multiple;
-            defaultValue?: Value;
-            value?: Value;
-            onChange?: (
-              newValue: Value,
-              reason: AutocompleteOnChangeReason,
-            ) => void;
-            disableClearable: DisableClearable;
-          }
-        : {
-            multiple?: Multiple;
-            defaultValue?: Value;
-            value?: Value | null;
-            onChange?: (
-              newValue: Value | null,
-              reason: AutocompleteOnChangeReason,
-            ) => void;
-            disableClearable?: DisableClearable;
-          });
+        });
 
-const defaultOptionsFilter = createAutocompleteFilter<string | object>();
+const defaultOptionsFilter = createComboboxFilter<string | object>();
 
-const displayName = 'Autocomplete';
+const displayName = 'Combobox';
 
-const AutocompleteImpl = React.forwardRef<
+const ComboboxImpl = React.forwardRef<
   HTMLUListElement,
-  AutocompleteProps<string | object, false, false>
+  ComboboxProps<string | object, false, false, true>
 >((props, ref) => {
   const {
     classNames,
@@ -224,6 +242,7 @@ const AutocompleteImpl = React.forwardRef<
     disablePopper,
     renderOption: renderOptionProp,
     renderTags,
+    editable = false,
     ...restProps
   } = props;
 
@@ -294,6 +313,11 @@ const AutocompleteImpl = React.forwardRef<
 
   const [focused, setFocused] = React.useState(false);
 
+  const searchState = React.useRef<{
+    timer?: ReturnType<typeof setTimeout>;
+    chars: string;
+  }>({ chars: '' }).current;
+
   const [open, setOpen] = useControlled({
     name: displayName,
     state: 'open',
@@ -308,33 +332,34 @@ const AutocompleteImpl = React.forwardRef<
 
   const listBoxOpen = open && !readOnly;
 
+  const __options = filterSelectedOptions
+    ? options.filter((option) => {
+        if (
+          (Array.isArray(value) ? value : [value]).some(
+            (value2) => value2 !== null && isOptionEqualToValue(option, value2),
+          )
+        ) {
+          return false;
+        }
+        return true;
+      })
+    : options;
+
   const filteredOptions = listBoxOpen
-    ? filterOptions(
-        options.filter((option) => {
-          if (
-            filterSelectedOptions &&
-            (Array.isArray(value) ? value : [value]).some(
-              (value2) =>
-                value2 !== null && isOptionEqualToValue(option, value2),
-            )
-          ) {
-            return false;
-          }
-          return true;
-        }),
-        {
+    ? editable
+      ? filterOptions(__options, {
           inputValue:
             inputValueIsSelectedValue && keepUnfiltered ? '' : inputValue,
           getOptionLabel,
-        },
-      )
+        })
+      : __options
     : [];
 
   let groupedOptions = filteredOptions;
 
   if (groupBy) {
     // used to keep track of key and indexes in the result array
-    // this will only occur if option are not sorted. Autocomplete expects sorted options
+    // this will only occur if option are not sorted. Combobox expects sorted options
     const indexBy = new Map();
     let warn = false;
 
@@ -377,27 +402,60 @@ const AutocompleteImpl = React.forwardRef<
   });
 
   const resetInputValue = React.useCallback(
-    (newValue: string | object | null) => {
+    (newValue: string | object | null | undefined | (string | object)[]) => {
       //
 
+      const isMoreOptionsSelected = multiple
+        ? Array.isArray(value) &&
+          Array.isArray(newValue) &&
+          value.length < newValue.length
+        : newValue !== null;
+
+      if (!isMoreOptionsSelected && !clearInputOnBlur) return;
+
       let newInputValue;
-      if (multiple) {
-        newInputValue = '';
-      } else if (newValue === null) {
-        newInputValue = '';
+
+      if (editable) {
+        if (multiple && Array.isArray(newValue)) {
+          newInputValue = '';
+        } else if (!newValue) {
+          newInputValue = '';
+        } else {
+          const optionLabel = getOptionLabel(newValue);
+          newInputValue = typeof optionLabel === 'string' ? optionLabel : '';
+        }
       } else {
-        const optionLabel = getOptionLabel(newValue);
-        newInputValue = typeof optionLabel === 'string' ? optionLabel : '';
+        if (multiple && Array.isArray(newValue)) {
+          newInputValue = newValue
+            .map((val) => {
+              const optionLabel = getOptionLabel(val);
+              return typeof optionLabel === 'string' ? optionLabel : '';
+            })
+            .join(', ');
+        } else if (!newValue) {
+          newInputValue = '';
+        } else {
+          const optionLabel = getOptionLabel(newValue);
+          newInputValue = typeof optionLabel === 'string' ? optionLabel : '';
+        }
       }
 
-      if (inputValue === newInputValue) {
-        return;
-      }
+      if (inputValue === newInputValue) return;
 
       setInputValue(newInputValue);
-      onInputChange?.(newInputValue, 'reset');
+
+      if (!editable) onInputChange?.(newInputValue, 'reset');
     },
-    [getOptionLabel, inputValue, multiple, onInputChange, setInputValue],
+    [
+      clearInputOnBlur,
+      editable,
+      getOptionLabel,
+      inputValue,
+      multiple,
+      onInputChange,
+      setInputValue,
+      value,
+    ],
   );
 
   React.useEffect(() => {
@@ -608,7 +666,7 @@ const AutocompleteImpl = React.forwardRef<
     onOpen?.();
   };
 
-  const handleClose = (reason: AutocompleteOnCloseReason) => {
+  const handleClose = (reason: ComboboxOnCloseReason) => {
     if (!open) return;
 
     setOpen(false);
@@ -618,7 +676,7 @@ const AutocompleteImpl = React.forwardRef<
 
   const handleValue = (
     newValue: string | object | null | (string | object | null)[],
-    reason: AutocompleteOnChangeReason,
+    reason: ComboboxOnChangeReason,
   ) => {
     if (Array.isArray(value) && Array.isArray(newValue)) {
       if (
@@ -642,6 +700,7 @@ const AutocompleteImpl = React.forwardRef<
     reasonProp = 'selectOption',
   ) => {
     let reason = reasonProp;
+    let newValue: string | object | (string | object)[] = option;
 
     if (multiple) {
       const newMultipleValue = Array.isArray(value) ? value.slice() : [];
@@ -672,16 +731,11 @@ const AutocompleteImpl = React.forwardRef<
         reason = 'removeOption';
       }
 
-      setInputValue('');
-      onInputChange?.('', 'reset');
-      handleValue(newMultipleValue, reason as AutocompleteOnChangeReason);
-    } else {
-      const inputValue = getOptionLabel(option);
-      setInputValue(inputValue);
-      onInputChange?.(inputValue, 'reset');
-
-      handleValue(option, reason as AutocompleteOnChangeReason);
+      newValue = newMultipleValue;
     }
+
+    resetInputValue(newValue);
+    handleValue(newValue, reason as ComboboxOnChangeReason);
 
     const modifiedEvent = e as unknown as {
       ctrlKey: boolean;
@@ -693,7 +747,7 @@ const AutocompleteImpl = React.forwardRef<
       !modifiedEvent.ctrlKey &&
       !modifiedEvent.metaKey
     ) {
-      handleClose(reason as AutocompleteOnCloseReason);
+      handleClose(reason as ComboboxOnCloseReason);
     }
   };
 
@@ -706,10 +760,78 @@ const AutocompleteImpl = React.forwardRef<
     onInputChange?.('', 'clear');
 
     handleValue(multiple ? [] : null, 'clear');
+    if (!editable) {
+      handleOpen();
+      setHighlightedIndex(getValidIndex('reset'), 'auto');
+    }
+  };
+
+  const handleCharSearch = (e: React.KeyboardEvent) => {
+    const char = e.key;
+
+    if (char.length !== 1 || e.repeat || !filteredOptions.length) return;
+
+    clearTimeout(searchState.timer);
+
+    searchState.timer = setTimeout(() => {
+      searchState.chars = '';
+    }, 500);
+
+    searchState.chars += char;
+
+    const startIndex =
+      highlightedIndexRef.current <= 0 ? 0 : highlightedIndexRef.current + 1;
+
+    const orderedOptions =
+      startIndex === 0
+        ? filteredOptions
+        : [
+            ...filteredOptions.slice(startIndex),
+            ...filteredOptions.slice(0, startIndex),
+          ];
+
+    const filter = searchState.chars.toLowerCase();
+
+    const excatMatch = orderedOptions.find((ele) =>
+      getOptionDisabled?.(ele)
+        ? false
+        : getOptionLabel(ele).toLowerCase().startsWith(filter),
+    );
+
+    if (excatMatch) {
+      setHighlightedIndex(
+        filteredOptions.findIndex((opt) => opt === excatMatch),
+        'auto',
+      );
+      return;
+    }
+
+    const sameLetters = filter
+      .split('')
+      .every((letter) => letter === filter[0]);
+
+    if (sameLetters) {
+      const matched = orderedOptions.find((ele) =>
+        getOptionDisabled?.(ele)
+          ? false
+          : getOptionLabel(ele).toLowerCase().startsWith(filter[0]),
+      );
+
+      if (matched)
+        setHighlightedIndex(
+          filteredOptions.findIndex((opt) => opt === matched),
+          'auto',
+        );
+    }
   };
 
   const onInputWrapperKeyDown = (e: React.KeyboardEvent) => {
     if (disabled) return;
+
+    if (e.key.length === 1 && !editable) {
+      handleCharSearch(e);
+      return;
+    }
 
     if (e.key === 'Escape') {
       // Avoid Opera to exit fullscreen mode.
@@ -814,26 +936,7 @@ const AutocompleteImpl = React.forwardRef<
     ignoreListOpen.current = false;
 
     handleClose('blur');
-
-    // if multiple is true, user search option and clearInputOnBlur is
-    // ture then left the inputValue as is otherwise change inputValue
-    if (multiple && clearInputOnBlur) {
-      setInputValue('');
-      onInputChange?.('', 'reset');
-      return;
-    }
-
-    if (!multiple && value === null && clearInputOnBlur) {
-      setInputValue('');
-      onInputChange?.('', 'reset');
-      return;
-    }
-
-    if (!multiple && value) {
-      const inputValue = getOptionLabel(value);
-      setInputValue(inputValue);
-      onInputChange?.(inputValue, 'reset');
-    }
+    resetInputValue(value);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -885,7 +988,7 @@ const AutocompleteImpl = React.forwardRef<
 
     const target = e.target as HTMLElement;
 
-    // Prevent focusing the input if click is anywhere outside the Autocomplete
+    // Prevent focusing the input if click is anywhere outside the Combobox
     if (!e.currentTarget.contains(target)) {
       return;
     }
@@ -905,7 +1008,7 @@ const AutocompleteImpl = React.forwardRef<
 
     const target = e.target as HTMLElement;
 
-    // Prevent focusing the input if click is anywhere outside the Autocomplete
+    // Prevent focusing the input if click is anywhere outside the Combobox
     if (!e.currentTarget.contains(target)) {
       return;
     }
@@ -915,6 +1018,7 @@ const AutocompleteImpl = React.forwardRef<
     inputRef.current.focus();
 
     if (
+      editable &&
       selectOnFocus &&
       firstFocus.current &&
       (inputRef.current.selectionEnd || 0) -
@@ -998,11 +1102,11 @@ const AutocompleteImpl = React.forwardRef<
   }
 
   const styles = React.useMemo(
-    () => autocomplete({ shadow, multiple, hasClearButton, hasOpenIndicator }),
+    () => combobox({ shadow, multiple, hasClearButton, hasOpenIndicator }),
     [shadow, multiple, hasClearButton, hasOpenIndicator],
   );
 
-  const defaultRenderGroup = (params: AutocompleteRenderGroupParams) => (
+  const defaultRenderGroup = (params: ComboboxRenderGroupParams) => (
     <li key={params.key} className={styles.group()}>
       <div className={styles.groupHeader()}>{params.group}</div>
       <ul className={styles.groupItems()}>{params.children}</ul>
@@ -1012,7 +1116,7 @@ const AutocompleteImpl = React.forwardRef<
   const renderGroup = renderGroupProp || defaultRenderGroup;
 
   const defaultRenderOption = (
-    props: AutocompleteRenderOptionProps & { key: string },
+    props: ComboboxRenderOptionProps & { key: string },
     option: string | object,
   ) => {
     const { key, ...otherProps } = props;
@@ -1042,9 +1146,11 @@ const AutocompleteImpl = React.forwardRef<
 
   let startContent: React.ReactNode | undefined = undefined;
 
-  if (Array.isArray(value) && value.length > 0) {
+  if (editable && Array.isArray(value) && value.length > 0) {
     const getTagProps = (index: number) => ({
-      className: styles.tag(),
+      className: styles.startContent({
+        className: editable && classNames?.startContent,
+      }),
       disabled,
       key: index,
       'data-tag-index': index,
@@ -1073,7 +1179,11 @@ const AutocompleteImpl = React.forwardRef<
   }
 
   const endContent = (hasClearButton || hasOpenIndicator) && (
-    <div className={styles.endContent()}>
+    <div
+      className={styles.endContent({
+        className: editable && classNames?.endContent,
+      })}
+    >
       {hasClearButton && (Array.isArray(value) ? !!value.length : !!value) && (
         <Button
           isIconOnly
@@ -1200,8 +1310,12 @@ const AutocompleteImpl = React.forwardRef<
               onPress: onInputWrapperPress,
             },
             classNames: {
-              inputWrapper: styles.inputWrapper(),
-              input: styles.input(),
+              inputWrapper: styles.inputWrapper({
+                className: editable && classNames?.inputWrapper,
+              }),
+              input: styles.input({
+                className: editable && classNames?.input,
+              }),
             },
             inputWrapperRef: referenceRef,
             startContent,
@@ -1228,7 +1342,7 @@ const AutocompleteImpl = React.forwardRef<
             spellCheck: 'false',
             role: 'combobox',
             disabled,
-            readOnly,
+            readOnly: !editable ? true : readOnly,
           })
         }
       </PopperReference>
@@ -1242,13 +1356,14 @@ const AutocompleteImpl = React.forwardRef<
   );
 });
 
-AutocompleteImpl.displayName = displayName;
+ComboboxImpl.displayName = displayName;
 
-export const Autocomplete = AutocompleteImpl as unknown as <
+export const Combobox = ComboboxImpl as unknown as <
   Value extends string | object,
   Multiple extends boolean = false,
   DisableClearable extends boolean = false,
+  Editable extends boolean = false,
 >(
-  props: AutocompleteProps<Value, Multiple, DisableClearable> &
+  props: ComboboxProps<Value, Multiple, DisableClearable, Editable> &
     React.RefAttributes<HTMLUListElement>,
 ) => React.ReactNode;
