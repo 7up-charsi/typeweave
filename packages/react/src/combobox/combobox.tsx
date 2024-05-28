@@ -118,7 +118,7 @@ type BaseProps<Value> = {
 
 export type ComboboxProps<Value, Multiple, DisableClearable, Editable> = (Omit<
   ComboboxVariantProps,
-  'hasClearButton' | 'hasOpenIndicator' | 'multiple'
+  'hasClearButton' | 'hasOpenIndicator' | 'multiple' | 'editable'
 > &
   Omit<
     React.HTMLAttributes<HTMLUListElement>,
@@ -1102,8 +1102,15 @@ const ComboboxImpl = React.forwardRef<
   }
 
   const styles = React.useMemo(
-    () => combobox({ shadow, multiple, hasClearButton, hasOpenIndicator }),
-    [shadow, multiple, hasClearButton, hasOpenIndicator],
+    () =>
+      combobox({
+        shadow,
+        multiple,
+        hasClearButton,
+        hasOpenIndicator,
+        editable,
+      }),
+    [shadow, multiple, hasClearButton, hasOpenIndicator, editable],
   );
 
   const defaultRenderGroup = (params: ComboboxRenderGroupParams) => (
