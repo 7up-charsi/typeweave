@@ -1,49 +1,61 @@
-import * as Accordion from '@webbo-ui/accordion';
+'use client';
+
+import {
+  AccordionContent,
+  AccordionHeader,
+  AccordionItem,
+  AccordionRoot,
+  AccordionTrigger,
+} from '@typeweave/react';
+import { ChevronDown } from 'lucide-react';
 
 export default function AccordionDemo() {
   return (
-    <Accordion.Root className="w-96" defaultValue={['accordion-1']}>
-      <Accordion.Item value="accordion-1">
-        <Accordion.Header>
-          <Accordion.Trigger>
+    <AccordionRoot className="w-96" defaultValue={['accordion-1']}>
+      <AccordionItem value="accordion-1">
+        <AccordionHeader>
+          <AccordionTrigger>
             Accordion 1 with dummy content{' '}
-            <Accordion.Arrow className="ml-auto" />
-          </Accordion.Trigger>
-        </Accordion.Header>
+            <ChevronDown className="group-data-[open=true]:rotate-180" />
+          </AccordionTrigger>
+        </AccordionHeader>
 
-        <Accordion.Content>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-          veritatis similique mollitia odio ducimus consectetur,
-        </Accordion.Content>
-      </Accordion.Item>
+        <AccordionContent>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Explicabo veritatis similique mollitia odio ducimus
+          consectetur,
+        </AccordionContent>
+      </AccordionItem>
 
-      <Accordion.Item value="accordion-2">
-        <Accordion.Header>
-          <Accordion.Trigger>
+      <AccordionItem value="accordion-2">
+        <AccordionHeader>
+          <AccordionTrigger>
             Accordion 2 with dummy content{' '}
-            <Accordion.Arrow className="ml-auto" />
-          </Accordion.Trigger>
-        </Accordion.Header>
+            <ChevronDown className="group-data-[open=true]:rotate-180" />
+          </AccordionTrigger>
+        </AccordionHeader>
 
-        <Accordion.Content>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-          veritatis similique mollitia odio ducimus consectetur,
-        </Accordion.Content>
-      </Accordion.Item>
+        <AccordionContent>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Explicabo veritatis similique mollitia odio ducimus
+          consectetur,
+        </AccordionContent>
+      </AccordionItem>
 
-      <Accordion.Item value="accordion-3">
-        <Accordion.Header>
-          <Accordion.Trigger>
+      <AccordionItem value="accordion-3">
+        <AccordionHeader>
+          <AccordionTrigger>
             Accordion 3 with dummy content{' '}
-            <Accordion.Arrow className="ml-auto" />
-          </Accordion.Trigger>
-        </Accordion.Header>
+            <ChevronDown className="group-data-[open=true]:rotate-180" />
+          </AccordionTrigger>
+        </AccordionHeader>
 
-        <Accordion.Content>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-          veritatis similique mollitia odio ducimus consectetur,
-        </Accordion.Content>
-      </Accordion.Item>
-    </Accordion.Root>
+        <AccordionContent>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Explicabo veritatis similique mollitia odio ducimus
+          consectetur,
+        </AccordionContent>
+      </AccordionItem>
+    </AccordionRoot>
   );
 }

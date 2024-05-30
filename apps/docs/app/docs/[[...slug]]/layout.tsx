@@ -4,7 +4,9 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   return (
-    <div className="col-start-2 grid grid-cols-[_1fr_theme(spacing.60)]">{children}</div>
+    <div className="col-start-2 grid grid-cols-[_1fr_theme(spacing.60)]">
+      {children}
+    </div>
   );
 };
 

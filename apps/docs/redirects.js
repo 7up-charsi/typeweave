@@ -1,4 +1,4 @@
-async function redirect() {
+const redirects = async () => {
   return [
     {
       source: '/docs',
@@ -6,6 +6,6 @@ async function redirect() {
       permanent: true,
     },
   ];
-}
+};
 
-module.exports = redirect;
+module.exports = redirects;

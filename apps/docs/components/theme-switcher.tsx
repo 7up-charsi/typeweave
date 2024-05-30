@@ -1,8 +1,16 @@
 'use client';
 
-import * as Menu from '@webbo-ui/menu';
-import { Button } from '@webbo-ui/button';
-import { ThemeProvider, useTheme } from '@ux-weaver/themes';
+import {
+  Button,
+  MenuArrow,
+  MenuContent,
+  MenuPortal,
+  MenuRadioGroup,
+  MenuRadioItem,
+  MenuRoot,
+  MenuTrigger,
+} from '@typeweave/react';
+import { ThemeProvider, useTheme } from 'next-themes';
 
 const light_svg = (
   <svg
@@ -56,22 +64,22 @@ const system_svg = (
 );
 
 const ThemeMenu = () => {
-  const { onThemeChange, theme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   return (
-    <Menu.Root>
-      <Menu.Trigger>
+    <MenuRoot>
+      <MenuTrigger>
         <Button classNames={{ base: 'mr-5' }} size="sm">
           theme
         </Button>
-      </Menu.Trigger>
+      </MenuTrigger>
 
-      <Menu.Portal>
-        <Menu.Menu className="z-[9999]">
-          <Menu.Arrow />
-          <Menu.RadioGroup
-            aria-label="theme switcher"
-            onChange={onThemeChange}
+      <MenuPortal>
+        <MenuContent className="z-[9999]">
+          <MenuArrow />
+          <MenuRadioGroup
+            label="theme switcher"
+            onChange={setTheme}
             value={theme ?? undefined}
           >
             {[
@@ -79,24 +87,34 @@ const ThemeMenu = () => {
               { title: 'dark', icon: dark_svg },
               { title: 'system', icon: system_svg },
             ].map(({ icon, title }) => (
-              <Menu.RadioItem
+              <MenuRadioItem
                 key={title}
                 value={title}
-                classNames={{ itemContent: 'flex justify-between pr-3' }}
+                classNames={{
+                  itemContent: 'flex justify-between pr-3',
+                }}
               >
-                <span className="first-letter:uppercase">{title}</span> {icon}
-              </Menu.RadioItem>
+                <span className="first-letter:uppercase">
+                  {title}
+                </span>{' '}
+                {icon}
+              </MenuRadioItem>
             ))}
-          </Menu.RadioGroup>
-        </Menu.Menu>
-      </Menu.Portal>
-    </Menu.Root>
+          </MenuRadioGroup>
+        </MenuContent>
+      </MenuPortal>
+    </MenuRoot>
   );
 };
 
 export const ThemeSwitcher = () => {
   return (
-    <ThemeProvider>
+    <ThemeProvider
+      enableSystem
+      enableColorScheme
+      defaultTheme="light"
+      themes={['light', 'dark']}
+    >
       <ThemeMenu />
     </ThemeProvider>
   );
