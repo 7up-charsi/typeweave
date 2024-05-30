@@ -6,7 +6,7 @@ import { Button } from '../button';
 import { useControlled } from '../use-controlled';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 
-export type NumberInputSpinButtonsProps = {
+export type NumberInputRenderSpinButtonsProps = {
   wrapperProps: React.HTMLAttributes<HTMLDivElement>;
   increaseProps: Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'>;
   decreaseProps: Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'>;
@@ -29,7 +29,9 @@ export interface NumberInputProps
   largeStep?: number;
   repeatRate?: number;
   threshold?: number;
-  renderSpinButtons?: (props: NumberInputSpinButtonsProps) => React.ReactNode;
+  renderSpinButtons?: (
+    props: NumberInputRenderSpinButtonsProps,
+  ) => React.ReactNode;
 }
 
 const displayName = 'NumberInput';
@@ -276,28 +278,16 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       decreaseProps,
       increaseProps,
       wrapperProps,
-    }: NumberInputSpinButtonsProps) => {
+    }: NumberInputRenderSpinButtonsProps) => {
       return (
         <div {...wrapperProps}>
           {/* decrease */}
-          <Button
-            type="button"
-            isIconOnly
-            size="sm"
-            variant="text"
-            {...decreaseProps}
-          >
+          <Button isIconOnly size="sm" variant="text" {...decreaseProps}>
             <MinusIcon />
           </Button>
 
           {/* increase */}
-          <Button
-            type="button"
-            isIconOnly
-            size="sm"
-            variant="text"
-            {...increaseProps}
-          >
+          <Button isIconOnly size="sm" variant="text" {...increaseProps}>
             <PlusIcon />
           </Button>
         </div>
@@ -332,6 +322,8 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
           <>
             {renderSpinButtons({
               decreaseProps: {
+                role: 'button',
+                type: 'button',
                 'aria-label': 'decrease value',
                 'aria-description': 'long press to decrease speedly',
                 tabIndex: -1,
@@ -341,6 +333,8 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
                 }),
               },
               increaseProps: {
+                role: 'button',
+                type: 'button',
                 'aria-label': 'increase value',
                 'aria-description': 'long press to increase speedly',
                 tabIndex: -1,
