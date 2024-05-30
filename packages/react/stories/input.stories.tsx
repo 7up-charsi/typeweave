@@ -68,6 +68,42 @@ export const Number = {
   },
 };
 
+const SpinButtonsTemplate = () => (
+  <NumberInput
+    required
+    label="input label"
+    placeholder="placeholder"
+    classNames={{
+      inputWrapper: 'overflow-hidden',
+      spinButtons: {
+        wrapper: 'flex flex-col h-full absolute top-0 right-0',
+        increase:
+          'grow w-6 min-h-0 bg-muted-3 flex items-center justify-center hover:bg-muted-4 active:bg-muted-5',
+        decrease:
+          'grow w-6 min-h-0 bg-muted-3 flex items-center justify-center hover:bg-muted-4 active:bg-muted-5',
+      },
+    }}
+    renderSpinButtons={({ decreaseProps, increaseProps, wrapperProps }) => (
+      <div {...wrapperProps}>
+        <button {...decreaseProps}>-</button>
+        <button {...increaseProps}>+</button>
+      </div>
+    )}
+  />
+);
+
+export const SpinButtons = {
+  render: SpinButtonsTemplate,
+  argTypes: {
+    min: { control: 'number' },
+    max: { control: 'number' },
+  },
+  args: {
+    step: 1,
+    largeStep: 5,
+  },
+};
+
 const MultilineTemplate = () => (
   <InputComp required label="multiline input" multiline />
 );

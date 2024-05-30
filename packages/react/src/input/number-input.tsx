@@ -6,12 +6,20 @@ import { Button } from '../button';
 import { useControlled } from '../use-controlled';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 
+export type NumberInputSpinButtonsProps = {
+  wrapperProps: React.HTMLAttributes<HTMLDivElement>;
+  increaseProps: Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'>;
+  decreaseProps: Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'>;
+};
+
 export interface NumberInputProps
   extends Omit<InputProps<false>, 'type' | 'onChange'> {
   classNames?: InputProps<false>['classNames'] & {
-    buttonsBase?: string;
-    increaseButton?: string;
-    decreaseButton?: string;
+    spinButtons?: {
+      wrapper?: string;
+      increase?: string;
+      decrease?: string;
+    };
   };
   onChange?: (newValue: string) => void;
   inputMode?: 'decimal' | 'numeric';
@@ -21,6 +29,7 @@ export interface NumberInputProps
   largeStep?: number;
   repeatRate?: number;
   threshold?: number;
+  renderSpinButtons?: (props: NumberInputSpinButtonsProps) => React.ReactNode;
 }
 
 const displayName = 'NumberInput';
@@ -40,6 +49,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       onChange,
       defaultValue,
       value: valueProp,
+      renderSpinButtons: renderSpinButtonsProps,
       ...rest
     } = props;
 
@@ -60,6 +70,8 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
     const increase = (toIncrase: number) => {
       setValue((prev) => {
+        if (isNaN(+prev)) prev = '0';
+
         let newValue = +prev;
 
         if (newValue === max) return newValue + '';
@@ -74,13 +86,15 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
     const decrease = (toDecrease: number) => {
       setValue((prev) => {
+        if (isNaN(+prev)) prev = '0';
+
         let newValue = +prev;
 
         if (newValue === min) return newValue + '';
 
         if (max && newValue > max) newValue = max;
         else if (min && newValue < min) newValue = min;
-        else newValue = Math.max(newValue - toDecrease, min ? min : Infinity);
+        else newValue = Math.max(newValue - toDecrease, min ? min : -Infinity);
 
         return newValue + '';
       });
@@ -258,6 +272,41 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
     const styles = React.useMemo(() => numberInput(), []);
 
+    const defaultRenderSpinButtons = ({
+      decreaseProps,
+      increaseProps,
+      wrapperProps,
+    }: NumberInputSpinButtonsProps) => {
+      return (
+        <div {...wrapperProps}>
+          {/* decrease */}
+          <Button
+            type="button"
+            isIconOnly
+            size="sm"
+            variant="text"
+            {...decreaseProps}
+          >
+            <MinusIcon />
+          </Button>
+
+          {/* increase */}
+          <Button
+            type="button"
+            isIconOnly
+            size="sm"
+            variant="text"
+            {...increaseProps}
+          >
+            <PlusIcon />
+          </Button>
+        </div>
+      );
+    };
+
+    const renderSpinButtons =
+      renderSpinButtonsProps ?? defaultRenderSpinButtons;
+
     if (process.env.NODE_ENV !== 'production' && min && max && min > max)
       throw new Error(`${displayName}, \`min\` must be lower than \`max\``);
 
@@ -281,43 +330,31 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
         step={step}
         endContent={
           <>
-            {/* decrease */}
-            <Button
-              type="button"
-              aria-label="decrease value"
-              aria-description="long press to decrease speedly"
-              tabIndex={-1}
-              isIconOnly
-              size="sm"
-              variant="text"
-              classNames={{
-                base: styles.button({
-                  className: classNames?.decreaseButton,
+            {renderSpinButtons({
+              decreaseProps: {
+                'aria-label': 'decrease value',
+                'aria-description': 'long press to decrease speedly',
+                tabIndex: -1,
+                onPointerDown: onLongPress('decrease'),
+                className: styles.decrease({
+                  className: classNames?.spinButtons?.decrease,
                 }),
-              }}
-              onPointerDown={onLongPress('decrease')}
-            >
-              <MinusIcon />
-            </Button>
-
-            {/* increase */}
-            <Button
-              type="button"
-              aria-label="increase value"
-              aria-description="long press to increase speedly"
-              tabIndex={-1}
-              isIconOnly
-              size="sm"
-              variant="text"
-              classNames={{
-                base: styles.button({
-                  className: classNames?.increaseButton,
+              },
+              increaseProps: {
+                'aria-label': 'increase value',
+                'aria-description': 'long press to increase speedly',
+                tabIndex: -1,
+                onPointerDown: onLongPress('increase'),
+                className: styles.increase({
+                  className: classNames?.spinButtons?.increase,
                 }),
-              }}
-              onPointerDown={onLongPress('increase')}
-            >
-              <PlusIcon />
-            </Button>
+              },
+              wrapperProps: {
+                className: styles.wrapper({
+                  className: classNames?.spinButtons?.wrapper,
+                }),
+              },
+            })}
 
             {endContent}
           </>
