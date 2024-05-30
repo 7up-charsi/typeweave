@@ -1,5 +1,6 @@
 import React from 'react';
 import { NumberInput, PasswordInput, Input as InputComp } from '../src';
+import { PointerEvents } from '../src/pointer-events/pointer-events';
 
 const meta = {
   title: 'Components/Input',
@@ -50,6 +51,23 @@ const PasswordTemplate = () => (
 
 export const Password = {
   render: PasswordTemplate,
+};
+
+const ToggleButtonTemplate = () => (
+  <PasswordInput
+    required
+    label="input label"
+    placeholder="placeholder"
+    renderToggleButton={({ onPress, ...props }, { isPassword }) => (
+      <PointerEvents onPress={onPress}>
+        <button {...props}>{isPassword ? 'show' : 'hide'}</button>
+      </PointerEvents>
+    )}
+  />
+);
+
+export const ToggleButton = {
+  render: ToggleButtonTemplate,
 };
 
 const NumberTemplate = () => (
