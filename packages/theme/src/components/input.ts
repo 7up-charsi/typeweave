@@ -41,7 +41,9 @@ export type InputClassNames = ClassNames<typeof input.slots>;
 
 export const numberInput = tv({
   slots: {
-    button: '',
+    wrapper: '',
+    increase: '',
+    decrease: '',
   },
 });
 
