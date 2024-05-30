@@ -1,14 +1,19 @@
 'use client';
 
-import * as Disclosure from '@webbo-ui/disclosure';
-import { Button } from '@webbo-ui/button';
+import {
+  Button,
+  DisclosureContent,
+  DisclosureItem,
+  DisclosureRoot,
+  DisclosureTrigger,
+} from '@typeweave/react';
 import React, { Fragment } from 'react';
-import { Icon } from '@webbo-ui/icon';
 import { LinkIndicator } from './link-indicator';
 import { Prop } from './prop';
 import { TsType } from './ts-type';
 import { ComponentProp } from '@/lib/types';
 import { Link } from './Link';
+import { ChevronDown } from 'lucide-react';
 
 export interface PropsProps {
   data?: ComponentProp[];
@@ -20,11 +25,13 @@ const asChildProp: ComponentProp = {
   default: 'undefined',
   description: (
     <>
-      Change the default rendered element for the one passed as a child, merging
-      their props and behavior.
+      Change the default rendered element for the one passed as a
+      child, merging their props and behavior.
       <br />
       See how to{' '}
-      <Link href="/docs/customization/asChild">customize rendered element</Link>
+      <Link href="/docs/customization/asChild">
+        customize rendered element
+      </Link>
     </>
   ),
 };
@@ -45,7 +52,9 @@ export const Props = (props: PropsProps) => {
           <Button
             size="sm"
             onPress={() => {
-              setItems(items.length ? [] : data.map((_, i) => `${i + 1}`));
+              setItems(
+                items.length ? [] : data.map((_, i) => `${i + 1}`),
+              );
             }}
             aria-label={`${buttonLabel} props`}
           >
@@ -54,7 +63,7 @@ export const Props = (props: PropsProps) => {
         </div>
       )}
 
-      <Disclosure.Root
+      <DisclosureRoot
         value={items}
         onValueChange={setItems}
         className="rounded border border-muted-6"
@@ -73,11 +82,21 @@ export const Props = (props: PropsProps) => {
 
           return (
             <Fragment key={i}>
-              <Disclosure.Item
+              <DisclosureItem
                 value={'' + (i + 1)}
                 className="first:mt-2 last:!mb-2"
               >
                 <div className="flex items-center px-4 py-1">
+                  <DisclosureTrigger className="group mr-2">
+                    <Button
+                      isIconOnly
+                      aria-label={`expand ${name} prop`}
+                      size="sm"
+                    >
+                      <ChevronDown className="rotate-0 transition-transform group-data-[expanded=true]:-rotate-180" />
+                    </Button>
+                  </DisclosureTrigger>
+
                   <span className="group isolate flex items-center">
                     <Prop
                       id={id}
@@ -89,33 +108,9 @@ export const Props = (props: PropsProps) => {
 
                     <LinkIndicator id={id} />
                   </span>
-
-                  <Disclosure.Trigger className="group ml-auto">
-                    <Button
-                      isIconOnly
-                      aria-label={`expand ${name} prop`}
-                      size="sm"
-                    >
-                      <Icon>
-                        <svg
-                          className="rotate-0 transition-transform group-data-[expanded=true]:-rotate-180"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M6 9l6 6 6-6"
-                          ></path>
-                        </svg>
-                      </Icon>
-                    </Button>
-                  </Disclosure.Trigger>
                 </div>
 
-                <Disclosure.Content>
+                <DisclosureContent>
                   <div className="flex flex-col gap-2 pl-10">
                     {(
                       [
@@ -126,10 +121,15 @@ export const Props = (props: PropsProps) => {
                     ).map(
                       ([key, value], i) =>
                         !!value && (
-                          <div key={i} className="flex items-center gap-3">
+                          <div
+                            key={i}
+                            className="flex items-center gap-3"
+                          >
                             <span className="place-self-start first-letter:uppercase">
                               {key}
-                              <span className="ml-3 whitespace-pre">--</span>
+                              <span className="ml-3 whitespace-pre">
+                                --
+                              </span>
                             </span>
 
                             {key === 'description' ? (
@@ -138,11 +138,13 @@ export const Props = (props: PropsProps) => {
                               </span>
                             ) : null}
 
-                            {key === 'default' && !Array.isArray(value) ? (
+                            {key === 'default' &&
+                            !Array.isArray(value) ? (
                               <TsType>{value}</TsType>
                             ) : null}
 
-                            {key === 'type' && !Array.isArray(value) ? (
+                            {key === 'type' &&
+                            !Array.isArray(value) ? (
                               <TsType>{value}</TsType>
                             ) : null}
 
@@ -164,14 +166,16 @@ export const Props = (props: PropsProps) => {
                         ),
                     )}
                   </div>
-                </Disclosure.Content>
-              </Disclosure.Item>
+                </DisclosureContent>
+              </DisclosureItem>
 
-              {i !== arr.length - 1 ? <hr className="border-muted-6" /> : null}
+              {i !== arr.length - 1 ? (
+                <hr className="border-muted-6" />
+              ) : null}
             </Fragment>
           );
         })}
-      </Disclosure.Root>
+      </DisclosureRoot>
     </div>
   );
 };

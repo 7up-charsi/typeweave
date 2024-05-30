@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { CopyCode } from './copy-code';
-import { Button } from '@webbo-ui/button';
+import { Button } from '@typeweave/react';
 import { Code } from './code';
 import { WrapLines } from './wrap-lines';
 
@@ -31,7 +31,10 @@ export const DemoCode = (props: Props) => {
 
         <div className="grow"></div>
 
-        <Button onPress={() => setIsCodeHide((prev) => !prev)} size="sm">
+        <Button
+          onPress={() => setIsCodeHide((prev) => !prev)}
+          size="sm"
+        >
           {isCodeHide ? 'show code' : 'hide code'}
         </Button>
 

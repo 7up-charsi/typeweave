@@ -12,7 +12,9 @@ export const DocHeader = ({ title, description }: Props) => {
       >
         {title}
       </h1>
-      {description && <p className="first-letter:uppercase">{description}</p>}
+      {description && (
+        <p className="first-letter:uppercase">{description}</p>
+      )}
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import { Icon } from '@webbo-ui/icon';
 import { LinkIndicator } from './link-indicator';
 
 const styles = {

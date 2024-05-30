@@ -26,7 +26,8 @@ export const StylePaths = async (props: Props) => {
   return (
     <>
       <p>
-        Copy and paste these <code data-highlight>style paths</code> in
+        Copy and paste these <code data-highlight>style paths</code>{' '}
+        in
         <code data-highlight>tailwind.config.ts</code> content array
       </p>
 

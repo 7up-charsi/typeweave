@@ -1,7 +1,7 @@
 import { componentsLinks } from '@/config/components-links';
 import { customizationLinks } from '@/config/customization-links';
 import { guidesLinks } from '@/config/guides-links';
-import { Button } from '@webbo-ui/button';
+import { Button } from '@typeweave/react';
 import Link from 'next/link';
 
 interface Props {
@@ -86,7 +86,9 @@ export const DocsPager = ({ activeSlug }: Props) => {
         <Button
           asChild
           startContent={arrowLeft}
-          classNames={{ base: 'h-auto py-2 px-4 min-w-52 justify-start gap-4' }}
+          classNames={{
+            base: 'h-auto py-2 px-4 min-w-52 justify-start gap-4',
+          }}
           aria-label={`got to prev docs ${prev.title} page in ${prevCategory}`}
         >
           <Link href={prev.href}>
@@ -94,7 +96,9 @@ export const DocsPager = ({ activeSlug }: Props) => {
               <div className="text-sm text-muted-11/80 first-letter:uppercase">
                 {prev.href.split('/')[2]}
               </div>
-              <div className="first-letter:uppercase">{prev.title}</div>
+              <div className="first-letter:uppercase">
+                {prev.title}
+              </div>
             </div>
           </Link>
         </Button>
@@ -106,7 +110,9 @@ export const DocsPager = ({ activeSlug }: Props) => {
         <Button
           asChild
           endContent={arrowRight}
-          classNames={{ base: 'h-auto py-2 px-4 min-w-52 justify-end gap-4' }}
+          classNames={{
+            base: 'h-auto py-2 px-4 min-w-52 justify-end gap-4',
+          }}
           aria-label={`got to next docs ${next.title} page in ${nextCategory}`}
         >
           <Link href={next.href}>
@@ -114,7 +120,9 @@ export const DocsPager = ({ activeSlug }: Props) => {
               <div className="text-sm text-muted-11/80 first-letter:uppercase">
                 {next.href.split('/')[2]}
               </div>
-              <div className="first-letter:uppercase">{next.title}</div>
+              <div className="first-letter:uppercase">
+                {next.title}
+              </div>
             </div>
           </Link>
         </Button>

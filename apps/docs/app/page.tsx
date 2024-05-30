@@ -9,7 +9,8 @@ const Page = () => {
       </h1>
 
       <p className="mt-10 text-center text-xl text-muted-11">
-        Make fully functional accessible websites with power of Tailwindcss
+        Make fully functional accessible websites with power of
+        Tailwindcss
       </p>
 
       <div className="mt-10 flex justify-center gap-5 text-muted-11">
@@ -18,7 +19,8 @@ const Page = () => {
             Free and open source
           </h2>
           <p id="des-r1" className="w-72 text-center">
-            All components are MIT licensed. You can use any component anywhere
+            All components are MIT licensed. You can use any component
+            anywhere
           </p>
         </div>
 

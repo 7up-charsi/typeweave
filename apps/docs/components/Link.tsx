@@ -1,6 +1,7 @@
 import NextLink from 'next/link';
 
-interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {}
+interface LinkProps
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {}
 
 export const Link = (props: LinkProps) => {
   const className = 'text-info-11 underline underline-offset-2';
