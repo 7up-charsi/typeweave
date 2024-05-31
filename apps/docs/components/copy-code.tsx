@@ -1,20 +1,16 @@
-import {
-  Button,
-  TooltipArrow,
-  TooltipContent,
-  TooltipPortal,
-  TooltipRoot,
-  TooltipTrigger,
-} from '@typeweave/react';
+'use client';
+
+import { Button } from '@typeweave/react';
 import React from 'react';
 import { Copy, CopyCheck } from 'lucide-react';
 
 interface CopyCodeProps {
   code: string;
+  className?: string;
 }
 
 export const CopyCode = (props: CopyCodeProps) => {
-  const { code } = props;
+  const { code, className } = props;
 
   const [isCopied, setIsCopied] = React.useState(false);
   const resetTimer = React.useRef<NodeJS.Timeout | undefined>(
@@ -22,35 +18,25 @@ export const CopyCode = (props: CopyCodeProps) => {
   );
 
   return (
-    <TooltipRoot>
-      <TooltipTrigger>
-        <Button
-          isIconOnly
-          size="sm"
-          aria-label="copy code"
-          onPress={() => {
-            clearTimeout(resetTimer.current);
+    <Button
+      isIconOnly
+      size="sm"
+      aria-label="copy code"
+      className={className}
+      color={isCopied ? 'success' : 'default'}
+      onPress={() => {
+        clearTimeout(resetTimer.current);
 
-            navigator.clipboard.writeText(code);
-            setIsCopied(true);
-            resetTimer.current = setTimeout(() => {
-              setIsCopied(false);
-              resetTimer.current = undefined;
-            }, 1000);
-          }}
-        >
-          {isCopied ? <CopyCheck /> : <Copy />}
-        </Button>
-      </TooltipTrigger>
-
-      <TooltipPortal>
-        <TooltipContent>
-          <TooltipArrow />
-
-          {isCopied ? 'copied' : 'Copy code'}
-        </TooltipContent>
-      </TooltipPortal>
-    </TooltipRoot>
+        navigator.clipboard.writeText(code);
+        setIsCopied(true);
+        resetTimer.current = setTimeout(() => {
+          setIsCopied(false);
+          resetTimer.current = undefined;
+        }, 1000);
+      }}
+    >
+      {isCopied ? <CopyCheck /> : <Copy />}
+    </Button>
   );
 };
 

@@ -9,8 +9,4 @@ export const navbarLinks: NavigationLink[] = [
     title: 'customization',
     href: '/docs/customization/theme',
   },
-  {
-    title: 'components',
-    href: '/components',
-  },
 ];

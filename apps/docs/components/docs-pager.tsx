@@ -2,61 +2,14 @@ import { componentsLinks } from '@/config/components-links';
 import { customizationLinks } from '@/config/customization-links';
 import { guidesLinks } from '@/config/guides-links';
 import { Button } from '@typeweave/react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
-interface Props {
+interface DocsPagerProps {
   activeSlug?: string;
 }
 
-const arrowLeft = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    width={20}
-    height={20}
-  >
-    <g>
-      <g>
-        <g
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        >
-          <path d="M7.6 7L2.5 12 7.6 17" data-name="Right"></path>
-          <path d="M21.5 12L4.8 12"></path>
-        </g>
-      </g>
-    </g>
-  </svg>
-);
-
-const arrowRight = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    width={20}
-    height={20}
-  >
-    <g>
-      <g>
-        <g
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        >
-          <path d="M16.4 7L21.5 12 16.4 17" data-name="Right"></path>
-          <path d="M2.5 12L19.2 12"></path>
-        </g>
-      </g>
-    </g>
-  </svg>
-);
-
-export const DocsPager = ({ activeSlug }: Props) => {
+export const DocsPager = ({ activeSlug }: DocsPagerProps) => {
   if (!activeSlug) return null;
 
   const links = [
@@ -77,29 +30,17 @@ export const DocsPager = ({ activeSlug }: Props) => {
       ? links[activeIndex + 1]
       : null;
 
-  const prevCategory = prev?.href.split('/')[2] ?? '';
-  const nextCategory = next?.href.split('/')[2] ?? '';
-
   return (
-    <div className="mt-10 flex">
+    <div className="mt-10 flex border-t border-muted-6 py-2">
       {prev && (
         <Button
           asChild
-          startContent={arrowLeft}
-          classNames={{
-            base: 'h-auto py-2 px-4 min-w-52 justify-start gap-4',
-          }}
-          aria-label={`got to prev docs ${prev.title} page in ${prevCategory}`}
+          startContent={<ChevronLeft />}
+          aria-label={`got to prev docs ${prev.title} page`}
+          variant="text"
         >
-          <Link href={prev.href}>
-            <div className="flex flex-col">
-              <div className="text-sm text-muted-11/80 first-letter:uppercase">
-                {prev.href.split('/')[2]}
-              </div>
-              <div className="first-letter:uppercase">
-                {prev.title}
-              </div>
-            </div>
+          <Link href={prev.href} className="first-letter:uppercase">
+            {prev.title}
           </Link>
         </Button>
       )}
@@ -109,21 +50,12 @@ export const DocsPager = ({ activeSlug }: Props) => {
       {next && (
         <Button
           asChild
-          endContent={arrowRight}
-          classNames={{
-            base: 'h-auto py-2 px-4 min-w-52 justify-end gap-4',
-          }}
-          aria-label={`got to next docs ${next.title} page in ${nextCategory}`}
+          endContent={<ChevronRight />}
+          aria-label={`got to next docs ${next.title} page`}
+          variant="text"
         >
-          <Link href={next.href}>
-            <div className="flex flex-col items-end">
-              <div className="text-sm text-muted-11/80 first-letter:uppercase">
-                {next.href.split('/')[2]}
-              </div>
-              <div className="first-letter:uppercase">
-                {next.title}
-              </div>
-            </div>
+          <Link href={next.href} className="first-letter:uppercase">
+            {next.title}
           </Link>
         </Button>
       )}

@@ -75,13 +75,13 @@ const Page = async ({ params }: PageProps) => {
   });
 
   return (
-    <>
-      <main className="overflow-auto px-16 py-4">
+    <div className="lg:col-start-2 ">
+      <main className="overflow-auto px-5 py-4 lg:px-10">
         <MdxContent components={mdxComponents} />
         <DocsPager activeSlug={slug} />
       </main>
-      <Toc />
-    </>
+      {/* <Toc /> */}
+    </div>
   );
 };
 

@@ -17,7 +17,7 @@ export const Branding = (props: BrandingProps) => {
       href="/"
       aria-label="home page"
       className={twMerge(
-        'inline-block select-none text-xl leading-none text-primary-11 first-letter:uppercase',
+        'inline-block select-none text-xl font-medium leading-none text-primary-11 first-letter:uppercase',
         className,
       )}
     >

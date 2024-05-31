@@ -1,16 +1,7 @@
 import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
-import local from 'next/font/local';
-import '@/styles/globals.css';
 import { siteConfig } from '@/config/site';
-
-const Font_Code = local({
-  src: '../assets/fonts/Menlo-Regular.ttf',
-  display: 'swap',
-  preload: true,
-  variable: '--font-code',
-  adjustFontFallback: 'Arial',
-});
+import '@/styles/globals.css';
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -47,10 +38,7 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   return (
-    <html
-      lang="en"
-      className={`${GeistSans.variable} ${Font_Code.variable}`}
-    >
+    <html lang="en" className={GeistSans.variable}>
       <body className="m-auto max-w-screen-2xl bg-background text-foreground">
         {children}
       </body>
