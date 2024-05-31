@@ -1,6 +1,10 @@
+import { LandingNavbar } from '@/components/landing-navbar';
+
 const Page = () => {
   return (
-    <div className="pt-16">
+    <>
+      <LandingNavbar />
+
       <h1 className="mt-32 text-center text-6xl font-bold leading-tight text-muted-11 ">
         <span className="text-primary-11">Fully featured</span> and{' '}
         <span className="text-secondary-11">accessible</span>
@@ -33,7 +37,7 @@ const Page = () => {
           </p>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

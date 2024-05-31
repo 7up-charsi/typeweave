@@ -176,6 +176,9 @@ importers:
       sucrase:
         specifier: ^3.35.0
         version: 3.35.0
+      tailwind-merge:
+        specifier: ^2.3.0
+        version: 2.3.0
     devDependencies:
       '@types/node':
         specifier: ^20.11.17
