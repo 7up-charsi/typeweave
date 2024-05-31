@@ -18,7 +18,7 @@ const displayName = 'LandingNavbar';
 
 export const LandingNavbar = () => {
   return (
-    <header className="sticky top-0 z-20 m-auto flex h-16 w-full max-w-screen-2xl items-center border-b border-b-muted-6 bg-muted-1/50 px-12 backdrop-blur-sm">
+    <header className="sticky top-0 z-20 m-auto flex h-16 w-full max-w-screen-2xl items-center border-b border-b-muted-6 bg-muted-1/50 px-5 backdrop-blur-sm lg:px-10">
       <Branding />
 
       <nav
@@ -50,8 +50,8 @@ export const LandingNavbar = () => {
         <DrawerPortal>
           <DrawerOverlay />
 
-          <DrawerContent className="w-full px-4 md:w-[300px] lg:hidden">
-            <div className="relative flex h-16 items-center justify-center border-b border-b-muted-6">
+          <DrawerContent className="w-full max-w-[300px]  lg:hidden">
+            <div className="relative flex h-16 items-center justify-center px-5">
               <Branding />
 
               <DrawerClose>
@@ -60,7 +60,7 @@ export const LandingNavbar = () => {
                   aria-label="close navbar"
                   size="sm"
                   color="danger"
-                  className="absolute left-0"
+                  className="absolute right-5"
                 >
                   <XIcon />
                 </Button>
@@ -69,7 +69,7 @@ export const LandingNavbar = () => {
 
             <nav
               aria-label="primary navigation links"
-              className="mt-5 space-y-2"
+              className="space-y-2 px-5"
             >
               {navbarLinks.map(({ href, title }, i) => (
                 <Button
