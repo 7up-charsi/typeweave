@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import local from 'next/font/local';
-import { Navbar } from '@/components/navbar';
 import '@/styles/globals.css';
+import { siteConfig } from '@/config/site';
 
 const Font_Code = local({
   src: '../assets/fonts/Menlo-Regular.ttf',
@@ -13,9 +13,32 @@ const Font_Code = local({
 });
 
 export const metadata: Metadata = {
-  title: { default: 'webbo-ui docs', template: '%s | webbo-ui' },
-  description:
-    'The documentation of react components ui library developed by webbo-ui',
+  title: siteConfig.name,
+  description: siteConfig.description,
+  keywords: ['typeweave', 'typescript', 'react', 'ui components'],
+  applicationName: siteConfig.name,
+  authors: { name: siteConfig.author, url: siteConfig.siteUrl },
+  icons: {
+    icon: '/favicon.png',
+    apple: '/apple-touch-icon.png',
+    shortcut: '/favicon.png',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    description: siteConfig.description,
+    title: siteConfig.name,
+    siteName: siteConfig.name,
+    emails: siteConfig.email,
+    images: [
+      {
+        width: 1200,
+        height: 630,
+        url: siteConfig.ogImage,
+        alt: siteConfig.name,
+      },
+    ],
+  },
 };
 
 interface Props {
@@ -28,8 +51,7 @@ const Layout = ({ children }: Props) => {
       lang="en"
       className={`${GeistSans.variable} ${Font_Code.variable}`}
     >
-      <body className="m-auto max-w-screen-2xl bg-muted-1 text-muted-11">
-        <Navbar />
+      <body className="m-auto max-w-screen-2xl bg-background text-foreground">
         {children}
       </body>
     </html>
