@@ -6,6 +6,7 @@ import grayMatter from 'gray-matter';
 import { getMdxFiles } from '@/lib/get-mdx-files';
 import { CompileMdx } from '@/components/compile-mdx';
 import { getMeta } from '@/lib/get-meta';
+import { ContentWithToc } from '@/components/content-with-toc';
 
 interface PageProps {
   params: { slug: string[] };
@@ -47,10 +48,10 @@ const Page = async ({ params }: PageProps) => {
   const { content } = grayMatter(markdown);
 
   return (
-    <>
+    <ContentWithToc>
       <CompileMdx content={content} />
       <DocsPager activeSlug={slug} />
-    </>
+    </ContentWithToc>
   );
 };
 
