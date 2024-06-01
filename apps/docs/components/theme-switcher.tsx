@@ -9,25 +9,33 @@ import {
   MenuRadioItem,
   MenuRoot,
   MenuTrigger,
+  Skeleton,
 } from '@typeweave/react';
 import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
 import { ThemeProvider, useTheme } from 'next-themes';
+import React from 'react';
 
-interface ThemeSwitcherMenuProps {
+interface ThemeSwitcherProps {
   className?: string;
 }
 
-const ThemeImpl = (props: ThemeSwitcherMenuProps) => {
+const ThemeImpl = (props: ThemeSwitcherProps) => {
   const { className } = props;
 
+  const [mounted, setMounted] = React.useState(false);
   const { theme, setTheme } = useTheme();
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted)
+    return <Skeleton variant="rounded" className="mr-5 h-9 w-20" />;
 
   return (
     <MenuRoot>
       <MenuTrigger>
-        <Button size="sm" className={className}>
-          theme
-        </Button>
+        <Button className={className}>theme</Button>
       </MenuTrigger>
 
       <MenuPortal>
@@ -68,7 +76,7 @@ const ThemeImpl = (props: ThemeSwitcherMenuProps) => {
   );
 };
 
-export const ThemeSwitcherMenu = (props: ThemeSwitcherMenuProps) => {
+export const ThemeSwitcher = (props: ThemeSwitcherProps) => {
   return (
     <ThemeProvider
       enableSystem

@@ -5,7 +5,7 @@ import {
   TabsRoot,
   TabsTrigger,
 } from '@typeweave/react';
-import { Code } from './code';
+// import { Code } from './code';
 
 interface Props {
   package?: string;
@@ -33,7 +33,8 @@ export const Installation = (props: Props) => {
       ].map(({ bash, value }, i) => (
         <TabsContent key={i} value={value}>
           <pre className="mt-0">
-            <Code className="language-bash">{bash}</Code>
+            {/* <Code className="language-bash">{bash}</Code> */}
+            <code>{bash}</code>
           </pre>
         </TabsContent>
       ))}

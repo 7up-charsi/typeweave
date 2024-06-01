@@ -1,8 +1,8 @@
 import path from 'path';
 import { access, readFile } from 'fs/promises';
 
-export const getContent = async (slug: string) => {
-  const filePath = path.resolve(`content/${slug}/content.mdx`);
+export const getMdx = async (slug: string) => {
+  const filePath = path.resolve(`content/${slug}.mdx`);
 
   try {
     await access(filePath);

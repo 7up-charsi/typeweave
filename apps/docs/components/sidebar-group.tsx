@@ -1,7 +1,7 @@
 'use client';
 
 import { PointerEvents } from '@typeweave/react/src/pointer-events/pointer-events';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 // *-*-*-*-* SidebarGroup *-*-*-*-*
 
@@ -14,13 +14,16 @@ export interface SidebarGroupProps
 export const SidebarGroup = (props: SidebarGroupProps) => {
   const { children, heading, ...restProps } = props;
 
-  const [isExpanded, setIsExpanded] = useState(true);
+  const ulId = React.useId();
+  const [isExpanded, setIsExpanded] = React.useState(true);
 
   return (
     <>
       <PointerEvents onPress={() => setIsExpanded((prev) => !prev)}>
         <button
           type="button"
+          aria-controls={ulId}
+          aria-expanded={isExpanded}
           className={`flex h-8 w-full items-center rounded font-medium capitalize hover:bg-muted-3 focus-visible:ring-2 focus-visible:ring-focus`}
         >
           <span className="flex w-6 items-center justify-center">
@@ -48,6 +51,7 @@ export const SidebarGroup = (props: SidebarGroupProps) => {
       </PointerEvents>
 
       <ul
+        id={ulId}
         style={{
           height: isExpanded ? 'auto' : '0px',
           display: isExpanded ? 'block' : 'none',

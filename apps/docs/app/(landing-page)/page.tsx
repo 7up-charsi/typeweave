@@ -1,4 +1,4 @@
-import { CopyCode } from '@/components/copy-code';
+import { CopyButton } from '@/components/copy-button';
 import { LandingNavbar } from '@/components/landing-navbar';
 
 const Page = () => {
@@ -24,7 +24,7 @@ const Page = () => {
           <pre className="group relative h-12 w-full content-center overflow-auto px-3">
             <code>$ {pm} @typeweave/react @typeweave/theme</code>
 
-            <CopyCode
+            <CopyButton
               code={`${pm} @typeweave/react @typeweave/theme`}
               className="absolute right-3 top-1/2 -translate-y-1/2 lg:hidden lg:group-hover:flex"
             />

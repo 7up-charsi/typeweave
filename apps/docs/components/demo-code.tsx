@@ -1,10 +1,17 @@
 'use client';
 
 import React from 'react';
-import { CopyCode } from './copy-code';
-import { Button } from '@typeweave/react';
-import { Code } from './code';
-import { WrapLines } from './wrap-lines';
+import { CopyButton } from './copy-button';
+import {
+  Button,
+  TooltipArrow,
+  TooltipContent,
+  TooltipPortal,
+  TooltipRoot,
+  TooltipTrigger,
+} from '@typeweave/react';
+// import { Code } from './code';
+import { TextIcon, WrapTextIcon } from 'lucide-react';
 
 interface Props {
   code: string;
@@ -23,10 +30,26 @@ export const DemoCode = (props: Props) => {
         className="flex h-14 items-center justify-end gap-3 border border-inherit px-5 data-[rounded=true]:rounded-b"
       >
         {isCodeHide ? null : (
-          <WrapLines
-            isWrapped={isWrapped}
-            toggleWrap={() => setIsWrapped((prev) => !prev)}
-          />
+          <TooltipRoot>
+            <TooltipTrigger>
+              <Button
+                size="sm"
+                isIconOnly
+                aria-label="wrap lines"
+                onPress={() => setIsWrapped((prev) => !prev)}
+              >
+                {isWrapped ? <TextIcon /> : <WrapTextIcon />}
+              </Button>
+            </TooltipTrigger>
+
+            <TooltipPortal>
+              <TooltipContent>
+                <TooltipArrow />
+
+                {isWrapped ? 'unwrap lines' : 'wrap lines'}
+              </TooltipContent>
+            </TooltipPortal>
+          </TooltipRoot>
         )}
 
         <div className="grow"></div>
@@ -38,7 +61,7 @@ export const DemoCode = (props: Props) => {
           {isCodeHide ? 'show code' : 'hide code'}
         </Button>
 
-        <CopyCode code={code} />
+        <CopyButton code={code} />
       </div>
 
       {isCodeHide ? null : (
@@ -48,7 +71,7 @@ export const DemoCode = (props: Props) => {
               data-wrap-lines={isWrapped}
               className="mt-0 rounded-none border-0 data-[wrap-lines=true]:whitespace-pre-wrap"
             >
-              <Code className="language-tsx">{code}</Code>
+              {/* <Code className="language-tsx">{code}</Code> */}
             </pre>
           </div>
         </div>

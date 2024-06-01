@@ -20,13 +20,7 @@ metaDescription: An accordion is a vertically stacked set of interactive heading
 
 <Installation package="@webbo-ui/accordion" />
 
-## styles
-
-<StylePaths component="accordion" />
-
 ## anatomy
-
-<Anatomy component="accordion" />
 
 ## props
 
@@ -42,26 +36,23 @@ Contains all the parts of an accordion.
       default: '"multiple"',
       description: (
         <>
-          Determines whether one or multiple items can be opened at the same
-          time.
+          Determines <code>whether</code> one or multiple items can be
+          opened at the same time.
         </>
       ),
     },
     {
       name: 'value',
       type: ['string', 'string[]'],
-      default: 'undefined',
       description: (
         <>
           the controlled value of the item to expand.
           <ul>
             <li>
-              it must be <TsType>string</TsType> when <Prop>type</Prop> is{' '}
-              <TsType>"single"</TsType>
+              it must be <code>string</code> when type is "single"
             </li>
             <li>
-              it must be <TsType>string[]</TsType> when <Prop>type</Prop> is{' '}
-              <TsType>"multiple"</TsType>
+              it must be <code>string[]</code> when type is "multiple"
             </li>
           </ul>
         </>
@@ -70,43 +61,28 @@ Contains all the parts of an accordion.
     {
       name: 'defaultValue',
       type: ['string', 'string[]'],
-      default: 'undefined',
       description: (
         <>
           The value of the item to expand when initially rendered.
           <ul>
-            <li>
-              it must be <TsType>string</TsType> when <Prop>type</Prop> is{' '}
-              <TsType>"single"</TsType>
-            </li>
-            <li>
-              it must be <TsType>string[]</TsType> when <Prop>type</Prop> is{' '}
-              <TsType>"multiple"</TsType>
-            </li>
+            <li>it must be string when type is "single"</li>
+            <li>it must be string[] when type is "multiple"</li>
           </ul>
         </>
       ),
     },
     {
       name: 'onValueChange',
-      type: '(value: string | null | string[]) => void',
-      default: 'undefined',
+      type: 'func',
       description: (
         <>
           Event handler called when the state of an item changes.
           <ul>
+            <li>value is string when type is "single".</li>
+            <li>value is string[] when type is "multiple".</li>
             <li>
-              value is <TsType>string</TsType> when <Prop>type</Prop> is{' '}
-              <TsType>"single"</TsType>.
-            </li>
-            <li>
-              value is <TsType>string[]</TsType> when <Prop>type</Prop> is{' '}
-              <TsType>"multiple"</TsType>.
-            </li>
-            <li>
-              value is <TsType>string</TsType> or <TsType>null</TsType> when{' '}
-              <Prop>type</Prop> is <TsType>"single"</TsType> and{' '}
-              <Prop>isSingleCollapsible</Prop> is <TsType>true</TsType>
+              value is string or null when type is "single" and
+              isSingleCollapsible is true
             </li>
           </ul>
         </>
@@ -118,19 +94,18 @@ Contains all the parts of an accordion.
       default: 'true',
       description: (
         <>
-          When <Prop>type</Prop> is <TsType>"single"</TsType>, allows closing
-          content when clicking trigger for an open item.
+          When type is "single", allows closing content when clicking
+          trigger for an open item.
         </>
       ),
     },
     {
       name: 'disabled',
       type: 'boolean',
-      default: 'undefined',
       description: (
         <>
-          When <TsType>true</TsType>, prevents the user from interacting with
-          the accordion and all its items.
+          When true, prevents the user from interacting with the
+          accordion and all its items.
         </>
       ),
     },
@@ -139,25 +114,22 @@ Contains all the parts of an accordion.
 
 ### item
 
-Contains all the parts of a collapsible section. by default trigger wraps button in h3 heading but you can change heading level with <Prop>asChild</Prop>
+Contains all the parts of a collapsible section. by default trigger wraps button in h3 heading but you can change heading level with asChild
 
 <Props
   data={[
     {
       name: 'value',
       type: 'string',
-      default: 'undefined',
       required: true,
       description: <>A unique value for the item.</>,
     },
     {
       name: 'disabled',
       type: 'boolean',
-      default: 'undefined',
       description: (
         <>
-          When <TsType>true</TsType>, prevents the user from interacting with
-          the item.
+          When true, prevents the user from interacting with the item.
         </>
       ),
     },
@@ -166,13 +138,13 @@ Contains all the parts of a collapsible section. by default trigger wraps button
 
 ### header
 
-by default renders <code>h3</code> element. it must be nested inside <Prop>Accordion.Item</Prop>
+by default renders <code>h3</code> element. it must be nested inside Accordion.Item
 
 <Props data={[{ name: 'asChild' }]} />
 
 ### trigger
 
-Toggles the collapsed state of its associated item. it must be nested inside <Prop>Accordion.Item</Prop>
+Toggles the collapsed state of its associated item. it must be nested inside Accordion.Item
 
 <Props data={[{ name: 'asChild' }]} />
 
@@ -182,5 +154,5 @@ Contains the collapsible content for an item and it does not accept any props ot
 
 ### arrow
 
-it does not accept any props other than <code>React.SVGProps</code>. it must be nested inside <Prop>Accordion.Trigger</Prop>
+it does not accept any props other than <code>React.SVGProps</code>. it must be nested inside Accordion.Trigger
 . By default it renders a svg chevron and if you want to change this icon and animate it on expand/collapse then [see example](#custom-indicator-example)

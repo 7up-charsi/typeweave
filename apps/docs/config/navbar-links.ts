@@ -3,10 +3,10 @@ import { NavigationLink } from '@/lib/types';
 export const navbarLinks: NavigationLink[] = [
   {
     title: 'guides',
-    href: '/docs/guides/introduction',
+    href: '/guides/introduction',
   },
   {
     title: 'customization',
-    href: '/docs/customization/theme',
+    href: '/customization/theme',
   },
 ];
