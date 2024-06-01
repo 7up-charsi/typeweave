@@ -3,6 +3,7 @@ import { SidebarContent } from '@/components/sidebar-content';
 import { GeistSans } from 'geist/font/sans';
 import '@/styles/globals.css';
 import '@/styles/syntax-highlight-theme.css';
+import { Toc } from '@/components/toc';
 
 interface Props {
   children: React.ReactNode;
@@ -25,7 +26,13 @@ const Layout = ({ children }: Props) => {
             </aside>
           </div>
 
-          {children}
+          <div className="lg:grid lg:grid-cols-[1fr_200px]">
+            <main className="overflow-auto px-5 py-4 lg:px-10">
+              {children}
+            </main>
+
+            <Toc />
+          </div>
         </div>
       </body>
     </html>

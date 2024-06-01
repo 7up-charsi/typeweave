@@ -4,12 +4,12 @@ import { Button } from '@typeweave/react';
 import React from 'react';
 import { Copy, CopyCheck } from 'lucide-react';
 
-interface CopyCodeProps {
+interface CopyButtonProps {
   code: string;
   className?: string;
 }
 
-export const CopyCode = (props: CopyCodeProps) => {
+export const CopyButton = (props: CopyButtonProps) => {
   const { code, className } = props;
 
   const [isCopied, setIsCopied] = React.useState(false);
@@ -21,7 +21,7 @@ export const CopyCode = (props: CopyCodeProps) => {
     <Button
       isIconOnly
       size="sm"
-      aria-label="copy code"
+      aria-label="copy"
       className={className}
       color={isCopied ? 'success' : 'default'}
       onPress={() => {
@@ -40,4 +40,4 @@ export const CopyCode = (props: CopyCodeProps) => {
   );
 };
 
-CopyCode.displayName = 'CopyCode';
+CopyButton.displayName = 'CopyButton';

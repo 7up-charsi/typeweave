@@ -12,16 +12,13 @@ import { MenuIcon, XIcon } from 'lucide-react';
 import { Branding } from './branding';
 import { GithubLink } from './github-link';
 import { SidebarContent } from './sidebar-content';
+import { ThemeSwitcher } from './theme-switcher';
 
 const displayName = 'DocsNavbar';
 
 export const DocsNavbar = () => {
   return (
     <header className="sticky top-0 z-20 m-auto flex h-16 w-full max-w-screen-2xl items-center border-b border-b-muted-6 bg-muted-1/50 px-5 backdrop-blur-sm lg:px-10">
-      <Branding />
-
-      <div className="grow"></div>
-
       <DrawerRoot>
         <DrawerTrigger>
           <Button
@@ -62,6 +59,11 @@ export const DocsNavbar = () => {
         </DrawerPortal>
       </DrawerRoot>
 
+      <Branding />
+
+      <div className="grow"></div>
+
+      <ThemeSwitcher className="mr-5" />
       <GithubLink />
     </header>
   );

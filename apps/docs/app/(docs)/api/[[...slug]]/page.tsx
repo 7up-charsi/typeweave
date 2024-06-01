@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation';
 import { DocsPager } from '@/components/docs-pager';
-import { Toc } from '@/components/toc';
 import { Metadata } from 'next';
-import { getContent } from '@/lib/get-content';
+import { getMdx } from '@/lib/get-mdx';
 import { readdir } from 'fs/promises';
 import { evaluate } from '@mdx-js/mdx';
 import path from 'path';
@@ -23,7 +22,7 @@ export const generateMetadata = async ({
 }: {
   params: PageProps['params'];
 }): Promise<Metadata> => {
-  const markdown = await getContent(`docs/${params.slug?.join('/')}`);
+  const markdown = await getMdx(params.slug?.join('/'));
 
   if (!markdown) {
     notFound();
@@ -38,7 +37,7 @@ export const generateMetadata = async ({
 };
 
 export async function generateStaticParams() {
-  const files = await readdir(path.resolve('content/docs'), {
+  const files = await readdir(path.resolve('content/'), {
     recursive: true,
   });
 
@@ -55,7 +54,7 @@ export async function generateStaticParams() {
 
 const Page = async ({ params }: PageProps) => {
   const slug = params.slug?.join('/');
-  const markdown = await getContent(`docs/${slug}`);
+  const markdown = await getMdx(slug);
 
   if (!markdown) {
     notFound();
@@ -75,13 +74,10 @@ const Page = async ({ params }: PageProps) => {
   });
 
   return (
-    <div className="lg:grid lg:grid-cols-[1fr_200px]">
-      <main className="overflow-auto px-5 py-4 lg:px-10">
-        <MdxContent components={mdxComponents} />
-        <DocsPager activeSlug={slug} />
-      </main>
-      <Toc />
-    </div>
+    <>
+      <MdxContent components={mdxComponents} />
+      <DocsPager activeSlug={slug} />
+    </>
   );
 };
 

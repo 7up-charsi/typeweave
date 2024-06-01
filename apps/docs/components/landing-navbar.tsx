@@ -13,29 +13,13 @@ import { Branding } from './branding';
 import { navbarLinks } from '@/config/navbar-links';
 import Link from 'next/link';
 import { GithubLink } from './github-link';
+import { ThemeSwitcher } from './theme-switcher';
 
 const displayName = 'LandingNavbar';
 
 export const LandingNavbar = () => {
   return (
     <header className="sticky top-0 z-20 m-auto flex h-16 w-full max-w-screen-2xl items-center border-b border-b-muted-6 bg-muted-1/50 px-5 backdrop-blur-sm lg:px-10">
-      <Branding />
-
-      <nav
-        aria-label="primary navigation links"
-        className="ml-10 flex gap-2 max-lg:hidden"
-      >
-        {navbarLinks.map(({ href, title }, i) => (
-          <Button key={i} asChild variant="text">
-            <Link href={href} className="first-letter:uppercase">
-              {title}
-            </Link>
-          </Button>
-        ))}
-      </nav>
-
-      <div className="grow"></div>
-
       <DrawerRoot>
         <DrawerTrigger>
           <Button
@@ -88,6 +72,24 @@ export const LandingNavbar = () => {
         </DrawerPortal>
       </DrawerRoot>
 
+      <Branding />
+
+      <nav
+        aria-label="primary navigation links"
+        className="ml-10 flex gap-2 max-lg:hidden"
+      >
+        {navbarLinks.map(({ href, title }, i) => (
+          <Button key={i} asChild variant="text">
+            <Link href={href} className="first-letter:uppercase">
+              {title}
+            </Link>
+          </Button>
+        ))}
+      </nav>
+
+      <div className="grow"></div>
+
+      <ThemeSwitcher className="mr-5" />
       <GithubLink />
     </header>
   );

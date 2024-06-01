@@ -4,121 +4,117 @@ export const componentsLinks: Record<string, NavigationLink[]> = {
   form: [
     {
       title: 'autocomplete',
-      href: '/docs/components/autocomplete',
+      href: '/components/autocomplete',
     },
     {
       title: 'button',
-      href: '/docs/components/button',
+      href: '/components/button',
     },
     {
       title: 'checkbox',
-      href: '/docs/components/checkbox',
+      href: '/components/checkbox',
     },
     {
       title: 'chip',
-      href: '/docs/components/chip',
+      href: '/components/chip',
     },
     {
       title: 'input',
-      href: '/docs/components/input',
+      href: '/components/input',
     },
     {
       title: 'radio',
-      href: '/docs/components/radio',
+      href: '/components/radio',
     },
     {
       title: 'select',
-      href: '/docs/components/select',
+      href: '/components/select',
     },
     {
       title: 'switch',
-      href: '/docs/components/switch',
+      href: '/components/switch',
     },
     {
       title: 'toggle button',
-      href: '/docs/components/toggle-button',
+      href: '/components/toggle-button',
     },
   ],
   feedback: [
     {
       title: 'alert',
-      href: '/docs/components/alert',
+      href: '/components/alert',
     },
     {
       title: 'alert dialog',
-      href: '/docs/components/alert-dialog',
+      href: '/components/alert-dialog',
     },
     {
       title: 'overlay',
-      href: '/docs/components/overlay',
+      href: '/components/overlay',
     },
     {
       title: 'skeleton',
-      href: '/docs/components/skeleton',
+      href: '/components/skeleton',
     },
   ],
   navigation: [
     {
       title: 'menu',
-      href: '/docs/components/menu',
+      href: '/components/menu',
     },
     {
       title: 'pagination',
-      href: '/docs/components/pagination',
+      href: '/components/pagination',
     },
   ],
   dataDisplay: [
     {
       title: 'badge',
-      href: '/docs/components/badge',
+      href: '/components/badge',
     },
     {
       title: 'dialog',
-      href: '/docs/components/dialog',
+      href: '/components/dialog',
     },
     {
       title: 'popover',
-      href: '/docs/components/popover',
+      href: '/components/popover',
     },
     {
       title: 'table',
-      href: '/docs/components/table',
+      href: '/components/table',
     },
     {
       title: 'tooltip',
-      href: '/docs/components/tooltip',
+      href: '/components/tooltip',
     },
   ],
   surfaces: [
     {
       title: 'accordion',
-      href: '/docs/components/accordion',
+      href: '/components/accordion',
     },
     {
       title: 'disclosure',
-      href: '/docs/components/disclosure',
+      href: '/components/disclosure',
     },
   ],
   utils: [
     {
-      title: 'theme switcher',
-      href: '/docs/components/theme-switcher',
-    },
-    {
       title: 'focus trap',
-      href: '/docs/components/focus-trap',
+      href: '/components/focus-trap',
     },
     {
       title: 'popper',
-      href: '/docs/components/popper',
+      href: '/components/popper',
     },
     {
       title: 'slot',
-      href: '/docs/components/slot',
+      href: '/components/slot',
     },
     {
       title: 'visually hidden',
-      href: '/docs/components/visually-hidden',
+      href: '/components/visually-hidden',
     },
   ],
 };
