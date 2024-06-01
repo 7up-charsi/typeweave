@@ -26,13 +26,7 @@ const Layout = ({ children }: Props) => {
             </aside>
           </div>
 
-          <div className="lg:grid lg:grid-cols-[1fr_200px]">
-            <main className="overflow-auto px-5 py-4 lg:px-10">
-              {children}
-            </main>
-
-            <Toc />
-          </div>
+          {children}
         </div>
       </body>
     </html>
