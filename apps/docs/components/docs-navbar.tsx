@@ -10,8 +10,6 @@ import {
 } from '@typeweave/react';
 import { MenuIcon, XIcon } from 'lucide-react';
 import { Branding } from './branding';
-import { navbarLinks } from '@/config/navbar-links';
-import Link from 'next/link';
 import { GithubLink } from './github-link';
 import { SidebarContent } from './sidebar-content';
 
@@ -22,14 +20,14 @@ export const DocsNavbar = () => {
     <header className="sticky top-0 z-20 m-auto flex h-16 w-full max-w-screen-2xl items-center border-b border-b-muted-6 bg-muted-1/50 px-5 backdrop-blur-sm lg:px-10">
       <Branding />
 
-      <GithubLink className="ml-auto max-lg:hidden" />
+      <div className="grow"></div>
 
       <DrawerRoot>
         <DrawerTrigger>
           <Button
             isIconOnly
             aria-label="navbar"
-            className="ml-auto lg:hidden"
+            className="mr-5 xl:hidden"
           >
             <MenuIcon />
           </Button>
@@ -38,7 +36,7 @@ export const DocsNavbar = () => {
         <DrawerPortal>
           <DrawerOverlay />
 
-          <DrawerContent className="w-full max-w-[300px] lg:hidden">
+          <DrawerContent className="w-full max-w-[300px]">
             <div className="flex h-full flex-col">
               <div className="relative flex h-16 shrink-0 items-center justify-center px-5">
                 <Branding />
@@ -63,6 +61,8 @@ export const DocsNavbar = () => {
           </DrawerContent>
         </DrawerPortal>
       </DrawerRoot>
+
+      <GithubLink />
     </header>
   );
 };

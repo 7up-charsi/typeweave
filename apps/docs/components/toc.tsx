@@ -45,7 +45,7 @@ export const Toc = () => {
   }, [headings]);
 
   return (
-    <aside className="sticky top-16 h-[calc(100vh-theme(spacing.16))] w-full shrink-0 p-2 pt-4">
+    <aside className="sticky top-16 hidden h-[calc(100vh-theme(spacing.16))] w-full shrink-0 p-2 pt-4 lg:block">
       <span className="text-sm text-muted-11">Table of contents</span>
       <nav aria-label="table of content" className="flex flex-col">
         {headings.map(({ id, innerText, dataset }, i) => {

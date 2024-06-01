@@ -34,14 +34,14 @@ export const LandingNavbar = () => {
         ))}
       </nav>
 
-      <GithubLink className="ml-auto max-lg:hidden" />
+      <div className="grow"></div>
 
       <DrawerRoot>
         <DrawerTrigger>
           <Button
             isIconOnly
             aria-label="navbar"
-            className="ml-auto lg:hidden"
+            className="mr-5 lg:hidden"
           >
             <MenuIcon />
           </Button>
@@ -50,7 +50,7 @@ export const LandingNavbar = () => {
         <DrawerPortal>
           <DrawerOverlay />
 
-          <DrawerContent className="w-full max-w-[300px]  lg:hidden">
+          <DrawerContent className="w-full max-w-[300px]">
             <div className="relative flex h-16 items-center justify-center px-5">
               <Branding />
 
@@ -84,13 +84,11 @@ export const LandingNavbar = () => {
                 </Button>
               ))}
             </nav>
-
-            <div className="mt-5 flex justify-center border-t py-2">
-              <GithubLink />
-            </div>
           </DrawerContent>
         </DrawerPortal>
       </DrawerRoot>
+
+      <GithubLink />
     </header>
   );
 };
