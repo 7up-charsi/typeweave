@@ -1,0 +1,139 @@
+---
+metaTitle: accordion api
+metaDescription: An accordion is a vertically stacked set of interactive headings that each contain a title representing a section of content.
+---
+
+## props
+
+### root
+
+Contains all the parts of an accordion.
+
+<Props
+  data={[
+    {
+      name: 'type',
+      type: ['"single"', '"multiple"'],
+      default: '"multiple"',
+      description: (
+        <>
+          Determines <code>whether</code> one or multiple items can be
+          opened at the same time.
+        </>
+      ),
+    },
+    {
+      name: 'value',
+      type: ['string', 'string[]'],
+      description: (
+        <>
+          the controlled value of the item to expand.
+          <ul>
+            <li>
+              it must be <code>string</code> when type is "single"
+            </li>
+            <li>
+              it must be <code>string[]</code> when type is "multiple"
+            </li>
+          </ul>
+        </>
+      ),
+    },
+    {
+      name: 'defaultValue',
+      type: ['string', 'string[]'],
+      description: (
+        <>
+          The value of the item to expand when initially rendered.
+          <ul>
+            <li>it must be string when type is "single"</li>
+            <li>it must be string[] when type is "multiple"</li>
+          </ul>
+        </>
+      ),
+    },
+    {
+      name: 'onValueChange',
+      type: 'func',
+      description: (
+        <>
+          Event handler called when the state of an item changes.
+          <ul>
+            <li>value is string when type is "single".</li>
+            <li>value is string[] when type is "multiple".</li>
+            <li>
+              value is string or null when type is "single" and
+              isSingleCollapsible is true
+            </li>
+          </ul>
+        </>
+      ),
+    },
+    {
+      name: 'isSingleCollapsible',
+      type: 'boolean',
+      default: 'true',
+      description: (
+        <>
+          When type is "single", allows closing content when clicking
+          trigger for an open item.
+        </>
+      ),
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      description: (
+        <>
+          When true, prevents the user from interacting with the
+          accordion and all its items.
+        </>
+      ),
+    },
+  ]}
+/>
+
+### item
+
+Contains all the parts of a collapsible section. by default trigger wraps button in h3 heading but you can change heading level with asChild
+
+<Props
+  data={[
+    {
+      name: 'value',
+      type: 'string',
+      required: true,
+      description: <>A unique value for the item.</>,
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      description: (
+        <>
+          When true, prevents the user from interacting with the item.
+        </>
+      ),
+    },
+  ]}
+/>
+
+### header
+
+by default renders <code>h3</code> element. it must be nested inside Accordion.Item
+
+<Props data={[{ name: 'asChild' }]} />
+
+### trigger
+
+Toggles the collapsed state of its associated item. it must be nested inside Accordion.Item
+
+<Props data={[{ name: 'asChild' }]} />
+
+### content
+
+Contains the collapsible content for an item and it does not accept any props other than <code>React.HTMLAttributes</code>.
+
+### arrow
+
+it does not accept any props other than <code>React.SVGProps</code>. it must be nested inside Accordion.Trigger
+. By default it renders a svg chevron and if you want to change this icon and animate it on expand/collapse then [see example](#custom-indicator-example)

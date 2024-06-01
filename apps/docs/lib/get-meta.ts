@@ -4,7 +4,7 @@ export const getMeta = (markdown: string) => {
   const { data } = grayMatter(markdown);
 
   return {
-    title: data.metaTitle,
-    description: data.metaDescription,
+    title: data.title,
+    description: data.description,
   };
 };

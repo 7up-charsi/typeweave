@@ -2,7 +2,7 @@ import React from 'react';
 import { evaluate } from '@mdx-js/mdx';
 import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
-import { mdxComponents } from './mdx-components';
+import { mdxComponents } from '@/mdx-components';
 
 // @ts-ignore
 import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
