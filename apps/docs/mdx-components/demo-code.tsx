@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { CopyButton } from './copy-button';
 import {
   Button,
   TooltipArrow,
@@ -12,6 +11,7 @@ import {
 } from '@typeweave/react';
 // import { Code } from './code';
 import { TextIcon, WrapTextIcon } from 'lucide-react';
+import { CopyButton } from '@/components/copy-button';
 
 interface Props {
   code: string;
