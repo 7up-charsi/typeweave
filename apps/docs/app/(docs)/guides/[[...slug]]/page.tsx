@@ -50,7 +50,7 @@ const Page = async ({ params }: PageProps) => {
   return (
     <ContentWithToc>
       <CompileMdx content={content} />
-      <DocsPager activeSlug={slug} />
+      <DocsPager activeHref={`${dir}/${slug}`} />
     </ContentWithToc>
   );
 };

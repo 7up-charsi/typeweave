@@ -6,11 +6,11 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
 interface DocsPagerProps {
-  activeSlug?: string;
+  activeHref?: string;
 }
 
-export const DocsPager = ({ activeSlug }: DocsPagerProps) => {
-  if (!activeSlug) return null;
+export const DocsPager = ({ activeHref }: DocsPagerProps) => {
+  if (!activeHref) return null;
 
   const links = [
     ...guidesLinks,
@@ -21,7 +21,7 @@ export const DocsPager = ({ activeSlug }: DocsPagerProps) => {
   ];
 
   const activeIndex = links.findIndex(
-    (link) => `/docs/${activeSlug}` === link.href,
+    (link) => `/${activeHref}` === link.href,
   );
 
   const prev = activeIndex > 0 ? links[activeIndex - 1] : null;
@@ -31,7 +31,7 @@ export const DocsPager = ({ activeSlug }: DocsPagerProps) => {
       : null;
 
   return (
-    <div className="mt-10 flex border-t border-muted-6 py-2">
+    <div className="not-prose mt-10 flex border-t border-muted-6 py-2">
       {prev && (
         <Button
           asChild

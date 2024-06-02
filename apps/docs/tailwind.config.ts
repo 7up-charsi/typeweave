@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import { createTheme, registerAllStyles } from '@typeweave/theme';
+import typography from '@tailwindcss/typography';
 
 const config: Config = {
   content: [
@@ -8,7 +9,7 @@ const config: Config = {
     './mdx-components/**/*.{js,ts,jsx,tsx,mdx}',
     registerAllStyles(),
   ],
-  plugins: [createTheme()],
+  plugins: [createTheme(), typography],
   theme: {
     extend: {
       fontFamily: {
