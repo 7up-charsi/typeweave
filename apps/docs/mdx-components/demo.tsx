@@ -13,7 +13,7 @@ export const Demo = async (props: DemoProps) => {
 
   if (!source) return;
 
-  const filePath = path.resolve(`components/demos/${source}.tsx`);
+  const filePath = path.resolve(`./demos/${source}.tsx`);
 
   try {
     await access(filePath);
@@ -24,7 +24,7 @@ export const Demo = async (props: DemoProps) => {
   const code = await readFile(filePath, { encoding: 'utf-8' });
 
   return (
-    <div className="border-muted-6">
+    <div className="not-prose border-muted-6">
       <DemoPreview>{preview}</DemoPreview>
       <DemoCode code={code} />
     </div>

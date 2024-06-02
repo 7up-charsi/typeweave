@@ -1,9 +1,14 @@
 import { DocsNavbar } from '@/components/docs-navbar';
 import { SidebarContent } from '@/components/sidebar-content';
 import { GeistSans } from 'geist/font/sans';
+import { Fira_Code } from 'next/font/google';
 import '@/styles/globals.css';
 import '@/styles/syntax-highlight-theme.css';
-import { Toc } from '@/components/toc';
+
+const font_code = Fira_Code({
+  variable: '--font-code',
+  subsets: ['latin'],
+});
 
 interface Props {
   children: React.ReactNode;
@@ -11,7 +16,10 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   return (
-    <html lang="en" className={GeistSans.variable}>
+    <html
+      lang="en"
+      className={`${GeistSans.variable} ${font_code.variable}`}
+    >
       <body className="m-auto max-w-screen-2xl bg-background text-foreground">
         <DocsNavbar />
 

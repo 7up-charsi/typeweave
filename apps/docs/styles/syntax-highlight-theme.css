@@ -1,9 +1,9 @@
 code:not(pre > code) {
-  @apply inline-block rounded border border-muted-6 bg-muted-2 px-1 font-code text-sm text-muted-11;
+  @apply inline-block rounded border border-muted-6 bg-muted-2 px-1 font-code text-sm;
 }
 
 pre:has(code) {
-  @apply mt-4 overflow-auto rounded border border-muted-6 p-4 font-code text-sm selection:bg-[hsl(230,_1%,_90%)];
+  @apply overflow-auto rounded border border-muted-6 p-4 font-code text-sm selection:bg-[hsl(230,_1%,_90%)];
 
   color: hsl(230, 8%, 24%);
 }

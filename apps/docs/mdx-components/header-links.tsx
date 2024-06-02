@@ -7,11 +7,11 @@ interface Props {
   styles?: boolean;
 }
 
-export const DocHeaderLinks = (props: Props) => {
+export const HeaderLinks = (props: Props) => {
   const { component, styles = true } = props;
 
   return (
-    <div className="mt-3 flex items-center justify-end gap-2">
+    <div className="flex items-center justify-end gap-2">
       {[
         {
           icon: <GithubIcon size={17} />,
@@ -41,6 +41,7 @@ export const DocHeaderLinks = (props: Props) => {
               rel="noreferrer"
               aria-label={a11yLabel}
               href={href}
+              className="not-prose"
             >
               {title}
             </Link>

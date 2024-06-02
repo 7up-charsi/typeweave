@@ -15,7 +15,7 @@ export const Installation = (props: Props) => {
   const { package: pkg } = props;
 
   return (
-    <TabsRoot defaultValue="pnpm" className="mt-4">
+    <TabsRoot defaultValue="pnpm" className="not-prose">
       <TabsList className="gap-3">
         {[{ value: 'pnpm' }, { value: 'npm' }, { value: 'yarn' }].map(
           ({ value }, i) => (
@@ -32,7 +32,7 @@ export const Installation = (props: Props) => {
         { value: 'yarn', bash: `yarn add ${pkg}` },
       ].map(({ bash, value }, i) => (
         <TabsContent key={i} value={value}>
-          <pre className="mt-0">
+          <pre>
             {/* <Code className="language-bash">{bash}</Code> */}
             <code>{bash}</code>
           </pre>
