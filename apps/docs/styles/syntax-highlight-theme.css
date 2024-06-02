@@ -2,8 +2,14 @@ code:not(pre > code) {
   @apply inline-block rounded border border-muted-6 bg-muted-2 px-1 font-code text-sm;
 }
 
+/* These styles are applied to all pre elements containing a code element, except for those within .source-code. */
+.pre-tag-container:not(.native-pre *) {
+  @apply my-7;
+}
+
+/* These styles are applied to all pre elements that contain a code element, regardless of their location.  */
 pre:has(code) {
-  @apply overflow-auto rounded border border-muted-6 p-4 font-code text-sm selection:bg-[hsl(230,_1%,_90%)];
+  @apply px-4 py-3 font-code text-sm font-normal selection:bg-[hsl(230,_1%,_90%)];
 
   color: hsl(230, 8%, 24%);
 }

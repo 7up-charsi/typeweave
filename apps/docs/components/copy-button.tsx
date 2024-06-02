@@ -23,6 +23,7 @@ export const CopyButton = (props: CopyButtonProps) => {
       size="sm"
       aria-label="copy"
       className={className}
+      variant="text"
       color={isCopied ? 'success' : 'default'}
       onPress={() => {
         clearTimeout(resetTimer.current);
