@@ -17,7 +17,7 @@ export const ContentWithToc = (props: ContentWithTocProps) => {
     the content will fill the entire available space. */
 
     <div className="lg:grid lg:grid-cols-[1fr_auto]">
-      <main className="prose prose-headings:text-foreground prose-headings:first-letter:uppercase prose-p:text-foreground prose-code:before:hidden prose-code:after:hidden prose-code:font-normal prose-a:text-primary-11 max-w-none px-5 py-4 pt-10 lg:px-10">
+      <main className="prose max-w-none px-5 py-4 pt-10 prose-headings:text-foreground prose-headings:first-letter:uppercase prose-p:text-foreground prose-a:text-primary-11 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden lg:px-10">
         {children}
       </main>
       <Toc />

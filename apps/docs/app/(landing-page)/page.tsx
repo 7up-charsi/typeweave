@@ -19,10 +19,13 @@ const Page = () => {
         customization.
       </p>
 
-      <div className="mx-auto mt-5 flex w-full max-w-md flex-col items-center justify-center divide-y rounded border border-muted-6">
+      <div className="mx-auto mt-5 flex w-full max-w-[500px] flex-col items-center justify-center divide-y">
         {['pnpm add', 'npm install', 'yarn add'].map((pm) => (
           <pre className="group relative h-12 w-full content-center overflow-auto px-3">
-            <code>$ {pm} @typeweave/react @typeweave/theme</code>
+            <code>
+              <span className="select-none">$</span> {pm}{' '}
+              @typeweave/react @typeweave/theme
+            </code>
 
             <CopyButton
               code={`${pm} @typeweave/react @typeweave/theme`}

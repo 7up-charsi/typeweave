@@ -5,7 +5,8 @@ import {
   TabsRoot,
   TabsTrigger,
 } from '@typeweave/react';
-// import { Code } from './code';
+import { Pre } from './pre';
+import { Code } from './code';
 
 interface Props {
   package?: string;
@@ -15,12 +16,17 @@ export const Installation = (props: Props) => {
   const { package: pkg } = props;
 
   return (
-    <TabsRoot defaultValue="pnpm" className="not-prose">
-      <TabsList className="gap-3">
+    <TabsRoot defaultValue="pnpm" className="not-prose native-pre">
+      <TabsList className="gap-2">
         {[{ value: 'pnpm' }, { value: 'npm' }, { value: 'yarn' }].map(
           ({ value }, i) => (
             <TabsTrigger key={i} value={value}>
-              <Button size="sm">{value}</Button>
+              <Button
+                size="sm"
+                className="data-[selected=true]:data-[orientation=horizontal]:border-b-muted-9"
+              >
+                {value}
+              </Button>
             </TabsTrigger>
           ),
         )}
@@ -32,10 +38,9 @@ export const Installation = (props: Props) => {
         { value: 'yarn', bash: `yarn add ${pkg}` },
       ].map(({ bash, value }, i) => (
         <TabsContent key={i} value={value}>
-          <pre>
-            {/* <Code className="language-bash">{bash}</Code> */}
-            <code>{bash}</code>
-          </pre>
+          <Pre>
+            <Code className="language-bash">{bash}</Code>
+          </Pre>
         </TabsContent>
       ))}
     </TabsRoot>

@@ -17,7 +17,23 @@ An accordion is a `vertically` stacked [set](#demo) of <Link href="#installation
 
 An accordion is a vertically stacked `set` of interactive headings that each contain a title representing a section of content.
 
-<Demo source="accordion" preview={<AccordionDemo />} />
+<Demo
+  source="accordion"
+  preview={
+    <ClientDemoRenderer>
+      <AccordionDemo />
+    </ClientDemoRenderer>
+  }
+/>
+
+```tsx
+<AccordionHeader>
+  <AccordionTrigger>
+    Accordion 1 with dummy content{' '}
+    <ChevronDown className="group-data-[open=true]:rotate-180" />
+  </AccordionTrigger>
+</AccordionHeader>
+```
 
 ## installation
 

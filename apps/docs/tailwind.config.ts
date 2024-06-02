@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 import { createTheme, registerAllStyles } from '@typeweave/theme';
 import typography from '@tailwindcss/typography';
+import tailwindScrollbar from 'tailwind-scrollbar';
 
 const config: Config = {
   content: [
@@ -9,7 +10,6 @@ const config: Config = {
     './mdx-components/**/*.{js,ts,jsx,tsx,mdx}',
     registerAllStyles(),
   ],
-  plugins: [createTheme(), typography],
   theme: {
     extend: {
       fontFamily: {
@@ -18,6 +18,7 @@ const config: Config = {
       },
     },
   },
+  plugins: [createTheme(), typography, tailwindScrollbar],
 };
 
 export default config;
