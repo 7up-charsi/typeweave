@@ -9,15 +9,15 @@ import {
   DrawerTrigger,
 } from '@typeweave/react';
 import { MenuIcon, XIcon } from 'lucide-react';
-import { Branding } from './branding';
 import { navbarLinks } from '@/config/navbar-links';
 import Link from 'next/link';
-import { GithubLink } from './github-link';
-import { ThemeSwitcher } from './theme-switcher';
+import { Branding } from '@/components/branding';
+import { ThemeSwitcher } from '@/components/theme-switcher';
+import { GithubLink } from '@/components/github-link';
 
-const displayName = 'LandingNavbar';
+const displayName = 'Navbar';
 
-export const LandingNavbar = () => {
+export const Navbar = () => {
   return (
     <header className="sticky top-0 z-20 m-auto flex h-16 w-full max-w-screen-2xl items-center border-b border-b-muted-6 bg-muted-1/50 px-5 backdrop-blur-sm lg:px-10">
       <DrawerRoot>
@@ -95,4 +95,4 @@ export const LandingNavbar = () => {
   );
 };
 
-LandingNavbar.displayName = displayName;
+Navbar.displayName = displayName;

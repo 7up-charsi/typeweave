@@ -1,5 +1,3 @@
-// *-*-*-*-* NotFound *-*-*-*-*
-
 const NotFound = () => {
   return (
     <div className="mt-12 flex w-full flex-col items-center justify-center overflow-auto py-4">

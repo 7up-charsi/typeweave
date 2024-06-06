@@ -5,11 +5,11 @@ import { Button } from '@typeweave/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
-interface DocsPagerProps {
+interface PagerProps {
   activeHref?: string;
 }
 
-export const DocsPager = ({ activeHref }: DocsPagerProps) => {
+export const Pager = ({ activeHref }: PagerProps) => {
   if (!activeHref) return null;
 
   const links = [

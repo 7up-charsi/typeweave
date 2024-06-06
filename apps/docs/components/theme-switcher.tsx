@@ -1,5 +1,8 @@
 'use client';
 
+import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
+import { ThemeProvider, useTheme } from 'next-themes';
+import React from 'react';
 import {
   Button,
   MenuArrow,
@@ -11,9 +14,6 @@ import {
   MenuTrigger,
   Skeleton,
 } from '@typeweave/react';
-import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
-import { ThemeProvider, useTheme } from 'next-themes';
-import React from 'react';
 
 interface ThemeSwitcherProps {
   className?: string;
