@@ -1,7 +1,7 @@
-import { DocsNavbar } from '@/components/docs-navbar';
-import { SidebarContent } from '@/components/sidebar-content';
 import { GeistSans } from 'geist/font/sans';
 import { Fira_Code } from 'next/font/google';
+import { Navbar } from '@/(docs)/_components/navbar';
+import { SidebarContent } from '@/(docs)/_components/sidebar-content';
 import '@/styles/globals.css';
 import '@/styles/syntax-highlight-theme.css';
 
@@ -21,7 +21,7 @@ const Layout = ({ children }: Props) => {
       className={`${GeistSans.variable} ${font_code.variable}`}
     >
       <body className="m-auto max-w-screen-2xl bg-background text-foreground">
-        <DocsNavbar />
+        <Navbar />
 
         <div className="xl:grid xl:grid-cols-[300px_1fr]">
           {/*

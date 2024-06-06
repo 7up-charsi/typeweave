@@ -1,12 +1,12 @@
 import { notFound } from 'next/navigation';
-import { DocsPager } from '@/components/docs-pager';
 import { Metadata } from 'next';
 import { getMdx } from '@/lib/get-mdx';
 import grayMatter from 'gray-matter';
 import { getMdxFiles } from '@/lib/get-mdx-files';
-import { CompileMdx } from '@/components/compile-mdx';
 import { getMeta } from '@/lib/get-meta';
-import { ContentWithToc } from '@/components/content-with-toc';
+import { ContentWithToc } from '@/(docs)/_components/content-with-toc';
+import { CompileMdx } from '@/(docs)/_components/compile-mdx';
+import { Pager } from '@/(docs)/_components/pager';
 
 interface PageProps {
   params: { slug: string[] };
@@ -50,7 +50,7 @@ const Page = async ({ params }: PageProps) => {
   return (
     <ContentWithToc>
       <CompileMdx content={content} />
-      <DocsPager activeHref={`${dir}/${slug}`} />
+      <Pager activeHref={`${dir}/${slug}`} />
     </ContentWithToc>
   );
 };

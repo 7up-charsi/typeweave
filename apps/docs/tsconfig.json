@@ -18,7 +18,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@/(docs)/*": ["./app/(docs)/*"],
+      "@/(landing-page)/*": ["./app/(landing-page)/*"]
     }
   },
   "include": [

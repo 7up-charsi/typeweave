@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import { Courgette } from 'next/font/google';
 
 export interface BrandingProps {
   className?: string;
