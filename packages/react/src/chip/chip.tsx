@@ -1,6 +1,6 @@
-import { ChipClassNames, ChipVariantProps, chip } from '@typeweave/theme';
 import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';
+import { ChipVariantProps, chipStyles } from './chip-styles';
 
 export interface ChipProps
   extends Omit<ChipVariantProps, 'pressable'>,
@@ -11,7 +11,13 @@ export interface ChipProps
   deleteIcon?: React.ReactNode;
   onDelete?: () => void;
   onPress?: (e: React.PointerEvent<HTMLDivElement>) => void;
-  classNames?: ChipClassNames;
+  classNames?: Partial<{
+    base: string;
+    content: string;
+    avatar: string;
+    icon: string;
+    deleteIcon: string;
+  }>;
 }
 
 const displayName = 'Chip';
@@ -57,7 +63,7 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
     const pressable = !!onPress;
 
     const styles = React.useMemo(
-      () => chip({ color, size, variant, pressable }),
+      () => chipStyles({ color, size, variant, pressable }),
       [color, size, variant, pressable],
     );
 

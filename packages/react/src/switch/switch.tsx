@@ -1,14 +1,16 @@
 import React from 'react';
-import {
-  SwitchClassNames,
-  SwitchVariantProps,
-  switch as switchStyles,
-} from '@typeweave/theme';
+import { SwitchVariantProps, switchStyles } from './switch-styles';
 
 export interface SwitchProps
   extends SwitchVariantProps,
     Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color' | 'size'> {
-  classNames?: SwitchClassNames;
+  classNames?: Partial<{
+    base: string;
+    switch: string;
+    input: string;
+    indicator: string;
+    label: string;
+  }>;
   label?: string;
 }
 

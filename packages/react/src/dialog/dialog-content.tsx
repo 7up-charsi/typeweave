@@ -1,26 +1,18 @@
-import { DialogVariantProps, dialog } from '@typeweave/theme';
 import React from 'react';
 import { useDialogCtx } from './dialog-root';
 import { useScrollLock } from '../use-scroll-lock';
-import { createContextScope } from '../context';
 import { FocusTrap, FocusTrapProps } from '../focus-trap';
 import { VisuallyHidden } from '../visually-hidden';
+import { DialogVariantProps, dialogStyles } from './dialog-styles';
 
 export interface DialogContentProps
   extends DialogVariantProps,
     React.HTMLAttributes<HTMLDivElement>,
     Pick<FocusTrapProps, 'loop' | 'onUnmountAutoFocus' | 'onMountAutoFocus'> {
-  noA11yTitle?: boolean;
-  noA11yDescription?: boolean;
   modal?: boolean;
 }
 
 const displayName = 'DialogContent';
-
-const [DialogStyles, useDialogStyles] =
-  createContextScope<ReturnType<typeof dialog>>(displayName);
-
-export { useDialogStyles };
 
 export const DialogContent = React.forwardRef<
   HTMLDivElement,
@@ -29,8 +21,6 @@ export const DialogContent = React.forwardRef<
   const {
     children,
     className,
-    noA11yDescription,
-    noA11yTitle,
     onMountAutoFocus,
     onUnmountAutoFocus,
     loop = true,
@@ -42,15 +32,13 @@ export const DialogContent = React.forwardRef<
 
   useScrollLock();
 
-  const styles = React.useMemo(() => dialog(), []);
+  const styles = React.useMemo(() => dialogStyles(), []);
 
   const content = (
     <div
       {...restProps}
       ref={ref}
       role="dialog"
-      aria-labelledby={noA11yTitle ? undefined : dialogCtx.titleId}
-      aria-describedby={noA11yDescription ? undefined : dialogCtx.descriptionId}
       aria-modal={modal}
       id={dialogCtx.contentId}
       className={styles.content({ className })}
@@ -71,22 +59,18 @@ export const DialogContent = React.forwardRef<
     </div>
   );
 
-  return (
-    <DialogStyles {...styles}>
-      {modal ? (
-        <FocusTrap
-          asChild
-          trapped
-          loop={loop}
-          onMountAutoFocus={onMountAutoFocus}
-          onUnmountAutoFocus={onUnmountAutoFocus}
-        >
-          {content}
-        </FocusTrap>
-      ) : (
-        content
-      )}
-    </DialogStyles>
+  return modal ? (
+    <FocusTrap
+      asChild
+      trapped
+      loop={loop}
+      onMountAutoFocus={onMountAutoFocus}
+      onUnmountAutoFocus={onUnmountAutoFocus}
+    >
+      {content}
+    </FocusTrap>
+  ) : (
+    content
   );
 });
 

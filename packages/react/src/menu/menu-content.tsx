@@ -1,4 +1,3 @@
-import { MenuVariantProps, menu } from '@typeweave/theme';
 import { createContextScope } from '../context';
 import { PopperFloating, PopperFloatingProps } from '../popper';
 import React from 'react';
@@ -7,6 +6,7 @@ import { mergeRefs } from '@typeweave/react-utils';
 import { VisuallyHidden } from '../visually-hidden';
 import { useClickOutside } from '../use-click-outside';
 import { useScrollLock } from '../use-scroll-lock';
+import { MenuVariantProps, menuStyles } from './menu-styles';
 
 export interface MenuContentProps
   extends Omit<PopperFloatingProps, 'children'>,
@@ -26,7 +26,7 @@ const [MenuContentCtx, useMenuContentCtx] =
   createContextScope<MenuContentCtx>(displayName);
 
 const [MenuStyles, useMenuStyles] =
-  createContextScope<ReturnType<typeof menu>>(displayName);
+  createContextScope<ReturnType<typeof menuStyles>>(displayName);
 
 export { useMenuContentCtx, useMenuStyles };
 
@@ -213,7 +213,7 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
       }
     };
 
-    const styles = React.useMemo(() => menu({ shadow }), [shadow]);
+    const styles = React.useMemo(() => menuStyles({ shadow }), [shadow]);
 
     const content = (
       <ul

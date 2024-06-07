@@ -1,4 +1,3 @@
-import { PopoverVariantProps, popover } from '@typeweave/theme';
 import { PopperFloating, PopperFloatingProps } from '../popper';
 import { VisuallyHidden } from '../visually-hidden';
 import React from 'react';
@@ -7,13 +6,12 @@ import { useClickOutside } from '../use-click-outside';
 import { createContextScope } from '../context';
 import { FocusTrap } from '../focus-trap';
 import { mergeRefs } from '@typeweave/react-utils';
+import { PopoverVariantProps, popoverStyles } from './popover-styles';
 
 export interface PopoverContentProps
   extends Omit<PopperFloatingProps, 'children'>,
     PopoverVariantProps,
     React.HTMLAttributes<HTMLDivElement> {
-  noA11yTitle?: boolean;
-  noA11yDescription?: boolean;
   loop?: boolean;
   trapped?: boolean;
 }
@@ -21,7 +19,7 @@ export interface PopoverContentProps
 const displayName = 'PopoverContent';
 
 const [PopoverStyles, usePopoverStyles] =
-  createContextScope<ReturnType<typeof popover>>(displayName);
+  createContextScope<ReturnType<typeof popoverStyles>>(displayName);
 
 export { usePopoverStyles };
 
@@ -32,8 +30,6 @@ export const PopoverContent = React.forwardRef<
   const {
     children,
     className,
-    noA11yDescription,
-    noA11yTitle,
     placement,
     updatePositionStrategy,
     mainOffset,
@@ -69,7 +65,7 @@ export const PopoverContent = React.forwardRef<
     setMounted(true);
   }, []);
 
-  const styles = React.useMemo(() => popover(), []);
+  const styles = React.useMemo(() => popoverStyles(), []);
 
   return (
     <PopoverStyles {...styles}>
@@ -93,10 +89,6 @@ export const PopoverContent = React.forwardRef<
             {...restProps}
             ref={mergeRefs(ref, setOutsideEle)}
             role="dialog"
-            aria-labelledby={noA11yTitle ? undefined : popoverCtx.titleId}
-            aria-describedby={
-              noA11yDescription ? undefined : popoverCtx.descriptionId
-            }
             id={popoverCtx.contentId}
             className={styles.content({ className })}
           >

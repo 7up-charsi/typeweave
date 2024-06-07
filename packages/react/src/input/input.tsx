@@ -1,23 +1,37 @@
-import { input, InputClassNames, InputVariantProps } from '@typeweave/theme';
 import { mergeRefs } from '@typeweave/react-utils';
 import React from 'react';
 import { Slot } from '../slot';
 import { PointerEventsProps } from '../pointer-events/pointer-events';
 import { usePointerEvents } from '../use-pointer-events';
+import { InputVariantProps, inputStyles } from './input-styles';
 
 type InputBaseProps = React.InputHTMLAttributes<HTMLInputElement> &
   PointerEventsProps<HTMLInputElement> & {
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
     onFocus?: React.FocusEventHandler<HTMLInputElement>;
-    classNames?: Omit<InputClassNames, 'textarea'>;
+    classNames?: Partial<{
+      base: string;
+      label: string;
+      inputWrapper: string;
+      input: string;
+      helperText: string;
+      errorMessage: string;
+    }>;
     startContent?: React.ReactNode;
     endContent?: React.ReactNode;
   };
 
 type TextareaBaseProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
   PointerEventsProps<HTMLTextAreaElement> & {
-    classNames?: Omit<InputClassNames, 'input'>;
+    classNames?: Partial<{
+      base: string;
+      label: string;
+      inputWrapper: string;
+      helperText: string;
+      errorMessage: string;
+      textarea: string;
+    }>;
   };
 
 type BaseProps = InputVariantProps & {
@@ -146,7 +160,7 @@ const InputImpl = (
 
   const styles = React.useMemo(
     () =>
-      input({
+      inputStyles({
         disabled,
         fullWidth,
         required: !!required,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SkeletonVariantProps, skeleton } from '@typeweave/theme';
+import { SkeletonVariantProps, skeletonStyles } from './skeleton-styles';
 
 export interface SkeletonProps
   extends SkeletonVariantProps,
@@ -17,7 +17,7 @@ export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
     } = props;
 
     const styles = React.useMemo(
-      () => skeleton({ variant, className, animation }),
+      () => skeletonStyles({ variant, className, animation }),
       [animation, className, variant],
     );
 

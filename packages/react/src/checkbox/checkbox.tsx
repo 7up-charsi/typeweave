@@ -1,21 +1,25 @@
-import {
-  CheckboxClassNames,
-  CheckboxVariantProps,
-  checkbox,
-} from '@typeweave/theme';
 import { mergeRefs } from '@typeweave/react-utils';
 import React from 'react';
 import { Check, Minus } from 'lucide-react';
+import { CheckboxVariantProps, checkboxStyles } from './checkbox-styles';
 
 export interface CheckboxProps
   extends CheckboxVariantProps,
     Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color' | 'size'> {
-  classNames?: CheckboxClassNames;
   label?: string;
   indeterminate?: boolean;
   indeterminateIcon?: React.ReactNode;
   icon?: React.ReactNode;
   checkedIcon?: React.ReactNode;
+  classNames?: Partial<{
+    base: string;
+    checkbox: string;
+    input: string;
+    icon: string;
+    checkedIcon: string;
+    indeterminateIcon: string;
+    label: string;
+  }>;
 }
 
 const displayName = 'Checkbox';
@@ -44,7 +48,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     const id = idProp ?? autoId;
 
     const styles = React.useMemo(
-      () => checkbox({ size, labelPlacement, color }),
+      () => checkboxStyles({ size, labelPlacement, color }),
       [color, labelPlacement, size],
     );
 

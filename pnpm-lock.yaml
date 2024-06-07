@@ -107,15 +107,15 @@ importers:
       '@mdx-js/mdx':
         specifier: ^3.0.1
         version: 3.0.1
+      '@typeweave/plugin':
+        specifier: workspace:*
+        version: link:../../packages/plugin
       '@typeweave/react':
         specifier: workspace:*
         version: link:../../packages/react
       '@typeweave/react-utils':
         specifier: workspace:*
         version: link:../../packages/react-utils
-      '@typeweave/theme':
-        specifier: workspace:*
-        version: link:../../packages/theme
       algoliasearch:
         specifier: ^4.22.1
         version: 4.23.3
@@ -243,9 +243,9 @@ importers:
       '@storybook/react-vite':
         specifier: ^8.0.9
         version: 8.1.1(prettier@3.2.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.17.2)(typescript@5.4.5)(vite@4.5.3(@types/node@20.12.12)(terser@5.31.0))
-      '@typeweave/theme':
+      '@typeweave/plugin':
         specifier: workspace:*
-        version: link:../../packages/theme
+        version: link:../../packages/plugin
       '@vitejs/plugin-react':
         specifier: ^4.2.1
         version: 4.2.1(vite@4.5.3(@types/node@20.12.12)(terser@5.31.0))
@@ -274,6 +274,43 @@ importers:
         specifier: ^4.5.3
         version: 4.5.3(@types/node@20.12.12)(terser@5.31.0)
 
+  packages/plugin:
+    dependencies:
+      '@radix-ui/colors':
+        specifier: ^3.0.0
+        version: 3.0.0
+      color:
+        specifier: ^4.2.3
+        version: 4.2.3
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
+      flat:
+        specifier: ^6.0.1
+        version: 6.0.1
+      lodash.kebabcase:
+        specifier: ^4.1.1
+        version: 4.1.1
+      tailwind-merge:
+        specifier: ^2.3.0
+        version: 2.3.0
+      tailwindcss:
+        specifier: ^3.4.3
+        version: 3.4.3(ts-node@10.9.2(@types/node@20.12.12)(typescript@5.4.5))
+    devDependencies:
+      '@types/color':
+        specifier: ^3.0.6
+        version: 3.0.6
+      '@types/lodash.kebabcase':
+        specifier: ^4.1.9
+        version: 4.1.9
+      clean-package:
+        specifier: ^2.2.0
+        version: 2.2.0
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
+
   packages/react:
     dependencies:
       '@floating-ui/react-dom':
@@ -282,9 +319,6 @@ importers:
       '@typeweave/react-utils':
         specifier: workspace:*
         version: link:../react-utils
-      '@typeweave/theme':
-        specifier: workspace:*
-        version: link:../theme
       lucide-react:
         specifier: ^0.376.0
         version: 0.376.0(react@18.3.1)
@@ -294,6 +328,9 @@ importers:
       react-dom:
         specifier: '>=18'
         version: 18.3.1(react@18.3.1)
+      tailwind-variants:
+        specifier: ^0.1.20
+        version: 0.1.20(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.12)(typescript@5.4.5)))
     devDependencies:
       clean-package:
         specifier: ^2.2.0
@@ -314,46 +351,6 @@ importers:
         specifier: '>=18'
         version: 18.3.1(react@18.3.1)
     devDependencies:
-      clean-package:
-        specifier: ^2.2.0
-        version: 2.2.0
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-
-  packages/theme:
-    dependencies:
-      '@radix-ui/colors':
-        specifier: ^3.0.0
-        version: 3.0.0
-      color:
-        specifier: ^4.2.3
-        version: 4.2.3
-      deepmerge:
-        specifier: ^4.3.1
-        version: 4.3.1
-      flat:
-        specifier: ^6.0.1
-        version: 6.0.1
-      lodash.kebabcase:
-        specifier: ^4.1.1
-        version: 4.1.1
-      tailwind-merge:
-        specifier: ^2.3.0
-        version: 2.3.0
-      tailwind-variants:
-        specifier: ^0.1.20
-        version: 0.1.20(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.12)(typescript@5.4.5)))
-      tailwindcss:
-        specifier: ^3.4.3
-        version: 3.4.3(ts-node@10.9.2(@types/node@20.12.12)(typescript@5.4.5))
-    devDependencies:
-      '@types/color':
-        specifier: ^3.0.6
-        version: 3.0.6
-      '@types/lodash.kebabcase':
-        specifier: ^4.1.9
-        version: 4.1.9
       clean-package:
         specifier: ^2.2.0
         version: 2.2.0
@@ -13986,7 +13983,7 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.38
 
-  postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.5.1)(typescript@5.4.5)):
+  postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.12.12)(typescript@5.4.5)):
     dependencies:
       lilconfig: 3.1.1
       yaml: 2.4.2
@@ -14927,7 +14924,7 @@ snapshots:
       postcss: 8.4.38
       postcss-import: 15.1.0(postcss@8.4.38)
       postcss-js: 4.0.1(postcss@8.4.38)
-      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.5.1)(typescript@5.4.5))
+      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.12.12)(typescript@5.4.5))
       postcss-nested: 6.0.1(postcss@8.4.38)
       postcss-selector-parser: 6.0.16
       resolve: 1.22.8
@@ -15109,7 +15106,7 @@ snapshots:
       execa: 5.1.1
       globby: 11.1.0
       joycon: 3.1.1
-      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.5.1)(typescript@5.4.5))
+      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.12.12)(typescript@5.4.5))
       resolve-from: 5.0.0
       rollup: 4.17.2
       source-map: 0.8.0-beta.0

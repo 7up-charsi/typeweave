@@ -1,11 +1,11 @@
-import { createTheme } from '@typeweave/theme';
+import { typeweave } from '@typeweave/plugin';
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    '../../packages/react/stories/**/*.stories.tsx',
-    '../../packages/theme/src/**/*.ts',
+    '../../packages/react/src/**/*.stories.tsx',
+    '../../packages/react/src/**/*-styles.ts',
     './.storybook/**/*.{ts,tsx}',
   ],
-  plugins: [createTheme()],
+  plugins: [typeweave()],
 };

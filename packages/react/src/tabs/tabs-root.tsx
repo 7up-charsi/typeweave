@@ -1,8 +1,8 @@
-import { TabsVariantProps, tabs } from '@typeweave/theme';
 import { createContextScope } from '../context';
 import { createCollection } from '../use-collection';
 import { useControlled } from '../use-controlled';
 import React from 'react';
+import { TabsVariantProps, tabsStyles } from './tabs-styles';
 
 export interface TabsRootProps
   extends TabsVariantProps,
@@ -34,7 +34,7 @@ const displayName = 'TabsRoot';
 const [TabsCtx, useTabsCtx] = createContextScope<TabsCtxProps>(displayName);
 
 const [TabsStyles, useTabsStyles] =
-  createContextScope<ReturnType<typeof tabs>>(displayName);
+  createContextScope<ReturnType<typeof tabsStyles>>(displayName);
 
 export { useTabsCtx, useTabsStyles };
 
@@ -73,7 +73,10 @@ export const TabsRoot = React.forwardRef<HTMLDivElement, TabsRootProps>(
 
     const baseId = React.useId();
 
-    const styles = React.useMemo(() => tabs({ orientation }), [orientation]);
+    const styles = React.useMemo(
+      () => tabsStyles({ orientation }),
+      [orientation],
+    );
 
     return (
       <TabsCtx

@@ -1,4 +1,3 @@
-import { mergeRefs } from '@typeweave/react-utils';
 import { Slot } from '../slot';
 import React from 'react';
 import { useDialogCtx } from './dialog-root';
@@ -19,10 +18,7 @@ export const DialogTrigger = React.forwardRef<
   return (
     <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
       {...restProps}
-      ref={mergeRefs(
-        ref,
-        dialogCtx.triggerRef as React.MutableRefObject<HTMLButtonElement | null>,
-      )}
+      ref={ref}
       role="button"
       data-open={dialogCtx.open}
       aria-haspopup="dialog"

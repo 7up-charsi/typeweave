@@ -22,9 +22,6 @@ interface DialogCtxProps {
   handleClose: (reason: Reason) => void;
   open: boolean;
   contentId: string;
-  titleId: string;
-  descriptionId: string;
-  triggerRef: React.MutableRefObject<HTMLElement | null>;
   keepMounted: boolean;
 }
 
@@ -55,9 +52,6 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
     } = props;
 
     const contentId = React.useId();
-    const titleId = React.useId();
-    const descriptionId = React.useId();
-    const triggerRef = React.useRef<HTMLElement | null>(null);
 
     const stackItem = React.useRef<StackItem>({
       paused: false,
@@ -149,9 +143,6 @@ export const DialogRoot = React.forwardRef<DialogRootMethods, DialogRootProps>(
         handleOpen={handleOpen}
         open={open}
         contentId={contentId}
-        titleId={titleId}
-        descriptionId={descriptionId}
-        triggerRef={triggerRef}
         keepMounted={keepMounted}
       >
         {children}

@@ -1,9 +1,9 @@
+import React from 'react';
 import {
   ButtonGroupVariantProps,
   ButtonVariantProps,
-  buttonGroup,
-} from '@typeweave/theme';
-import React from 'react';
+  buttonGroupStyles,
+} from './button-styles';
 
 export interface ButtonGroupProps
   extends Pick<ButtonVariantProps, 'color' | 'size' | 'variant'>,
@@ -34,7 +34,7 @@ export const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
     } = props;
 
     const styles = React.useMemo(
-      () => buttonGroup({ direction, className }),
+      () => buttonGroupStyles({ direction, className }),
       [className, direction],
     );
 

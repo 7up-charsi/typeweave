@@ -1,13 +1,16 @@
-import { BadgeClassNames, BadgeVariantProps, badge } from '@typeweave/theme';
 import React from 'react';
+import { BadgeVariantProps, badgeStyles } from './badge-styles';
 
 export interface BadgeProps
   extends BadgeVariantProps,
     Omit<React.HTMLAttributes<HTMLSpanElement>, 'color' | 'content'> {
   content?: number;
   max?: number;
-  classNames?: BadgeClassNames;
   showZero?: boolean;
+  classNames?: Partial<{
+    base: string;
+    content: string;
+  }>;
 }
 
 const displayName = 'Badge';
@@ -30,7 +33,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
     } = props;
 
     const styles = React.useMemo(
-      () => badge({ color, variant, placement, shadow, invisible }),
+      () => badgeStyles({ color, variant, placement, shadow, invisible }),
       [color, invisible, placement, shadow, variant],
     );
 

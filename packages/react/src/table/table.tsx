@@ -1,11 +1,18 @@
-import { TableClassNames, TableVariantProps, table } from '@typeweave/theme';
 import { useTableCtx } from './table-root';
 import React from 'react';
+import { TableVariantProps, tableStyles } from './table-styles';
 
 export interface TableProps
   extends TableVariantProps,
     React.TableHTMLAttributes<HTMLTableElement> {
-  classNames?: TableClassNames;
+  classNames?: Partial<{
+    table: string;
+    thead: string;
+    tbody: string;
+    tr: string;
+    th: string;
+    td: string;
+  }>;
 }
 
 const displayName = 'Table';
@@ -17,7 +24,7 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
     const { data, columns, getRowKey, columnVisibility } =
       useTableCtx(displayName);
 
-    const styles = React.useMemo(() => table({ variant }), [variant]);
+    const styles = React.useMemo(() => tableStyles({ variant }), [variant]);
 
     return (
       <table

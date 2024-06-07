@@ -1,10 +1,10 @@
 import React from 'react';
 import { InputProps, Input } from './input';
 import { mergeRefs } from '@typeweave/react-utils';
-import { numberInput } from '@typeweave/theme';
 import { Button } from '../button';
 import { useControlled } from '../use-controlled';
 import { MinusIcon, PlusIcon } from 'lucide-react';
+import { numberInputStyles } from './input-styles';
 
 export type NumberInputRenderSpinButtonsProps = {
   wrapperProps: React.HTMLAttributes<HTMLDivElement>;
@@ -272,7 +272,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       }, threshold);
     };
 
-    const styles = React.useMemo(() => numberInput(), []);
+    const styles = React.useMemo(() => numberInputStyles(), []);
 
     const defaultRenderSpinButtons = ({
       decreaseProps,

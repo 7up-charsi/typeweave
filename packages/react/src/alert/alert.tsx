@@ -1,4 +1,3 @@
-import { AlertVariantProps, alert as alertStyles } from '@typeweave/theme';
 import { Button } from '../button';
 import React from 'react';
 import {
@@ -8,6 +7,7 @@ import {
   CircleAlert,
   TriangleAlert,
 } from 'lucide-react';
+import { AlertVariantProps, alertStyles } from './alert-styles';
 
 const icons = {
   success: <Check />,

@@ -1,7 +1,7 @@
-import { TooltipVariantProps, tooltip } from '@typeweave/theme';
 import { PopperFloating, PopperFloatingProps } from '../popper';
 import React from 'react';
 import { useTooltipCtx } from './tooltip-root';
+import { TooltipVariantProps, tooltipStyles } from './tooltip-styles';
 
 export interface TooltipContentProps
   extends TooltipVariantProps,
@@ -37,7 +37,7 @@ export const TooltipContent = React.forwardRef<
 
   const context = useTooltipCtx(displayName);
 
-  const styles = React.useMemo(() => tooltip({ className }), [className]);
+  const styles = React.useMemo(() => tooltipStyles({ className }), [className]);
 
   return (
     <PopperFloating

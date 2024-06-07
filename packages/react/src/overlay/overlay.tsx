@@ -1,5 +1,5 @@
-import { OverlayVariantProps, overlay } from '@typeweave/theme';
 import React from 'react';
+import { OverlayVariantProps, overlayStyles } from './overlay-styles';
 
 export interface OverlayProps
   extends OverlayVariantProps,
@@ -12,7 +12,7 @@ export const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
     const { className, variant = 'opaque', ...restProps } = props;
 
     const styles = React.useMemo(
-      () => overlay({ variant, className }),
+      () => overlayStyles({ variant, className }),
       [className, variant],
     );
 

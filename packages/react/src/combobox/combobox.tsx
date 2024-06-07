@@ -1,16 +1,5 @@
-import {
-  ComboboxClassNames,
-  ComboboxVariantProps,
-  combobox,
-} from '@typeweave/theme';
 import React from 'react';
 import { createPortal } from 'react-dom';
-import {
-  PopperFloating,
-  PopperFloatingProps,
-  PopperReference,
-  PopperRoot,
-} from '../popper';
 import { createComboboxFilter } from './create-combobox-filter';
 import { useControlled } from '../use-controlled';
 import { useCallbackRef } from '../use-callback-ref';
@@ -21,6 +10,13 @@ import { Chip } from '../chip';
 import { Button } from '../button';
 import { ChevronDownIcon, XIcon } from 'lucide-react';
 import { InputProps } from '../input';
+import {
+  PopperFloating,
+  PopperFloatingProps,
+  PopperReference,
+  PopperRoot,
+} from '../popper';
+import { ComboboxVariantProps, comboboxStyles } from './combobox-styles';
 
 export type ComboboxOnChangeReason =
   | 'selectOption'
@@ -127,7 +123,22 @@ export type ComboboxProps<Value, Multiple, DisableClearable, Editable> = (Omit<
   (Editable extends true
     ? BaseProps<Value> & {
         editable: Editable;
-        classNames?: ComboboxClassNames;
+        classNames?: Partial<{
+          listboxWrapper: string;
+          listbox: string;
+          option: string;
+          noOptions: string;
+          loading: string;
+          group: string;
+          groupHeader: string;
+          groupItems: string;
+          startContent: string;
+          endContent: string;
+          inputWrapper: string;
+          input: string;
+          clearIndicator: string;
+          openIndicator: string;
+        }>;
         clearInputOnBlur?: boolean;
         selectOnFocus?: boolean;
         inputValue?: string;
@@ -143,19 +154,18 @@ export type ComboboxProps<Value, Multiple, DisableClearable, Editable> = (Omit<
       }
     : BaseProps<Value> & {
         editable?: Editable;
-        classNames?: Pick<
-          ComboboxClassNames,
-          | 'listboxWrapper'
-          | 'listbox'
-          | 'option'
-          | 'noOptions'
-          | 'loading'
-          | 'group'
-          | 'groupHeader'
-          | 'groupItems'
-          | 'clearIndicator'
-          | 'openIndicator'
-        >;
+        classNames?: Partial<{
+          listboxWrapper: string;
+          listbox: string;
+          option: string;
+          noOptions: string;
+          loading: string;
+          group: string;
+          groupHeader: string;
+          groupItems: string;
+          clearIndicator: string;
+          openIndicator: string;
+        }>;
       }) &
   (Multiple extends true
     ? {
@@ -1103,7 +1113,7 @@ const ComboboxImpl = React.forwardRef<
 
   const styles = React.useMemo(
     () =>
-      combobox({
+      comboboxStyles({
         shadow,
         multiple,
         hasClearButton,

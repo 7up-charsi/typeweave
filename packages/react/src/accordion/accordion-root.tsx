@@ -2,7 +2,7 @@ import { createContextScope } from '../context';
 import { useControlled } from '../use-controlled';
 import React from 'react';
 import { createCollection } from '../use-collection';
-import { accordion } from '@typeweave/theme';
+import { accordionStyles } from './accordion-styles';
 
 export type AccordionRootProps<Type, IsSingleCollapsible> = {
   disabled?: boolean;
@@ -45,7 +45,7 @@ const [AccordionCtx, useAccordionCtx] =
   createContextScope<AccordionCtxProps>(displayName);
 
 const [AccordionStyles, useAccordionStyles] =
-  createContextScope<ReturnType<typeof accordion>>(displayName);
+  createContextScope<ReturnType<typeof accordionStyles>>(displayName);
 
 export { useAccordionCtx, useAccordionStyles };
 
@@ -114,7 +114,7 @@ export const AccordionRootImpl = React.forwardRef<
     }
   };
 
-  const styles = React.useMemo(() => accordion(), []);
+  const styles = React.useMemo(() => accordionStyles(), []);
 
   if (
     valueProp &&
