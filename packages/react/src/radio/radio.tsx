@@ -1,11 +1,18 @@
 import React from 'react';
-import { RadioClassNames, RadioVariantProps, radio } from '@typeweave/theme';
 import { Circle } from 'lucide-react';
+import { RadioVariantProps, radioStyles } from './radio-styles';
 
 export interface RadioProps
   extends RadioVariantProps,
     Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color' | 'size'> {
-  classNames?: RadioClassNames;
+  classNames?: Partial<{
+    base: string;
+    radio: string;
+    input: string;
+    icon: string;
+    checkedIcon: string;
+    label: string;
+  }>;
   label?: string;
   icon?: React.ReactNode;
   checkedIcon?: React.ReactNode;
@@ -51,7 +58,7 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
     const id = idProp ?? autoId;
 
     const styles = React.useMemo(
-      () => radio({ labelPlacement, color, size }),
+      () => radioStyles({ labelPlacement, color, size }),
       [color, labelPlacement, size],
     );
 

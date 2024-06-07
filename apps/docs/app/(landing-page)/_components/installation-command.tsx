@@ -19,7 +19,7 @@ export const InstallationCommand = () => {
     <PointerEvents
       onPress={() => {
         navigator.clipboard.writeText(
-          'npm install @typeweave/react @typeweave/theme',
+          'npm install @typeweave/react @typeweave/plugin',
         );
         setIsCopied(true);
 
@@ -31,7 +31,7 @@ export const InstallationCommand = () => {
       <div className="group relative cursor-copy text-sm">
         <code className={font_code.className}>
           <span className="select-none">$ </span>npm install
-          @typeweave/react @typeweave/theme
+          @typeweave/react @typeweave/plugin
         </code>
 
         {isCopied ? (

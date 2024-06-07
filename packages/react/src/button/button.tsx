@@ -1,9 +1,9 @@
 import { mergeRefs } from '@typeweave/react-utils';
-import { button, ButtonClassNames, ButtonVariantProps } from '@typeweave/theme';
 import { Slot } from '../slot';
 import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';
 import { GroupCtx } from './button-group';
+import { ButtonVariantProps, buttonStyles } from './button-styles';
 
 export type ButtonPressEvent = {
   target: HTMLButtonElement;
@@ -16,11 +16,16 @@ export interface ButtonProps
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'> {
   startContent?: React.ReactNode;
   endContent?: React.ReactNode;
-  classNames?: ButtonClassNames;
   children?: React.ReactNode;
   asChild?: boolean;
   onPress?: (e: ButtonPressEvent) => void;
   excludeFromTabOrder?: boolean;
+  classNames?: Partial<{
+    base: string;
+    content: string;
+    startContent: string;
+    endContent: string;
+  }>;
 }
 
 const displayName = 'Button';
@@ -102,7 +107,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const styles = React.useMemo(
       () =>
-        button({
+        buttonStyles({
           isIconOnly,
           size: size ?? groupContext?.size ?? 'md',
           variant: variant ?? groupContext?.variant ?? 'flat',

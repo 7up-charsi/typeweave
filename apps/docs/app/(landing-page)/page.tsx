@@ -60,14 +60,6 @@ const Page = () => {
             inclusive and compliant web applications.
           </dd>
 
-          <dt className="mb-2 font-medium">Customizable Themes</dt>
-          <dd className="mb-4 pl-6">
-            Typeweave components are unstyled by default, giving you
-            the freedom to style them as you see fit. Use the
-            @typeweave/theme package to apply our default theme or
-            bring your own theme to match your brand's identity.
-          </dd>
-
           <dt className="mb-2 font-medium">Developer Friendly</dt>
           <dd className="mb-4 pl-6">
             Typeweave is designed with developers in mind. All

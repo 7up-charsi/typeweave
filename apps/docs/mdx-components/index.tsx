@@ -19,8 +19,21 @@ export const mdxComponents: any = {
   Steps,
   HeaderLinks,
   Link,
-  h2: (props: any) => <Heading as="h2" {...props} />,
-  h3: (props: any) => <Heading as="h3" {...props} />,
   code: Code,
   pre: Pre,
+  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <Heading as="h2" {...props} />
+  ),
+  h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <Heading as="h3" {...props} />
+  ),
+  a: ({
+    href,
+    ...props
+  }: React.AnchorHTMLAttributes<HTMLAnchorElement>) =>
+    href?.startsWith('native:') ? (
+      <a {...props} href={href.slice(7)} />
+    ) : (
+      href && <Link {...props} href={href} />
+    ),
 };

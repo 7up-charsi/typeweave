@@ -11,7 +11,7 @@ Webbo-ui is built on top of Tailwind CSS, so you need to install Tailwind CSS fi
 To install, run following command in your terminal
 
 ```bash
-pnpm add @ux-weaver/theme
+pnpm add @ux-weaver/plugin
 ```
 
 ### add theme plugin
@@ -19,7 +19,7 @@ pnpm add @ux-weaver/theme
 then configure it in your <code data-highlight>tailwind.config.ts</code>, leave `content` array as is we will modify it later.
 
 ```ts
-import { WebboUi } from '@ux-weaver/theme';
+import { WebboUi } from '@ux-weaver/plugin';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -52,8 +52,8 @@ pnpm add @webbo-ui/button
 Button component has installed. Now add its <code data-highlight>style paths</code> in your `content` array in <code data-highlight>tailwind.config.ts</code> for button styles.
 
 ```txt
-'./node_modules/@ux-weaver/theme/dist/components/button.js',
-'./node_modules/@ux-weaver/theme/dist/classes.js',
+'./node_modules/@ux-weaver/plugin/dist/components/button.js',
+'./node_modules/@ux-weaver/plugin/dist/classes.js',
 ```
 
 ### import component

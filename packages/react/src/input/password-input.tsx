@@ -1,9 +1,9 @@
 import React from 'react';
 import { InputProps, Input } from './input';
 import { Button } from '../button';
-import { passwordInput } from '@typeweave/theme';
 import { EyeIcon, EyeOff } from 'lucide-react';
 import { UsePointerEventsProps } from '../use-pointer-events';
+import { passwordInputStyles } from './input-styles';
 
 export type PasswordInputRenderToggleButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -51,7 +51,7 @@ export const PasswordInput = React.forwardRef<
 
   const [isPassword, setIsPassword] = React.useState(true);
 
-  const styles = React.useMemo(() => passwordInput(), []);
+  const styles = React.useMemo(() => passwordInputStyles(), []);
 
   const defaultRenderToggleButton = (
     props: PasswordInputRenderToggleButtonProps,

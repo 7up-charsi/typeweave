@@ -1,8 +1,3 @@
-import {
-  PaginationClassNames,
-  PaginationVariantProps,
-  pagination,
-} from '@typeweave/theme';
 import React from 'react';
 import { useControlled } from '../use-controlled';
 import { Button, ButtonProps } from '../button';
@@ -13,6 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
+import { PaginationVariantProps, paginationStyles } from './pagination-styles';
 
 export interface PaginationProps
   extends PaginationVariantProps,
@@ -23,7 +19,10 @@ export interface PaginationProps
   page?: number;
   onPageChange?: (page: number) => void;
   defaultPage?: number;
-  classNames?: PaginationClassNames;
+  classNames?: Partial<{
+    base: string;
+    item: string;
+  }>;
   getItemA11yLabel?: (page: number) => string;
   showFirstButton?: boolean;
   showLastButton?: boolean;
@@ -107,7 +106,7 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
       endPages.length > 0 ? endPages[0] - 2 : count - 1,
     );
 
-    const styles = React.useMemo(() => pagination({}), []);
+    const styles = React.useMemo(() => paginationStyles(), []);
 
     const buttonProps = {
       size,

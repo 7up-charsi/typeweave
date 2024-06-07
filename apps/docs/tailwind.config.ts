@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss';
-import { createTheme, registerAllStyles } from '@typeweave/theme';
+import { typeweave } from '@typeweave/plugin';
 import typography from '@tailwindcss/typography';
 import tailwindScrollbar from 'tailwind-scrollbar';
 
@@ -8,7 +8,7 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './mdx-components/**/*.{js,ts,jsx,tsx,mdx}',
-    registerAllStyles(),
+    './node_modules/@typeweave/react/dist/**/*-styles.js',
   ],
   theme: {
     extend: {
@@ -18,7 +18,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [createTheme(), typography, tailwindScrollbar],
+  plugins: [typeweave(), typography, tailwindScrollbar],
 };
 
 export default config;

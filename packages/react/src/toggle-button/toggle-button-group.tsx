@@ -1,8 +1,11 @@
-import { ToggleButtonVariantProps, toggleButton } from '@typeweave/theme';
 import { createContextScope } from '../context';
 import { ButtonGroup, ButtonGroupProps } from '../button';
 import React from 'react';
 import { useControlled } from '../use-controlled';
+import {
+  ToggleButtonVariantProps,
+  toggleButtonStyles,
+} from './toggle-button-styles';
 
 export type ToggleButtonGroupProps<Exclusive> = ToggleButtonVariantProps &
   Omit<ButtonGroupProps, 'variant'> &
@@ -35,7 +38,7 @@ const [ToggleButtonCtx, useToggleButtonCtx] =
   createContextScope<GroupCtxProps>(displayName);
 
 const [ToggleButtonStyles, useToggleButtonStyles] =
-  createContextScope<ReturnType<typeof toggleButton>>(displayName);
+  createContextScope<ReturnType<typeof toggleButtonStyles>>(displayName);
 
 export { useToggleButtonCtx, useToggleButtonStyles };
 
@@ -69,7 +72,7 @@ export const ToggleButtonGroupImpl = (props: ToggleButtonGroupProps<false>) => {
       `${displayName}, \`value\` must be \`string[]\`, when \`exclusive\` is false`,
     );
 
-  const styles = React.useMemo(() => toggleButton({ color }), [color]);
+  const styles = React.useMemo(() => toggleButtonStyles({ color }), [color]);
 
   return (
     <ToggleButtonCtx value={value} setValue={setValue} exclusive={!!exclusive}>

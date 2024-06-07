@@ -1,8 +1,8 @@
-import { disclosure } from '@typeweave/theme';
 import { createContextScope } from '../context';
 import React from 'react';
 import { Slot } from '../slot';
 import { useControlled } from '../use-controlled';
+import { disclosureStyles } from './disclosure-styles';
 
 export interface DisclosureRootProps {
   children?: React.ReactNode;
@@ -28,7 +28,7 @@ const [DisclosureCtx, useDisclosureCtx] =
   createContextScope<DisclosureCtxProps>(displayName);
 
 const [DisclosureStyles, useDisclosureStyles] =
-  createContextScope<ReturnType<typeof disclosure>>(displayName);
+  createContextScope<ReturnType<typeof disclosureStyles>>(displayName);
 
 export { useDisclosureCtx, useDisclosureStyles };
 
@@ -66,7 +66,7 @@ export const DisclosureRoot = React.forwardRef<
     setValue((prev) => prev.filter((ele) => ele !== collapsedItem));
   };
 
-  const styles = React.useMemo(() => disclosure(), []);
+  const styles = React.useMemo(() => disclosureStyles(), []);
 
   const Component = asChild ? Slot : 'div';
 

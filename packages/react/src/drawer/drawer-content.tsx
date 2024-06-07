@@ -1,9 +1,9 @@
-import { DrawerVariantProps, drawer } from '@typeweave/theme';
 import React from 'react';
 import { useDrawerCtx } from './drawer-root';
 import { useScrollLock } from '../use-scroll-lock';
 import { createContextScope } from '../context';
 import { VisuallyHidden } from '../visually-hidden';
+import { DrawerVariantProps, drawerStyles } from './drawer-styles';
 
 export interface DrawerContentProps
   extends DrawerVariantProps,
@@ -12,7 +12,7 @@ export interface DrawerContentProps
 const displayName = 'DrawerContent';
 
 const [DrawerStyles, useDrawerStyles] =
-  createContextScope<ReturnType<typeof drawer>>(displayName);
+  createContextScope<ReturnType<typeof drawerStyles>>(displayName);
 
 export { useDrawerStyles };
 
@@ -26,7 +26,7 @@ export const DrawerContent = React.forwardRef<
 
   useScrollLock();
 
-  const styles = React.useMemo(() => drawer({ placement }), [placement]);
+  const styles = React.useMemo(() => drawerStyles({ placement }), [placement]);
 
   return (
     <DrawerStyles {...styles}>
