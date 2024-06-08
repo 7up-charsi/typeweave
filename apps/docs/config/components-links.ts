@@ -3,8 +3,8 @@ import { NavigationLink } from '@/lib/types';
 export const componentsLinks: Record<string, NavigationLink[]> = {
   form: [
     {
-      title: 'autocomplete',
-      href: '/components/autocomplete',
+      title: 'combobox',
+      href: '/components/combobox',
     },
     {
       title: 'button',

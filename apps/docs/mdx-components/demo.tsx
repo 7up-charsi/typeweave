@@ -8,16 +8,17 @@ import {
   TabsTrigger,
 } from '@typeweave/react';
 import { Code } from './code';
-import { CopyButton } from '@/components/copy-button';
 import { Pre } from './pre';
+import { ClientDemoRenderer } from './client-demo-renderer';
 
 interface DemoProps {
   source?: string;
   preview?: string;
+  clientSide?: boolean;
 }
 
 export const Demo = async (props: DemoProps) => {
-  const { source, preview } = props;
+  const { source, preview, clientSide } = props;
 
   if (!source) return;
 
@@ -58,7 +59,11 @@ export const Demo = async (props: DemoProps) => {
 
       <TabsContent value="preview">
         <div className="flex items-center justify-center rounded border border-inherit px-5 py-10">
-          {preview}
+          {clientSide ? (
+            <ClientDemoRenderer>{preview}</ClientDemoRenderer>
+          ) : (
+            preview
+          )}
         </div>
       </TabsContent>
 

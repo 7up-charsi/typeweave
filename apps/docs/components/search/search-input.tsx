@@ -1,10 +1,8 @@
 'use client';
 
-import { Button } from '@webbo-ui/button';
+import { Button, DialogClose } from '@typeweave/react';
+import { SearchIcon, XIcon } from 'lucide-react';
 import { useState, useRef } from 'react';
-import SearchIcon from '../../assets/icons/search-icon';
-import CloseIcon from '../../assets/icons/close-icon';
-import * as Dialog from '@webbo-ui/dialog';
 import {
   UseSearchBoxProps,
   useInstantSearch,
@@ -73,16 +71,26 @@ export const SearchInput = (props: UseSearchBoxProps) => {
 
         {inputValue.length === 0 ||
           (!isSearchStalled && (
-            <Button type="reset" isIconOnly size="sm" aria-label="clear input">
-              <CloseIcon />
+            <Button
+              type="reset"
+              isIconOnly
+              size="sm"
+              aria-label="clear input"
+            >
+              <XIcon />
             </Button>
           ))}
 
-        <Dialog.Close>
-          <Button type="button" size="sm" color="danger" variant="text">
+        <DialogClose>
+          <Button
+            type="button"
+            size="sm"
+            color="danger"
+            variant="text"
+          >
             Close
           </Button>
-        </Dialog.Close>
+        </DialogClose>
       </form>
     </div>
   );
