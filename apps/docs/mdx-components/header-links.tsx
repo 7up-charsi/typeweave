@@ -16,13 +16,13 @@ export const HeaderLinks = (props: Props) => {
         {
           icon: <GithubIcon size={17} />,
           title: 'source',
-          href: process.env.REPO_COMPONENTS + `${component}.tsx`,
+          href: `${process.env.REPO}/blob/main/packages/react/src/${component}/${component}.tsx`,
           a11yLabel: 'github component source code',
         },
         styles && {
           icon: <GithubIcon size={17} />,
           title: 'styles',
-          href: process.env.REPO_STYLES + `${component}.ts`,
+          href: `${process.env.REPO}/blob/main/packages/react/src/${component}/${component}-styles.ts`,
           a11yLabel: 'github styles source code',
         },
       ]

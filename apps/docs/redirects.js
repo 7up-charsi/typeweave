@@ -3,8 +3,8 @@ const redirects = async () => {
     // redirect component
     ...[
       {
-        source: '/autocomplete',
-        destination: '/components/autocomplete',
+        source: '/combobox',
+        destination: '/components/combobox',
         permanent: true,
       },
       {
