@@ -2,10 +2,12 @@ import React from 'react';
 import { evaluate } from '@mdx-js/mdx';
 import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
+import remarkDirective from 'remark-directive';
 import { mdxComponents } from '@/mdx-components';
 
 // @ts-ignore
 import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
+import { remarkAdmonitions } from '@/lib/remark-admonitions';
 
 interface CompileMdxProps {
   content: string;
@@ -23,7 +25,7 @@ export const CompileMdx = async (props: CompileMdxProps) => {
     jsx,
     // @ts-ignore
     jsxs,
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [remarkGfm, remarkDirective, remarkAdmonitions],
     rehypePlugins: [rehypeSlug],
   });
 

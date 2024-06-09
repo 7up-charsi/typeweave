@@ -1,1 +1,2 @@
-export { default as AccordionDemo } from './accordion';
+export * from './accordion';
+export * from './combobox';

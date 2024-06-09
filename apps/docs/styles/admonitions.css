@@ -1,0 +1,43 @@
+.admonition {
+  @apply my-5 rounded border p-4 text-sm;
+
+  & > .admonitionHeading {
+    @apply mb-3 text-lg font-semibold first-letter:uppercase;
+  }
+
+  & .pre-tag-container {
+    @apply my-3;
+  }
+}
+
+.admonition.warning {
+  @apply border-warning-6 bg-warning-2 text-warning-12;
+
+  & > .admonitionHeading {
+    @apply text-warning-11;
+  }
+}
+
+.admonition.info {
+  @apply border-info-6 bg-info-2;
+
+  & > .admonitionHeading {
+    @apply text-info-11;
+  }
+}
+
+.admonition.note {
+  @apply border-muted-6 bg-muted-2;
+
+  & > .admonitionHeading {
+    @apply text-muted-11;
+  }
+}
+
+.admonition.danger {
+  @apply border-danger-6 bg-danger-2;
+
+  & > .admonitionHeading {
+    @apply text-danger-11;
+  }
+}

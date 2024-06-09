@@ -28,8 +28,6 @@ export const inputStyles = tv({
       true: {
         inputWrapper: 'p-0',
         textarea: 'p-3',
-        startContent: 'hidden',
-        endContent: 'hidden',
       },
     },
   },

@@ -8,6 +8,7 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './mdx-components/**/*.{js,ts,jsx,tsx,mdx}',
+    './demos/**/*.{js,ts,jsx,tsx,mdx}',
     './node_modules/@typeweave/react/src/**/*-styles.ts',
   ],
   theme: {

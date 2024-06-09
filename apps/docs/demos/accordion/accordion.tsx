@@ -7,7 +7,7 @@ import {
 } from '@typeweave/react';
 import { ChevronDown } from 'lucide-react';
 
-export default function AccordionDemo() {
+export default function App() {
   return (
     <AccordionRoot className="w-96" defaultValue={['accordion-1']}>
       <AccordionItem value="accordion-1">

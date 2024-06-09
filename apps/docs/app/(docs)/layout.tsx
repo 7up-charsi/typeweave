@@ -4,6 +4,7 @@ import { Navbar } from '@/(docs)/_components/navbar';
 import { SidebarContent } from '@/(docs)/_components/sidebar-content';
 import '@/styles/globals.css';
 import '@/styles/syntax-highlight-theme.css';
+import '@/styles/admonitions.css';
 
 const font_code = Fira_Code({
   variable: '--font-code',
