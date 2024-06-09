@@ -295,11 +295,16 @@ const ComboboxImpl = React.forwardRef<
 
   const inputId = React.useId();
 
+  // I used React.memo to retain the array reference between re-renders.
+  // This prevents console warnings from occurring because useControlled
+  // keeps track of the default value using strict equality comparison.
+  const defaultEmptyArray = React.useMemo(() => [], []);
+
   const [value, setValue] = useControlled({
     name: displayName,
     state: 'value',
     controlled: valueProp,
-    default: defaultValue,
+    default: multiple ? defaultValue ?? defaultEmptyArray : defaultValue,
   });
 
   const [inputValue, setInputValue] = useControlled({
@@ -454,7 +459,7 @@ const ComboboxImpl = React.forwardRef<
 
       setInputValue(newInputValue);
 
-      if (!editable) onInputChange?.(newInputValue, 'reset');
+      if (editable) onInputChange?.(newInputValue, 'reset');
     },
     [
       clearInputOnBlur,

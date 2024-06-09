@@ -14,7 +14,7 @@ export const comboboxStyles = tv({
       'sticky -top-2 bg-paper h-12 px-4 z-50 text-sm font-medium content-center',
     groupItems: '[&>li]:pl-6',
     startContent: '',
-    endContent: '',
+    endContent: 'flex items-center',
     inputWrapper: '',
     input: 'truncate',
     clearIndicator: 'w-6 h-6',
@@ -35,7 +35,7 @@ export const comboboxStyles = tv({
       multiple: true,
       editable: true,
       className: {
-        endContent: 'flex absolute right-0 top-1/2 -translate-y-1/2 mr-3',
+        endContent: 'absolute right-0 top-1/2 -translate-y-1/2 mr-3',
         inputWrapper: 'flex-wrap min-h-10 h-auto py-2',
         input: 'min-w-12 grow min-h-auto h-auto',
       },

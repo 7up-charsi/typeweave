@@ -11,4 +11,98 @@ A combobox is an input widget that has an associated popup. The popup enables us
 
 <hr />
 
-## Basic usage
+## combobox
+
+### Single
+
+A single-select combobox with no text input that is functionally similar to an HTML select element.
+
+<Demo source="combobox/single" preview={<SingleComboboxDemo />} />
+
+### multiple
+
+<Demo source="combobox/multiple" preview={<MultipleComboboxDemo />} />
+
+### editable single
+
+An editable single-select combobox that demonstrates the autocomplete behavior known as "list with manual selection".
+
+<Demo
+  source="combobox/editable-single"
+  preview={<EditableSingleComboboxDemo />}
+/>
+
+### editable multiple
+
+<Demo
+  source="combobox/editable-multiple"
+  preview={<EditableMultipleComboboxDemo />}
+/>
+
+### Options structure
+
+By default, the component accepts the following options structures:
+
+```tsx
+interface AutocompleteOption {
+  label: string;
+}
+// or
+type AutocompleteOption = string;
+```
+
+for instance:
+
+```tsx
+const options = [
+  { title: 'Forrest Gump', year: 1994 },
+  { title: 'Inception', year: 2010 },
+];
+// or
+const options = ['Forrest Gump', 'Inception'];
+```
+
+However, you can use different structures by providing a `getOptionLabel` prop.
+
+### Controlled states
+
+The component has two states that can be controlled:
+
+1. the "value" state with the `value`/`onChange` props combination. This state represents the value selected by the user, for instance when pressing `Enter`.
+
+2. the "input value" state with the `inputValue`/`onInputChange` props combination. This state represents the value displayed in the textbox.
+
+These two states are isolated, and should be controlled independently.
+
+- A component is controlled when it's managed by its parent using props.
+- A component is uncontrolled when it's managed by its own local state.
+
+<Demo
+  source="combobox/controlled"
+  preview={<ControlledComboboxDemo />}
+/>
+
+:::warning
+If you control the value, make sure it's referentially stable between renders. In other words, the reference to the value shouldn't change if the value itself doesn't change.
+
+{/* prettier-ignore */}
+```tsx
+// ⚠️ BAD
+return <Autocomplete multiple value={allValues.filter((v) => v.selected)} />;
+
+// 👍 GOOD
+const selectedValues = React.useMemo(
+  () => allValues.filter((v) => v.selected),
+  [allValues],
+);
+return <Autocomplete multiple value={selectedValues} />;
+```
+
+In the first example, allValues.filter is called and returns a new array every render. The fix includes memoizing the value, so it changes only when needed.
+:::
+
+## Grouped
+
+You can group the options with the groupBy prop. If you do so, make sure that the options are also sorted with the same dimension that they are grouped by, otherwise, you will notice duplicate headers.
+
+<Demo source="combobox/grouped" preview={<GroupedComboboxDemo />} />

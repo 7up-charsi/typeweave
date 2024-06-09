@@ -1,5 +1,8 @@
 import path from 'path';
 import { access, readFile } from 'fs/promises';
+import { Code } from './code';
+import { Pre } from './pre';
+import { ClientDemoRenderer } from './client-demo-renderer';
 import {
   Button,
   TabsContent,
@@ -7,18 +10,14 @@ import {
   TabsRoot,
   TabsTrigger,
 } from '@typeweave/react';
-import { Code } from './code';
-import { Pre } from './pre';
-import { ClientDemoRenderer } from './client-demo-renderer';
 
 interface DemoProps {
   source?: string;
   preview?: string;
-  clientSide?: boolean;
 }
 
 export const Demo = async (props: DemoProps) => {
-  const { source, preview, clientSide } = props;
+  const { source, preview } = props;
 
   if (!source) return;
 
@@ -33,10 +32,7 @@ export const Demo = async (props: DemoProps) => {
   const code = await readFile(filePath, { encoding: 'utf-8' });
 
   return (
-    <TabsRoot
-      defaultValue="preview"
-      className="not-prose native-pre border-muted-6"
-    >
+    <TabsRoot defaultValue="preview" className="not-prose native-pre">
       <TabsList className="gap-2">
         <TabsTrigger value="preview">
           <Button
@@ -58,18 +54,18 @@ export const Demo = async (props: DemoProps) => {
       </TabsList>
 
       <TabsContent value="preview">
-        <div className="flex items-center justify-center rounded border border-inherit px-5 py-10">
-          {clientSide ? (
-            <ClientDemoRenderer>{preview}</ClientDemoRenderer>
-          ) : (
-            preview
-          )}
+        <div className="flex items-center justify-center rounded border border-muted-6 px-5 py-10">
+          {preview}
         </div>
       </TabsContent>
 
       <TabsContent value="code">
         <Pre>
-          <Code className="language-tsx">{code}</Code>
+          <Code className="language-tsx">
+            {code.startsWith("'use client';")
+              ? code.replace(/^'use client';/, '').trim()
+              : code.trim()}
+          </Code>
         </Pre>
       </TabsContent>
     </TabsRoot>
