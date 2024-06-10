@@ -1,6 +1,6 @@
 {
   "name": "@typeweave/plugin",
-  "version": "1.4.5",
+  "version": "1.0.0",
   "keywords": [
     "typeweave",
     "theme"
@@ -52,4 +52,3 @@
     "extends": "../../../../../../clean-package.config.json"
   }
 }
-
