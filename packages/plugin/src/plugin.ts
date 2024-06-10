@@ -26,7 +26,7 @@ const defaultThemes = {
 
 export const typeweave = (config: PluginConfig = {}) => {
   const {
-    themes: userThemes = {},
+    themes: userThemes,
     defaultTheme = 'light',
     colorMode = 'hsl',
   } = config;
@@ -35,13 +35,16 @@ export const typeweave = (config: PluginConfig = {}) => {
     throw new Error('createTheme, `colorMode` must be either `hsl` or `rgb`');
 
   const themes: Themes = {
-    ...userThemes,
-    light: deepmerge(defaultLightTheme, userThemes.light || {}),
-    dark: deepmerge(defaultDarkTheme, userThemes.dark || {}),
+    ...(userThemes ?? {}),
+    light: deepmerge(defaultLightTheme, userThemes?.light || {}),
+    dark: deepmerge(defaultDarkTheme, userThemes?.dark || {}),
   };
 
   Object.entries(themes).forEach(([themeName, theme]) => {
     if (themeName === 'light' || themeName === 'dark') return;
+
+    // It serves only as a guard, as every theme will have a base property.
+    if (!('base' in theme)) return;
 
     const baseTheme = theme.base === 'dark' ? 'dark' : 'light';
 
@@ -53,7 +56,12 @@ export const typeweave = (config: PluginConfig = {}) => {
   const utilities: Record<string, Record<string, string>> = {};
   const variants: { name: string; definition: string }[] = [];
 
-  Object.entries(themes).forEach(([themeName, { base, colors, layout }]) => {
+  Object.entries(themes).forEach(([themeName, theme]) => {
+    // It serves only as a guard, as every theme will have a base property.
+    if (!('base' in theme)) return;
+
+    const { base, colors, layout } = theme;
+
     let cssSelector = `:root.${themeName}, :root[data-theme="${themeName}"]`;
 
     const scheme = base === 'dark' ? 'dark' : 'light';
