@@ -1,6 +1,7 @@
 {
   "name": "typeweave",
   "private": true,
+  "packageManager": "pnpm@9.2.0",
   "scripts": {
     "dev:sb": "pnpm --filter @typeweave/storybook dev",
     "dev:docs": "pnpm --filter @typeweave/docs dev",
@@ -53,3 +54,4 @@
     "typescript": "^5.4.5"
   }
 }
+
