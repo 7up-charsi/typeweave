@@ -2,7 +2,7 @@ import { createContextScope } from '../context';
 import { createCollection } from '../use-collection';
 import { useControlled } from '../use-controlled';
 import React from 'react';
-import { TabsVariantProps, tabsStyles } from './tabs-styles';
+import { TabsVariantProps, tabsStyles } from './tabs.styles';
 
 export interface TabsRootProps
   extends TabsVariantProps,

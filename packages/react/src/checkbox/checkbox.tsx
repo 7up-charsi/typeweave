@@ -1,7 +1,7 @@
 import { mergeRefs } from '@typeweave/react-utils';
 import React from 'react';
 import { Check, Minus } from 'lucide-react';
-import { CheckboxVariantProps, checkboxStyles } from './checkbox-styles';
+import { CheckboxVariantProps, checkboxStyles } from './checkbox.styles';
 
 export interface CheckboxProps
   extends CheckboxVariantProps,

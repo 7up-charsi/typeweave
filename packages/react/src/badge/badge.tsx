@@ -1,5 +1,5 @@
 import React from 'react';
-import { BadgeVariantProps, badgeStyles } from './badge-styles';
+import { BadgeVariantProps, badgeStyles } from './badge.styles';
 
 export interface BadgeProps
   extends BadgeVariantProps,

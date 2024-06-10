@@ -7,7 +7,7 @@ import {
   CircleAlert,
   TriangleAlert,
 } from 'lucide-react';
-import { AlertVariantProps, alertStyles } from './alert-styles';
+import { AlertVariantProps, alertStyles } from './alert.styles';
 
 const icons = {
   success: <Check />,

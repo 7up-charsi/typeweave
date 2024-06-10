@@ -9,7 +9,7 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './mdx-components/**/*.{js,ts,jsx,tsx,mdx}',
     './demos/**/*.{js,ts,jsx,tsx,mdx}',
-    './node_modules/@typeweave/react/src/**/*-styles.ts',
+    './node_modules/@typeweave/react/src/**/*.styles.ts',
   ],
   theme: {
     extend: {

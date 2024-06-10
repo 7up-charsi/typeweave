@@ -9,7 +9,7 @@ export type { MenuRootProps } from './menu-root';
 export type { MenuSeparatorProps } from './menu-separator';
 export type { MenuTriggerProps } from './menu-trigger';
 export type { PopperArrowProps as MenuArrowProps } from '../popper';
-export type { MenuVariantProps } from './menu-styles';
+export type { MenuVariantProps } from './menu.styles';
 
 export { MenuCheckboxItem } from './menu-checkbox-item';
 export { MenuContent } from './menu-content';
@@ -22,4 +22,4 @@ export { MenuRoot } from './menu-root';
 export { MenuSeparator } from './menu-separator';
 export { MenuTrigger } from './menu-trigger';
 export { PopperArrow as MenuArrow } from '../popper';
-export { menuStyles } from './menu-styles';
+export { menuStyles } from './menu.styles';

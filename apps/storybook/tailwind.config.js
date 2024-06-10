@@ -4,7 +4,7 @@ import { typeweave } from '@typeweave/plugin';
 export default {
   content: [
     '../../packages/react/src/**/*.stories.tsx',
-    '../../packages/react/src/**/*-styles.ts',
+    '../../packages/react/src/**/*.styles.ts',
     './.storybook/**/*.{ts,tsx}',
   ],
   plugins: [typeweave()],

@@ -1,5 +1,5 @@
 import React from 'react';
-import { OverlayVariantProps, overlayStyles } from './overlay-styles';
+import { OverlayVariantProps, overlayStyles } from './overlay.styles';
 
 export interface OverlayProps
   extends OverlayVariantProps,

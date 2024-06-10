@@ -8,7 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
-import { PaginationVariantProps, paginationStyles } from './pagination-styles';
+import { PaginationVariantProps, paginationStyles } from './pagination.styles';
 
 export interface PaginationProps
   extends PaginationVariantProps,

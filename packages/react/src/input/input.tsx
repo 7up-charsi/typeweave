@@ -3,7 +3,7 @@ import React from 'react';
 import { Slot } from '../slot';
 import { PointerEventsProps } from '../pointer-events/pointer-events';
 import { usePointerEvents } from '../use-pointer-events';
-import { InputVariantProps, inputStyles } from './input-styles';
+import { InputVariantProps, inputStyles } from './input.styles';
 
 type InputBaseProps = React.InputHTMLAttributes<HTMLInputElement> &
   PointerEventsProps<HTMLInputElement> & {

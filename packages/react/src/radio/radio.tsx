@@ -1,6 +1,6 @@
 import React from 'react';
 import { Circle } from 'lucide-react';
-import { RadioVariantProps, radioStyles } from './radio-styles';
+import { RadioVariantProps, radioStyles } from './radio.styles';
 
 export interface RadioProps
   extends RadioVariantProps,

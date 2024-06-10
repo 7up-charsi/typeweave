@@ -5,7 +5,7 @@ export type {
   InputVariantProps,
   NumberInputVariantProps,
   PasswordInputVariantProps,
-} from './input-styles';
+} from './input.styles';
 
 export { Input } from './input';
 export { NumberInput } from './number-input';
@@ -14,4 +14,4 @@ export type {
   inputStyles,
   numberInputStyles,
   passwordInputStyles,
-} from './input-styles';
+} from './input.styles';
