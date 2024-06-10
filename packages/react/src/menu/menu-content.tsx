@@ -6,7 +6,7 @@ import { mergeRefs } from '@typeweave/react-utils';
 import { VisuallyHidden } from '../visually-hidden';
 import { useClickOutside } from '../use-click-outside';
 import { useScrollLock } from '../use-scroll-lock';
-import { MenuVariantProps, menuStyles } from './menu-styles';
+import { MenuVariantProps, menuStyles } from './menu.styles';
 
 export interface MenuContentProps
   extends Omit<PopperFloatingProps, 'children'>,

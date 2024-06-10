@@ -2,7 +2,7 @@ import { createContextScope } from '../context';
 import React from 'react';
 import { Slot } from '../slot';
 import { useControlled } from '../use-controlled';
-import { disclosureStyles } from './disclosure-styles';
+import { disclosureStyles } from './disclosure.styles';
 
 export interface DisclosureRootProps {
   children?: React.ReactNode;

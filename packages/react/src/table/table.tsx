@@ -1,6 +1,6 @@
 import { useTableCtx } from './table-root';
 import React from 'react';
-import { TableVariantProps, tableStyles } from './table-styles';
+import { TableVariantProps, tableStyles } from './table.styles';
 
 export interface TableProps
   extends TableVariantProps,

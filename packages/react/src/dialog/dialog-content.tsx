@@ -3,7 +3,7 @@ import { useDialogCtx } from './dialog-root';
 import { useScrollLock } from '../use-scroll-lock';
 import { FocusTrap, FocusTrapProps } from '../focus-trap';
 import { VisuallyHidden } from '../visually-hidden';
-import { DialogVariantProps, dialogStyles } from './dialog-styles';
+import { DialogVariantProps, dialogStyles } from './dialog.styles';
 
 export interface DialogContentProps
   extends DialogVariantProps,

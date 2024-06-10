@@ -1,5 +1,5 @@
 import React from 'react';
-import { SwitchVariantProps, switchStyles } from './switch-styles';
+import { SwitchVariantProps, switchStyles } from './switch.styles';
 
 export interface SwitchProps
   extends SwitchVariantProps,

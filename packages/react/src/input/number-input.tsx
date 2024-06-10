@@ -4,7 +4,7 @@ import { mergeRefs } from '@typeweave/react-utils';
 import { Button } from '../button';
 import { useControlled } from '../use-controlled';
 import { MinusIcon, PlusIcon } from 'lucide-react';
-import { numberInputStyles } from './input-styles';
+import { numberInputStyles } from './input.styles';
 
 export type NumberInputRenderSpinButtonsProps = {
   wrapperProps: React.HTMLAttributes<HTMLDivElement>;

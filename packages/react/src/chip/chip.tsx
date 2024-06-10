@@ -1,6 +1,6 @@
 import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';
-import { ChipVariantProps, chipStyles } from './chip-styles';
+import { ChipVariantProps, chipStyles } from './chip.styles';
 
 export interface ChipProps
   extends Omit<ChipVariantProps, 'pressable'>,

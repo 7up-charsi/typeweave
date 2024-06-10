@@ -1,5 +1,5 @@
 export type { BadgeProps } from './badge';
-export type { BadgeVariantProps } from './badge-styles';
+export type { BadgeVariantProps } from './badge.styles';
 
 export { Badge } from './badge';
-export { badgeStyles } from './badge-styles';
+export { badgeStyles } from './badge.styles';

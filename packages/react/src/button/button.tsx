@@ -3,7 +3,7 @@ import { Slot } from '../slot';
 import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';
 import { GroupCtx } from './button-group';
-import { ButtonVariantProps, buttonStyles } from './button-styles';
+import { ButtonVariantProps, buttonStyles } from './button.styles';
 
 export type ButtonPressEvent = {
   target: HTMLButtonElement;

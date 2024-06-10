@@ -1,5 +1,5 @@
 import React from 'react';
-import { SkeletonVariantProps, skeletonStyles } from './skeleton-styles';
+import { SkeletonVariantProps, skeletonStyles } from './skeleton.styles';
 
 export interface SkeletonProps
   extends SkeletonVariantProps,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createContextScope } from '../context';
 import { useCallbackRef } from '../use-callback-ref';
-import { AvatarVariantProps, avatarStyles } from './avatar-styles';
+import { AvatarVariantProps, avatarStyles } from './avatar.styles';
 
 export type Status = 'idle' | 'loaded' | 'loading' | 'error';
 

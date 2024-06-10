@@ -3,7 +3,7 @@ import {
   ButtonGroupVariantProps,
   ButtonVariantProps,
   buttonGroupStyles,
-} from './button-styles';
+} from './button.styles';
 
 export interface ButtonGroupProps
   extends Pick<ButtonVariantProps, 'color' | 'size' | 'variant'>,

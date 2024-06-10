@@ -16,7 +16,7 @@ import {
   PopperReference,
   PopperRoot,
 } from '../popper';
-import { ComboboxVariantProps, comboboxStyles } from './combobox-styles';
+import { ComboboxVariantProps, comboboxStyles } from './combobox.styles';
 
 export type ComboboxOnChangeReason =
   | 'selectOption'

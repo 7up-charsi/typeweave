@@ -3,7 +3,7 @@ import { useDrawerCtx } from './drawer-root';
 import { useScrollLock } from '../use-scroll-lock';
 import { createContextScope } from '../context';
 import { VisuallyHidden } from '../visually-hidden';
-import { DrawerVariantProps, drawerStyles } from './drawer-styles';
+import { DrawerVariantProps, drawerStyles } from './drawer.styles';
 
 export interface DrawerContentProps
   extends DrawerVariantProps,

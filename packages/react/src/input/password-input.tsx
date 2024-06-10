@@ -3,7 +3,7 @@ import { InputProps, Input } from './input';
 import { Button } from '../button';
 import { EyeIcon, EyeOff } from 'lucide-react';
 import { UsePointerEventsProps } from '../use-pointer-events';
-import { passwordInputStyles } from './input-styles';
+import { passwordInputStyles } from './input.styles';
 
 export type PasswordInputRenderToggleButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,

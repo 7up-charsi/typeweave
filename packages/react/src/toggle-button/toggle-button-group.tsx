@@ -5,7 +5,7 @@ import { useControlled } from '../use-controlled';
 import {
   ToggleButtonVariantProps,
   toggleButtonStyles,
-} from './toggle-button-styles';
+} from './toggle-button.styles';
 
 export type ToggleButtonGroupProps<Exclusive> = ToggleButtonVariantProps &
   Omit<ButtonGroupProps, 'variant'> &

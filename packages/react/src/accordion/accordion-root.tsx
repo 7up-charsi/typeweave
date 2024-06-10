@@ -2,7 +2,7 @@ import { createContextScope } from '../context';
 import { useControlled } from '../use-controlled';
 import React from 'react';
 import { createCollection } from '../use-collection';
-import { accordionStyles } from './accordion-styles';
+import { accordionStyles } from './accordion.styles';
 
 export type AccordionRootProps<Type, IsSingleCollapsible> = {
   disabled?: boolean;

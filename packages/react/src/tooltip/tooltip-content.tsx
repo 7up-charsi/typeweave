@@ -1,7 +1,7 @@
 import { PopperFloating, PopperFloatingProps } from '../popper';
 import React from 'react';
 import { useTooltipCtx } from './tooltip-root';
-import { TooltipVariantProps, tooltipStyles } from './tooltip-styles';
+import { TooltipVariantProps, tooltipStyles } from './tooltip.styles';
 
 export interface TooltipContentProps
   extends TooltipVariantProps,

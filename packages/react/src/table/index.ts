@@ -12,7 +12,7 @@ export type {
   ColumnVisibility,
   TableColumn,
 } from './table-root';
-export type { TableVariantProps } from './table-styles';
+export type { TableVariantProps } from './table.styles';
 
 export { Table } from './table';
 export { TableColumnVisibility } from './table-column-visibility';
@@ -21,4 +21,4 @@ export { TableSelectRow } from './table-select-row';
 export { TableSelectRowRoot } from './table-select-row-root';
 export { TableSelectedRows } from './table-selected-rows';
 export { TableRoot } from './table-root';
-export { tableStyles } from './table-styles';
+export { tableStyles } from './table.styles';
