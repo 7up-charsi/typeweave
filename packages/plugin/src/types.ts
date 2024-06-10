@@ -32,12 +32,18 @@ export type ThemeLayout = Partial<{
 }>;
 
 export type Theme = Partial<{
+  /** @default light */
   base: 'light' | 'dark';
   colors: ThemeColors;
   layout: ThemeLayout;
 }>;
 
-export type Themes = Record<string, Theme>;
+export type BaseThemes = {
+  light?: Omit<Theme, 'base'>;
+  dark?: Omit<Theme, 'base'>;
+};
+
+export type Themes = BaseThemes & Record<string, Theme>;
 
 export type PluginConfig = Partial<{
   colorMode: 'rgb' | 'hsl';
