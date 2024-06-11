@@ -26,7 +26,7 @@ export const inputStyles = tv({
     },
     multiline: {
       true: {
-        inputWrapper: 'p-0',
+        inputWrapper: 'p-0 h-auto',
         textarea: 'p-3',
       },
     },
