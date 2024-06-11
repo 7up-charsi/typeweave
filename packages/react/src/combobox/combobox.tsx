@@ -1215,6 +1215,7 @@ const ComboboxImpl = React.forwardRef<
           excludeFromTabOrder
           className={styles.clearIndicator()}
           onPress={handleClear}
+          type="button"
         >
           <XIcon />
         </Button>
@@ -1230,6 +1231,7 @@ const ComboboxImpl = React.forwardRef<
           className={styles.openIndicator()}
           onPress={handleOpenIndicator}
           data-open={listBoxOpen}
+          type="button"
         >
           <ChevronDownIcon />
         </Button>
