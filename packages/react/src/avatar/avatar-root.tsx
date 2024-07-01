@@ -28,7 +28,7 @@ const [AvatarStyles, useAvatarStyles] =
 export { useAvatarStyles, useAvatarCtx };
 
 export const AvatarRoot = React.forwardRef<HTMLSpanElement, AvatarRootProps>(
-  (props: AvatarRootProps) => {
+  (props, forwardedRef) => {
     const {
       onLoadingStatusChange: onLoadingStatusChangeProp,
       className,
@@ -49,7 +49,11 @@ export const AvatarRoot = React.forwardRef<HTMLSpanElement, AvatarRootProps>(
           setStatus={setStatus}
           onLoadingStatusChange={onLoadingStatusChange}
         >
-          <span {...restProps} className={styles.base({ className })} />
+          <span
+            ref={forwardedRef}
+            {...restProps}
+            className={styles.base({ className })}
+          />
         </AvatarCtx>
       </AvatarStyles>
     );
