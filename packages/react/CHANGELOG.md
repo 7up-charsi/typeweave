@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.4
+
+### Patch Changes
+
+- fix(React): combobox console waring and props type
+
 ## 3.0.3
 
 ### Patch Changes
