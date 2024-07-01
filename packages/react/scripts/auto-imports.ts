@@ -6,11 +6,11 @@ import prettier from 'prettier';
 const excludePackages: string[] = ['stack-manager'];
 
 (async () => {
-  console.log('*** auto imports started');
+  console.log('*** React: auto imports started');
 
   const dirContent = await readdir(path.resolve('./src'));
 
-  const names = dirContent.filter((name) => {
+  const components = dirContent.filter((name) => {
     if (excludePackages.includes(name)) return;
 
     const stats = statSync(path.resolve(`./src/${name}`));
@@ -20,7 +20,7 @@ const excludePackages: string[] = ['stack-manager'];
     return true;
   });
 
-  const data = names.map((name) => `export * from './${name}'`).join(';');
+  const data = components.map((name) => `export * from './${name}'`).join(';');
 
   const prettierConfig = await prettier.resolveConfig(
     path.resolve('../../.prettierrc.json '),
@@ -35,5 +35,5 @@ const excludePackages: string[] = ['stack-manager'];
 
   await writeFile(path.resolve('./src/index.ts'), formatedData, 'utf-8');
 
-  console.log('*** auto imports completed');
+  console.log('*** React: auto imports completed');
 })();

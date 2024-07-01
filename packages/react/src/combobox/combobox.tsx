@@ -89,7 +89,6 @@ type BaseProps<Value> = {
   getOptionLabel?: (option: Value) => string;
   autoHighlight?: boolean;
   getOptionKey?: (options: Value) => string;
-  isOptionEqualToValue?: (option: Value, value: Value) => boolean;
   renderGroup?: (params: ComboboxRenderGroupParams) => React.ReactNode;
   noOptionsText?: string;
   clearText?: string;
@@ -174,6 +173,7 @@ export type ComboboxProps<Value, Multiple, DisableClearable, Editable> = (Omit<
         value?: Value[];
         onChange?: (newValue: Value[], reason: ComboboxOnChangeReason) => void;
         disableClearable?: DisableClearable;
+        isOptionEqualToValue?: (option: Value, value: Value) => boolean;
       }
     : DisableClearable extends true
       ? {
@@ -182,6 +182,7 @@ export type ComboboxProps<Value, Multiple, DisableClearable, Editable> = (Omit<
           value?: Value;
           onChange?: (newValue: Value, reason: ComboboxOnChangeReason) => void;
           disableClearable: DisableClearable;
+          isOptionEqualToValue?: (option: Value, value: Value) => boolean;
         }
       : {
           multiple?: Multiple;
@@ -192,6 +193,10 @@ export type ComboboxProps<Value, Multiple, DisableClearable, Editable> = (Omit<
             reason: ComboboxOnChangeReason,
           ) => void;
           disableClearable?: DisableClearable;
+          isOptionEqualToValue?: (
+            option: Value,
+            value: Value | null,
+          ) => boolean;
         });
 
 const defaultOptionsFilter = createComboboxFilter<string | object>();
@@ -304,7 +309,9 @@ const ComboboxImpl = React.forwardRef<
     name: displayName,
     state: 'value',
     controlled: valueProp,
-    default: multiple ? defaultValue ?? defaultEmptyArray : defaultValue,
+    default: multiple
+      ? defaultValue ?? defaultEmptyArray
+      : defaultValue ?? null,
   });
 
   const [inputValue, setInputValue] = useControlled({
