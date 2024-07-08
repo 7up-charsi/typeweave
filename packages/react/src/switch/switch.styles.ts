@@ -2,7 +2,7 @@ import { tv, VariantProps } from 'tailwind-variants';
 
 export const switchStyles = tv({
   slots: {
-    base: 'inline-flex gap-2',
+    base: 'inline-flex gap-2 shrink-0',
     switch: 'relative flex items-center p-1',
     input:
       'peer rounded-full appearance-none cursor-pointer transition-colors border border-muted-8 disabled:disabled absolute inset-0 outline-none focus-visible:ring-2 focus-visible:ring-focus',
