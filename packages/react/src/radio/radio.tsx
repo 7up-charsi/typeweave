@@ -64,6 +64,7 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
 
     return (
       <div
+        role="group"
         className={styles.base({ className: classNames?.base ?? className })}
       >
         <div className={styles.radio({ className: classNames?.radio })}>
