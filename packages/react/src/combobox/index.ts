@@ -9,4 +9,4 @@ export type {
 export { Combobox } from './combobox';
 export { createComboboxFilter } from './create-combobox-filter';
 
-export type { comboboxStyles } from './combobox.styles';
+export { comboboxStyles } from './combobox.styles';

@@ -10,7 +10,7 @@ export type {
 export { Input } from './input';
 export { NumberInput } from './number-input';
 export { PasswordInput } from './password-input';
-export type {
+export {
   inputStyles,
   numberInputStyles,
   passwordInputStyles,
