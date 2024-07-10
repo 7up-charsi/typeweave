@@ -80,14 +80,14 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
       if (![' ', 'Enter'].includes(e.key)) return;
 
-      e.preventDefault();
-
       onPress?.({
         pointerType: 'mouse',
         target: e.currentTarget,
         preventDefault: e.preventDefault,
       });
     };
+
+    const onClick = !!props.onClick;
 
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -102,7 +102,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           console.warn(
             'Typeweave: For accessible icon-only buttons, provide `aria-label` prop for screen readers to describe its purpose.',
           );
-      }, [ariaLabel, ariaLabelledby, isIconOnly, role]);
+
+        if (onClick)
+          console.warn(
+            'Typeweave: For better user experience you must use `onPress`.',
+          );
+      }, [ariaLabel, ariaLabelledby, isIconOnly, onClick, role]);
     }
 
     const styles = React.useMemo(
