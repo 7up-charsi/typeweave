@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.9
+
+### Patch Changes
+
+- fix(React): combobox clear button and onChange reason type
+
 ## 3.0.8
 
 ### Patch Changes
