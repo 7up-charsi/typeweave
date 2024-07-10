@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.10
+
+### Patch Changes
+
+- fix(React): combobox disableClearable
+
 ## 3.0.9
 
 ### Patch Changes
