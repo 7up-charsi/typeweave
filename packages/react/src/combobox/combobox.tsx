@@ -180,7 +180,10 @@ export type ComboboxProps<Value, Multiple, DisableClearable, Editable> = (Omit<
           multiple?: Multiple;
           defaultValue?: Value;
           value?: Value;
-          onChange?: (newValue: Value, reason: ComboboxOnChangeReason) => void;
+          onChange?: (
+            newValue: Value,
+            reason: Exclude<ComboboxOnChangeReason, 'removeOption'>,
+          ) => void;
           disableClearable: DisableClearable;
           isOptionEqualToValue?: (option: Value, value: Value) => boolean;
         }
@@ -190,7 +193,7 @@ export type ComboboxProps<Value, Multiple, DisableClearable, Editable> = (Omit<
           value?: Value | null;
           onChange?: (
             newValue: Value | null,
-            reason: ComboboxOnChangeReason,
+            reason: Exclude<ComboboxOnChangeReason, 'removeOption'>,
           ) => void;
           disableClearable?: DisableClearable;
           isOptionEqualToValue?: (
@@ -711,7 +714,7 @@ const ComboboxImpl = React.forwardRef<
       return;
     }
 
-    onChange?.(newValue, reason);
+    onChange?.(newValue, reason as never);
 
     setValue(newValue);
   };
@@ -1213,7 +1216,11 @@ const ComboboxImpl = React.forwardRef<
         className: editable && classNames?.endContent,
       })}
     >
-      {hasClearButton && (Array.isArray(value) ? !!value.length : !!value) && (
+      {(Array.isArray(value)
+        ? hasClearButton && !!value.length
+        : hasClearButton
+          ? !!value
+          : false) && (
         <Button
           isIconOnly
           variant="text"
