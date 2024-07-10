@@ -98,7 +98,6 @@ type BaseProps<Value> = {
   loading?: boolean;
   handleHomeEndKeys?: boolean;
   filterSelectedOptions?: boolean;
-  hasClearButton?: boolean;
   hasOpenIndicator?: boolean;
   groupBy?: (option: Value) => string;
   disablePortal?: boolean;
@@ -233,7 +232,6 @@ const ComboboxImpl = React.forwardRef<
     disableListWrap,
     disabled,
     selectOnFocus = true,
-    hasClearButton = true,
     hasOpenIndicator = true,
     multiple,
     readOnly,
@@ -785,6 +783,7 @@ const ComboboxImpl = React.forwardRef<
     onInputChange?.('', 'clear');
 
     handleValue(multiple ? [] : null, 'clear');
+
     if (!editable) {
       handleOpen();
       setHighlightedIndex(getValidIndex('reset'), 'auto');
@@ -971,18 +970,10 @@ const ComboboxImpl = React.forwardRef<
       setInputValue(newValue);
       setKeepUnfiltered(false);
 
-      if (onInputChange) {
-        onInputChange(newValue, 'input');
-      }
+      onInputChange?.(newValue, 'input');
     }
 
-    if (newValue === '') {
-      if (!disableClearable && !multiple) {
-        handleValue(null, 'clear');
-      }
-    } else {
-      handleOpen();
-    }
+    if (newValue) handleOpen();
   };
 
   const handleOptionPointerEnter = (e: React.PointerEvent) => {
@@ -1131,11 +1122,11 @@ const ComboboxImpl = React.forwardRef<
       comboboxStyles({
         shadow,
         multiple,
-        hasClearButton,
+        hasClearButton: !disableClearable,
         hasOpenIndicator,
         editable,
       }),
-    [shadow, multiple, hasClearButton, hasOpenIndicator, editable],
+    [shadow, multiple, disableClearable, hasOpenIndicator, editable],
   );
 
   const defaultRenderGroup = (params: ComboboxRenderGroupParams) => (
@@ -1210,17 +1201,17 @@ const ComboboxImpl = React.forwardRef<
     }
   }
 
-  const endContent = (hasClearButton || hasOpenIndicator) && (
+  const endContent = (!disableClearable || hasOpenIndicator) && (
     <div
       className={styles.endContent({
         className: editable && classNames?.endContent,
       })}
     >
       {(Array.isArray(value)
-        ? hasClearButton && !!value.length
-        : hasClearButton
-          ? !!value
-          : false) && (
+        ? !disableClearable && !!value.length
+        : disableClearable
+          ? false
+          : !!value) && (
         <Button
           isIconOnly
           variant="text"
