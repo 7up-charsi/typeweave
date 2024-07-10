@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.11
+
+### Patch Changes
+
+- fix(React): button does not submit form'
+
 ## 3.0.10
 
 ### Patch Changes
