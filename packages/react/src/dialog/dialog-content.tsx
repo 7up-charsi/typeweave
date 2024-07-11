@@ -30,7 +30,7 @@ export const DialogContent = React.forwardRef<
 
   const dialogCtx = useDialogCtx(displayName);
 
-  useScrollLock();
+  useScrollLock({ disabled: dialogCtx.keepMounted && !dialogCtx.open });
 
   const styles = React.useMemo(() => dialogStyles(), []);
 
