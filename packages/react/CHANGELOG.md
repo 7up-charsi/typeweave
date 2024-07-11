@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.12
+
+### Patch Changes
+
+- fix(React): sr does not announce input error message
+
 ## 3.0.11
 
 ### Patch Changes
