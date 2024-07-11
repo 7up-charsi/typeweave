@@ -24,7 +24,7 @@ export const DrawerContent = React.forwardRef<
 
   const drawerCtx = useDrawerCtx(displayName);
 
-  useScrollLock();
+  useScrollLock({ disabled: drawerCtx.keepMounted && !drawerCtx.open });
 
   const styles = React.useMemo(() => drawerStyles({ placement }), [placement]);
 
