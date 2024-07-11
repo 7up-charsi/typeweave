@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.13
+
+### Patch Changes
+
+- fix(React): input broken associantion btw input and helpertext
+
 ## 3.0.12
 
 ### Patch Changes
