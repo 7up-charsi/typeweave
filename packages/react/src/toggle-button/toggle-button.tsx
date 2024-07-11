@@ -15,7 +15,13 @@ export const ToggleButton = React.forwardRef<
   HTMLButtonElement,
   ToggleButtonProps
 >((props, ref) => {
-  const { value: valueProp, onPress, classNames, ...restProps } = props;
+  const {
+    value: valueProp,
+    onPress,
+    classNames,
+    className,
+    ...restProps
+  } = props;
 
   const { setValue, value, exclusive } = useToggleButtonCtx(displayName);
   const styles = useToggleButtonStyles(displayName);
@@ -36,7 +42,7 @@ export const ToggleButton = React.forwardRef<
       {...restProps}
       classNames={{
         ...classNames,
-        base: styles.button({ className: classNames?.base }),
+        base: styles.button({ className: classNames?.base ?? className }),
       }}
       data-selected={selected}
       aria-pressed={selected}
