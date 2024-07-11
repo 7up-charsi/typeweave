@@ -15,7 +15,7 @@ type InputBaseProps = React.InputHTMLAttributes<HTMLInputElement> &
       inputWrapper: string;
       input: string;
       helperText: string;
-      errorMessage: string;
+      required: string;
     }>;
     startContent?: React.ReactNode;
     endContent?: React.ReactNode;
@@ -28,8 +28,8 @@ type TextareaBaseProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
       label: string;
       inputWrapper: string;
       helperText: string;
-      errorMessage: string;
       textarea: string;
+      required: string;
     }>;
   };
 
@@ -40,14 +40,12 @@ type BaseProps = InputVariantProps & {
   id?: string;
   required?: boolean;
   helperText?: string;
-  errorMessage?: string;
   hideLabel?: boolean;
   className?: string;
   placeholder?: string;
   baseProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   labelProps?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'className'>;
   helperTextProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
-  errorMessageProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   inputWrapperProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'> &
     PointerEventsProps<HTMLDivElement>;
   baseRef?: React.ForwardedRef<HTMLDivElement>;
@@ -77,7 +75,6 @@ const InputImpl = (
     label,
     id,
     helperText,
-    errorMessage,
     startContent,
     endContent,
     classNames,
@@ -90,7 +87,6 @@ const InputImpl = (
     labelProps = {},
     helperTextProps = {},
     inputWrapperProps: inputWrapperPropsProp = {},
-    errorMessageProps = {},
     fullWidth = false,
     disabled = false,
     inputWrapperRef,
@@ -114,7 +110,6 @@ const InputImpl = (
 
   const labelId = React.useId();
   const helperTextId = React.useId();
-  const errorMessageId = React.useId();
   const inputId = id || labelId;
 
   const innerInputRef = React.useRef<HTMLInputElement | null>(null);
@@ -158,16 +153,15 @@ const InputImpl = (
       inputStyles({
         disabled,
         fullWidth,
-        required: !!required,
         multiline,
+        error,
       }),
-    [disabled, fullWidth, multiline, required],
+    [disabled, fullWidth, error, multiline],
   );
 
   const sharedProps = {
     'aria-label': hideLabel ? label : undefined,
-    'aria-describedby': helperText ? helperTextId : undefined,
-    'aria-errormessage': error && errorMessage ? errorMessageId : undefined,
+    'aria-describedby': helperTextId,
     'aria-required': required,
     'aria-invalid': error,
     id: inputId,
@@ -190,6 +184,15 @@ const InputImpl = (
           className={styles.label({ className: classNames?.label })}
         >
           {label}
+
+          {!required ? null : (
+            <span
+              aria-hidden={true}
+              className={styles.required({ className: classNames?.required })}
+            >
+              *
+            </span>
+          )}
         </label>
       )}
 
@@ -225,26 +228,13 @@ const InputImpl = (
         {!!endContent && !multiline && endContent}
       </div>
 
-      {!error && helperText && (
+      {!helperText ? null : (
         <div
           {...helperTextProps}
           id={helperTextId}
           className={styles.helperText({ className: classNames?.helperText })}
         >
           {helperText}
-        </div>
-      )}
-
-      {error && errorMessage && (
-        <div
-          {...errorMessageProps}
-          id={errorMessageId}
-          aria-live="polite"
-          className={styles.errorMessage({
-            className: classNames?.errorMessage,
-          })}
-        >
-          {errorMessage}
         </div>
       )}
     </div>
