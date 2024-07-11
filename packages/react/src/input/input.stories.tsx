@@ -1,3 +1,4 @@
+import React from 'react';
 import { PointerEvents } from '../pointer-events';
 import { NumberInput, PasswordInput, Input as InputComp } from './';
 
@@ -9,18 +10,13 @@ export default meta;
 
 const InputTemplate = () => (
   <div className="flex flex-col gap-5">
-    <InputComp
-      label="input label"
-      placeholder="Placeholder"
-      helperText="this input is optional"
-    />
+    <InputComp label="input label" helperText="this input is optional" />
 
     <InputComp
       required
       label="input label"
-      placeholder="Placeholder"
       error
-      errorMessage="this input is required"
+      helperText="this input is required"
     />
   </div>
 );
@@ -32,7 +28,6 @@ export const Input = {
 const ContentTemplate = () => (
   <InputComp
     label="input label"
-    placeholder="Placeholder"
     helperText="this input is optional"
     startContent={<p className="text-sm">kg</p>}
     endContent={<p className="text-sm">$$$</p>}
@@ -44,9 +39,7 @@ export const StartEndContent = {
   render: ContentTemplate,
 };
 
-const PasswordTemplate = () => (
-  <PasswordInput required label="input label" placeholder="placeholder" />
-);
+const PasswordTemplate = () => <PasswordInput required label="input label" />;
 
 export const Password = {
   render: PasswordTemplate,
@@ -56,7 +49,6 @@ const ToggleButtonTemplate = () => (
   <PasswordInput
     required
     label="input label"
-    placeholder="placeholder"
     renderToggleButton={({ onPress, ...props }, { isPassword }) => (
       <PointerEvents onPress={onPress}>
         <button {...props}>{isPassword ? 'show' : 'hide'}</button>

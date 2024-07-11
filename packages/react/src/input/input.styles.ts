@@ -9,21 +9,20 @@ export const inputStyles = tv({
       'h-10 w-full relative flex items-center gap-x-2 gap-y-1 rounded px-3 cursor-text bg-transparent border border-muted-7 hover:border-muted-8 focus-within:hover:border-transparent focus-within:border-transparent overflow-hidden focus-within:ring-2 focus-within:ring-focus dynamic-icon',
     input:
       'h-full appearance-none bg-transparent outline-none grow w-0 placeholder:text-current placeholder:opacity-75 text-sm',
-    helperText: 'first-letter:uppercase px-1 text-xs',
-    errorMessage:
-      'first-letter:uppercase px-1 text-xs font-semibold text-danger-11',
+    helperText: 'first-letter:uppercase px-1 text-xs h-5',
     textarea:
       'appearance-none bg-transparent outline-none grow w-0 placeholder:text-current placeholder:opacity-75 text-sm resize-none',
+    required: 'text-danger-11 ml-2',
   },
   variants: {
-    fullWidth: { true: { base: 'w-full' } },
-    disabled: { true: { base: 'disabled' } },
-    required: {
+    error: {
       true: {
-        label:
-          "relative after:absolute after:content-['*'] after:text-danger-11 after:ml-2",
+        helperText: 'text-danger-11 ',
+        inputWrapper: 'border-danger-7 focus-within:ring-danger-8',
       },
     },
+    fullWidth: { true: { base: 'w-full' } },
+    disabled: { true: { base: 'disabled' } },
     multiline: {
       true: {
         inputWrapper: 'p-0 h-auto',
