@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.15
+
+### Patch Changes
+
+- fix(React): scrollLock hook locks scroll when closed and keepMounted
+
 ## 3.0.14
 
 ### Patch Changes
