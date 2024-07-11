@@ -161,7 +161,7 @@ const InputImpl = (
 
   const sharedProps = {
     'aria-label': hideLabel ? label : undefined,
-    'aria-describedby': helperTextId,
+    'aria-describedby': helperText ? helperTextId : undefined,
     'aria-required': required,
     'aria-invalid': error,
     id: inputId,
