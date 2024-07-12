@@ -31,6 +31,7 @@ export * from './use-click-outside';
 export * from './use-collection';
 export * from './use-controlled';
 export * from './use-is-disabled';
+export * from './use-is-mounted';
 export * from './use-media-query';
 export * from './use-pointer-events';
 export * from './use-previous-props';

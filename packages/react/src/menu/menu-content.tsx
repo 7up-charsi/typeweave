@@ -73,7 +73,7 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
       },
     });
 
-    useScrollLock();
+    useScrollLock({ disabled: !menuCtx.open });
 
     const getItems = useMenuCollection();
 
