@@ -33,7 +33,7 @@ export const darkThemeColors: ThemeColors = {
   danger: createColorScale(colors.redDark),
   info: createColorScale(colors.blueDark),
   muted: createColorScale(colors.grayDark),
-  overlay: colors.blackA.blackA6,
+  overlay: colors.whiteA.whiteA3,
   focus: colors.blueDark.blue8,
   paper: darkMuted.gray5,
 };
