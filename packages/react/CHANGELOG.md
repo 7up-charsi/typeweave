@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.17
+
+### Patch Changes
+
+- fix(React): change overlay default color in dark mode
+
 ## 3.0.16
 
 ### Patch Changes
