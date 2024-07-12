@@ -1,5 +1,12 @@
 # @typeweave/react
 
+## 3.0.16
+
+### Patch Changes
+
+- fix(React): useScrollLock issue
+  feat(React): useIsMounted hook
+
 ## 3.0.15
 
 ### Patch Changes
