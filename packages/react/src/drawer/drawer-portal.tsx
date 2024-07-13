@@ -11,18 +11,18 @@ const displayName = 'DrawerPortal';
 export const DrawerPortal = (props: DrawerPortalProps) => {
   const { children, container = globalThis?.document?.body } = props;
 
-  const DrawerCtx = useDrawerCtx(displayName);
+  const drawerCtx = useDrawerCtx(displayName);
 
-  if (DrawerCtx.keepMounted) {
+  if (drawerCtx.keepMounted) {
     return createPortal(
-      <div style={{ visibility: DrawerCtx.open ? 'visible' : 'hidden' }}>
+      <div style={{ visibility: drawerCtx.open ? 'visible' : 'hidden' }}>
         {children}
       </div>,
       container,
     );
   }
 
-  return DrawerCtx.open ? createPortal(children, container) : null;
+  return drawerCtx.open ? createPortal(children, container) : null;
 };
 
 DrawerPortal.displayName = displayName;

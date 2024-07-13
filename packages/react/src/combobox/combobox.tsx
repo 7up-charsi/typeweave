@@ -1130,9 +1130,18 @@ const ComboboxImpl = React.forwardRef<
   );
 
   const defaultRenderGroup = (params: ComboboxRenderGroupParams) => (
-    <li key={params.key} className={styles.group()}>
-      <div className={styles.groupHeader()}>{params.group}</div>
-      <ul className={styles.groupItems()}>{params.children}</ul>
+    <li
+      key={params.key}
+      className={styles.group({ className: classNames?.group })}
+    >
+      <div
+        className={styles.groupHeader({ className: classNames?.groupHeader })}
+      >
+        {params.group}
+      </div>
+      <ul className={styles.groupItems({ className: classNames?.groupItems })}>
+        {params.children}
+      </ul>
     </li>
   );
 
@@ -1157,7 +1166,10 @@ const ComboboxImpl = React.forwardRef<
     const optionProps = getOptionProps({ option, index });
 
     return renderOption(
-      { ...optionProps, className: styles.option() },
+      {
+        ...optionProps,
+        className: styles.option({ className: classNames?.option }),
+      },
       option,
       {
         selected: optionProps['aria-selected'],
@@ -1218,7 +1230,9 @@ const ComboboxImpl = React.forwardRef<
           size="sm"
           aria-label={clearText}
           excludeFromTabOrder
-          className={styles.clearIndicator()}
+          className={styles.clearIndicator({
+            className: classNames?.clearIndicator,
+          })}
           onPress={handleClear}
           type="button"
         >
@@ -1233,7 +1247,9 @@ const ComboboxImpl = React.forwardRef<
           size="sm"
           aria-label={listBoxOpen ? closeText : openText}
           excludeFromTabOrder
-          className={styles.openIndicator()}
+          className={styles.openIndicator({
+            className: classNames?.openIndicator,
+          })}
           onPress={handleOpenIndicator}
           data-open={listBoxOpen}
           type="button"
