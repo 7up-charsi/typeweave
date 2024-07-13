@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button } from '../button';
 import {
   DrawerContent,
@@ -15,7 +16,7 @@ export default meta;
 
 const Template = ({ children, placement }) => {
   return (
-    <DrawerRoot>
+    <DrawerRoot keepMounted>
       <DrawerTrigger>{children}</DrawerTrigger>
 
       <DrawerPortal>

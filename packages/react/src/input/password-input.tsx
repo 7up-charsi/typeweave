@@ -15,7 +15,8 @@ export type PasswordInputRenderToggleButtonState = {
   isPassword: boolean;
 };
 
-export interface PasswordInputProps extends Omit<InputProps<false>, 'type'> {
+export interface PasswordInputProps
+  extends Omit<InputProps<false>, 'type' | 'classNames'> {
   /**
    * This prop value is used in `aria-label` of ToggleButton when type is password
    */
@@ -30,6 +31,7 @@ export interface PasswordInputProps extends Omit<InputProps<false>, 'type'> {
     props: PasswordInputRenderToggleButtonProps,
     state: PasswordInputRenderToggleButtonState,
   ) => React.ReactNode;
+  classNames?: InputProps<false>['classNames'] & Partial<{ button: string }>;
 }
 
 const displayName = 'PasswordInput';
@@ -43,6 +45,7 @@ export const PasswordInput = React.forwardRef<
     hideIcon,
     label,
     endContent,
+    classNames,
     hideAriaLabel = `hide ${label}`,
     showAriaLabel = `show ${label}`,
     renderToggleButton: renderToggleButtonProp,
@@ -70,6 +73,7 @@ export const PasswordInput = React.forwardRef<
   return (
     <Input
       ref={ref}
+      classNames={classNames}
       {...rest}
       label={label}
       type={isPassword ? 'password' : 'text'}
@@ -77,7 +81,7 @@ export const PasswordInput = React.forwardRef<
         <>
           {renderToggleButton(
             {
-              className: styles.button(),
+              className: styles.button({ className: classNames?.button }),
               role: 'button',
               type: 'button',
               'aria-label': isPassword ? showAriaLabel : hideAriaLabel,

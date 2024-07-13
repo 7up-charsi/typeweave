@@ -23,6 +23,13 @@ export interface AlertProps
   action?: false | React.ReactNode;
   title?: React.ReactNode;
   onClose?: () => void;
+  classNames?: Partial<{
+    base: string;
+    icon: string;
+    content: string;
+    title: string;
+    action: string;
+  }>;
 }
 
 const displayName = 'Alert';
@@ -37,6 +44,8 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
       onClose,
       action,
       fullWidth = true,
+      classNames,
+      className,
       icon = icons[color || 'danger'],
       ...restProps
     } = props;
@@ -47,16 +56,29 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
     );
 
     return (
-      <div {...restProps} ref={ref} role="alert" className={styles.base()}>
-        {icon === false ? null : <div className={styles.icon()}>{icon}</div>}
+      <div
+        {...restProps}
+        ref={ref}
+        role="alert"
+        className={styles.base({ className: classNames?.base ?? className })}
+      >
+        {icon === false ? null : (
+          <div className={styles.icon({ className: classNames?.icon })}>
+            {icon}
+          </div>
+        )}
 
-        <div className={styles.content()}>
-          {title && <div className={styles.title()}>{title}</div>}
+        <div className={styles.content({ className: classNames?.content })}>
+          {title && (
+            <div className={styles.title({ className: classNames?.title })}>
+              {title}
+            </div>
+          )}
           {children}
         </div>
 
         {action === false || !onClose ? null : (
-          <div className={styles.action()}>
+          <div className={styles.action({ className: classNames?.action })}>
             {action || (
               <Button
                 isIconOnly
