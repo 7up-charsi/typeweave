@@ -2,7 +2,6 @@ import React from 'react';
 import { useDialogCtx } from './dialog-root';
 import { useScrollLock } from '../use-scroll-lock';
 import { FocusTrap, FocusTrapProps } from '../focus-trap';
-import { VisuallyHidden } from '../visually-hidden';
 import { DialogVariantProps, dialogStyles } from './dialog.styles';
 
 export interface DialogContentProps
@@ -43,19 +42,7 @@ export const DialogContent = React.forwardRef<
       id={dialogCtx.contentId}
       className={styles.content({ className })}
     >
-      <VisuallyHidden>
-        <button onPointerUp={() => dialogCtx.handleClose('pointer')}>
-          close
-        </button>
-      </VisuallyHidden>
-
       {children}
-
-      <VisuallyHidden>
-        <button onPointerUp={() => dialogCtx.handleClose('pointer')}>
-          close
-        </button>
-      </VisuallyHidden>
     </div>
   );
 

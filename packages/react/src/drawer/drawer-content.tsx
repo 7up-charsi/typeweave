@@ -2,12 +2,14 @@ import React from 'react';
 import { useDrawerCtx } from './drawer-root';
 import { useScrollLock } from '../use-scroll-lock';
 import { createContextScope } from '../context';
-import { VisuallyHidden } from '../visually-hidden';
 import { DrawerVariantProps, drawerStyles } from './drawer.styles';
+import { FocusTrap } from '../focus-trap';
 
 export interface DrawerContentProps
   extends DrawerVariantProps,
-    React.HTMLAttributes<HTMLDivElement> {}
+    React.HTMLAttributes<HTMLDivElement> {
+  loop?: boolean;
+}
 
 const displayName = 'DrawerContent';
 
@@ -20,7 +22,13 @@ export const DrawerContent = React.forwardRef<
   HTMLDivElement,
   DrawerContentProps
 >((props, ref) => {
-  const { children, className, placement = 'left', ...restProps } = props;
+  const {
+    children,
+    className,
+    placement = 'left',
+    loop = true,
+    ...restProps
+  } = props;
 
   const drawerCtx = useDrawerCtx(displayName);
 
@@ -37,19 +45,9 @@ export const DrawerContent = React.forwardRef<
         id={drawerCtx.contentId}
         className={styles.content({ className })}
       >
-        <VisuallyHidden>
-          <button onPointerUp={() => drawerCtx.handleClose('virtual')}>
-            close
-          </button>
-        </VisuallyHidden>
-
-        {children}
-
-        <VisuallyHidden>
-          <button onPointerUp={() => drawerCtx.handleClose('virtual')}>
-            close
-          </button>
-        </VisuallyHidden>
+        <FocusTrap trapped loop={loop}>
+          {children}
+        </FocusTrap>
       </div>
     </DrawerStyles>
   );
