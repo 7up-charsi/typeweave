@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.0.3
+
+### Patch Changes
+
+- feat(Plugin): allow user to modily default theme
+
 ## 1.0.2
 
 ### Patch Changes
