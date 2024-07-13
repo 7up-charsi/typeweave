@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.19
+
+### Patch Changes
+
+- fix(React): drawer
+
 ## 3.0.18
 
 ### Patch Changes
