@@ -1,5 +1,4 @@
 import { PopperFloating, PopperFloatingProps } from '../popper';
-import { VisuallyHidden } from '../visually-hidden';
 import React from 'react';
 import { usePopoverCtx } from './popover-root';
 import { useClickOutside } from '../use-click-outside';
@@ -92,15 +91,7 @@ export const PopoverContent = React.forwardRef<
             id={popoverCtx.contentId}
             className={styles.content({ className })}
           >
-            <VisuallyHidden>
-              <button onPointerUp={popoverCtx.handleClose}>close </button>
-            </VisuallyHidden>
-
             {children}
-
-            <VisuallyHidden>
-              <button onPointerUp={popoverCtx.handleClose}>close </button>
-            </VisuallyHidden>
           </div>
         </FocusTrap>
       </PopperFloating>
