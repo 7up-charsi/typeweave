@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.18
+
+### Patch Changes
+
+- feat(React): drawer focus trap
+
 ## 3.0.17
 
 ### Patch Changes
