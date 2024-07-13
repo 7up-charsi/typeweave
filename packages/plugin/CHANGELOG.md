@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.1.0
+
+### Minor Changes
+
+- mistake in previous semver version
+
 ## 1.0.3
 
 ### Patch Changes
