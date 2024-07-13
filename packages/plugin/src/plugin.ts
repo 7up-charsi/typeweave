@@ -3,25 +3,28 @@ import deepmerge from 'deepmerge';
 import { flatten } from 'flat';
 import Color from 'color';
 import kebabcase from 'lodash.kebabcase';
-import { PluginConfig, Theme, ThemeColors, Themes } from './types';
+import { PluginConfig, Theme, ThemeColors, Themes } from '../types/theme';
 import { darkThemeColors, lightThemeColors } from './semantics';
 import { darkThemeLayout, lightThemeLayout } from './layouts';
+import {
+  PluginColors,
+  PluginLayout,
+  Utilities,
+  Variants,
+} from '../types/internal';
+import kebabCase from 'lodash.kebabcase';
 
-const defaultLightTheme: Theme = {
-  base: 'light',
-  colors: lightThemeColors,
-  layout: lightThemeLayout,
-};
-
-const defaultDarkTheme: Theme = {
-  base: 'dark',
-  colors: darkThemeColors,
-  layout: darkThemeLayout,
-};
-
-const defaultThemes = {
-  light: defaultLightTheme,
-  dark: defaultDarkTheme,
+const semanticThemes: { light: Theme; dark: Theme } = {
+  light: {
+    base: 'light',
+    colors: lightThemeColors,
+    layout: lightThemeLayout,
+  },
+  dark: {
+    base: 'dark',
+    colors: darkThemeColors,
+    layout: darkThemeLayout,
+  },
 };
 
 export const typeweave = (config: PluginConfig = {}) => {
@@ -29,15 +32,28 @@ export const typeweave = (config: PluginConfig = {}) => {
     themes: userThemes,
     defaultTheme = 'light',
     colorMode = 'hsl',
+    defaultColors: userDefaultColors,
+    defaultLayout: userDefaultLayout,
   } = config;
 
   if (colorMode !== 'hsl' && colorMode !== 'rgb')
     throw new Error('createTheme, `colorMode` must be either `hsl` or `rgb`');
 
+  const defaultThemes = {
+    light: deepmerge(semanticThemes.light, {
+      colors: userDefaultColors ?? {},
+      layout: userDefaultLayout ?? {},
+    }),
+    dark: deepmerge(semanticThemes.dark, {
+      colors: userDefaultColors ?? {},
+      layout: userDefaultLayout ?? {},
+    }),
+  };
+
   const themes: Themes = {
     ...(userThemes ?? {}),
-    light: deepmerge(defaultLightTheme, userThemes?.light || {}),
-    dark: deepmerge(defaultDarkTheme, userThemes?.dark || {}),
+    light: deepmerge(defaultThemes.light, userThemes?.light || {}),
+    dark: deepmerge(defaultThemes.dark, userThemes?.dark || {}),
   };
 
   Object.entries(themes).forEach(([themeName, theme]) => {
@@ -51,10 +67,10 @@ export const typeweave = (config: PluginConfig = {}) => {
     themes[themeName] = deepmerge(defaultThemes[baseTheme], theme);
   });
 
-  const pluginColors: Record<string, string> = {};
-  const pluginLayout: Record<string, Record<string, string>> = {};
-  const utilities: Record<string, Record<string, string>> = {};
-  const variants: { name: string; definition: string }[] = [];
+  const pluginColors: PluginColors = {};
+  const pluginLayout: PluginLayout = {};
+  const utilities: Utilities = {};
+  const variants: Variants = [];
 
   Object.entries(themes).forEach(([themeName, theme]) => {
     // It serves only as a guard, as every theme will have a base property.
@@ -81,7 +97,7 @@ export const typeweave = (config: PluginConfig = {}) => {
 
     // generate colors css variables
     Object.entries(flatColors).forEach(([_colorName, colorValue]) => {
-      const colorName = kebabcase(_colorName);
+      const colorName = kebabCase(_colorName);
 
       const rgb = Color(colorValue).rgb().round().array();
       const hsl = Color(colorValue).hsl().round().array();

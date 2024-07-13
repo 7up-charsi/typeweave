@@ -1,6 +1,6 @@
 import * as colors from '@radix-ui/colors';
-import { createColorScale } from './utils';
-import { ThemeColors } from './types';
+import { createColorScale } from '../utils/color';
+import { ThemeColors } from '../types/theme';
 
 const lightMuted = colors.gray;
 const lightBg = '#ffffff';
@@ -33,7 +33,7 @@ export const darkThemeColors: ThemeColors = {
   danger: createColorScale(colors.redDark),
   info: createColorScale(colors.blueDark),
   muted: createColorScale(colors.grayDark),
-  overlay: colors.whiteA.whiteA3,
+  overlay: colors.blackA.blackA3,
   focus: colors.blueDark.blue8,
   paper: darkMuted.gray5,
 };

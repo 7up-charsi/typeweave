@@ -1,4 +1,4 @@
 {
   "extends": "tsconfig/packages",
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*", "./types/**/*", "./utils/**/*"]
 }
