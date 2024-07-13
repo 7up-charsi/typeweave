@@ -38,17 +38,17 @@ export const DrawerContent = React.forwardRef<
 
   return (
     <DrawerStyles {...styles}>
-      <div
-        {...restProps}
-        ref={ref}
-        role="presentation"
-        id={drawerCtx.contentId}
-        className={styles.content({ className })}
-      >
-        <FocusTrap trapped loop={loop}>
+      <FocusTrap trapped loop={loop} asChild>
+        <div
+          {...restProps}
+          ref={ref}
+          role="presentation"
+          id={drawerCtx.contentId}
+          className={styles.content({ className })}
+        >
           {children}
-        </FocusTrap>
-      </div>
+        </div>
+      </FocusTrap>
     </DrawerStyles>
   );
 });
