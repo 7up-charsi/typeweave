@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.20
+
+### Patch Changes
+
+- fix(React): combobox and alert classNames
+
 ## 3.0.19
 
 ### Patch Changes
