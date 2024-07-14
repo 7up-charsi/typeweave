@@ -48,7 +48,7 @@ export type Themes = BaseThemes & Record<string, Theme>;
 export type PluginConfig = Partial<{
   colorMode: 'rgb' | 'hsl';
   defaultTheme: string;
-  defaultColors: ThemeColors;
-  defaultLayout: ThemeLayout;
+  defaultColors: { light: ThemeColors; dark: ThemeColors };
+  defaultLayout: { light: ThemeLayout; dark: ThemeLayout };
   themes: Themes;
 }>;
