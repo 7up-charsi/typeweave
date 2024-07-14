@@ -41,12 +41,12 @@ export const typeweave = (config: PluginConfig = {}) => {
 
   const defaultThemes = {
     light: deepmerge(semanticThemes.light, {
-      colors: userDefaultColors ?? {},
-      layout: userDefaultLayout ?? {},
+      colors: userDefaultColors?.light ?? {},
+      layout: userDefaultLayout?.light ?? {},
     }),
     dark: deepmerge(semanticThemes.dark, {
-      colors: userDefaultColors ?? {},
-      layout: userDefaultLayout ?? {},
+      colors: userDefaultColors?.dark ?? {},
+      layout: userDefaultLayout?.dark ?? {},
     }),
   };
 
