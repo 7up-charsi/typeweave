@@ -1,5 +1,12 @@
 # @typeweave/plugin
 
+## 1.1.1
+
+### Patch Changes
+
+- fix(React): combobox controlled value
+  feat(Plugin): allow user to customize internal light/dark theme
+
 ## 1.1.0
 
 ### Minor Changes
