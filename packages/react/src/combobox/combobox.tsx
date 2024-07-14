@@ -486,7 +486,6 @@ const ComboboxImpl = React.forwardRef<
 
     if (!valueChanged) return;
     if (focused) return;
-    if (!value) return;
 
     resetInputValue(value);
   }, [focused, previousProps.value, resetInputValue, value]);

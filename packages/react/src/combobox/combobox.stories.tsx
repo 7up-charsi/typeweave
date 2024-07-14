@@ -1,3 +1,4 @@
+import React from 'react';
 import optionsJson from './options.json';
 import { Combobox } from './';
 import { Input } from '../input';
@@ -14,14 +15,16 @@ const meta = {
 
 export default meta;
 
-const SingleTemplate = () => (
-  <Combobox
-    options={options}
-    defaultValue={options[21]}
-    getOptionLabel={(option) => option.title}
-    renderInput={(props) => <Input label="top 100 movies" {...props} />}
-  />
-);
+const SingleTemplate = () => {
+  return (
+    <Combobox
+      options={options}
+      defaultValue={options[21]}
+      getOptionLabel={(option) => option.title}
+      renderInput={(props) => <Input label="top 100 movies" {...props} />}
+    />
+  );
+};
 
 export const Single = {
   render: SingleTemplate,
