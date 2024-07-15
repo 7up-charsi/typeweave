@@ -1,16 +1,16 @@
 # Typeweave
 
+Developed to empower developers and contribute to the developer community.
+
 ## Introduction
 
-**TypeWeave** is an organization on npm that provides a collection of packages for building robust and elegant user interfaces. My goal is to streamline the development process and make it easier for developers to create high-quality applications.
+**Typeweave** is a specialized React TypeScript UI library designed to empower developers in crafting accessible and visually consistent web applications. It offers a robust suite of reusable components through its main packages:
 
-## Main Packages
+**@typeweave/react**: This package provides a rich collection of components optimized for accessibility and compatibility with light and dark mode environments. Each component is meticulously engineered to ensure usability and seamless integration into diverse web projects.
 
-- **@typeweave/react**: A versatile **TypeScript React UI** components package that provides a comprehensive set of UI components for building robust and maintainable applications.
+**@typeweave/plugin**: As a Tailwind CSS plugin, this package extends Typeweave's functionality by injecting essential theme variables. This integration simplifies customization and theming processes, enabling developers to maintain design consistency effortlessly.
 
-- **@typeweave/theme**: A **Tailwind CSS** theme package that provides a set of pre-designed styles for use with **_@typeweave/react_**. This package allows you to quickly customize the appearance of your application and create a consistent visual identity.
-
-By harnessing the power of both **_@typeweave/react_** and **_@typeweave/theme_** packages, you can seamlessly integrate sophisticated UI components, leveraging the robust typing capabilities of TypeScript and the rapid styling features of Tailwind CSS to streamline your development process and create exceptional user experiences.
+Typeweave prioritizes accessibility and design consistency while focusing on enhancing development workflows. It serves as a reliable toolkit for developers striving to deliver inclusive and visually appealing user interfaces in their React TypeScript applications.
 
 ## Features
 
@@ -26,38 +26,34 @@ By harnessing the power of both **_@typeweave/react_** and **_@typeweave/theme_*
 
 ## Installation
 
-To install **_@typeweave/react_** in your project, simply run one of these:
+To install **@typeweave/react** in your project, simply run one of these:
 
 ```bash
-pnpm add @typeweave/react @typeweave/theme
+pnpm add @typeweave/react @typeweave/plugin
 ```
 
 ```bash
-npm install @typeweave/react @typeweave/theme
+npm install @typeweave/react @typeweave/plugin
 ```
 
 ```bash
-yarn add @typeweave/react @typeweave/theme
+yarn add @typeweave/react @typeweave/plugin
 ```
 
 ## Usage
 
-To use **_@typeweave/react_** in your project, you'll need to configure Tailwind CSS with the styles provided by **_@typeweave/theme_**. Here's how you can do it:
-
-1. Install Tailwind CSS in your project if you haven't already.
-
-2. Configure **_@typeweave/theme_** in your project's **tailwind.config.js** file:
+1. Configure **@typeweave/plugin** in `tailwind.config.js`:
 
 ```js
-import { createTheme, registerStyles } from '@typeweave/theme';
+import { typeweave } from '@typeweave/plugin';
 
 export default {
-  content: [...registerStyles(['button'])],
-  plugins: [createTheme()],
+  content: ['./node_modules/@typeweave/react/dist/**/button.styles.js'],
+  plugins: [typeweave()],
 };
 ```
 
-and in your **global css**
+and in your **globals.css**
 
 ```css
 @layer base {
@@ -67,12 +63,13 @@ and in your **global css**
 }
 ```
 
-This configuration registers the necessary styles for **_@typeweave/react_** components, ensuring they are available for use in your application.
+This configuration registers the styles of **Button** component and sets body background and text color.
 
-3. Import individual components from **_@typeweave/react_** and integrate them into your React application:
+2. Import components from **@typeweave/react**
 
 ```jsx
 import React from 'react';
+import "./globals.css'
 import { Button } from '@typeweave/react';
 
 const App = () => {
@@ -105,4 +102,4 @@ For questions, feedback, or support, please contact me at 7up.charsi@gmail.com.
 
 ## Note
 
-This project is under active development. Your feedback is highly valued as I continue to refine and enhance **Typeweave**. Developed with the aim to demonstrate expertise and contribute to the developer community.
+This project is under active development. Your feedback is highly valued as I continue to refine and enhance **Typeweave**. Developed with the aim to demonstrate expertise.
