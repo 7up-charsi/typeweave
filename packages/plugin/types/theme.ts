@@ -38,17 +38,17 @@ export type Theme = Partial<{
   layout: ThemeLayout;
 }>;
 
-export type BaseThemes = {
-  light?: Omit<Theme, 'base'>;
-  dark?: Omit<Theme, 'base'>;
-};
+export type BaseThemes = Partial<{
+  light: Omit<Theme, 'base'>;
+  dark: Omit<Theme, 'base'>;
+}>;
 
 export type Themes = BaseThemes & Record<string, Theme>;
 
 export type PluginConfig = Partial<{
   colorMode: 'rgb' | 'hsl';
   defaultTheme: string;
-  defaultColors: { light: ThemeColors; dark: ThemeColors };
-  defaultLayout: { light: ThemeLayout; dark: ThemeLayout };
+  defaultColors: Partial<{ light: ThemeColors; dark: ThemeColors }>;
+  defaultLayout: Partial<{ light: ThemeLayout; dark: ThemeLayout }>;
   themes: Themes;
 }>;
