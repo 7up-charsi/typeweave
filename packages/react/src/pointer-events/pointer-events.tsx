@@ -1,3 +1,4 @@
+import React from 'react';
 import { Slot } from '../slot';
 import { UsePointerEventsProps, usePointerEvents } from '../use-pointer-events';
 
@@ -7,8 +8,9 @@ export interface PointerEventsProps<E> extends UsePointerEventsProps<E> {
 
 const displayName = 'PointerEvents';
 
-export const PointerEvents = <E extends HTMLElement>(
+const PointerEventsImpl = <E extends HTMLElement>(
   props: PointerEventsProps<E>,
+  ref: React.ForwardedRef<E>,
 ) => {
   const { children, onPointerDown, onPointerUp, onPress, ...restProps } = props;
 
@@ -19,10 +21,16 @@ export const PointerEvents = <E extends HTMLElement>(
   });
 
   return (
-    <Slot {...pointerEvents} {...restProps}>
+    <Slot ref={ref} {...pointerEvents} {...restProps}>
       {children}
     </Slot>
   );
 };
 
-PointerEvents.displayName = displayName;
+PointerEventsImpl.displayName = displayName;
+
+export const PointerEvents = React.forwardRef(PointerEventsImpl) as <
+  E extends HTMLElement,
+>(
+  props: PointerEventsProps<E> & React.RefAttributes<E>,
+) => React.ReactNode;
