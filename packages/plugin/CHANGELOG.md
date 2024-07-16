@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.1.2
+
+### Patch Changes
+
+- fix(Plugin): plugin type
+
 ## 1.1.1
 
 ### Patch Changes
