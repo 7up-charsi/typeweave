@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.22
+
+### Patch Changes
+
+- fix(React): PointerEvents accepts ref
+
 ## 3.0.21
 
 ### Patch Changes
