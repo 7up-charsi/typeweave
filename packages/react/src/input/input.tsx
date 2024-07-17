@@ -148,16 +148,7 @@ const InputImpl = (
     }
   }, [label]);
 
-  const styles = React.useMemo(
-    () =>
-      inputStyles({
-        disabled,
-        fullWidth,
-        multiline,
-        error,
-      }),
-    [disabled, fullWidth, error, multiline],
-  );
+  const styles = React.useMemo(() => inputStyles({ fullWidth }), [fullWidth]);
 
   const sharedProps = {
     'aria-label': hideLabel ? label : undefined,
@@ -170,18 +161,25 @@ const InputImpl = (
     ...pointerEvents,
   };
 
+  const sharedDataAttributes = {
+    'data-disabled': disabled,
+    'data-multiline': multiline,
+    'data-error': error,
+  };
+
   return (
     <div
       {...baseProps}
       ref={baseRef}
       className={styles.base({ className: classNames?.base ?? className })}
-      data-disabled={disabled}
+      {...sharedDataAttributes}
     >
       {!hideLabel && !!label && (
         <label
           {...labelProps}
           htmlFor={inputId}
           className={styles.label({ className: classNames?.label })}
+          {...sharedDataAttributes}
         >
           {label}
 
@@ -201,6 +199,7 @@ const InputImpl = (
         {...inputWrapperPointerEvents}
         ref={inputWrapperRef}
         className={styles.inputWrapper({ className: classNames?.inputWrapper })}
+        {...sharedDataAttributes}
       >
         {!!startContent && !multiline && startContent}
 
@@ -213,6 +212,7 @@ const InputImpl = (
             })}
             ref={mergeRefs(ref, innerTextareaRef)}
             {...sharedProps}
+            {...sharedDataAttributes}
           ></textarea>
         )}
 
@@ -222,6 +222,7 @@ const InputImpl = (
             className={styles.input({ className: classNames?.input })}
             ref={mergeRefs(ref, innerInputRef)}
             {...sharedProps}
+            {...sharedDataAttributes}
           />
         )}
 
@@ -233,6 +234,7 @@ const InputImpl = (
           {...helperTextProps}
           id={helperTextId}
           className={styles.helperText({ className: classNames?.helperText })}
+          {...sharedDataAttributes}
         >
           {helperText}
         </div>
