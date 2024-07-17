@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.24
+
+### Patch Changes
+
+- fix(React): input styles when errored
+
 ## 3.0.23
 
 ### Patch Changes
