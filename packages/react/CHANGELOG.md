@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.0.23
+
+### Patch Changes
+
+- fix(React): data attributes
+
 ## 3.0.22
 
 ### Patch Changes
