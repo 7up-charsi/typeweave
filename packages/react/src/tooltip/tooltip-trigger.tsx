@@ -24,6 +24,7 @@ export const TooltipTrigger = React.forwardRef<
         {...restProps}
         ref={ref}
         tabIndex={0}
+        data-open={context.open}
         onPointerDown={(e) => {
           restProps.onPointerDown?.(e);
 

@@ -21,6 +21,7 @@ export const PopoverTrigger = React.forwardRef<
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
         {...restProps}
         ref={ref}
+        data-open={popoverCtx.open}
         aria-expanded={popoverCtx.open}
         aria-controls={popoverCtx.open ? popoverCtx.contentId : undefined}
         // @ts-expect-error Property 'onPress' does not exist
