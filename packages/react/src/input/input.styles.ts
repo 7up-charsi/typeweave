@@ -6,7 +6,7 @@ export const inputStyles = tv({
     label:
       'first-letter:uppercase cursor-pointer self-start px-1 text-sm font-semibold',
     inputWrapper:
-      'h-10 w-full relative flex items-center gap-x-2 gap-y-1 rounded px-3 cursor-text bg-transparent border border-muted-7 hover:border-muted-8 focus-within:hover:border-transparent focus-within:border-transparent overflow-hidden focus-within:ring-2 focus-within:ring-focus dynamic-icon data-[error=true]:border-danger-7 data-[error=true]:focus-within:ring-danger-8 data-[multiline=true]:p-0 data-[multiline=true]:h-auto',
+      'relative flex h-10 w-full cursor-text items-center gap-x-2 gap-y-1 overflow-hidden rounded border border-muted-7 bg-transparent px-3 dynamic-icon focus-within:border-transparent focus-within:ring-2 focus-within:ring-focus hover:border-muted-8 focus-within:hover:border-transparent data-[multiline=true]:h-auto data-[error=true]:border-danger-7 data-[multiline=true]:p-0 data-[error=true]:focus-within:border-transparent data-[error=true]:focus-within:ring-danger-8 data-[error=true]:hover:border-danger-8 data-[error=true]:focus-within:hover:border-transparent',
     input:
       'h-full appearance-none bg-transparent outline-none grow w-0 placeholder:text-current placeholder:opacity-75 text-sm',
     helperText:
