@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 3.1.0
+
+### Patch Changes
+
+- feat(React): scroll aware app-bar
+
 ## 3.0.24
 
 ### Patch Changes
