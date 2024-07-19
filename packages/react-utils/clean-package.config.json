@@ -2,7 +2,6 @@
   "remove": ["devDependencies"],
   "replace": {
     "exports": {
-      "./package.json": "./package.json",
       ".": {
         "import": "./dist/index.js",
         "types": "./dist/index.d.ts"

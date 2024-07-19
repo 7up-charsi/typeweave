@@ -24,7 +24,7 @@ const excludePackages: string[] = ['stack-manager'];
 
     const exports = components.reduce(
       (acc, comp) => (
-        (acc[`/${comp}`] = {
+        (acc[`./${comp}`] = {
           import: `./dist/${comp}/index.js`,
           types: `./dist/${comp}/index.d.ts`,
         }),
@@ -40,7 +40,7 @@ const excludePackages: string[] = ['stack-manager'];
 
     const config = JSON.parse(configContent);
 
-    config.replace.exports = { ...config.replace.exports, ...exports };
+    config.replace.exports = exports;
 
     const prettierConfig = await prettier.resolveConfig(
       path.resolve('../../.prettierrc.json '),
