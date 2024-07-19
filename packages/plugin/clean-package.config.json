@@ -1,6 +1,7 @@
 {
   "remove": ["devDependencies"],
   "replace": {
+    "main": "./dist/index.js",
     "exports": {
       ".": {
         "import": "./dist/index.js",

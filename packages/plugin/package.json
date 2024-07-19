@@ -25,6 +25,7 @@
   "bugs": {
     "url": "https://github.com/7up-charsi/typeweave/issues"
   },
+  "main": "./src/index.ts",
   "exports": {
     ".": {
       "import": "./src/index.ts",
@@ -56,3 +57,4 @@
     "@repo/typescript-config": "workspace:*"
   }
 }
+
