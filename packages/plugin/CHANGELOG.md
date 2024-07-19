@@ -1,5 +1,17 @@
 # @typeweave/plugin
 
+## 1.1.3
+
+### Patch Changes
+
+- ccaf912: fix(Plugin): main/types field in package.json
+- 65435a5: feat: strict types check with tsc and only esm
+- 1f9dc1c: chore: remove main/types field form package.json
+- 1f9dc1c: refactor
+- dcdbb89: fix: exports in package.json
+- b74c2ba: fix(Plugin): add main field in package.json
+- de78c5e: fix: add main field in package.json
+
 ## 1.1.3-next.5
 
 ### Patch Changes
