@@ -93,23 +93,23 @@ export const TabsTrigger = React.forwardRef<
 
     // loop from last to first
     if (currentIndex === elements.length - 1 && tabsCtx.loop && Next) {
-      elements[0].focus();
+      elements[0]?.focus();
       return;
     }
 
     // loop from first to end
     if (currentIndex === 0 && tabsCtx.loop && Prev) {
-      elements[elements.length - 1].focus();
+      elements[elements.length - 1]?.focus();
       return;
     }
 
     if (Next && currentIndex >= 0 && currentIndex < elements.length - 1) {
-      elements[currentIndex + 1].focus();
+      elements[currentIndex + 1]?.focus();
       return;
     }
 
     if (Prev && currentIndex > 0 && currentIndex <= elements.length - 1) {
-      elements[currentIndex - 1].focus();
+      elements[currentIndex - 1]?.focus();
       return;
     }
   };

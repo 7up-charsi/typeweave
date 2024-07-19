@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const mergeRefs = <T>(
   ...refs: (
     | React.ForwardedRef<T>

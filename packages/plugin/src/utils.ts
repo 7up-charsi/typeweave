@@ -1,4 +1,4 @@
-import { ColorScale } from '../types/theme';
+import { ColorScale } from './types';
 
 export const createColorScale = (color: ColorScale) =>
   Object.entries(color).reduce<ColorScale>(

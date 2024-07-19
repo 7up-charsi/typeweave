@@ -98,7 +98,7 @@ I welcome contributions to **Typeweave**. Please see Contributing Guide for info
 
 ## Contact
 
-For questions, feedback, or support, please contact me at 7up.charsi@gmail.com.
+For questions, feedback, or support, please contact me at dev@uxweaver.codes.
 
 ## Note
 

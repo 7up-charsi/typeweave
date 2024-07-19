@@ -1,4 +1,4 @@
-import { ThemeLayout } from '../types/theme';
+import { ThemeLayout } from './types';
 
 const borderRadius = '4px';
 const depthElevationShadow =

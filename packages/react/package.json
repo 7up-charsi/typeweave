@@ -1,5 +1,6 @@
 {
   "name": "@typeweave/react",
+  "type": "module",
   "version": "3.1.0",
   "keywords": [
     "typeweave",
@@ -7,7 +8,7 @@
   ],
   "author": {
     "name": "Muhammad Zeeshan",
-    "email": "7up.charsi@gmail.com"
+    "email": "dev@uxweaver.codes"
   },
   "license": "MIT",
   "files": [
@@ -24,12 +25,18 @@
   "bugs": {
     "url": "https://github.com/7up-charsi/typeweave/issues"
   },
-  "main": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/**/index.ts",
+      "types": "./src/**/index.ts"
+    }
+  },
   "scripts": {
-    "build": "pnpm auto-imports && cross-env NODE_OPTIONS=--max-old-space-size=16384 tsup",
+    "build": "pnpm gen-exports && pnpm clean:dist && pnpm tsc",
+    "clean:dist": "rimraf dist",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
-    "auto-imports": "tsx ./scripts/auto-imports.ts",
+    "gen-exports": "tsx ./scripts/gen-exports.ts",
     "prepack": "clean-package",
     "postpack": "clean-package restore"
   },
@@ -41,13 +48,13 @@
     "@floating-ui/react-dom": "^2.0.9",
     "@typeweave/react-utils": "workspace:*",
     "lucide-react": "^0.376.0",
-    "tailwind-variants": "^0.1.20"
+    "tailwind-variants": "^0.2.1"
   },
   "devDependencies": {
-    "clean-package": "^2.2.0",
-    "tsconfig": "workspace:*"
-  },
-  "clean-package": {
-    "extends": "../../../../../../clean-package.config.json"
+    "@repo/typescript-config": "workspace:*",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "clean-package": "^2.2.0"
   }
 }
+
