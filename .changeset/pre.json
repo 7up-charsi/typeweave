@@ -10,6 +10,7 @@
     "@typeweave/react-utils": "1.1.3"
   },
   "changesets": [
-    "eighty-kangaroos-travel"
+    "eighty-kangaroos-travel",
+    "spotty-suns-protect"
   ]
 }

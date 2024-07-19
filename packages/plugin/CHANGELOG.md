@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.1.3-next.1
+
+### Patch Changes
+
+- fix: exports in package.json
+
 ## 1.1.3-next.0
 
 ### Patch Changes
