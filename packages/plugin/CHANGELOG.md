@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.1.3-next.0
+
+### Patch Changes
+
+- feat: strict types check with tsc and only esm
+
 ## 1.1.2
 
 ### Patch Changes

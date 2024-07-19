@@ -1,5 +1,16 @@
 # @typeweave/react
 
+## 4.0.0-next.0
+
+### Major Changes
+
+- feat: strict types check with tsc and only esm
+
+### Patch Changes
+
+- Updated dependencies
+  - @typeweave/react-utils@1.1.4-next.0
+
 ## 3.1.0
 
 ### Patch Changes
