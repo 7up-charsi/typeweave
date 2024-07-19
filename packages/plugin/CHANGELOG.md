@@ -1,5 +1,17 @@
 # @typeweave/plugin
 
+## 1.1.3-next.3
+
+### Patch Changes
+
+- refactor
+
+## 1.1.3-next.2
+
+### Patch Changes
+
+- chore: remove main/types field form package.json
+
 ## 1.1.3-next.2
 
 ### Patch Changes
