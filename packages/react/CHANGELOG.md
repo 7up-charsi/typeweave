@@ -1,5 +1,18 @@
 # @typeweave/react
 
+## 4.0.0
+
+### Major Changes
+
+- 65435a5: feat: strict types check with tsc and only esm
+
+### Patch Changes
+
+- dcdbb89: fix: exports in package.json
+- Updated dependencies [65435a5]
+- Updated dependencies [dcdbb89]
+  - @typeweave/react-utils@1.1.4
+
 ## 4.0.0-next.1
 
 ### Patch Changes
