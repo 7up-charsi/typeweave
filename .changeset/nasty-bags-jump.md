@@ -1,0 +1,5 @@
+---
+'@typeweave/plugin': patch
+---
+
+refactor
