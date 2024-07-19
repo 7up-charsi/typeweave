@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.1.3-next.2
+
+### Patch Changes
+
+- fix: add main field in package.json
+
 ## 1.1.3-next.1
 
 ### Patch Changes
