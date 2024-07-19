@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.1.3-next.5
+
+### Patch Changes
+
+- fix(Plugin): main/types field in package.json
+
 ## 1.1.3-next.4
 
 ### Patch Changes

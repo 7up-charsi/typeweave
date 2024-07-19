@@ -10,6 +10,7 @@
     "@typeweave/react-utils": "1.1.3"
   },
   "changesets": [
+    "brown-phones-change",
     "eighty-kangaroos-travel",
     "gentle-penguins-drum",
     "nasty-bags-jump",
