@@ -1,5 +1,11 @@
 # @typeweave/react-utils
 
+## 1.1.4-next.1
+
+### Patch Changes
+
+- fix: exports in package.json
+
 ## 1.1.4-next.0
 
 ### Patch Changes
