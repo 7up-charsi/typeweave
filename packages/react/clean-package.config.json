@@ -2,7 +2,6 @@
   "remove": ["devDependencies"],
   "replace": {
     "exports": {
-      "./package.json": "./package.json",
       "/accordion": {
         "import": "./dist/accordion/index.js",
         "types": "./dist/accordion/index.d.ts"
