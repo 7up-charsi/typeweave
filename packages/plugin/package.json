@@ -25,8 +25,12 @@
   "bugs": {
     "url": "https://github.com/7up-charsi/typeweave/issues"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
   "scripts": {
     "build": "pnpm clean:dist && pnpm tsc",
     "clean:dist": "rimraf dist",
