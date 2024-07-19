@@ -3,16 +3,10 @@ import deepmerge from 'deepmerge';
 import { flatten } from 'flat';
 import Color from 'color';
 import kebabcase from 'lodash.kebabcase';
-import { PluginConfig, Theme, ThemeColors, Themes } from '../types/theme';
 import { darkThemeColors, lightThemeColors } from './semantics';
 import { darkThemeLayout, lightThemeLayout } from './layouts';
-import {
-  PluginColors,
-  PluginLayout,
-  Utilities,
-  Variants,
-} from '../types/internal';
 import kebabCase from 'lodash.kebabcase';
+import { PluginConfig, Theme, ThemeColors, Themes } from './types';
 
 const semanticThemes: { light: Theme; dark: Theme } = {
   light: {
@@ -67,10 +61,10 @@ export const typeweave = (config: PluginConfig = {}) => {
     themes[themeName] = deepmerge(defaultThemes[baseTheme], theme);
   });
 
-  const pluginColors: PluginColors = {};
-  const pluginLayout: PluginLayout = {};
-  const utilities: Utilities = {};
-  const variants: Variants = [];
+  const pluginColors: Record<string, string> = {};
+  const pluginLayout: Record<string, Record<string, string>> = {};
+  const utilities: Record<string, Record<string, string>> = {};
+  const variants: { name: string; definition: string }[] = [];
 
   Object.entries(themes).forEach(([themeName, theme]) => {
     // It serves only as a guard, as every theme will have a base property.
@@ -107,8 +101,9 @@ export const typeweave = (config: PluginConfig = {}) => {
       pluginColors[colorName] =
         `${colorMode}(var(--${colorName}) / ${color[3] ?? '<alpha-value>'})`;
 
-      utilities[cssSelector][`--${colorName}`] =
-        `${color[0]} ${color[1]} ${color[2]}`;
+      if (utilities[cssSelector])
+        utilities[cssSelector]![`--${colorName}`] =
+          `${color[0]} ${color[1]} ${color[2]}`;
     });
 
     // generate layout css variables
@@ -123,15 +118,19 @@ export const typeweave = (config: PluginConfig = {}) => {
 
           const variable = `--${kebabcaseKey}-${kebabcaseNestedKey}`;
 
-          utilities[cssSelector][variable] = nestedValue;
-          pluginLayout[key][kebabcaseNestedKey] = `var(${variable})`;
+          if (utilities[cssSelector])
+            utilities[cssSelector]![variable] = nestedValue;
+
+          if (pluginLayout[key])
+            pluginLayout[key][kebabcaseNestedKey] = `var(${variable})`;
         });
 
         return;
       }
 
       const variable = `--${kebabcaseKey}`;
-      utilities[cssSelector][variable] = value;
+
+      if (utilities[cssSelector]) utilities[cssSelector]![variable] = value;
       pluginLayout[key].DEFAULT = `var(${variable})`;
     });
   });

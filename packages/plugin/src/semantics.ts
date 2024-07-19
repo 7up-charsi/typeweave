@@ -1,6 +1,6 @@
 import * as colors from '@radix-ui/colors';
-import { createColorScale } from '../utils/color';
-import { ThemeColors } from '../types/theme';
+import { createColorScale } from './utils';
+import { ThemeColors } from './types';
 
 const lightMuted = colors.gray;
 const lightBg = '#ffffff';

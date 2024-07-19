@@ -103,7 +103,7 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
 
     const siblingsEnd = Math.min(
       Math.max(page + siblingCount, boundaryCount + 2 + siblingCount * 2),
-      endPages.length > 0 ? endPages[0] - 2 : count - 1,
+      endPages.length > 0 ? endPages[0]! - 2 : count - 1,
     );
 
     const styles = React.useMemo(() => paginationStyles(), []);

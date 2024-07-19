@@ -107,8 +107,10 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
         (currentIndex === elements.length - 1 && menuCtx.loop && ArrowDown)
       ) {
         const index = 0;
-        elements[index].focus();
-        setFocused(activeItems[index].id);
+        elements[index]?.focus();
+
+        if (activeItems[index]) setFocused(activeItems[index].id);
+
         return;
       }
 
@@ -119,8 +121,12 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
         ArrowUp
       ) {
         const index = elements.length - 1;
-        elements[index].focus();
+        elements[index]?.focus();
+
+        if (!activeItems[index]) return;
+
         setFocused(activeItems[index].id);
+
         return;
       }
 
@@ -130,15 +136,23 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
         currentIndex < elements.length - 1
       ) {
         const index = currentIndex + 1;
-        elements[index].focus();
+        elements[index]?.focus();
+
+        if (!activeItems[index]) return;
+
         setFocused(activeItems[index].id);
+
         return;
       }
 
       if (ArrowUp && currentIndex > 0 && currentIndex <= elements.length - 1) {
         const index = currentIndex - 1;
-        elements[index].focus();
+        elements[index]?.focus();
+
+        if (!activeItems[index]) return;
+
         setFocused(activeItems[index].id);
+
         return;
       }
     };

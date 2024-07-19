@@ -22,10 +22,12 @@ const useSize = <E extends HTMLElement>(element: E | null) => {
       const observer = new ResizeObserver((enteies) => {
         if (!enteies.length) return;
         const entry = enteies[0];
-        setSize({
-          width: entry.borderBoxSize[0].inlineSize,
-          height: entry.borderBoxSize[0].blockSize,
-        });
+
+        if (entry && entry.borderBoxSize[0])
+          setSize({
+            width: entry.borderBoxSize[0].inlineSize,
+            height: entry.borderBoxSize[0].blockSize,
+          });
       });
 
       observer.observe(element, { box: 'border-box' });

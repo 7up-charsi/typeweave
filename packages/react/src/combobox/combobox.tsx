@@ -311,8 +311,8 @@ const ComboboxImpl = React.forwardRef<
     state: 'value',
     controlled: valueProp,
     default: multiple
-      ? defaultValue ?? defaultEmptyArray
-      : defaultValue ?? null,
+      ? (defaultValue ?? defaultEmptyArray)
+      : (defaultValue ?? null),
   });
 
   const [inputValue, setInputValue] = useControlled({
@@ -390,8 +390,8 @@ const ComboboxImpl = React.forwardRef<
       (acc, option, index) => {
         const group = groupBy(option);
 
-        if (acc.length > 0 && acc[acc.length - 1].group === group) {
-          acc[acc.length - 1].options.push(option);
+        if (acc.length > 0 && acc[acc.length - 1]?.group === group) {
+          acc[acc.length - 1]?.options.push(option);
         } else {
           if (process.env.NODE_ENV !== 'production') {
             if (indexBy.get(group) && !warn) {
@@ -837,7 +837,9 @@ const ComboboxImpl = React.forwardRef<
       const matched = orderedOptions.find((ele) =>
         getOptionDisabled?.(ele)
           ? false
-          : getOptionLabel(ele).toLowerCase().startsWith(filter[0]),
+          : getOptionLabel(ele)
+              .toLowerCase()
+              .startsWith(filter[0] ?? ''),
       );
 
       if (matched)
@@ -933,6 +935,9 @@ const ComboboxImpl = React.forwardRef<
       if (highlightedIndexRef.current === -1) return;
 
       const option = filteredOptions[highlightedIndexRef.current];
+
+      if (!option) return;
+
       const optionDisabled = getOptionDisabled
         ? getOptionDisabled(option)
         : false;
@@ -984,6 +989,9 @@ const ComboboxImpl = React.forwardRef<
 
   const handleOptionPress = (e: React.PointerEvent) => {
     const index = Number(e.currentTarget.getAttribute('data-option-index'));
+
+    if (!filteredOptions[index]) return;
+
     selectNewValue(e, filteredOptions[index], 'selectOption');
   };
 

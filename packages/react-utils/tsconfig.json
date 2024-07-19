@@ -1,4 +1,7 @@
 {
-  "extends": "tsconfig/packages",
-  "include": ["./src/**/*"]
+  "extends": "@repo/typescript-config/base",
+  "include": ["./src/**/*"],
+  "compilerOptions": {
+    "outDir": "dist"
+  }
 }

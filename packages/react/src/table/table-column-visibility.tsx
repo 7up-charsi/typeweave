@@ -29,7 +29,7 @@ export const TableColumnVisibility = (props: TableColumnVisibilityProps) => {
           title:
             col.visibilityTitle ?? (typeof header === 'string' ? header : null),
 
-          visibility: columnVisibility[col.identifier],
+          visibility: !!columnVisibility[col.identifier],
           toggleVisibility: () => {
             setColumnVisibility((prev) => {
               const cols = { ...prev };

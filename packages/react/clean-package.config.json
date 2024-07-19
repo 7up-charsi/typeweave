@@ -1,0 +1,176 @@
+{
+  "remove": ["devDependencies"],
+  "replace": {
+    "exports": {
+      "./package.json": "./package.json",
+      "/accordion": {
+        "import": "./dist/accordion/index.js",
+        "types": "./dist/accordion/index.d.ts"
+      },
+      "/alert": {
+        "import": "./dist/alert/index.js",
+        "types": "./dist/alert/index.d.ts"
+      },
+      "/app-bar": {
+        "import": "./dist/app-bar/index.js",
+        "types": "./dist/app-bar/index.d.ts"
+      },
+      "/avatar": {
+        "import": "./dist/avatar/index.js",
+        "types": "./dist/avatar/index.d.ts"
+      },
+      "/badge": {
+        "import": "./dist/badge/index.js",
+        "types": "./dist/badge/index.d.ts"
+      },
+      "/button": {
+        "import": "./dist/button/index.js",
+        "types": "./dist/button/index.d.ts"
+      },
+      "/checkbox": {
+        "import": "./dist/checkbox/index.js",
+        "types": "./dist/checkbox/index.d.ts"
+      },
+      "/chip": {
+        "import": "./dist/chip/index.js",
+        "types": "./dist/chip/index.d.ts"
+      },
+      "/combobox": {
+        "import": "./dist/combobox/index.js",
+        "types": "./dist/combobox/index.d.ts"
+      },
+      "/context": {
+        "import": "./dist/context/index.js",
+        "types": "./dist/context/index.d.ts"
+      },
+      "/dialog": {
+        "import": "./dist/dialog/index.js",
+        "types": "./dist/dialog/index.d.ts"
+      },
+      "/disclosure": {
+        "import": "./dist/disclosure/index.js",
+        "types": "./dist/disclosure/index.d.ts"
+      },
+      "/drawer": {
+        "import": "./dist/drawer/index.js",
+        "types": "./dist/drawer/index.d.ts"
+      },
+      "/focus-trap": {
+        "import": "./dist/focus-trap/index.js",
+        "types": "./dist/focus-trap/index.d.ts"
+      },
+      "/input": {
+        "import": "./dist/input/index.js",
+        "types": "./dist/input/index.d.ts"
+      },
+      "/menu": {
+        "import": "./dist/menu/index.js",
+        "types": "./dist/menu/index.d.ts"
+      },
+      "/overlay": {
+        "import": "./dist/overlay/index.js",
+        "types": "./dist/overlay/index.d.ts"
+      },
+      "/pagination": {
+        "import": "./dist/pagination/index.js",
+        "types": "./dist/pagination/index.d.ts"
+      },
+      "/pointer-events": {
+        "import": "./dist/pointer-events/index.js",
+        "types": "./dist/pointer-events/index.d.ts"
+      },
+      "/popover": {
+        "import": "./dist/popover/index.js",
+        "types": "./dist/popover/index.d.ts"
+      },
+      "/popper": {
+        "import": "./dist/popper/index.js",
+        "types": "./dist/popper/index.d.ts"
+      },
+      "/radio": {
+        "import": "./dist/radio/index.js",
+        "types": "./dist/radio/index.d.ts"
+      },
+      "/skeleton": {
+        "import": "./dist/skeleton/index.js",
+        "types": "./dist/skeleton/index.d.ts"
+      },
+      "/slot": {
+        "import": "./dist/slot/index.js",
+        "types": "./dist/slot/index.d.ts"
+      },
+      "/switch": {
+        "import": "./dist/switch/index.js",
+        "types": "./dist/switch/index.d.ts"
+      },
+      "/table": {
+        "import": "./dist/table/index.js",
+        "types": "./dist/table/index.d.ts"
+      },
+      "/tabs": {
+        "import": "./dist/tabs/index.js",
+        "types": "./dist/tabs/index.d.ts"
+      },
+      "/toggle-button": {
+        "import": "./dist/toggle-button/index.js",
+        "types": "./dist/toggle-button/index.d.ts"
+      },
+      "/tooltip": {
+        "import": "./dist/tooltip/index.js",
+        "types": "./dist/tooltip/index.d.ts"
+      },
+      "/use-callback-ref": {
+        "import": "./dist/use-callback-ref/index.js",
+        "types": "./dist/use-callback-ref/index.d.ts"
+      },
+      "/use-click-outside": {
+        "import": "./dist/use-click-outside/index.js",
+        "types": "./dist/use-click-outside/index.d.ts"
+      },
+      "/use-collection": {
+        "import": "./dist/use-collection/index.js",
+        "types": "./dist/use-collection/index.d.ts"
+      },
+      "/use-controlled": {
+        "import": "./dist/use-controlled/index.js",
+        "types": "./dist/use-controlled/index.d.ts"
+      },
+      "/use-is-disabled": {
+        "import": "./dist/use-is-disabled/index.js",
+        "types": "./dist/use-is-disabled/index.d.ts"
+      },
+      "/use-is-mounted": {
+        "import": "./dist/use-is-mounted/index.js",
+        "types": "./dist/use-is-mounted/index.d.ts"
+      },
+      "/use-media-query": {
+        "import": "./dist/use-media-query/index.js",
+        "types": "./dist/use-media-query/index.d.ts"
+      },
+      "/use-pointer-events": {
+        "import": "./dist/use-pointer-events/index.js",
+        "types": "./dist/use-pointer-events/index.d.ts"
+      },
+      "/use-previous-props": {
+        "import": "./dist/use-previous-props/index.js",
+        "types": "./dist/use-previous-props/index.d.ts"
+      },
+      "/use-ripple": {
+        "import": "./dist/use-ripple/index.js",
+        "types": "./dist/use-ripple/index.d.ts"
+      },
+      "/use-scroll-lock": {
+        "import": "./dist/use-scroll-lock/index.js",
+        "types": "./dist/use-scroll-lock/index.d.ts"
+      },
+      "/use-size": {
+        "import": "./dist/use-size/index.js",
+        "types": "./dist/use-size/index.d.ts"
+      },
+      "/visually-hidden": {
+        "import": "./dist/visually-hidden/index.js",
+        "types": "./dist/visually-hidden/index.d.ts"
+      }
+    }
+  }
+}
