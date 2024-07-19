@@ -46,9 +46,10 @@
     "lodash.kebabcase": "^4.1.1"
   },
   "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
     "@types/color": "^3.0.6",
     "@types/lodash.kebabcase": "^4.1.9",
-    "clean-package": "^2.2.0",
-    "@repo/typescript-config": "workspace:*"
+    "clean-package": "^2.2.0"
   }
 }
+
