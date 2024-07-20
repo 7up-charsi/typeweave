@@ -1,3 +1,5 @@
+'use client';
+
 export type { CheckboxProps } from './checkbox';
 export type { CheckboxVariantProps } from './checkbox.styles';
 

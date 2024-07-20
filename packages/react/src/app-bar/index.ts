@@ -1,3 +1,5 @@
+'use client';
+
 export type { AppBarProps } from './app-bar';
 export type { AppBarVariantProps } from './app-bar.styles';
 

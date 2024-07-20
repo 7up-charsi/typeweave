@@ -1,3 +1,5 @@
+'use client';
+
 export type { TooltipContentProps } from './tooltip-content';
 export type { TooltipPortalProps } from './tooltip-portal';
 export type { TooltipRootProps } from './tooltip-root';

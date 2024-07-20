@@ -1,3 +1,5 @@
+'use client';
+
 export type { PopperArrowProps } from './popper-arrow';
 export type { PopperFloatingProps } from './popper-floating';
 export type { PopperReferenceProps } from './popper-reference';

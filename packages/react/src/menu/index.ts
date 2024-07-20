@@ -1,3 +1,5 @@
+'use client';
+
 export type { MenuCheckboxItemProps } from './menu-checkbox-item';
 export type { MenuContentProps } from './menu-content';
 export type { MenuGroupProps } from './menu-group';

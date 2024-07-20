@@ -1,3 +1,5 @@
+'use client';
+
 export type { ChipProps } from './chip';
 export type { ChipVariantProps } from './chip.styles';
 

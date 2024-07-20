@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Slot } from '../slot';
 import { UsePointerEventsProps, usePointerEvents } from '../use-pointer-events';

@@ -1,3 +1,5 @@
+'use client';
+
 export type { ToggleButtonProps } from './toggle-button';
 export type { ToggleButtonGroupProps } from './toggle-button-group';
 export type { ToggleButtonVariantProps } from './toggle-button.styles';

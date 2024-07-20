@@ -1,3 +1,5 @@
+'use client';
+
 export type { AccordionContentProps } from './accordion-content';
 export type { AccordionHeaderProps } from './accordion-header';
 export type { AccordionItemProps } from './accordion-item';

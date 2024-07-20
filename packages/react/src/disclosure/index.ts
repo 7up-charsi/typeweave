@@ -1,3 +1,5 @@
+'use client';
+
 export type { DisclosureContentProps } from './disclosure-content';
 export type { DisclosureItemProps } from './disclosure-item';
 export type { DisclosureRootProps } from './disclosure-root';

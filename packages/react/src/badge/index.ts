@@ -1,3 +1,5 @@
+'use client';
+
 export type { BadgeProps } from './badge';
 export type { BadgeVariantProps } from './badge.styles';
 

@@ -1,3 +1,5 @@
+'use client';
+
 export type { PaginationProps } from './pagination';
 export type { PaginationVariantProps } from './pagination.styles';
 

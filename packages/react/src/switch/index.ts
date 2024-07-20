@@ -1,3 +1,5 @@
+'use client';
+
 export type { SwitchProps } from './switch';
 export type { SwitchVariantProps } from './switch.styles';
 

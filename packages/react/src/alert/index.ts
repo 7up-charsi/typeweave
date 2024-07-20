@@ -1,3 +1,5 @@
+'use client';
+
 export type { AlertProps } from './alert';
 export type { AlertVariantProps } from './alert.styles';
 

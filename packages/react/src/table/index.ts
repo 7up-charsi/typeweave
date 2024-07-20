@@ -1,3 +1,5 @@
+'use client';
+
 export type { TableProps } from './table';
 export type { TableColumnVisibilityProps } from './table-column-visibility';
 export type { TableSelectAllRowsProps } from './table-select-all-rows';

@@ -1,3 +1,5 @@
+'use client';
+
 export type { OverlayProps } from './overlay';
 export type { OverlayVariantProps } from './overlay.styles';
 

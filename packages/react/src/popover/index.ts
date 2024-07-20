@@ -1,3 +1,5 @@
+'use client';
+
 export type { PopoverCloseProps } from './popover-close';
 export type { PopoverContentProps } from './popover-content';
 export type { PopoverPortalProps } from './popover-portal';

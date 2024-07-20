@@ -1,3 +1,5 @@
+'use client';
+
 export type { DialogCloseProps } from './dialog-close';
 export type { DialogContentProps } from './dialog-content';
 export type { DialogOverlayProps } from './dialog-overlay';

@@ -1,3 +1,5 @@
+'use client';
+
 export type { ComboboxProps } from './combobox';
 export type { ComboboxVariantProps } from './combobox.styles';
 

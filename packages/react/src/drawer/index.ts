@@ -1,3 +1,5 @@
+'use client';
+
 export type { DrawerCloseProps } from './drawer-close';
 export type { DrawerContentProps } from './drawer-content';
 export type { DrawerPortalProps } from './drawer-portal';

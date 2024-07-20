@@ -1,3 +1,5 @@
+'use client';
+
 export type { SkeletonProps } from './skeleton';
 export type { SkeletonVariantProps } from './skeleton.styles';
 
