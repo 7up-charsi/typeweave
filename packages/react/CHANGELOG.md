@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.0.4
+
+### Patch Changes
+
+- fix(React): remove trigger toggle menu/popover
+
 ## 4.0.3
 
 ### Patch Changes
