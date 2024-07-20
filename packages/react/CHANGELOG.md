@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.0.5
+
+### Patch Changes
+
+- fix(React): button pointer events none
+
 ## 4.0.4
 
 ### Patch Changes
