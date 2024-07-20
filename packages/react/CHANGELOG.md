@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.0.1
+
+### Patch Changes
+
+- fix(React): add missing useClient directive
+
 ## 4.0.0
 
 ### Major Changes
