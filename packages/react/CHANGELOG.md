@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.0.2
+
+### Patch Changes
+
+- refactor(React): add size-\*
+
 ## 4.0.1
 
 ### Patch Changes
