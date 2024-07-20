@@ -5,7 +5,7 @@ export const skeletonStyles = tv({
   variants: {
     variant: {
       text: 'h-auto w-full before:content-["_"] before:whitespace-pre',
-      circular: 'h-10 w-10 rounded-full',
+      circular: 'size-10 rounded-full',
       rectangular: 'h-20 w-full rounded-none',
       rounded: 'h-20 w-full rounded',
     },

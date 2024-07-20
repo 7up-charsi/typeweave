@@ -99,19 +99,19 @@ export const buttonStyles = tv({
       isIconOnly: true,
       isInGroup: false,
       size: 'sm',
-      className: { base: 'w-7 h-7' },
+      className: { base: 'size-7' },
     },
     {
       isIconOnly: true,
       isInGroup: false,
       size: 'md',
-      className: { base: 'w-9 h-9' },
+      className: { base: 'size-9' },
     },
     {
       isIconOnly: true,
       isInGroup: false,
       size: 'lg',
-      className: { base: 'w-11 h-11' },
+      className: { base: 'size-11' },
     },
 
     // icon button sizes when it is in button group

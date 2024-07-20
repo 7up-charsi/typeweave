@@ -3,14 +3,14 @@ import { tv, VariantProps } from 'tailwind-variants';
 export const badgeStyles = tv({
   slots: {
     base: 'inline-block relative isolate',
-    content: 'absolute z-50 rounded-full -translate-x-1/2 -translate-y-1/2',
+    content:
+      'absolute z-50 rounded-full -translate-x-1/2 -translate-y-1/2 select-none',
   },
   variants: {
     variant: {
-      dot: { content: 'w-3 h-3' },
+      dot: { content: 'size-3' },
       standard: {
-        content:
-          'text-xs min-w-[20px] h-[20px] flex items-center justify-center px-1',
+        content: 'text-xs size-5 flex items-center justify-center px-1',
       },
     },
     color: {

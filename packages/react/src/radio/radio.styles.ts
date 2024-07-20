@@ -3,7 +3,7 @@ import { tv, VariantProps } from 'tailwind-variants';
 export const radioStyles = tv({
   slots: {
     base: 'inline-flex gap-2',
-    radio: 'relative w-5 h-5 shrink-0',
+    radio: 'relative size-5 shrink-0',
     input:
       'peer/input rounded-full appearance-none cursor-pointer transition-colors disabled:disabled absolute inset-0 outline-none focus-visible:ring-2 focus-visible:ring-focus',
     icon: 'pointer-events-none absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 block peer-checked/input:hidden dynamic-icon',

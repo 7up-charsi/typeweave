@@ -17,8 +17,8 @@ export const comboboxStyles = tv({
     endContent: 'flex items-center',
     inputWrapper: '',
     input: 'truncate',
-    clearIndicator: 'w-6 h-6',
-    openIndicator: 'w-6 h-6 data-[open=true]:rotate-180',
+    clearIndicator: 'size-6',
+    openIndicator: 'size-6 data-[open=true]:rotate-180',
   },
   variants: {
     shadow: {

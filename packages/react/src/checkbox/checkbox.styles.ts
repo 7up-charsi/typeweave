@@ -53,13 +53,13 @@ export const checkboxStyles = tv({
     },
     size: {
       sm: {
-        checkbox: 'w-4 h-4',
+        checkbox: 'size-4',
         icon: 'text-base',
         checkedIcon: 'text-base',
         indeterminateIcon: 'text-xs',
       },
       md: {
-        checkbox: 'w-5 h-5 ',
+        checkbox: 'size-5 ',
         icon: 'text-lg',
         checkedIcon: 'text-lg',
         indeterminateIcon: 'text-sm',
