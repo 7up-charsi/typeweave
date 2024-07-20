@@ -55,6 +55,7 @@ export const PopoverContent = React.forwardRef<
     disabled: !mounted,
     callback: (e) => {
       if ((e.target as HTMLElement).closest('[role=dialog]')) return;
+      if (e.target === popoverCtx.triggerRef.current) return;
 
       popoverCtx.handleClose();
     },

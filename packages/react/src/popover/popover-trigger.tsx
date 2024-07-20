@@ -2,6 +2,7 @@ import React from 'react';
 import { usePopoverCtx } from './popover-root';
 import { PopperReference } from '../popper';
 import { Slot } from '../slot';
+import { mergeRefs } from '@typeweave/react-utils';
 
 export interface PopoverTriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
@@ -20,7 +21,7 @@ export const PopoverTrigger = React.forwardRef<
     <PopperReference>
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
         {...restProps}
-        ref={ref}
+        ref={mergeRefs(ref, popoverCtx.triggerRef)}
         data-open={popoverCtx.open}
         aria-expanded={popoverCtx.open}
         aria-controls={popoverCtx.open ? popoverCtx.contentId : undefined}

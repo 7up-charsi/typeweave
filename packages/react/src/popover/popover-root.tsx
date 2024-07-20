@@ -18,6 +18,7 @@ interface PopoverCtxProps {
   handleClose(): void;
   keepMounted: boolean;
   contentId: string;
+  triggerRef: React.RefObject<HTMLButtonElement>;
 }
 
 const displayName = 'PopoverRoot';
@@ -45,6 +46,7 @@ export const PopoverRoot = (props: PopoverRootProps) => {
   });
 
   const contentId = React.useId();
+  const triggerRef = React.useRef<HTMLButtonElement>(null);
 
   const handleOpen = useCallbackRef(() => {
     setOpen(true);
@@ -79,6 +81,7 @@ export const PopoverRoot = (props: PopoverRootProps) => {
       open={open}
       keepMounted={keepMounted}
       contentId={contentId}
+      triggerRef={triggerRef}
     >
       <PopperRoot>{children}</PopperRoot>
     </PopoverCtx>
