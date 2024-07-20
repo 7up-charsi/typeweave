@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.0.3
+
+### Patch Changes
+
+- fix: prev release
+
 ## 4.0.2
 
 ### Patch Changes
