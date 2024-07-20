@@ -67,8 +67,8 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
 
     const setOutsideEle = useClickOutside({
       disabled: !mounted,
-      callback: () => {
-        menuCtx.handleClose();
+      callback: (e) => {
+        if (e.target !== menuCtx.triggerRef.current) menuCtx.handleClose();
       },
     });
 
