@@ -10,7 +10,8 @@ export const badgeStyles = tv({
     variant: {
       dot: { content: 'size-3' },
       standard: {
-        content: 'text-xs size-5 flex items-center justify-center px-1',
+        content:
+          'text-xs h-5 min-w-5 w-auto flex items-center justify-center px-1',
       },
     },
     color: {
