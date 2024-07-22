@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.0.6
+
+### Patch Changes
+
+- fix(React): badge max width
+
 ## 4.0.5
 
 ### Patch Changes
