@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.0.7
+
+### Patch Changes
+
+- feat(React): add selected/removed option in onChange combobox
+
 ## 4.0.6
 
 ### Patch Changes
