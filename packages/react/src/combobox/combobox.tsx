@@ -170,7 +170,11 @@ export type ComboboxProps<Value, Multiple, DisableClearable, Editable> = (Omit<
         multiple: Multiple;
         defaultValue?: Value[];
         value?: Value[];
-        onChange?: (newValue: Value[], reason: ComboboxOnChangeReason) => void;
+        onChange?: (
+          newValue: Value[],
+          reason: ComboboxOnChangeReason,
+          option: Value,
+        ) => void;
         disableClearable?: DisableClearable;
         isOptionEqualToValue?: (option: Value, value: Value) => boolean;
       }
@@ -699,6 +703,8 @@ const ComboboxImpl = React.forwardRef<
   const handleValue = (
     newValue: string | object | null | (string | object | null)[],
     reason: ComboboxOnChangeReason,
+    // check selectNewValue handler below to see details of this prop
+    option?: string | object | null,
   ) => {
     if (Array.isArray(value) && Array.isArray(newValue)) {
       if (
@@ -711,7 +717,8 @@ const ComboboxImpl = React.forwardRef<
       return;
     }
 
-    onChange?.(newValue, reason as never);
+    // @ts-ignore Expected 2 arguments, but got 3.
+    onChange?.(newValue, reason as never, option);
 
     setValue(newValue);
   };
@@ -757,7 +764,13 @@ const ComboboxImpl = React.forwardRef<
     }
 
     resetInputValue(newValue);
-    handleValue(newValue, reason as ComboboxOnChangeReason);
+
+    handleValue(
+      newValue,
+      reason as ComboboxOnChangeReason,
+      // pass selected/removed option when multiple is true. it allow developer to check which option is selected/removed among array of options
+      multiple ? option : undefined,
+    );
 
     const modifiedEvent = e as unknown as {
       ctrlKey: boolean;
