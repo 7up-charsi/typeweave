@@ -102,6 +102,7 @@ type BaseProps<Value> = {
   groupBy?: (option: Value) => string;
   disablePortal?: boolean;
   disablePopper?: boolean;
+  endContent?: React.ReactNode;
   renderInput: (props: ComboboxRenderInputProps) => React.ReactNode;
   renderOption?: (
     props: ComboboxRenderOptionProps,
@@ -235,6 +236,7 @@ const ComboboxImpl = React.forwardRef<
     clearOnEscape = true,
     disableListWrap,
     disabled,
+    endContent: endContentProp,
     selectOnFocus = true,
     hasOpenIndicator = true,
     multiple,
@@ -1239,6 +1241,8 @@ const ComboboxImpl = React.forwardRef<
         className: editable && classNames?.endContent,
       })}
     >
+      {endContentProp}
+
       {(Array.isArray(value)
         ? !disableClearable && !!value.length
         : disableClearable
