@@ -4,7 +4,7 @@ export const badgeStyles = tv({
   slots: {
     base: 'inline-block relative isolate',
     content:
-      'absolute z-50 rounded-full -translate-x-1/2 -translate-y-1/2 select-none',
+      'absolute z-50 rounded-full -translate-x-1/2 -translate-y-1/2 select-none pointer-events-none',
   },
   variants: {
     variant: {
