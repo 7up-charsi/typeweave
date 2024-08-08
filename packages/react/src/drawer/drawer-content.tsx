@@ -42,7 +42,8 @@ export const DrawerContent = React.forwardRef<
         <div
           {...restProps}
           ref={ref}
-          role="presentation"
+          role="dialog"
+          aria-modal="true"
           id={drawerCtx.contentId}
           className={styles.content({ className })}
         >
