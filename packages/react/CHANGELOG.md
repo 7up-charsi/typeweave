@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.0.9
+
+### Patch Changes
+
+- fix(React): drawer content aria role
+
 ## 4.0.8
 
 ### Patch Changes
