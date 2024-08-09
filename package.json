@@ -20,7 +20,10 @@
     "format:pkgs:write": "prettier --write ./packages/**/src/**/*.{ts,tsx} --cache",
     "unused-deps": "tsx ./scripts/check-deps.ts",
     "create:pkg": "plop package",
-    "create:cmp-docs": "plop component-docs"
+    "create:cmp-docs": "plop component-docs",
+    "version:add": "pnpm changeset",
+    "version:bump": "pnpm changeset version",
+    "version:release": "pnpm changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.7",

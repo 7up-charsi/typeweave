@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.0.10
+
+### Patch Changes
+
+- fix(React): tooltip can be disabled
+
 ## 4.0.9
 
 ### Patch Changes
