@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.0.12
+
+### Patch Changes
+
+- fix(React): tooltip does not hide when disabled after open
+
 ## 4.0.11
 
 ### Patch Changes
