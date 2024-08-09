@@ -76,6 +76,8 @@ export const TooltipRoot = (props: TooltipRootProps) => {
   };
 
   const showTooltip = useCallbackRef((immediate?: boolean) => {
+    if (disabled) return;
+
     clearTimeout(hideTimeout.current);
     hideTimeout.current = undefined;
 
@@ -94,6 +96,8 @@ export const TooltipRoot = (props: TooltipRootProps) => {
   });
 
   const hideTooltip = useCallbackRef((immediate?: boolean) => {
+    if (disabled) return;
+
     clearTimeout(showTimeout.current);
     showTimeout.current = undefined;
 
@@ -110,7 +114,7 @@ export const TooltipRoot = (props: TooltipRootProps) => {
   });
 
   React.useEffect(() => {
-    if (!open) return;
+    if (!open || disabled) return;
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -123,7 +127,7 @@ export const TooltipRoot = (props: TooltipRootProps) => {
     return () => {
       document.removeEventListener('keydown', onKeyDown);
     };
-  }, [hideTooltip, open]);
+  }, [hideTooltip, open, disabled]);
 
   React.useEffect(() => {
     return () => {
@@ -131,9 +135,7 @@ export const TooltipRoot = (props: TooltipRootProps) => {
       clearTimeout(hideTimeout.current);
       delete tooltips[identifier];
     };
-  }, [identifier]);
-
-  if (disabled) return <>{children}</>;
+  }, [identifier, disabled]);
 
   return (
     <TooltipCtx
