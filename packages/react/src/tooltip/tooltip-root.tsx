@@ -96,8 +96,6 @@ export const TooltipRoot = (props: TooltipRootProps) => {
   });
 
   const hideTooltip = useCallbackRef((immediate?: boolean) => {
-    if (disabled) return;
-
     clearTimeout(showTimeout.current);
     showTimeout.current = undefined;
 
@@ -130,12 +128,17 @@ export const TooltipRoot = (props: TooltipRootProps) => {
   }, [hideTooltip, open, disabled]);
 
   React.useEffect(() => {
+    hideTooltip(true);
+    delete tooltips[identifier];
+  }, [identifier, disabled]);
+
+  React.useEffect(() => {
     return () => {
       clearTimeout(showTimeout.current);
       clearTimeout(hideTimeout.current);
       delete tooltips[identifier];
     };
-  }, [identifier, disabled]);
+  }, [identifier]);
 
   return (
     <TooltipCtx
