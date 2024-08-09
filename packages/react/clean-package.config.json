@@ -166,6 +166,10 @@
         "import": "./dist/use-size/index.js",
         "types": "./dist/use-size/index.d.ts"
       },
+      "./use-swipeable": {
+        "import": "./dist/use-swipeable/index.js",
+        "types": "./dist/use-swipeable/index.d.ts"
+      },
       "./visually-hidden": {
         "import": "./dist/visually-hidden/index.js",
         "types": "./dist/visually-hidden/index.d.ts"
