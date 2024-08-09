@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.1.0
+
+### Minor Changes
+
+- feat(React): use-swipeable
+
 ## 4.0.13
 
 ### Patch Changes
