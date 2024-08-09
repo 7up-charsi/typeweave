@@ -18,6 +18,7 @@ export interface TooltipRootProps {
   defaultOpen?: boolean;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  disabled?: boolean;
 }
 
 interface TooltipCtxProps {
@@ -45,6 +46,7 @@ export const TooltipRoot = (props: TooltipRootProps) => {
     open: openProp,
     onOpenChange,
     defaultOpen,
+    disabled,
   } = props;
 
   const [open, setOpen] = useControlled({
@@ -130,6 +132,8 @@ export const TooltipRoot = (props: TooltipRootProps) => {
       delete tooltips[identifier];
     };
   }, [identifier]);
+
+  if (disabled) return <>{children}</>;
 
   return (
     <TooltipCtx
