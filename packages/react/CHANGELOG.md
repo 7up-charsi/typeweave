@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.1.2
+
+### Patch Changes
+
+- feat(React): useScroll total scroll
+
 ## 4.1.1
 
 ### Patch Changes

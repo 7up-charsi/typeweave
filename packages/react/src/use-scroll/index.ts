@@ -158,8 +158,8 @@ export const useScroll = <E extends HTMLElement>(
       setDirY(newScrollDirY);
       setDirX(newScrollDirX);
 
-      setTotalScrollY(element.scrollHeight + element.clientHeight);
-      setTotalScrollX(element.scrollWidth + element.clientWidth);
+      setTotalScrollY(element.scrollHeight);
+      setTotalScrollX(element.scrollWidth);
 
       localState.lastScrollY = currentScrollY;
       localState.lastScrollX = currentScrollX;
