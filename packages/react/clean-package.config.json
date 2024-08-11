@@ -158,6 +158,10 @@
         "import": "./dist/use-ripple/index.js",
         "types": "./dist/use-ripple/index.d.ts"
       },
+      "./use-scroll": {
+        "import": "./dist/use-scroll/index.js",
+        "types": "./dist/use-scroll/index.d.ts"
+      },
       "./use-scroll-lock": {
         "import": "./dist/use-scroll-lock/index.js",
         "types": "./dist/use-scroll-lock/index.d.ts"
