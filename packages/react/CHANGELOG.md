@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.1.4
+
+### Patch Changes
+
+- feat(React): use scroll more values
+
 ## 4.1.3
 
 ### Patch Changes
