@@ -61,6 +61,12 @@ export const useScroll = <E extends HTMLElement>(
   const [dirX, setDirX] = React.useState<ScrollDirection>(0);
   const [totalScrollY, setTotalScrollY] = React.useState(0);
   const [totalScrollX, setTotalScrollX] = React.useState(0);
+  const [yInPercent, setYInPercent] = React.useState(0);
+  const [xInPercent, setXInPercent] = React.useState(0);
+  const [isAtTop, setIsAtTop] = React.useState(false);
+  const [isAtBottom, setIsAtBottom] = React.useState(false);
+  const [isAtLeft, setIsAtLeft] = React.useState(false);
+  const [isAtRight, setIsAtRight] = React.useState(false);
 
   const elementRef = React.useRef<E>(null);
 
@@ -158,8 +164,17 @@ export const useScroll = <E extends HTMLElement>(
       setDirY(newScrollDirY);
       setDirX(newScrollDirX);
 
-      setTotalScrollY(element.scrollHeight);
-      setTotalScrollX(element.scrollWidth);
+      const scrollableAmountY = element.scrollHeight - element.clientHeight;
+      const scrollableAmountX = element.scrollWidth - element.clientWidth;
+
+      setTotalScrollY(scrollableAmountY);
+      setTotalScrollX(scrollableAmountX);
+      setYInPercent((currentScrollY / scrollableAmountY) * 100);
+      setXInPercent((currentScrollX / scrollableAmountX) * 100);
+      setIsAtTop(currentScrollY === 0);
+      setIsAtBottom(currentScrollY === scrollableAmountY);
+      setIsAtLeft(currentScrollX === 0);
+      setIsAtRight(currentScrollX === scrollableAmountX);
 
       localState.lastScrollY = currentScrollY;
       localState.lastScrollX = currentScrollX;
@@ -188,5 +203,11 @@ export const useScroll = <E extends HTMLElement>(
     dirX,
     totalScrollY,
     totalScrollX,
+    yInPercent,
+    xInPercent,
+    isAtTop,
+    isAtBottom,
+    isAtLeft,
+    isAtRight,
   };
 };
