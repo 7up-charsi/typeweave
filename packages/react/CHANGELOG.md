@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.1.3
+
+### Patch Changes
+
+- fix: remove extra addtion of clientHeight
+
 ## 4.1.2
 
 ### Patch Changes
