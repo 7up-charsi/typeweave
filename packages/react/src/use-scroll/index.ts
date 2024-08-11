@@ -59,6 +59,8 @@ export const useScroll = <E extends HTMLElement>(
   const [deltaX, setDeltaX] = React.useState(0);
   const [dirY, setDirY] = React.useState<ScrollDirection>(0);
   const [dirX, setDirX] = React.useState<ScrollDirection>(0);
+  const [totalScrollY, setTotalScrollY] = React.useState(0);
+  const [totalScrollX, setTotalScrollX] = React.useState(0);
 
   const elementRef = React.useRef<E>(null);
 
@@ -80,13 +82,14 @@ export const useScroll = <E extends HTMLElement>(
 
   React.useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = elementRef.current
-        ? elementRef.current.scrollTop
-        : document.body.scrollTop || document.documentElement.scrollTop;
+      const element =
+        elementRef.current ??
+        (document.documentElement.scrollTop
+          ? document.documentElement
+          : document.body);
 
-      const currentScrollX = elementRef.current
-        ? elementRef.current.scrollLeft
-        : document.body.scrollLeft || document.documentElement.scrollLeft;
+      const currentScrollY = element.scrollTop;
+      const currentScrollX = element.scrollLeft;
 
       const newScrollDirY = currentScrollY > localState.lastScrollY ? 1 : -1;
       const newScrollDirX = currentScrollX > localState.lastScrollX ? 1 : -1;
@@ -155,6 +158,9 @@ export const useScroll = <E extends HTMLElement>(
       setDirY(newScrollDirY);
       setDirX(newScrollDirX);
 
+      setTotalScrollY(element.scrollHeight + element.clientHeight);
+      setTotalScrollX(element.scrollWidth + element.clientWidth);
+
       localState.lastScrollY = currentScrollY;
       localState.lastScrollX = currentScrollX;
       localState.lastScrollDirY = newScrollDirY;
@@ -180,5 +186,7 @@ export const useScroll = <E extends HTMLElement>(
     deltaX,
     dirY,
     dirX,
+    totalScrollY,
+    totalScrollX,
   };
 };
