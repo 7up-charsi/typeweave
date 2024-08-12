@@ -13,6 +13,7 @@ export interface ScrollEvent {
 }
 
 export interface UseScrollProps {
+  defaultScrollable?: 'root' | 'body';
   onScrollY?: (event: ScrollEvent) => void;
   onScrollX?: (event: ScrollEvent) => void;
   onScrollUp?: (event: ScrollEvent) => void;
@@ -51,6 +52,7 @@ export const useScroll = <E extends HTMLElement>(
   props: UseScrollProps = {},
 ) => {
   const {
+    defaultScrollable = 'root',
     onScrollY: onScrollYProp,
     onScrollX: onScrollXProp,
     onScrollUp: onScrollUpProp,
@@ -109,7 +111,7 @@ export const useScroll = <E extends HTMLElement>(
     const handleScroll = () => {
       const element =
         elementRef.current ??
-        (document.documentElement.scrollTop
+        (defaultScrollable === 'root'
           ? document.documentElement
           : document.body);
 
@@ -232,7 +234,18 @@ export const useScroll = <E extends HTMLElement>(
     return () => {
       ele.removeEventListener('scroll', handleScroll);
     };
-  }, [flags]);
+  }, [
+    flags,
+    defaultScrollable,
+    onScrollY,
+    onScrollX,
+    onScrollUp,
+    onScrollDown,
+    onScrollLeft,
+    onScrollRight,
+    onYDirectionChange,
+    onXDirectionChange,
+  ]);
 
   return [state, elementRef] as const;
 };
