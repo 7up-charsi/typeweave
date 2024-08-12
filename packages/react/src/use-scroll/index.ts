@@ -30,6 +30,23 @@ export interface UseScrollProps {
  */
 type ScrollDirection = 0 | 1 | -1;
 
+interface State {
+  scrollY: number;
+  scrollX: number;
+  deltaY: number;
+  deltaX: number;
+  dirY: number;
+  dirX: number;
+  totalScrollY: number;
+  totalScrollX: number;
+  scrollYProgress: number;
+  scrollXProgress: number;
+  isAtTop: boolean | null;
+  isAtBottom: boolean | null;
+  isAtLeft: boolean | null;
+  isAtRight: boolean | null;
+}
+
 export const useScroll = <E extends HTMLElement>(
   props: UseScrollProps = {},
 ) => {
@@ -53,24 +70,26 @@ export const useScroll = <E extends HTMLElement>(
   const onYDirectionChange = useCallbackRef(onYDirectionChangeProp);
   const onXDirectionChange = useCallbackRef(onXDirectionChangeProp);
 
-  const [y, setY] = React.useState(0);
-  const [x, setX] = React.useState(0);
-  const [deltaY, setDeltaY] = React.useState(0);
-  const [deltaX, setDeltaX] = React.useState(0);
-  const [dirY, setDirY] = React.useState<ScrollDirection>(0);
-  const [dirX, setDirX] = React.useState<ScrollDirection>(0);
-  const [totalScrollY, setTotalScrollY] = React.useState(0);
-  const [totalScrollX, setTotalScrollX] = React.useState(0);
-  const [yInPercent, setYInPercent] = React.useState(0);
-  const [xInPercent, setXInPercent] = React.useState(0);
-  const [isAtTop, setIsAtTop] = React.useState(false);
-  const [isAtBottom, setIsAtBottom] = React.useState(false);
-  const [isAtLeft, setIsAtLeft] = React.useState(false);
-  const [isAtRight, setIsAtRight] = React.useState(false);
+  const [state, setState] = React.useState<State>({
+    scrollY: 0,
+    scrollX: 0,
+    deltaY: 0,
+    deltaX: 0,
+    dirY: 0,
+    dirX: 0,
+    totalScrollY: 0,
+    totalScrollX: 0,
+    scrollYProgress: 0,
+    scrollXProgress: 0,
+    isAtTop: null,
+    isAtBottom: null,
+    isAtLeft: null,
+    isAtRight: null,
+  });
 
   const elementRef = React.useRef<E>(null);
 
-  const localState = React.useRef<{
+  const flags = React.useRef<{
     lastScrollY: number;
     lastScrollX: number;
     lastScrollDirY: ScrollDirection;
@@ -97,89 +116,111 @@ export const useScroll = <E extends HTMLElement>(
       const currentScrollY = element.scrollTop;
       const currentScrollX = element.scrollLeft;
 
-      const newScrollDirY = currentScrollY > localState.lastScrollY ? 1 : -1;
-      const newScrollDirX = currentScrollX > localState.lastScrollX ? 1 : -1;
+      const newScrollDirY =
+        currentScrollY === flags.lastScrollY
+          ? flags.lastScrollDirY
+          : currentScrollY > flags.lastScrollY
+            ? 1
+            : -1;
+
+      const newScrollDirX =
+        currentScrollX === flags.lastScrollX
+          ? flags.lastScrollDirX
+          : currentScrollX > flags.lastScrollX
+            ? 1
+            : -1;
 
       const scrollEvent: ScrollEvent = {
-        deltaX: localState.deltaX,
-        deltaY: localState.deltaY,
-        lastDirX: localState.lastScrollDirX,
-        lastDirY: localState.lastScrollDirY,
+        deltaX: flags.deltaX,
+        deltaY: flags.deltaY,
+        lastDirX: flags.lastScrollDirX,
+        lastDirY: flags.lastScrollDirY,
         dirX: newScrollDirX,
         dirY: newScrollDirY,
         x: currentScrollX,
         y: currentScrollY,
       };
 
-      if (localState.lastScrollDirY === 1 && newScrollDirY === -1) {
-        localState.deltaY = 0;
-      } else if (localState.lastScrollDirY === -1 && newScrollDirY === 1) {
-        localState.deltaY = 0;
+      if (flags.lastScrollDirY === 1 && newScrollDirY === -1) {
+        flags.deltaY = 0;
+      } else if (flags.lastScrollDirY === -1 && newScrollDirY === 1) {
+        flags.deltaY = 0;
       }
 
-      localState.deltaY += Math.abs(currentScrollY - localState.lastScrollY);
+      flags.deltaY += Math.abs(currentScrollY - flags.lastScrollY);
 
-      if (newScrollDirY === -1) {
-        onScrollUp({ ...scrollEvent, deltaY: localState.deltaY });
-      } else if (newScrollDirY === 1) {
-        onScrollDown({ ...scrollEvent, deltaY: localState.deltaY });
+      if (newScrollDirY === -1 && currentScrollY !== flags.lastScrollY) {
+        onScrollUp({ ...scrollEvent, deltaY: flags.deltaY });
+      } else if (newScrollDirY === 1 && currentScrollY !== flags.lastScrollY) {
+        onScrollDown({ ...scrollEvent, deltaY: flags.deltaY });
       }
 
-      if (localState.lastScrollDirX === 1 && newScrollDirX === -1) {
-        localState.deltaX = 0;
-      } else if (localState.lastScrollDirX === -1 && newScrollDirX === 1) {
-        localState.deltaX = 0;
+      if (flags.lastScrollDirX === 1 && newScrollDirX === -1) {
+        flags.deltaX = 0;
+      } else if (flags.lastScrollDirX === -1 && newScrollDirX === 1) {
+        flags.deltaX = 0;
       }
 
-      localState.deltaX += Math.abs(currentScrollX - localState.lastScrollX);
+      flags.deltaX += Math.abs(currentScrollX - flags.lastScrollX);
 
-      if (newScrollDirX === -1) {
-        onScrollLeft({ ...scrollEvent, deltaX: localState.deltaX });
-      } else if (newScrollDirX === 1) {
-        onScrollRight({ ...scrollEvent, deltaX: localState.deltaX });
+      if (newScrollDirX === -1 && currentScrollX !== flags.lastScrollX) {
+        onScrollLeft({ ...scrollEvent, deltaX: flags.deltaX });
+      } else if (newScrollDirX === 1 && currentScrollX !== flags.lastScrollX) {
+        onScrollRight({ ...scrollEvent, deltaX: flags.deltaX });
       }
 
-      if (newScrollDirY !== localState.lastScrollDirY)
+      if (newScrollDirY !== flags.lastScrollDirY)
         onYDirectionChange?.(scrollEvent);
 
-      if (newScrollDirX !== localState.lastScrollDirX)
+      if (newScrollDirX !== flags.lastScrollDirX)
         onXDirectionChange?.(scrollEvent);
 
       if (
-        currentScrollY !== localState.lastScrollY &&
-        currentScrollX === localState.lastScrollX
+        currentScrollY !== flags.lastScrollY &&
+        currentScrollX === flags.lastScrollX
       )
         onScrollY?.(scrollEvent);
 
       if (
-        currentScrollX !== localState.lastScrollX &&
-        currentScrollY === localState.lastScrollY
+        currentScrollX !== flags.lastScrollX &&
+        currentScrollY === flags.lastScrollY
       )
         onScrollX?.(scrollEvent);
 
-      setY(currentScrollY);
-      setX(currentScrollX);
-      setDeltaY(localState.deltaY);
-      setDeltaX(localState.deltaX);
-      setDirY(newScrollDirY);
-      setDirX(newScrollDirX);
+      const scrollableAreaY = element.scrollHeight - element.clientHeight;
+      const scrollableAreaX = element.scrollWidth - element.clientWidth;
 
-      const scrollableAmountY = element.scrollHeight - element.clientHeight;
-      const scrollableAmountX = element.scrollWidth - element.clientWidth;
+      const isScrollableY = element.scrollHeight > element.clientHeight;
+      const isScrollableX = element.scrollWidth > element.clientWidth;
 
-      setTotalScrollY(scrollableAmountY);
-      setTotalScrollX(scrollableAmountX);
-      setYInPercent((currentScrollY / scrollableAmountY) * 100);
-      setXInPercent((currentScrollX / scrollableAmountX) * 100);
-      setIsAtTop(currentScrollY === 0);
-      setIsAtBottom(currentScrollY === scrollableAmountY);
-      setIsAtLeft(currentScrollX === 0);
-      setIsAtRight(currentScrollX === scrollableAmountX);
+      const isScrolledY = currentScrollY !== 0;
+      const isScrolledX = currentScrollX !== 0;
 
-      localState.lastScrollY = currentScrollY;
-      localState.lastScrollX = currentScrollX;
-      localState.lastScrollDirY = newScrollDirY;
-      localState.lastScrollDirX = newScrollDirX;
+      setState({
+        scrollY: currentScrollY,
+        scrollX: currentScrollX,
+        deltaY: flags.deltaY,
+        deltaX: flags.deltaX,
+        dirY: isScrolledY ? newScrollDirY : 0,
+        dirX: isScrolledX ? newScrollDirX : 0,
+        totalScrollY: isScrollableY ? scrollableAreaY : 0,
+        totalScrollX: isScrollableX ? scrollableAreaX : 0,
+        scrollYProgress: isScrollableY
+          ? +(currentScrollY / scrollableAreaY).toFixed(3)
+          : 0,
+        scrollXProgress: isScrollableX
+          ? +(currentScrollX / scrollableAreaX).toFixed(3)
+          : 0,
+        isAtTop: isScrollableY ? currentScrollY === 0 : null,
+        isAtBottom: isScrollableY ? currentScrollY === scrollableAreaY : null,
+        isAtLeft: isScrollableX ? currentScrollX === 0 : null,
+        isAtRight: isScrollableX ? currentScrollX === scrollableAreaX : null,
+      });
+
+      flags.lastScrollY = currentScrollY;
+      flags.lastScrollX = currentScrollX;
+      flags.lastScrollDirY = newScrollDirY;
+      flags.lastScrollDirX = newScrollDirX;
     };
 
     const ele = elementRef.current ?? window;
@@ -191,23 +232,7 @@ export const useScroll = <E extends HTMLElement>(
     return () => {
       ele.removeEventListener('scroll', handleScroll);
     };
-  }, [localState]);
+  }, [flags]);
 
-  return {
-    ref: elementRef,
-    y,
-    x,
-    deltaY,
-    deltaX,
-    dirY,
-    dirX,
-    totalScrollY,
-    totalScrollX,
-    yInPercent,
-    xInPercent,
-    isAtTop,
-    isAtBottom,
-    isAtLeft,
-    isAtRight,
-  };
+  return [state, elementRef] as const;
 };
