@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.1.5
+
+### Patch Changes
+
+- fix(React): use scroll hook
+
 ## 4.1.4
 
 ### Patch Changes
