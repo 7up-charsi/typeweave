@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.1.7
+
+### Patch Changes
+
+- fix(React): use scroll event
+
 ## 4.1.6
 
 ### Patch Changes
