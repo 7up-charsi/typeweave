@@ -2,14 +2,12 @@ import React from 'react';
 import { useCallbackRef } from '../use-callback-ref';
 
 export interface ScrollEvent {
-  y: number;
-  x: number;
+  scrollY: number;
+  scrollX: number;
   deltaY: number;
   deltaX: number;
-  dirY: ScrollDirection;
-  dirX: ScrollDirection;
-  lastDirY: ScrollDirection;
-  lastDirX: ScrollDirection;
+  dirY: number;
+  dirX: number;
 }
 
 export interface UseScrollProps {
@@ -135,12 +133,10 @@ export const useScroll = <E extends HTMLElement>(
       const scrollEvent: ScrollEvent = {
         deltaX: flags.deltaX,
         deltaY: flags.deltaY,
-        lastDirX: flags.lastScrollDirX,
-        lastDirY: flags.lastScrollDirY,
         dirX: newScrollDirX,
         dirY: newScrollDirY,
-        x: currentScrollX,
-        y: currentScrollY,
+        scrollX: currentScrollX,
+        scrollY: currentScrollY,
       };
 
       if (flags.lastScrollDirY === 1 && newScrollDirY === -1) {
