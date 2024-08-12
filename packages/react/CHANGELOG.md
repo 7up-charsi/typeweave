@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.1.6
+
+### Patch Changes
+
+- fix(React): use scroll hook default scrollable
+
 ## 4.1.5
 
 ### Patch Changes
