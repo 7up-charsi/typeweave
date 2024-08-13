@@ -130,11 +130,20 @@ export const useScroll = <E extends HTMLElement>(
             ? 1
             : -1;
 
+      const isScrolledY = currentScrollY !== 0;
+      const isScrolledX = currentScrollX !== 0;
+
+      const isScrollableY = element.scrollHeight > element.clientHeight;
+      const isScrollableX = element.scrollWidth > element.clientWidth;
+
+      const dirY = isScrollableY ? (isScrolledY ? newScrollDirY : 1) : 0;
+      const dirX = isScrollableX ? (isScrolledX ? newScrollDirX : 1) : 0;
+
       const scrollEvent: ScrollEvent = {
+        dirY,
+        dirX,
         deltaX: flags.deltaX,
         deltaY: flags.deltaY,
-        dirX: newScrollDirX,
-        dirY: newScrollDirY,
         scrollX: currentScrollX,
         scrollY: currentScrollY,
       };
@@ -188,19 +197,13 @@ export const useScroll = <E extends HTMLElement>(
       const scrollableAreaY = element.scrollHeight - element.clientHeight;
       const scrollableAreaX = element.scrollWidth - element.clientWidth;
 
-      const isScrollableY = element.scrollHeight > element.clientHeight;
-      const isScrollableX = element.scrollWidth > element.clientWidth;
-
-      const isScrolledY = currentScrollY !== 0;
-      const isScrolledX = currentScrollX !== 0;
-
       setState({
+        dirY,
+        dirX,
         scrollY: currentScrollY,
         scrollX: currentScrollX,
         deltaY: flags.deltaY,
         deltaX: flags.deltaX,
-        dirY: isScrollableY ? (isScrolledY ? newScrollDirY : 1) : 0,
-        dirX: isScrollableX ? (isScrolledX ? newScrollDirX : 1) : 0,
         totalScrollY: isScrollableY ? scrollableAreaY : 0,
         totalScrollX: isScrollableX ? scrollableAreaX : 0,
         scrollYProgress: isScrollableY
