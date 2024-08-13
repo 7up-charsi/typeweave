@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.1.8
+
+### Patch Changes
+
+- fix(React): change default dirY dirX at initial
+
 ## 4.1.7
 
 ### Patch Changes
