@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.1.9
+
+### Patch Changes
+
+- fix(React): use scroll event dirY and dirX
+
 ## 4.1.8
 
 ### Patch Changes
