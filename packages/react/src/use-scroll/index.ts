@@ -199,8 +199,8 @@ export const useScroll = <E extends HTMLElement>(
         scrollX: currentScrollX,
         deltaY: flags.deltaY,
         deltaX: flags.deltaX,
-        dirY: isScrolledY ? newScrollDirY : 0,
-        dirX: isScrolledX ? newScrollDirX : 0,
+        dirY: isScrollableY ? (isScrolledY ? newScrollDirY : 1) : 0,
+        dirX: isScrollableX ? (isScrolledX ? newScrollDirX : 1) : 0,
         totalScrollY: isScrollableY ? scrollableAreaY : 0,
         totalScrollX: isScrollableX ? scrollableAreaX : 0,
         scrollYProgress: isScrollableY
