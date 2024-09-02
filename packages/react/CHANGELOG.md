@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.2.1
+
+### Patch Changes
+
+- fix: remove back forth route progress
+
 ## 4.2.0
 
 ### Minor Changes
