@@ -1,3 +1,4 @@
+import React from 'react';
 import { Switch, SwitchProps } from './';
 
 const meta = {
