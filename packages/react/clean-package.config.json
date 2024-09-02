@@ -158,6 +158,10 @@
         "import": "./dist/use-ripple/index.js",
         "types": "./dist/use-ripple/index.d.ts"
       },
+      "./use-route-progress": {
+        "import": "./dist/use-route-progress/index.js",
+        "types": "./dist/use-route-progress/index.d.ts"
+      },
       "./use-scroll": {
         "import": "./dist/use-scroll/index.js",
         "types": "./dist/use-scroll/index.d.ts"

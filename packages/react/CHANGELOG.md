@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.2.0
+
+### Minor Changes
+
+- feat: use route progress
+
 ## 4.1.9
 
 ### Patch Changes
