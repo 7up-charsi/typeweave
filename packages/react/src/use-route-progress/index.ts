@@ -161,19 +161,13 @@ export const useRouteProgress = () => {
       setProgress(0);
     };
 
-    const handleBackAndForth = () => {
-      start();
-    };
-
     // Add the global click event listener
     document.addEventListener('click', handleClick); // TODO: add PointerEvents
-    window.addEventListener('popstate', handleBackAndForth);
     window.addEventListener('pagehide', handlePageHide);
 
     // Clean up the global click event listener when the component is unmounted
     return (): void => {
       document.removeEventListener('click', handleClick);
-      window.removeEventListener('popstate', handleBackAndForth);
       window.removeEventListener('pagehide', handlePageHide);
 
       cancelAnimationFrame(doneAnimationFrameRef.current);
