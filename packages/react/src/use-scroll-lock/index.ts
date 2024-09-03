@@ -16,7 +16,7 @@ export interface UseScrollLockProps<E> {
   direction?: Direction;
 }
 
-const useScrollLock = <E extends HTMLElement>(
+export const useScrollLock = <E extends HTMLElement>(
   props: UseScrollLockProps<E> = {},
 ) => {
   const { ref, disabled, direction = 'both' } = props;
@@ -25,7 +25,8 @@ const useScrollLock = <E extends HTMLElement>(
     if (disabled) return;
 
     const isBody = !(ref && ref.current);
-    const ele = ref?.current || document?.body;
+    const ele = ref?.current || document.body;
+
     const computedStyles = getComputedStyle(ele);
 
     const originalPaddingRight = computedStyles.paddingRight;
@@ -84,7 +85,3 @@ const useScrollLock = <E extends HTMLElement>(
     };
   }, [direction, disabled, ref]);
 };
-
-export type UseScrollLockReturn = ReturnType<typeof useScrollLock>;
-
-export { useScrollLock };

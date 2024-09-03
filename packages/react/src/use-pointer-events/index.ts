@@ -7,7 +7,7 @@ export interface UsePointerEventsProps<E> {
   onPress?: React.PointerEventHandler<E>;
 }
 
-const usePointerEvents = <E extends HTMLElement = HTMLElement>(
+export const usePointerEvents = <E extends HTMLElement = HTMLElement>(
   props: UsePointerEventsProps<E> = {},
 ) => {
   const {
@@ -55,7 +55,3 @@ const usePointerEvents = <E extends HTMLElement = HTMLElement>(
 
   return { onPointerDown, onPointerUp };
 };
-
-export type UsePointerEventsReturn = ReturnType<typeof usePointerEvents>;
-
-export { usePointerEvents };
