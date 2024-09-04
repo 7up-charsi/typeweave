@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.2.2
+
+### Patch Changes
+
+- fix(React): input focus-visible ring
+
 ## 4.2.1
 
 ### Patch Changes
