@@ -9,7 +9,7 @@ const displayName = 'Overlay';
 
 export const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
   (props, ref) => {
-    const { className, variant = 'opaque', ...restProps } = props;
+    const { className, variant = 'blur', ...restProps } = props;
 
     const styles = React.useMemo(
       () => overlayStyles({ variant, className }),
