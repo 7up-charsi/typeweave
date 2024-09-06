@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.2.4
+
+### Patch Changes
+
+- fix(React): input styles when multine
+
 ## 4.2.3
 
 ### Patch Changes
