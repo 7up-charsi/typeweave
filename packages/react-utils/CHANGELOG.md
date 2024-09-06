@@ -1,5 +1,11 @@
 # @typeweave/react-utils
 
+## 1.2.0
+
+### Minor Changes
+
+- feat(ReactUtils): dialog state
+
 ## 1.1.4
 
 ### Patch Changes
