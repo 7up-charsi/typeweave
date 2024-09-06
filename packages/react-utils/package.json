@@ -43,11 +43,12 @@
     "react": ">=18"
   },
   "dependencies": {
-    "clsx": "^2.1.1"
+    "clsx": "^2.1.1",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
-    "clean-package": "^2.2.0",
+    "@repo/typescript-config": "workspace:*",
     "@types/react": "^18.3.1",
-    "@repo/typescript-config": "workspace:*"
+    "clean-package": "^2.2.0"
   }
 }
