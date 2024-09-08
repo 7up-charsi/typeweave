@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.2.7
+
+### Patch Changes
+
+- fix(React): checkbox a11y
+
 ## 4.2.6
 
 ### Patch Changes
