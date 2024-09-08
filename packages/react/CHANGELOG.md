@@ -1,5 +1,17 @@
 # @typeweave/react
 
+## 4.2.6
+
+### Patch Changes
+
+- re-release
+
+## 4.2.5
+
+### Patch Changes
+
+- feat: error state in checkbox
+
 ## 4.2.4
 
 ### Patch Changes
