@@ -13,6 +13,7 @@ export const checkboxStyles = tv({
       'pointer-events-none absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden peer-indeterminate/input:block dynamic-icon',
     label:
       'cursor-pointer select-none first-letter:uppercase group-data-[error=true]/base:text-danger-11',
+    errorMessage: 'sr-only',
   },
   variants: {
     color: {

@@ -20,7 +20,8 @@ export interface CheckboxProps
     indeterminateIcon: string;
     label: string;
   }>;
-  error: boolean;
+  error?: boolean;
+  errorMessage?: string;
 }
 
 const displayName = 'Checkbox';
@@ -41,8 +42,12 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
       color = 'primary',
       labelPlacement = 'right',
       error,
+      errorMessage,
+      'aria-describedby': ariaDescribedby,
       ...inpuProps
     } = props;
+
+    const errorMessageId = React.useId();
 
     const innerRef = React.useRef<HTMLInputElement>(null);
 
@@ -72,6 +77,10 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             id={id}
             ref={mergeRefs(ref, innerRef)}
             type="checkbox"
+            aria-invalid={!!error}
+            aria-describedby={
+              error ? ariaDescribedby || errorMessageId : undefined
+            }
             className={styles.input({ className: classNames?.input })}
           />
 
@@ -102,6 +111,12 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             {label}
           </label>
         )}
+
+        {error && !ariaDescribedby ? (
+          <span id={errorMessageId} className={styles.errorMessage()}>
+            {errorMessage}
+          </span>
+        ) : null}
       </div>
     );
   },
