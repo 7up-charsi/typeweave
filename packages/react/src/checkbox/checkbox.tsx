@@ -20,6 +20,7 @@ export interface CheckboxProps
     indeterminateIcon: string;
     label: string;
   }>;
+  error: boolean;
 }
 
 const displayName = 'Checkbox';
@@ -39,6 +40,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
       size = 'md',
       color = 'primary',
       labelPlacement = 'right',
+      error,
       ...inpuProps
     } = props;
 
@@ -60,6 +62,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
 
     return (
       <div
+        data-error={!!error}
         className={styles.base({ className: classNames?.base ?? className })}
       >
         <div className={styles.checkbox({ className: classNames?.checkbox })}>

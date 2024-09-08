@@ -1,3 +1,4 @@
+import React from 'react';
 import { Checkbox, CheckboxProps, checkboxStyles } from './';
 
 const meta = {
@@ -8,20 +9,33 @@ const meta = {
 
 export default meta;
 
-const Template = (args: CheckboxProps) => (
-  <div className="flex flex-col gap-4">
-    <Checkbox {...args} indeterminate label="indeterminate and md size" />
-    <Checkbox {...args} label="default and md size" />
+const Template = (args: CheckboxProps) => {
+  const [error, setError] = React.useState(true);
 
-    <Checkbox
-      {...args}
-      indeterminate
-      label="indeterminate and sm size"
-      size="sm"
-    />
-    <Checkbox {...args} label="default and sm size" size="sm" />
-  </div>
-);
+  return (
+    <div className="flex flex-col gap-4">
+      <Checkbox {...args} indeterminate label="indeterminate and md size" />
+      <Checkbox {...args} label="default and md size" />
+
+      <Checkbox
+        {...args}
+        indeterminate
+        label="indeterminate and sm size"
+        size="sm"
+      />
+
+      <Checkbox {...args} label="default and sm size" size="sm" />
+
+      <Checkbox
+        {...args}
+        error={error}
+        label="i have error"
+        size="sm"
+        onChange={(e) => setError(!e.target.checked)}
+      />
+    </div>
+  );
+};
 
 export const Default = {
   render: Template,

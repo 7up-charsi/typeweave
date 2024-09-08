@@ -2,16 +2,17 @@ import { tv, VariantProps } from 'tailwind-variants';
 
 export const checkboxStyles = tv({
   slots: {
-    base: 'inline-flex gap-2',
+    base: 'inline-flex gap-2 group/base',
     checkbox: 'relative shrink-0',
     input:
-      'peer/input rounded appearance-none cursor-pointer transition-colors border border-muted-8 disabled:disabled absolute inset-0 outline-none focus-visible:ring-2 focus-visible:ring-focus',
+      'group-data-[error=true]/base:border-danger-9 peer/input rounded appearance-none cursor-pointer transition-colors border border-muted-8 disabled:disabled absolute inset-0 outline-none focus-visible:ring-2 focus-visible:ring-focus',
     icon: 'pointer-events-none absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 block peer-indeterminate/input:hidden peer-checked/input:hidden dynamic-icon',
     checkedIcon:
       'pointer-events-none absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden peer-checked/input:block dynamic-icon',
     indeterminateIcon:
       'pointer-events-none absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden peer-indeterminate/input:block dynamic-icon',
-    label: 'cursor-pointer select-none first-letter:uppercase',
+    label:
+      'cursor-pointer select-none first-letter:uppercase group-data-[error=true]/base:text-danger-11',
   },
   variants: {
     color: {
