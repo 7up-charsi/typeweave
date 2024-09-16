@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.2.8
+
+### Patch Changes
+
+- fix(React): switch disabled styles
+
 ## 4.2.7
 
 ### Patch Changes
