@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.2.9
+
+### Patch Changes
+
+- fix: border and foucs-ring color
+
 ## 4.2.8
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.1.5
+
+### Patch Changes
+
+- fix: border and foucs-ring color
+
 ## 1.1.3
 
 ### Patch Changes
