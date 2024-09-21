@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.1.6
+
+### Patch Changes
+
+- fix: prev release
+
 ## 1.1.5
 
 ### Patch Changes
