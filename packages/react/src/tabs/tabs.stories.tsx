@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button } from '../button';
 import { TabsRoot, TabsTrigger, TabsList, TabsContent } from './';
 
@@ -21,7 +22,7 @@ const Template = (args) => (
       <TabsContent
         key={i}
         value={`tab-${i + 1}`}
-        className="border border-muted-6 rounded p-3"
+        className="border border-muted-7 rounded p-3"
       >
         <h2 className="text-lg mb-2">Tab {i + 1}</h2>
 

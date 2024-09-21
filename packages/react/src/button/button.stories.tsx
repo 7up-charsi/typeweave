@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, ButtonGroup, ButtonProps, buttonStyles } from './';
 import { ChevronDown, SmileIcon } from 'lucide-react';
 

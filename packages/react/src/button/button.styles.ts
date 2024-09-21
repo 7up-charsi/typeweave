@@ -262,49 +262,49 @@ export const buttonStyles = tv({
       variant: 'border',
       color: 'default',
       className: {
-        base: 'border-muted-6 hover:border-muted-7 active:border-muted-8 text-muted-11',
+        base: 'border-muted-7 hover:border-muted-8 active:border-muted-8 text-muted-11',
       },
     },
     {
       variant: 'border',
       color: 'primary',
       className: {
-        base: 'border-primary-6 hover:border-primary-7 active:border-primary-8 text-primary-11',
+        base: 'border-primary-7 hover:border-primary-8 active:border-primary-8 text-primary-11',
       },
     },
     {
       variant: 'border',
       color: 'secondary',
       className: {
-        base: 'border-secondary-6 hover:border-secondary-7 active:border-secondary-8 text-secondary-11',
+        base: 'border-secondary-7 hover:border-secondary-8 active:border-secondary-8 text-secondary-11',
       },
     },
     {
       variant: 'border',
       color: 'success',
       className: {
-        base: 'border-success-6 hover:border-success-7 active:border-success-8 text-success-11',
+        base: 'border-success-7 hover:border-success-8 active:border-success-8 text-success-11',
       },
     },
     {
       variant: 'border',
       color: 'info',
       className: {
-        base: 'border-info-6 hover:border-info-7 active:border-info-8 text-info-11',
+        base: 'border-info-7 hover:border-info-8 active:border-info-8 text-info-11',
       },
     },
     {
       variant: 'border',
       color: 'warning',
       className: {
-        base: 'border-warning-6 hover:border-warning-7 active:border-warning-8 text-warning-11',
+        base: 'border-warning-7 hover:border-warning-8 active:border-warning-8 text-warning-11',
       },
     },
     {
       variant: 'border',
       color: 'danger',
       className: {
-        base: 'border-danger-6 hover:border-danger-7 active:border-danger-8 text-danger-11',
+        base: 'border-danger-7 hover:border-danger-8 active:border-danger-8 text-danger-11',
       },
     },
   ],

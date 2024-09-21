@@ -214,7 +214,7 @@ export const chipStyles = tv({
       variant: 'border',
       color: 'default',
       class: {
-        base: 'border-muted-6 text-muted-11',
+        base: 'border-muted-7 text-muted-11',
         deleteIcon: 'text-muted-11/70 hover:text-muted-11',
       },
     },
@@ -222,7 +222,7 @@ export const chipStyles = tv({
       variant: 'border',
       color: 'primary',
       class: {
-        base: 'border-primary-6 text-primary-11',
+        base: 'border-primary-7 text-primary-11',
         deleteIcon: 'text-primary-11/70 hover:text-primary-11',
       },
     },
@@ -230,7 +230,7 @@ export const chipStyles = tv({
       variant: 'border',
       color: 'secondary',
       class: {
-        base: 'border-secondary-6 text-secondary-11',
+        base: 'border-secondary-7 text-secondary-11',
         deleteIcon: 'text-secondary-11/70 hover:text-secondary-11',
       },
     },
@@ -238,7 +238,7 @@ export const chipStyles = tv({
       variant: 'border',
       color: 'success',
       class: {
-        base: 'border-success-6 text-success-11',
+        base: 'border-success-7 text-success-11',
         deleteIcon: 'text-success-11/70 hover:text-success-11',
       },
     },
@@ -246,7 +246,7 @@ export const chipStyles = tv({
       variant: 'border',
       color: 'info',
       class: {
-        base: 'border-info-6 text-info-11',
+        base: 'border-info-7 text-info-11',
         deleteIcon: 'text-info-11/70 hover:text-info-11',
       },
     },
@@ -254,7 +254,7 @@ export const chipStyles = tv({
       variant: 'border',
       color: 'warning',
       class: {
-        base: 'border-warning-6 text-warning-11',
+        base: 'border-warning-7 text-warning-11',
         deleteIcon: 'text-warning-11/70 hover:text-warning-11',
       },
     },
@@ -262,7 +262,7 @@ export const chipStyles = tv({
       variant: 'border',
       color: 'danger',
       class: {
-        base: 'border-danger-6 text-danger-11',
+        base: 'border-danger-7 text-danger-11',
         deleteIcon: 'text-danger-11/70 hover:text-danger-11',
       },
     },

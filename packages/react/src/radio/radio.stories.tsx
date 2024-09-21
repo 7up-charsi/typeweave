@@ -1,3 +1,4 @@
+import React from 'react';
 import { Radio, RadioProps, RadioVariantProps, radioStyles } from './';
 
 const meta = {
@@ -15,7 +16,7 @@ const Template = (args: RadioProps) => {
       ).map((color) => (
         <div
           key={color}
-          className="w-44 border border-muted-6 p-4 rounded flex flex-col gap-3"
+          className="w-44 border border-muted-7 p-4 rounded flex flex-col gap-3"
         >
           <h2>Your gender</h2>
           <div className="flex flex-col gap-2">

@@ -74,22 +74,22 @@ export const alertStyles = tv({
     {
       variant: 'border',
       color: 'success',
-      class: 'border-success-6 text-success-11',
+      class: 'border-success-7 text-success-11',
     },
     {
       variant: 'border',
       color: 'info',
-      class: 'border-info-6 text-info-11',
+      class: 'border-info-7 text-info-11',
     },
     {
       variant: 'border',
       color: 'warning',
-      class: 'border-warning-6 text-warning-11',
+      class: 'border-warning-7 text-warning-11',
     },
     {
       variant: 'border',
       color: 'danger',
-      class: 'border-danger-6 text-danger-11',
+      class: 'border-danger-7 text-danger-11',
     },
   ],
 });

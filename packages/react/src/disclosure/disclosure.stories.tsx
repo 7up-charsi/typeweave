@@ -15,7 +15,7 @@ const meta = {
 export default meta;
 
 const Template = (args) => (
-  <DisclosureRoot {...args} className="rounded border border-muted-6">
+  <DisclosureRoot {...args} className="rounded border border-muted-7">
     {Array.from({ length: 10 }).map((_, i, arr) => (
       <React.Fragment key={i}>
         <DisclosureItem value={'' + (i + 1)} className="first:mt-2 last:!mb-2">
@@ -41,7 +41,7 @@ const Template = (args) => (
           </DisclosureContent>
         </DisclosureItem>
 
-        {i !== arr.length - 1 ? <hr className="border-muted-6" /> : null}
+        {i !== arr.length - 1 ? <hr className="border-muted-7" /> : null}
       </React.Fragment>
     ))}
   </DisclosureRoot>

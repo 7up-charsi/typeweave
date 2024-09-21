@@ -1,3 +1,4 @@
+import React from 'react';
 import { Skeleton, skeletonStyles } from './';
 
 const meta = {

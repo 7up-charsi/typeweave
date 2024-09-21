@@ -1,3 +1,4 @@
+import React from 'react';
 import { Chip, chipStyles } from './';
 
 const meta = {

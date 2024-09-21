@@ -16,7 +16,7 @@ export const lightThemeColors: ThemeColors = {
   info: createColorScale(colors.blue),
   muted: createColorScale(lightMuted),
   overlay: colors.blackA.blackA6,
-  focus: colors.blue.blue8,
+  focus: colors.blue.blue7,
   paper: lightBg,
 };
 
@@ -34,6 +34,6 @@ export const darkThemeColors: ThemeColors = {
   info: createColorScale(colors.blueDark),
   muted: createColorScale(colors.grayDark),
   overlay: colors.blackA.blackA3,
-  focus: colors.blueDark.blue8,
+  focus: colors.blueDark.blue7,
   paper: darkMuted.gray5,
 };

@@ -30,7 +30,7 @@ const Template = () => {
     <>
       <div
         ref={scrollRef}
-        className="h-96 rounded border border-muted-6 overflow-auto p-5"
+        className="h-96 rounded border border-muted-7 overflow-auto p-5"
       >
         {content.map(({ length, lastLine }, i) => (
           <div

@@ -15,8 +15,8 @@ export const tableStyles = tv({
         tr: 'even:bg-muted-3 [thead>&]:bg-muted-3',
       },
       grid: {
-        th: 'border border-muted-6',
-        td: 'border border-muted-6',
+        th: 'border border-muted-7',
+        td: 'border border-muted-7',
       },
     },
   },
