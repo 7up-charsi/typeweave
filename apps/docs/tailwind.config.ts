@@ -1,7 +1,8 @@
-import type { Config } from 'tailwindcss';
-import { typeweave } from '@typeweave/plugin';
-import typography from '@tailwindcss/typography';
+import { createColorScale, typeweave } from '@typeweave/plugin';
 import tailwindScrollbar from 'tailwind-scrollbar';
+import { gray, grayDark } from '@radix-ui/colors';
+import typography from '@tailwindcss/typography';
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
@@ -19,7 +20,17 @@ const config: Config = {
       },
     },
   },
-  plugins: [typeweave(), typography, tailwindScrollbar],
+  plugins: [
+    typeweave({
+      colorMode: 'rgb',
+      themes: {
+        light: { colors: { primary: createColorScale(gray) } },
+        dark: { colors: { primary: createColorScale(grayDark) } },
+      },
+    }),
+    typography,
+    tailwindScrollbar,
+  ],
 };
 
 export default config;

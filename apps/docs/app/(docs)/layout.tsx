@@ -1,8 +1,11 @@
-import { SidebarContent } from '@/(docs)/_components/sidebar-content';
-import { Navbar } from '@/(docs)/_components/navbar';
+import { AppBarContent } from './_scoped/app-bar-content';
+import { RouteProgress } from './_scoped/route-progress';
 import '@/styles/syntax-highlight-theme.css';
+import { SideBar } from './_scoped/side-bar';
 import { Fira_Code } from 'next/font/google';
 import { GeistSans } from 'geist/font/sans';
+import { ThemeProvider } from 'next-themes';
+import { AppBar } from './_scoped/app-bar';
 import '@/styles/admonitions.css';
 import '@/styles/globals.css';
 
@@ -22,21 +25,19 @@ const Layout = ({ children }: Props) => {
       className={`${GeistSans.variable} ${font_code.variable}`}
     >
       <body className="m-auto max-w-screen-2xl bg-background text-foreground">
-        <Navbar />
+        <ThemeProvider attribute="class">
+          <AppBar>
+            <AppBarContent />
+          </AppBar>
 
-        <div className="xl:grid xl:grid-cols-[300px_1fr]">
-          {/*
-          why aside in div 
-          Since the aside element is positioned absolutely, it needs to be replaced with some other content so that the grid columns remain as intended.
-          */}
-          <div className="max-xl:hidden">
-            <aside className="fixed top-16 flex h-[calc(100vh-theme(spacing.16))] w-[300px] flex-col gap-3 overflow-auto border-r border-r-muted-6 py-5 pl-10 pr-5">
-              <SidebarContent />
-            </aside>
+          <div className="min-h-[calc(100vh-65px)] xl:grid xl:grid-cols-[300px_1fr]">
+            <SideBar />
+
+            {children}
           </div>
 
-          {children}
-        </div>
+          <RouteProgress />
+        </ThemeProvider>
       </body>
     </html>
   );

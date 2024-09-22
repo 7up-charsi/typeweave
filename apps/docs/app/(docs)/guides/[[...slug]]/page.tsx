@@ -1,6 +1,6 @@
-import { ContentWithToc } from '@/(docs)/_components/content-with-toc';
-import { CompileMdx } from '@/(docs)/_components/compile-mdx';
-import { Pager } from '@/(docs)/_components/pager';
+import { ContentWithToc } from '@/app/(docs)/_scoped/content-with-toc';
+import { CompileMdx } from '@/app/(docs)/_scoped/compile-mdx';
+import { Pager } from '@/app/(docs)/_scoped/pager';
 import { getMdxFiles } from '@/lib/get-mdx-files';
 import { notFound } from 'next/navigation';
 import { getMeta } from '@/lib/get-meta';
