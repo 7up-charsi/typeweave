@@ -119,7 +119,7 @@ export const useSwipeable = (props: UseSwipeableProps = {}) => {
       const deltaY = Math.abs(endY - startY);
       const absX = Math.abs(deltaX);
       const absY = Math.abs(deltaY);
-      const time = event.timeStamp - startTime ?? 1;
+      const time = event.timeStamp - startTime || 1;
       const speedX = absX / time;
       const speedY = absY / time;
 
