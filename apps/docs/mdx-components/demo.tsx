@@ -1,15 +1,14 @@
-import path from 'path';
-import { access, readFile } from 'fs/promises';
-import { Code } from './code';
-import { Pre } from './pre';
-import { ClientDemoRenderer } from './client-demo-renderer';
 import {
-  Button,
   TabsContent,
   TabsList,
   TabsRoot,
   TabsTrigger,
-} from '@typeweave/react';
+} from '@typeweave/react/tabs';
+import { Button } from '@typeweave/react/button';
+import { access, readFile } from 'fs/promises';
+import { Code } from './code';
+import { Pre } from './pre';
+import path from 'path';
 
 interface DemoProps {
   source?: string;

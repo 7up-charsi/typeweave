@@ -1,4 +1,4 @@
-import { Button } from '@typeweave/react';
+import { Button } from '@typeweave/react/button';
 import { GithubIcon } from 'lucide-react';
 import Link from 'next/link';
 

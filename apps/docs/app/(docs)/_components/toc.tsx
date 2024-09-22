@@ -1,6 +1,6 @@
 'use client';
 
-import { Skeleton } from '@typeweave/react';
+import { Skeleton } from '@typeweave/react/skeleton';
 import Link from 'next/link';
 import React from 'react';
 

@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionRoot,
   AccordionTrigger,
-} from '@typeweave/react';
+} from '@typeweave/react/accordion';
 import { ChevronDown } from 'lucide-react';
 
 export default function App() {

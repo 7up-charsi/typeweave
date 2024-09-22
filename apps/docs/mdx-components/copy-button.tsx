@@ -1,8 +1,8 @@
 'use client';
 
-import { Button } from '@typeweave/react';
-import React from 'react';
+import { Button } from '@typeweave/react/button';
 import { Copy, CopyCheck } from 'lucide-react';
+import React from 'react';
 
 interface CopyButtonProps {
   code: string;

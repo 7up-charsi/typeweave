@@ -1,7 +1,7 @@
 'use client';
 
-import { PointerEvents } from '@typeweave/react/src/pointer-events/pointer-events';
-import React, { useState } from 'react';
+import { PointerEvents } from '@typeweave/react/pointer-events';
+import React from 'react';
 
 // *-*-*-*-* SidebarGroup *-*-*-*-*
 

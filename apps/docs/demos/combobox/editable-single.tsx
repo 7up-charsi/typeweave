@@ -1,6 +1,7 @@
 'use client';
 
-import { Combobox, Input } from '@typeweave/react';
+import { Combobox } from '@typeweave/react/combobox';
+import { Input } from '@typeweave/react/input';
 import topMovies from './options.json';
 
 export default function App() {

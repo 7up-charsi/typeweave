@@ -1,12 +1,12 @@
 'use client';
 
+import { componentsApiLinks } from '@/config/components-api-links';
 import { customizationLinks } from '@/config/customization-links';
-import { guidesLinks } from '@/config/guides-links';
 import { componentsLinks } from '@/config/components-links';
+import { guidesLinks } from '@/config/guides-links';
+import { SidebarGroup } from './sidebar-group';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { SidebarGroup } from './sidebar-group';
-import { componentsApiLinks } from '@/config/components-api-links';
 
 const linkStyles = (href: string, pathname: string) =>
   `flex h-8 items-center rounded px-3 ${pathname === href ? 'bg-primary-4 text-primary-11' : 'text-muted-11 hover:bg-muted-3'} focus-visible:ring-2 focus-visible:ring-focus`;

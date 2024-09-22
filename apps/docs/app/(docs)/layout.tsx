@@ -1,10 +1,10 @@
-import { GeistSans } from 'geist/font/sans';
-import { Fira_Code } from 'next/font/google';
-import { Navbar } from '@/(docs)/_components/navbar';
 import { SidebarContent } from '@/(docs)/_components/sidebar-content';
-import '@/styles/globals.css';
+import { Navbar } from '@/(docs)/_components/navbar';
 import '@/styles/syntax-highlight-theme.css';
+import { Fira_Code } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
 import '@/styles/admonitions.css';
+import '@/styles/globals.css';
 
 const font_code = Fira_Code({
   variable: '--font-code',

@@ -1,18 +1,18 @@
-import React from 'react';
 import {
-  Button,
   DrawerClose,
   DrawerContent,
   DrawerOverlay,
   DrawerPortal,
   DrawerRoot,
   DrawerTrigger,
-} from '@typeweave/react';
-import { MenuIcon, XIcon } from 'lucide-react';
-import { Branding } from '@/components/branding';
-import { SidebarContent } from './sidebar-content';
+} from '@typeweave/react/drawer';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { GithubLink } from '@/components/github-link';
+import { SidebarContent } from './sidebar-content';
+import { Button } from '@typeweave/react/button';
+import { Branding } from '@/components/branding';
+import { MenuIcon, XIcon } from 'lucide-react';
+import React from 'react';
 
 const displayName = 'Navbar';
 

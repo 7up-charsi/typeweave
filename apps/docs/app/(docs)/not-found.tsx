@@ -5,7 +5,7 @@ const NotFound = () => {
         404
       </h1>
       <p className="mb-8 text-center text-2xl">
-        We can't seem to find the page you're looking for.
+        We can&apos;t seem to find the page you&apos;re looking for.
       </p>
     </div>
   );

@@ -1,13 +1,13 @@
-import React from 'react';
-import { evaluate } from '@mdx-js/mdx';
-import remarkGfm from 'remark-gfm';
-import rehypeSlug from 'rehype-slug';
-import remarkDirective from 'remark-directive';
 import { mdxComponents } from '@/mdx-components';
+import remarkDirective from 'remark-directive';
+import { evaluate } from '@mdx-js/mdx';
+import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm';
+import React from 'react';
 
 // @ts-ignore
-import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
 import { remarkAdmonitions } from '@/lib/remark-admonitions';
+import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
 
 interface CompileMdxProps {
   content: string;

@@ -1,6 +1,6 @@
 'use client';
 
-import { PointerEvents, Slot } from '@typeweave/react';
+import { PointerEvents } from '@typeweave/react/pointer-events';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 import { Fira_Code } from 'next/font/google';
 import React from 'react';

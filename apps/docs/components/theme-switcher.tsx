@@ -1,10 +1,6 @@
 'use client';
 
-import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
-import { ThemeProvider, useTheme } from 'next-themes';
-import React from 'react';
 import {
-  Button,
   MenuArrow,
   MenuContent,
   MenuPortal,
@@ -12,8 +8,12 @@ import {
   MenuRadioItem,
   MenuRoot,
   MenuTrigger,
-  Skeleton,
-} from '@typeweave/react';
+} from '@typeweave/react/menu';
+import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
+import { ThemeProvider, useTheme } from 'next-themes';
+import { Skeleton } from '@typeweave/react/skeleton';
+import { Button } from '@typeweave/react/button';
+import React from 'react';
 
 interface ThemeSwitcherProps {
   className?: string;
@@ -41,6 +41,7 @@ const ThemeImpl = (props: ThemeSwitcherProps) => {
       <MenuPortal>
         <MenuContent className="z-[9999]">
           <MenuArrow />
+
           <MenuRadioGroup
             label="theme switcher"
             onChange={setTheme}

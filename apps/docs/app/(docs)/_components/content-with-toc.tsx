@@ -1,5 +1,5 @@
-import React from 'react';
 import { Toc } from './toc';
+import React from 'react';
 
 interface ContentWithTocProps {
   children?: React.ReactNode;

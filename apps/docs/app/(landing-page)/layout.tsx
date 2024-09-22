@@ -1,7 +1,7 @@
-import type { Metadata } from 'next';
+import { Navbar } from '@/app/(landing-page)/_scoped/navbar';
 import { GeistSans } from 'geist/font/sans';
 import { siteConfig } from '@/config/site';
-import { Navbar } from '@/(landing-page)/_components/navbar';
+import type { Metadata } from 'next';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {

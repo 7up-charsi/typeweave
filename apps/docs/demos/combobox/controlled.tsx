@@ -1,8 +1,9 @@
 'use client';
 
-import React from 'react';
-import { Combobox, Input } from '@typeweave/react';
+import { Combobox } from '@typeweave/react/combobox';
+import { Input } from '@typeweave/react/input';
 import topMovies from './options.json';
+import React from 'react';
 
 type ComboboxOption = { label: string; year: number };
 
@@ -15,8 +16,8 @@ export default function App() {
   return (
     <div>
       <div className="mb-3">
-        <div>value: "{value?.label}"</div>
-        <div>inputValue: "{inputValue}"</div>
+        <div>value: &quot;{value?.label}&quot;</div>
+        <div>inputValue: &quot;{inputValue}</div>
       </div>
 
       <Combobox

@@ -1,6 +1,6 @@
-import { Button } from '@typeweave/react';
+import { InstallationCommand } from '@/app/(landing-page)/_scoped/installation-command';
+import { Button } from '@typeweave/react/button';
 import Link from 'next/link';
-import { InstallationCommand } from '@/(landing-page)/_components/installation-command';
 
 const Page = () => {
   return (
@@ -65,7 +65,8 @@ const Page = () => {
             Typeweave is designed with developers in mind. All
             components are easy to use and integrate seamlessly into
             your projects. With comprehensive documentation and a
-            focus on simplicity, you'll be up and running in no time.
+            focus on simplicity, you&apos;ll be up and running in no
+            time.
           </dd>
 
           <dt className="mb-2 font-medium">Robust Components</dt>

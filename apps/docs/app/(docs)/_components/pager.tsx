@@ -1,8 +1,8 @@
-import { componentsLinks } from '@/config/components-links';
 import { customizationLinks } from '@/config/customization-links';
-import { guidesLinks } from '@/config/guides-links';
-import { Button } from '@typeweave/react';
+import { componentsLinks } from '@/config/components-links';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { guidesLinks } from '@/config/guides-links';
+import { Button } from '@typeweave/react/button';
 import Link from 'next/link';
 
 interface PagerProps {

@@ -1,14 +1,14 @@
-import LZString from 'lz-string';
 import {
-  Button,
   TooltipArrow,
   TooltipContent,
   TooltipPortal,
   TooltipRoot,
   TooltipTrigger,
-} from '@typeweave/react';
-import React from 'react';
+} from '@typeweave/react/tooltip';
+import { Button } from '@typeweave/react/button';
 import { Codesandbox } from 'lucide-react';
+import LZString from 'lz-string';
+import React from 'react';
 
 export const CreateSandbox = () => {
   return (

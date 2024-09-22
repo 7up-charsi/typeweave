@@ -1,12 +1,12 @@
-import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
-import { getMdx } from '@/lib/get-mdx';
-import grayMatter from 'gray-matter';
-import { getMdxFiles } from '@/lib/get-mdx-files';
-import { getMeta } from '@/lib/get-meta';
 import { ContentWithToc } from '@/(docs)/_components/content-with-toc';
 import { CompileMdx } from '@/(docs)/_components/compile-mdx';
 import { Pager } from '@/(docs)/_components/pager';
+import { getMdxFiles } from '@/lib/get-mdx-files';
+import { notFound } from 'next/navigation';
+import { getMeta } from '@/lib/get-meta';
+import { getMdx } from '@/lib/get-mdx';
+import grayMatter from 'gray-matter';
+import { Metadata } from 'next';
 
 interface PageProps {
   params: { slug: string[] };

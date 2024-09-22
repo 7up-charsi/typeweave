@@ -1,5 +1,4 @@
 import { Link2Icon } from 'lucide-react';
-import Link from 'next/link';
 
 interface HeadingProps
   extends React.HTMLAttributes<HTMLHeadingElement> {

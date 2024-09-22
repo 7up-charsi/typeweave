@@ -1,7 +1,7 @@
 import { highlightCode } from '@/lib/highlight-code';
-import { Markup } from 'interweave';
-import { polyfill } from 'interweave-ssr';
 import { CopyButton } from './copy-button';
+import { polyfill } from 'interweave-ssr';
+import { Markup } from 'interweave';
 polyfill();
 
 interface CodeProps {

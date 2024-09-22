@@ -1,12 +1,12 @@
 import {
-  Button,
   TabsContent,
   TabsList,
   TabsRoot,
   TabsTrigger,
-} from '@typeweave/react';
-import { Pre } from './pre';
+} from '@typeweave/react/tabs';
+import { Button } from '@typeweave/react/button';
 import { Code } from './code';
+import { Pre } from './pre';
 
 interface Props {
   package?: string;
