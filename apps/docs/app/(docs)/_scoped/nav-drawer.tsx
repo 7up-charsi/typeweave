@@ -46,9 +46,9 @@ export const NavDrawer = (props: NavDrawerProps) => {
       </DrawerTrigger>
 
       <DrawerPortal>
-        <DrawerOverlay className="xl:hidden" />
+        <DrawerOverlay />
 
-        <DrawerContent className="flex w-full max-w-[300px] flex-col xl:hidden">
+        <DrawerContent className="flex w-full max-w-[300px] flex-col">
           <div className="flex h-16 shrink-0 items-center px-5">
             <Branding />
 

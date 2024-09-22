@@ -41,7 +41,7 @@ export const Toc = () => {
   }, []);
 
   return (
-    <aside className="sticky top-16 hidden h-[calc(100vh-theme(spacing.16))] w-[200px] shrink-0 p-2 pt-4 lg:block">
+    <aside className="sticky top-[65px] hidden h-[var(--screen-height)] w-full p-2 pt-4 lg:block">
       <span className="text-sm text-muted-11">Table of contents</span>
       <nav aria-label="table of content" className="flex flex-col">
         {headings ? null : (
@@ -86,7 +86,7 @@ export const Toc = () => {
                         : 'text-muted-11 hover:text-muted-12'
                     }`}
                   >
-                    <span className="inline-block first-letter:uppercase ">
+                    <span className="inline-block first-letter:uppercase">
                       {innerText}
                     </span>
                   </Link>

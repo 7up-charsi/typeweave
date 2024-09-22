@@ -1,9 +1,10 @@
-import { ContentWithToc } from '@/app/(docs)/_scoped/content-with-toc';
-import { CompileMdx } from '@/app/(docs)/_scoped/compile-mdx';
-import { Pager } from '@/app/(docs)/_scoped/pager';
+import { ProseContent } from '../../_scoped/prose-content';
+import { CompileMdx } from '../../_scoped/compile-mdx';
 import { getMdxFiles } from '@/lib/get-mdx-files';
+import { Pager } from '../../_scoped/pager';
 import { notFound } from 'next/navigation';
 import { getMeta } from '@/lib/get-meta';
+import { Toc } from '../../_scoped/toc';
 import { getMdx } from '@/lib/get-mdx';
 import grayMatter from 'gray-matter';
 import { Metadata } from 'next';
@@ -48,10 +49,14 @@ const Page = async ({ params }: PageProps) => {
   const { content } = grayMatter(markdown);
 
   return (
-    <ContentWithToc>
-      <CompileMdx content={content} />
-      <Pager activeHref={`${dir}/${slug}`} />
-    </ContentWithToc>
+    <>
+      <ProseContent>
+        <CompileMdx content={content} />
+        <Pager activeHref={`${dir}/${slug}`} />
+      </ProseContent>
+
+      <Toc />
+    </>
   );
 };
 
