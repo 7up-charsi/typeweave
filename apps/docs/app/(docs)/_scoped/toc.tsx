@@ -1,43 +1,63 @@
 'use client';
 
+import { useScroll } from '@typeweave/react/use-scroll';
 import { Skeleton } from '@typeweave/react/skeleton';
 import Link from 'next/link';
 import React from 'react';
 
 export const Toc = () => {
   const [headings, setHeadings] = React.useState<
-    HTMLHeadingElement[] | null
-  >(null);
+    HTMLHeadingElement[]
+  >([]);
 
-  const [activeId, setActiveId] = React.useState<string | null>();
+  const [activeHeadings, setActiveHeadings] = React.useState<
+    string[]
+  >([]);
+
+  const dirYRef = React.useRef(0);
+
+  const [{ dirY }] = useScroll();
 
   React.useEffect(() => {
-    const headingElements: HTMLHeadingElement[] = Array.from(
-      document.querySelectorAll('[data-mdx-heading]'),
-    );
+    dirYRef.current = dirY;
+  }, [dirY]);
 
-    setHeadings(headingElements);
+  React.useEffect(() => {
+    const headings = document.querySelectorAll(
+      '[data-mdx-heading]',
+    ) as unknown as HTMLHeadingElement[];
 
-    const elements = headingElements.map((heading) =>
-      document.querySelector(`[id="${heading.id}"]`),
-    );
+    if (!headings.length) return;
+
+    setHeadings(Array.from(headings));
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry?.isIntersecting) {
-            setActiveId(entry.target.getAttribute('id'));
+          if (entry.isIntersecting && entry.intersectionRatio === 1) {
+            setActiveHeadings((prev) =>
+              [...prev, entry.target.id].sort(),
+            );
+          }
+
+          if (entry.intersectionRatio === 0) {
+            setActiveHeadings((prev) =>
+              prev.filter((id) => id !== entry.target.id),
+            );
           }
         });
       },
       {
-        rootMargin: '0% 0% -80% 0%',
+        rootMargin: '-65px 0px 0px 0px',
+        threshold: [1, 0],
       },
     );
 
-    elements.forEach((el) => el && observer.observe(el));
+    headings.forEach((ele) => observer.observe(ele));
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -70,21 +90,21 @@ export const Toc = () => {
               const depth = dataset.depth as unknown as string;
 
               return (
-                <div key={i} className="flex h-8 items-center gap-2">
+                <div
+                  data-active={activeHeadings.includes(id)}
+                  key={i}
+                  className="group flex h-8 items-center gap-2"
+                >
                   <div
                     style={{
                       marginLeft: +depth === 2 ? 0 : +depth * 5,
                     }}
-                    className={`h-1/3 w-1 rounded-full ${activeId === id ? 'bg-primary-9' : 'bg-transparent'}`}
+                    className="h-1/3 w-1 rounded-full bg-transparent group-data-[active=true]:bg-primary-9"
                   ></div>
 
                   <Link
                     href={`#${id}`}
-                    className={`text-sm ${
-                      activeId === id
-                        ? 'text-primary-11 hover:text-primary-12'
-                        : 'text-muted-11 hover:text-muted-12'
-                    }`}
+                    className="text-sm text-muted-11 hover:text-muted-12"
                   >
                     <span className="inline-block first-letter:uppercase">
                       {innerText}
