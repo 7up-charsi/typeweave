@@ -1,6 +1,23 @@
-import { NavigationLink } from '@/lib/types';
+export const gettingStartedLinks = [
+  {
+    title: 'introduction',
+    href: '/getting-started/introduction',
+  },
+  {
+    title: 'installation',
+    href: '/getting-started/installation',
+  },
+  {
+    title: 'theme',
+    href: '/getting-started/theme',
+  },
+  {
+    title: 'dark mode',
+    href: '/getting-started/dark-mode',
+  },
+];
 
-export const componentsLinks: Record<string, NavigationLink[]> = {
+export const componentsLinks = {
   form: [
     {
       title: 'combobox',

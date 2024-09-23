@@ -1,6 +1,6 @@
-const NotFound = () => {
+export default function NotFoundPage() {
   return (
-    <div className="mt-12 flex w-full flex-col items-center justify-center overflow-auto py-4">
+    <div className="flex w-full flex-col items-center justify-center overflow-auto py-4 lg:col-span-2">
       <h1 className="mb-8 text-9xl font-semibold text-muted-7">
         404
       </h1>
@@ -9,8 +9,4 @@ const NotFound = () => {
       </p>
     </div>
   );
-};
-
-NotFound.displayName = 'NotFound';
-
-export default NotFound;
+}

@@ -1,7 +1,8 @@
-import { customizationLinks } from '@/config/customization-links';
-import { componentsLinks } from '@/config/components-links';
+import {
+  componentsLinks,
+  gettingStartedLinks,
+} from '@/constants/links';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { guidesLinks } from '@/config/guides-links';
 import { Button } from '@typeweave/react/button';
 import Link from 'next/link';
 
@@ -13,8 +14,7 @@ export const Pager = ({ activeHref }: PagerProps) => {
   if (!activeHref) return null;
 
   const links = [
-    ...guidesLinks,
-    ...customizationLinks,
+    ...gettingStartedLinks,
     ...Object.values(componentsLinks)
       .map((arr) => arr.sort())
       .flat(),

@@ -13,7 +13,7 @@ interface PageProps {
   params: { slug: string[] };
 }
 
-const dir = 'guides';
+const dir = 'getting-started';
 
 export const generateMetadata = async ({
   params,

@@ -1,5 +1,34 @@
 const redirects = async () => {
   return [
+    // redirect getting-started
+    ...[
+      {
+        source: '/',
+        destination: '/getting-started/introduction',
+        permanent: true,
+      },
+      {
+        source: '/intro',
+        destination: '/getting-started/introduction',
+        permanent: true,
+      },
+      {
+        source: '/introduction',
+        destination: '/getting-started/introduction',
+        permanent: true,
+      },
+      {
+        source: '/install',
+        destination: '/getting-started/installation',
+        permanent: true,
+      },
+      {
+        source: '/installation',
+        destination: '/getting-started/installation',
+        permanent: true,
+      },
+    ],
+
     // redirect component
     ...[
       {
@@ -135,44 +164,6 @@ const redirects = async () => {
       {
         source: '/visually hidden',
         destination: '/components/visually-hidden',
-        permanent: true,
-      },
-    ],
-
-    // redirect guides
-    ...[
-      {
-        source: '/intro',
-        destination: '/guides/introduction',
-        permanent: true,
-      },
-      {
-        source: '/introduction',
-        destination: '/guides/introduction',
-        permanent: true,
-      },
-      {
-        source: '/install',
-        destination: '/guides/installation',
-        permanent: true,
-      },
-      {
-        source: '/installation',
-        destination: '/guides/installation',
-        permanent: true,
-      },
-    ],
-
-    // redirect customization
-    ...[
-      {
-        source: '/theme',
-        destination: '/customization/theme',
-        permanent: true,
-      },
-      {
-        source: '/dark-mode',
-        destination: '/customization/dark-mode',
         permanent: true,
       },
     ],

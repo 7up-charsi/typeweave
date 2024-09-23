@@ -21,7 +21,7 @@ export const AppBarContent = (props: AppBarContentProps) => {
         <ThemeSwitcher />
       </div>
 
-      <div className="hidden md:block">
+      <div className="mr-3 hidden md:block">
         <GithubLink />
       </div>
 

@@ -68,7 +68,7 @@ export const NavDrawer = (props: NavDrawerProps) => {
             </DrawerClose>
           </div>
 
-          <hr className="mx-5 border-muted-6" />
+          <hr className="mx-5 border-muted-6 md:hidden" />
 
           <div className="my-4 flex items-center justify-between px-5 md:hidden">
             <GithubLink />

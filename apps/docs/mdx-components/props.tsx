@@ -1,6 +1,6 @@
 'use client';
 
-import { ComponentProp } from '@/lib/types';
+import { ComponentProp } from '@/types/common';
 import React from 'react';
 
 export interface PropsProps {

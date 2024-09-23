@@ -1,8 +1,9 @@
 'use client';
 
-import { customizationLinks } from '@/config/customization-links';
-import { componentsLinks } from '@/config/components-links';
-import { guidesLinks } from '@/config/guides-links';
+import {
+  componentsLinks,
+  gettingStartedLinks,
+} from '@/constants/links';
 import { useNavDrawerState } from './nav-drawer';
 import { usePathname } from 'next/navigation';
 import { DrawerLink } from './drawer-link';
@@ -15,26 +16,10 @@ export const SidebarContent = () => {
   return (
     <nav className="flex flex-col gap-1 p-5 pt-0 md:pt-5">
       <h2 className="select-none text-sm font-medium text-foreground/75 first-letter:uppercase">
-        guides
+        Getting Started
       </h2>
 
-      {guidesLinks.map(({ title, href }, i) => (
-        <DrawerLink
-          key={i}
-          data-active={href === pathname}
-          href={href}
-          handleClose={handleDrawerClose}
-          className="relative block h-9 content-center rounded px-3 first-letter:uppercase before:absolute before:right-2 before:top-1/2 before:hidden before:h-1/2 before:w-1 before:-translate-y-1/2 before:rounded-full before:bg-muted-9 data-[active=true]:bg-muted-3 data-[active=true]:text-muted-12 data-[active=true]:before:block hover:bg-muted-3 focus-visible:ring-2 focus-visible:ring-focus"
-        >
-          {title}
-        </DrawerLink>
-      ))}
-
-      <h2 className="select-none text-sm font-medium text-foreground/75 first-letter:uppercase">
-        customization
-      </h2>
-
-      {customizationLinks.map(({ title, href }, i) => (
+      {gettingStartedLinks.map(({ title, href }, i) => (
         <DrawerLink
           key={i}
           data-active={href === pathname}
