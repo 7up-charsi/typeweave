@@ -1,5 +1,4 @@
 import { ClientDemoRenderer } from './client-demo-renderer';
-import { EditThisPage } from './edit-this-page';
 import { Installation } from './installation';
 import { HeaderLinks } from './header-links';
 import { Heading } from './heading';
@@ -13,7 +12,6 @@ import { Pre } from './pre';
 
 export const mdxComponents: any = {
   ...demos,
-  EditThisPage,
   Props,
   Demo,
   ClientDemoRenderer,

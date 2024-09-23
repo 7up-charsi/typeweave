@@ -1,4 +1,4 @@
-import { EditThisPage } from '@/mdx-components/edit-this-page';
+import { EditThisPage } from '@/app/_scoped/edit-this-page';
 import { ProseContent } from '../../_scoped/prose-content';
 import { CompileMdx } from '../../_scoped/compile-mdx';
 import { getMdxFiles } from '@/lib/get-mdx-files';

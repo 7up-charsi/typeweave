@@ -24,6 +24,7 @@ export const EditThisPage = (props: EditThisPageProps) => {
     >
       <a
         href={`${repoUrl.replace(/\/+$/, '')}/edit/main/apps/docs/content/${path.replace(/^\/+/, '')}.mdx`}
+        target="_blank"
       >
         Edit this page
       </a>
