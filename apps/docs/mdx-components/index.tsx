@@ -1,17 +1,19 @@
-import Link from 'next/link';
-import * as demos from '../demos';
-import { Demo } from './demo';
+import { ClientDemoRenderer } from './client-demo-renderer';
+import { EditThisPage } from './edit-this-page';
+import { Installation } from './installation';
 import { HeaderLinks } from './header-links';
 import { Heading } from './heading';
-import { Installation } from './installation';
+import * as demos from '../demos';
 import { Props } from './props';
 import { Steps } from './steps';
+import { Demo } from './demo';
 import { Code } from './code';
+import Link from 'next/link';
 import { Pre } from './pre';
-import { ClientDemoRenderer } from './client-demo-renderer';
 
 export const mdxComponents: any = {
   ...demos,
+  EditThisPage,
   Props,
   Demo,
   ClientDemoRenderer,

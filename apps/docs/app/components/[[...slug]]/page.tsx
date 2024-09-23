@@ -1,3 +1,4 @@
+import { EditThisPage } from '@/mdx-components/edit-this-page';
 import { ProseContent } from '../../_scoped/prose-content';
 import { CompileMdx } from '../../_scoped/compile-mdx';
 import { getMdxFiles } from '@/lib/get-mdx-files';
@@ -40,7 +41,9 @@ export async function generateStaticParams() {
 const Page = async ({ params }: PageProps) => {
   const slug = params.slug?.join('/');
 
-  const markdown = await getMdx(`${dir}/${slug}`);
+  const path = `${dir}/${slug}`;
+
+  const markdown = await getMdx(path);
 
   if (!markdown) {
     notFound();
@@ -52,7 +55,8 @@ const Page = async ({ params }: PageProps) => {
     <>
       <ProseContent>
         <CompileMdx content={content} />
-        <Pager activeHref={`${dir}/${slug}`} />
+        <EditThisPage path={path} />
+        <Pager activeHref={path} />
       </ProseContent>
 
       <Toc />

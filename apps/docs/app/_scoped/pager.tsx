@@ -31,34 +31,38 @@ export const Pager = ({ activeHref }: PagerProps) => {
       : null;
 
   return (
-    <div className="not-prose mt-10 flex border-t border-muted-6 py-2">
-      {prev && (
-        <Button
-          asChild
-          startContent={<ChevronLeft />}
-          aria-label={`got to prev docs ${prev.title} page`}
-          variant="text"
-        >
-          <Link href={prev.href} className="first-letter:uppercase">
-            {prev.title}
-          </Link>
-        </Button>
-      )}
+    <>
+      <hr className="mb-5 mt-5 border-muted-6" />
 
-      <div className="grow"></div>
+      <div className="not-prose mb-1 flex">
+        {prev && (
+          <Button
+            asChild
+            startContent={<ChevronLeft />}
+            aria-label={`got to prev docs ${prev.title} page`}
+            variant="text"
+          >
+            <Link href={prev.href} className="first-letter:uppercase">
+              {prev.title}
+            </Link>
+          </Button>
+        )}
 
-      {next && (
-        <Button
-          asChild
-          endContent={<ChevronRight />}
-          aria-label={`got to next docs ${next.title} page`}
-          variant="text"
-        >
-          <Link href={next.href} className="first-letter:uppercase">
-            {next.title}
-          </Link>
-        </Button>
-      )}
-    </div>
+        <div className="grow"></div>
+
+        {next && (
+          <Button
+            asChild
+            endContent={<ChevronRight />}
+            aria-label={`got to next docs ${next.title} page`}
+            variant="text"
+          >
+            <Link href={next.href} className="first-letter:uppercase">
+              {next.title}
+            </Link>
+          </Button>
+        )}
+      </div>
+    </>
   );
 };

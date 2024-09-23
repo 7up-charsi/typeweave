@@ -1,23 +1,19 @@
 {
   "name": "typeweave",
+  "packageManager": "pnpm@9.11.0",
   "private": true,
-  "packageManager": "pnpm@9.6.0",
   "scripts": {
-    "dev:sb": "pnpm --filter @typeweave/storybook dev",
-    "dev:docs": "pnpm --filter @typeweave/docs dev",
-    "build": "turbo build",
-    "build:pkgs": "turbo build --filter ./packages/**",
-    "typecheck": "turbo typecheck",
-    "typecheck:pkgs": "turbo typecheck --filter ./packages/**",
-    "lint": "turbo lint",
-    "lint:pkgs": "turbo lint --filter ./packages/**",
+    "dev": "pnpm --filter @typeweave/storybook dev",
+    "build": "turbo build --filter ./packages/**",
+    "typecheck": "turbo typecheck --filter ./packages/**",
+    "lint": "turbo lint --filter ./packages/**",
     "clean": "pnpm turbo:clean && pnpm clean:node-modules && pnpm clean:lock",
     "turbo:clean": "turbo clean && rimraf ./node_modules/.cache/turbo",
     "clean:node-modules": "rimraf ./apps/**/node_modules ./packages/**/node_modules -g && rm -rf ./node_modules",
     "clean:lock": "rm -rf ./pnpm-lock.yaml",
     "clean:changelogs": "rimraf ./apps/**/CHANGELOG.md ./packages/**/CHANGELOG.md -g",
-    "format:pkgs:check": "prettier --check ./packages/**/src/**/*.{ts,tsx} --cache",
-    "format:pkgs:write": "prettier --write ./packages/**/src/**/*.{ts,tsx} --cache",
+    "format:check": "prettier --check ./packages/**/src/**/*.{ts,tsx} --cache",
+    "format:write": "prettier --write ./packages/**/src/**/*.{ts,tsx} --cache",
     "unused-deps": "tsx ./scripts/check-deps.ts",
     "create:pkg": "plop package",
     "create:cmp-docs": "plop component-docs"
@@ -40,3 +36,4 @@
     "typescript": "^5.6.2"
   }
 }
+
