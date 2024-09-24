@@ -47,12 +47,13 @@ yarn add @typeweave/react @typeweave/plugin
 **Important Note:**
 
 When importing styles, please be aware of the following distinction:
-* Use `./node_modules/@typeweave/react/dist/COMPONENT_NAME/COMPONENT_NAME.styles.js` to only include one component styles, allowing TailwindCSS to generate optimized CSS for that specific component.
+
+- Use `./node_modules/@typeweave/react/dist/COMPONENT_NAME/COMPONENT_NAME.styles.js` to only include one component styles, allowing TailwindCSS to generate optimized CSS for that specific component.
 
   Replace `COMPONENT_NAME` with your actual component name in **lowercase** and **kebab case** (e.g. `my-component`).
-  
-* Use `./node_modules/@typeweave/react/dist/**/*.styles.js` to include styles for all components. **Note that this approach will result in a significantly larger CSS file size**, as it includes styles for all components, even if you're only using the one component. This may impact page load times and performance.
-Choose the appropriate import to optimize your TailwindCSS setup and minimize CSS file size!
+
+- Use `./node_modules/@typeweave/react/dist/**/*.styles.js` to include styles for all components. **Note that this approach will result in a significantly larger CSS file size**, as it includes styles for all components, even if you're only using the one component. This may impact page load times and performance.
+  Choose the appropriate import to optimize your TailwindCSS setup and minimize CSS file size!
 
 ```js
 import { typeweave } from '@typeweave/plugin';
@@ -84,7 +85,7 @@ This configuration registers the styles of **Button** component and sets body ba
 **Incorrect:** `import { COMPONENT_NAME } from '@typeweave/react'`
 **Correct:** `import { COMPONENT_NAME } from '@typeweave/react/COMPONENT_NAME'`
 
-  Replace `COMPONENT_NAME` with your actual component name in **Pascal case** (e.g. `MyComponent`).
+Replace `COMPONENT_NAME` with your actual component name in **Pascal case** (e.g. `MyComponent`).
 
 By importing components directly, you can take advantage of tree shaking and only include the components you need in your build, reducing unnecessary code and optimizing performance.
 

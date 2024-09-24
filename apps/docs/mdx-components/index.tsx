@@ -31,7 +31,9 @@ export const mdxComponents: any = {
     href,
     ...props
   }: React.AnchorHTMLAttributes<HTMLAnchorElement>) =>
-    href?.startsWith('native:') ? (
+    !href ? (
+      'Link_Without_Href'
+    ) : /^native:/.test(href) ? (
       <a {...props} href={href.slice(7)} />
     ) : (
       href && <Link {...props} href={href} />

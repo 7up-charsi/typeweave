@@ -1,4 +1,4 @@
-import { highlightCode } from '@/lib/highlight-code';
+import { highlightCode } from '@/utils/highlight-code';
 import { CopyButton } from './copy-button';
 import { polyfill } from 'interweave-ssr';
 import { Markup } from 'interweave';
