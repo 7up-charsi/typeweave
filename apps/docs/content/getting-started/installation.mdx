@@ -19,9 +19,20 @@ npm install @typeweave/react @typeweave/plugin
 yarn add @typeweave/react @typeweave/plugin
 ```
 
-## Usage
+## Configuration
 
-1. Configure **@typeweave/plugin** in `tailwind.config.js`:
+1. Set up Tailwind CSS: If you haven't already, follow the Tailwind CSS [installation](https://tailwindcss.com/docs/installation) instructions to set up your project.
+
+2. Configure **@typeweave/plugin** in `tailwind.config.js`:
+
+```ts
+import { typeweave } from '@typeweave/plugin';
+
+export default {
+  content: ['./node_modules/@typeweave/react/dist/**/*.styles.js'],
+  plugins: [typeweave()],
+};
+```
 
 **Important Note:**
 
@@ -34,13 +45,19 @@ When importing styles, please be aware of the following distinction:
 - Use `./node_modules/@typeweave/react/dist/**/*.styles.js` to include styles for all components. **Note that this approach will result in a significantly larger CSS file size**, as it includes styles for all components, even if you're only using the one component. This may impact page load times and performance.
   Choose the appropriate import to optimize your TailwindCSS setup and minimize CSS file size!
 
+  **Each component's documentation specifies its style paths.**
+
+For example, this `tailwind.config.ts` includes styles for `Button`, `dialog` and `Input` components
+
 ```js
 import { typeweave } from '@typeweave/plugin';
 
 export default {
   content: [
     './node_modules/@typeweave/react/dist/button/button.styles.js',
-  ], // styles for button component
+    './node_modules/@typeweave/react/dist/dialog/dialog.styles.js',
+    './node_modules/@typeweave/react/dist/input/input.styles.js',
+  ],
   plugins: [typeweave()],
 };
 ```
@@ -55,9 +72,14 @@ and in your **globals.css**
 }
 ```
 
-This configuration registers the styles of **Button** component and sets body background and text color.
+## Usage
 
-2. Import components from **@typeweave/react**
+1. Import components from **@typeweave/react**
+
+```tsx
+import { Button } from '@typeweave/react/button';
+import { Input } from '@typeweave/react/input';
+```
 
 **Important Note:**
 
@@ -70,6 +92,10 @@ This configuration registers the styles of **Button** component and sets body ba
 Replace `COMPONENT_NAME` with your actual component name in **Pascal case** (e.g. `MyComponent`).
 
 By importing components directly, you can take advantage of tree shaking and only include the components you need in your build, reducing unnecessary code and optimizing performance.
+
+    **Each component's documentation specifies its import details.**
+
+2. Use Components:
 
 ```jsx
 import React from 'react';
