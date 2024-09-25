@@ -32,11 +32,10 @@
     }
   },
   "scripts": {
-    "build": "pnpm gen-exports && pnpm clean:dist && pnpm tsc",
+    "build": "pnpm clean:dist && pnpm tsc",
     "clean:dist": "rimraf dist",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
-    "gen-exports": "tsx ./scripts/gen-exports.ts",
     "prepack": "clean-package",
     "postpack": "clean-package restore"
   },
