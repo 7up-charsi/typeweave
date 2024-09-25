@@ -13,9 +13,15 @@ To install **@typeweave/react** in your project, simply run both of these:
 
 ## Configuration
 
-1. Set up Tailwind CSS: If you haven't already, follow the Tailwind CSS [installation](https://tailwindcss.com/docs/installation) instructions to set up your project.
+<Steps>
 
-2. Configure **@typeweave/plugin** in `tailwind.config.ts`:
+### Tailwind css
+
+Set up Tailwind CSS: If you haven't already, follow the Tailwind CSS [installation](https://tailwindcss.com/docs/installation) instructions to set up your project.
+
+### Plugin
+
+Configure **@typeweave/plugin** in `tailwind.config.ts`:
 
 ```ts
 import { typeweave } from '@typeweave/plugin';
@@ -30,9 +36,17 @@ export default {
 
 When importing styles, please be aware of the following distinction:
 
-- Use `./node_modules/@typeweave/react/dist/COMPONENT_NAME/COMPONENT_NAME.styles.js` to only include one component styles, allowing TailwindCSS to generate optimized CSS for that specific component. **Each component's documentation specifies its style paths.**
+- ```text
+  ./node_modules/@typeweave/react/dist/COMPONENT_NAME/COMPONENT_NAME.styles.js
+  ```
 
-- Use `./node_modules/@typeweave/react/dist/**/*.styles.js` to include styles for all components. **Note that this approach will result in a significantly larger CSS file size**, as it includes styles for all components, even if you're only using the one component. This may impact page load times and performance.
+  Use above to only include one component styles, allowing TailwindCSS to generate optimized CSS for that specific component. **Each component's documentation specifies its style paths.**
+
+- ```text
+  ./node_modules/@typeweave/react/dist/**/*.styles.js
+  ```
+
+  Use above to include styles for all components. **Note that this approach will result in a significantly larger CSS file size**, as it includes styles for all components, even if you're only using the one component. This may impact page load times and performance.
   Choose the appropriate import to optimize your TailwindCSS setup and minimize CSS file size!
 
 For example, this `tailwind.config.ts` includes styles for `Button`, `dialog` and `Input` components.
@@ -60,9 +74,15 @@ and in your **globals.css**
 }
 ```
 
+</Steps>
+
 ## Usage
 
-1. Import components from **@typeweave/react**
+<Steps>
+
+### import
+
+Import components from **@typeweave/react**
 
 ```tsx
 import { Button } from '@typeweave/react/button';
@@ -71,17 +91,31 @@ import { Input } from '@typeweave/react/input';
 
 **Important Note:**
 
-**@typeweave/react** does not provide a main export. Instead, i recommend importing components directly from their respective files to leverage tree shaking and optimize bundle size.
+**@typeweave/react** does not provide a main export. Instead, i recommend importing components directly from their respective files to leverage tree shaking and optimize bundle size. **Each component's documentation specifies its import details.**
 
-**Incorrect:** `import { COMPONENT_NAME } from '@typeweave/react'`
+<span className="mb-1">**Incorrect import**</span>
 
-**Correct:** `import { COMPONENT_NAME } from '@typeweave/react/COMPONENT_NAME'`
+<div className="*:mt-0">
 
-**Each component's documentation specifies its import details.**
+```ts
+import { COMPONENT_NAME } from '@typeweave/react';
+```
+
+</div>
+
+<span className="mb-1">**Correct:**</span>
+
+<div className="*:mt-0">
+
+```ts
+import { COMPONENT_NAME } from '@typeweave/react/COMPONENT_NAME';
+```
+
+</div>
 
 By importing components directly, you can take advantage of tree shaking and only include the components you need in your build, reducing unnecessary code and optimizing performance.
 
-2. Use Components:
+### Use Components:
 
 ```tsx
 import React from 'react';
@@ -96,3 +130,5 @@ const App = () => {
 
 export default App;
 ```
+
+</Steps>

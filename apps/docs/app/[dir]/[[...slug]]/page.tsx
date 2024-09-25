@@ -1,5 +1,4 @@
 import { remarkAdmonitions } from '@/utils/remark-admonitions';
-import { EditThisPage } from '@/app/_scoped/edit-this-page';
 import { getMdxFiles } from '@/utils/get-mdx-files';
 import { mdxComponents } from '@/mdx-components';
 import remarkDirective from 'remark-directive';
@@ -17,6 +16,8 @@ import React from 'react';
 
 // @ts-ignore
 import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
+import { Button } from '@typeweave/react/button';
+import { GithubIcon } from 'lucide-react';
 
 interface PageProps {
   params: {
@@ -24,6 +25,8 @@ interface PageProps {
     slug: string[];
   };
 }
+
+const repoUrl = process.env.NEXT_PUBLIC_REPO_URL;
 
 export const generateMetadata = async ({
   params,
@@ -79,12 +82,29 @@ const Page = async ({ params }: PageProps) => {
     rehypePlugins: [rehypeSlug],
   });
 
+  if (!repoUrl) throw new Error('repo url is not defined');
+
   return (
     <>
       <main className="prose max-w-none px-5 pb-5 pt-10 prose-headings:text-foreground prose-headings:first-letter:uppercase prose-p:text-foreground prose-a:text-muted-12 prose-a:underline prose-code:font-normal prose-pre:my-0 prose-pre:font-normal hover:prose-a:underline-offset-2 lg:px-10">
         <MdxContent components={mdxComponents} />
 
-        <EditThisPage path={path} />
+        <div className="mt-10 flex justify-end">
+          <Button
+            asChild
+            variant="text"
+            startContent={<GithubIcon />}
+            className="not-prose"
+          >
+            <a
+              href={`${repoUrl.replace(/\/+$/, '')}/edit/main/apps/docs/content/${path.replace(/^\/+/, '')}.mdx`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Edit this page
+            </a>
+          </Button>
+        </div>
 
         <Pager activeHref={path} />
       </main>

@@ -6,10 +6,11 @@ import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './mdx-components/**/*.{js,ts,jsx,tsx,mdx}',
-    './demos/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './content/**/*.mdx',
+    './mdx-components/**/*.{ts,tsx}',
+    './demos/**/*.{ts,tsx}',
     './node_modules/@typeweave/react/src/**/*.styles.ts',
   ],
   theme: {
