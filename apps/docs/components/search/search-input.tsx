@@ -1,13 +1,14 @@
 'use client';
 
-import { Button, DialogClose } from '@typeweave/react';
-import { SearchIcon, XIcon } from 'lucide-react';
-import { useState, useRef } from 'react';
 import {
   UseSearchBoxProps,
   useInstantSearch,
   useSearchBox,
 } from 'react-instantsearch';
+import { DialogClose } from '@typeweave/react/dialog';
+import { Button } from '@typeweave/react/button';
+import { SearchIcon, XIcon } from 'lucide-react';
+import { useState, useRef } from 'react';
 
 export const SearchInput = (props: UseSearchBoxProps) => {
   const { query, refine } = useSearchBox(props);

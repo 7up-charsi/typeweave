@@ -1,11 +1,17 @@
 'use client';
 
-import algoliasearch from 'algoliasearch/lite';
-import * as Dialog from '@webbo-ui/dialog';
+import {
+  DialogContent,
+  DialogOverlay,
+  DialogPortal,
+  DialogRoot,
+  DialogTrigger,
+} from '@typeweave/react/dialog';
 import { InstantSearch } from 'react-instantsearch';
-import { SearchInput } from './search-input';
-import SearchIcon from '../../assets/icons/search-icon';
 import { SearchResults } from './search-results';
+import algoliasearch from 'algoliasearch/lite';
+import { SearchInput } from './search-input';
+import { SearchIcon } from 'lucide-react';
 
 const searchClient = algoliasearch(
   'FQ038NK883',
@@ -15,8 +21,8 @@ const searchClient = algoliasearch(
 export const Search = () => {
   return (
     <InstantSearch searchClient={searchClient} indexName="search-box">
-      <Dialog.Root>
-        <Dialog.Trigger>
+      <DialogRoot>
+        <DialogTrigger>
           <div
             className="group mr-5 flex h-9 w-52 cursor-pointer select-none items-center rounded px-2 ring-1 ring-muted-7 transition-colors hover:ring-muted-8"
             tabIndex={0}
@@ -29,16 +35,17 @@ export const Search = () => {
 
             <SearchIcon />
           </div>
-        </Dialog.Trigger>
+        </DialogTrigger>
 
-        <Dialog.Portal>
-          <Dialog.Overlay />
-          <Dialog.Content className="top-20 max-h-[calc(100dvh-160px)] max-w-2xl translate-y-0 overflow-auto p-0">
+        <DialogPortal>
+          <DialogOverlay />
+
+          <DialogContent className="top-20 max-h-[calc(100dvh-160px)] max-w-2xl translate-y-0 overflow-auto p-0">
             <SearchInput />
             <SearchResults />
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
+          </DialogContent>
+        </DialogPortal>
+      </DialogRoot>
     </InstantSearch>
   );
 };
