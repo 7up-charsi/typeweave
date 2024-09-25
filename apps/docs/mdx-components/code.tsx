@@ -25,7 +25,7 @@ export const Code = (props: CodeProps) => {
     );
 
   return (
-    <code {...restProps} className={`${className} not-prose`}>
+    <code {...restProps} className={className}>
       <div className="absolute right-4 top-2">
         <CopyButton code={children} />
       </div>

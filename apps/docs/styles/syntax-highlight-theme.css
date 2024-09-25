@@ -3,9 +3,9 @@ code:not(pre > code) {
 }
 
 /* These styles are applied to all pre elements containing a code element, except for those within .source-code. */
-.pre-tag-container:not(.native-pre *) {
+/* .pre-tag-container:not(.native-pre *) {
   @apply my-7;
-}
+} */
 
 /* These styles are applied to all pre elements that contain a code element, regardless of their location.  */
 pre:has(code) {

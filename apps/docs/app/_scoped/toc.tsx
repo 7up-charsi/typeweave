@@ -7,8 +7,8 @@ import React from 'react';
 
 export const Toc = () => {
   const [headings, setHeadings] = React.useState<
-    HTMLHeadingElement[]
-  >([]);
+    HTMLHeadingElement[] | null
+  >(null);
 
   const [activeHeadings, setActiveHeadings] = React.useState<
     string[]
@@ -23,13 +23,13 @@ export const Toc = () => {
   }, [dirY]);
 
   React.useEffect(() => {
-    const headings = document.querySelectorAll(
-      '[data-mdx-heading]',
-    ) as unknown as HTMLHeadingElement[];
+    const headings = document.querySelectorAll('[data-mdx-heading]');
 
     if (!headings.length) return;
 
-    setHeadings(Array.from(headings));
+    const headingsArray = Array.from(headings);
+
+    setHeadings(headingsArray as HTMLHeadingElement[]);
 
     const observer = new IntersectionObserver(
       (entries) => {

@@ -1,3 +1,4 @@
+import { LoadPackageManager } from '@/components/load-package-manager';
 import { AppBarContent } from './_scoped/app-bar-content';
 import { RouteProgress } from './_scoped/route-progress';
 import '@/styles/syntax-highlight-theme.css';
@@ -37,6 +38,7 @@ const Layout = ({ children }: Props) => {
           </div>
 
           <RouteProgress />
+          <LoadPackageManager />
         </ThemeProvider>
       </body>
     </html>
