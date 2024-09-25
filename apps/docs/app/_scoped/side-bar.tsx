@@ -9,7 +9,7 @@ export const SideBar = (props: SideBarProps) => {
   const {} = props;
 
   return (
-    <aside className="sticky left-0 top-[65px] h-[var(--screen-height)] w-full overflow-auto border-r border-r-muted-6 max-xl:hidden">
+    <aside className="sticky left-0 top-[65px] hidden h-[var(--screen-height)] w-full overflow-auto border-r border-r-muted-6 scrollbar-thin md:block">
       <SidebarContent />
     </aside>
   );

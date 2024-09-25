@@ -30,7 +30,7 @@ const Layout = ({ children }: Props) => {
             <AppBarContent />
           </AppBar>
 
-          <div className="grid min-h-[var(--screen-height)] grid-cols-1 [--screen-height:calc(100vh-65px)] [--toc-width:240px] lg:grid-cols-[1fr_var(--toc-width)] xl:grid-cols-[300px_1fr_var(--toc-width)]">
+          <div className="grid min-h-[var(--screen-height)] grid-cols-1 [--screen-height:calc(100vh-65px)] [--toc-width:240px] md:grid-cols-[300px_1fr] lg:grid-cols-[300px_1fr_var(--toc-width)]">
             <SideBar />
 
             {children}

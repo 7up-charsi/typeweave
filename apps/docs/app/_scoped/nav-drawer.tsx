@@ -39,7 +39,7 @@ export const NavDrawer = (props: NavDrawerProps) => {
           variant="text"
           isIconOnly
           aria-label="open navigation drawer"
-          className="text-2xl xl:hidden"
+          className="text-2xl md:hidden"
         >
           <MenuIcon />
         </Button>
@@ -75,7 +75,7 @@ export const NavDrawer = (props: NavDrawerProps) => {
             <ThemeSwitcher />
           </div>
 
-          <div className="grow overflow-auto">
+          <div className="grow overflow-auto scrollbar-thin">
             <SidebarContent />
           </div>
         </DrawerContent>
