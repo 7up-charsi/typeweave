@@ -1,6 +1,7 @@
 import { ClientDemoRenderer } from './client-demo-renderer';
 import { Installation } from './installation';
 import { HeaderLinks } from './header-links';
+import { FileName } from './file-name';
 import { Heading } from './heading';
 import * as demos from '../demos';
 import { Props } from './props';
@@ -12,6 +13,7 @@ import { Pre } from './pre';
 
 export const mdxComponents: any = {
   ...demos,
+  FileName,
   Props,
   Demo,
   ClientDemoRenderer,

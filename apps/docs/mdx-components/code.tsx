@@ -1,5 +1,5 @@
 import { highlightCode } from '@/utils/highlight-code';
-import { CopyButton } from './copy-button';
+import { CopyCodeButton } from './copy-code-button';
 import { polyfill } from 'interweave-ssr';
 import { Markup } from 'interweave';
 polyfill();
@@ -26,9 +26,7 @@ export const Code = (props: CodeProps) => {
 
   return (
     <code {...restProps} className={className}>
-      <div className="absolute right-4 top-2">
-        <CopyButton code={children} />
-      </div>
+      <CopyCodeButton code={children} />
 
       <Markup content={highlightCode(children, lang)} noWrap />
     </code>

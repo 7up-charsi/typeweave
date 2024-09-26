@@ -21,7 +21,9 @@ Set up Tailwind CSS: If you haven't already, follow the Tailwind CSS [installati
 
 ### Plugin
 
-Configure **@typeweave/plugin** in `tailwind.config.ts`:
+Configure **@typeweave/plugin** in config file:
+
+<FileName>tailwind.config.ts</FileName>
 
 ```ts
 import { typeweave } from '@typeweave/plugin';
@@ -51,7 +53,9 @@ When importing styles, please be aware of the following distinction:
 
 For example, this `tailwind.config.ts` includes styles for `Button`, `dialog` and `Input` components.
 
-```js
+<FileName>tailwind.config.ts</FileName>
+
+```ts
 import { typeweave } from '@typeweave/plugin';
 
 export default {
@@ -64,13 +68,27 @@ export default {
 };
 ```
 
-and in your **globals.css**
+and apply `bg-background` and `text-foreground` classes to the `body` tag using any method, assuming you're working with **Next.js**.
 
-```css
-@layer base {
-  body {
-    @apply bg-background text-foreground;
-  }
+<FileName>layout.tsx</FileName>
+
+```tsx
+import "./globals.css';
+
+interface RootLayoutProps {
+  children?: React.ReactNode;
+}
+
+export default function RootLayout(props: RootLayoutProps) {
+  const { children } = props;
+
+  return (
+    <html lang="en" dir="ltr">
+      <body className="bg-background text-foreground">
+        {children}
+      </body>
+    </html>
+  );
 }
 ```
 
@@ -117,18 +135,14 @@ By importing components directly, you can take advantage of tree shaking and onl
 
 ### Use Components:
 
+<FileName>page.tsx</FileName>
+
 ```tsx
-import React from 'react';
 import { Button } from '@typeweave/react/button';
-import "./globals.css'
 
-const App = () => {
-  return (
-    <Button onPress={() => alert('Hello, TypeWeave!')}>Press me</Button>
-  );
-};
-
-export default App;
+export default function RootPage() {
+  return <Button>Press me</Button>;
+}
 ```
 
 </Steps>

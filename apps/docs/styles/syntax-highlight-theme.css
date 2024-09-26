@@ -2,16 +2,6 @@ code:not(pre > code) {
   @apply inline-block rounded border border-muted-6 bg-muted-2 px-1 font-code text-sm;
 }
 
-/* These styles are applied to all pre elements containing a code element, except for those within .source-code. */
-/* .pre-tag-container:not(.native-pre *) {
-  @apply my-7;
-} */
-
-/* These styles are applied to all pre elements that contain a code element, regardless of their location.  */
-pre:has(code) {
-  color: hsl(230, 8%, 24%);
-}
-
 /**
  * Dracula Theme originally by Zeno Rocha [@zenorocha]
  * https://draculatheme.com/
@@ -19,12 +9,9 @@ pre:has(code) {
  * Ported for PrismJS by Albert Vallverdu [@byverdu]
  */
 
-code[class*='language-'],
-pre[class*='language-'] {
+.code-block {
   color: #f8f8f2;
-  background: none;
   text-shadow: 0 1px rgba(0, 0, 0, 0.3);
-  font-family: var(--font-code);
   text-align: left;
   white-space: pre;
   word-spacing: normal;
@@ -38,6 +25,9 @@ pre[class*='language-'] {
   -moz-hyphens: none;
   -ms-hyphens: none;
   hyphens: none;
+  background: #282a36;
+
+  @apply font-code text-sm font-normal;
 }
 
 .token.comment,

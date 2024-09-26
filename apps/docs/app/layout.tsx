@@ -23,6 +23,7 @@ const Layout = ({ children }: Props) => {
   return (
     <html
       lang="en"
+      dir="ltr"
       className={`${GeistSans.variable} ${font_code.variable}`}
     >
       <body className="m-auto max-w-screen-2xl bg-background text-foreground">
@@ -31,7 +32,7 @@ const Layout = ({ children }: Props) => {
             <AppBarContent />
           </AppBar>
 
-          <div className="grid min-h-[var(--screen-height)] grid-cols-1 [--screen-height:calc(100vh-65px)] [--toc-width:240px] md:grid-cols-[300px_1fr] lg:grid-cols-[300px_1fr_var(--toc-width)]">
+          <div className="grid min-h-[var(--screen-height)] grid-cols-1 [--screen-height:calc(100vh-65px)] md:grid-cols-[300px_1fr] lg:grid-cols-[300px_1fr_240px]">
             <SideBar />
 
             {children}
