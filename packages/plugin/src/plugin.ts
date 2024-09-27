@@ -25,7 +25,7 @@ export const typeweave = (config: PluginConfig = {}) => {
   const {
     themes: userThemes,
     defaultTheme = 'light',
-    colorMode = 'hsl',
+    colorMode = 'rgb',
     defaultColors: userDefaultColors,
     defaultLayout: userDefaultLayout,
   } = config;

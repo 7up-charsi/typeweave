@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.1.7
+
+### Patch Changes
+
+- chore(Plugin): change default color mode to rgb
+
 ## 1.1.6
 
 ### Patch Changes
