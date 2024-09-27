@@ -5,7 +5,7 @@ description: Tailor theme to match your brand identity
 
 # Theme Customization
 
-Easily customize theme using our plugin. The plugin works by modifying CSS variables, which are then injected into CSS and utilized by component styles.
+Easily customize theme using plugin. The plugin works by modifying CSS variables, which are then injected into CSS and utilized by component styles.
 
 ## Prerequisites
 
@@ -13,7 +13,37 @@ Before customizing theme colors, ensure you have [@radix-ui/colors](https://www.
 
 ## Customizing
 
-To tailor your theme, navigate to `tailwind.config.ts` and provide a configuration object to the plugin. The plugin accepts only one configuration parameter, enabling you to override all default theme values and create a fully customized theme from scratch
+To tailor your theme, navigate to `tailwind.config.ts` and provide a configuration object to the plugin. The plugin accepts only one configuration parameter, enabling you to override all default theme values and create a fully customized theme from scratch.
+
+## new theme
+
+When creating a new theme, remember to use the `createColorScale` function to define your colors. As Plugin relies on Radix UI colors, please select colors from the official Radix UI color palette: [@radix-ui/colors](https://www.radix-ui.com/colors).
+
+<FileName>tailwind.config.ts</FileName>
+
+```ts
+import { createColorScale, typeweave } from '@typeweave/plugin';
+import { teal, tealDark } from '@radix-ui/colors';
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  content: [
+    './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './node_modules/@typeweave/react/src/**/*.styles.ts',
+  ],
+  plugins: [
+    typeweave({
+      themes: {
+        light: { colors: { primary: createColorScale(teal) } },
+        dark: { colors: { primary: createColorScale(tealDark) } },
+      },
+    }),
+  ],
+};
+
+export default config;
+```
 
 ## plugin config
 
@@ -30,26 +60,38 @@ To tailor your theme, navigate to `tailwind.config.ts` and provide a configurati
       type: ['light', 'dark'],
       default: 'light',
       description:
-        'when creates a theme from scratch. plugin needs to merge your theme with one of predefined themes so if you miss any token it gets from theme to be merged, it allows you to create theme with only your desired changes and remains else same. There are two predefined themes one for light ui named light and other is for dark ui named dark',
+        'when creates a theme from scratch. plugin needs to merge your theme with one of predefined themes. in case, if you miss any token it gets from theme to be merged, it allows you to create theme with only your desired changes and remains else same. There are two predefined themes one for light ui named light and other is for dark ui named dark',
     },
     {
       name: 'defaultColors',
       typeAsNode: (
         <>
-          see below{' '}
-          <a href="native:#default-colors-type">defaultColors</a> in
-          PluginConfig
+          see below <a href="native:#plugin-config">defaultColors</a>{' '}
+          in PluginConfig, also see{' '}
+          <a href="native:#default-theme">default theme</a> below
         </>
       ),
       description:
-        'which color to use in css. by default plugin uses hsl but you can use rgb if hsl does not work at some devices as well known ios mobiles.',
+        'allows you to change predefined themes colors pallete',
+    },
+    {
+      name: 'defaultLayout',
+      typeAsNode: (
+        <>
+          see below <a href="native:#plugin-config">defaultLayout</a>{' '}
+          in PluginConfig, also see{' '}
+          <a href="native:#default-theme">default theme</a> below
+        </>
+      ),
+      description: 'allows you to change predefined themes layout',
     },
   ]}
 />
 
-<div id="default-colors-type">
+<div id="plugin-config">
 
 <FileName>PluginConfig</FileName>
+
 ```ts
 export type ColorScale = Record<string, string>;
 
@@ -96,6 +138,52 @@ export type PluginConfig = Partial<{
   defaultLayout: Partial<{ light: ThemeLayout; dark: ThemeLayout }>;
   themes: Themes;
 }>;
+```
+
+</div>
+
+<div id="default-theme">
+
+<FileName>default theme</FileName>
+
+```ts
+import * as colors from '@radix-ui/colors';
+
+const lightMuted = colors.gray;
+const lightBg = '#ffffff';
+
+const lightThemeColors: ThemeColors = {
+  background: lightBg,
+  foreground: lightMuted.gray11,
+  primary: createColorScale(colors.violet),
+  secondary: createColorScale(colors.plum),
+  success: createColorScale(colors.green),
+  warning: createColorScale(colors.orange),
+  danger: createColorScale(colors.red),
+  info: createColorScale(colors.blue),
+  muted: createColorScale(lightMuted),
+  overlay: colors.blackA.blackA6,
+  focus: colors.blue.blue7,
+  paper: lightBg,
+};
+
+const darkMuted = colors.grayDark;
+const darkBg = colors.grayDark.gray1;
+
+const darkThemeColors: ThemeColors = {
+  background: darkBg,
+  foreground: darkMuted.gray11,
+  primary: createColorScale(colors.violetDark),
+  secondary: createColorScale(colors.plumDark),
+  success: createColorScale(colors.greenDark),
+  warning: createColorScale(colors.orangeDark),
+  danger: createColorScale(colors.redDark),
+  info: createColorScale(colors.blueDark),
+  muted: createColorScale(colors.grayDark),
+  overlay: colors.blackA.blackA3,
+  focus: colors.blueDark.blue7,
+  paper: darkMuted.gray5,
+};
 ```
 
 </div>
