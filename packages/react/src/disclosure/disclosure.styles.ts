@@ -2,10 +2,10 @@ import { tv, VariantProps } from 'tailwind-variants';
 
 export const disclosureStyles = tv({
   slots: {
-    base: 'space-y-2',
+    base: '',
     item: '',
     trigger: '',
-    content: 'px-3 py-2',
+    content: '',
   },
   variants: {},
 });

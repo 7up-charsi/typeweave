@@ -38,7 +38,7 @@ export const Heading = (props: HeadingProps) => {
       data-depth={as.replace('h', '')}
       className="group flex scroll-mt-20 items-center"
     >
-      <span>{children}</span>
+      <span className="first-letter:uppercase">{children}</span>
 
       <PointerEvents
         onPress={async () => {

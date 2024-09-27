@@ -3,3 +3,9 @@
 @import 'tailwindcss/components';
 
 @import 'tailwindcss/utilities';
+
+@layer base {
+  .prose-a {
+    @apply text-muted-12 underline hover:underline-offset-2;
+  }
+}

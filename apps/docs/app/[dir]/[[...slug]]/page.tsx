@@ -86,7 +86,7 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <>
-      <main className="prose max-w-full overflow-auto px-5 pb-5 pt-10 text-foreground prose-headings:text-foreground prose-headings:first-letter:uppercase prose-a:text-muted-12 prose-a:underline prose-strong:text-muted-12 prose-code:font-normal prose-pre:my-0 prose-pre:font-normal hover:prose-a:underline-offset-2 lg:px-10">
+      <main className="prose-a:prose-a prose mx-auto w-full max-w-[calc(theme(screens.md)+100px)] overflow-auto px-5 pb-5 pt-10 text-foreground prose-headings:text-foreground prose-headings:first-letter:uppercase prose-strong:text-muted-12 prose-code:font-normal prose-pre:my-0 prose-pre:font-normal xl:px-10">
         <MdxContent components={mdxComponents} />
 
         <div className="mt-10 flex justify-end">

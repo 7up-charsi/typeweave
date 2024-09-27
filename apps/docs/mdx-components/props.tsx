@@ -1,6 +1,14 @@
 'use client';
 
+import {
+  DisclosureContent,
+  DisclosureItem,
+  DisclosureRoot,
+  DisclosureTrigger,
+} from '@typeweave/react/disclosure';
+import { Button } from '@typeweave/react/button';
 import { ComponentProp } from '@/types/common';
+import { ChevronDownIcon } from 'lucide-react';
 import React from 'react';
 
 export interface PropsProps {
@@ -13,84 +21,84 @@ export const Props = (props: PropsProps) => {
   if (!data) return;
 
   return (
-    <div className="overflow-auto">
-      <table className="mt-5 border-collapse">
-        <thead>
-          <tr className="border-b border-b-muted-7">
-            {['name', 'type', 'default', 'description'].map(
-              (header) => (
-                <th
-                  key={header}
-                  className="px-1 py-3 text-left font-medium capitalize"
+    <DisclosureRoot className="not-prose space-y-3">
+      {data.map((ele, i) => (
+        <React.Fragment key={i}>
+          <DisclosureItem value={i + ''}>
+            <div className="flex items-center gap-2">
+              <span className="font-medium text-info-11">
+                {ele.name}
+              </span>
+
+              <div className="grow"></div>
+
+              <DisclosureTrigger>
+                <Button
+                  isIconOnly
+                  aria-label={`open content of ${ele.name}`}
+                  size="sm"
+                  className="text-lg"
                 >
-                  {header}
-                </th>
-              ),
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(
-            (
-              {
-                default: defaultValue,
-                description,
-                name,
-                type,
-                required,
-              },
-              index,
-            ) => {
-              return (
-                <tr key={index} className="border-b border-b-muted-7">
-                  <td
-                    className="min-w-36 px-1 py-3"
-                    data-required={required}
-                  >
-                    {name}
-                    {required ? (
-                      <span className="ml-2 text-danger-11">*</span>
-                    ) : null}
-                  </td>
+                  <ChevronDownIcon className="transition-transform group-data-[expanded=true]:rotate-180" />
+                </Button>
+              </DisclosureTrigger>
+            </div>
 
-                  <td className="min-w-36 px-1 py-3">
-                    {Array.isArray(type) ? (
-                      <code className="border-primary-6 bg-primary-2 leading-relaxed text-primary-11">
-                        {type.map((ele, index) => {
-                          return (
-                            <React.Fragment key={index}>
-                              {ele}
-                              {index === type.length - 1 ? null : (
-                                <br />
-                              )}
-                              {index === type.length - 1
-                                ? null
-                                : ' | '}
-                            </React.Fragment>
-                          );
-                        })}
-                      </code>
-                    ) : (
-                      <code className="border-primary-6 bg-primary-2 text-primary-11">
-                        {type}
-                      </code>
-                    )}
-                  </td>
+            <DisclosureContent className="pt-2">
+              {ele.description ? (
+                <p className="mb-2">{ele.description}</p>
+              ) : null}
 
-                  <td className="min-w-36 px-1 py-3">
-                    {defaultValue ? <code>{defaultValue}</code> : '-'}
-                  </td>
+              <div className="prose">
+                {!!ele.typeAsNode && (
+                  <p className="[&_a]:prose-a">
+                    <span className="mr-2 text-sm font-medium text-muted-12">
+                      Type:
+                    </span>
+                    <span className="">{ele.typeAsNode}</span>
+                  </p>
+                )}
 
-                  <td className="min-w-[300px] py-3">
-                    {description}
-                  </td>
-                </tr>
-              );
-            },
-          )}
-        </tbody>
-      </table>
-    </div>
+                {!ele.typeAsNode && (
+                  <p>
+                    <span className="mr-2 text-sm font-medium text-muted-12">
+                      Type:
+                    </span>
+                    <span className="inline-flex items-center gap-2">
+                      {Array.isArray(ele.type) ? (
+                        ele.type.map((type, i) => (
+                          <React.Fragment key={i}>
+                            <span className="inline-block rounded border border-info-7 bg-info-3 px-2 py-px font-code text-sm">
+                              {type}
+                            </span>
+                            <span className="inline-block h-7 w-[2px] rounded-full bg-muted-7 last:hidden" />
+                          </React.Fragment>
+                        ))
+                      ) : (
+                        <span className="inline-block rounded border border-info-7 bg-info-3 px-2 py-px font-code text-sm">
+                          {ele.type}
+                        </span>
+                      )}
+                    </span>
+                  </p>
+                )}
+
+                {!!ele.default && (
+                  <p className="mt-1">
+                    <span className="mr-2 text-sm font-medium text-muted-12">
+                      Default:
+                    </span>
+                    <code>{ele.default}</code>
+                  </p>
+                )}
+              </div>
+            </DisclosureContent>
+          </DisclosureItem>
+
+          <hr className="border-muted-6" />
+        </React.Fragment>
+      ))}
+    </DisclosureRoot>
   );
 };
 

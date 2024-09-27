@@ -13,6 +13,89 @@ Before customizing theme colors, ensure you have [@radix-ui/colors](https://www.
 
 ## Customizing
 
-To tailor your theme, navigate to tailwind.config.ts and provide a configuration object to the plugin. The plugin accepts only one configuration parameter, enabling you to override all default theme values and create a fully customized theme from scratch
+To tailor your theme, navigate to `tailwind.config.ts` and provide a configuration object to the plugin. The plugin accepts only one configuration parameter, enabling you to override all default theme values and create a fully customized theme from scratch
 
 ## plugin config
+
+<Props
+  data={[
+    {
+      name: 'colorMode',
+      type: ['rgb', 'hsl'],
+      default: 'rgb',
+      description: 'which color to use in css.',
+    },
+    {
+      name: 'defaultTheme',
+      type: ['light', 'dark'],
+      default: 'light',
+      description:
+        'when creates a theme from scratch. plugin needs to merge your theme with one of predefined themes so if you miss any token it gets from theme to be merged, it allows you to create theme with only your desired changes and remains else same. There are two predefined themes one for light ui named light and other is for dark ui named dark',
+    },
+    {
+      name: 'defaultColors',
+      typeAsNode: (
+        <>
+          see below{' '}
+          <a href="native:#default-colors-type">defaultColors</a> in
+          PluginConfig
+        </>
+      ),
+      description:
+        'which color to use in css. by default plugin uses hsl but you can use rgb if hsl does not work at some devices as well known ios mobiles.',
+    },
+  ]}
+/>
+
+<div id="default-colors-type">
+
+<FileName>PluginConfig</FileName>
+```ts
+export type ColorScale = Record<string, string>;
+
+export type ThemeColors = Partial<{
+  background: string;
+  foreground: string;
+  primary: ColorScale;
+  secondary: ColorScale;
+  success: ColorScale;
+  warning: ColorScale;
+  danger: ColorScale;
+  info: ColorScale;
+  muted: ColorScale;
+  overlay: string;
+  focus: string;
+  paper: string;
+}>;
+
+export type ThemeLayout = Partial<{
+  borderRadius: string;
+  boxShadow: {
+    depthElevation?: string;
+  };
+}>;
+
+export type Theme = Partial<{
+  /** @default light */
+  base: 'light' | 'dark';
+  colors: ThemeColors;
+  layout: ThemeLayout;
+}>;
+
+export type BaseThemes = Partial<{
+  light: Omit<Theme, 'base'>;
+  dark: Omit<Theme, 'base'>;
+}>;
+
+export type Themes = BaseThemes & Record<string, Theme>;
+
+export type PluginConfig = Partial<{
+  colorMode: 'rgb' | 'hsl';
+  defaultTheme: string;
+  defaultColors: Partial<{ light: ThemeColors; dark: ThemeColors }>;
+  defaultLayout: Partial<{ light: ThemeLayout; dark: ThemeLayout }>;
+  themes: Themes;
+}>;
+```
+
+</div>
