@@ -21,12 +21,10 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   return (
-    <html
-      lang="en"
-      dir="ltr"
-      className={`${GeistSans.variable} ${font_code.variable}`}
-    >
-      <body className="m-auto max-w-screen-2xl bg-background text-foreground">
+    <html lang="en" dir="ltr">
+      <body
+        className={`${GeistSans.variable} ${font_code.variable} m-auto max-w-screen-2xl bg-background font-sans text-foreground`}
+      >
         <ThemeProvider attribute="class">
           <AppBar>
             <AppBarContent />

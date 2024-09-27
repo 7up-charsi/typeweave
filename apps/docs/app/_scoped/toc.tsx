@@ -25,8 +25,6 @@ export const Toc = () => {
   React.useEffect(() => {
     const headings = document.querySelectorAll('[data-mdx-heading]');
 
-    if (!headings.length) return;
-
     const headingsArray = Array.from(headings);
 
     setHeadings(headingsArray as HTMLHeadingElement[]);
@@ -79,7 +77,7 @@ export const Toc = () => {
         )}
 
         {headings && !headings.length ? (
-          <span className="mt-10 text-sm text-muted-11/70">
+          <span className="mt-3 text-center text-sm text-muted-11/70">
             No headings found
           </span>
         ) : null}
