@@ -279,10 +279,15 @@ const ComboboxImpl = React.forwardRef<
   };
 
   const getOptionLabel = useCallbackRef((option: string | object) => {
-    if (typeof option === 'string') return option;
-
-    if ('label' in option && typeof option.label === 'string')
+    if (
+      typeof option === 'object' &&
+      'label' in option &&
+      typeof option.label === 'string' &&
+      !getOptionLabelProp
+    )
       return option.label;
+
+    if (typeof option === 'string' && !getOptionLabelProp) return option;
 
     const optionLabel = getOptionLabelProp?.(option);
 
@@ -1112,7 +1117,7 @@ const ComboboxImpl = React.forwardRef<
     handleValue(newValue, 'removeOption');
   };
 
-  // on open highlight selected option
+  // on open, highlight selected option
   React.useEffect(() => {
     if (!listBoxOpen) return;
 
