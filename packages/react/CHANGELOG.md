@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.2.12
+
+### Patch Changes
+
+- fix(React): Combobox getOptionLabel
+
 ## 4.2.11
 
 ### Patch Changes
