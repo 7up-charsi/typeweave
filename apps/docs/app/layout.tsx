@@ -7,7 +7,6 @@ import { Fira_Code } from 'next/font/google';
 import { GeistSans } from 'geist/font/sans';
 import { ThemeProvider } from 'next-themes';
 import { AppBar } from './_scoped/app-bar';
-import { InfoIcon } from 'lucide-react';
 import '@/styles/admonitions.css';
 import '@/styles/globals.css';
 
