@@ -7,6 +7,7 @@ import { Fira_Code } from 'next/font/google';
 import { GeistSans } from 'geist/font/sans';
 import { ThemeProvider } from 'next-themes';
 import { AppBar } from './_scoped/app-bar';
+import { InfoIcon } from 'lucide-react';
 import '@/styles/admonitions.css';
 import '@/styles/globals.css';
 
@@ -25,6 +26,10 @@ const Layout = ({ children }: Props) => {
       <body
         className={`${GeistSans.variable} ${font_code.variable} m-auto max-w-screen-2xl bg-background font-sans text-foreground`}
       >
+        <p className="text-balance bg-info-3 px-5 py-3 text-center text-info-11">
+          Documentation is under development.
+        </p>
+
         <ThemeProvider attribute="class">
           <AppBar>
             <AppBarContent />
