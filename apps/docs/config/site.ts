@@ -8,6 +8,6 @@ export const siteConfig = {
     "TypeWeave streamlines UI development by providing robust TypeScript React components and efficient Tailwind CSS theming. My packages, @typeweave/react and @typeweave/plugin, enable developers to build maintainable, visually appealing applications quickly and easily. Enhance your development workflow with TypeWeave's powerful, type-safe, and beautifully styled solutions.",
   ogImage: `${process.env.NEXT_PUBLIC_SITE_URL}/og.png`,
   author: 'muhammad zeeshan',
-  email: 'dev@uxweaver.codes',
+  email: '7up.charsi@gmail.com',
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
 };
