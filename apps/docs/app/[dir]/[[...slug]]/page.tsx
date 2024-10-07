@@ -1,4 +1,3 @@
-import { remarkAdmonitions } from '@/utils/remark-admonitions';
 import { getMdxFiles } from '@/utils/get-mdx-files';
 import { mdxComponents } from '@/mdx-components';
 import remarkDirective from 'remark-directive';
@@ -78,7 +77,7 @@ const Page = async ({ params }: PageProps) => {
     jsx,
     // @ts-ignore
     jsxs,
-    remarkPlugins: [remarkGfm, remarkDirective, remarkAdmonitions],
+    remarkPlugins: [remarkGfm, remarkDirective],
     rehypePlugins: [rehypeSlug],
   });
 
