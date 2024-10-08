@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "typecheck": "pnpm tsc --noEmit"
+    "lint": "next lint"
   },
   "dependencies": {
     "@mdx-js/mdx": "^3.0.1",
