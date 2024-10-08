@@ -36,7 +36,11 @@ export const CreateSandbox = () => {
 
 CreateSandbox.displayName = 'CreateSandbox';
 
-const openSandbox = ({ files, codeVariant, initialFile }: any) => {
+const openSandbox = ({
+  files,
+  codeVariant,
+  initialFile,
+}: Record<string, unknown>) => {
   const parameters = LZString.compressToBase64(
     JSON.stringify({ files }),
   )

@@ -724,7 +724,7 @@ const ComboboxImpl = React.forwardRef<
       return;
     }
 
-    // @ts-ignore Expected 2 arguments, but got 3.
+    // @ts-expect-error Expected 2 arguments, but got 3.
     onChange?.(newValue, reason as never, option);
 
     setValue(newValue);

@@ -3,15 +3,9 @@
 import { usePackageManagerState } from '@/hooks/use-package-manager-state';
 import React from 'react';
 
-interface LoadPackageManagerProps {}
-
 const displayName = 'LoadPackageManager';
 
-export const LoadPackageManager = (
-  props: LoadPackageManagerProps,
-) => {
-  const {} = props;
-
+export const LoadPackageManager = () => {
   const onChange = usePackageManagerState((s) => s.onChange);
 
   React.useEffect(() => {

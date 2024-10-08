@@ -1,15 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
 
-export interface BrandingProps {
-  className?: string;
-}
-
 const displayName = 'Branding';
 
-export const Branding = (props: BrandingProps) => {
-  const {} = props;
-
+export const Branding = () => {
   return (
     <Link
       href="/"

@@ -3,13 +3,9 @@ import { GithubIcon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 
-interface GithubLinkProps {}
-
 const displayName = 'GithubLink';
 
-export const GithubLink = (props: GithubLinkProps) => {
-  const {} = props;
-
+export const GithubLink = () => {
   return (
     <Button
       variant="text"

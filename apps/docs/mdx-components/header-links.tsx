@@ -25,28 +25,27 @@ export const HeaderLinks = (props: Props) => {
           href: `${process.env.REPO}/blob/main/packages/react/src/${component}/${component}-styles.ts`,
           a11yLabel: 'github styles source code',
         },
-      ]
-        .filter(Boolean)
-        // @ts-ignore
-        .map(({ icon, title, href, a11yLabel }, i) => (
+      ].map((ele, i) =>
+        !ele ? null : (
           <Button
             key={i}
             asChild
             variant="border"
             size="sm"
-            startContent={icon}
+            startContent={ele.icon}
           >
             <Link
               target="_blank"
               rel="noreferrer"
-              aria-label={a11yLabel}
-              href={href}
+              aria-label={ele.a11yLabel}
+              href={ele.href}
               className="not-prose"
             >
-              {title}
+              {ele.title}
             </Link>
           </Button>
-        ))}
+        ),
+      )}
     </div>
   );
 };

@@ -13,7 +13,6 @@ import remarkGfm from 'remark-gfm';
 import { Metadata } from 'next';
 import React from 'react';
 
-// @ts-ignore
 import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
 import { Button } from '@typeweave/react/button';
 import { GithubIcon } from 'lucide-react';
@@ -73,9 +72,9 @@ const Page = async ({ params }: PageProps) => {
   const { default: MdxContent } = await evaluate(content, {
     format: 'mdx',
     Fragment,
-    // @ts-ignore
+    // @ts-expect-error Types of parameters 'type' and 'type' are incompatible.
     jsx,
-    // @ts-ignore
+    // @ts-expect-error Types of parameters 'type' and 'type' are incompatible.
     jsxs,
     remarkPlugins: [remarkGfm, remarkDirective],
     rehypePlugins: [rehypeSlug],

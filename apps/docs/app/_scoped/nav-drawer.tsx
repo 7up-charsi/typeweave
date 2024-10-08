@@ -17,15 +17,11 @@ import { Branding } from '@/components/branding';
 import { MenuIcon, XIcon } from 'lucide-react';
 import React from 'react';
 
-interface NavDrawerProps {}
-
 const displayName = 'NavDrawer';
 
 export const useNavDrawerState = createDialogState();
 
-export const NavDrawer = (props: NavDrawerProps) => {
-  const {} = props;
-
+export const NavDrawer = () => {
   const { handleClose, handleOpenChange, open } = useNavDrawerState();
 
   return (

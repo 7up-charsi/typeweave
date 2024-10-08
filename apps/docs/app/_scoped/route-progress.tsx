@@ -3,13 +3,9 @@
 import { useRouteProgress } from '@typeweave/react/use-route-progress';
 import React from 'react';
 
-interface RouteProgressProps {}
-
 const displayName = 'RouteProgress';
 
-export const RouteProgress = (props: RouteProgressProps) => {
-  const {} = props;
-
+export const RouteProgress = () => {
   const { progress, hide } = useRouteProgress();
 
   return (

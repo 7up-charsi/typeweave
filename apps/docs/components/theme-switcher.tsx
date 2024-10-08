@@ -25,13 +25,9 @@ import { Button } from '@typeweave/react/button';
 import { useTheme } from 'next-themes';
 import React from 'react';
 
-interface ThemeSwitcherProps {}
-
 const displayName = 'ThemeSwitcher';
 
-export const ThemeSwitcher = (props: ThemeSwitcherProps) => {
-  const {} = props;
-
+export const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme();
 
   const isMounted = useIsMounted();

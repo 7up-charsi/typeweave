@@ -4,13 +4,9 @@ import { Branding } from '@/components/branding';
 import { NavDrawer } from './nav-drawer';
 import React from 'react';
 
-interface AppBarContentProps {}
-
 const displayName = 'AppBarContent';
 
-export const AppBarContent = (props: AppBarContentProps) => {
-  const {} = props;
-
+export const AppBarContent = () => {
   return (
     <header className="flex h-16 items-center px-5 lg:px-10">
       <Branding />
