@@ -1,106 +1,52 @@
-const capitalize = (str) => {
+const capitalize = (/** @type {string} */ str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const camelCase = (str) => {
+const camelCase = (/** @type {string} */ str) => {
   return str.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
-};
-
-const generators = ['package', 'component-docs'];
-
-const defaultOutDirs = {
-  package: './',
 };
 
 module.exports = function main(
   /** @type {import('plop').NodePlopAPI} */
   plop,
 ) {
-  plop.setHelper('capitalize', (text) => {
-    return capitalize(camelCase(text));
-  });
+  plop.setHelper('capitalize', (text) => capitalize(camelCase(text)));
+
   plop.setHelper('camelCase', camelCase);
 
-  generators.forEach((gen) => {
-    plop.setGenerator(gen, {
-      description: `Generates a ${gen}`,
-      prompts: [
-        {
-          type: 'input',
-          name: 'name',
-          message: `Enter ${gen} name :`,
+  plop.setGenerator('Package', {
+    description: 'Generates a package',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'Package name :',
+        validate: (value) => {
+          if (!value) return 'Package name is required';
 
-          validate: (value) => {
-            if (!value) return `${gen} name is required`;
+          if (/[A-Z]+/.test(value)) return 'Package name must be in lowercase';
 
-            // check is case is correct
-            if (value !== value.toLowerCase())
-              return `${gen} name must be in lowercase`;
+          if (/\s+/.test(value)) return 'Package name cannot have spaces';
 
-            // cannot have spaces
-            if (value.includes(' ')) return `${gen} name cannot have spaces`;
-
-            return true;
-          },
+          return true;
         },
-        {
-          type: 'input',
-          name: 'description',
-          message: `The description of this ${gen} :`,
-        },
-      ],
-      actions(answers) {
-        const actions = [];
-
-        if (!answers) return actions;
-
-        if (gen === 'component-docs') {
-          actions.push(
-            // demo
-            {
-              type: 'add',
-              templateFile: `plop/${gen}/demo.tsx.hbs`,
-              path: `./apps/docs/components/demos/{{dashCase name}}.tsx`,
-              base: `plop/${gen}`,
-              abortOnFail: true,
-            },
-
-            // export demo from index.ts
-            {
-              type: 'append',
-              path: `./apps/docs/components/demos/index.ts`,
-              template:
-                "export { default as {{capitalize name}}Demo } from './{{dashCase name}}';",
-            },
-
-            // content
-            {
-              type: 'addMany',
-              templateFiles: `plop/${gen}/content/**`,
-              destination: `./apps/docs/content/docs/components/{{dashCase name}}`,
-              base: `plop/${gen}/content`,
-              abortOnFail: true,
-            },
-          );
-
-          return actions;
-        }
-
-        const data = {
-          outDir: defaultOutDirs[gen],
-        };
-
-        actions.push({
-          type: 'addMany',
-          templateFiles: `plop/${gen}/**`,
-          destination: `./packages/{{outDir}}/{{dashCase name}}`,
-          base: `plop/${gen}`,
-          data,
-          abortOnFail: true,
-        });
-
-        return actions;
       },
-    });
+      {
+        type: 'input',
+        name: 'description',
+        message: 'The description of this package',
+      },
+    ],
+    actions(data) {
+      return [
+        {
+          type: 'addMany',
+          templateFiles: 'plop/package/**',
+          destination: './packages/{{dashCase name}}',
+          base: 'plop/package',
+          data,
+        },
+      ];
+    },
   });
 };

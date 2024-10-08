@@ -14,8 +14,7 @@
     "format:check": "prettier --check ./packages/**/src/**/*.{ts,tsx} --cache",
     "format:write": "prettier --write ./packages/**/src/**/*.{ts,tsx} --cache",
     "unused-deps": "tsx ./scripts/check-deps.ts",
-    "create:pkg": "plop package",
-    "create:cmp-docs": "plop component-docs"
+    "gen": "plop"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.9",
@@ -37,3 +36,4 @@
   },
   "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
 }
+
