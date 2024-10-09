@@ -1,4 +1,6 @@
-export * from './types';
+export * from './plugin';
+export * from './layout';
+export * from './semantics';
+export * from './utils';
 
-export { typeweave } from './plugin';
-export { createColorScale } from './utils';
+export * from './plugin-config-types';

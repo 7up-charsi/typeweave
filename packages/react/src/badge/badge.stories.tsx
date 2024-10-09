@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '../button';
 import { Badge, BadgeProps } from './';
 import { MailIcon } from 'lucide-react';

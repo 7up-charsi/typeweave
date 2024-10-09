@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export const mergeProps = (...props: object[]) => {
   const result: Record<string, unknown> = { ...props[0] };
@@ -27,7 +27,7 @@ export const mergeProps = (...props: object[]) => {
         typeof presentValue === 'string' &&
         typeof newValue === 'string'
       ) {
-        result[key] = clsx(presentValue, newValue);
+        result[key] = twMerge(presentValue, newValue);
       } else if (
         key === 'style' &&
         typeof presentValue === 'object' &&

@@ -1,4 +1,4 @@
-import { mergeRefs } from '@typeweave/react-utils';
+import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 import { PopperReference } from '../popper';
 import { Slot } from '../slot';
 import { useMenuCtx } from './menu-root';

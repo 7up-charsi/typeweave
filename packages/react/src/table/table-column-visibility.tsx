@@ -23,7 +23,8 @@ export const TableColumnVisibility = (props: TableColumnVisibilityProps) => {
     columns: columns
       .filter((col) => col.hideable)
       .map((col) => {
-        const header = col.header(data);
+        const header =
+          typeof col.header === 'function' ? col.header(data) : col.header;
 
         return {
           title:

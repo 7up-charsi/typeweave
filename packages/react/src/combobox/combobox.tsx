@@ -4,7 +4,7 @@ import { createComboboxFilter } from './create-combobox-filter';
 import { useControlled } from '../use-controlled';
 import { useCallbackRef } from '../use-callback-ref';
 import usePreviousProps from '../use-previous-props';
-import { mergeRefs } from '@typeweave/react-utils';
+import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 import { PointerEvents } from '../pointer-events/pointer-events';
 import { Chip } from '../chip';
 import { Button } from '../button';

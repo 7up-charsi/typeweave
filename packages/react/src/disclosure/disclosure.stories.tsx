@@ -3,6 +3,7 @@ import {
   DisclosureContent,
   DisclosureItem,
   DisclosureRoot,
+  DisclosureRootProps,
   DisclosureTrigger,
 } from './';
 import { ChevronDownIcon } from 'lucide-react';
@@ -14,7 +15,7 @@ const meta = {
 
 export default meta;
 
-const Template = (args) => (
+const Template = (args: DisclosureRootProps) => (
   <DisclosureRoot {...args} className="rounded border border-muted-7">
     {Array.from({ length: 10 }).map((_, i, arr) => (
       <React.Fragment key={i}>

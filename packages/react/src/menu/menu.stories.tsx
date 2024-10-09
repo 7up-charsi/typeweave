@@ -9,6 +9,7 @@ import {
   MenuRadioGroup,
   MenuRadioItem,
   MenuRoot,
+  MenuRootProps,
   MenuSeparator,
   MenuTrigger,
 } from './';
@@ -26,7 +27,7 @@ const meta = {
 
 export default meta;
 
-const Template = (args) => {
+const Template = (args: MenuRootProps & { customIcon?: React.ReactNode }) => {
   const ref = React.useRef<HTMLButtonElement>(null);
 
   const [favrouite, setFavrouite] = React.useState(true);

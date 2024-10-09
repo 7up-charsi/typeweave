@@ -1,0 +1,46 @@
+# mergeProps
+
+## Description
+
+Merges multiple props objects into a single object, handling edge cases for event handlers, classNames, and styles.
+
+## Syntax
+
+```ts
+mergeProps(...props: object[]): Record<string, unknown>
+```
+
+## Parameters
+
+props: A variable number of objects to be merged.
+
+## Return Value
+
+A single object containing the merged props.
+
+## Details
+
+- If two or more props objects have the same key, the value from the last props object will be used, unless:
+  - The key starts with "on" and the value is a function (event handler), in which case the functions will be chained.
+  - The key is "className" and the values are strings, in which case the values will be merged using the `twMerge` function.
+  - The key is "style" and the values are objects, in which case the objects will be merged
+
+## example
+
+```tsx
+import { mergeProps } from '@typeweave/react-utils/merge-props';
+
+export default function App() {
+  const props1 = {
+    onClick: () => console.log('Hello'),
+    className: 'foo',
+  };
+
+  const props2 = {
+    onClick: () => console.log('World'),
+    className: 'bar',
+  };
+
+  return <div {...mergeProps(props1, props2)}></div>;
+}
+```

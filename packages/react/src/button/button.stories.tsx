@@ -1,5 +1,10 @@
-import React from 'react';
-import { Button, ButtonGroup, ButtonProps, buttonStyles } from './';
+import {
+  Button,
+  ButtonGroup,
+  ButtonGroupProps,
+  ButtonProps,
+  buttonStyles,
+} from './';
 import { ChevronDown, SmileIcon } from 'lucide-react';
 
 const meta = {
@@ -140,7 +145,7 @@ const WithConentTemplate = (args: ButtonProps) => (
                   startContent={position !== 'end' && <SmileIcon />}
                   endContent={position !== 'start' && <SmileIcon />}
                 >
-                  {color[0].toUpperCase() + color.slice(1)}
+                  {color.charAt(0).toUpperCase() + color.slice(1)}
                 </Button>
               ))}
             </div>
@@ -159,7 +164,7 @@ export const WithContent = {
   },
 };
 
-const GroupTemplate = (args) => (
+const GroupTemplate = (args: ButtonGroupProps) => (
   <div className="flex flex-col items-start gap-4">
     <ButtonGroup {...args} variant="flat" size="lg">
       <Button>Select</Button>

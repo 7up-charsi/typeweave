@@ -1,8 +1,4 @@
 {
   "extends": "@repo/typescript-config/react",
-  "include": ["./src/**/*"],
-  "exclude": ["./src/**/*.stories.tsx"],
-  "compilerOptions": {
-    "outDir": "dist"
-  }
+  "include": ["./src/**/*"]
 }

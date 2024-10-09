@@ -1,4 +1,3 @@
-import React from 'react';
 import { PointerEvents } from '../pointer-events';
 import { NumberInput, PasswordInput, Input as InputComp } from './';
 

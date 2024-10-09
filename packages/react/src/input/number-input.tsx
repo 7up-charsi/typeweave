@@ -1,6 +1,6 @@
 import React from 'react';
 import { InputProps, Input } from './input';
-import { mergeRefs } from '@typeweave/react-utils';
+import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 import { Button } from '../button';
 import { useControlled } from '../use-controlled';
 import { MinusIcon, PlusIcon } from 'lucide-react';

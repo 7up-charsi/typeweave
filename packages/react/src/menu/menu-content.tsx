@@ -2,7 +2,7 @@ import { createContextScope } from '../context';
 import { PopperFloating, PopperFloatingProps } from '../popper';
 import React from 'react';
 import { MenuCollection, useMenuCollection, useMenuCtx } from './menu-root';
-import { mergeRefs } from '@typeweave/react-utils';
+import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 import { useClickOutside } from '../use-click-outside';
 import { useScrollLock } from '../use-scroll-lock';
 import { MenuVariantProps, menuStyles } from './menu.styles';

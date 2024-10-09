@@ -1,4 +1,3 @@
-import React from 'react';
 import { ToggleButton, ToggleButtonGroup, toggleButtonStyles } from './';
 
 const meta = {

@@ -1,4 +1,4 @@
-import { mergeRefs } from '@typeweave/react-utils';
+import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 import React from 'react';
 import { Check, Minus } from 'lucide-react';
 import { CheckboxVariantProps, checkboxStyles } from './checkbox.styles';

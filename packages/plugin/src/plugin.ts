@@ -4,20 +4,25 @@ import { flatten } from 'flat';
 import Color from 'color';
 import kebabcase from 'lodash.kebabcase';
 import { darkThemeColors, lightThemeColors } from './semantics';
-import { darkThemeLayout, lightThemeLayout } from './layouts';
+import { defaultLayout } from './layout';
 import kebabCase from 'lodash.kebabcase';
-import { PluginConfig, Theme, ThemeColors, Themes } from './types';
+import {
+  PluginConfig,
+  Theme,
+  ThemeColors,
+  Themes,
+} from './plugin-config-types';
 
 const semanticThemes: { light: Theme; dark: Theme } = {
   light: {
     base: 'light',
     colors: lightThemeColors,
-    layout: lightThemeLayout,
+    layout: defaultLayout,
   },
   dark: {
     base: 'dark',
     colors: darkThemeColors,
-    layout: darkThemeLayout,
+    layout: defaultLayout,
   },
 };
 

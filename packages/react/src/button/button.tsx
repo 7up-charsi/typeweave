@@ -1,9 +1,9 @@
-import { mergeRefs } from '@typeweave/react-utils';
 import { Slot } from '../slot';
 import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';
 import { GroupCtx } from './button-group';
 import { ButtonVariantProps, buttonStyles } from './button.styles';
+import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 
 export type ButtonPressEvent = {
   target: HTMLButtonElement;
@@ -150,7 +150,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={!!disabled}
         ref={mergeRefs(ref, innerRef)}
         className={styles.base({ className: classNames?.base ?? className })}
-        tabIndex={excludeFromTabOrder ? -1 : tabIndex ?? 0}
+        tabIndex={excludeFromTabOrder ? -1 : (tabIndex ?? 0)}
         onKeyDown={onKeyDown}
       >
         {asChild ? (

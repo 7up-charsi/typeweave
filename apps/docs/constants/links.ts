@@ -135,3 +135,14 @@ export const componentsLinks = {
     },
   ],
 };
+
+export const utilsLinks = [
+  {
+    title: 'merge props',
+    href: '/utils/merge-props',
+  },
+  {
+    title: 'merge refs',
+    href: '/utils/merge-refs',
+  },
+];

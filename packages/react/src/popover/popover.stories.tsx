@@ -41,7 +41,7 @@ const meta = {
 
 export default meta;
 
-const Template = (args) => {
+const Template = () => {
   const ref = React.useRef<HTMLButtonElement>(null);
 
   React.useEffect(() => {
@@ -54,26 +54,14 @@ const Template = (args) => {
 
   return (
     <div className="w-[300vw] h-[300vh] flex items-center justify-center">
-      <PopoverRoot defaultOpen={args.defaultOpen}>
+      <PopoverRoot defaultOpen={true}>
         <PopoverTrigger>
           <Button ref={ref}>open popver</Button>
         </PopoverTrigger>
 
         <PopoverPortal>
-          <PopoverContent
-            alignOffset={args.alignOffset}
-            arrow={args.arrow}
-            mainOffset={args.mainOffset}
-            sticky={args.sticky}
-            placement={args.placement}
-            arrowPadding={args.arrowPadding}
-            hideWhenDetached={args.hideWhenDetached}
-            allowMainAxisFlip={args.allowMainAxisFlip}
-            allowCrossAxisFlip={args.allowCrossAxisFlip}
-            aria-labelledby="title"
-            aria-describedby="desc"
-          >
-            {args.arrow && <PopoverArrow />}
+          <PopoverContent aria-labelledby="title" aria-describedby="desc">
+            <PopoverArrow />
 
             <div id="title">SVG Vector</div>
 
@@ -108,16 +96,4 @@ const Template = (args) => {
 
 export const Default = {
   render: Template,
-  args: {
-    alignOffset: 0,
-    mainOffset: 0,
-    arrowPadding: 10,
-    hideWhenDetached: true,
-    boundaryPadding: 0,
-    sticky: 'partial',
-    placement: 'bottom',
-    arrow: true,
-    allowMainAxisFlip: true,
-    allowCrossAxisFlip: true,
-  },
 };

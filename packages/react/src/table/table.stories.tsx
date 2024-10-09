@@ -1,4 +1,3 @@
-import React from 'react';
 import { Columns3Icon } from 'lucide-react';
 import {
   TableRoot,
@@ -30,14 +29,17 @@ const Template = () => {
       getRowKey={(row) => row.id}
       data={Array.from({ length: 25 }).map((_, i) => ({
         id: i + '',
-        name: '',
+        name: {
+          first: { short: '', long: 33 },
+          last: 33,
+        },
         age: 0,
       }))}
       columns={[
         {
           identifier: 'select-row',
           visibilityTitle: 'select row',
-          accessor: (row) => row.id,
+          accessor: 'id',
           header: () => (
             <div className="flex items-center justify-center">
               <TableSelectAllRows>
@@ -55,8 +57,8 @@ const Template = () => {
         },
         ...Array.from({ length: 8 }).map((_, i) => ({
           identifier: `${i + 1}`,
-          accessor: () => `${i + 1}`,
           header: () => `column ${i + 1}`,
+          cell: () => `${i + 1}`,
         })),
       ]}
     >

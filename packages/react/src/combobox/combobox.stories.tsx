@@ -1,11 +1,14 @@
-import React from 'react';
 import optionsJson from './options.json';
 import { Combobox } from './';
 import { Input } from '../input';
 
 const options = optionsJson.sort((a, b) => {
-  if (a.title[0].toLowerCase() > b.title[0].toLowerCase()) return 1;
-  if (a.title[0].toLowerCase() < b.title[0].toLowerCase()) return -1;
+  if (a.title.charAt(0).toLowerCase() > b.title.charAt(0).toLowerCase())
+    return 1;
+
+  if (a.title.charAt(0).toLowerCase() < b.title.charAt(0).toLowerCase())
+    return -1;
+
   return 0;
 });
 
@@ -34,7 +37,7 @@ const MultipleTemplate = () => (
   <Combobox
     multiple
     options={options}
-    defaultValue={[options[21]]}
+    defaultValue={[options[21]!]}
     getOptionLabel={(option) => option.title}
     renderInput={(props) => <Input label="top 100 movies" {...props} />}
   />
@@ -63,7 +66,7 @@ const MultipleEditableTemplate = () => (
     editable
     multiple
     options={options}
-    defaultValue={[options[21]]}
+    defaultValue={[options[21]!]}
     getOptionLabel={(option) => option.title}
     renderInput={(props) => <Input label="top 100 movies" {...props} />}
   />

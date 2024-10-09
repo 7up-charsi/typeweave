@@ -1,5 +1,4 @@
-import React from 'react';
-import { Chip, chipStyles } from './';
+import { Chip, ChipProps, chipStyles } from './';
 
 const meta = {
   title: 'Components/Chip',
@@ -23,7 +22,7 @@ const meta = {
 
 export default meta;
 
-const Template = (args) => (
+const Template = (args: ChipProps) => (
   <div className="p-5 flex flex-col gap-6 items-center">
     {(
       Object.keys(chipStyles.variants.variant) as [

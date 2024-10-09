@@ -1,4 +1,3 @@
-import React from 'react';
 import { Alert, alertStyles } from './';
 import { Heart, Angry } from 'lucide-react';
 

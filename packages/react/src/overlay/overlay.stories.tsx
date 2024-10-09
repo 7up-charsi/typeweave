@@ -1,4 +1,3 @@
-import React from 'react';
 import { Overlay, OverlayProps } from './';
 
 const meta = {

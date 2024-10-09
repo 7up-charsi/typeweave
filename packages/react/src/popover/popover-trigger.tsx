@@ -2,7 +2,7 @@ import React from 'react';
 import { usePopoverCtx } from './popover-root';
 import { PopperReference } from '../popper';
 import { Slot } from '../slot';
-import { mergeRefs } from '@typeweave/react-utils';
+import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 
 export interface PopoverTriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}

@@ -1,4 +1,4 @@
-import { mergeRefs } from '@typeweave/react-utils';
+import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 import React from 'react';
 import { PointerEventsProps } from '../pointer-events/pointer-events';
 import { usePointerEvents } from '../use-pointer-events';

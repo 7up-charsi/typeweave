@@ -1,7 +1,7 @@
-import React from 'react';
 import { Button } from '../button';
 import {
   DrawerContent,
+  DrawerContentProps,
   DrawerOverlay,
   DrawerPortal,
   DrawerRoot,
@@ -14,7 +14,13 @@ const meta = {
 
 export default meta;
 
-const Template = ({ children, placement }) => {
+const Template = ({
+  children,
+  placement,
+}: {
+  children?: React.ReactNode;
+  placement: DrawerContentProps['placement'];
+}) => {
   return (
     <DrawerRoot keepMounted>
       <DrawerTrigger>{children}</DrawerTrigger>

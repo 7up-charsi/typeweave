@@ -1,7 +1,3 @@
-export type ClassNames<Slots extends object> = {
-  [key in keyof Slots]?: string;
-};
-
 export type ColorScale = Record<string, string>;
 
 export type ThemeColors = Partial<{
@@ -21,9 +17,9 @@ export type ThemeColors = Partial<{
 
 export type ThemeLayout = Partial<{
   borderRadius: string;
-  boxShadow: {
-    depthElevation?: string;
-  };
+  boxShadow: Partial<{
+    depthElevation: string;
+  }>;
 }>;
 
 export type Theme = Partial<{
@@ -33,12 +29,11 @@ export type Theme = Partial<{
   layout: ThemeLayout;
 }>;
 
-export type BaseThemes = Partial<{
+export type Themes = Partial<{
   light: Omit<Theme, 'base'>;
   dark: Omit<Theme, 'base'>;
-}>;
-
-export type Themes = BaseThemes & Record<string, Theme>;
+}> &
+  Record<string, Theme>;
 
 export type PluginConfig = Partial<{
   colorMode: 'rgb' | 'hsl';

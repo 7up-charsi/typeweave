@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type Store = {
+export type CreateDialogState = {
   open: boolean;
   handleOpenChange: (open: boolean) => void;
   handleOpen: () => void;
@@ -8,7 +8,7 @@ type Store = {
 };
 
 export const createDialogState = () =>
-  create<Store>((set) => ({
+  create<CreateDialogState>((set) => ({
     open: false,
     handleOpenChange: (open) => {
       set({ open });

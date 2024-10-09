@@ -1,5 +1,4 @@
-import React from 'react';
-import { Skeleton, skeletonStyles } from './';
+import { Skeleton, SkeletonProps, skeletonStyles } from './';
 
 const meta = {
   title: 'Components/Skeleton',
@@ -9,7 +8,7 @@ const meta = {
 
 export default meta;
 
-const Template = (args) => (
+const Template = (args: SkeletonProps) => (
   <div className="w-[300px] shadow-md border rounded p-3">
     <div className="w-full flex gap-3 items-center">
       <div>

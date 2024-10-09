@@ -6,27 +6,57 @@ export type ColumnVisibility = Record<string, boolean>;
 
 type _Row = Record<string, unknown>;
 
-export type TableColumn<Row = _Row> = {
-  [K in keyof Row]: {
-    accessor: (row: Row) => Row[K];
-    header: (data: Row[]) => React.ReactNode;
-    identifier: string;
-    cell?: (val: Row[K], row: Row, data: Row[]) => React.ReactNode;
-    visibility?: boolean;
-    visibilityTitle?: string;
-    hideable?: boolean;
-    classNames?: {
-      th?: string;
-      td?: string;
-    };
-  };
+type NestedKeys<Row, ParentKey extends string = ''> = {
+  [K in keyof Row]: K extends string
+    ? Row[K] extends object
+      ? `${ParentKey}${K}` | NestedKeys<Row[K], `${ParentKey}${K}.`>
+      : `${ParentKey}${K}`
+    : never;
 }[keyof Row];
+
+type AccessorValueType<BeforeDotObject, Acc> =
+  Acc extends `${infer ParentObject}.${infer NestedKey}`
+    ? AccessorValueType<
+        BeforeDotObject[ParentObject & keyof BeforeDotObject],
+        NestedKey
+      >
+    : BeforeDotObject[Acc & keyof BeforeDotObject];
+
+type TableColumnProps<Row> = {
+  identifier: string;
+  header: string | ((data: Row[]) => React.ReactNode);
+  visibility?: boolean;
+  visibilityTitle?: string;
+  hideable?: boolean;
+  classNames?: {
+    th?: string;
+    td?: string;
+  };
+};
+
+export type TableColumn<K, Row> =
+  | ({
+      accessor: K;
+      cell?: (
+        val: AccessorValueType<Row, K>,
+        row: Row,
+        data: Row[],
+      ) => React.ReactNode;
+    } & TableColumnProps<Row>)
+  | ({
+      accessor?: undefined;
+      cell?: (row: Row, data: Row[]) => React.ReactNode;
+    } & TableColumnProps<Row>);
+
+type TableColumns<Row> = {
+  [K in NestedKeys<Row>]: TableColumn<K, Row>;
+}[NestedKeys<Row>][];
 
 type GetRowKey<R = _Row> = (row: R) => string;
 
 export interface TableRootProps<R = _Row> {
   data: R[];
-  columns: TableColumn<R>[];
+  columns: TableColumns<R>;
   getRowKey?: GetRowKey<R>;
   children?: React.ReactNode;
   columnVisibility?: ColumnVisibility;
@@ -35,7 +65,7 @@ export interface TableRootProps<R = _Row> {
 
 interface RootContext {
   data: _Row[];
-  columns: TableColumn<_Row>[];
+  columns: TableColumns<_Row>;
   getRowKey?: GetRowKey<_Row>;
   columnVisibility: ColumnVisibility;
   setColumnVisibility: ReturnType<typeof useControlled<ColumnVisibility>>[1];

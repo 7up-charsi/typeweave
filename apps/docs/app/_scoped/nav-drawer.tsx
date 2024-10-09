@@ -8,8 +8,8 @@ import {
   DrawerRoot,
   DrawerTrigger,
 } from '@typeweave/react/drawer';
+import { createDialogState } from '@typeweave/react-utils/dialog-state';
 import { ThemeSwitcher } from '@/components/theme-switcher';
-import { createDialogState } from '@typeweave/react-utils';
 import { GithubLink } from '@/components/github-link';
 import { SidebarContent } from './sidebar-content';
 import { Button } from '@typeweave/react/button';

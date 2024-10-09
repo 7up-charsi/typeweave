@@ -8,6 +8,7 @@ import {
   DialogRootMethods,
   DialogTrigger,
   DialogPortal,
+  DialogRootProps,
 } from './';
 import { Button } from '../button';
 
@@ -17,7 +18,7 @@ const meta = {
 
 export default meta;
 
-const Template = (args) => {
+const Template = (args: DialogRootProps & { className?: string }) => {
   return (
     <DialogRoot defaultOpen={args.defaultOpen} keepMounted={args.keepMounted}>
       <DialogTrigger>
@@ -67,7 +68,7 @@ const Template = (args) => {
   );
 };
 
-const DialogTemplate = (args) => {
+const DialogTemplate = (args: DialogRootProps) => {
   return (
     <>
       <Template {...args} />
@@ -100,7 +101,7 @@ export const Default = {
   },
 };
 
-const NestedTemplate = (args) => {
+const NestedTemplate = (args: DialogRootProps) => {
   return (
     <>
       <Template {...args}>

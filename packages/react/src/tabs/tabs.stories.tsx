@@ -1,6 +1,11 @@
-import React from 'react';
 import { Button } from '../button';
-import { TabsRoot, TabsTrigger, TabsList, TabsContent } from './';
+import {
+  TabsRoot,
+  TabsTrigger,
+  TabsList,
+  TabsContent,
+  TabsRootProps,
+} from './';
 
 const meta = {
   title: 'Components/Tabs',
@@ -8,7 +13,7 @@ const meta = {
 
 export default meta;
 
-const Template = (args) => (
+const Template = (args: TabsRootProps) => (
   <TabsRoot {...args} defaultValue="tab-1">
     <TabsList className="gap-3">
       {Array.from({ length: 3 }).map((_, i) => (

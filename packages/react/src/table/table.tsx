@@ -70,7 +70,11 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
 
                 if (!visible) return;
 
-                const tdValue = col.accessor(row);
+                const tdValue = col.accessor
+                  ? col.accessor
+                      .split('.')
+                      .reduce((acc, curr) => acc[curr] as never, row)
+                  : '';
 
                 return (
                   <td
@@ -80,11 +84,19 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
                     })}
                   >
                     {col.cell
-                      ? col.cell(tdValue, row, data)
-                      : typeof tdValue === 'string' ||
-                          typeof tdValue === 'number'
-                        ? tdValue
-                        : '[object, object]'}
+                      ? col.accessor
+                        ? col.cell(tdValue, row, data)
+                        : (
+                            col as {
+                              cell: (
+                                _row: typeof row,
+                                data: (typeof row)[],
+                              ) => React.ReactNode;
+                            }
+                          ).cell(row, data)
+                      : null}
+
+                    {!col.cell ? renderer(tdValue) : null}
                   </td>
                 );
               })}
@@ -97,3 +109,11 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
 );
 
 Table.displayName = displayName;
+
+const renderer = (value: unknown) => {
+  if (typeof value === 'string' || typeof value === 'number') {
+    return value;
+  }
+
+  return '[object, object]';
+};

@@ -1,4 +1,4 @@
-import { ColorScale } from './types';
+import { ColorScale } from './plugin-config-types';
 
 export const createColorScale = (color: ColorScale) =>
   Object.entries(color).reduce<ColorScale>(

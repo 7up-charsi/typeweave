@@ -7,7 +7,7 @@ import {
 } from './utils';
 import { Slot } from '../slot';
 import React from 'react';
-import { mergeRefs } from '@typeweave/react-utils';
+import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 import { useCallbackRef } from '../use-callback-ref';
 import { StackItem, createStackManager } from '../stack-manager';
 

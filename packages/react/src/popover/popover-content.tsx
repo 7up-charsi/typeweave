@@ -4,7 +4,7 @@ import { usePopoverCtx } from './popover-root';
 import { useClickOutside } from '../use-click-outside';
 import { createContextScope } from '../context';
 import { FocusTrap } from '../focus-trap';
-import { mergeRefs } from '@typeweave/react-utils';
+import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 import { PopoverVariantProps, popoverStyles } from './popover.styles';
 
 export interface PopoverContentProps
