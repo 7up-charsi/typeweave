@@ -33,10 +33,11 @@
     }
   },
   "scripts": {
-    "build": "pnpm tsup",
+    "build": "pnpm rimraf dist && pnpm tsc",
     "clean": "rimraf dist .turbo",
     "prepack": "clean-package",
-    "postpack": "clean-package restore"
+    "postpack": "clean-package restore",
+    "prepublishOnly": "pnpm build"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -55,3 +56,4 @@
     "clean-package": "^2.2.0"
   }
 }
+

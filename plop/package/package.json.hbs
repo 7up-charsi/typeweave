@@ -25,23 +25,23 @@
   "bugs": {
     "url": "https://github.com/7up-charsi/typeweave/issues"
   },
-  "main": "./src/index.ts",
+  "exports": {
+  },
   "scripts": {
-    "build": "tsup",
+    "build": "pnpm rimraf dist && pnpm tsc",
     "clean": "rimraf dist .turbo",
-    "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
-    "postpack": "clean-package restore"
+    "postpack": "clean-package restore",
+    "prepublishOnly": "pnpm build"
   }, 
   "peerDependencies": {
     "react": ">=18",
     "react-dom": ">=18"
   },
+  "dependencies": {
+  },
   "devDependencies": {
     "clean-package": "^2.2.0",
     "tsconfig": "workspace:*"
-  },
-  "clean-package": {
-    "extends": "../../../../../../clean-package.config.json"
   }
 }
