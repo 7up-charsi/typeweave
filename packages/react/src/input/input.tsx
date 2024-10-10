@@ -90,6 +90,7 @@ const InputImpl = (
     fullWidth = false,
     disabled = false,
     inputWrapperRef,
+    readOnly,
     multiline = false,
     onPointerDown,
     onPointerUp,
@@ -115,20 +116,32 @@ const InputImpl = (
   const innerInputRef = React.useRef<HTMLInputElement | null>(null);
   const innerTextareaRef = React.useRef<HTMLTextAreaElement | null>(null);
 
+  const handleFocus = (e: React.PointerEvent) => {
+    e.preventDefault();
+    innerInputRef.current?.focus();
+    innerTextareaRef.current?.focus();
+  };
+
   const inputWrapperPointerEvents = usePointerEvents({
     onPointerUp: inputWrapperOnPointerUp,
-    onPress: inputWrapperOnPress,
+    onPress: (e) => {
+      inputWrapperOnPress?.(e);
+
+      if (e.currentTarget !== e.target || disabled || readOnly) return;
+      if (e.pointerType !== 'mouse') handleFocus(e);
+    },
     onPointerDown: (e) => {
       inputWrapperOnPointerDown?.(e);
 
-      if (e.currentTarget !== e.target) return;
-      if (e.button !== 0 || disabled) return;
-      if (!multiline && e.target instanceof HTMLInputElement) return;
-      if (multiline && e.target instanceof HTMLTextAreaElement) return;
+      if (
+        e.currentTarget !== e.target ||
+        e.button !== 0 ||
+        disabled ||
+        readOnly
+      )
+        return;
 
-      e.preventDefault();
-      innerInputRef.current?.focus();
-      innerTextareaRef.current?.focus();
+      if (e.pointerType === 'mouse') handleFocus(e);
     },
   });
 
@@ -157,6 +170,7 @@ const InputImpl = (
     'aria-invalid': error,
     id: inputId,
     disabled,
+    readOnly,
     autoComplete: 'off',
     ...pointerEvents,
   };

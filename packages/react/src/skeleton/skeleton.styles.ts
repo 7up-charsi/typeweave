@@ -10,6 +10,7 @@ export const skeletonStyles = tv({
       rounded: 'h-20 w-full rounded',
     },
     animation: {
+      none: '',
       pulse: 'animate-pulse',
       wave: 'relative after:absolute after:inset-0 after:-translate-x-full after:content-["_"] after:bg-[linear-gradient(90deg,transparent,theme(colors.muted-7),transparent)] after:animate-skeletonWave',
     },

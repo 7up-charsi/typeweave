@@ -585,7 +585,6 @@ const ComboboxImpl = React.forwardRef<
 
     let nextFocus = newIndex;
 
-    // eslint-disable-next-line no-constant-condition
     while (true) {
       const option = listboxRef.current.querySelector(
         `[data-option-index="${nextFocus}"]`,
@@ -710,7 +709,9 @@ const ComboboxImpl = React.forwardRef<
   const handleValue = (
     newValue: string | object | null | (string | object | null)[],
     reason: ComboboxOnChangeReason,
-    // check selectNewValue handler below to see details of this prop
+    /**
+     * in multiple mode this is user selected or removed option
+     */
     option?: string | object | null,
   ) => {
     if (Array.isArray(value) && Array.isArray(newValue)) {
@@ -724,26 +725,29 @@ const ComboboxImpl = React.forwardRef<
       return;
     }
 
-    // @ts-expect-error Expected 2 arguments, but got 3.
-    onChange?.(newValue, reason as never, option);
+    (onChange as (value: unknown, reason: unknown, options: unknown) => void)?.(
+      newValue,
+      reason,
+      option,
+    );
 
     setValue(newValue);
   };
 
   const selectNewValue = (
     e: React.SyntheticEvent,
-    option: string | object,
-    reasonProp = 'selectOption',
+    selectedOption: string | object,
   ) => {
-    let reason = reasonProp;
-    let newValue: string | object | (string | object)[] = option;
+    let reason: ComboboxOnCloseReason = 'selectOption';
+
+    let newValue: string | object | (string | object)[] = selectedOption;
 
     if (multiple) {
       const newMultipleValue = Array.isArray(value) ? value.slice() : [];
 
       if (process.env.NODE_ENV !== 'production') {
         const matches = newMultipleValue.filter((val) =>
-          isOptionEqualToValue(option, val),
+          isOptionEqualToValue(selectedOption, val),
         );
 
         if (matches.length > 1) {
@@ -757,11 +761,11 @@ const ComboboxImpl = React.forwardRef<
       }
 
       const itemIndex = newMultipleValue.findIndex((valueItem) =>
-        isOptionEqualToValue(option, valueItem),
+        isOptionEqualToValue(selectedOption, valueItem),
       );
 
       if (itemIndex === -1) {
-        newMultipleValue.push(option);
+        newMultipleValue.push(selectedOption);
       } else {
         newMultipleValue.splice(itemIndex, 1);
         reason = 'removeOption';
@@ -772,31 +776,26 @@ const ComboboxImpl = React.forwardRef<
 
     resetInputValue(newValue);
 
-    handleValue(
-      newValue,
-      reason as ComboboxOnChangeReason,
-      // pass selected/removed option when multiple is true. it allow developer to check which option is selected/removed among array of options
-      multiple ? option : undefined,
-    );
+    handleValue(newValue, reason, multiple ? selectedOption : undefined);
 
     const modifiedEvent = e as unknown as {
-      ctrlKey: boolean;
-      metaKey: boolean;
+      ctrlKey?: boolean;
+      metaKey?: boolean;
     };
 
-    if (
-      !disableCloseOnSelect &&
-      !modifiedEvent.ctrlKey &&
-      !modifiedEvent.metaKey
-    ) {
-      handleClose(reason as ComboboxOnCloseReason);
+    const isControlKeyPressed = modifiedEvent.ctrlKey || modifiedEvent.metaKey;
+
+    if (!disableCloseOnSelect && !isControlKeyPressed) {
+      handleClose(reason);
     }
   };
 
   const handleClear = () => {
-    if (disabled) return;
+    if (disabled || readOnly) return;
 
     ignoreListOpen.current = true;
+
+    inputRef.current?.focus();
 
     setInputValue('');
     onInputChange?.('', 'clear');
@@ -900,6 +899,7 @@ const ComboboxImpl = React.forwardRef<
       !listBoxOpen &&
       ['PageUp', 'PageDown', 'ArrowDown', 'ArrowUp'].includes(e.key)
     ) {
+      e.preventDefault();
       handleOpen();
       return;
     }
@@ -964,7 +964,7 @@ const ComboboxImpl = React.forwardRef<
 
       if (optionDisabled) return;
 
-      selectNewValue(e, option, 'selectOption');
+      selectNewValue(e, option);
 
       return;
     }
@@ -1012,11 +1012,13 @@ const ComboboxImpl = React.forwardRef<
 
     if (!filteredOptions[index]) return;
 
-    selectNewValue(e, filteredOptions[index], 'selectOption');
+    selectNewValue(e, filteredOptions[index]);
   };
 
-  const handleOpenIndicator = () => {
-    if (disabled) return;
+  const handleListBoxToggle = () => {
+    if (disabled || readOnly) return;
+
+    inputRef.current?.focus();
 
     if (open) {
       handleClose('toggleInput');
@@ -1025,40 +1027,35 @@ const ComboboxImpl = React.forwardRef<
     }
   };
 
-  // Prevent input blur when interacting with the combobox
-  const onInputWrapperPoiterDown = (e: React.PointerEvent) => {
-    if (disabled) return;
-
-    const target = e.target as HTMLElement;
-
-    // Prevent focusing the input if click is anywhere outside the Combobox
-    if (!e.currentTarget.contains(target)) {
-      return;
-    }
-
-    if (e.currentTarget === e.target) {
-      handleOpenIndicator();
-    }
-
-    if (target.getAttribute('id') !== inputId) {
-      e.preventDefault();
+  const handleOpenListBox = (e: React.PointerEvent) => {
+    if (
+      (e.currentTarget === e.target || e.target instanceof HTMLInputElement) &&
+      !open
+    ) {
+      handleListBoxToggle();
     }
   };
 
-  // Focus the input when interacting with the combobox
+  const onInputWrapperPointerDown = (e: React.PointerEvent) => {
+    if (disabled || readOnly) return;
+
+    if (!(e.target instanceof HTMLInputElement)) {
+      e.preventDefault();
+    }
+
+    if (e.pointerType === 'mouse') {
+      handleOpenListBox(e);
+    }
+  };
+
   const onInputWrapperPress = (e: React.PointerEvent) => {
-    if (disabled) return;
+    if (disabled || readOnly) return;
 
-    const target = e.target as HTMLElement;
-
-    // Prevent focusing the input if click is anywhere outside the Combobox
-    if (!e.currentTarget.contains(target)) {
-      return;
+    if (e.pointerType !== 'mouse') {
+      handleOpenListBox(e);
     }
 
     if (!inputRef.current) return;
-
-    inputRef.current.focus();
 
     if (
       editable &&
@@ -1072,14 +1069,6 @@ const ComboboxImpl = React.forwardRef<
     }
 
     firstFocus.current = false;
-  };
-
-  const onInputPointerDown = () => {
-    if (disabled) return;
-
-    if (inputValue === '' || !open) {
-      handleOpenIndicator();
-    }
   };
 
   const getOptionProps = ({
@@ -1263,6 +1252,7 @@ const ComboboxImpl = React.forwardRef<
             className: classNames?.clearIndicator,
           })}
           onPress={handleClear}
+          disabled={disabled || readOnly}
           type="button"
         >
           <XIcon />
@@ -1279,7 +1269,8 @@ const ComboboxImpl = React.forwardRef<
           className={styles.openIndicator({
             className: classNames?.openIndicator,
           })}
-          onPress={handleOpenIndicator}
+          disabled={disabled || readOnly}
+          onPress={handleListBoxToggle}
           data-open={listBoxOpen}
           type="button"
         >
@@ -1362,14 +1353,6 @@ const ComboboxImpl = React.forwardRef<
     </div>
   );
 
-  const withPopper = disablePopper ? (
-    list
-  ) : (
-    <PopperFloating sticky="always" mainOffset={offset || 5}>
-      {list}
-    </PopperFloating>
-  );
-
   const listboxAvailable = open && filteredOptions.length > 0 && !readOnly;
 
   return (
@@ -1380,7 +1363,7 @@ const ComboboxImpl = React.forwardRef<
             inputWrapperProps: {
               'aria-owns': listBoxOpen ? `${inputId}-listbox` : undefined,
               onKeyDown: onInputWrapperKeyDown,
-              onPointerDown: onInputWrapperPoiterDown,
+              onPointerDown: onInputWrapperPointerDown,
               onPress: onInputWrapperPress,
             },
             classNames: {
@@ -1399,7 +1382,6 @@ const ComboboxImpl = React.forwardRef<
             onBlur: handleBlur,
             onFocus: handleFocus,
             onChange: handleInputChange,
-            onPointerDown: onInputPointerDown,
             // if open then this is handled imperatively in setHighlightedIndex so don't let react override
             // only have an opinion about this when closed
             'aria-activedescendant': listBoxOpen ? '' : undefined,
@@ -1421,10 +1403,15 @@ const ComboboxImpl = React.forwardRef<
         }
       </PopperReference>
 
-      {open
+      {listBoxOpen
         ? disablePortal
-          ? withPopper
-          : createPortal(withPopper, globalThis?.document.body)
+          ? list
+          : createPortal(
+              <PopperFloating sticky="always" mainOffset={offset || 5}>
+                {list}
+              </PopperFloating>,
+              globalThis?.document.body,
+            )
         : null}
     </PopperRoot>
   );

@@ -53,5 +53,7 @@ export const usePointerEvents = <E extends HTMLElement = HTMLElement>(
     }
   });
 
-  return { onPointerDown, onPointerUp };
+  const onMouseDown = (e: React.MouseEvent) => e.preventDefault();
+
+  return { onPointerDown, onPointerUp, onMouseDown };
 };

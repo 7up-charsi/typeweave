@@ -3,11 +3,11 @@ import { tv, VariantProps } from 'tailwind-variants';
 export const switchStyles = tv({
   slots: {
     base: 'inline-flex gap-2 shrink-0 has-[input:disabled]:disabled',
-    switch: 'relative flex items-center p-1',
+    switch: 'relative flex items-center p-[5px]',
     input:
-      'peer rounded-full appearance-none cursor-pointer transition-colors border border-muted-8 disabled:disabled absolute inset-0 outline-none focus-visible:ring-2 focus-visible:ring-focus',
+      'peer rounded appearance-none cursor-pointer transition-colors border border-muted-8 disabled:disabled absolute inset-0 outline-none focus-visible:ring-2 focus-visible:ring-focus',
     indicator:
-      'pointer-events-none peer-checked:disabled:disabled grow h-full relative text-muted-9 before:bg-current before:absolute before:left-0 before:z-10 before:rounded-full before:h-full before:aspect-square before:translate-x-0 peer-checked:before:left-full peer-checked:before:-translate-x-full before:transition-[left,transform]',
+      'pointer-events-none peer-checked:disabled:disabled grow h-full relative text-muted-9 before:bg-current before:absolute before:left-0 before:z-10 before:rounded-[2px] before:h-full before:aspect-square before:translate-x-0 peer-checked:before:left-full peer-checked:before:-translate-x-full before:transition-[left,transform]',
     label: 'cursor-pointer select-none first-letter:uppercase',
   },
   variants: {

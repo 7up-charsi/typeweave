@@ -28,6 +28,11 @@ export interface NumberInputProps
   step?: number;
   largeStep?: number;
   repeatRate?: number;
+  /**
+   * should foucs input on spin button interaction
+   * @default true
+   */
+  shouldFocusInput?: boolean;
   threshold?: number;
   renderSpinButtons?: (
     props: NumberInputRenderSpinButtonsProps,
@@ -45,6 +50,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       max,
       step = 1,
       largeStep = 5,
+      shouldFocusInput = true,
       repeatRate = 100,
       threshold = 500,
       endContent,
@@ -222,8 +228,10 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
       keyDownInterval.current = undefined;
 
-      e.preventDefault();
-      innerRef.current?.focus();
+      if (shouldFocusInput) {
+        e.preventDefault();
+        innerRef.current?.focus();
+      }
 
       if (action === 'decrease') {
         decrease(step);
