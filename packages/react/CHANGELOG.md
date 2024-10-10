@@ -1,5 +1,13 @@
 # @typeweave/react
 
+## 4.2.14
+
+### Patch Changes
+
+- chore: switch back to tsc
+- Updated dependencies
+  - @typeweave/react-utils@1.2.2
+
 ## 4.2.13
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @typeweave/react-utils
 
+## 1.2.2
+
+### Patch Changes
+
+- chore: switch back to tsc
+
 ## 1.2.1
 
 ### Patch Changes

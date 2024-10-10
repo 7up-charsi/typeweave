@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.1.9
+
+### Patch Changes
+
+- chore: switch back to tsc
+
 ## 1.1.8
 
 ### Patch Changes

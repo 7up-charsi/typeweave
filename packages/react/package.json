@@ -1,7 +1,7 @@
 {
   "name": "@typeweave/react",
   "type": "module",
-  "version": "4.2.13",
+  "version": "4.2.14",
   "keywords": [
     "typeweave",
     "react"
@@ -56,4 +56,3 @@
     "clean-package": "^2.2.0"
   }
 }
-
