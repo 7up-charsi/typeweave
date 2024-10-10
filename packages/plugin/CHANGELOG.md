@@ -1,5 +1,16 @@
 # @typeweave/plugin
 
+## 1.1.8
+
+### Patch Changes
+
+- fix: bugs
+  combobox: listbox opens even input does not get focus on touch devices
+  combobox: when input has keyboard focus, page scrolls on arrow down
+  combobox: readOnly does not work
+  NumberInput: prop shouldFoucsInput
+  Skeleton: no animation
+
 ## 1.1.7
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @typeweave/react
 
+## 4.2.13
+
+### Patch Changes
+
+- fix: bugs
+  combobox: listbox opens even input does not get focus on touch devices
+  combobox: when input has keyboard focus, page scrolls on arrow down
+  combobox: readOnly does not work
+  NumberInput: prop shouldFoucsInput
+  Skeleton: no animation
+- Updated dependencies
+  - @typeweave/react-utils@1.2.1
+
 ## 4.2.12
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 {
   "name": "@typeweave/plugin",
   "type": "module",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "keywords": [
     "typeweave",
     "theme"
@@ -51,4 +51,3 @@
     "clean-package": "^2.2.0"
   }
 }
-

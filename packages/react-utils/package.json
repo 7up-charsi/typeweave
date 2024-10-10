@@ -1,7 +1,7 @@
 {
   "name": "@typeweave/react-utils",
   "type": "module",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "keywords": [
     "typeweave",
     "react-utils"
@@ -51,4 +51,3 @@
     "clean-package": "^2.2.0"
   }
 }
-
