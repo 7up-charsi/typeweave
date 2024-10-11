@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.2.15
+
+### Patch Changes
+
+- fix: use-scroll-lock more than one call with same element
+
 ## 4.2.14
 
 ### Patch Changes
