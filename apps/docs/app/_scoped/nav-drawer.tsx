@@ -1,13 +1,13 @@
 'use client';
 
 import {
-  DrawerClose,
-  DrawerContent,
-  DrawerOverlay,
-  DrawerPortal,
-  DrawerRoot,
-  DrawerTrigger,
-} from '@typeweave/react/drawer';
+  DialogClose,
+  DialogContent,
+  DialogOverlay,
+  DialogPortal,
+  DialogRoot,
+  DialogTrigger,
+} from '@typeweave/react/dialog';
 import { createDialogState } from '@typeweave/react-utils/dialog-state';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { GithubLink } from '@/components/github-link';
@@ -25,12 +25,12 @@ export const NavDrawer = () => {
   const { handleClose, handleOpenChange, open } = useNavDrawerState();
 
   return (
-    <DrawerRoot
+    <DialogRoot
       open={open}
       onClose={handleClose}
       onOpenChange={handleOpenChange}
     >
-      <DrawerTrigger>
+      <DialogTrigger>
         <Button
           variant="text"
           isIconOnly
@@ -39,18 +39,21 @@ export const NavDrawer = () => {
         >
           <MenuIcon />
         </Button>
-      </DrawerTrigger>
+      </DialogTrigger>
 
-      <DrawerPortal>
-        <DrawerOverlay />
+      <DialogPortal>
+        <DialogOverlay />
 
-        <DrawerContent className="flex w-full max-w-[300px] flex-col">
+        <DialogContent
+          placement="left"
+          className="flex w-full max-w-[300px] flex-col"
+        >
           <div className="flex h-16 shrink-0 items-center px-5">
             <Branding />
 
             <div className="grow"></div>
 
-            <DrawerClose>
+            <DialogClose>
               <Button
                 variant="text"
                 isIconOnly
@@ -61,7 +64,7 @@ export const NavDrawer = () => {
               >
                 <XIcon />
               </Button>
-            </DrawerClose>
+            </DialogClose>
           </div>
 
           <hr className="mx-5 border-muted-6 md:hidden" />
@@ -74,9 +77,9 @@ export const NavDrawer = () => {
           <div className="grow overflow-auto scrollbar-thin">
             <SidebarContent />
           </div>
-        </DrawerContent>
-      </DrawerPortal>
-    </DrawerRoot>
+        </DialogContent>
+      </DialogPortal>
+    </DialogRoot>
   );
 };
 

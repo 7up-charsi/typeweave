@@ -8,6 +8,7 @@ import {
 import { useNavDrawerState } from './nav-drawer';
 import { usePathname } from 'next/navigation';
 import { DrawerLink } from './drawer-link';
+import Link from 'next/link';
 
 export const SidebarContent = () => {
   const pathname = usePathname();
@@ -21,15 +22,14 @@ export const SidebarContent = () => {
       </h2>
 
       {gettingStartedLinks.map(({ title, href }, i) => (
-        <DrawerLink
+        <Link
           key={i}
           data-active={href === pathname}
           href={href}
-          handleClose={handleDrawerClose}
           className="relative block h-9 content-center rounded px-3 first-letter:uppercase before:absolute before:right-2 before:top-1/2 before:hidden before:h-1/2 before:w-1 before:-translate-y-1/2 before:rounded-full before:bg-muted-9 data-[active=true]:bg-muted-3 data-[active=true]:text-muted-12 data-[active=true]:before:block hover:bg-muted-3 focus-visible:ring-2 focus-visible:ring-focus"
         >
           {title}
-        </DrawerLink>
+        </Link>
       ))}
 
       <h2 className="select-none text-sm font-medium text-foreground/75 first-letter:uppercase">

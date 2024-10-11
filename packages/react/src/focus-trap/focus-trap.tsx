@@ -1,4 +1,4 @@
-import { focus, focusFirst, getTabbables } from './utils';
+import { focus, focusFirst, getTabbables, isHidden } from './utils';
 import { Slot } from '../slot';
 import React from 'react';
 import { mergeRefs } from '@typeweave/react-utils/merge-refs';
@@ -74,6 +74,7 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
           container.dispatchEvent(mountEvent);
 
           if (!mountEvent.defaultPrevented) {
+            // no need isHidden because focusFirst move focus to first element and if first element is not focusable (not visible, disply none) it will try next tabbable
             focusFirst(getTabbables(container), {
               select: true,
             });
@@ -133,10 +134,10 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
 
         const relatedTarget = event.relatedTarget as HTMLElement | null;
 
-        // It checks if the related target is null. If it is, it means that focus is moving outside the browser window or to an element that is not part of the DOM (such as a native operating system window or an element in another window or frame). In this case, the function returns early as there's no need to handle focus changes.
+        // No handling needed when focus moves outside the browser window; browser remembers which element was focused before moving outside and browser does default behavior on refocus.
         if (relatedTarget === null) return;
 
-        // it will focus back to lastFocusedElement if user wants to place focus on element ousite container and it will ensure that the element on which user wants to place focus will never get focus becauze it will return foucs to lastFocusedElement before blur event happens on lastFocusedElement
+        // it will focus back to lastFocusedElement if user wants to place focus on element ousitde container and it will ensure that the element on which user wants to place focus will never get focus becauze it will return foucs to lastFocusedElement before blur event happens on lastFocusedElement
         if (!container.contains(relatedTarget)) {
           focus(lastFocusedElement.current);
         }
@@ -155,7 +156,7 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
           if (mutation.removedNodes.length > 0 && lastFocusedElement.current) {
             const removedNodesArray = Array.from(mutation.removedNodes);
 
-            // as i only want to focus container if lastFocusedElement gets removed from dom. if any element that did't get focus and removed from DOM i damn care.
+            // as i only want to focus container if lastFocusedElement gets removed from dom. if any else element gets removed from DOM i damn care.
             if (removedNodesArray.includes(lastFocusedElement.current)) {
               focus(container);
               return;
@@ -202,22 +203,22 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
 
         const tabbables = getTabbables(container);
 
+        const first = tabbables.at(0);
+        const last = tabbables.at(-1);
+
         // if container does not have more than one focusable elements, prevent default and exit
-        if (tabbables.length <= 1) {
+        if (tabbables.length <= 1 || !first || !last) {
           event.preventDefault();
           return;
         }
 
-        const first = tabbables.at(0);
-        const last = tabbables.at(-1);
-
-        if (!event.shiftKey && focusedElement === last && first) {
+        if (!event.shiftKey && focusedElement === last && !isHidden(first)) {
           event.preventDefault();
           focus(first, { select: true });
           return;
         }
 
-        if (event.shiftKey && focusedElement === first && last) {
+        if (event.shiftKey && focusedElement === first && !isHidden(last)) {
           event.preventDefault();
           focus(last, { select: true });
         }

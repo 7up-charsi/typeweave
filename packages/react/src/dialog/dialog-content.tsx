@@ -23,6 +23,7 @@ export const DialogContent = React.forwardRef<
     onMountAutoFocus,
     onUnmountAutoFocus,
     loop = true,
+    placement = 'center',
     modal = true,
     ...restProps
   } = props;
@@ -31,7 +32,7 @@ export const DialogContent = React.forwardRef<
 
   useScrollLock({ isLocked: dialogCtx.open });
 
-  const styles = React.useMemo(() => dialogStyles(), []);
+  const styles = React.useMemo(() => dialogStyles({ placement }), [placement]);
 
   const content = (
     <div

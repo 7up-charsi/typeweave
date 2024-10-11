@@ -734,9 +734,9 @@ const ComboboxImpl = React.forwardRef<
     setValue(newValue);
   };
 
-  const selectNewValue = (
-    e: React.SyntheticEvent,
+  const handleSelectNewValue = (
     selectedOption: string | object,
+    isCtrlKeyDown = false,
   ) => {
     let reason: ComboboxOnCloseReason = 'selectOption';
 
@@ -778,14 +778,7 @@ const ComboboxImpl = React.forwardRef<
 
     handleValue(newValue, reason, multiple ? selectedOption : undefined);
 
-    const modifiedEvent = e as unknown as {
-      ctrlKey?: boolean;
-      metaKey?: boolean;
-    };
-
-    const isControlKeyPressed = modifiedEvent.ctrlKey || modifiedEvent.metaKey;
-
-    if (!disableCloseOnSelect && !isControlKeyPressed) {
+    if (!disableCloseOnSelect && !isCtrlKeyDown) {
       handleClose(reason);
     }
   };
@@ -964,7 +957,9 @@ const ComboboxImpl = React.forwardRef<
 
       if (optionDisabled) return;
 
-      selectNewValue(e, option);
+      const isCtrlKeyDown = e.ctrlKey || e.metaKey;
+
+      handleSelectNewValue(option, isCtrlKeyDown);
 
       return;
     }
@@ -1012,7 +1007,7 @@ const ComboboxImpl = React.forwardRef<
 
     if (!filteredOptions[index]) return;
 
-    selectNewValue(e, filteredOptions[index]);
+    handleSelectNewValue(filteredOptions[index]);
   };
 
   const handleListBoxToggle = () => {
@@ -1126,7 +1121,6 @@ const ComboboxImpl = React.forwardRef<
         setHighlightedIndex(index, 'auto');
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredOptions, listBoxOpen, multiple, value]);
 
   if (disabled && focused) {
