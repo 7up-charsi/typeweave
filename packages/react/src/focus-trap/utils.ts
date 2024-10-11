@@ -6,31 +6,14 @@ export const focusFirst = (
 ) => {
   const previouslyFocusedElement = document?.activeElement;
 
+  elements = elements.filter((ele) => !(ele instanceof HTMLAnchorElement));
+
   for (const ele of elements) {
     focus(ele, { select });
 
     // if statement is true, then focus moved
     if (document?.activeElement !== previouslyFocusedElement) return;
   }
-};
-
-export const getTabbableEdges = (container: HTMLElement) => {
-  const tabbables = getTabbables(container);
-  const first = tabbables.find((ele) => !isHidden(ele, { upTo: container }));
-  const last = tabbables
-    .reverse()
-    .find((ele) => !isHidden(ele, { upTo: container }));
-  return [first, last] as const;
-};
-
-export const firstTabbable = (container: HTMLElement) => {
-  const tabbables = getTabbables(container);
-  return tabbables.find((ele) => !isHidden(ele, { upTo: container }));
-};
-
-export const lastTabbable = (container: HTMLElement) => {
-  const tabbables = getTabbables(container);
-  return tabbables.reverse().find((ele) => !isHidden(ele, { upTo: container }));
 };
 
 export const getTabbables = (container: HTMLElement) => {
@@ -97,6 +80,3 @@ export const focus = (
     }
   }
 };
-
-export const removeLinks = (elements: HTMLElement[]) =>
-  elements.filter((ele) => ele.tagName !== 'A');

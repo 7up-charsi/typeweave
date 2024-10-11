@@ -20,7 +20,7 @@ export default meta;
 
 const Template = (args: DialogRootProps & { className?: string }) => {
   return (
-    <DialogRoot defaultOpen={args.defaultOpen} keepMounted={args.keepMounted}>
+    <DialogRoot defaultOpen={args.defaultOpen} keepMounted>
       <DialogTrigger>
         <Button>open dialog</Button>
       </DialogTrigger>

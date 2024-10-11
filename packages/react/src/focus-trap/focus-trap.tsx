@@ -1,10 +1,4 @@
-import {
-  focus,
-  focusFirst,
-  getTabbableEdges,
-  getTabbables,
-  removeLinks,
-} from './utils';
+import { focus, focusFirst, getTabbables } from './utils';
 import { Slot } from '../slot';
 import React from 'react';
 import { mergeRefs } from '@typeweave/react-utils/merge-refs';
@@ -65,6 +59,58 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
         this.paused = false;
       },
     }).current;
+
+    React.useEffect(() => {
+      if (container) {
+        focusStack.add(stackItem);
+
+        const previouslyFocusedElement =
+          document.activeElement as HTMLElement | null;
+
+        if (!container.contains(previouslyFocusedElement)) {
+          container.addEventListener(AUTOFOCUS_ON_MOUNT, onMountAutoFocus);
+
+          const mountEvent = new CustomEvent(AUTOFOCUS_ON_MOUNT, EVENT_OPTIONS);
+          container.dispatchEvent(mountEvent);
+
+          if (!mountEvent.defaultPrevented) {
+            focusFirst(getTabbables(container), {
+              select: true,
+            });
+
+            if (document.activeElement === previouslyFocusedElement) {
+              focus(container);
+            }
+          }
+        }
+
+        return () => {
+          container.removeEventListener(AUTOFOCUS_ON_MOUNT, onMountAutoFocus);
+
+          container.addEventListener(AUTOFOCUS_ON_UNMOUNT, onUnmountAutoFocus);
+
+          const unmountEvent = new CustomEvent(
+            AUTOFOCUS_ON_UNMOUNT,
+            EVENT_OPTIONS,
+          );
+
+          container.dispatchEvent(unmountEvent);
+
+          if (!unmountEvent.defaultPrevented) {
+            focus(previouslyFocusedElement ?? document.body, {
+              select: true,
+            });
+          }
+
+          container.removeEventListener(
+            AUTOFOCUS_ON_UNMOUNT,
+            onUnmountAutoFocus,
+          );
+
+          focusStack.remove(stackItem);
+        };
+      }
+    }, [container, onMountAutoFocus, onUnmountAutoFocus, stackItem]);
 
     React.useEffect(() => {
       if (!trapped || !container) return;
@@ -137,61 +183,11 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
       };
     }, [trapped, container, stackItem.paused]);
 
-    React.useEffect(() => {
-      if (container) {
-        focusStack.add(stackItem);
-
-        const previouslyFocusedElement =
-          document.activeElement as HTMLElement | null;
-
-        if (!container.contains(previouslyFocusedElement)) {
-          const mountEvent = new CustomEvent(AUTOFOCUS_ON_MOUNT, EVENT_OPTIONS);
-
-          container.addEventListener(AUTOFOCUS_ON_MOUNT, onMountAutoFocus);
-          container.dispatchEvent(mountEvent);
-
-          if (!mountEvent.defaultPrevented) {
-            focusFirst(removeLinks(getTabbables(container)), {
-              select: true,
-            });
-
-            if (document.activeElement === previouslyFocusedElement) {
-              focus(container);
-            }
-          }
-        }
-
-        return () => {
-          container.removeEventListener(AUTOFOCUS_ON_MOUNT, onMountAutoFocus);
-
-          const unmountEvent = new CustomEvent(
-            AUTOFOCUS_ON_UNMOUNT,
-            EVENT_OPTIONS,
-          );
-
-          container.addEventListener(AUTOFOCUS_ON_UNMOUNT, onUnmountAutoFocus);
-          container.dispatchEvent(unmountEvent);
-
-          if (!unmountEvent.defaultPrevented) {
-            focus(previouslyFocusedElement ?? document.body, {
-              select: true,
-            });
-          }
-
-          container.removeEventListener(
-            AUTOFOCUS_ON_UNMOUNT,
-            onUnmountAutoFocus,
-          );
-
-          focusStack.remove(stackItem);
-        };
-      }
-    }, [container, onMountAutoFocus, onUnmountAutoFocus, stackItem]);
-
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent) => {
-        if (!loop) return;
-        if (stackItem.paused) return;
+        const container = event.currentTarget as HTMLElement;
+
+        if (!loop || stackItem.paused) return;
 
         const isTabKey =
           event.key === 'Tab' &&
@@ -201,26 +197,27 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
 
         const focusedElement = document.activeElement as HTMLElement | null;
 
-        // if focusedElement is true and it is in container then proceed. i never checked container.contains(focusedElement) because onKeyDown is applied to container so when browser/user place focus in/on contianer and this handler runs and focusedElement exists its mean focusedElement is in contianer
-        if (!isTabKey || !focusedElement) return;
+        if (!isTabKey || !focusedElement || !container.contains(focusedElement))
+          return;
 
-        const container = event.currentTarget as HTMLElement;
-        const [first, last] = getTabbableEdges(container);
+        const tabbables = getTabbables(container);
 
-        const hasFocusableElementsInside = first && last;
-
-        if (!hasFocusableElementsInside) {
+        // if container does not have more than one focusable elements, prevent default and exit
+        if (tabbables.length <= 1) {
           event.preventDefault();
           return;
         }
 
-        if (!event.shiftKey && focusedElement === last) {
+        const first = tabbables.at(0);
+        const last = tabbables.at(-1);
+
+        if (!event.shiftKey && focusedElement === last && first) {
           event.preventDefault();
           focus(first, { select: true });
           return;
         }
 
-        if (event.shiftKey && focusedElement === first) {
+        if (event.shiftKey && focusedElement === first && last) {
           event.preventDefault();
           focus(last, { select: true });
         }
