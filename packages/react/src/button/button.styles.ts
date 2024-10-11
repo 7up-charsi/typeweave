@@ -1,7 +1,7 @@
 import { VariantProps, tv } from 'tailwind-variants';
 
 export const buttonGroupStyles = tv({
-  base: 'inline-flex gap-0 [&>button]:rounded-none',
+  base: 'flex gap-0 [&>button]:rounded-none',
   variants: {
     direction: {
       horizontal:
@@ -14,7 +14,7 @@ export const buttonGroupStyles = tv({
 
 export const buttonStyles = tv({
   slots: {
-    base: 'z-0 group relative inline-flex items-center justify-center box-border rounded appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transition-colors [&>span]:first-letter:uppercase disabled:disabled [&[hidden]]:hidden shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-focus',
+    base: 'z-0 group relative flex items-center justify-center box-border rounded appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transition-colors [&>span]:first-letter:uppercase disabled:disabled [&[hidden]]:hidden shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-focus',
     content: 'first-letter:uppercase pointer-events-none',
     startContent: 'flex gap-1 items-center dynamic-icon pointer-events-none',
     endContent: 'flex gap-1 items-center dynamic-icon pointer-events-none',
