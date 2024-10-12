@@ -109,6 +109,86 @@ type BaseProps<Value> = {
     option: Value,
     state: ComboboxRenderOptionState,
   ) => React.ReactNode;
+  isOptionEqualToValue?: (option: Value, value: Value) => boolean;
+};
+
+type ClassNames = Partial<{
+  listboxWrapper: string;
+  listbox: string;
+  option: string;
+  noOptions: string;
+  loading: string;
+  group: string;
+  groupHeader: string;
+  groupItems: string;
+  startContent: string;
+  endContent: string;
+  inputWrapper: string;
+  input: string;
+  clearIndicator: string;
+  openIndicator: string;
+}>;
+
+type EditableProps<Value, Editable> = {
+  editable: Editable;
+  classNames?: ClassNames;
+  clearInputOnBlur?: boolean;
+  selectOnFocus?: boolean;
+  inputValue?: string;
+  onInputChange?: (
+    newValue: string,
+    reason: 'reset' | 'clear' | 'input',
+  ) => void;
+  filterOptions?: ReturnType<typeof createComboboxFilter<Value>>;
+};
+
+type NotEditableProps<Editable> = {
+  editable?: Editable;
+  classNames?: Omit<
+    ClassNames,
+    'startContent' | 'endContent' | 'inputWrapper' | 'input'
+  >;
+};
+
+type MultipleAndEditableProps<Value> = {
+  renderTags?: (
+    tags: Value[],
+    props: (index: number) => ComboboxRenderTagsProps,
+  ) => React.ReactNode;
+};
+
+type MultipleProps<Value, Multiple, DisableClearable> = {
+  multiple: Multiple;
+  defaultValue?: Value[];
+  value?: Value[];
+  onChange?: (
+    newValue: Value[],
+    reason: DisableClearable extends true
+      ? Exclude<ComboboxOnChangeReason, 'removeOption'>
+      : ComboboxOnChangeReason,
+    option: Value,
+  ) => void;
+  disableClearable?: DisableClearable;
+};
+
+type DisableClearableProps<Value, Multiple, DisableClearable> = {
+  multiple?: Multiple;
+  defaultValue?: Value;
+  value?: Value;
+  onChange?: (
+    newValue: Value,
+    reason: Exclude<ComboboxOnChangeReason, 'removeOption'>,
+  ) => void;
+  disableClearable: DisableClearable;
+};
+
+type ClearableProps<Value, Multiple, DisableClearable> = {
+  multiple?: Multiple;
+  defaultValue?: Value;
+  value?: Value | null;
+  onChange?: (newValue: Value | null, reason: ComboboxOnChangeReason) => void;
+  disableClearable?: DisableClearable;
+  isOptionEqualToValue?: (option: Value, value: Value | null) => boolean;
 };
 
 export type ComboboxProps<Value, Multiple, DisableClearable, Editable> = (Omit<
@@ -119,101 +199,61 @@ export type ComboboxProps<Value, Multiple, DisableClearable, Editable> = (Omit<
     React.HTMLAttributes<HTMLUListElement>,
     'defaultValue' | 'children' | 'onChange'
   >) &
+  BaseProps<Value> &
   (Editable extends true
-    ? BaseProps<Value> & {
-        editable: Editable;
-        classNames?: Partial<{
-          listboxWrapper: string;
-          listbox: string;
-          option: string;
-          noOptions: string;
-          loading: string;
-          group: string;
-          groupHeader: string;
-          groupItems: string;
-          startContent: string;
-          endContent: string;
-          inputWrapper: string;
-          input: string;
-          clearIndicator: string;
-          openIndicator: string;
-        }>;
-        clearInputOnBlur?: boolean;
-        selectOnFocus?: boolean;
-        inputValue?: string;
-        onInputChange?: (
-          newValue: string,
-          reason: 'reset' | 'clear' | 'input',
-        ) => void;
-        filterOptions?: ReturnType<typeof createComboboxFilter<Value>>;
-        renderTags?: (
-          tags: Value[],
-          props: (index: number) => ComboboxRenderTagsProps,
-        ) => React.ReactNode;
-      }
-    : BaseProps<Value> & {
-        editable?: Editable;
-        classNames?: Partial<{
-          listboxWrapper: string;
-          listbox: string;
-          option: string;
-          noOptions: string;
-          loading: string;
-          group: string;
-          groupHeader: string;
-          groupItems: string;
-          clearIndicator: string;
-          openIndicator: string;
-        }>;
-      }) &
+    ? EditableProps<Value, Editable>
+    : NotEditableProps<Editable>) &
   (Multiple extends true
-    ? {
-        multiple: Multiple;
-        defaultValue?: Value[];
-        value?: Value[];
-        onChange?: (
-          newValue: Value[],
-          reason: ComboboxOnChangeReason,
-          option: Value,
-        ) => void;
-        disableClearable?: DisableClearable;
-        isOptionEqualToValue?: (option: Value, value: Value) => boolean;
-      }
+    ? Editable extends true
+      ? MultipleAndEditableProps<Value>
+      : {}
+    : {}) &
+  (Multiple extends true
+    ? MultipleProps<Value, Multiple, DisableClearable>
     : DisableClearable extends true
-      ? {
-          multiple?: Multiple;
-          defaultValue?: Value;
-          value?: Value;
-          onChange?: (
-            newValue: Value,
-            reason: Exclude<ComboboxOnChangeReason, 'removeOption'>,
-          ) => void;
-          disableClearable: DisableClearable;
-          isOptionEqualToValue?: (option: Value, value: Value) => boolean;
-        }
-      : {
-          multiple?: Multiple;
-          defaultValue?: Value;
-          value?: Value | null;
-          onChange?: (
-            newValue: Value | null,
-            reason: Exclude<ComboboxOnChangeReason, 'removeOption'>,
-          ) => void;
-          disableClearable?: DisableClearable;
-          isOptionEqualToValue?: (
-            option: Value,
-            value: Value | null,
-          ) => boolean;
-        });
+      ? DisableClearableProps<Value, Multiple, DisableClearable>
+      : ClearableProps<Value, Multiple, DisableClearable>);
 
-const defaultOptionsFilter = createComboboxFilter<string | object>();
+type Value = string | object;
+
+type Props = Omit<
+  ComboboxVariantProps,
+  'hasClearButton' | 'hasOpenIndicator' | 'multiple' | 'editable'
+> &
+  Omit<
+    React.HTMLAttributes<HTMLUListElement>,
+    'defaultValue' | 'children' | 'onChange'
+  > &
+  BaseProps<Value> &
+  // i didn't used NotEditableProps because this `Props` type purpose is to merge all above props for component internal props and NotEditableProps have only 2 props and they are available in EditableProps
+  Omit<EditableProps<Value, true>, 'editable'> & {
+    editable?: boolean;
+    renderTags?: (
+      tags: Value[],
+      props: (index: number) => ComboboxRenderTagsProps,
+    ) => React.ReactNode;
+
+    multiple?: boolean;
+    defaultValue?: Value | Value[];
+    value?: Value | null | Value[];
+    onChange?: (
+      newValue: Value | null | Value[],
+      reason: ComboboxOnChangeReason,
+      option?: Value,
+    ) => void;
+    disableClearable?: boolean;
+
+    isOptionEqualToValue?: (option: Value, value: Value | null) => boolean;
+  };
+
+// i defined array outside of component because this prevents console warnings from occurring because useControlled keeps track of the default value using strict equality comparison.
+const defaultEmptyArray: [] = [];
+
+const defaultOptionsFilter = createComboboxFilter<Value>();
 
 const displayName = 'Combobox';
 
-const ComboboxImpl = React.forwardRef<
-  HTMLUListElement,
-  ComboboxProps<string | object, false, false, true>
->((props, ref) => {
+const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
   const {
     classNames,
     className,
@@ -268,17 +308,14 @@ const ComboboxImpl = React.forwardRef<
     ...restProps
   } = props;
 
-  const isOptionEqualToValue = (
-    option: string | object,
-    value: string | object,
-  ) => {
+  const isOptionEqualToValue = (option: Value, value: Value) => {
     if (isOptionEqualToValueProp)
       return isOptionEqualToValueProp(option, value);
 
     return option === value;
   };
 
-  const getOptionLabel = useCallbackRef((option: string | object) => {
+  const getOptionLabel = useCallbackRef((option: Value) => {
     if (
       typeof option === 'object' &&
       'label' in option &&
@@ -312,12 +349,7 @@ const ComboboxImpl = React.forwardRef<
 
   const inputId = React.useId();
 
-  // I used React.memo to retain the array reference between re-renders.
-  // This prevents console warnings from occurring because useControlled
-  // keeps track of the default value using strict equality comparison.
-  const defaultEmptyArray = React.useMemo(() => [], []);
-
-  const [value, setValue] = useControlled({
+  const [value, setValue] = useControlled<Value | null | Value[]>({
     name: displayName,
     state: 'value',
     controlled: valueProp,
@@ -332,12 +364,16 @@ const ComboboxImpl = React.forwardRef<
     controlled: inputValueProp,
     default: '',
   });
+  ``;
 
-  // this is used to not open listbox when user clear value with clear button
-  const ignoreListOpen = React.useRef(false);
+  /** this is used to prevent reset highilited index when `disableCloseOnSelect` is true or user select option while `ctrl` is pressed (see handleSelectNewValue bellow) */
+  const shouldResetHighlitedIndexRef = React.useRef(true);
 
-  // this is used to select input value if user focused input first time
-  const firstFocus = React.useRef(true);
+  /** this is used to prevent listbox open when user clear value with clear button */
+  const ignoreListBoxOpenOnClearRef = React.useRef(false);
+
+  /** this is used to select input value if user focused input first time */
+  const isFirstFocusRef = React.useRef(true);
 
   const inputRef = React.useRef<HTMLInputElement>(null);
   const listboxRef = React.useRef<HTMLUListElement>(null);
@@ -435,10 +471,8 @@ const ComboboxImpl = React.forwardRef<
     inputValue,
   });
 
-  const resetInputValue = React.useCallback(
-    (newValue: string | object | null | undefined | (string | object)[]) => {
-      //
-
+  const updateInputValue = React.useCallback(
+    (newValue: Value | null | Value[]) => {
       const isMoreOptionsSelected = multiple
         ? Array.isArray(value) &&
           Array.isArray(newValue) &&
@@ -492,14 +526,14 @@ const ComboboxImpl = React.forwardRef<
     ],
   );
 
+  // change input value when Combobox is not focused. its mean when value changed with controlled state
   React.useEffect(() => {
-    const valueChanged = previousProps.value !== value;
-
-    if (!valueChanged) return;
     if (focused) return;
 
-    resetInputValue(value);
-  }, [focused, previousProps.value, resetInputValue, value]);
+    if (previousProps.value === value) return;
+
+    updateInputValue(value);
+  }, [focused, previousProps.value, updateInputValue, value]);
 
   if (process.env.NODE_ENV !== 'production') {
     if (value !== null && options.length > 0) {
@@ -690,6 +724,32 @@ const ComboboxImpl = React.forwardRef<
     },
   );
 
+  // on open, highlight selected option
+  // i dont reset highlighted option on close as it will highlight correct option on next open and if multiple it will reset to defaultHighlighted
+  React.useEffect(() => {
+    if (!listBoxOpen) return;
+    if (!shouldResetHighlitedIndexRef.current) return;
+
+    shouldResetHighlitedIndexRef.current = false;
+
+    if (multiple) {
+      setHighlightedIndex(getValidIndex('reset'), 'auto');
+      return;
+    }
+
+    if (!multiple && value && filteredOptions.length) {
+      const index = filteredOptions.findIndex((option) =>
+        isOptionEqualToValue(option, value),
+      );
+
+      if (index === -1) {
+        setHighlightedIndex(getValidIndex('reset'), 'auto');
+      } else {
+        setHighlightedIndex(index, 'auto');
+      }
+    }
+  }, [filteredOptions, listBoxOpen, multiple, value]);
+
   const handleOpen = () => {
     if (open) return;
 
@@ -702,45 +762,21 @@ const ComboboxImpl = React.forwardRef<
     if (!open) return;
 
     setOpen(false);
+    shouldResetHighlitedIndexRef.current = true;
 
     onClose?.(reason);
   };
 
-  const handleValue = (
-    newValue: string | object | null | (string | object | null)[],
-    reason: ComboboxOnChangeReason,
-    /**
-     * in multiple mode this is user selected or removed option
-     */
-    option?: string | object | null,
-  ) => {
-    if (Array.isArray(value) && Array.isArray(newValue)) {
-      if (
-        value.length === newValue.length &&
-        value.every((val, i) => val === newValue[i])
-      ) {
-        return;
-      }
-    } else if (value === newValue) {
-      return;
-    }
-
-    (onChange as (value: unknown, reason: unknown, options: unknown) => void)?.(
-      newValue,
-      reason,
-      option,
-    );
-
-    setValue(newValue);
-  };
-
   const handleSelectNewValue = (
-    selectedOption: string | object,
+    selectedOption: Value,
     isCtrlKeyDown = false,
   ) => {
     let reason: ComboboxOnCloseReason = 'selectOption';
 
-    let newValue: string | object | (string | object)[] = selectedOption;
+    let newValue: Value | Value[] = selectedOption;
+
+    // when user clicks on same selected option more than once
+    if (!multiple && value === newValue) return;
 
     if (multiple) {
       const newMultipleValue = Array.isArray(value) ? value.slice() : [];
@@ -774,11 +810,11 @@ const ComboboxImpl = React.forwardRef<
       newValue = newMultipleValue;
     }
 
-    resetInputValue(newValue);
+    onChange?.(newValue, reason, selectedOption);
+    setValue(newValue);
+    updateInputValue(newValue);
 
-    handleValue(newValue, reason, multiple ? selectedOption : undefined);
-
-    if (!disableCloseOnSelect && !isCtrlKeyDown) {
+    if (!disableCloseOnSelect && (multiple ? !isCtrlKeyDown : true)) {
       handleClose(reason);
     }
   };
@@ -786,14 +822,17 @@ const ComboboxImpl = React.forwardRef<
   const handleClear = () => {
     if (disabled || readOnly) return;
 
-    ignoreListOpen.current = true;
+    ignoreListBoxOpenOnClearRef.current = true;
 
     inputRef.current?.focus();
 
     setInputValue('');
     onInputChange?.('', 'clear');
 
-    handleValue(multiple ? [] : null, 'clear');
+    const newValue = multiple ? [] : null;
+
+    onChange?.(newValue, 'clear');
+    setValue(newValue);
 
     if (!editable) {
       handleOpen();
@@ -862,19 +901,19 @@ const ComboboxImpl = React.forwardRef<
     }
   };
 
-  const onInputWrapperKeyDown = (e: React.KeyboardEvent) => {
+  const onInputWrapperKeyDown = (event: React.KeyboardEvent) => {
     if (disabled) return;
 
-    if (e.key.length === 1 && !editable) {
-      handleCharSearch(e);
+    if (event.key.length === 1 && !editable) {
+      handleCharSearch(event);
       return;
     }
 
-    if (e.key === 'Escape') {
+    if (event.key === 'Escape') {
       // Avoid Opera to exit fullscreen mode.
-      e.preventDefault();
+      event.preventDefault();
       // Avoid the Modal to handle the event.
-      e.stopPropagation();
+      event.stopPropagation();
 
       if (listBoxOpen) {
         handleClose('escape');
@@ -890,60 +929,60 @@ const ComboboxImpl = React.forwardRef<
 
     if (
       !listBoxOpen &&
-      ['PageUp', 'PageDown', 'ArrowDown', 'ArrowUp'].includes(e.key)
+      ['PageUp', 'PageDown', 'ArrowDown', 'ArrowUp'].includes(event.key)
     ) {
-      e.preventDefault();
+      event.preventDefault();
       handleOpen();
       return;
     }
 
     if (!listBoxOpen) return;
 
-    if (e.key === 'Home' && handleHomeEndKeys) {
+    if (event.key === 'Home' && handleHomeEndKeys) {
       // Prevent scroll of the page
-      e.preventDefault();
+      event.preventDefault();
       setHighlightedIndex(getValidIndex('start', 'next'), 'keyboard');
       return;
     }
 
-    if (e.key === 'End' && handleHomeEndKeys) {
+    if (event.key === 'End' && handleHomeEndKeys) {
       // Prevent scroll of the page
-      e.preventDefault();
+      event.preventDefault();
       setHighlightedIndex(getValidIndex('end', 'next'), 'keyboard');
       return;
     }
 
-    if (e.key === 'PageUp') {
+    if (event.key === 'PageUp') {
       // Prevent scroll of the page
-      e.preventDefault();
+      event.preventDefault();
       setHighlightedIndex(getValidIndex(-pageSize, 'previous'), 'keyboard');
       return;
     }
 
-    if (e.key === 'PageDown') {
+    if (event.key === 'PageDown') {
       // Prevent scroll of the page
-      e.preventDefault();
+      event.preventDefault();
       setHighlightedIndex(getValidIndex(pageSize, 'next'), 'keyboard');
       return;
     }
 
-    if (e.key === 'ArrowDown') {
+    if (event.key === 'ArrowDown') {
       // Prevent cursor move
-      e.preventDefault();
+      event.preventDefault();
       setHighlightedIndex(getValidIndex(1, 'next'), 'keyboard');
       return;
     }
 
-    if (e.key === 'ArrowUp') {
+    if (event.key === 'ArrowUp') {
       // Prevent cursor move
-      e.preventDefault();
+      event.preventDefault();
       setHighlightedIndex(getValidIndex(-1, 'next'), 'keyboard');
       return;
     }
 
-    if (e.key === 'Enter') {
+    if (event.key === 'Enter') {
       // Avoid early form validation, let the end-users continue filling the form.
-      e.preventDefault();
+      event.preventDefault();
 
       if (highlightedIndexRef.current === -1) return;
 
@@ -957,7 +996,7 @@ const ComboboxImpl = React.forwardRef<
 
       if (optionDisabled) return;
 
-      const isCtrlKeyDown = e.ctrlKey || e.metaKey;
+      const isCtrlKeyDown = event.ctrlKey || event.metaKey;
 
       handleSelectNewValue(option, isCtrlKeyDown);
 
@@ -968,18 +1007,18 @@ const ComboboxImpl = React.forwardRef<
   const handleFocus = () => {
     setFocused(true);
 
-    if (openOnFocus && !ignoreListOpen.current) {
+    if (openOnFocus && !ignoreListBoxOpenOnClearRef.current) {
       handleOpen();
     }
   };
 
   const handleBlur = () => {
     setFocused(false);
-    firstFocus.current = true;
-    ignoreListOpen.current = false;
+    isFirstFocusRef.current = true;
+    ignoreListBoxOpenOnClearRef.current = false;
 
     handleClose('blur');
-    resetInputValue(value);
+    updateInputValue(value);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -1055,7 +1094,7 @@ const ComboboxImpl = React.forwardRef<
     if (
       editable &&
       selectOnFocus &&
-      firstFocus.current &&
+      isFirstFocusRef.current &&
       (inputRef.current.selectionEnd || 0) -
         (inputRef.current.selectionStart || 0) ===
         0
@@ -1063,7 +1102,7 @@ const ComboboxImpl = React.forwardRef<
       inputRef.current.select();
     }
 
-    firstFocus.current = false;
+    isFirstFocusRef.current = false;
   };
 
   const getOptionProps = ({
@@ -1071,7 +1110,7 @@ const ComboboxImpl = React.forwardRef<
     option,
   }: {
     index: number;
-    option: string | object;
+    option: Value;
   }) => {
     const selected = (Array.isArray(value) ? value : [value]).some(
       (value2) => value2 != null && isOptionEqualToValue(option, value2),
@@ -1098,30 +1137,10 @@ const ComboboxImpl = React.forwardRef<
 
     const newValue = value.slice();
     newValue.splice(index, 1);
-    handleValue(newValue, 'removeOption');
+
+    onChange?.(newValue, 'removeOption');
+    setValue(newValue);
   };
-
-  // on open, highlight selected option
-  React.useEffect(() => {
-    if (!listBoxOpen) return;
-
-    if (multiple) {
-      setHighlightedIndex(getValidIndex('reset'), 'auto');
-      return;
-    }
-
-    if (!multiple && value && filteredOptions.length) {
-      const index = filteredOptions.findIndex((option) =>
-        isOptionEqualToValue(option, value),
-      );
-
-      if (index === -1) {
-        setHighlightedIndex(getValidIndex('reset'), 'auto');
-      } else {
-        setHighlightedIndex(index, 'auto');
-      }
-    }
-  }, [filteredOptions, listBoxOpen, multiple, value]);
 
   if (disabled && focused) {
     handleBlur();
@@ -1159,7 +1178,7 @@ const ComboboxImpl = React.forwardRef<
 
   const defaultRenderOption = (
     props: ComboboxRenderOptionProps & { key: string },
-    option: string | object,
+    option: Value,
   ) => {
     const { key, ...otherProps } = props;
 
@@ -1172,7 +1191,7 @@ const ComboboxImpl = React.forwardRef<
 
   const renderOption = renderOptionProp || defaultRenderOption;
 
-  const renderListOption = (option: string | object, index: number) => {
+  const renderListOption = (option: Value, index: number) => {
     const optionProps = getOptionProps({ option, index });
 
     return renderOption(

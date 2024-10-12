@@ -28,14 +28,6 @@ export const TabsTrigger = React.forwardRef<
   const triggerId = 'trigger-' + value;
   const contentId = 'content-' + value;
 
-  const handleClick = (event: React.PointerEvent) => {
-    if (event.ctrlKey === false) {
-      tabsCtx.onValueChange(value);
-    } else {
-      event.preventDefault();
-    }
-  };
-
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Tab' && e.shiftKey) {
       tabsCtx.setIsTabbingBackOut(true);
@@ -138,7 +130,9 @@ export const TabsTrigger = React.forwardRef<
         id={triggerId}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
-        onPress={handleClick}
+        onPress={() => {
+          tabsCtx.onValueChange(value);
+        }}
       />
     </TabsCollection.Item>
   );
