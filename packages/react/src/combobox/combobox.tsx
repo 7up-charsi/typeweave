@@ -253,6 +253,14 @@ const defaultOptionsFilter = createComboboxFilter<Value>();
 
 const displayName = 'Combobox';
 
+/*
+---- NOTE ----
+i reset highlighlited index on:
+- when listbox opens, to highlight the selected option
+_ when user clear values ( handleClear ), i need to reset index because on reset listbox does not close and index stays same so need to reset it.
+- in editable combobox, when user either search for any option or when user press Backspace
+*/
+
 const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
   const {
     classNames,
@@ -366,10 +374,10 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
   });
   ``;
 
-  /** this is used to prevent reset highilited index when `disableCloseOnSelect` is true or user select option while `ctrl` is pressed (see handleSelectNewValue bellow) */
-  const shouldResetHighlitedIndexRef = React.useRef(true);
+  /** this is used to check whether listbox open first time after input got focus, if it is then it will prevent to run useEffect on again listbox open while focus on input */
+  const listboxOpenFirstTimeRef = React.useRef(true);
 
-  /** this is used to prevent listbox open when user clear value with clear button */
+  /** this is used to prevent listbox open when `openOnFoucs` and `editable` both are true and user clear value with clear button */
   const ignoreListBoxOpenOnClearRef = React.useRef(false);
 
   /** this is used to select input value if user focused input first time */
@@ -728,11 +736,11 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
   // i dont reset highlighted option on close as it will highlight correct option on next open and if multiple it will reset to defaultHighlighted
   React.useEffect(() => {
     if (!listBoxOpen) return;
-    if (!shouldResetHighlitedIndexRef.current) return;
+    if (!listboxOpenFirstTimeRef.current) return;
 
-    shouldResetHighlitedIndexRef.current = false;
+    listboxOpenFirstTimeRef.current = false;
 
-    if (multiple) {
+    if (multiple || filteredOptions.length === 0 || value === null) {
       setHighlightedIndex(getValidIndex('reset'), 'auto');
       return;
     }
@@ -748,7 +756,7 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
         setHighlightedIndex(index, 'auto');
       }
     }
-  }, [filteredOptions, listBoxOpen, multiple, value]);
+  }, [listBoxOpen]);
 
   const handleOpen = () => {
     if (open) return;
@@ -761,8 +769,8 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
   const handleClose = (reason: ComboboxOnCloseReason) => {
     if (!open) return;
 
+    listboxOpenFirstTimeRef.current = true;
     setOpen(false);
-    shouldResetHighlitedIndexRef.current = true;
 
     onClose?.(reason);
   };
@@ -834,9 +842,10 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
     onChange?.(newValue, 'clear');
     setValue(newValue);
 
+    setHighlightedIndex(getValidIndex('reset'), 'auto');
+
     if (!editable) {
       handleOpen();
-      setHighlightedIndex(getValidIndex('reset'), 'auto');
     }
   };
 
@@ -907,6 +916,13 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
     if (event.key.length === 1 && !editable) {
       handleCharSearch(event);
       return;
+    }
+
+    if (
+      editable &&
+      (event.key.length === 1 || (event.key === 'Backspace' && inputValue))
+    ) {
+      setHighlightedIndex(getValidIndex('reset'), 'auto');
     }
 
     if (event.key === 'Escape') {
