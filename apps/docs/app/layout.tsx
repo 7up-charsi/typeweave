@@ -23,23 +23,16 @@ const Layout = ({ children }: Props) => {
   return (
     <html lang="en" dir="ltr">
       <body
-        className={`${GeistSans.variable} ${font_code.variable} m-auto max-w-screen-2xl bg-background font-sans text-foreground`}
+        className={`${GeistSans.variable} ${font_code.variable} bg-background font-sans text-foreground`}
       >
-        <p className="text-balance bg-info-3 px-5 py-3 text-center text-info-11">
-          Documentation is under development.
-        </p>
-
         <ThemeProvider attribute="class">
           <AppBar>
             <AppBarContent />
           </AppBar>
-
           <div className="grid min-h-[var(--screen-height)] grid-cols-1 [--screen-height:calc(100vh-65px)] md:grid-cols-[300px_1fr] lg:grid-cols-[300px_1fr_240px]">
             <SideBar />
-
             {children}
           </div>
-
           <RouteProgress />
           <LoadPackageManager />
         </ThemeProvider>

@@ -84,7 +84,16 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <>
-      <main className="prose-a:prose-a prose mx-auto w-full max-w-[calc(theme(screens.md)+100px)] overflow-auto px-5 pb-5 pt-10 text-foreground prose-headings:text-foreground prose-headings:first-letter:uppercase prose-strong:text-muted-12 prose-code:font-normal prose-pre:my-0 prose-pre:font-normal xl:px-10">
+      <main className="prose-a:prose-a prose mx-auto w-full max-w-[calc(theme(screens.md)+100px)] overflow-auto px-5 pb-5 text-foreground prose-headings:text-foreground prose-headings:first-letter:uppercase prose-strong:text-muted-12 prose-code:font-normal prose-pre:my-0 prose-pre:font-normal xl:px-10">
+        <p className="mt-5 text-balance px-5 text-center text-info-11">
+          <span className="rounded bg-info-3 px-5 py-3">
+            Documentation is under development.
+          </span>
+        </p>
+
+        {/* when remove above info alert, also remove this by adding pt-10 on main */}
+        <div className="mt-10"></div>
+
         <MdxContent components={mdxComponents} />
 
         <div className="mt-10 flex justify-end">

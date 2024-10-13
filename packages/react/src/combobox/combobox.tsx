@@ -246,7 +246,7 @@ type Props = Omit<
     isOptionEqualToValue?: (option: Value, value: Value | null) => boolean;
   };
 
-// i defined array outside of component because this prevents console warnings from occurring because useControlled keeps track of the default value using strict equality comparison.
+// i defined array outside of component because this prevents console warnings from occurring as useControlled keeps track of the default value using strict equality comparison.
 const defaultEmptyArray: [] = [];
 
 const defaultOptionsFilter = createComboboxFilter<Value>();
