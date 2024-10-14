@@ -16,8 +16,11 @@ const DefaultTemplate = (args: FocusTrapProps) => {
 
   return (
     <div className="flex flex-col gap-4 items-center">
-      <button>test</button>
-      
+      <div className="">
+        <Button>button 1</Button>
+        <Button className="ml-5">button 2</Button>
+      </div>
+
       <div
         data-invisible={isInvisible}
         className="data-[invisible=true]:invisible"
@@ -36,44 +39,45 @@ const DefaultTemplate = (args: FocusTrapProps) => {
                   setIsInvisible((prev) => !prev);
                 }}
               >
-                button 1
+                button 3
               </Button>
             )}
             <Button
               onBlur={() => console.log('blur button-2')}
               onFocus={() => console.log('focus button-2')}
             >
-              button 2
+              button 4
             </Button>
             <Button
               onBlur={() => console.log('blur button-3')}
               onFocus={() => console.log('focus button-3')}
               onPress={() => setState(false)}
             >
-              button 3
+              button 5
             </Button>
             <Button
               onBlur={() => console.log('blur button-4')}
               onFocus={() => console.log('focus button-4')}
             >
-              button 4
+              button 6
             </Button>
             <Button
               onBlur={() => console.log('blur button-5')}
               onFocus={() => console.log('focus button-5')}
             >
-              button 5
+              button 7
             </Button>
           </div>
         </FocusTrap>
       </div>
 
-      <p className="text-info-11 text-center text-balance">
-        You cannot focus this button with keyboard <br /> when <b>`trapped`</b>
-        is true
+      <p className="text-info-11 text-center text-balance max-w-lg">
+        Once focus gets in above container, you cannot focus bellow button with
+        keyboard when <b>`trapped`</b>
+        is true.
       </p>
 
-      <Button>button 6</Button>
+      <Button>button 8</Button>
     </div>
   );
 };

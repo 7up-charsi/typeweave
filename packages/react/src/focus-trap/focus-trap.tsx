@@ -154,7 +154,8 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
           return;
         }
 
-        // at this place, i dont force container to get focus, because my goal is to trap focus once focus gets in container
+        // only focus lastFocusedElementRef.current if once container got focus, otherwise do not do any action as container never got focus. my goal is to trap focus if at least once container got focus
+        focus(lastFocusedElementRef.current);
       };
 
       const handleFocusOut = (event: FocusEvent) => {
@@ -167,17 +168,14 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
         // No handling needed when focus moves outside the browser window; browser remembers which element was focused before moving focus outside and browser does default behavior on refocus.
         if (relatedTarget === null) return;
 
-        // it will focus back to lastFocusedElementRef if user wants to place focus on element ousitde container, this happens before next element gains focus (see above info note)
+        // it will focus back to lastFocusedElementRef if user wants to place focus on element ousitde container, this happens before next element gains focus (see Focus Event Sequence above)
         if (!container.contains(relatedTarget)) {
-          if (lastFocusedElementRef.current) {
-            focus(lastFocusedElementRef.current);
-          } else {
-            focus(container);
-          }
+          // if lastFocusedElementRef.current is not defined, do not do any action because focus never gets in container, i want to trap focus if at least once container got focus. i can forcefully set focus to container but i mentioned my goal above.
+          focus(lastFocusedElementRef.current);
           return;
         }
 
-        // at this place, container contains new focused element, let handleFocusIn to save the new focused element in lastFocusedElementRef ref
+        // at this place, container contains new focused element, let handleFocusIn to save the new focused element in lastFocusedElementRef ref (see Focus Event Sequence above)
       };
 
       const handleMutations = (mutations: MutationRecord[]) => {
