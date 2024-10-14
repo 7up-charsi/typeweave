@@ -1,4 +1,8 @@
-import { typeweave } from '@typeweave/plugin';
+import {
+  typeweave,
+  lightThemeColors,
+  darkThemeColors,
+} from '@typeweave/plugin';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -7,5 +11,12 @@ export default {
     '../../packages/react/src/**/*.styles.ts',
     './.storybook/**/*.{ts,tsx}',
   ],
-  plugins: [typeweave()],
+  plugins: [
+    typeweave({
+      themes: {
+        light: { colors: { primary: lightThemeColors.muted } },
+        dark: { colors: { primary: darkThemeColors.muted } },
+      },
+    }),
+  ],
 };

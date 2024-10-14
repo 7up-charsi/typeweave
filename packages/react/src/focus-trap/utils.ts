@@ -72,7 +72,8 @@ export const focus = (
 
     if (
       element !== previousFocusedElement &&
-      element instanceof HTMLInputElement &&
+      (element instanceof HTMLInputElement ||
+        element instanceof HTMLTextAreaElement) &&
       'select' in element &&
       select
     ) {

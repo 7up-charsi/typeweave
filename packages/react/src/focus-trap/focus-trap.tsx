@@ -7,9 +7,8 @@ import { StackItem, createStackManager } from '../stack-manager';
 
 export interface FocusTrapProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
-   * When this prop is true, focus with **keyboard** will loop,
+   * This prop is used when `trapped` is true. When this prop is true, focus with keyboard will loop.
    *
-   * *loop* mean with last element is focused and you press Tab then first tabbable element will be focused and when first element is focused and you press Tab + Shift then last tabbable element will be focused
    * @default true
    */
   loop?: boolean;
@@ -18,6 +17,7 @@ export interface FocusTrapProps extends React.HTMLAttributes<HTMLDivElement> {
    * @default true
    */
   trapped?: boolean;
+  disabled?: boolean;
   children?: React.ReactNode;
   asChild?: boolean;
   onMountAutoFocus?: (event: Event) => void;
@@ -38,6 +38,7 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
       asChild,
       loop = true,
       trapped = true,
+      disabled,
       onMountAutoFocus: onMountAutoFocusProp,
       onUnmountAutoFocus: onUnmountAutoFocusProp,
       ...restProps
@@ -45,10 +46,12 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
 
     const [container, setContainer] = React.useState<HTMLElement | null>(null);
 
+    const isDisabledRef = React.useRef(disabled);
+
     const onMountAutoFocus = useCallbackRef(onMountAutoFocusProp);
     const onUnmountAutoFocus = useCallbackRef(onUnmountAutoFocusProp);
 
-    const lastFocusedElement = React.useRef<HTMLElement | null>(null);
+    const lastFocusedElementRef = React.useRef<HTMLElement | null>(null);
 
     const stackItem = React.useRef<StackItem>({
       paused: false,
@@ -59,6 +62,10 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
         this.paused = false;
       },
     }).current;
+
+    React.useEffect(() => {
+      isDisabledRef.current = disabled;
+    }, [disabled]);
 
     React.useEffect(() => {
       if (container) {
@@ -74,7 +81,7 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
           container.dispatchEvent(mountEvent);
 
           if (!mountEvent.defaultPrevented) {
-            // no need isHidden because focusFirst move focus to first element and if first element is not focusable (not visible, disply none) it will try next tabbable
+            // no need isHidden because focusFirst move focus to first element and if first element is not focusable (invisible or disply none) it will try next tabbable
             focusFirst(getTabbables(container), {
               select: true,
             });
@@ -116,33 +123,61 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
     React.useEffect(() => {
       if (!trapped || !container) return;
 
+      /*
+        Focus Event Sequence Explanation
+        ================================
+
+        Scenario 1: No Element Focused
+
+        When no element has focus and an element gains focus:
+        1. Focus Handler: Triggered on the focused element.
+        2. Focus-In: Triggered on the document.
+
+        Scenario 2: Element Already Focused
+
+        When an element is already focused and another element gains focus:
+        1. Blur Handler: Triggered on the currently focused element.
+        2. Focus-Out: Triggered on the document.
+        3. Focus Handler: Triggered on the newly focused element.
+        4. Focus-In: Triggered on the document.
+      */
+
       const handleFocusIn = (event: FocusEvent) => {
+        if (isDisabledRef.current) return;
+
         if (stackItem.paused) return;
 
         const target = event.target as HTMLElement | null;
 
         if (container.contains(target)) {
-          lastFocusedElement.current = target;
+          lastFocusedElementRef.current = target;
           return;
         }
 
-        focus(lastFocusedElement.current, { select: true });
+        // at this place, i dont force container to get focus, because my goal is to trap focus once focus gets in container
       };
 
       const handleFocusOut = (event: FocusEvent) => {
+        if (isDisabledRef.current) return;
+
         if (stackItem.paused) return;
 
         const relatedTarget = event.relatedTarget as HTMLElement | null;
 
-        // No handling needed when focus moves outside the browser window; browser remembers which element was focused before moving outside and browser does default behavior on refocus.
+        // No handling needed when focus moves outside the browser window; browser remembers which element was focused before moving focus outside and browser does default behavior on refocus.
         if (relatedTarget === null) return;
 
-        // it will focus back to lastFocusedElement if user wants to place focus on element ousitde container and it will ensure that the element on which user wants to place focus will never get focus becauze it will return foucs to lastFocusedElement before blur event happens on lastFocusedElement
+        // it will focus back to lastFocusedElementRef if user wants to place focus on element ousitde container, this happens before next element gains focus (see above info note)
         if (!container.contains(relatedTarget)) {
-          focus(lastFocusedElement.current);
+          if (lastFocusedElementRef.current) {
+            focus(lastFocusedElementRef.current);
+          } else {
+            focus(container);
+          }
+          return;
         }
 
-        // otherwise dont do any action. let focusin handle other cases
+        // at this place, container contains new focused element, let handleFocusIn to save the new focused element in lastFocusedElementRef ref
       };
 
       const handleMutations = (mutations: MutationRecord[]) => {
@@ -153,16 +188,17 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
         if (focusedElement !== document.body) return;
 
         mutations.forEach((mutation) => {
-          if (mutation.removedNodes.length > 0 && lastFocusedElement.current) {
+          if (
+            mutation.removedNodes.length > 0 &&
+            lastFocusedElementRef.current
+          ) {
             const removedNodesArray = Array.from(mutation.removedNodes);
 
-            // as i only want to focus container if lastFocusedElement gets removed from dom. if any else element gets removed from DOM i damn care.
-            if (removedNodesArray.includes(lastFocusedElement.current)) {
+            // as i only want to focus container if lastFocusedElementRef gets removed from dom. if any else element gets removed from DOM i damn care.
+            if (removedNodesArray.includes(lastFocusedElementRef.current)) {
               focus(container);
               return;
             }
-
-            focus(lastFocusedElement.current);
           }
         });
       };
@@ -186,9 +222,12 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
 
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent) => {
-        const container = event.currentTarget as HTMLElement;
+        if (disabled) return;
 
-        if (!loop || stackItem.paused) return;
+        if (stackItem.paused) return;
+        if (!(loop && trapped)) return;
+
+        const container = event.currentTarget as HTMLElement;
 
         const isTabKey =
           event.key === 'Tab' &&
@@ -223,7 +262,7 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
           focus(last, { select: true });
         }
       },
-      [loop, stackItem.paused],
+      [loop, trapped, disabled, stackItem.paused],
     );
 
     const Comp = asChild ? Slot : 'div';
@@ -237,7 +276,7 @@ export const FocusTrap = React.forwardRef<HTMLDivElement, FocusTrapProps>(
           restProps.onKeyDown?.(e);
           handleKeyDown(e);
         }}
-        style={{ outline: 'none', ...restProps.style }}
+        style={{ ...restProps.style }}
       />
     );
   },
