@@ -52,6 +52,7 @@ export const DialogContent = React.forwardRef<
       asChild
       trapped
       loop={loop}
+      disabled={dialogCtx.keepMounted && !dialogCtx.open}
       onMountAutoFocus={onMountAutoFocus}
       onUnmountAutoFocus={onUnmountAutoFocus}
     >

@@ -3,7 +3,6 @@ import React from 'react';
 import { usePopoverCtx } from './popover-root';
 import { useClickOutside } from '../use-click-outside';
 import { createContextScope } from '../context';
-import { FocusTrap } from '../focus-trap';
 import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 import { PopoverVariantProps, popoverStyles } from './popover.styles';
 
@@ -84,17 +83,15 @@ export const PopoverContent = React.forwardRef<
         clippingBoundary={clippingBoundary}
         boundaryPadding={boundaryPadding}
       >
-        <FocusTrap loop={loop} trapped={trapped} asChild>
-          <div
-            {...restProps}
-            ref={mergeRefs(ref, setOutsideEle)}
-            role="dialog"
-            id={popoverCtx.contentId}
-            className={styles.content({ className })}
-          >
-            {children}
-          </div>
-        </FocusTrap>
+        <div
+          {...restProps}
+          ref={mergeRefs(ref, setOutsideEle)}
+          role="dialog"
+          id={popoverCtx.contentId}
+          className={styles.content({ className })}
+        >
+          {children}
+        </div>
       </PopperFloating>
     </PopoverStyles>
   );
