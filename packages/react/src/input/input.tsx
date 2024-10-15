@@ -154,6 +154,8 @@ const InputImpl = (
       <div
         {...inputWrapperProps}
         onMouseDown={(e) => {
+          inputWrapperProps.onMouseDown?.(e);
+
           if (e.currentTarget !== e.target || disabled || readOnly) return;
           e.preventDefault();
           innerInputRef.current?.focus();
