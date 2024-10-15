@@ -14,7 +14,7 @@ const meta = {
 
 export default meta;
 
-const FormTemplate = () => {
+const Template = () => {
   const alertDialogRef = React.useRef<AlertDialogRootMethods>(null);
 
   return (
@@ -54,49 +54,16 @@ const FormTemplate = () => {
           alertDialogRef.current?.open();
         }}
       >
-        <Input label="Full name" />
+        <Input label="identifier" />
 
-        <Button type="submit" className="mt-3">
-          submit
+        <Button type="submit" color="danger" className="mt-3">
+          Delete
         </Button>
       </form>
     </>
   );
 };
 
-export const Form = {
-  render: FormTemplate,
-};
-
-const ProgrammaticallyTemplate = () => {
-  const ref = React.useRef<AlertDialogRootMethods>(null);
-
-  return (
-    <>
-      <Button
-        onClick={() => {
-          ref.current?.open();
-        }}
-      >
-        submit
-      </Button>
-
-      <AlertDialogRoot ref={ref}>
-        <AlertDialogOverlay />
-
-        <AlertDialogContent
-          title="Delete item?"
-          description="Are you sure you want to delete this item from this project?"
-        >
-          <Button variant="text">close</Button>
-
-          <Button color="danger">ok</Button>
-        </AlertDialogContent>
-      </AlertDialogRoot>
-    </>
-  );
-};
-
-export const Programmatically = {
-  render: ProgrammaticallyTemplate,
+export const Default = {
+  render: Template,
 };
