@@ -50,7 +50,11 @@ const [MenuStylesCtx, useMenuStyles] =
   createContextScope<ReturnType<typeof menuStyles>>(displayName);
 
 interface ArrowCtxProps {
-  setArrowEle: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+  side: string;
+  isInCenter: boolean;
+  setArrowEle: React.Dispatch<
+    React.SetStateAction<HTMLElement | SVGSVGElement | null>
+  >;
 }
 
 const [ArrowCtx, useArrowCtx] = createContextScope<ArrowCtxProps>(displayName);
@@ -71,7 +75,9 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
       ...restProps
     } = props;
 
-    const [arrowEle, setArrowEle] = React.useState<HTMLElement | null>(null);
+    const [arrowEle, setArrowEle] = React.useState<
+      HTMLElement | SVGSVGElement | null
+    >(null);
 
     const innerRef = React.useRef<HTMLUListElement>(null);
 
@@ -268,7 +274,7 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
     const styles = React.useMemo(() => menuStyles({ shadow }), [shadow]);
 
     const arrowData = floatingReturn.middlewareData.arrow;
-    const side = floatingReturn.placement.split('-')[0];
+    const side = floatingReturn.placement.split('-')[0] ?? '';
 
     return (
       <MenuContentCtx setFocused={setFocused} focused={focused}>
@@ -286,9 +292,13 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
               ...restProps.style,
               ...(disablePoper ? {} : floatingReturn.floatingStyles),
               ...{
-                '--arrow-top': side === 'top' ? '100%' : arrowData?.y,
+                '--arrow-top':
+                  (side === 'top' && '100%') ||
+                  (arrowData?.y !== undefined ? `${arrowData.y}px` : ''),
                 '--arrow-bottom': side === 'bottom' ? '100%' : '',
-                '--arrow-left': side === 'left' ? '100%' : arrowData?.x,
+                '--arrow-left':
+                  (side === 'left' && '100%') ||
+                  (arrowData?.x !== undefined ? `${arrowData.x}px` : ''),
                 '--arrow-right': side === 'right' ? '100%' : '',
                 '--arrow-rotate':
                   (side === 'top' && '180deg') ||
@@ -312,7 +322,13 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
             }}
           >
             <MenuStylesCtx {...styles}>
-              <ArrowCtx setArrowEle={setArrowEle}>{children}</ArrowCtx>
+              <ArrowCtx
+                isInCenter={arrowData?.centerOffset === 0}
+                side={side}
+                setArrowEle={setArrowEle}
+              >
+                {children}
+              </ArrowCtx>
             </MenuStylesCtx>
           </ul>
         </MenuCollection.Parent>

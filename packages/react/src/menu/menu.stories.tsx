@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  MenuArrow,
   MenuCheckboxItem,
   MenuContent,
   MenuGroup,
@@ -13,7 +14,6 @@ import {
   MenuTrigger,
 } from './';
 import {
-  ChevronUpIcon,
   CircleCheckBigIcon,
   CircleIcon,
   HeartIcon,
@@ -33,31 +33,27 @@ const Template = (args: MenuRootProps & { customIcon?: React.ReactNode }) => {
   const [favrouite, setFavrouite] = React.useState(true);
   const [radioValue, setRadioValue] = React.useState('radio item 1');
 
-  // React.useEffect(() => {
-  //   ref.current?.scrollIntoView({
-  //     behavior: 'instant',
-  //     block: 'center',
-  //     inline: 'center',
-  //   });
-  // }, []);
+  React.useEffect(() => {
+    ref.current?.scrollIntoView({
+      behavior: 'instant',
+      block: 'center',
+      inline: 'center',
+    });
+  }, []);
 
   return (
-    <div
-      data-scrollable={true} // only for testing against scroll
-      className="data-[scrollable=true]:h-[300vh] data-[scrollable=true]:w-[300vw] flex pt-24 justify-center items-center"
-    >
-      <MenuRoot defaultOpen {...args}>
+    <div className="h-[300vh] w-[300vw] flex pt-24 justify-center items-center">
+      <MenuRoot defaultOpen loop={args.loop}>
         <MenuTrigger ref={ref}>
           <Button>open menu</Button>
         </MenuTrigger>
 
         <MenuPortal>
           <MenuContent
-            placement="left"
             aria-roledescription="control menu"
             className="w-[170px]"
           >
-            <ChevronUpIcon className="fill-muted-9 absolute top-[var(--arrow-top)] bottom-[var(--arrow-bottom)] left-[var(--arrow-left)] right-[var(--arrow-right)] rotate-[var(--arrow-rotate)]" />
+            <MenuArrow />
 
             <MenuGroup label="actions">
               <MenuItem>add</MenuItem>

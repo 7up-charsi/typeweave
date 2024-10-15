@@ -9,7 +9,8 @@ export type { MenuRadioGroupProps } from './menu-radio-group';
 export type { MenuRadioItemProps } from './menu-radio-item';
 export type { MenuRootProps } from './menu-root';
 export type { MenuSeparatorProps } from './menu-separator';
-export type { MenuTriggerProps, ChildrenProps } from './menu-trigger';
+export type { MenuTriggerProps } from './menu-trigger';
+export type { MenuArrowProps } from './menu-arrow';
 export type { MenuVariantProps } from './menu.styles';
 
 export { MenuCheckboxItem } from './menu-checkbox-item';
@@ -22,4 +23,5 @@ export { MenuRadioItem } from './menu-radio-item';
 export { MenuRoot } from './menu-root';
 export { MenuSeparator } from './menu-separator';
 export { MenuTrigger } from './menu-trigger';
+export { MenuArrow } from './menu-arrow';
 export { menuStyles } from './menu.styles';
