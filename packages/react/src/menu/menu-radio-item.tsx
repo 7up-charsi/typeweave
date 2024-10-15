@@ -71,8 +71,9 @@ export const MenuRadioItem = React.forwardRef<
         className: classNames?.item ?? className,
       })}
       disabled={disabled}
-      onPress={() => {
+      onClick={() => {
         if (!disableCloseOnChange) menuCtx.handleClose();
+
         menuRadioGroupCtx.onChange?.(value);
       }}
     >

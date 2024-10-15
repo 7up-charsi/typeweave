@@ -48,9 +48,6 @@ const Template = (args: ChipProps) => (
               onDelete={() => {
                 console.log('onDelete');
               }}
-              onPress={() => {
-                console.log('onPress');
-              }}
               size={args.size}
             />
           ))}

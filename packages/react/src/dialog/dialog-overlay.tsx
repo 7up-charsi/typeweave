@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDialogCtx } from './dialog-root';
-import { usePointerEvents } from '../use-pointer-events';
 import { Overlay, OverlayProps } from '../overlay';
 
 export interface DialogOverlayProps extends OverlayProps {}
@@ -15,13 +14,15 @@ export const DialogOverlay = React.forwardRef<
 
   const dialogCtx = useDialogCtx(displayName);
 
-  const pointerEvents = usePointerEvents({
-    onPress: () => {
-      dialogCtx.handleClose('outside');
-    },
-  });
-
-  return <Overlay {...restProps} ref={ref} {...pointerEvents} />;
+  return (
+    <Overlay
+      {...restProps}
+      ref={ref}
+      onClick={() => {
+        dialogCtx.handleClose('outside');
+      }}
+    />
+  );
 });
 
 DialogOverlay.displayName = displayName;

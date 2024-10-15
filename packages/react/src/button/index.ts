@@ -1,7 +1,7 @@
 'use client';
 
 export type { ButtonGroupProps } from './button-group';
-export type { ButtonProps, ButtonPressEvent } from './button';
+export type { ButtonProps } from './button';
 export type {
   ButtonGroupVariantProps,
   ButtonVariantProps,

@@ -17,7 +17,7 @@ export const ToggleButton = React.forwardRef<
 >((props, ref) => {
   const {
     value: valueProp,
-    onPress,
+    onClick,
     classNames,
     className,
     ...restProps
@@ -46,8 +46,8 @@ export const ToggleButton = React.forwardRef<
       }}
       data-selected={selected}
       aria-pressed={selected}
-      onPress={(e) => {
-        onPress?.(e);
+      onClick={(e) => {
+        onClick?.(e);
 
         if (!valueProp) return;
 

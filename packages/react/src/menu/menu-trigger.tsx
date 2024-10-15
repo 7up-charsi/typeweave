@@ -27,8 +27,7 @@ export const MenuTrigger = React.forwardRef<
         data-open={menuCtx.open}
         aria-expanded={menuCtx.open}
         aria-controls={menuCtx.open ? menuCtx.id : undefined}
-        // @ts-expect-error Property 'onPress' does not exist
-        onPress={menuCtx.handleOpen}
+        onClick={menuCtx.handleOpen}
       />
     </PopperReference>
   );

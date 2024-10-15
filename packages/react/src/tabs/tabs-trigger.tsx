@@ -130,7 +130,7 @@ export const TabsTrigger = React.forwardRef<
         id={triggerId}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
-        onPress={() => {
+        onClick={() => {
           tabsCtx.onValueChange(value);
         }}
       />

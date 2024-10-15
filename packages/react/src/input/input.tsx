@@ -1,37 +1,33 @@
 import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 import React from 'react';
-import { PointerEventsProps } from '../pointer-events/pointer-events';
-import { usePointerEvents } from '../use-pointer-events';
 import { InputVariantProps, inputStyles } from './input.styles';
 
-type InputBaseProps = React.InputHTMLAttributes<HTMLInputElement> &
-  PointerEventsProps<HTMLInputElement> & {
-    onChange?: React.ChangeEventHandler<HTMLInputElement>;
-    onBlur?: React.FocusEventHandler<HTMLInputElement>;
-    onFocus?: React.FocusEventHandler<HTMLInputElement>;
-    classNames?: Partial<{
-      base: string;
-      label: string;
-      inputWrapper: string;
-      input: string;
-      helperText: string;
-      required: string;
-    }>;
-    startContent?: React.ReactNode;
-    endContent?: React.ReactNode;
-  };
+type InputBaseProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement>;
+  classNames?: Partial<{
+    base: string;
+    label: string;
+    inputWrapper: string;
+    input: string;
+    helperText: string;
+    required: string;
+  }>;
+  startContent?: React.ReactNode;
+  endContent?: React.ReactNode;
+};
 
-type TextareaBaseProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
-  PointerEventsProps<HTMLTextAreaElement> & {
-    classNames?: Partial<{
-      base: string;
-      label: string;
-      inputWrapper: string;
-      helperText: string;
-      textarea: string;
-      required: string;
-    }>;
-  };
+type TextareaBaseProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  classNames?: Partial<{
+    base: string;
+    label: string;
+    inputWrapper: string;
+    helperText: string;
+    textarea: string;
+    required: string;
+  }>;
+};
 
 type BaseProps = InputVariantProps & {
   defaultValue?: string;
@@ -46,8 +42,7 @@ type BaseProps = InputVariantProps & {
   baseProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   labelProps?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'className'>;
   helperTextProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
-  inputWrapperProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'> &
-    PointerEventsProps<HTMLDivElement>;
+  inputWrapperProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>;
   baseRef?: React.ForwardedRef<HTMLDivElement>;
   inputWrapperRef?: React.ForwardedRef<HTMLDivElement>;
   error?: boolean;
@@ -86,28 +81,14 @@ const InputImpl = (
     baseProps = {},
     labelProps = {},
     helperTextProps = {},
-    inputWrapperProps: inputWrapperPropsProp = {},
+    inputWrapperProps = {},
     fullWidth = false,
     disabled = false,
     inputWrapperRef,
     readOnly,
     multiline = false,
-    onPointerDown,
-    onPointerUp,
-    onPress,
     ...restProps
   } = props;
-
-  const {
-    onPointerDown: inputWrapperOnPointerDown,
-    onPointerUp: inputWrapperOnPointerUp,
-    onPress: inputWrapperOnPress,
-    ...inputWrapperProps
-  } = inputWrapperPropsProp as Omit<
-    React.HTMLAttributes<HTMLDivElement>,
-    'className'
-  > &
-    PointerEventsProps<HTMLDivElement>;
 
   const labelId = React.useId();
   const helperTextId = React.useId();
@@ -115,43 +96,6 @@ const InputImpl = (
 
   const innerInputRef = React.useRef<HTMLInputElement | null>(null);
   const innerTextareaRef = React.useRef<HTMLTextAreaElement | null>(null);
-
-  const handleFocus = (e: React.PointerEvent) => {
-    e.preventDefault();
-    innerInputRef.current?.focus();
-    innerTextareaRef.current?.focus();
-  };
-
-  const inputWrapperPointerEvents = usePointerEvents({
-    onPointerUp: inputWrapperOnPointerUp,
-    onPress: (e) => {
-      inputWrapperOnPress?.(e);
-
-      if (e.currentTarget !== e.target || disabled || readOnly) return;
-      if (e.pointerType !== 'mouse') handleFocus(e);
-    },
-    onPointerDown: (e) => {
-      inputWrapperOnPointerDown?.(e);
-
-      if (
-        e.currentTarget !== e.target ||
-        e.button !== 0 ||
-        disabled ||
-        readOnly
-      )
-        return;
-
-      if (e.pointerType === 'mouse') handleFocus(e);
-    },
-  });
-
-  const pointerEvents = usePointerEvents<
-    HTMLInputElement | HTMLTextAreaElement
-  >({
-    onPointerDown,
-    onPointerUp,
-    onPress,
-  });
 
   React.useEffect(() => {
     if (process.env.NODE_ENV !== 'production' && !label) {
@@ -172,7 +116,6 @@ const InputImpl = (
     disabled,
     readOnly,
     autoComplete: 'off',
-    ...pointerEvents,
   };
 
   const sharedDataAttributes = {
@@ -210,7 +153,12 @@ const InputImpl = (
 
       <div
         {...inputWrapperProps}
-        {...inputWrapperPointerEvents}
+        onMouseDown={(e) => {
+          if (e.currentTarget !== e.target || disabled || readOnly) return;
+          e.preventDefault();
+          innerInputRef.current?.focus();
+          innerTextareaRef.current?.focus();
+        }}
         ref={inputWrapperRef}
         className={styles.inputWrapper({ className: classNames?.inputWrapper })}
         {...sharedDataAttributes}

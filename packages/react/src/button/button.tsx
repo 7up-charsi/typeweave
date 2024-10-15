@@ -1,15 +1,8 @@
 import { Slot } from '../slot';
-import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';
 import { GroupCtx } from './button-group';
 import { ButtonVariantProps, buttonStyles } from './button.styles';
 import { mergeRefs } from '@typeweave/react-utils/merge-refs';
-
-export type ButtonPressEvent = {
-  target: HTMLButtonElement;
-  pointerType: 'mouse' | 'pen' | 'touch' | 'keyboard';
-  preventDefault: () => void;
-};
 
 export interface ButtonProps
   extends Omit<ButtonVariantProps, 'isInGroup'>,
@@ -18,7 +11,6 @@ export interface ButtonProps
   endContent?: React.ReactNode;
   children?: React.ReactNode;
   asChild?: boolean;
-  onPress?: (e: ButtonPressEvent) => void;
   excludeFromTabOrder?: boolean;
   classNames?: Partial<{
     base: string;
@@ -44,10 +36,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       variant,
       color,
       fullWidth,
-      onPointerDown,
-      onPointerUp,
-      onPress,
-      onKeyDown: onKeyDownProp,
       tabIndex,
       excludeFromTabOrder = false,
       isIconOnly = false,
@@ -64,31 +52,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const ariaLabelledby = props['aria-labelledby'];
     const role = props.role;
 
-    const pointerEvents = usePointerEvents({
-      onPointerDown,
-      onPointerUp,
-      onPress: (e) =>
-        onPress?.({
-          pointerType: e.pointerType,
-          target: e.currentTarget,
-          preventDefault: e.preventDefault,
-        }),
-    });
-
-    const onKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-      onKeyDownProp?.(e);
-
-      if (![' ', 'Enter'].includes(e.key)) return;
-
-      onPress?.({
-        pointerType: 'mouse',
-        target: e.currentTarget,
-        preventDefault: e.preventDefault,
-      });
-    };
-
-    const onClick = !!props.onClick;
-
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       React.useEffect(() => {
@@ -102,12 +65,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           console.warn(
             'Typeweave: For accessible icon-only buttons, provide `aria-label` prop for screen readers to describe its purpose.',
           );
-
-        if (onClick)
-          console.warn(
-            'Typeweave: For better user experience you must use `onPress`.',
-          );
-      }, [ariaLabel, ariaLabelledby, isIconOnly, onClick, role]);
+      }, [ariaLabel, ariaLabelledby, isIconOnly, role]);
     }
 
     const styles = React.useMemo(
@@ -146,12 +104,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
         {...buttonProps}
-        {...pointerEvents}
         disabled={!!disabled}
         ref={mergeRefs(ref, innerRef)}
         className={styles.base({ className: classNames?.base ?? className })}
         tabIndex={excludeFromTabOrder ? -1 : (tabIndex ?? 0)}
-        onKeyDown={onKeyDown}
       >
         {asChild ? (
           React.isValidElement(children) &&

@@ -1,6 +1,5 @@
 'use client';
 
-import { PointerEvents } from '@typeweave/react/pointer-events';
 import { usePathname } from 'next/navigation';
 import { Link2Icon } from 'lucide-react';
 import { clearTimeout } from 'timers';
@@ -40,8 +39,9 @@ export const Heading = (props: HeadingProps) => {
     >
       <span className="first-letter:uppercase">{children}</span>
 
-      <PointerEvents
-        onPress={async () => {
+      <button
+        tabIndex={-1}
+        onClick={async () => {
           if (!siteUrl) throw new Error('site url is not defined');
 
           const newPathname = `${siteUrl?.replace(/\/+$/, '')}${pathname}/#${id}`;
@@ -57,14 +57,10 @@ export const Heading = (props: HeadingProps) => {
             timerRef.current = undefined;
           }, 2000);
         }}
+        className="ml-2 hidden cursor-pointer rounded px-1 py-px group-hover:block hover:bg-muted-4"
       >
-        <button
-          tabIndex={-1}
-          className="ml-2 hidden cursor-pointer rounded px-1 py-px group-hover:block hover:bg-muted-4"
-        >
-          <Link2Icon size={20} />
-        </button>
-      </PointerEvents>
+        <Link2Icon size={20} />
+      </button>
 
       {isCopied ? (
         <div className="group ml-2 hidden text-sm font-normal text-success-11 group-hover:block">

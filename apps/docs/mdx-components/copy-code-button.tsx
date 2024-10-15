@@ -1,6 +1,5 @@
 'use client';
 
-import { PointerEvents } from '@typeweave/react/pointer-events';
 import { CheckIcon, Copy } from 'lucide-react';
 import React from 'react';
 
@@ -18,8 +17,9 @@ export const CopyCodeButton = (props: CopyCodeButtonProps) => {
   );
 
   return (
-    <PointerEvents
-      onPress={() => {
+    <button
+      aria-label="copy"
+      onClick={() => {
         clearTimeout(resetTimer.current);
 
         navigator.clipboard.writeText(code);
@@ -29,14 +29,10 @@ export const CopyCodeButton = (props: CopyCodeButtonProps) => {
           resetTimer.current = undefined;
         }, 1000);
       }}
+      className="absolute right-2 top-2 hidden size-7 items-center justify-center rounded bg-white/20 text-base backdrop-blur-sm dynamic-icon group-hover/code-block:flex hover:bg-white/30"
     >
-      <button
-        aria-label="copy"
-        className="absolute right-2 top-2 hidden size-7 items-center justify-center rounded bg-white/20 text-base backdrop-blur-sm dynamic-icon group-hover/code-block:flex hover:bg-white/30"
-      >
-        {isCopied ? <CheckIcon /> : <Copy />}
-      </button>
-    </PointerEvents>
+      {isCopied ? <CheckIcon /> : <Copy />}
+    </button>
   );
 };
 

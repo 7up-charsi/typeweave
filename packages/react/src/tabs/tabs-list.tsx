@@ -29,7 +29,7 @@ export const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(
           role="tablist"
           aria-orientation={tabsCtx.orientation}
           className={styles.list({ className })}
-          onPointerDown={() => {
+          onMouseDown={() => {
             isClickFocusRef.current = true;
           }}
           onBlur={() => tabsCtx.setIsTabbingBackOut(false)}

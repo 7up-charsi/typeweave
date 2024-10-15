@@ -39,7 +39,7 @@ const useRipple = ({
 }: UseRippleProps = {}) => {
   //
 
-  const onPointerDown = useCallback(
+  const onMouseDown = useCallback(
     (e?: MinimalEvent) => {
       if (disabled || !containerRef || !containerRef.current) return;
 
@@ -174,7 +174,7 @@ const useRipple = ({
   );
 
   return {
-    ripplePointerProps: { onPointerDown },
+    ripplePointerProps: { onMouseDown },
     rippleKeyboardProps: { onKeyDown },
   };
 };

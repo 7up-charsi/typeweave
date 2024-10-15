@@ -24,8 +24,7 @@ export const DialogTrigger = React.forwardRef<
       aria-haspopup="dialog"
       aria-expanded={dialogCtx.open}
       aria-controls={dialogCtx.open ? dialogCtx.contentId : undefined}
-      // @ts-expect-error Property 'onPress' does not exist
-      onPress={dialogCtx.handleOpen}
+      onClick={dialogCtx.handleOpen}
     />
   );
 });

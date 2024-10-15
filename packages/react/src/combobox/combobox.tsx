@@ -5,7 +5,6 @@ import { useControlled } from '../use-controlled';
 import { useCallbackRef } from '../use-callback-ref';
 import usePreviousProps from '../use-previous-props';
 import { mergeRefs } from '@typeweave/react-utils/merge-refs';
-import { PointerEvents } from '../pointer-events/pointer-events';
 import { Chip } from '../chip';
 import { Button } from '../button';
 import { ChevronDownIcon, XIcon } from 'lucide-react';
@@ -55,12 +54,13 @@ export interface ComboboxRenderOptionProps {
   tabIndex: number;
   role: string;
   id: string;
-  onPointerEnter: (e: React.PointerEvent<HTMLLIElement>) => void;
-  onPress: (e: React.PointerEvent<HTMLLIElement>) => void;
+  onMouseEnter: (e: React.MouseEvent<HTMLLIElement>) => void;
+  onClick: (e: React.MouseEvent<HTMLLIElement>) => void;
   'data-option-index': number;
   'aria-disabled': boolean;
   'aria-selected': boolean;
   'data-selected': boolean;
+  'data-disabled': boolean;
   className: string;
 }
 
@@ -1050,14 +1050,14 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
     if (newValue) handleOpen();
   };
 
-  const handleOptionPointerEnter = (e: React.PointerEvent) => {
+  const handleOptionMouseEnter = (e: React.MouseEvent) => {
     const index = Number(e.currentTarget.getAttribute('data-option-index'));
     if (highlightedIndexRef.current !== index) {
       setHighlightedIndex(index, 'pointer');
     }
   };
 
-  const handleOptionPress = (e: React.PointerEvent) => {
+  const handleOptionClick = (e: React.MouseEvent) => {
     const index = Number(e.currentTarget.getAttribute('data-option-index'));
 
     if (!filteredOptions[index]) return;
@@ -1077,7 +1077,7 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
     }
   };
 
-  const handleOpenListBox = (e: React.PointerEvent) => {
+  const handleOpenListBox = (e: React.MouseEvent) => {
     if (
       (e.currentTarget === e.target || e.target instanceof HTMLInputElement) &&
       !open
@@ -1086,24 +1086,18 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
     }
   };
 
-  const onInputWrapperPointerDown = (e: React.PointerEvent) => {
+  const onInputWrapperMouseDown = (e: React.MouseEvent) => {
     if (disabled || readOnly) return;
 
     if (!(e.target instanceof HTMLInputElement)) {
       e.preventDefault();
     }
 
-    if (e.pointerType === 'mouse') {
-      handleOpenListBox(e);
-    }
+    handleOpenListBox(e);
   };
 
-  const onInputWrapperPress = (e: React.PointerEvent) => {
+  const onInputWrapperClick = () => {
     if (disabled || readOnly) return;
-
-    if (e.pointerType !== 'mouse') {
-      handleOpenListBox(e);
-    }
 
     if (!inputRef.current) return;
 
@@ -1127,7 +1121,7 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
   }: {
     index: number;
     option: Value;
-  }) => {
+  }): ComboboxRenderOptionProps => {
     const selected = (Array.isArray(value) ? value : [value]).some(
       (value2) => value2 != null && isOptionEqualToValue(option, value2),
     );
@@ -1138,8 +1132,9 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
       tabIndex: -1,
       role: 'option',
       id: `${inputId}-option-${index}`,
-      onPointerEnter: handleOptionPointerEnter,
-      onPress: handleOptionPress,
+      onMouseEnter: handleOptionMouseEnter,
+      onClick: handleOptionClick,
+      className: '',
       'data-option-index': index,
       'aria-disabled': !!disabled,
       'aria-selected': selected,
@@ -1199,9 +1194,9 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
     const { key, ...otherProps } = props;
 
     return (
-      <PointerEvents key={key} {...otherProps}>
-        <li>{getOptionLabel(option)}</li>
-      </PointerEvents>
+      <li key={key} {...otherProps}>
+        {getOptionLabel(option)}
+      </li>
     );
   };
 
@@ -1280,8 +1275,11 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
           className={styles.clearIndicator({
             className: classNames?.clearIndicator,
           })}
-          onPress={handleClear}
+          onClick={handleClear}
           disabled={disabled || readOnly}
+          onMouseDown={(e) => {
+            e.preventDefault();
+          }}
           type="button"
         >
           <XIcon />
@@ -1299,8 +1297,11 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
             className: classNames?.openIndicator,
           })}
           disabled={disabled || readOnly}
-          onPress={handleListBoxToggle}
+          onClick={handleListBoxToggle}
           data-open={listBoxOpen}
+          onMouseDown={(e) => {
+            e.preventDefault();
+          }}
           type="button"
         >
           <ChevronDownIcon />
@@ -1338,7 +1339,7 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
           role="listbox"
           id={`${inputId}-listbox`}
           aria-labelledby={`${inputId}-label`}
-          onPointerDown={(e) => {
+          onMouseDown={(e) => {
             e.preventDefault();
           }}
         >
@@ -1392,8 +1393,8 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
             inputWrapperProps: {
               'aria-owns': listBoxOpen ? `${inputId}-listbox` : undefined,
               onKeyDown: onInputWrapperKeyDown,
-              onPointerDown: onInputWrapperPointerDown,
-              onPress: onInputWrapperPress,
+              onMouseDown: onInputWrapperMouseDown,
+              onClick: onInputWrapperClick,
             },
             classNames: {
               inputWrapper: styles.inputWrapper({

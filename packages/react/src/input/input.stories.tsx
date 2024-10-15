@@ -1,4 +1,3 @@
-import { PointerEvents } from '../pointer-events';
 import { NumberInput, PasswordInput, Input as InputComp } from './';
 
 const meta = {
@@ -48,10 +47,8 @@ const ToggleButtonTemplate = () => (
   <PasswordInput
     required
     label="input label"
-    renderToggleButton={({ onPress, ...props }, { isPassword }) => (
-      <PointerEvents onPress={onPress}>
-        <button {...props}>{isPassword ? 'show' : 'hide'}</button>
-      </PointerEvents>
+    renderToggleButton={(props, { isPassword }) => (
+      <button {...props}>{isPassword ? 'show' : 'hide'}</button>
     )}
   />
 );

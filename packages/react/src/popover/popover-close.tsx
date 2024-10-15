@@ -15,7 +15,7 @@ export const PopoverClose = React.forwardRef<
 
   const popoverCtx = usePopoverCtx(displayName);
 
-  return <Slot {...restProps} ref={ref} onPress={popoverCtx.handleClose} />;
+  return <Slot {...restProps} ref={ref} onClick={popoverCtx.handleClose} />;
 });
 
 PopoverClose.displayName = displayName;

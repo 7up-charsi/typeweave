@@ -25,8 +25,7 @@ export const PopoverTrigger = React.forwardRef<
         data-open={popoverCtx.open}
         aria-expanded={popoverCtx.open}
         aria-controls={popoverCtx.open ? popoverCtx.contentId : undefined}
-        // @ts-expect-error Property 'onPress' does not exist
-        onPress={popoverCtx.handleOpen}
+        onClick={popoverCtx.handleOpen}
       />
     </PopperReference>
   );

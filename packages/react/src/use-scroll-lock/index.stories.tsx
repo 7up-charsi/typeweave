@@ -31,7 +31,7 @@ const Template = () => {
       >
         <DialogTrigger>
           <Button
-            onPress={() => {
+            onClick={() => {
               setOpen(true);
             }}
           >
@@ -46,7 +46,7 @@ const Template = () => {
 
             <Button
               className="mx-auto flex mb-5"
-              onPress={() => {
+              onClick={() => {
                 setOpen(false);
               }}
             >
@@ -55,7 +55,7 @@ const Template = () => {
 
             <Button
               className="mx-auto flex"
-              onPress={async () => {
+              onClick={async () => {
                 setOpenNested(true);
 
                 await new Promise((resolve) => {
@@ -87,7 +87,7 @@ const Template = () => {
 
             <Button
               className="mx-auto flex"
-              onPress={async () => {
+              onClick={async () => {
                 setOpenNested(false);
               }}
             >

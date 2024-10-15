@@ -52,7 +52,7 @@ export const MenuCheckboxItem = React.forwardRef<
         className: classNames?.item ?? className,
       })}
       disabled={disabled}
-      onPress={() => {
+      onClick={() => {
         if (!disableCloseOnChange) menuCtx.handleClose();
         onChange?.(!checked);
       }}

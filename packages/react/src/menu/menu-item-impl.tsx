@@ -1,6 +1,5 @@
 import React from 'react';
 import { MenuCollection } from './menu-root';
-import { usePointerEvents } from '../use-pointer-events';
 import { useMenuContentCtx } from './menu-content';
 
 export interface MenuItemImplProps
@@ -11,7 +10,6 @@ export interface MenuItemImplProps
     itemIcon?: string;
     itemContent?: string;
   };
-  onPress?: () => void;
   icon?: React.ReactNode;
 }
 
@@ -21,7 +19,7 @@ export const MenuItemImpl = React.forwardRef<
   HTMLLIElement,
   MenuItemImplProps & { className?: string }
 >((props, ref) => {
-  const { onPointerDown, onPointerUp, disabled, onPress, ...restProps } = props;
+  const { disabled, onClick, ...restProps } = props;
 
   const id = React.useId();
 
@@ -29,39 +27,37 @@ export const MenuItemImpl = React.forwardRef<
 
   const isFocused = menuContentCtx.focused === id;
 
-  const pointerEvents = usePointerEvents({
-    onPress: () => onPress?.(),
-    onPointerDown,
-    onPointerUp,
-  });
-
   return (
     <MenuCollection.Item disabled={!!disabled} isFocused={isFocused} id={id}>
       <li
         {...restProps}
+        onClick={onClick}
         ref={ref}
         data-disabled={!!disabled}
         aria-disabled={disabled}
         data-focused={isFocused}
         tabIndex={isFocused ? 0 : -1}
-        onPointerEnter={(e) => {
-          restProps.onPointerEnter?.(e);
+        onMouseEnter={(e) => {
+          restProps.onMouseEnter?.(e);
+
           if (disabled) return;
           menuContentCtx.setFocused(id);
         }}
-        onPointerLeave={(e) => {
-          restProps.onPointerLeave?.(e);
+        onMouseLeave={(e) => {
+          restProps.onMouseLeave?.(e);
+
+          if (disabled) return;
           menuContentCtx.setFocused('');
         }}
-        {...pointerEvents}
         onKeyDown={(e) => {
           restProps.onKeyDown?.(e);
 
           const key = e.key;
 
           if (![' ', 'Tab'].includes(key)) return;
+
           e.preventDefault();
-          onPress?.();
+          onClick?.(e as unknown as React.MouseEvent<HTMLLIElement>);
         }}
       />
     </MenuCollection.Item>

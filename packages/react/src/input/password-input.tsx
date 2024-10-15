@@ -2,14 +2,12 @@ import React from 'react';
 import { InputProps, Input } from './input';
 import { Button } from '../button';
 import { EyeIcon, EyeOff } from 'lucide-react';
-import { UsePointerEventsProps } from '../use-pointer-events';
 import { passwordInputStyles } from './input.styles';
 
 export type PasswordInputRenderToggleButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   'color'
-> &
-  Pick<UsePointerEventsProps<HTMLButtonElement>, 'onPress'>;
+>;
 
 export type PasswordInputRenderToggleButtonState = {
   isPassword: boolean;
@@ -60,9 +58,8 @@ export const PasswordInput = React.forwardRef<
     props: PasswordInputRenderToggleButtonProps,
   ) => {
     return (
-      // @ts-expect-error Type 'PointerEventHandler<HTMLButtonElement>' is not assignable to type ButtonPressEvent
       <Button {...props} isIconOnly size="sm" variant="text">
-        {isPassword ? showIcon ?? <EyeIcon /> : hideIcon ?? <EyeOff />}
+        {isPassword ? (showIcon ?? <EyeIcon />) : (hideIcon ?? <EyeOff />)}
       </Button>
     );
   };
@@ -86,7 +83,7 @@ export const PasswordInput = React.forwardRef<
               type: 'button',
               'aria-label': isPassword ? showAriaLabel : hideAriaLabel,
               'aria-pressed': isPassword,
-              onPress: () => {
+              onClick: () => {
                 setIsPassword((p) => !p);
               },
             },

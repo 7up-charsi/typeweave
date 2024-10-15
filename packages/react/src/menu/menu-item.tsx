@@ -4,7 +4,7 @@ import { useMenuCtx } from './menu-root';
 import { useMenuStyles } from './menu-content';
 
 export interface MenuItemProps extends MenuItemImplProps {
-  disableCloseOnPress?: boolean;
+  disableCloseOnClick?: boolean;
 }
 
 const displayName = 'MenuItem';
@@ -13,8 +13,8 @@ export const MenuItem = React.forwardRef<HTMLLIElement, MenuItemProps>(
   (props, ref) => {
     const {
       children,
-      onPress,
-      disableCloseOnPress,
+      onClick,
+      disableCloseOnClick,
       classNames,
       className,
       disabled,
@@ -34,9 +34,10 @@ export const MenuItem = React.forwardRef<HTMLLIElement, MenuItemProps>(
           className: classNames?.item ?? className,
         })}
         disabled={disabled}
-        onPress={() => {
-          if (!disableCloseOnPress) menuCtx.handleClose();
-          onPress?.();
+        onClick={(e) => {
+          if (!disableCloseOnClick) menuCtx.handleClose();
+
+          onClick?.(e);
         }}
       >
         {!!icon && (

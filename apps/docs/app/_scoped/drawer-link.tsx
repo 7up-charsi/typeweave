@@ -50,7 +50,6 @@ export const DrawerLink = React.forwardRef<
       ref={forwardedRef}
       href={href}
       {...restProps}
-      // TODO: Replace this with `onPress` once `useRouteProgress` is upgraded to `PointerEvents`
       onClick={(e) => {
         if (isCTRLRef.current) return;
         if (!href) return;

@@ -131,7 +131,7 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
                 base: styles.item({ className: classNames?.item }),
               }}
               aria-label={firstPageA11yLabel}
-              onPress={() => {
+              onClick={() => {
                 setPage(1);
               }}
               disabled={!!disabled || page === 1}
@@ -149,7 +149,7 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
                 base: styles.item({ className: classNames?.item }),
               }}
               aria-label={previousPageA11yLabel}
-              onPress={() => {
+              onClick={() => {
                 const newValue = page - 1;
                 setPage(newValue);
               }}
@@ -212,7 +212,7 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
                   base: styles.item({ className: classNames?.item }),
                 }}
                 aria-label={getItemA11yLabel(ele)}
-                onPress={() => {
+                onClick={() => {
                   setPage(ele);
                 }}
                 disabled={disabled}
@@ -234,7 +234,7 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
                 base: styles.item({ className: classNames?.item }),
               }}
               aria-label={nextPageA11yLabel}
-              onPress={() => {
+              onClick={() => {
                 const newValue = page + 1;
                 setPage(newValue);
               }}
@@ -253,7 +253,7 @@ export const Pagination = React.forwardRef<HTMLUListElement, PaginationProps>(
                 base: styles.item({ className: classNames?.item }),
               }}
               aria-label={lastPageA11yLabel}
-              onPress={() => {
+              onClick={() => {
                 setPage(count);
               }}
               disabled={!!disabled || page === count}

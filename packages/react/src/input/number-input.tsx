@@ -223,7 +223,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
         e.preventDefault();
     };
 
-    const onLongPress = (action: string) => (e: React.PointerEvent) => {
+    const onLongPress = (action: string) => (e: React.MouseEvent) => {
       if (e.button !== 0) return;
 
       keyDownInterval.current = undefined;
@@ -335,7 +335,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
                 'aria-label': 'decrease value',
                 'aria-description': 'long press to decrease speedly',
                 tabIndex: -1,
-                onPointerDown: onLongPress('decrease'),
+                onMouseDown: onLongPress('decrease'),
                 className: styles.decrease({
                   className: classNames?.spinButtons?.decrease,
                 }),
@@ -346,7 +346,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
                 'aria-label': 'increase value',
                 'aria-description': 'long press to increase speedly',
                 tabIndex: -1,
-                onPointerDown: onLongPress('increase'),
+                onMouseDown: onLongPress('increase'),
                 className: styles.increase({
                   className: classNames?.spinButtons?.increase,
                 }),

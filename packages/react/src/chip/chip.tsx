@@ -1,4 +1,3 @@
-import { usePointerEvents } from '../use-pointer-events';
 import React from 'react';
 import { ChipVariantProps, chipStyles } from './chip.styles';
 
@@ -10,7 +9,6 @@ export interface ChipProps
   icon?: React.ReactNode;
   deleteIcon?: React.ReactNode;
   onDelete?: () => void;
-  onPress?: (e: React.PointerEvent<HTMLDivElement>) => void;
   classNames?: Partial<{
     base: string;
     content: string;
@@ -28,8 +26,6 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
       label,
       avatar,
       onDelete,
-      onPointerDown,
-      onPointerUp,
       size = 'md',
       variant = 'flat',
       color = 'primary',
@@ -39,20 +35,10 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
       deleteIcon,
       tabIndex,
       role,
-      onPress,
+      onClick,
       onKeyUp,
       ...restProps
     } = props;
-
-    const pressPointerEvents = usePointerEvents({
-      onPress,
-      onPointerDown,
-      onPointerUp,
-    });
-
-    const deletePointerEvents = usePointerEvents({
-      onPress: onDelete,
-    });
 
     const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
       onKeyUp?.(e);
@@ -60,7 +46,7 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
       if (['Backspace', 'Delete'].includes(e.key)) onDelete?.();
     };
 
-    const pressable = !!onPress;
+    const pressable = !!onClick;
 
     const styles = React.useMemo(
       () => chipStyles({ color, size, variant, pressable }),
@@ -72,10 +58,9 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
         {...restProps}
         ref={ref}
         className={styles.base({ className: classNames?.base ?? className })}
-        tabIndex={tabIndex ?? (onPress || onDelete ? 0 : undefined)}
-        role={role ?? (onPress || onDelete ? 'button' : undefined)}
+        tabIndex={tabIndex ?? (onClick || onDelete ? 0 : undefined)}
+        role={role ?? (onClick || onDelete ? 'button' : undefined)}
         onKeyUp={handleKeyUp}
-        {...pressPointerEvents}
       >
         {avatar && (
           <span className={styles.avatar({ className: classNames?.avatar })}>
@@ -95,7 +80,7 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
 
         {onDelete ? (
           <span
-            {...deletePointerEvents}
+            onClick={onDelete}
             className={styles.deleteIcon({ className: classNames?.deleteIcon })}
           >
             {deleteIcon ?? (

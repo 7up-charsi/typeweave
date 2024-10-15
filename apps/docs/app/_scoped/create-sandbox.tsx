@@ -18,7 +18,7 @@ export const CreateSandbox = () => {
           isIconOnly
           size="sm"
           aria-label="open in code sandbox"
-          onPress={() => openSandbox({})}
+          onClick={() => openSandbox({})}
         >
           <Codesandbox />
         </Button>

@@ -20,7 +20,7 @@ export const DisclosureTrigger = React.forwardRef<
 
   const isExpended = disclosureItemCtx.isExpended;
 
-  const onPress = () => {
+  const onClick = () => {
     if (isExpended) disclosureCtx.onCollapse(disclosureItemCtx.value);
     else disclosureCtx.onExpand(disclosureItemCtx.value);
   };
@@ -31,7 +31,7 @@ export const DisclosureTrigger = React.forwardRef<
     const key = e.key;
 
     if ([' ', 'Enter'].includes(key)) {
-      onPress();
+      onClick();
 
       return;
     }
@@ -50,7 +50,7 @@ export const DisclosureTrigger = React.forwardRef<
       aria-expanded={isExpended}
       aria-controls={disclosureItemCtx.contentId}
       data-expanded={isExpended}
-      onPress={onPress}
+      onClick={onClick}
     />
   );
 });

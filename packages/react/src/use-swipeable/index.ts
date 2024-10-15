@@ -70,14 +70,14 @@ export const useSwipeable = (props: UseSwipeableProps = {}) => {
   const isPointerDownRef = React.useRef(false);
   const isSwipeStartedRef = React.useRef(false);
 
-  const onPointerDown = React.useCallback((event: PointerEvent) => {
+  const onMouseDown = React.useCallback((event: PointerEvent) => {
     startXRef.current = event.clientX;
     startYRef.current = event.clientY;
     startTimeRef.current = event.timeStamp;
     isPointerDownRef.current = true;
   }, []);
 
-  const onPointerMove = React.useCallback((event: PointerEvent) => {
+  const onMouseMove = React.useCallback((event: PointerEvent) => {
     if (!isPointerDownRef.current) return;
 
     if (!isSwipeStartedRef.current) onSwipeStart?.(event);
@@ -89,7 +89,7 @@ export const useSwipeable = (props: UseSwipeableProps = {}) => {
     onSwiping?.(event);
   }, []);
 
-  const onPointerCancel = React.useCallback(() => {
+  const onMouseCancel = React.useCallback(() => {
     startXRef.current = null;
     endXRef.current = null;
     startYRef.current = null;
@@ -99,7 +99,7 @@ export const useSwipeable = (props: UseSwipeableProps = {}) => {
     isSwipeStartedRef.current = false;
   }, []);
 
-  const onPointerUp = React.useCallback((event: PointerEvent) => {
+  const onMouseUp = React.useCallback((event: PointerEvent) => {
     if (!isPointerDownRef.current) return;
 
     const startX = startXRef.current;
@@ -123,7 +123,7 @@ export const useSwipeable = (props: UseSwipeableProps = {}) => {
       const speedX = absX / time;
       const speedY = absY / time;
 
-      onPointerCancel();
+      onMouseCancel();
 
       if (time > swipeDuration) return;
 
@@ -164,10 +164,10 @@ export const useSwipeable = (props: UseSwipeableProps = {}) => {
   }, []);
 
   return {
-    onPointerDown,
-    onPointerMove,
-    onPointerUp,
-    onPointerCancel,
+    onMouseDown,
+    onMouseMove,
+    onMouseUp,
+    onMouseCancel,
   };
 };
 

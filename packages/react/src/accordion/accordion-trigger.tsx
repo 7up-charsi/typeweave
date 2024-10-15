@@ -6,7 +6,6 @@ import {
   useAccordionStyles,
 } from './accordion-root';
 import { useAccordionItemCtx } from './accordion-item';
-import { usePointerEvents } from '../use-pointer-events';
 
 export interface AccordionTriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
@@ -26,12 +25,10 @@ export const AccordionTrigger = React.forwardRef<
 
   const isExpended = itemCtx.isExpended;
 
-  const onPress = () => {
+  const onClick = () => {
     if (isExpended) accordionCtx.onCollapse(itemCtx.value);
     else accordionCtx.onExpand(itemCtx.value);
   };
-
-  const pointerEvents = usePointerEvents({ onPress });
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (accordionCtx.disabled) return;
@@ -41,7 +38,7 @@ export const AccordionTrigger = React.forwardRef<
     if (key === 'Tab' || (key === 'Tab' && e.shiftKey)) return;
 
     if ([' ', 'Enter'].includes(key)) {
-      onPress();
+      onClick();
 
       return;
     }
@@ -88,7 +85,7 @@ export const AccordionTrigger = React.forwardRef<
         aria-controls={itemCtx.contentId}
         data-expanded={isExpended}
         role="button"
-        {...pointerEvents}
+        onClick={onClick}
       >
         {children}
       </button>

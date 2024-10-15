@@ -25,21 +25,21 @@ export const TooltipTrigger = React.forwardRef<
         ref={ref}
         tabIndex={0}
         data-open={context.open}
-        onPointerDown={(e) => {
-          restProps.onPointerDown?.(e);
+        onMouseDown={(e) => {
+          restProps.onMouseDown?.(e);
 
           isMouseRef.current = true;
           context.hideTooltip(true);
         }}
-        onPointerEnter={(e) => {
-          restProps.onPointerEnter?.(e);
+        onMouseEnter={(e) => {
+          restProps.onMouseEnter?.(e);
 
           if (context.trigger === 'focus') return;
 
           context.showTooltip(false);
         }}
-        onPointerLeave={(e) => {
-          restProps.onPointerLeave?.(e);
+        onMouseLeave={(e) => {
+          restProps.onMouseLeave?.(e);
 
           isMouseRef.current = false;
 
