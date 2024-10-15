@@ -162,7 +162,7 @@ export const useRouteProgress = () => {
     };
 
     // Add the global click event listener
-    document.addEventListener('click', handleClick); // TODO: add PointerEvents
+    document.addEventListener('click', handleClick);
     window.addEventListener('pagehide', handlePageHide);
 
     // Clean up the global click event listener when the component is unmounted

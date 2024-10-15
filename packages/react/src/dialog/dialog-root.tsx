@@ -4,7 +4,7 @@ import { useCallbackRef } from '../use-callback-ref';
 import { useControlled } from '../use-controlled';
 import { StackItem, createStackManager } from '../stack-manager';
 
-type Reason = 'pointer' | 'escape' | 'outside' | 'imperative';
+type Reason = 'close-button' | 'escape' | 'outside' | 'imperative';
 
 type CloseEvent = { preventDefault(): void };
 

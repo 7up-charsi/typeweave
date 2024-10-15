@@ -60,11 +60,15 @@ export const TooltipContent = React.forwardRef<
         ref={ref}
         role="tooltip"
         className={styles}
-        onMouseEnter={() => {
+        onMouseEnter={(e) => {
+          restProps.onMouseEnter?.(e);
+
           if (disableInteractive) return;
           context.showTooltip(true);
         }}
-        onMouseLeave={() => {
+        onMouseLeave={(e) => {
+          restProps.onMouseLeave?.(e);
+
           if (disableInteractive) return;
           context.hideTooltip(false);
         }}

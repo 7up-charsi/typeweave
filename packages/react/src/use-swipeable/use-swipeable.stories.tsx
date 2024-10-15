@@ -21,14 +21,14 @@ const Template = () => {
   });
 
   React.useEffect(() => {
-    document.addEventListener('pointerdown', handlers.onMouseDown);
-    document.addEventListener('pointermove', handlers.onMouseMove);
-    document.addEventListener('pointerup', handlers.onMouseUp);
+    document.addEventListener('mousedown', handlers.onMouseDown);
+    document.addEventListener('mousemove', handlers.onMouseMove);
+    document.addEventListener('mouseup', handlers.onMouseUp);
 
     return () => {
-      document.removeEventListener('pointerdown', handlers.onMouseDown);
-      document.removeEventListener('pointermove', handlers.onMouseMove);
-      document.removeEventListener('pointerup', handlers.onMouseUp);
+      document.removeEventListener('mousedown', handlers.onMouseDown);
+      document.removeEventListener('mousemove', handlers.onMouseMove);
+      document.removeEventListener('mouseup', handlers.onMouseUp);
     };
   }, []);
 

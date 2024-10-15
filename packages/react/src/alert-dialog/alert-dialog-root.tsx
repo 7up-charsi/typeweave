@@ -5,16 +5,11 @@ import { useControlled } from '../use-controlled';
 import { StackItem, createStackManager } from '../stack-manager';
 import { createPortal } from 'react-dom';
 
-type Reason = 'pointer' | 'escape' | 'outside' | 'imperative';
-
-type CloseEvent = { preventDefault(): void };
-
 export interface AlertDialogRootProps {
   children?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   defaultOpen?: boolean;
-  onClose?: (event: CloseEvent, reason: Reason) => void;
   /** container for createPortal
    * @default document.body
    */
@@ -23,7 +18,7 @@ export interface AlertDialogRootProps {
 
 interface AlertDialogCtxProps {
   handleOpen: () => void;
-  handleClose: (reason: Reason) => void;
+  handleClose: () => void;
   open: boolean;
   contentId: string;
 }
@@ -52,7 +47,6 @@ export const AlertDialogRoot = React.forwardRef<
     open: openProp,
     defaultOpen,
     onOpenChange,
-    onClose,
     container = document.body,
   } = props;
 
@@ -81,26 +75,16 @@ export const AlertDialogRoot = React.forwardRef<
     dialogStack.add(stackItem);
   });
 
-  const handleClose = useCallbackRef((reason: Reason) => {
+  const handleClose = useCallbackRef(() => {
     if (stackItem.paused) return;
     if (!open) return;
 
-    const eventObj = { defaultPrevented: false };
-
-    const preventDefault = () => {
-      eventObj.defaultPrevented = true;
-    };
-
-    onClose?.({ preventDefault }, reason);
-
-    if (!eventObj.defaultPrevented) {
-      dialogStack.remove(stackItem);
-      setOpen(false);
-    }
+    dialogStack.remove(stackItem);
+    setOpen(false);
   });
 
   const imperativeClose = useCallbackRef(() => {
-    handleClose('imperative');
+    handleClose();
   });
 
   const imperativeOpen = useCallbackRef(() => {
@@ -109,8 +93,6 @@ export const AlertDialogRoot = React.forwardRef<
 
   const imperativeForceClose = useCallbackRef(() => {
     if (!open) return;
-
-    onClose?.({ preventDefault: () => {} }, 'imperative');
 
     setOpen(false);
     dialogStack.remove(stackItem);
@@ -131,7 +113,7 @@ export const AlertDialogRoot = React.forwardRef<
 
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        handleClose('escape');
+        handleClose();
       }
     };
 

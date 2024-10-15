@@ -30,7 +30,7 @@ export interface UseRippleProps {
     | React.MutableRefObject<HTMLElement>;
 }
 
-const useRipple = ({
+export const useRipple = ({
   containerRef,
   duration = 500,
   timingFunction = 'cubic-bezier(.42,.36,.28,.88)',
@@ -174,11 +174,7 @@ const useRipple = ({
   );
 
   return {
-    ripplePointerProps: { onMouseDown },
-    rippleKeyboardProps: { onKeyDown },
+    onMouseDown,
+    onKeyDown,
   };
 };
-
-export type UseRippleReturn = ReturnType<typeof useRipple>;
-
-export { useRipple };

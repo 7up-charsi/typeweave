@@ -661,7 +661,7 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
   };
 
   const setHighlightedIndex = useCallbackRef(
-    (index: number, reason: 'pointer' | 'keyboard' | 'auto') => {
+    (index: number, reason: 'click' | 'keyboard' | 'auto') => {
       highlightedIndexRef.current = index;
 
       if (!inputRef.current) return;
@@ -707,7 +707,7 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
 
       if (
         listboxNode.scrollHeight > listboxNode.clientHeight &&
-        reason !== 'pointer'
+        reason !== 'click'
       ) {
         const element = option;
 
@@ -1053,7 +1053,7 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
   const handleOptionMouseEnter = (e: React.MouseEvent) => {
     const index = Number(e.currentTarget.getAttribute('data-option-index'));
     if (highlightedIndexRef.current !== index) {
-      setHighlightedIndex(index, 'pointer');
+      setHighlightedIndex(index, 'click');
     }
   };
 

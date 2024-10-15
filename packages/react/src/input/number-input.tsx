@@ -145,7 +145,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       if (repeatEvent && !keyDownInterval.current) {
         longPressTimeout.current = undefined;
 
-        ['pointerdown', 'keyup'].forEach((event) =>
+        ['mousedown', 'keyup'].forEach((event) =>
           document.addEventListener(
             event,
             () => {
@@ -241,7 +241,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
         increase(step);
       }
 
-      ['pointerup', 'keydown'].forEach((event) =>
+      ['mouseup', 'keydown'].forEach((event) =>
         document.addEventListener(
           event,
           () => {
@@ -253,7 +253,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       );
 
       longPressTimeout.current = setTimeout(() => {
-        ['pointerup', 'keydown'].forEach((event) =>
+        ['mouseup', 'keydown'].forEach((event) =>
           document.addEventListener(
             event,
             () => {

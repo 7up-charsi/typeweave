@@ -20,7 +20,7 @@ export const DialogClose = React.forwardRef<
       {...restProps}
       ref={ref}
       onClick={() => {
-        handleClose('pointer');
+        handleClose('close-button');
       }}
     />
   );
