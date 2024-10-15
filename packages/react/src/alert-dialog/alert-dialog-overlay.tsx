@@ -19,7 +19,7 @@ export const AlertDialogOverlay = React.forwardRef<
       {...restProps}
       ref={ref}
       onClick={() => {
-        dialogCtx.handleClose('outside');
+        dialogCtx.handleClose();
       }}
     />
   );
