@@ -1,5 +1,4 @@
 import { mergeRefs } from '@typeweave/react-utils/merge-refs';
-import { PopperReference } from '../popper';
 import { Slot } from '../slot';
 import { useMenuCtx } from './menu-root';
 import React from 'react';
@@ -18,18 +17,16 @@ export const MenuTrigger = React.forwardRef<
   const menuCtx = useMenuCtx(displayName);
 
   return (
-    <PopperReference>
-      <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
-        {...restProps}
-        ref={mergeRefs(ref, menuCtx.triggerRef)}
-        role="button"
-        aria-haspopup="menu"
-        data-open={menuCtx.open}
-        aria-expanded={menuCtx.open}
-        aria-controls={menuCtx.open ? menuCtx.id : undefined}
-        onClick={menuCtx.handleOpen}
-      />
-    </PopperReference>
+    <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
+      {...restProps}
+      ref={mergeRefs(ref, menuCtx.setTrigger)}
+      role="button"
+      aria-haspopup="menu"
+      data-open={menuCtx.open}
+      aria-expanded={menuCtx.open}
+      aria-controls={menuCtx.open ? menuCtx.id : undefined}
+      onClick={menuCtx.handleOpen}
+    />
   );
 });
 

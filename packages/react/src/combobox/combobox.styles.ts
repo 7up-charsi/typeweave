@@ -3,7 +3,7 @@ import { tv, VariantProps } from 'tailwind-variants';
 export const comboboxStyles = tv({
   slots: {
     listboxWrapper:
-      'w-[var(--reference-width)] bg-paper border border-muted-7 rounded z-50 overflow-hidden',
+      'w-[var(--reference-width)] data-[hide=true]:invisible bg-paper border border-muted-7 rounded z-50 overflow-hidden',
     listbox: 'max-h-[300px] w-full overflow-y-auto py-2 relative',
     option:
       'min-h-auto px-4 py-[6px] lg:min-h-9 flex items-center select-none cursor-pointer data-[disabled=true]:disabled data-[selected=true]:bg-info-3 data-[focused=true]:data-[selected=true]:bg-info-4 data-[focused=true]:data-[selected=false]:bg-muted-3 dark:data-[selected=true]:bg-info-6 dark:data-[focused=true]:data-[selected=true]:bg-info-7 dark:data-[focused=true]:data-[selected=false]:bg-muted-6',

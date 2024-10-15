@@ -9,13 +9,15 @@ import { Chip } from '../chip';
 import { Button } from '../button';
 import { ChevronDownIcon, XIcon } from 'lucide-react';
 import { InputProps } from '../input';
-import {
-  PopperFloating,
-  PopperFloatingProps,
-  PopperReference,
-  PopperRoot,
-} from '../popper';
 import { ComboboxVariantProps, comboboxStyles } from './combobox.styles';
+import {
+  flip as flipMiddleware,
+  offset as offsetMiddleware,
+  size as sizeMiddleware,
+  hide as hideMiddleware,
+  useFloating,
+  autoUpdate,
+} from '@floating-ui/react-dom';
 
 export type ComboboxOnChangeReason =
   | 'selectOption'
@@ -71,8 +73,13 @@ export interface ComboboxRenderInputProps extends InputProps<false> {
 }
 
 type BaseProps<Value> = {
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  wrapperRef?: React.RefObject<HTMLDivElement>;
   disabled?: boolean;
-  offset?: PopperFloatingProps['mainOffset'];
+  /** distance between combobox and listbox
+   * @default 5
+   */
+  offset?: number;
   options: Value[];
   open?: boolean;
   onOpen?: () => void;
@@ -265,7 +272,7 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
   const {
     classNames,
     className,
-    offset,
+    offset = 5,
     open: openProp,
     onOpen,
     onClose,
@@ -313,6 +320,8 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
     renderOption: renderOptionProp,
     renderTags,
     editable = false,
+    wrapperProps = {},
+    wrapperRef,
     ...restProps
   } = props;
 
@@ -401,6 +410,24 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
     state: 'open',
     controlled: openProp,
     default: defaultOpen,
+  });
+
+  const floatingReturn = useFloating({
+    open,
+    whileElementsMounted: autoUpdate,
+    middleware: [
+      offsetMiddleware({ mainAxis: offset }),
+      flipMiddleware(),
+      sizeMiddleware({
+        apply({ rects, elements }) {
+          elements.floating.style.setProperty(
+            '--reference-width',
+            `${rects.reference.width}px`,
+          );
+        },
+      }),
+      hideMiddleware({ strategy: 'referenceHidden' }),
+    ],
   });
 
   const [keepUnfiltered, setKeepUnfiltered] = React.useState(true);
@@ -1325,6 +1352,10 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
 
   const list = (
     <div
+      {...wrapperProps}
+      ref={mergeRefs(wrapperRef, floatingReturn.refs.setFloating)}
+      style={{ ...wrapperProps.style, ...floatingReturn.floatingStyles }}
+      data-hide={!!floatingReturn.middlewareData.hide?.referenceHidden}
       className={styles.listboxWrapper({
         className: classNames?.listboxWrapper ?? className,
       })}
@@ -1386,64 +1417,53 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
   const listboxAvailable = open && filteredOptions.length > 0 && !readOnly;
 
   return (
-    <PopperRoot>
-      <PopperReference>
-        {({ referenceRef }) =>
-          renderInput({
-            inputWrapperProps: {
-              'aria-owns': listBoxOpen ? `${inputId}-listbox` : undefined,
-              onKeyDown: onInputWrapperKeyDown,
-              onMouseDown: onInputWrapperMouseDown,
-              onClick: onInputWrapperClick,
-            },
-            classNames: {
-              inputWrapper: styles.inputWrapper({
-                className: editable && classNames?.inputWrapper,
-              }),
-              input: styles.input({
-                className: editable && classNames?.input,
-              }),
-            },
-            inputWrapperRef: referenceRef,
-            startContent,
-            endContent,
-            id: inputId,
-            value: inputValue,
-            onBlur: handleBlur,
-            onFocus: handleFocus,
-            onChange: handleInputChange,
-            // if open then this is handled imperatively in setHighlightedIndex so don't let react override
-            // only have an opinion about this when closed
-            'aria-activedescendant': listBoxOpen ? '' : undefined,
-            'aria-autocomplete': 'list',
-            'aria-controls': listboxAvailable
-              ? `${inputId}-listbox`
-              : undefined,
-            'aria-expanded': listboxAvailable,
-            // Disable browser's suggestion that might overlap with the popup.
-            // Handle autocomplete but not autofill.
-            autoComplete: 'off',
-            ref: inputRef,
-            autoCapitalize: 'none',
-            spellCheck: 'false',
-            role: 'combobox',
-            disabled,
-            readOnly: !editable ? true : readOnly,
-          })
-        }
-      </PopperReference>
+    <>
+      {renderInput({
+        inputWrapperProps: {
+          'aria-owns': listBoxOpen ? `${inputId}-listbox` : undefined,
+          onKeyDown: onInputWrapperKeyDown,
+          onMouseDown: onInputWrapperMouseDown,
+          onClick: onInputWrapperClick,
+        },
+        classNames: {
+          inputWrapper: styles.inputWrapper({
+            className: editable && classNames?.inputWrapper,
+          }),
+          input: styles.input({
+            className: editable && classNames?.input,
+          }),
+        },
+        inputWrapperRef: floatingReturn.refs.setReference,
+        startContent,
+        endContent,
+        id: inputId,
+        value: inputValue,
+        onBlur: handleBlur,
+        onFocus: handleFocus,
+        onChange: handleInputChange,
+        // if open then this is handled imperatively in setHighlightedIndex so don't let react override
+        // only have an opinion about this when closed
+        'aria-activedescendant': listBoxOpen ? '' : undefined,
+        'aria-autocomplete': 'list',
+        'aria-controls': listboxAvailable ? `${inputId}-listbox` : undefined,
+        'aria-expanded': listboxAvailable,
+        // Disable browser's suggestion that might overlap with the popup.
+        // Handle autocomplete but not autofill.
+        autoComplete: 'off',
+        ref: inputRef,
+        autoCapitalize: 'none',
+        spellCheck: 'false',
+        role: 'combobox',
+        disabled,
+        readOnly: !editable ? true : readOnly,
+      })}
 
       {listBoxOpen
         ? disablePortal
           ? list
-          : createPortal(
-              <PopperFloating sticky="always" mainOffset={offset || 5}>
-                {list}
-              </PopperFloating>,
-              globalThis?.document.body,
-            )
+          : createPortal(list, globalThis?.document.body)
         : null}
-    </PopperRoot>
+    </>
   );
 });
 

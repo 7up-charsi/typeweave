@@ -3,7 +3,7 @@ import { tv, VariantProps } from 'tailwind-variants';
 export const menuStyles = tv({
   slots: {
     content:
-      'min-w-[160px] bg-paper rounded py-2 outline-none [--arrowFill:theme(colors.muted-9)]',
+      'min-w-[160px] data-[hide=true]:invisible bg-paper rounded py-2 outline-none [--arrowFill:theme(colors.muted-9)]',
     item: 'px-2 py-[6px] mx-2 cursor-pointer text-sm select-none flex items-center outline-none data-[disabled=true]:cursor-default data-[disabled=true]:disabled data-[focused=true]:bg-muted-3 rounded relative overflow-hidden first:mt-0 mt-1',
     itemIcon:
       'size-5 mr-2 overflow-hidden flex items-center justify-center text-base dynamic-icon',

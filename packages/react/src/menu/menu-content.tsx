@@ -1,17 +1,26 @@
 import { createContextScope } from '../context';
-import { PopperFloating, PopperFloatingProps } from '../popper';
 import React from 'react';
 import { MenuCollection, useMenuCollection, useMenuCtx } from './menu-root';
 import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 import { useClickOutside } from '../use-click-outside';
 import { useScrollLock } from '../use-scroll-lock';
 import { MenuVariantProps, menuStyles } from './menu.styles';
+import {
+  autoUpdate,
+  useFloating,
+  offset as offsetMiddleware,
+  flip as flipMiddleware,
+  hide as hideMiddleware,
+} from '@floating-ui/react-dom';
 
 export interface MenuContentProps
-  extends Omit<PopperFloatingProps, 'children'>,
-    MenuVariantProps,
+  extends MenuVariantProps,
     React.HTMLAttributes<HTMLUListElement> {
   disablePoper?: boolean;
+  /** distance between combobox and listbox
+   * @default 5
+   */
+  offset?: number;
 }
 
 interface MenuContentCtx {
@@ -34,20 +43,8 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
     const {
       children,
       className,
-      placement,
-      updatePositionStrategy,
-      mainOffset,
-      alignOffset,
-      arrow,
-      sticky,
-      hideWhenDetached,
-      fallbackPlacements,
-      allowMainAxisFlip,
-      allowCrossAxisFlip,
-      clippingBoundary,
-      arrowPadding = 10,
-      boundaryPadding = 10,
       disablePoper,
+      offset = 5,
       shadow = true,
       ...restProps
     } = props;
@@ -55,6 +52,17 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
     const innerRef = React.useRef<HTMLUListElement>(null);
 
     const menuCtx = useMenuCtx(displayName);
+
+    const floatingReturn = useFloating<HTMLButtonElement>({
+      open: menuCtx.open,
+      elements: { reference: menuCtx.trigger },
+      whileElementsMounted: autoUpdate,
+      middleware: [
+        offsetMiddleware({ mainAxis: offset }),
+        flipMiddleware(),
+        hideMiddleware({ strategy: 'referenceHidden' }),
+      ],
+    });
 
     const [focused, setFocused] = React.useState('');
 
@@ -68,7 +76,7 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
     const setOutsideEle = useClickOutside({
       disabled: !mounted,
       callback: (e) => {
-        if (e.target !== menuCtx.triggerRef.current) menuCtx.handleClose();
+        if (e.target !== menuCtx.trigger) menuCtx.handleClose();
       },
     });
 
@@ -233,7 +241,14 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
         {...restProps}
         id={menuCtx.id}
         role="menu"
-        ref={mergeRefs(setOutsideEle, ref, innerRef)}
+        data-hide={!!floatingReturn.middlewareData.hide?.referenceHidden}
+        style={{ ...restProps.style, ...floatingReturn.floatingStyles }}
+        ref={mergeRefs(
+          setOutsideEle,
+          ref,
+          innerRef,
+          floatingReturn.refs.setFloating,
+        )}
         className={styles.content({ className })}
         tabIndex={-1}
         onKeyDown={(e) => {
@@ -248,27 +263,7 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
     return (
       <MenuContentCtx setFocused={setFocused} focused={focused}>
         <MenuCollection.Parent>
-          {disablePoper ? (
-            content
-          ) : (
-            <PopperFloating
-              arrowPadding={arrowPadding}
-              boundaryPadding={boundaryPadding ?? 10}
-              placement={placement}
-              updatePositionStrategy={updatePositionStrategy}
-              mainOffset={mainOffset}
-              alignOffset={alignOffset}
-              arrow={arrow}
-              sticky={sticky}
-              hideWhenDetached={hideWhenDetached}
-              fallbackPlacements={fallbackPlacements}
-              allowMainAxisFlip={allowMainAxisFlip}
-              allowCrossAxisFlip={allowCrossAxisFlip}
-              clippingBoundary={clippingBoundary}
-            >
-              {content}
-            </PopperFloating>
-          )}
+          {disablePoper ? content : content}
         </MenuCollection.Parent>
       </MenuContentCtx>
     );

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  MenuArrow,
   MenuCheckboxItem,
   MenuContent,
   MenuGroup,
@@ -33,19 +32,22 @@ const Template = (args: MenuRootProps & { customIcon?: React.ReactNode }) => {
   const [favrouite, setFavrouite] = React.useState(true);
   const [radioValue, setRadioValue] = React.useState('radio item 1');
 
-  React.useEffect(() => {
-    ref.current?.scrollIntoView({
-      behavior: 'instant',
-      block: 'center',
-      inline: 'center',
-    });
-  }, []);
+  // React.useEffect(() => {
+  //   ref.current?.scrollIntoView({
+  //     behavior: 'instant',
+  //     block: 'center',
+  //     inline: 'center',
+  //   });
+  // }, []);
 
   return (
-    <div className="h-[300vh] w-[300vw] flex pt-24 justify-center">
+    <div
+      data-scrollable={false} // only for testing against scroll
+      className="data-[scrollable=true]:h-[300vh] data-[scrollable=true]:w-[300vw] flex pt-24 justify-center"
+    >
       <MenuRoot defaultOpen {...args}>
-        <MenuTrigger>
-          <Button ref={ref}>open menu</Button>
+        <MenuTrigger ref={ref}>
+          <Button>open menu</Button>
         </MenuTrigger>
 
         <MenuPortal>
@@ -53,7 +55,7 @@ const Template = (args: MenuRootProps & { customIcon?: React.ReactNode }) => {
             aria-roledescription="control menu"
             className="w-[170px]"
           >
-            <MenuArrow />
+            {/* <MenuArrow /> */}
 
             <MenuGroup label="actions">
               <MenuItem>add</MenuItem>

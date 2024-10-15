@@ -3,7 +3,6 @@ import { createContextScope } from '../context';
 import { useControlled } from '../use-controlled';
 import { useCallbackRef } from '../use-callback-ref';
 import { createCollection } from '../use-collection';
-import { PopperRoot } from '../popper';
 
 export interface MenuRootProps {
   children?: React.ReactNode;
@@ -19,7 +18,8 @@ interface MenuCtxProps {
   handleOpen: () => void;
   handleClose: () => void;
   id: string;
-  triggerRef: React.RefObject<HTMLButtonElement>;
+  setTrigger: React.Dispatch<React.SetStateAction<HTMLButtonElement | null>>;
+  trigger: HTMLButtonElement | null;
   loop?: boolean;
 }
 
@@ -59,7 +59,8 @@ export const MenuRoot = (props: MenuRootProps) => {
   });
 
   const id = React.useId();
-  const triggerRef = React.useRef<HTMLButtonElement>(null);
+
+  const [trigger, setTrigger] = React.useState<HTMLButtonElement | null>(null);
 
   const handleOpen = useCallbackRef(() => {
     setOpen(true);
@@ -69,7 +70,7 @@ export const MenuRoot = (props: MenuRootProps) => {
     if (!open) return;
 
     setOpen(false);
-    triggerRef.current?.focus();
+    trigger?.focus();
   });
 
   React.useEffect(() => {
@@ -94,12 +95,11 @@ export const MenuRoot = (props: MenuRootProps) => {
       handleClose={handleClose}
       open={open}
       id={id}
-      triggerRef={triggerRef}
+      setTrigger={setTrigger}
+      trigger={trigger}
       loop={loop}
     >
-      <MenuCollection.Provider>
-        <PopperRoot>{children}</PopperRoot>
-      </MenuCollection.Provider>
+      <MenuCollection.Provider>{children}</MenuCollection.Provider>
     </MenuCtx>
   );
 };
