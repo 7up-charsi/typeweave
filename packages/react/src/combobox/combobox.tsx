@@ -1353,9 +1353,19 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
   const list = (
     <div
       {...wrapperProps}
-      ref={mergeRefs(wrapperRef, floatingReturn.refs.setFloating)}
-      style={{ ...wrapperProps.style, ...floatingReturn.floatingStyles }}
-      data-hide={!!floatingReturn.middlewareData.hide?.referenceHidden}
+      ref={mergeRefs(
+        wrapperRef,
+        disablePopper ? undefined : floatingReturn.refs.setFloating,
+      )}
+      style={{
+        ...wrapperProps.style,
+        ...(disablePopper ? {} : floatingReturn.floatingStyles),
+      }}
+      data-hide={
+        disablePopper
+          ? false
+          : !!floatingReturn.middlewareData.hide?.referenceHidden
+      }
       className={styles.listboxWrapper({
         className: classNames?.listboxWrapper ?? className,
       })}

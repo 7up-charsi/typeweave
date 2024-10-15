@@ -11,6 +11,11 @@ import {
   offset as offsetMiddleware,
   flip as flipMiddleware,
   hide as hideMiddleware,
+  arrow as arrowMiddleware,
+  shift as shiftMiddleware,
+  Placement,
+  limitShift,
+  Strategy,
 } from '@floating-ui/react-dom';
 
 export interface MenuContentProps
@@ -21,6 +26,14 @@ export interface MenuContentProps
    * @default 5
    */
   offset?: number;
+  /** padding used to prevent arrow to touch content edges. its usefull when content has rounded corners.
+   * @default 10
+   */
+  arrowPadding?: number;
+  /** @default bottom */
+  placement?: Placement;
+  /** @default absolute */
+  strategy?: Strategy;
 }
 
 interface MenuContentCtx {
@@ -33,10 +46,16 @@ const displayName = 'MenuContent';
 const [MenuContentCtx, useMenuContentCtx] =
   createContextScope<MenuContentCtx>(displayName);
 
-const [MenuStyles, useMenuStyles] =
+const [MenuStylesCtx, useMenuStyles] =
   createContextScope<ReturnType<typeof menuStyles>>(displayName);
 
-export { useMenuContentCtx, useMenuStyles };
+interface ArrowCtxProps {
+  setArrowEle: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+}
+
+const [ArrowCtx, useArrowCtx] = createContextScope<ArrowCtxProps>(displayName);
+
+export { useMenuContentCtx, useMenuStyles, useArrowCtx };
 
 export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
   (props, ref) => {
@@ -46,8 +65,13 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
       disablePoper,
       offset = 5,
       shadow = true,
+      arrowPadding = 10,
+      placement = 'bottom',
+      strategy = 'absolute',
       ...restProps
     } = props;
+
+    const [arrowEle, setArrowEle] = React.useState<HTMLElement | null>(null);
 
     const innerRef = React.useRef<HTMLUListElement>(null);
 
@@ -55,11 +79,18 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
 
     const floatingReturn = useFloating<HTMLButtonElement>({
       open: menuCtx.open,
+      placement,
       elements: { reference: menuCtx.trigger },
       whileElementsMounted: autoUpdate,
+      strategy,
       middleware: [
         offsetMiddleware({ mainAxis: offset }),
         flipMiddleware(),
+        shiftMiddleware({ limiter: limitShift() }),
+        arrowMiddleware({
+          element: arrowEle,
+          padding: arrowPadding,
+        }),
         hideMiddleware({ strategy: 'referenceHidden' }),
       ],
     });
@@ -236,34 +267,54 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
 
     const styles = React.useMemo(() => menuStyles({ shadow }), [shadow]);
 
-    const content = (
-      <ul
-        {...restProps}
-        id={menuCtx.id}
-        role="menu"
-        data-hide={!!floatingReturn.middlewareData.hide?.referenceHidden}
-        style={{ ...restProps.style, ...floatingReturn.floatingStyles }}
-        ref={mergeRefs(
-          setOutsideEle,
-          ref,
-          innerRef,
-          floatingReturn.refs.setFloating,
-        )}
-        className={styles.content({ className })}
-        tabIndex={-1}
-        onKeyDown={(e) => {
-          onkeydown(e);
-          handleCharSearch(e);
-        }}
-      >
-        <MenuStyles {...styles}>{children}</MenuStyles>
-      </ul>
-    );
+    const arrowData = floatingReturn.middlewareData.arrow;
+    const side = floatingReturn.placement.split('-')[0];
 
     return (
       <MenuContentCtx setFocused={setFocused} focused={focused}>
         <MenuCollection.Parent>
-          {disablePoper ? content : content}
+          <ul
+            {...restProps}
+            id={menuCtx.id}
+            role="menu"
+            data-hide={
+              disablePoper
+                ? false
+                : !!floatingReturn.middlewareData.hide?.referenceHidden
+            }
+            style={{
+              ...restProps.style,
+              ...(disablePoper ? {} : floatingReturn.floatingStyles),
+              ...{
+                '--arrow-top': side === 'top' ? '100%' : arrowData?.y,
+                '--arrow-bottom': side === 'bottom' ? '100%' : '',
+                '--arrow-left': side === 'left' ? '100%' : arrowData?.x,
+                '--arrow-right': side === 'right' ? '100%' : '',
+                '--arrow-rotate':
+                  (side === 'top' && '180deg') ||
+                  (side === 'bottom' && '0deg') ||
+                  (side === 'left' && '90deg') ||
+                  (side === 'right' && '-90deg'),
+                '--arrow-side': side,
+              },
+            }}
+            ref={mergeRefs(
+              setOutsideEle,
+              ref,
+              innerRef,
+              disablePoper ? undefined : floatingReturn.refs.setFloating,
+            )}
+            className={styles.content({ className })}
+            tabIndex={-1}
+            onKeyDown={(e) => {
+              onkeydown(e);
+              handleCharSearch(e);
+            }}
+          >
+            <MenuStylesCtx {...styles}>
+              <ArrowCtx setArrowEle={setArrowEle}>{children}</ArrowCtx>
+            </MenuStylesCtx>
+          </ul>
         </MenuCollection.Parent>
       </MenuContentCtx>
     );

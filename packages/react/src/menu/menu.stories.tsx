@@ -13,6 +13,7 @@ import {
   MenuTrigger,
 } from './';
 import {
+  ChevronUpIcon,
   CircleCheckBigIcon,
   CircleIcon,
   HeartIcon,
@@ -42,8 +43,8 @@ const Template = (args: MenuRootProps & { customIcon?: React.ReactNode }) => {
 
   return (
     <div
-      data-scrollable={false} // only for testing against scroll
-      className="data-[scrollable=true]:h-[300vh] data-[scrollable=true]:w-[300vw] flex pt-24 justify-center"
+      data-scrollable={true} // only for testing against scroll
+      className="data-[scrollable=true]:h-[300vh] data-[scrollable=true]:w-[300vw] flex pt-24 justify-center items-center"
     >
       <MenuRoot defaultOpen {...args}>
         <MenuTrigger ref={ref}>
@@ -52,10 +53,11 @@ const Template = (args: MenuRootProps & { customIcon?: React.ReactNode }) => {
 
         <MenuPortal>
           <MenuContent
+            placement="left"
             aria-roledescription="control menu"
             className="w-[170px]"
           >
-            {/* <MenuArrow /> */}
+            <ChevronUpIcon className="fill-muted-9 absolute top-[var(--arrow-top)] bottom-[var(--arrow-bottom)] left-[var(--arrow-left)] right-[var(--arrow-right)] rotate-[var(--arrow-rotate)]" />
 
             <MenuGroup label="actions">
               <MenuItem>add</MenuItem>
