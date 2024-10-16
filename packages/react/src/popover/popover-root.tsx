@@ -1,6 +1,5 @@
 import React from 'react';
 import { createContextScope } from '../context';
-import { PopperRoot } from '../popper';
 import { useCallbackRef } from '../use-callback-ref';
 import { useControlled } from '../use-controlled';
 
@@ -18,7 +17,8 @@ interface PopoverCtxProps {
   handleClose(): void;
   keepMounted: boolean;
   contentId: string;
-  triggerRef: React.RefObject<HTMLButtonElement>;
+  setTrigger: React.Dispatch<React.SetStateAction<HTMLButtonElement | null>>;
+  trigger: HTMLButtonElement | null;
 }
 
 const displayName = 'PopoverRoot';
@@ -46,7 +46,7 @@ export const PopoverRoot = (props: PopoverRootProps) => {
   });
 
   const contentId = React.useId();
-  const triggerRef = React.useRef<HTMLButtonElement>(null);
+  const [trigger, setTrigger] = React.useState<HTMLButtonElement | null>(null);
 
   const handleOpen = useCallbackRef(() => {
     setOpen(true);
@@ -81,9 +81,10 @@ export const PopoverRoot = (props: PopoverRootProps) => {
       open={open}
       keepMounted={keepMounted}
       contentId={contentId}
-      triggerRef={triggerRef}
+      setTrigger={setTrigger}
+      trigger={trigger}
     >
-      <PopperRoot>{children}</PopperRoot>
+      {children}
     </PopoverCtx>
   );
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  MenuArrow,
   MenuCheckboxItem,
   MenuContent,
   MenuGroup,
@@ -20,6 +19,7 @@ import {
   HeartOffIcon,
 } from 'lucide-react';
 import { Button } from '../button';
+import { FloatingArrow } from '../floating-arrow';
 
 const meta = {
   title: 'Components/Menu',
@@ -53,7 +53,7 @@ const Template = (args: MenuRootProps & { customIcon?: React.ReactNode }) => {
             aria-roledescription="control menu"
             className="w-[170px]"
           >
-            <MenuArrow />
+            <FloatingArrow />
 
             <MenuGroup label="actions">
               <MenuItem>add</MenuItem>

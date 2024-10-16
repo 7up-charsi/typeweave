@@ -1,17 +1,38 @@
-import { PopperFloating, PopperFloatingProps } from '../popper';
 import React from 'react';
 import { usePopoverCtx } from './popover-root';
 import { useClickOutside } from '../use-click-outside';
 import { createContextScope } from '../context';
 import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 import { PopoverVariantProps, popoverStyles } from './popover.styles';
+import {
+  autoUpdate,
+  useFloating,
+  offset as offsetMiddleware,
+  flip as flipMiddleware,
+  hide as hideMiddleware,
+  arrow as arrowMiddleware,
+  shift as shiftMiddleware,
+  Placement,
+  limitShift,
+  Strategy,
+} from '@floating-ui/react-dom';
+import { FloatingArrowCtx } from '../floating-arrow';
 
 export interface PopoverContentProps
-  extends Omit<PopperFloatingProps, 'children'>,
-    PopoverVariantProps,
+  extends PopoverVariantProps,
     React.HTMLAttributes<HTMLDivElement> {
-  loop?: boolean;
-  trapped?: boolean;
+  /** distance between combobox and listbox
+   * @default 5
+   */
+  offset?: number;
+  /** padding used to prevent arrow to touch content edges. its usefull when content has rounded corners.
+   * @default 10
+   */
+  arrowPadding?: number;
+  /** @default bottom */
+  placement?: Placement;
+  /** @default absolute */
+  strategy?: Strategy;
 }
 
 const displayName = 'PopoverContent';
@@ -28,71 +49,89 @@ export const PopoverContent = React.forwardRef<
   const {
     children,
     className,
-    placement,
-    updatePositionStrategy,
-    mainOffset,
-    alignOffset,
-    arrow,
-    sticky,
-    hideWhenDetached,
-    fallbackPlacements,
-    allowMainAxisFlip,
-    allowCrossAxisFlip,
-    clippingBoundary,
-    loop = true,
-    trapped = true,
+    offset = 5,
     arrowPadding = 10,
-    boundaryPadding = 10,
+    placement = 'bottom',
+    strategy = 'absolute',
     ...restProps
   } = props;
 
-  const [mounted, setMounted] = React.useState(false);
-
   const popoverCtx = usePopoverCtx(displayName);
 
+  const innerRef = React.useRef<HTMLDivElement>(null);
+
+  const [floatingArrow, setFloatingArrow] = React.useState<
+    HTMLElement | SVGSVGElement | null
+  >(null);
+
+  const floatingReturn = useFloating<HTMLButtonElement>({
+    open: popoverCtx.open,
+    placement,
+    elements: { reference: popoverCtx.trigger },
+    whileElementsMounted: autoUpdate,
+    strategy,
+    middleware: [
+      offsetMiddleware({ mainAxis: offset }),
+      flipMiddleware(),
+      shiftMiddleware({ limiter: limitShift() }),
+      arrowMiddleware({
+        element: floatingArrow,
+        padding: arrowPadding,
+      }),
+      hideMiddleware({ strategy: 'referenceHidden' }),
+    ],
+  });
+
+  React.useEffect(() => {
+    if (!floatingReturn.isPositioned) return;
+
+    innerRef.current?.focus();
+  }, [floatingReturn.isPositioned]);
+
   const setOutsideEle = useClickOutside({
-    disabled: !mounted,
     callback: (e) => {
-      if ((e.target as HTMLElement).closest('[role=dialog]')) return;
-      if (e.target === popoverCtx.triggerRef.current) return;
+      // if ((e.target as HTMLElement).closest('[role=dialog]')) return;
+      if (e.target === popoverCtx.trigger) return;
 
       popoverCtx.handleClose();
     },
   });
 
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const styles = React.useMemo(() => popoverStyles(), []);
+
+  const arrowData = floatingReturn.middlewareData.arrow;
+
+  const floatingArrowProps = {
+    x: arrowData?.x,
+    y: arrowData?.y,
+    centerOffset: arrowData?.centerOffset,
+    alignmentOffset: arrowData?.alignmentOffset,
+    placement,
+    setFloatingArrow,
+  };
 
   return (
     <PopoverStyles {...styles}>
-      <PopperFloating
-        arrowPadding={arrowPadding}
-        placement={placement}
-        updatePositionStrategy={updatePositionStrategy}
-        mainOffset={mainOffset}
-        alignOffset={alignOffset}
-        arrow={arrow}
-        sticky={sticky}
-        hideWhenDetached={hideWhenDetached}
-        fallbackPlacements={fallbackPlacements}
-        allowMainAxisFlip={allowMainAxisFlip}
-        allowCrossAxisFlip={allowCrossAxisFlip}
-        clippingBoundary={clippingBoundary}
-        boundaryPadding={boundaryPadding}
+      <div
+        {...restProps}
+        data-hide={!!floatingReturn.middlewareData.hide?.referenceHidden}
+        style={{
+          ...restProps.style,
+          ...floatingReturn.floatingStyles,
+        }}
+        ref={mergeRefs(
+          setOutsideEle,
+          ref,
+          innerRef,
+          floatingReturn.refs.setFloating,
+        )}
+        tabIndex={-1}
+        role="dialog"
+        id={popoverCtx.contentId}
+        className={styles.content({ className })}
       >
-        <div
-          {...restProps}
-          ref={mergeRefs(ref, setOutsideEle)}
-          role="dialog"
-          id={popoverCtx.contentId}
-          className={styles.content({ className })}
-        >
-          {children}
-        </div>
-      </PopperFloating>
+        <FloatingArrowCtx {...floatingArrowProps}>{children}</FloatingArrowCtx>
+      </div>
     </PopoverStyles>
   );
 });

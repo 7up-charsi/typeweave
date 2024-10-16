@@ -1,7 +1,7 @@
 import React from 'react';
-import { PopperReference } from '../popper';
 import { useTooltipCtx } from './tooltip-root';
 import { Slot } from '../slot';
+import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 
 export interface TooltipTriggerProps
   extends React.HTMLAttributes<HTMLElement> {}
@@ -14,63 +14,61 @@ export const TooltipTrigger = React.forwardRef<
 >((props, ref) => {
   const { ...restProps } = props;
 
-  const context = useTooltipCtx(displayName);
+  const tooltipCtx = useTooltipCtx(displayName);
 
   const isMouseRef = React.useRef(false);
 
   return (
-    <PopperReference>
-      <Slot<HTMLElement, React.HTMLAttributes<HTMLElement>>
-        {...restProps}
-        ref={ref}
-        tabIndex={0}
-        data-open={context.open}
-        onMouseDown={(e) => {
-          restProps.onMouseDown?.(e);
+    <Slot<HTMLElement, React.HTMLAttributes<HTMLElement>>
+      {...restProps}
+      ref={mergeRefs(ref, tooltipCtx.setTriggerEle)}
+      tabIndex={0}
+      data-open={tooltipCtx.open}
+      onMouseDown={(e) => {
+        restProps.onMouseDown?.(e);
 
-          isMouseRef.current = true;
-          context.hideTooltip(true);
-        }}
-        onMouseEnter={(e) => {
-          restProps.onMouseEnter?.(e);
+        isMouseRef.current = true;
+        tooltipCtx.hideTooltip(true);
+      }}
+      onMouseEnter={(e) => {
+        restProps.onMouseEnter?.(e);
 
-          if (context.trigger === 'focus') return;
+        if (tooltipCtx.trigger === 'focus') return;
 
-          context.showTooltip(false);
-        }}
-        onMouseLeave={(e) => {
-          restProps.onMouseLeave?.(e);
+        tooltipCtx.showTooltip(false);
+      }}
+      onMouseLeave={(e) => {
+        restProps.onMouseLeave?.(e);
 
+        isMouseRef.current = false;
+
+        if (tooltipCtx.trigger === 'focus') return;
+
+        tooltipCtx.hideTooltip(false);
+      }}
+      onKeyDown={(e) => {
+        restProps.onKeyDown?.(e);
+
+        const key = e.key;
+
+        if (key === 'Tab' || (key === 'Tab' && e.shiftKey))
           isMouseRef.current = false;
+      }}
+      onFocus={(e) => {
+        restProps?.onFocus?.(e);
 
-          if (context.trigger === 'focus') return;
+        if (tooltipCtx.trigger === 'hover' || isMouseRef.current) return;
 
-          context.hideTooltip(false);
-        }}
-        onKeyDown={(e) => {
-          restProps.onKeyDown?.(e);
+        tooltipCtx.showTooltip(true);
+      }}
+      onBlur={(e) => {
+        restProps.onBlur?.(e);
 
-          const key = e.key;
+        if (tooltipCtx.trigger === 'hover' || isMouseRef.current) return;
 
-          if (key === 'Tab' || (key === 'Tab' && e.shiftKey))
-            isMouseRef.current = false;
-        }}
-        onFocus={(e) => {
-          restProps?.onFocus?.(e);
-
-          if (context.trigger === 'hover' || isMouseRef.current) return;
-
-          context.showTooltip(true);
-        }}
-        onBlur={(e) => {
-          restProps.onBlur?.(e);
-
-          if (context.trigger === 'hover' || isMouseRef.current) return;
-
-          context.hideTooltip(true);
-        }}
-      />
-    </PopperReference>
+        tooltipCtx.hideTooltip(true);
+      }}
+    />
   );
 });
 

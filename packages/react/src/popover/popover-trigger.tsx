@@ -1,6 +1,5 @@
 import React from 'react';
 import { usePopoverCtx } from './popover-root';
-import { PopperReference } from '../popper';
 import { Slot } from '../slot';
 import { mergeRefs } from '@typeweave/react-utils/merge-refs';
 
@@ -18,16 +17,14 @@ export const PopoverTrigger = React.forwardRef<
   const popoverCtx = usePopoverCtx(displayName);
 
   return (
-    <PopperReference>
-      <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
-        {...restProps}
-        ref={mergeRefs(ref, popoverCtx.triggerRef)}
-        data-open={popoverCtx.open}
-        aria-expanded={popoverCtx.open}
-        aria-controls={popoverCtx.open ? popoverCtx.contentId : undefined}
-        onClick={popoverCtx.handleOpen}
-      />
-    </PopperReference>
+    <Slot<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>
+      {...restProps}
+      ref={mergeRefs(ref, popoverCtx.setTrigger)}
+      data-open={popoverCtx.open}
+      aria-expanded={popoverCtx.open}
+      aria-controls={popoverCtx.open ? popoverCtx.contentId : undefined}
+      onClick={popoverCtx.handleOpen}
+    />
   );
 });
 

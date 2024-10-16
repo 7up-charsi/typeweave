@@ -17,11 +17,11 @@ import {
   limitShift,
   Strategy,
 } from '@floating-ui/react-dom';
+import { FloatingArrowCtx } from '../floating-arrow';
 
 export interface MenuContentProps
   extends MenuVariantProps,
     React.HTMLAttributes<HTMLUListElement> {
-  disablePoper?: boolean;
   /** distance between combobox and listbox
    * @default 5
    */
@@ -49,33 +49,21 @@ const [MenuContentCtx, useMenuContentCtx] =
 const [MenuStylesCtx, useMenuStyles] =
   createContextScope<ReturnType<typeof menuStyles>>(displayName);
 
-interface ArrowCtxProps {
-  side: string;
-  isInCenter: boolean;
-  setArrowEle: React.Dispatch<
-    React.SetStateAction<HTMLElement | SVGSVGElement | null>
-  >;
-}
-
-const [ArrowCtx, useArrowCtx] = createContextScope<ArrowCtxProps>(displayName);
-
-export { useMenuContentCtx, useMenuStyles, useArrowCtx };
+export { useMenuContentCtx, useMenuStyles };
 
 export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
   (props, ref) => {
     const {
       children,
       className,
-      disablePoper,
       offset = 5,
-      shadow = true,
       arrowPadding = 10,
       placement = 'bottom',
       strategy = 'absolute',
       ...restProps
     } = props;
 
-    const [arrowEle, setArrowEle] = React.useState<
+    const [floatingArrow, setFloatingArrow] = React.useState<
       HTMLElement | SVGSVGElement | null
     >(null);
 
@@ -94,7 +82,7 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
         flipMiddleware(),
         shiftMiddleware({ limiter: limitShift() }),
         arrowMiddleware({
-          element: arrowEle,
+          element: floatingArrow,
           padding: arrowPadding,
         }),
         hideMiddleware({ strategy: 'referenceHidden' }),
@@ -269,10 +257,18 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
       }
     };
 
-    const styles = React.useMemo(() => menuStyles({ shadow }), [shadow]);
+    const styles = React.useMemo(() => menuStyles(), []);
 
     const arrowData = floatingReturn.middlewareData.arrow;
-    const side = floatingReturn.placement.split('-')[0] ?? '';
+
+    const floatingArrowProps = {
+      x: arrowData?.x,
+      y: arrowData?.y,
+      centerOffset: arrowData?.centerOffset,
+      alignmentOffset: arrowData?.alignmentOffset,
+      placement,
+      setFloatingArrow,
+    };
 
     return (
       <MenuContentCtx setFocused={setFocused} focused={focused}>
@@ -281,36 +277,16 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
             {...restProps}
             id={menuCtx.id}
             role="menu"
-            data-hide={
-              disablePoper
-                ? false
-                : !!floatingReturn.middlewareData.hide?.referenceHidden
-            }
+            data-hide={!!floatingReturn.middlewareData.hide?.referenceHidden}
             style={{
               ...restProps.style,
-              ...(disablePoper ? {} : floatingReturn.floatingStyles),
-              ...{
-                '--arrow-top':
-                  (side === 'top' && '100%') ||
-                  (arrowData?.y !== undefined ? `${arrowData.y}px` : ''),
-                '--arrow-bottom': side === 'bottom' ? '100%' : '',
-                '--arrow-left':
-                  (side === 'left' && '100%') ||
-                  (arrowData?.x !== undefined ? `${arrowData.x}px` : ''),
-                '--arrow-right': side === 'right' ? '100%' : '',
-                '--arrow-rotate':
-                  (side === 'top' && '180deg') ||
-                  (side === 'bottom' && '0deg') ||
-                  (side === 'left' && '90deg') ||
-                  (side === 'right' && '-90deg'),
-                '--arrow-side': side,
-              },
+              ...floatingReturn.floatingStyles,
             }}
             ref={mergeRefs(
               setOutsideEle,
               ref,
               innerRef,
-              disablePoper ? undefined : floatingReturn.refs.setFloating,
+              floatingReturn.refs.setFloating,
             )}
             className={styles.content({ className })}
             tabIndex={-1}
@@ -320,13 +296,9 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
             }}
           >
             <MenuStylesCtx {...styles}>
-              <ArrowCtx
-                isInCenter={arrowData?.centerOffset === 0}
-                side={side}
-                setArrowEle={setArrowEle}
-              >
+              <FloatingArrowCtx {...floatingArrowProps}>
                 {children}
-              </ArrowCtx>
+              </FloatingArrowCtx>
             </MenuStylesCtx>
           </ul>
         </MenuCollection.Parent>

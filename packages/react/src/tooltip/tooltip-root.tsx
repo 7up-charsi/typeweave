@@ -1,6 +1,5 @@
 import React from 'react';
 import { createContextScope } from '../context';
-import { PopperRoot } from '../popper';
 import { useControlled } from '../use-controlled';
 import { useCallbackRef } from '../use-callback-ref';
 
@@ -26,6 +25,8 @@ interface TooltipCtxProps {
   hideTooltip: (immediate?: boolean) => void;
   trigger?: Trigger;
   open: boolean;
+  setTriggerEle: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+  triggerEle: HTMLElement | null;
 }
 
 const displayName = 'TooltipRoot';
@@ -61,6 +62,8 @@ export const TooltipRoot = (props: TooltipRootProps) => {
 
   const showTimeout = React.useRef<NodeJS.Timeout>();
   const hideTimeout = React.useRef<NodeJS.Timeout>();
+
+  const [triggerEle, setTriggerEle] = React.useState<HTMLElement | null>(null);
 
   const addOpenTooltip = () => {
     tooltips[identifier] = hideTooltip;
@@ -148,8 +151,10 @@ export const TooltipRoot = (props: TooltipRootProps) => {
       hideTooltip={hideTooltip}
       trigger={trigger}
       open={open}
+      setTriggerEle={setTriggerEle}
+      triggerEle={triggerEle}
     >
-      <PopperRoot>{children}</PopperRoot>
+      {children}
     </TooltipCtx>
   );
 };
