@@ -5,7 +5,7 @@ import { Side } from '@floating-ui/react-dom';
 export interface MenuArrowProps {
   className?: string;
   /** size of default arrow in px
-   * @default 6
+   * @default 5
    */
   size?: number;
   children?: (
@@ -29,7 +29,7 @@ const STYLES: React.CSSProperties = {
 };
 
 export const MenuArrow = (props: MenuArrowProps) => {
-  const { children, className, size = 6 } = props;
+  const { children, className, size = 5 } = props;
 
   const arrowCtx = useArrowCtx(displayName);
   const styles = useMenuStyles(displayName);

@@ -103,15 +103,12 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
 
     const [focused, setFocused] = React.useState('');
 
-    const [mounted, setMounted] = React.useState(false);
-
     const searchState = React.useRef<{
       timer?: ReturnType<typeof setTimeout>;
       chars: string;
     }>({ chars: '' }).current;
 
     const setOutsideEle = useClickOutside({
-      disabled: !mounted,
       callback: (e) => {
         if (e.target !== menuCtx.trigger) menuCtx.handleClose();
       },
@@ -122,9 +119,10 @@ export const MenuContent = React.forwardRef<HTMLUListElement, MenuContentProps>(
     const getItems = useMenuCollection();
 
     React.useEffect(() => {
+      if (!floatingReturn.isPositioned) return;
+
       innerRef.current?.focus();
-      setMounted(true);
-    }, []);
+    }, [floatingReturn.isPositioned]);
 
     const onkeydown = (e: React.KeyboardEvent) => {
       const key = e.key;
