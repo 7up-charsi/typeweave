@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  TooltipArrow,
   TooltipContent,
   TooltipContentProps,
   TooltipPortal,
@@ -7,7 +8,6 @@ import {
   TooltipRootProps,
   TooltipTrigger,
 } from './';
-import { FloatingArrow } from '../floating-arrow';
 
 const meta = {
   title: 'Components/Tooltip',
@@ -42,7 +42,7 @@ const Template = (args: TooltipRootProps & TooltipContentProps) => {
             <TooltipPortal>
               <TooltipContent disableInteractive={args.disableInteractive}>
                 i am tooltip
-                <FloatingArrow />
+                <TooltipArrow />
               </TooltipContent>
             </TooltipPortal>
           </TooltipRoot>

@@ -20,7 +20,7 @@ export interface FloatingArrowProps {
 
 const displayName = 'FloatingArrow';
 
-export interface FloatingArrowCtxProps extends Partial<Coords> {
+interface FloatingArrowCtxProps extends Partial<Coords> {
   placement: Placement;
   centerOffset?: number;
   alignmentOffset?: number;

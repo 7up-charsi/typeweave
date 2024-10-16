@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  PopoverArrow,
   PopoverClose,
   PopoverContent,
   PopoverPortal,
@@ -7,7 +8,6 @@ import {
   PopoverTrigger,
 } from './';
 import { Button } from '../button';
-import { FloatingArrow } from '../floating-arrow';
 
 const meta = {
   title: 'Components/Popover',
@@ -39,7 +39,7 @@ const Template = () => {
             aria-describedby="desc"
             className="max-w-sm p-5 w-full"
           >
-            <FloatingArrow />
+            <PopoverArrow />
 
             <p>
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere,

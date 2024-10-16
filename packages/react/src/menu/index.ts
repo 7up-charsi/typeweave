@@ -11,6 +11,7 @@ export type { MenuRootProps } from './menu-root';
 export type { MenuSeparatorProps } from './menu-separator';
 export type { MenuTriggerProps } from './menu-trigger';
 export type { MenuVariantProps } from './menu.styles';
+export type { FloatingArrowProps as MenuArrowProps } from '../floating-arrow';
 
 export { MenuCheckboxItem } from './menu-checkbox-item';
 export { MenuContent } from './menu-content';
@@ -23,3 +24,4 @@ export { MenuRoot } from './menu-root';
 export { MenuSeparator } from './menu-separator';
 export { MenuTrigger } from './menu-trigger';
 export { menuStyles } from './menu.styles';
+export { FloatingArrow as MenuArrow } from '../floating-arrow';
