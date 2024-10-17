@@ -1,7 +1,7 @@
 {
   "name": "@typeweave/react",
   "type": "module",
-  "version": "4.2.16",
+  "version": "4.2.17",
   "keywords": [
     "typeweave",
     "react"

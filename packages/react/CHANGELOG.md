@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.2.17
+
+### Patch Changes
+
+- fix(React): document is not defined
+
 ## 4.2.16
 
 ### Patch Changes
