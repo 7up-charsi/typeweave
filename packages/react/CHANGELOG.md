@@ -1,5 +1,11 @@
 # @typeweave/react
 
+## 4.2.19
+
+### Patch Changes
+
+- fix(React): alert-dialog descritpion style
+
 ## 4.2.18
 
 ### Patch Changes
