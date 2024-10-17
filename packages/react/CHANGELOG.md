@@ -1,5 +1,13 @@
 # @typeweave/react
 
+## 4.2.16
+
+### Patch Changes
+
+- fix: all known issues
+- Updated dependencies
+  - @typeweave/react-utils@1.2.3
+
 ## 4.2.15
 
 ### Patch Changes
