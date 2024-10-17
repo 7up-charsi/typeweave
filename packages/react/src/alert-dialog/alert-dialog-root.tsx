@@ -47,7 +47,7 @@ export const AlertDialogRoot = React.forwardRef<
     open: openProp,
     defaultOpen,
     onOpenChange,
-    container = document.body,
+    container = globalThis?.document?.body,
   } = props;
 
   const contentId = React.useId();
