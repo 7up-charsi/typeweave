@@ -1,5 +1,13 @@
 # @typeweave/react
 
+## 4.2.20
+
+### Patch Changes
+
+- refactor: all packages
+- Updated dependencies
+  - @typeweave/react-utils@1.2.4
+
 ## 4.2.19
 
 ### Patch Changes

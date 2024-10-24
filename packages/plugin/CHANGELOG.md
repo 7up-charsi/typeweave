@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.1.11
+
+### Patch Changes
+
+- refactor: all packages
+
 ## 1.1.10
 
 ### Patch Changes
