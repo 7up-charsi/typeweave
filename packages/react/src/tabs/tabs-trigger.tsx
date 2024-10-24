@@ -130,12 +130,7 @@ export const TabsTrigger = React.forwardRef<
         id={triggerId}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
-        onClick={(e: React.MouseEvent) => {
-          if (e.ctrlKey) {
-            e.preventDefault();
-            return;
-          }
-
+        onClick={() => {
           tabsCtx.onValueChange(value);
         }}
       />
