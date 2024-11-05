@@ -4,6 +4,14 @@
 
 ### Patch Changes
 
+- [`cf62558`](https://github.com/7up-charsi/typeweave/commit/cf6255881aaa0762f441ae3cbfa5b012a0ef2e4d) Thanks [@7up-charsi](https://github.com/7up-charsi)! - chore: fix 2
+
+- [`3b323bc`](https://github.com/7up-charsi/typeweave/commit/3b323bc0913c2cff7880aec582b250dd57618cf9) Thanks [@7up-charsi](https://github.com/7up-charsi)! - chore: fix 3
+
+## 1.1.12
+
+### Patch Changes
+
 - [`990e134`](https://github.com/7up-charsi/typeweave/commit/990e13434221d8da4d50c0eef44511832722b1ae) Thanks [@7up-charsi](https://github.com/7up-charsi)! - chore: patch
 
 - [`74efbdb`](https://github.com/7up-charsi/typeweave/commit/74efbdb349dd185c3bc62e9b58460353d7768ecb) Thanks [@7up-charsi](https://github.com/7up-charsi)! - chore: fix
