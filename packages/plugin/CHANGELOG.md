@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.1.13
+
+### Patch Changes
+
+- [`da09674`](https://github.com/7up-charsi/typeweave/commit/da09674526ad44738476cb4e4e3cfb22201b4571) Thanks [@7up-charsi](https://github.com/7up-charsi)! - chore: fix
+
 ## 1.1.12
 
 ### Patch Changes
