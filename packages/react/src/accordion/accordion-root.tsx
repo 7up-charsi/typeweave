@@ -72,7 +72,7 @@ export const AccordionRootImpl = React.forwardRef<
   const [value, setValue] = useControlled({
     default:
       type === 'multiple'
-        ? (defaultValue as string[]) ?? []
+        ? ((defaultValue as string[]) ?? [])
         : (defaultValue as string | null),
     controlled: valueProp,
     name: displayName,

@@ -1,11 +1,7 @@
 dist
-node_modules
 plop
-coverage
 .changeset
 .next
-build
 pnpm-lock.yaml
 !.storybook
 !.lintstagedrc.cjs
-*.hbs

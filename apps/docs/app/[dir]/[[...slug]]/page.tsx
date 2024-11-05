@@ -1,9 +1,12 @@
+import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
 import { getMdxFiles } from '@/utils/get-mdx-files';
+import { Button } from '@typeweave/react/button';
 import { mdxComponents } from '@/mdx-components';
 import remarkDirective from 'remark-directive';
 import { Pager } from '@/app/_scoped/pager';
 import { getMeta } from '@/utils/get-meta';
 import { notFound } from 'next/navigation';
+import { GithubIcon } from 'lucide-react';
 import { getMdx } from '@/utils/get-mdx';
 import { Toc } from '@/app/_scoped/toc';
 import { evaluate } from '@mdx-js/mdx';
@@ -12,10 +15,6 @@ import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import { Metadata } from 'next';
 import React from 'react';
-
-import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
-import { Button } from '@typeweave/react/button';
-import { GithubIcon } from 'lucide-react';
 
 interface PageProps {
   params: {
@@ -72,9 +71,7 @@ const Page = async ({ params }: PageProps) => {
   const { default: MdxContent } = await evaluate(content, {
     format: 'mdx',
     Fragment,
-    // @ts-expect-error Types of parameters 'type' and 'type' are incompatible.
     jsx,
-    // @ts-expect-error Types of parameters 'type' and 'type' are incompatible.
     jsxs,
     remarkPlugins: [remarkGfm, remarkDirective],
     rehypePlugins: [rehypeSlug],

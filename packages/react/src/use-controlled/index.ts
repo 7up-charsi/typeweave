@@ -20,24 +20,23 @@ https://github.com/mui/material-ui/blob/next/packages/mui-utils/src/useControlle
 export const useControlled = <T>(props: UseControlledProps<T>) => {
   const {
     controlled,
-    default: defaultProp,
+    default: defaultValueProp,
     name,
     state,
     onChange: onChangeProp,
   } = props;
 
   const isControlled = React.useRef(controlled !== undefined).current;
-  const defaultValue = React.useRef(defaultProp).current;
+  const defaultValueRef = React.useRef(defaultValueProp);
 
-  const [valueState, setValueState] = React.useState(defaultProp);
+  const [valueState, setValueState] = React.useState(defaultValueProp);
 
   const value = isControlled ? controlled : valueState;
 
   const onChange = useCallbackRef(onChangeProp);
 
-  if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    React.useEffect(() => {
+  React.useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') {
       if (isControlled !== (controlled !== undefined)) {
         console.error(
           [
@@ -52,11 +51,12 @@ export const useControlled = <T>(props: UseControlledProps<T>) => {
           ].join('\n'),
         );
       }
-    }, [controlled, isControlled, name, state]);
+    }
+  }, [controlled, isControlled, name, state]);
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    React.useEffect(() => {
-      if (!isControlled && defaultValue !== defaultProp) {
+  React.useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') {
+      if (!isControlled && defaultValueRef.current !== defaultValueProp) {
         console.error(
           [
             `Typeweave: A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. ` +
@@ -64,9 +64,8 @@ export const useControlled = <T>(props: UseControlledProps<T>) => {
           ].join('\n'),
         );
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [defaultProp, isControlled, name, state, JSON.stringify(defaultValue)]);
-  }
+    }
+  }, [defaultValueProp, isControlled, name, state]);
 
   const setValue = useCallbackRef((newValue: React.SetStateAction<T>) => {
     const setter = newValue as (prev: T | undefined) => T;

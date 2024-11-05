@@ -31,9 +31,10 @@
   "scripts": {
     "build": "pnpm rimraf dist && pnpm tsc",
     "clean": "rimraf dist .turbo",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
-    "postpack": "clean-package restore",
-    "prepublishOnly": "pnpm build"
+    "postpack": "clean-package restore"
   },
   "peerDependencies": {
     "tailwindcss": "^3.4.3"
@@ -47,8 +48,10 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
     "@types/color": "^3.0.6",
     "@types/lodash.kebabcase": "^4.1.9",
     "clean-package": "^2.2.0"
   }
 }
+

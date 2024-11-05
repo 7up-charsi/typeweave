@@ -4,15 +4,15 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "dist/**", "lib/**", "storybook-static/**"]
-    },
-    "typecheck": {
-      "cache": false,
-      "dependsOn": ["^typecheck"]
+      "outputs": [".next/**", "dist/**", "storybook-static/**"]
     },
     "lint": {
       "cache": false,
       "dependsOn": ["^lint"]
+    },
+    "typecheck": {
+      "cache": false,
+      "dependsOn": ["^typecheck"]
     },
     "clean": {
       "cache": false,

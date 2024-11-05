@@ -15,7 +15,6 @@ export const createContextScope = <ContextValue extends object>(
 
     const value = React.useMemo(
       () => context,
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       Object.values(context),
     ) as ContextValue;
 

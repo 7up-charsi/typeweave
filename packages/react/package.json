@@ -35,9 +35,10 @@
   "scripts": {
     "build": "pnpm rimraf dist && pnpm tsc",
     "clean": "rimraf dist .turbo",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
-    "postpack": "clean-package restore",
-    "prepublishOnly": "pnpm build"
+    "postpack": "clean-package restore"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -51,8 +52,10 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "clean-package": "^2.2.0"
   }
 }
+

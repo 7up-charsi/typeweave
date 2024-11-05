@@ -30,7 +30,7 @@ const Template = () => {
       document.removeEventListener('mousemove', handlers.onMouseMove);
       document.removeEventListener('mouseup', handlers.onMouseUp);
     };
-  }, []);
+  }, [handlers.onMouseDown, handlers.onMouseMove, handlers.onMouseUp]);
 
   return <div>sipewable</div>;
 };

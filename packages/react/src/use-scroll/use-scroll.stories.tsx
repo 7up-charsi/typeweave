@@ -6,7 +6,7 @@ const meta = {
 
 export default meta;
 
-const content = Array.from({ length: 10 }).map((_) => ({
+const content = Array.from({ length: 10 }).map((_ele) => ({
   length: Math.floor(Math.random() * (15 - 4 + 1)) + 4,
   lastLine: Math.floor(Math.random() * (70 - 10 + 1)) + 10,
 }));
