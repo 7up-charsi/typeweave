@@ -42,9 +42,6 @@ jobs:
       - name: Eslint
         run: pnpm lint
 
-      - name: Build
-        run: pnpm build
-
       - name: Publish to NPM
         id: changesets
         uses: changesets/action@v1.4.8
