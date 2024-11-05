@@ -9,7 +9,7 @@ concurrency:
 jobs:
   code_quality:
     name: Code  Quality
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
         uses: actions/checkout@v4
