@@ -10,6 +10,10 @@
       "cache": false,
       "dependsOn": ["^lint"]
     },
+    "typecheck": {
+      "cache": false,
+      "dependsOn": ["^typecheck"]
+    },
     "clean": {
       "cache": false,
       "outputs": []

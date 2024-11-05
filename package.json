@@ -5,6 +5,7 @@
     "dev": "pnpm --filter @typeweave/storybook dev",
     "build": "turbo build --filter ./packages/**",
     "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
     "clean": "pnpm turbo:clean && pnpm clean:node-modules && pnpm clean:lock",
     "turbo:clean": "turbo clean && rimraf ./node_modules/.cache/turbo",
     "clean:node-modules": "rimraf ./apps/**/node_modules ./packages/**/node_modules -g && rm -rf ./node_modules",

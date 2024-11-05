@@ -32,6 +32,7 @@
     "build": "pnpm rimraf dist && pnpm tsc",
     "clean": "rimraf dist .turbo",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
     "postpack": "clean-package restore"
   },
