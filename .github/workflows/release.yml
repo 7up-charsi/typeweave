@@ -10,7 +10,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
 permissions:
-  contents: write
+  contents:
+    - write
+    - read
 
 jobs:
   release:
@@ -45,9 +47,9 @@ jobs:
       - name: Eslint
         run: pnpm lint
 
-      - name: Publish to NPM
+      - name: Pull request or publish to npm
         id: changesets
-        uses: changesets/action@v1.4.8
+        uses: changesets/action@v1
         with:
           title: 'ci(changesets): :package: version packages'
           commit: 'ci(changesets): version packages'
