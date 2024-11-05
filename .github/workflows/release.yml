@@ -26,12 +26,6 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
 
-      - name: Setup Git User
-        shell: bash
-        run: |
-          git config --global user.email "7up.charsi@gmail.com"
-          git config --global user.name "zeeshan"
-
       - name: Install dependencies
         run: pnpm install
 
@@ -48,7 +42,6 @@ jobs:
           title: 'ci(changesets): :package: version packages'
           commit: 'ci(changesets): version packages'
           publish: pnpm changeset publish
-          setupGitUser: false
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
