@@ -1,5 +1,11 @@
 # @typeweave/plugin
 
+## 1.1.12
+
+### Patch Changes
+
+- [#3](https://github.com/7up-charsi/typeweave/pull/3) [`842c1f8`](https://github.com/7up-charsi/typeweave/commit/842c1f8f9ce1cf1d0a98dfb2e4d9c7ee7c14ccc4) Thanks [@7up-charsi](https://github.com/7up-charsi)! - chore: eslint errors/warnings fix
+
 ## 1.1.11
 
 ### Patch Changes
