@@ -53,7 +53,7 @@ export const ToggleButtonGroupImpl = (props: ToggleButtonGroupProps<false>) => {
   } = props;
 
   const [value, setValue] = useControlled<string | null | string[]>({
-    default: exclusive ? defaultValue ?? null : defaultValue ?? [],
+    default: exclusive ? (defaultValue ?? null) : (defaultValue ?? []),
     controlled: valueProp,
     name: displayName,
     state: 'value',

@@ -147,7 +147,7 @@ export const useRouteProgress = () => {
 
           start();
         }
-      } catch (err) {
+      } catch (_error) {
         done();
       }
     };

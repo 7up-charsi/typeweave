@@ -135,7 +135,7 @@ export const TooltipRoot = (props: TooltipRootProps) => {
       hideTooltip(true);
       delete tooltips[identifier];
     }
-  }, [identifier, disabled]);
+  }, [identifier, disabled, hideTooltip]);
 
   React.useEffect(() => {
     return () => {

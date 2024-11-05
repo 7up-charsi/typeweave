@@ -66,7 +66,8 @@ export interface ComboboxRenderOptionProps {
   className: string;
 }
 
-export interface ComboboxRenderTagsProps {}
+export interface ComboboxRenderTagsProps
+  extends React.HTMLAttributes<HTMLElement> {}
 
 export interface ComboboxRenderInputProps extends InputProps<false> {
   ref: React.RefObject<HTMLInputElement>;
@@ -213,8 +214,8 @@ export type ComboboxProps<Value, Multiple, DisableClearable, Editable> = (Omit<
   (Multiple extends true
     ? Editable extends true
       ? MultipleAndEditableProps<Value>
-      : {}
-    : {}) &
+      : object
+    : object) &
   (Multiple extends true
     ? MultipleProps<Value, Multiple, DisableClearable>
     : DisableClearable extends true
@@ -381,7 +382,6 @@ const ComboboxImpl = React.forwardRef<HTMLUListElement, Props>((props, ref) => {
     controlled: inputValueProp,
     default: '',
   });
-  ``;
 
   /** this is used to check whether listbox open first time after input got focus, if it is then it will prevent to run useEffect on again listbox open while focus on input */
   const listboxOpenFirstTimeRef = React.useRef(true);

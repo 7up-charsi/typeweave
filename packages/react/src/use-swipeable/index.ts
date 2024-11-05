@@ -1,4 +1,5 @@
 import React from 'react';
+import { useCallbackRef } from '../use-callback-ref';
 
 type Directions = 'up' | 'left' | 'down' | 'right';
 
@@ -32,35 +33,45 @@ const DEFAULT_MIN_DISTANCE = 10;
 
 export const useSwipeable = (props: UseSwipeableProps = {}) => {
   const {
-    onSwipe,
-    onSwipeDown,
-    onSwipeLeft,
-    onSwipeRight,
-    onSwipeStart,
-    onSwipeUp,
-    onSwiping,
+    onSwipe: onSwipeProp,
+    onSwipeDown: onSwipeDownProp,
+    onSwipeLeft: onSwipeLeftProp,
+    onSwipeRight: onSwipeRightProp,
+    onSwipeStart: onSwipeStartProp,
+    onSwipeUp: onSwipeUpProp,
+    onSwiping: onSwipingProp,
     swipeDuration = Infinity,
     minDistance = DEFAULT_MIN_DISTANCE,
   } = props;
 
-  const distanceTraveled: Required<typeof minDistance> = {
+  const onSwipe = useCallbackRef(onSwipeProp);
+  const onSwipeDown = useCallbackRef(onSwipeDownProp);
+  const onSwipeLeft = useCallbackRef(onSwipeLeftProp);
+  const onSwipeRight = useCallbackRef(onSwipeRightProp);
+  const onSwipeStart = useCallbackRef(onSwipeStartProp);
+  const onSwipeUp = useCallbackRef(onSwipeUpProp);
+  const onSwiping = useCallbackRef(onSwipingProp);
+
+  const minDistanceRef = React.useRef({
     down: DEFAULT_MIN_DISTANCE,
     left: DEFAULT_MIN_DISTANCE,
     right: DEFAULT_MIN_DISTANCE,
     up: DEFAULT_MIN_DISTANCE,
-  };
+  });
 
-  if (typeof minDistance === 'number') {
-    distanceTraveled.down = minDistance;
-    distanceTraveled.left = minDistance;
-    distanceTraveled.right = minDistance;
-    distanceTraveled.up = minDistance;
-  } else {
-    distanceTraveled.down = minDistance.down ?? DEFAULT_MIN_DISTANCE;
-    distanceTraveled.left = minDistance.left ?? DEFAULT_MIN_DISTANCE;
-    distanceTraveled.right = minDistance.right ?? DEFAULT_MIN_DISTANCE;
-    distanceTraveled.up = minDistance.up ?? DEFAULT_MIN_DISTANCE;
-  }
+  React.useEffect(() => {
+    if (typeof minDistance === 'number') {
+      minDistanceRef.current.down = minDistance;
+      minDistanceRef.current.left = minDistance;
+      minDistanceRef.current.right = minDistance;
+      minDistanceRef.current.up = minDistance;
+    } else {
+      minDistanceRef.current.down = minDistance.down ?? DEFAULT_MIN_DISTANCE;
+      minDistanceRef.current.left = minDistance.left ?? DEFAULT_MIN_DISTANCE;
+      minDistanceRef.current.right = minDistance.right ?? DEFAULT_MIN_DISTANCE;
+      minDistanceRef.current.up = minDistance.up ?? DEFAULT_MIN_DISTANCE;
+    }
+  }, [minDistance]);
 
   const startXRef = React.useRef<number | null>(null);
   const endXRef = React.useRef<number | null>(null);
@@ -70,14 +81,14 @@ export const useSwipeable = (props: UseSwipeableProps = {}) => {
   const isMouseDownRef = React.useRef(false);
   const isSwipeStartedRef = React.useRef(false);
 
-  const onMouseDown = React.useCallback((event: MouseEvent) => {
+  const onMouseDown = useCallbackRef((event: MouseEvent) => {
     startXRef.current = event.clientX;
     startYRef.current = event.clientY;
     startTimeRef.current = event.timeStamp;
     isMouseDownRef.current = true;
-  }, []);
+  });
 
-  const onMouseMove = React.useCallback((event: MouseEvent) => {
+  const onMouseMove = useCallbackRef((event: MouseEvent) => {
     if (!isMouseDownRef.current) return;
 
     if (!isSwipeStartedRef.current) onSwipeStart?.(event);
@@ -87,77 +98,80 @@ export const useSwipeable = (props: UseSwipeableProps = {}) => {
     endXRef.current = event.clientX;
     endYRef.current = event.clientY;
     onSwiping?.(event);
-  }, []);
+  });
 
-  const onMouseUp = React.useCallback((event: MouseEvent) => {
-    if (!isMouseDownRef.current) return;
+  const onMouseUp = React.useCallback(
+    (event: MouseEvent) => {
+      if (!isMouseDownRef.current) return;
 
-    const startX = startXRef.current;
-    const endX = endXRef.current;
-    const startY = startYRef.current;
-    const endY = endYRef.current;
-    const startTime = startTimeRef.current;
+      const startX = startXRef.current;
+      const endX = endXRef.current;
+      const startY = startYRef.current;
+      const endY = endYRef.current;
+      const startTime = startTimeRef.current;
 
-    if (
-      startX !== null &&
-      startY !== null &&
-      endX !== null &&
-      endY !== null &&
-      startTime !== null
-    ) {
-      const deltaX = Math.abs(endX - startX);
-      const deltaY = Math.abs(endY - startY);
-      const absX = Math.abs(deltaX);
-      const absY = Math.abs(deltaY);
-      const time = event.timeStamp - startTime || 1;
-      const speedX = absX / time;
-      const speedY = absY / time;
+      if (
+        startX !== null &&
+        startY !== null &&
+        endX !== null &&
+        endY !== null &&
+        startTime !== null
+      ) {
+        const deltaX = Math.abs(endX - startX);
+        const deltaY = Math.abs(endY - startY);
+        const absX = Math.abs(deltaX);
+        const absY = Math.abs(deltaY);
+        const time = event.timeStamp - startTime || 1;
+        const speedX = absX / time;
+        const speedY = absY / time;
 
-      startXRef.current = null;
-      endXRef.current = null;
-      startYRef.current = null;
-      endYRef.current = null;
-      startTimeRef.current = null;
-      isMouseDownRef.current = false;
-      isSwipeStartedRef.current = false;
+        startXRef.current = null;
+        endXRef.current = null;
+        startYRef.current = null;
+        endYRef.current = null;
+        startTimeRef.current = null;
+        isMouseDownRef.current = false;
+        isSwipeStartedRef.current = false;
 
-      if (time > swipeDuration) return;
+        if (time > swipeDuration) return;
 
-      const velocity = Math.sqrt(speedX ** 2 + speedY ** 2);
+        const velocity = Math.sqrt(speedX ** 2 + speedY ** 2);
 
-      const customEvent: CustomEvent = {
-        event,
-        velocity,
-        deltaX,
-        deltaY,
-        absX,
-        absY,
-        direction: getDirection(absX, absY, deltaX, deltaY),
-      };
+        const customEvent: CustomEvent = {
+          event,
+          velocity,
+          deltaX,
+          deltaY,
+          absX,
+          absY,
+          direction: getDirection(absX, absY, deltaX, deltaY),
+        };
 
-      if (deltaX > deltaY) {
-        // horizontal swipe
-        if (absX >= distanceTraveled.right && endX > startX) {
-          onSwipeRight?.(customEvent);
+        if (deltaX > deltaY) {
+          // horizontal swipe
+          if (absX >= minDistanceRef.current.right && endX > startX) {
+            onSwipeRight?.(customEvent);
+          }
+
+          if (absX >= minDistanceRef.current.left && endX < startX) {
+            onSwipeLeft?.(customEvent);
+          }
+        } else {
+          // vertical swipe
+          if (absY >= minDistanceRef.current.down && endY > startY) {
+            onSwipeDown?.(customEvent);
+          }
+
+          if (absY >= minDistanceRef.current.up && endY < startY) {
+            onSwipeUp?.(customEvent);
+          }
         }
 
-        if (absX >= distanceTraveled.left && endX < startX) {
-          onSwipeLeft?.(customEvent);
-        }
-      } else {
-        // vertical swipe
-        if (absY >= distanceTraveled.down && endY > startY) {
-          onSwipeDown?.(customEvent);
-        }
-
-        if (absY >= distanceTraveled.up && endY < startY) {
-          onSwipeUp?.(customEvent);
-        }
+        onSwipe?.(customEvent);
       }
-
-      onSwipe?.(customEvent);
-    }
-  }, []);
+    },
+    [onSwipe, onSwipeDown, onSwipeLeft, onSwipeRight, onSwipeUp, swipeDuration],
+  );
 
   return {
     onMouseDown,

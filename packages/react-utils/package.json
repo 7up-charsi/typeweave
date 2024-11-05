@@ -35,6 +35,7 @@
   "scripts": {
     "build": "pnpm rimraf dist && pnpm tsc",
     "clean": "rimraf dist .turbo",
+    "lint": "eslint",
     "prepack": "clean-package",
     "postpack": "clean-package restore"
   },
@@ -47,6 +48,7 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
     "@types/react": "^18.3.1",
     "clean-package": "^2.2.0"
   }

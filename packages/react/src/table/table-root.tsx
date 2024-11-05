@@ -109,17 +109,16 @@ const TableRootImpl = (props: TableRootProps) => {
     onChange: onColumnVisibilityChange,
   });
 
-  if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    React.useEffect(() => {
+  React.useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') {
       const set = new Set(columns?.map((ele) => ele.identifier));
 
       if (columns && columns?.length !== set.size)
         throw new Error(
           `${displayName}, Duplicate \`column identifier\` found.`,
         );
-    }, [columns]);
-  }
+    }
+  }, [columns]);
 
   if (!columns) return;
   if (!data) return;

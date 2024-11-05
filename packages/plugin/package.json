@@ -31,6 +31,7 @@
   "scripts": {
     "build": "pnpm rimraf dist && pnpm tsc",
     "clean": "rimraf dist .turbo",
+    "lint": "eslint",
     "prepack": "clean-package",
     "postpack": "clean-package restore"
   },
@@ -46,6 +47,7 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
     "@types/color": "^3.0.6",
     "@types/lodash.kebabcase": "^4.1.9",
     "clean-package": "^2.2.0"

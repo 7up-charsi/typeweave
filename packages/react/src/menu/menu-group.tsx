@@ -18,15 +18,14 @@ export const MenuGroup = React.forwardRef<HTMLUListElement, MenuGroupProps>(
 
     const styles = useMenuStyles(displayName);
 
-    if (process.env.NODE_ENV !== 'production') {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      React.useEffect(() => {
+    React.useEffect(() => {
+      if (process.env.NODE_ENV !== 'production') {
         if (!label)
           console.warn(
             'Typeweave: For accessible MenuGroup, provide `label` prop for screen readers to describe its purpose. If you want to hide the label visually, use the `hideLabel` prop',
           );
-      }, [label]);
-    }
+      }
+    }, [label]);
 
     return (
       <li role="none">
