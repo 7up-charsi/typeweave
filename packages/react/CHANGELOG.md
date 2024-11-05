@@ -1,5 +1,16 @@
 # @typeweave/react
 
+## 4.2.21
+
+### Patch Changes
+
+- [`990e134`](https://github.com/7up-charsi/typeweave/commit/990e13434221d8da4d50c0eef44511832722b1ae) Thanks [@7up-charsi](https://github.com/7up-charsi)! - chore: patch
+
+- [`74efbdb`](https://github.com/7up-charsi/typeweave/commit/74efbdb349dd185c3bc62e9b58460353d7768ecb) Thanks [@7up-charsi](https://github.com/7up-charsi)! - chore: fix
+
+- Updated dependencies [[`990e134`](https://github.com/7up-charsi/typeweave/commit/990e13434221d8da4d50c0eef44511832722b1ae), [`74efbdb`](https://github.com/7up-charsi/typeweave/commit/74efbdb349dd185c3bc62e9b58460353d7768ecb)]:
+  - @typeweave/react-utils@1.2.5
+
 ## 4.2.22
 
 ### Patch Changes
