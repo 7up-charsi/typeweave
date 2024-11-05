@@ -1,5 +1,13 @@
 # @typeweave/react-utils
 
+## 1.2.5
+
+### Patch Changes
+
+- [`990e134`](https://github.com/7up-charsi/typeweave/commit/990e13434221d8da4d50c0eef44511832722b1ae) Thanks [@7up-charsi](https://github.com/7up-charsi)! - chore: patch
+
+- [`74efbdb`](https://github.com/7up-charsi/typeweave/commit/74efbdb349dd185c3bc62e9b58460353d7768ecb) Thanks [@7up-charsi](https://github.com/7up-charsi)! - chore: fix
+
 ## 1.2.6
 
 ### Patch Changes
