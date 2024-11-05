@@ -9,11 +9,6 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
-permissions:
-  contents:
-    - write
-    - read
-
 jobs:
   release:
     name: Release
